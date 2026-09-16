@@ -1,38 +1,62 @@
 # Research issue graph
 
-Status: planned issue graph; GitHub issue numbers are assigned at creation  
+Status: current issue graph; GitHub issues #1–#16 assigned  
 Date: 2026-09-16
 
 ## Dependency philosophy
 
-The graph deliberately contains parallel tracks. “Depends on” means the issue should consume accepted output from that predecessor; it does not mean unrelated research must wait.
+The graph deliberately contains parallel tracks. `Depends on` means the issue should consume accepted output from that predecessor; it does not mean unrelated research must wait.
+
+RCS-001 corrects the original Gate-1 wording so the graph is no longer circular: RCS-002/RCS-003 outputs are **not** prerequisites for starting RCS-002/RCS-003.
 
 ## Issues
 
-| Key | Research issue | Depends on | Primary output |
-|---|---|---|---|
-| RCS-001 | Foundation audit: terminology, invariants and Gate-1 definitions | — | reconciled foundation + decision records |
-| RCS-002 | Canonical manufacturing journal and deterministic normalization | RCS-001 | versioned operation/journal proposal |
-| RCS-003 | Adversarial manufacturing geometry corpus specification | RCS-001 | fixture taxonomy + expected-result policy |
-| RCS-004 | OCCT 8.0.1 architecture, robustness, forkability and license audit | RCS-001 | subsystem/fork map |
-| RCS-005 | STEP conformance and downstream usability contract | RCS-001 | measurable STEP acceptance specification |
-| RCS-006 | Baseline benchmark/validation harness design and spike | RCS-003, RCS-004, RCS-005 | reproducible baseline runner/results |
-| RCS-007 | Virtual tolerance, uncertainty and equivalence research | RCS-003, RCS-006 | candidate tolerance models + evidence |
-| RCS-008 | Provenance, semantic identity and topological naming research | RCS-002, RCS-006 | ancestry/identity model candidates |
-| RCS-009 | Regularized solids and deferred-topology research | RCS-003, RCS-006 | semantics + prototype/experiment results |
-| RCS-010 | Lathe-specialized material-domain solver research | RCS-002, RCS-003, RCS-006 | comparative turning solver evidence |
-| RCS-011 | Mill cutter-sweep and process-hierarchy research | RCS-002, RCS-003, RCS-006 | comparative milling solver evidence |
-| RCS-012 | Alternative/hybrid representation campaign | RCS-003, RCS-006 | B-rep alternatives/hybrid trade study |
-| RCS-013 | OpenSimachinist architecture synthesis / Gate-2 decision | RCS-007–RCS-012, RCS-005 | evidence-backed initial architecture |
-| RCS-014 | Generate clean OpenSimachinist founding handoff | RCS-013 | production-ready founding spec/roadmap |
-| RCS-015 | Generate clean MSAC founding handoff | RCS-002, RCS-005, RCS-013 | production-ready MSAC spec/roadmap |
-| RCS-016 | Freeze genesis handoff release and production-repo launch checklist | RCS-014, RCS-015 | tagged/frozen genesis handoff plan |
+| GitHub | Key | Research issue | Depends on | Primary output |
+|---:|---|---|---|---|
+| #1 | RCS-001 | Foundation audit: terminology, invariants and Gate-1 definitions | — | reconciled foundation + decision records |
+| #2 | RCS-002 | Canonical manufacturing journal and deterministic normalization | RCS-001 | versioned operation/journal proposal |
+| #3 | RCS-003 | Adversarial manufacturing geometry corpus specification | RCS-001 | fixture taxonomy + expected-result policy |
+| #4 | RCS-004 | OCCT 8.0.1 architecture, robustness, forkability and license audit | RCS-001 | subsystem/fork map |
+| #5 | RCS-005 | STEP conformance and downstream usability contract | RCS-001 | measurable STEP acceptance specification |
+| #6 | RCS-006 | Baseline benchmark/validation harness design and spike | RCS-003, RCS-004, RCS-005 | reproducible baseline runner/results |
+| #7 | RCS-007 | Virtual tolerance, uncertainty and equivalence research | RCS-003, RCS-006 | candidate tolerance models + evidence |
+| #8 | RCS-008 | Provenance, semantic identity and topological naming research | RCS-002, RCS-006 | ancestry/identity model candidates |
+| #9 | RCS-009 | Regularized solids and deferred-topology research | RCS-003, RCS-006 | semantics + prototype/experiment results |
+| #10 | RCS-010 | Lathe-specialized material-domain solver research | RCS-002, RCS-003, RCS-006 | comparative turning solver evidence |
+| #11 | RCS-011 | Mill cutter-sweep and process-hierarchy research | RCS-002, RCS-003, RCS-006 | comparative milling solver evidence |
+| #12 | RCS-012 | Alternative/hybrid representation campaign | RCS-003, RCS-006 | B-rep alternatives/hybrid trade study |
+| #13 | RCS-013 | OpenSimachinist architecture synthesis / Gate-2 decision | RCS-007–RCS-012, RCS-005 | evidence-backed initial architecture |
+| #14 | RCS-014 | Generate clean OpenSimachinist founding handoff | RCS-013 | production-ready founding spec/roadmap |
+| #15 | RCS-015 | Generate clean MSAC founding handoff | RCS-002, RCS-005, RCS-013 | production-ready MSAC spec/roadmap |
+| #16 | RCS-016 | Freeze genesis handoff release and production-repo launch checklist | RCS-014, RCS-015 | tagged/frozen genesis handoff plan |
 
-## Parallelism after RCS-001
+## Gate 1 and first fan-out
 
-Once RCS-001 is accepted, RCS-002 through RCS-005 can proceed in parallel.
+RCS-001 / GitHub #1 completes **Gate 1 — research-foundation ready** as defined in `04-REVISED-RESEARCH-ROADMAP.md` and `09-FOUNDATION-AUDIT.md`.
 
-After the baseline harness exists, RCS-007 through RCS-012 are intentionally parallel research campaigns. Individual issues may file narrower follow-ups when a rabbit hole is valuable but not blocking.
+Once RCS-001 is accepted and merged, RCS-002 through RCS-005 can proceed in parallel:
+
+- #2 / Track A — canonical journal;
+- #3 / Track C — adversarial corpus;
+- #4 / Track B — OCCT audit;
+- #5 / Track G — STEP conformance.
+
+The final journal schema and fixture format are outputs of #2/#3 and therefore are not Gate-1 prerequisites.
+
+## Parallelism after the baseline harness
+
+RCS-006 combines the corpus, OCCT audit and STEP contract into the shared baseline harness.
+
+After RCS-006 exists, RCS-007 through RCS-012 are intentionally parallel research campaigns subject to their individual declared dependencies. Individual issues may file narrower follow-ups when a rabbit hole is valuable but not blocking.
+
+## Cross-cutting foundation requirements carried downstream
+
+RCS-001 identified two requirements that must be explicit in early research rather than hidden assumptions:
+
+1. **units / coordinate frames / transform semantics** — carried by RCS-002, RCS-003 and RCS-005;
+2. **disconnected material bodies / parting / cut-through semantics** — carried by RCS-002, RCS-003 and RCS-005 initially, then RCS-008/RCS-009 for identity/connectivity research.
+
+These requirements are added to the existing issue prompts rather than creating unnecessary serial blocker issues.
 
 ## Synthesis discipline
 
