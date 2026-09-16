@@ -28,8 +28,11 @@ Start with:
 - [Programme terminology](docs/08-TERMINOLOGY.md) — accepted vocabulary;
 - [Foundation audit](docs/09-FOUNDATION-AUDIT.md) — invariant/hypothesis split and Gate-1 reconciliation;
 - [Canonical manufacturing journal contract](docs/10-CANONICAL-JOURNAL-CONTRACT.md) — accepted RCS-002 durable operation/history and normalization contract;
+- [Adversarial manufacturing corpus](docs/11-ADVERSARIAL-MANUFACTURING-CORPUS.md) — accepted RCS-003 fixture semantics and regression lifecycle;
+- [OCCT 8.0.1 audit](docs/12-OCCT-8.0.1-AUDIT.md) — accepted RCS-004 subsystem/forkability and licensing evidence;
+- [STEP conformance contract](docs/13-STEP-CONFORMANCE-CONTRACT.md) — RCS-005 measurable export success/refusal and interoperability contract;
 - `docs/decisions/` — explicit programme decision records.
 
-Issue-specific research should additionally consume accepted outputs from its declared dependencies. RCS-002 machine-readable examples live under `research/rcs-002/`.
+Issue-specific research should additionally consume accepted outputs from its declared dependencies. Machine-readable research assets live under the corresponding `research/rcs-NNN/` directory.
 
 The historical initial plan and critique remain under `docs/` for design archaeology; newer accepted decisions and current foundation documents supersede speculative historical material where they conflict.

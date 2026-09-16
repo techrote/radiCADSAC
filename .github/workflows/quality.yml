@@ -20,3 +20,5 @@ jobs:
         run: python3 tools/validate_rcs003.py
       - name: Validate RCS-004 OCCT audit
         run: python3 tools/validate_rcs004.py
+      - name: Validate RCS-005 STEP conformance contract
+        run: python3 tools/validate_rcs005.py

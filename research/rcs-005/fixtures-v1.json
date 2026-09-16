@@ -1,0 +1,178 @@
+{
+  "fixture_matrix_schema": "msac-step-conformance-fixtures/1.0",
+  "contract_ref": "msac-step-conformance/1.0",
+  "matrix_id": "rcs-005-minimal-step-matrix-v1",
+  "default_accuracy": {
+    "max_dimension_error_nm": 5000,
+    "max_surface_deviation_nm": 5000,
+    "max_angular_error_nrad": 10000,
+    "max_volume_error_abs_mm3": 0.001,
+    "max_volume_error_rel": 0.000001,
+    "volume_rule": "both"
+  },
+  "notes": [
+    "These values are research-fixture budgets, not universal manufacturing tolerances.",
+    "A later project/export request may declare tighter budgets; the exporter may not silently widen them.",
+    "RCS-006 should derive/materialize geometry from RCS-003 fixture families where a matching manufacturing case exists."
+  ],
+  "fixtures": [
+    {
+      "fixture_id": "step-lathe-analytic-mm-v1",
+      "source_family": "RCS-003 lathe repeated/exact finishing and analytic OD family",
+      "unit": "millimeter",
+      "body_selection": "all",
+      "expected_body_count": 1,
+      "expected_void_count": 0,
+      "required_analytic_classes": ["plane", "cylinder", "circle_or_arc"],
+      "required_dimensions_mm": {
+        "diameter": 25.4,
+        "length": 50.8
+      },
+      "purpose": ["single-body manifold B-rep", "metric units", "analytic cylinder/plane retention"]
+    },
+    {
+      "fixture_id": "step-block-inch-v1",
+      "source_family": "RCS-003 generic exact rectangular solid",
+      "unit": "inch",
+      "body_selection": "all",
+      "expected_body_count": 1,
+      "expected_void_count": 0,
+      "required_analytic_classes": ["plane", "line"],
+      "required_dimensions_mm": {
+        "x": 25.4,
+        "y": 12.7,
+        "z": 6.35
+      },
+      "purpose": ["inch unit encoding", "25.4 conversion", "physical scale preservation"]
+    },
+    {
+      "fixture_id": "step-block-mm-equivalent-v1",
+      "source_family": "same canonical geometry as step-block-inch-v1",
+      "unit": "millimeter",
+      "body_selection": "all",
+      "expected_body_count": 1,
+      "expected_void_count": 0,
+      "required_dimensions_mm": {
+        "x": 25.4,
+        "y": 12.7,
+        "z": 6.35
+      },
+      "equivalence_peer": "step-block-inch-v1",
+      "purpose": ["metric/inch physical equivalence", "volume equivalence"]
+    },
+    {
+      "fixture_id": "step-enclosed-cavity-v1",
+      "source_family": "generic solid with fully enclosed internal cavity",
+      "unit": "millimeter",
+      "body_selection": "all",
+      "expected_body_count": 1,
+      "expected_void_count": 1,
+      "required_analytic_classes": ["plane"],
+      "preferred_entity_form": "BREP_WITH_VOIDS",
+      "purpose": ["void shell semantics", "solid volume preservation"]
+    },
+    {
+      "fixture_id": "step-lathe-parting-all-bodies-v1",
+      "source_family": "RCS-003 lathe-parting-cut-through",
+      "unit": "millimeter",
+      "body_selection": "all",
+      "expected_body_count": 2,
+      "expected_connectivity": "disconnected",
+      "forbid": ["silent_drop", "silent_fuse", "implicit_primary_body"],
+      "purpose": ["parting", "multi-body preservation", "body structure qualification"]
+    },
+    {
+      "fixture_id": "step-mill-cut-through-all-bodies-v1",
+      "source_family": "RCS-003 mill-cut-through-separation",
+      "unit": "millimeter",
+      "body_selection": "all",
+      "expected_body_count": 2,
+      "expected_connectivity": "disconnected",
+      "forbid": ["silent_drop", "silent_fuse", "implicit_primary_body"],
+      "purpose": ["mill separation", "multi-body preservation", "second process-specific connectivity case"]
+    },
+    {
+      "fixture_id": "step-parting-explicit-subset-v1",
+      "source_family": "same committed revision as step-lathe-parting-all-bodies-v1",
+      "unit": "millimeter",
+      "revision_body_count": 2,
+      "body_selection": "explicit_subset",
+      "selected_body_count": 1,
+      "expected_body_count": 1,
+      "required_manifest_fields": ["revision_body_ids", "selected_body_ids", "omitted_body_ids", "selection_origin"],
+      "purpose": ["explicit body selection", "prove omission is intentional rather than silent loss"]
+    },
+    {
+      "fixture_id": "step-same-domain-cleanup-v1",
+      "source_family": "RCS-003 generic coincidence/coplanarity or repeated pass family",
+      "unit": "millimeter",
+      "body_selection": "all",
+      "expected_body_count": 1,
+      "healing_allowed": true,
+      "healing_must_be_measured": true,
+      "face_edge_counts_semantic": false,
+      "purpose": ["same-domain cleanup", "bounded healing", "geometry-before/after metrics"]
+    },
+    {
+      "fixture_id": "step-analytic-cone-cylinder-v1",
+      "source_family": "lathe taper/chamfer analytic reference",
+      "unit": "millimeter",
+      "body_selection": "all",
+      "expected_body_count": 1,
+      "required_analytic_classes": ["plane", "cylinder", "cone", "circle_or_arc"],
+      "forbid": ["gratuitous_analytic_to_spline_conversion"],
+      "purpose": ["analytic geometry preservation"]
+    },
+    {
+      "fixture_id": "step-freeform-spline-v1",
+      "source_family": "RCS-003 mill self-crossing/freehand-derived bounded freeform reference after valid reconciliation",
+      "unit": "millimeter",
+      "body_selection": "all",
+      "expected_body_count": 1,
+      "spline_allowed": true,
+      "purpose": ["legitimate non-analytic surface", "surface deviation metric"]
+    },
+    {
+      "fixture_id": "step-near-tolerance-feature-v1",
+      "source_family": "RCS-003 sub-tolerance skim/sliver family",
+      "unit": "millimeter",
+      "body_selection": "all",
+      "parameter_sweep": {
+        "feature_depth_nm": [100, 1000, 5000, 10000],
+        "declared_max_dimension_error_nm": [500, 5000]
+      },
+      "purpose": ["deterministic preserve/refuse boundary", "prove tolerance is declared rather than backend-default"]
+    },
+    {
+      "fixture_id": "step-invalid-open-shell-refusal-v1",
+      "source_family": "synthetic negative conformance fixture",
+      "unit": "millimeter",
+      "body_selection": "all",
+      "pre_export_state": "open_shell_not_material_solid",
+      "expected_result": "refused",
+      "expected_failure_code": "PREEXPORT_NONVOLUMETRIC_BODY",
+      "purpose": ["negative test", "prove writer success cannot override invalid source state"]
+    }
+  ],
+  "qualification_matrix": {
+    "automated_every_ci_or_harness_run": [
+      "pre_export_validity",
+      "STEP_write",
+      "Part21_and_schema_inspection",
+      "fresh_OCCT_readback",
+      "geometry_metrics",
+      "body_void_connectivity_checks",
+      "analytic_class_checks"
+    ],
+    "independent_parser_when_available": [
+      "STEPcode_p21read_AP242"
+    ],
+    "profile_release_qualification": [
+      "at_least_one_downstream_CAD_CAM_importer",
+      "record_product_version_platform_import_settings",
+      "record_kernel_independence_when_known",
+      "verify_body_count_dimensions_and_solid_usability",
+      "second_consumer_preferred"
+    ]
+  }
+}

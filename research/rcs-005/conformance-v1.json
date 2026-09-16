@@ -1,0 +1,228 @@
+{
+  "contract_schema": "msac-step-conformance/1.0",
+  "contract_id": "step-conformance-v1",
+  "status": "rcs-005-candidate",
+  "protocol_target": {
+    "family": "AP242",
+    "published_reference": "ISO 10303-242:2025 Edition 4",
+    "published_reference_url": "https://www.iso.org/standard/84300.html",
+    "claim_boundary": "AP242-family semantics are the programme target; exporter-specific schema identifiers are recorded and independently qualified rather than relabelled as ISO certification"
+  },
+  "baseline_exporter": {
+    "implementation": "Open CASCADE Technology",
+    "version": "8.0.1",
+    "commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42",
+    "profile_id": "occt-8.0.1-ap242dis",
+    "writer_schema_mode": "DESTEP_Parameters::WriteMode_StepSchema_AP242DIS",
+    "solid_mode": "STEPControl_ManifoldSolidBrep"
+  },
+  "primary_geometry": {
+    "required": [
+      "MANIFOLD_SOLID_BREP",
+      "BREP_WITH_VOIDS"
+    ],
+    "not_sufficient_as_primary": [
+      "FACETED_BREP",
+      "SHELL_BASED_SURFACE_MODEL",
+      "TESSELLATED_ONLY",
+      "GEOMETRIC_CURVE_SET",
+      "STL_OR_MESH_FALLBACK"
+    ]
+  },
+  "validation_layers": [
+    {
+      "id": "pre_export",
+      "mandatory": true,
+      "checks": [
+        "committed_revision",
+        "explicit_body_selection",
+        "selected_bodies_resolve",
+        "closed_orientable_finite_positive_volume_solids",
+        "brep_validity",
+        "body_count_and_connectivity_match_committed_state",
+        "reconciliation_within_declared_accuracy",
+        "healing_is_explicit_and_bounded"
+      ]
+    },
+    {
+      "id": "serialized_file",
+      "mandatory": true,
+      "checks": [
+        "part21_parseable",
+        "actual_schema_identifier_recorded_and_profile_approved",
+        "requested_units_explicit",
+        "all_selected_bodies_present_as_brep_solids",
+        "no_unexpected_surface_or_mesh_substitution",
+        "body_structure_matches_profile",
+        "writer_profile_version_recorded"
+      ]
+    },
+    {
+      "id": "readback",
+      "mandatory": true,
+      "checks": [
+        "fresh_session_readback",
+        "valid_brep",
+        "body_count_exact",
+        "connectivity_and_void_semantics_preserved",
+        "physical_scale_preserved",
+        "dimension_budget",
+        "volume_budget",
+        "surface_deviation_budget_when_available",
+        "analytic_class_preservation"
+      ]
+    },
+    {
+      "id": "interoperability_qualification",
+      "mandatory_for_success_status": true,
+      "checks": [
+        "independent_part21_schema_parser",
+        "at_least_one_recorded_downstream_cad_cam_consumer",
+        "consumer_version_and_kernel_independence_recorded_when_known",
+        "solid_body_count_and_dimensions_verified"
+      ]
+    }
+  ],
+  "accuracy_contract": {
+    "required_fields": [
+      "max_dimension_error_nm",
+      "max_surface_deviation_nm",
+      "max_angular_error_nrad",
+      "max_volume_error_abs_mm3",
+      "max_volume_error_rel"
+    ],
+    "rule": "declared export accuracy must not silently widen a tighter project/manufacturing tolerance",
+    "topology_validity_is_non_negotiable": true,
+    "body_count_requires_exact_equality": true,
+    "face_edge_counts_default_to_diagnostic": true
+  },
+  "units": {
+    "canonical_journal": "nanometre integer coordinates per msac-journal/1.0",
+    "required_export_units": [
+      "millimeter",
+      "inch"
+    ],
+    "required_equivalence_dimensions_mm": [
+      25.4,
+      12.7,
+      6.35
+    ],
+    "scale_error_examples_that_must_fail": [
+      25.4,
+      0.03937007874015748,
+      1000.0,
+      0.001
+    ]
+  },
+  "analytic_preservation": {
+    "required_classes_when_exact_in_source": [
+      "plane",
+      "cylinder",
+      "cone",
+      "sphere",
+      "torus",
+      "line",
+      "circle_or_arc"
+    ],
+    "spline_approximation_allowed_when": [
+      "source_is_spline_or_freeform",
+      "result_is_not_exactly_a_supported_analytic_primitive",
+      "versioned_policy_explicitly_allows_approximation"
+    ],
+    "approximation_must_stay_within_declared_budgets": true
+  },
+  "healing_policy": {
+    "must_be_explicit": true,
+    "must_record": [
+      "policy_id_and_version",
+      "input_validity",
+      "output_validity",
+      "topology_change_summary",
+      "dimension_delta",
+      "surface_deviation",
+      "volume_delta",
+      "analytic_classes_gained_or_lost",
+      "body_connectivity_before_and_after"
+    ],
+    "may_not": [
+      "merge_distinct_material_bodies_without_committed_semantics",
+      "close_unintended_gap_beyond_budget",
+      "remove_requested_feature",
+      "change_geometry_beyond_budget"
+    ]
+  },
+  "body_policy": {
+    "default_selection": "all material bodies in selected committed revision",
+    "implicit_primary_body_forbidden": true,
+    "explicit_subset_allowed": true,
+    "subset_manifest_required": [
+      "revision_body_ids",
+      "selected_body_ids",
+      "omitted_body_ids",
+      "selection_origin"
+    ],
+    "qualified_representation_strategies": [
+      "single_product_multi_solid",
+      "explicit_body_product_structure"
+    ],
+    "silent_fuse_forbidden": true,
+    "silent_drop_forbidden": true,
+    "refuse_if_no_qualified_lossless_strategy": true,
+    "scrap_primary_classification": "not_defined_by_rcs-005"
+  },
+  "interoperability": {
+    "automated_independent_parser": "STEPcode p21read for matching AP242 schema",
+    "parser_role": "Part 21 and EXPRESS/schema independence; not a full geometry oracle",
+    "downstream_consumer_rule": "at least one recorded CAD/CAM consumer independent of exporter implementation where practical; a second consumer is preferred",
+    "vendor_is_not_authoritative": true,
+    "hosted_ci_may_use_qualification_record": true,
+    "requalification_triggers": [
+      "exporter_version_change",
+      "schema_mode_change",
+      "solid_representation_change",
+      "healing_policy_change",
+      "unit_mapping_change",
+      "material_STEP_behaviour_change"
+    ]
+  },
+  "result_states": [
+    "success",
+    "refused",
+    "failed",
+    "unqualified"
+  ],
+  "failure_codes": [
+    "PREVIEW_STATE_NOT_EXPORTABLE",
+    "BODY_SELECTION_INVALID",
+    "PREEXPORT_INVALID_TOPOLOGY",
+    "PREEXPORT_NONVOLUMETRIC_BODY",
+    "RECONCILIATION_UNRESOLVED",
+    "HEALING_BUDGET_EXCEEDED",
+    "SERIALIZATION_FAILED",
+    "SCHEMA_PROFILE_MISMATCH",
+    "UNIT_OR_SCALE_MISMATCH",
+    "BODY_COUNT_MISMATCH",
+    "READBACK_INVALID_TOPOLOGY",
+    "GEOMETRIC_DEVIATION_EXCEEDED",
+    "ANALYTIC_GEOMETRY_LOST",
+    "VOID_OR_CONNECTIVITY_MISMATCH",
+    "INDEPENDENT_PARSE_FAILED",
+    "PROFILE_NOT_INTEROPERABILITY_QUALIFIED",
+    "DOWNSTREAM_CONSUMER_FAILURE"
+  ],
+  "provenance": {
+    "step_optional_metadata_must_not_be_required_for_geometry_use": true,
+    "deterministic_export_record_required": true,
+    "export_record_fields": [
+      "journal_schema_version",
+      "source_revision_id",
+      "revision_body_ids",
+      "selected_body_ids",
+      "export_profile_version",
+      "exporter_build_and_dependency_versions",
+      "declared_accuracy_budgets",
+      "validation_results",
+      "step_file_digest"
+    ]
+  }
+}
