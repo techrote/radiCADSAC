@@ -16,3 +16,5 @@ jobs:
         uses: actions/checkout@v4
       - name: Validate repository
         run: python3 tools/validate_repo.py
+      - name: Validate RCS-003 adversarial corpus
+        run: python3 tools/validate_rcs003.py

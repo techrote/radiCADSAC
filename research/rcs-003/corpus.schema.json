@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/techrote/radiCADSAC/research/rcs-003/corpus.schema.json",
+  "title": "radiCADSAC adversarial manufacturing corpus",
+  "type": "object",
+  "required": ["corpus_schema", "corpus_id", "version", "policy_refs", "fixture_families", "lifecycle"],
+  "properties": {
+    "corpus_schema": {"const": "rcs-003-corpus/1.0"},
+    "corpus_id": {"type": "string", "minLength": 1},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "policy_refs": {
+      "type": "object",
+      "required": ["units", "frames", "tolerance", "result_policy"],
+      "properties": {
+        "units": {"const": "si-mm-rad-s-v1"},
+        "frames": {"const": "right-handed-z-up-workpiece-v1"},
+        "tolerance": {"const": "rcs-003-fixture-policy-v1"},
+        "result_policy": {"const": "physical-intent-v1"}
+      },
+      "additionalProperties": false
+    },
+    "fixture_families": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/family"}
+    },
+    "lifecycle": {
+      "type": "object",
+      "required": ["minimization", "regression", "versioning"],
+      "properties": {
+        "minimization": {"type": "string", "minLength": 1},
+        "regression": {"type": "string", "minLength": 1},
+        "versioning": {"type": "string", "minLength": 1}
+      }
+    }
+  },
+  "$defs": {
+    "axis": {
+      "type": "object",
+      "required": ["name", "unit", "values"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "unit": {"type": "string", "minLength": 1},
+        "values": {"type": "array", "minItems": 1}
+      }
+    },
+    "family": {
+      "type": "object",
+      "required": [
+        "id", "revision", "domain", "tags", "physical_intent", "setup",
+        "parameter_axes", "expected", "oracle", "minimization_preserves"
+      ],
+      "properties": {
+        "id": {"type": "string", "pattern": "^(lathe|mill|generic)-[a-z0-9-]+$"},
+        "revision": {"type": "integer", "minimum": 1},
+        "domain": {"enum": ["lathe", "mill", "generic"]},
+        "tags": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true},
+        "physical_intent": {"type": "string", "minLength": 8},
+        "setup": {
+          "type": "object",
+          "required": ["units", "frame", "stock", "operation_model"],
+          "properties": {
+            "units": {"const": "mm"},
+            "frame": {"const": "right-handed-z-up-workpiece-v1"},
+            "stock": {"type": "string", "minLength": 1},
+            "operation_model": {"type": "string", "minLength": 1}
+          }
+        },
+        "parameter_axes": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/axis"}},
+        "expected": {
+          "type": "object",
+          "required": ["classification", "body_count", "connectivity"],
+          "properties": {
+            "classification": {"enum": ["no_material_change", "regularized_material_change", "body_separation_or_merge", "ambiguous_or_unsupported"]},
+            "body_count": {"type": ["integer", "string"], "minimum": 0},
+            "connectivity": {"enum": ["unchanged", "connected", "disconnected", "parameter_dependent", "not_applicable"]}
+          }
+        },
+        "oracle": {"type": "string", "minLength": 8},
+        "minimization_preserves": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true}
+      }
+    }
+  }
+}
