@@ -1,0 +1,261 @@
+{
+  "fixture_schema": "rcs-002-journal-fixture/1.0",
+  "fixture_id": "rcs-002:lathe-finishing-pass-v1",
+  "journal": {
+    "journal_schema": {
+      "id": "msac-journal",
+      "major": 1,
+      "minor": 0
+    },
+    "project_id": "project:lathe-fixture-v1",
+    "workpiece_id": "workpiece:lathe-fixture-v1",
+    "numeric_convention": "nm-nrad-ns-q15-v1",
+    "required_extensions": [],
+    "definitions": {
+      "frames": [
+        {
+          "frame_id": "frame:workpiece",
+          "revision": "1",
+          "role": "workpiece",
+          "parent_frame_id": null,
+          "transform_parent_from_child": null
+        },
+        {
+          "frame_id": "frame:machine",
+          "revision": "1",
+          "role": "machine",
+          "parent_frame_id": "frame:workpiece",
+          "transform_parent_from_child": {
+            "translation_nm": [0, 0, 0],
+            "rotation_q15_wxyz": [1000000000000000, 0, 0, 0]
+          }
+        },
+        {
+          "frame_id": "frame:tool-tip",
+          "revision": "1",
+          "role": "tool",
+          "parent_frame_id": "frame:machine",
+          "transform_parent_from_child": {
+            "translation_nm": [0, 0, 0],
+            "rotation_q15_wxyz": [1000000000000000, 0, 0, 0]
+          }
+        }
+      ],
+      "stocks": [
+        {
+          "stock_id": "stock:lathe-cylinder",
+          "revision": "1",
+          "kind": "cylinder",
+          "frame_ref": "frame:workpiece@1",
+          "radius_nm": 20000000,
+          "length_nm": 80000000,
+          "axis": "+Z",
+          "initial_body_id": "body:stock"
+        }
+      ],
+      "setups": [
+        {
+          "setup_id": "setup:lathe-1",
+          "revision": "1",
+          "workpiece_frame_ref": "frame:workpiece@1",
+          "machine_frame_ref": "frame:machine@1",
+          "clamped_body_ids": ["body:stock"]
+        }
+      ],
+      "tools": [
+        {
+          "tool_id": "tool:turning-od",
+          "revision": "1",
+          "geometry_revision": "1",
+          "tool_frame_ref": "frame:tool-tip@1",
+          "geometry": {
+            "kind": "turning_insert",
+            "nose_radius_nm": 400000,
+            "included_angle_nrad": 1396263402
+          }
+        }
+      ],
+      "normalization_policies": [
+        {
+          "policy_id": "norm:baseline-v1",
+          "revision": "1",
+          "interpolation": "linear-translation-shortest-quaternion",
+          "rounding": "nearest-ties-even",
+          "bounds": {
+            "max_translation_error_nm": 1000,
+            "max_orientation_error_nrad": 1000,
+            "max_event_time_shift_ns": 100000,
+            "max_rate_error_nm_s": 10000
+          }
+        }
+      ]
+    },
+    "operations": [
+      {
+        "operation_id": "op:setup-1",
+        "kind": "setup_change",
+        "operation_version": 1,
+        "parent_revision_id": "rev:0",
+        "setup_ref": "setup:lathe-1@1",
+        "target_body_ids": ["body:stock"]
+      },
+      {
+        "operation_id": "op:finish-pass-1",
+        "kind": "process_motion",
+        "operation_version": 1,
+        "parent_revision_id": "rev:1",
+        "setup_ref": "setup:lathe-1@1",
+        "tool_ref": "tool:turning-od@1",
+        "normalization_policy_ref": "norm:baseline-v1@1",
+        "process_family": "turning.od",
+        "target_body_ids": ["body:stock"],
+        "process_state": {
+          "workpiece_spindle_axis_frame_ref": "frame:workpiece@1",
+          "workpiece_spindle_axis": "+Z",
+          "workpiece_angular_rate_nrad_s": 209439510239
+        },
+        "trajectory": {
+          "frame_ref": "frame:workpiece@1",
+          "orientation_q15_wxyz": [1000000000000000, 0, 0, 0],
+          "sections": [
+            {
+              "section_id": "section:approach-1",
+              "engagement": "neutral",
+              "start_time_ns": 0,
+              "end_time_ns": 500000000,
+              "curve": {
+                "kind": "line",
+                "start_nm": [22000000, 0, 82000000],
+                "end_nm": [19500000, 0, 82000000]
+              }
+            },
+            {
+              "section_id": "section:cut-1",
+              "engagement": "remove",
+              "start_time_ns": 500000000,
+              "end_time_ns": 4500000000,
+              "curve": {
+                "kind": "line",
+                "start_nm": [19500000, 0, 82000000],
+                "end_nm": [19500000, 0, 10000000]
+              }
+            },
+            {
+              "section_id": "section:withdraw-1",
+              "engagement": "neutral",
+              "start_time_ns": 4500000000,
+              "end_time_ns": 5000000000,
+              "curve": {
+                "kind": "line",
+                "start_nm": [19500000, 0, 10000000],
+                "end_nm": [22000000, 0, 10000000]
+              }
+            }
+          ],
+          "guaranteed_bounds": {
+            "max_translation_error_nm": 1000,
+            "max_orientation_error_nrad": 1000,
+            "max_event_time_shift_ns": 100000,
+            "max_rate_error_nm_s": 10000
+          }
+        }
+      },
+      {
+        "operation_id": "op:finish-pass-2",
+        "kind": "process_motion",
+        "operation_version": 1,
+        "parent_revision_id": "rev:2",
+        "setup_ref": "setup:lathe-1@1",
+        "tool_ref": "tool:turning-od@1",
+        "normalization_policy_ref": "norm:baseline-v1@1",
+        "process_family": "turning.od",
+        "target_body_ids": ["body:stock"],
+        "process_state": {
+          "workpiece_spindle_axis_frame_ref": "frame:workpiece@1",
+          "workpiece_spindle_axis": "+Z",
+          "workpiece_angular_rate_nrad_s": 209439510239
+        },
+        "trajectory": {
+          "frame_ref": "frame:workpiece@1",
+          "orientation_q15_wxyz": [1000000000000000, 0, 0, 0],
+          "sections": [
+            {
+              "section_id": "section:approach-2",
+              "engagement": "neutral",
+              "start_time_ns": 0,
+              "end_time_ns": 500000000,
+              "curve": {
+                "kind": "line",
+                "start_nm": [22000000, 0, 82000000],
+                "end_nm": [19500000, 0, 82000000]
+              }
+            },
+            {
+              "section_id": "section:cut-2",
+              "engagement": "remove",
+              "start_time_ns": 500000000,
+              "end_time_ns": 4500000000,
+              "curve": {
+                "kind": "line",
+                "start_nm": [19500000, 0, 82000000],
+                "end_nm": [19500000, 0, 10000000]
+              }
+            },
+            {
+              "section_id": "section:withdraw-2",
+              "engagement": "neutral",
+              "start_time_ns": 4500000000,
+              "end_time_ns": 5000000000,
+              "curve": {
+                "kind": "line",
+                "start_nm": [19500000, 0, 10000000],
+                "end_nm": [22000000, 0, 10000000]
+              }
+            }
+          ],
+          "guaranteed_bounds": {
+            "max_translation_error_nm": 1000,
+            "max_orientation_error_nrad": 1000,
+            "max_event_time_shift_ns": 100000,
+            "max_rate_error_nm_s": 10000
+          }
+        }
+      }
+    ],
+    "material_body_transitions": [],
+    "revisions": [
+      {
+        "revision_id": "rev:0",
+        "parent_revision_id": null,
+        "caused_by_operation_id": null,
+        "body_ids": ["body:stock"]
+      },
+      {
+        "revision_id": "rev:1",
+        "parent_revision_id": "rev:0",
+        "caused_by_operation_id": "op:setup-1",
+        "body_ids": ["body:stock"]
+      },
+      {
+        "revision_id": "rev:2",
+        "parent_revision_id": "rev:1",
+        "caused_by_operation_id": "op:finish-pass-1",
+        "body_ids": ["body:stock"]
+      },
+      {
+        "revision_id": "rev:3",
+        "parent_revision_id": "rev:2",
+        "caused_by_operation_id": "op:finish-pass-2",
+        "body_ids": ["body:stock"]
+      }
+    ],
+    "root_revision_id": "rev:0",
+    "selected_head_revision_id": "rev:3"
+  },
+  "expected_journal_invariants": {
+    "process_motion_count": 2,
+    "preserve_repeated_engaged_motion": true,
+    "body_count_at_head": 1,
+    "second_pass_may_be_geometry_noop_but_must_remain_in_journal": true
+  }
+}

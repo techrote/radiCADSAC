@@ -16,9 +16,9 @@ The exported engineering object is the product. A successful workpiece must be e
 
 The planning repository may be messy, speculative, contradictory, and research-heavy. The later production repositories should not inherit that archaeology. Instead, this repo will produce frozen founding handoffs containing fresh, reviewed implementation plans.
 
-## Current research foundation
+## Current research foundation and accepted contracts
 
-After RCS-001, start with:
+Start with:
 
 - [Founding brief](docs/00-FOUNDING-BRIEF.md) — preserved product intent;
 - [MSAC ↔ geometry contract](docs/01-MSAC-GEOMETRY-CONTRACT.md) — Gate-1 programme boundary;
@@ -27,6 +27,9 @@ After RCS-001, start with:
 - [Research issue graph](docs/07-RESEARCH-ISSUE-GRAPH.md) — issue dependencies;
 - [Programme terminology](docs/08-TERMINOLOGY.md) — accepted vocabulary;
 - [Foundation audit](docs/09-FOUNDATION-AUDIT.md) — invariant/hypothesis split and Gate-1 reconciliation;
+- [Canonical manufacturing journal contract](docs/10-CANONICAL-JOURNAL-CONTRACT.md) — accepted RCS-002 durable operation/history and normalization contract;
 - `docs/decisions/` — explicit programme decision records.
+
+Issue-specific research should additionally consume accepted outputs from its declared dependencies. RCS-002 machine-readable examples live under `research/rcs-002/`.
 
 The historical initial plan and critique remain under `docs/` for design archaeology; newer accepted decisions and current foundation documents supersede speculative historical material where they conflict.

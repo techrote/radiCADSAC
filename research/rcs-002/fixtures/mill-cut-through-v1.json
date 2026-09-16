@@ -1,0 +1,212 @@
+{
+  "fixture_schema": "rcs-002-journal-fixture/1.0",
+  "fixture_id": "rcs-002:mill-cut-through-v1",
+  "journal": {
+    "journal_schema": {
+      "id": "msac-journal",
+      "major": 1,
+      "minor": 0
+    },
+    "project_id": "project:mill-fixture-v1",
+    "workpiece_id": "workpiece:mill-fixture-v1",
+    "numeric_convention": "nm-nrad-ns-q15-v1",
+    "required_extensions": [],
+    "definitions": {
+      "frames": [
+        {
+          "frame_id": "frame:workpiece",
+          "revision": "1",
+          "role": "workpiece",
+          "parent_frame_id": null,
+          "transform_parent_from_child": null
+        },
+        {
+          "frame_id": "frame:machine",
+          "revision": "1",
+          "role": "machine",
+          "parent_frame_id": "frame:workpiece",
+          "transform_parent_from_child": {
+            "translation_nm": [0, 0, 0],
+            "rotation_q15_wxyz": [1000000000000000, 0, 0, 0]
+          }
+        },
+        {
+          "frame_id": "frame:tool-tip",
+          "revision": "1",
+          "role": "tool",
+          "parent_frame_id": "frame:machine",
+          "transform_parent_from_child": {
+            "translation_nm": [0, 0, 0],
+            "rotation_q15_wxyz": [1000000000000000, 0, 0, 0]
+          }
+        }
+      ],
+      "stocks": [
+        {
+          "stock_id": "stock:mill-box",
+          "revision": "1",
+          "kind": "box",
+          "frame_ref": "frame:workpiece@1",
+          "min_nm": [0, 0, 0],
+          "max_nm": [100000000, 80000000, 10000000],
+          "initial_body_id": "body:stock"
+        }
+      ],
+      "setups": [
+        {
+          "setup_id": "setup:mill-1",
+          "revision": "1",
+          "workpiece_frame_ref": "frame:workpiece@1",
+          "machine_frame_ref": "frame:machine@1",
+          "clamped_body_ids": ["body:stock"]
+        }
+      ],
+      "tools": [
+        {
+          "tool_id": "tool:endmill-10mm",
+          "revision": "1",
+          "geometry_revision": "1",
+          "tool_frame_ref": "frame:tool-tip@1",
+          "geometry": {
+            "kind": "flat_end_mill_envelope",
+            "radius_nm": 5000000,
+            "cutting_length_nm": 30000000,
+            "axis": "+Z"
+          }
+        }
+      ],
+      "normalization_policies": [
+        {
+          "policy_id": "norm:baseline-v1",
+          "revision": "1",
+          "interpolation": "linear-translation-shortest-quaternion",
+          "rounding": "nearest-ties-even",
+          "bounds": {
+            "max_translation_error_nm": 1000,
+            "max_orientation_error_nrad": 1000,
+            "max_event_time_shift_ns": 100000,
+            "max_rate_error_nm_s": 10000
+          }
+        }
+      ]
+    },
+    "operations": [
+      {
+        "operation_id": "op:setup-1",
+        "kind": "setup_change",
+        "operation_version": 1,
+        "parent_revision_id": "rev:0",
+        "setup_ref": "setup:mill-1@1",
+        "target_body_ids": ["body:stock"]
+      },
+      {
+        "operation_id": "op:cut-through",
+        "kind": "process_motion",
+        "operation_version": 1,
+        "parent_revision_id": "rev:1",
+        "setup_ref": "setup:mill-1@1",
+        "tool_ref": "tool:endmill-10mm@1",
+        "normalization_policy_ref": "norm:baseline-v1@1",
+        "process_family": "milling.general",
+        "target_body_ids": ["body:stock"],
+        "process_state": {
+          "tool_spindle_axis_frame_ref": "frame:tool-tip@1",
+          "tool_spindle_axis": "+Z",
+          "tool_angular_rate_nrad_s": 125663706144
+        },
+        "trajectory": {
+          "frame_ref": "frame:workpiece@1",
+          "orientation_q15_wxyz": [1000000000000000, 0, 0, 0],
+          "sections": [
+            {
+              "section_id": "section:approach",
+              "engagement": "neutral",
+              "start_time_ns": 0,
+              "end_time_ns": 1000000000,
+              "curve": {
+                "kind": "line",
+                "start_nm": [50000000, -10000000, 15000000],
+                "end_nm": [50000000, -10000000, -1000000]
+              }
+            },
+            {
+              "section_id": "section:through-cut",
+              "engagement": "remove",
+              "start_time_ns": 1000000000,
+              "end_time_ns": 7000000000,
+              "curve": {
+                "kind": "line",
+                "start_nm": [50000000, -10000000, -1000000],
+                "end_nm": [50000000, 90000000, -1000000]
+              }
+            },
+            {
+              "section_id": "section:withdraw",
+              "engagement": "neutral",
+              "start_time_ns": 7000000000,
+              "end_time_ns": 8000000000,
+              "curve": {
+                "kind": "line",
+                "start_nm": [50000000, 90000000, -1000000],
+                "end_nm": [50000000, 90000000, 15000000]
+              }
+            }
+          ],
+          "guaranteed_bounds": {
+            "max_translation_error_nm": 1000,
+            "max_orientation_error_nrad": 1000,
+            "max_event_time_shift_ns": 100000,
+            "max_rate_error_nm_s": 10000
+          }
+        }
+      }
+    ],
+    "material_body_transitions": [
+      {
+        "transition_id": "body-transition:cut-through",
+        "caused_by_operation_id": "op:cut-through",
+        "committed_revision_id": "rev:2",
+        "kind": "split",
+        "input_body_ids": ["body:stock"],
+        "output_bodies": [
+          {
+            "body_id": "body:left",
+            "classification": "retained_clamped"
+          },
+          {
+            "body_id": "body:right",
+            "classification": "detached_unclassified"
+          }
+        ]
+      }
+    ],
+    "revisions": [
+      {
+        "revision_id": "rev:0",
+        "parent_revision_id": null,
+        "caused_by_operation_id": null,
+        "body_ids": ["body:stock"]
+      },
+      {
+        "revision_id": "rev:1",
+        "parent_revision_id": "rev:0",
+        "caused_by_operation_id": "op:setup-1",
+        "body_ids": ["body:stock"]
+      },
+      {
+        "revision_id": "rev:2",
+        "parent_revision_id": "rev:1",
+        "caused_by_operation_id": "op:cut-through",
+        "body_ids": ["body:left", "body:right"]
+      }
+    ],
+    "root_revision_id": "rev:0",
+    "selected_head_revision_id": "rev:2"
+  },
+  "expected_journal_invariants": {
+    "process_motion_count": 1,
+    "body_count_at_head": 2,
+    "body_transition_kind": "split",
+    "detached_body_must_remain_explicit": true
+  }
+}
