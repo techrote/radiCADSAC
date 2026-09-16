@@ -81,7 +81,7 @@
     },
     {
       "id": "tangent-contact-zero",
-      "source_family_id": "generic-lower-dimensional-contact",
+      "source_family_id": "mill-tangent-corner-entry-exit",
       "worker_case": "tangent_contact",
       "parameters": {"offset_mm": "0", "fuzzy_mm": "0"},
       "expected_classification": "no_material_change",
@@ -90,16 +90,16 @@
     },
     {
       "id": "tangent-contact-overlap",
-      "source_family_id": "generic-near-tangent-solids",
+      "source_family_id": "mill-tangent-corner-entry-exit",
       "worker_case": "tangent_contact",
-      "parameters": {"offset_mm": "-0.0001", "fuzzy_mm": "0"},
+      "parameters": {"offset_mm": "-0.001", "fuzzy_mm": "0"},
       "expected_classification": "regularized_material_change",
       "expected_body_count": 1,
       "expect_volume_change": true
     },
     {
       "id": "thin-skim-0.1um",
-      "source_family_id": "generic-sliver-remnants",
+      "source_family_id": "lathe-sub-tolerance-skim",
       "worker_case": "thin_skim",
       "parameters": {"depth_mm": "0.0001", "fuzzy_mm": "0"},
       "expected_classification": "regularized_material_change",
@@ -108,7 +108,7 @@
     },
     {
       "id": "thin-skim-1um",
-      "source_family_id": "generic-sliver-remnants",
+      "source_family_id": "lathe-sub-tolerance-skim",
       "worker_case": "thin_skim",
       "parameters": {"depth_mm": "0.001", "fuzzy_mm": "0"},
       "expected_classification": "regularized_material_change",
@@ -117,7 +117,7 @@
     },
     {
       "id": "thin-skim-10um",
-      "source_family_id": "generic-sliver-remnants",
+      "source_family_id": "lathe-sub-tolerance-skim",
       "worker_case": "thin_skim",
       "parameters": {"depth_mm": "0.01", "fuzzy_mm": "0"},
       "expected_classification": "regularized_material_change",
@@ -126,7 +126,7 @@
     },
     {
       "id": "repeated-slot-2",
-      "source_family_id": "mill-repeated-retraced-sweep",
+      "source_family_id": "mill-repeated-identical-slot",
       "worker_case": "repeated_slot",
       "parameters": {"count": "2", "fuzzy_mm": "0"},
       "expected_classification": "regularized_material_change",
@@ -135,7 +135,7 @@
     },
     {
       "id": "repeated-slot-20",
-      "source_family_id": "mill-repeated-retraced-sweep",
+      "source_family_id": "mill-repeated-identical-slot",
       "worker_case": "repeated_slot",
       "parameters": {"count": "20", "fuzzy_mm": "0"},
       "expected_classification": "regularized_material_change",
@@ -144,12 +144,13 @@
     },
     {
       "id": "repeated-slot-200",
-      "source_family_id": "generic-large-operation-count",
+      "source_family_id": "mill-repeated-identical-slot",
       "worker_case": "repeated_slot",
       "parameters": {"count": "200", "fuzzy_mm": "0"},
       "expected_classification": "regularized_material_change",
       "expected_body_count": 1,
-      "expect_volume_change": true
+      "expect_volume_change": true,
+      "notes": "High-operation-count baseline member."
     },
     {
       "id": "overlapping-slots",
@@ -162,66 +163,66 @@
     },
     {
       "id": "lathe-od-finish",
-      "source_family_id": "lathe-repeated-finishing-pass",
+      "source_family_id": "lathe-sub-tolerance-skim",
       "worker_case": "lathe_od_finish",
-      "parameters": {"depth_mm": "0.05", "fuzzy_mm": "0"},
+      "parameters": {"depth_mm": "0.1", "fuzzy_mm": "0"},
       "expected_classification": "regularized_material_change",
       "expected_body_count": 1,
       "expect_volume_change": true
     },
     {
       "id": "lathe-parting",
-      "source_family_id": "lathe-parting-body-split",
+      "source_family_id": "lathe-parting-cut-through",
+      "step_fixture_id": "step-lathe-parting-all-bodies-v1",
       "worker_case": "lathe_parting",
       "parameters": {"tool_width_mm": "2", "fuzzy_mm": "0"},
       "expected_classification": "body_separation_or_merge",
       "expected_body_count": 2,
       "expect_volume_change": true,
-      "step_fixture_id": "disconnected-multi-body-mm",
       "step": {"enabled": true, "unit": "millimeter"}
     },
     {
       "id": "mill-cut-through",
-      "source_family_id": "mill-cut-through-body-separation",
+      "source_family_id": "mill-cut-through-separation",
+      "step_fixture_id": "step-mill-cut-through-all-bodies-v1",
       "worker_case": "mill_cut_through",
       "parameters": {"slot_width_mm": "2", "fuzzy_mm": "0"},
       "expected_classification": "body_separation_or_merge",
       "expected_body_count": 2,
       "expect_volume_change": true,
-      "step_fixture_id": "disconnected-multi-body-mm",
       "step": {"enabled": true, "unit": "millimeter"}
     },
     {
       "id": "step-cylinder-mm",
-      "source_family_id": "lathe-clean-od-profile",
+      "source_family_id": "lathe-repeated-finishing-pass",
+      "step_fixture_id": "step-lathe-analytic-mm-v1",
       "worker_case": "step_cylinder",
       "parameters": {},
       "expected_classification": "no_material_change",
       "expected_body_count": 1,
       "expect_volume_change": false,
-      "step_fixture_id": "analytic-cylinder-mm",
       "step": {"enabled": true, "unit": "millimeter"}
     },
     {
       "id": "step-block-mm",
-      "source_family_id": "mill-pocket-island",
+      "source_family_id": "generic-coincidence-coplanarity",
+      "step_fixture_id": "step-block-mm-equivalent-v1",
       "worker_case": "step_block",
       "parameters": {},
       "expected_classification": "no_material_change",
       "expected_body_count": 1,
       "expect_volume_change": false,
-      "step_fixture_id": "rectangular-block-mm",
       "step": {"enabled": true, "unit": "millimeter"}
     },
     {
       "id": "step-block-inch",
-      "source_family_id": "mill-pocket-island",
+      "source_family_id": "generic-coincidence-coplanarity",
+      "step_fixture_id": "step-block-inch-v1",
       "worker_case": "step_block",
       "parameters": {},
       "expected_classification": "no_material_change",
       "expected_body_count": 1,
       "expect_volume_change": false,
-      "step_fixture_id": "rectangular-block-inch",
       "step": {"enabled": true, "unit": "inch"}
     }
   ]
