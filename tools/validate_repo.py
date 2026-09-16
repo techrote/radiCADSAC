@@ -15,8 +15,26 @@ REQUIRED = [
     "docs/00-FOUNDING-BRIEF.md",
     "docs/01-MSAC-GEOMETRY-CONTRACT.md",
     "docs/04-REVISED-RESEARCH-ROADMAP.md",
+    "docs/05-SOURCE-BASELINE.md",
     "docs/06-RESEARCH-METHOD.md",
+    "docs/07-RESEARCH-ISSUE-GRAPH.md",
+    "docs/08-TERMINOLOGY.md",
+    "docs/09-FOUNDATION-AUDIT.md",
+    "docs/decisions/DR-0001-step-is-primary-output.md",
+    "docs/decisions/DR-0002-journal-is-durable-intent.md",
+    "docs/decisions/DR-0003-initial-scope-lathe-mill.md",
+    "docs/decisions/DR-0004-stable-backend-boundary.md",
+    "docs/decisions/DR-0005-pathological-geometry-is-normal-input.md",
 ]
+
+DECISION_REQUIRED_HEADINGS = (
+    "## Context",
+    "## Decision",
+    "## Alternatives considered",
+    "## Evidence",
+    "## Consequences",
+    "## Reversibility",
+)
 
 errors: list[str] = []
 
@@ -55,6 +73,15 @@ for path in markdown_files:
             continue
         if not resolved.exists():
             errors.append(f"{rel}: broken local link: {target}")
+
+for path in sorted((ROOT / "docs" / "decisions").glob("*.md")):
+    rel = path.relative_to(ROOT)
+    text = path.read_text(encoding="utf-8")
+    if "Status:" not in text:
+        errors.append(f"{rel}: decision record has no Status field")
+    for heading in DECISION_REQUIRED_HEADINGS:
+        if heading not in text:
+            errors.append(f"{rel}: decision record missing heading {heading!r}")
 
 if errors:
     print("radiCADSAC validation failed:")
