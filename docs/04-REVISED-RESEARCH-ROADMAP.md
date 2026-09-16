@@ -1,47 +1,73 @@
 # Revised research roadmap
 
-Status: current programme plan  
+Status: current programme plan; Gate-1 reconciled by RCS-001  
 Date: 2026-09-16
 
 ## Programme structure
 
 The research programme is intentionally **gated-parallel** rather than purely serial. A small foundation is completed first; then multiple tracks proceed independently enough that one rabbit hole does not stall the entire programme.
 
+Current foundation references:
+
+- `00-FOUNDING-BRIEF.md` — preserved product intent;
+- `01-MSAC-GEOMETRY-CONTRACT.md` — Gate-1 programme boundary;
+- `08-TERMINOLOGY.md` — accepted research vocabulary;
+- `09-FOUNDATION-AUDIT.md` — RCS-001 reconciliation and Gate-1 definition;
+- `06-RESEARCH-METHOD.md` — evidence/research method;
+- `07-RESEARCH-ISSUE-GRAPH.md` — issue dependencies.
+
 ## Phase 0 — foundation
 
 ### R0.1 Founding brief and geometry contract
 
-Already seeded by:
+Seeded by:
 
 - `00-FOUNDING-BRIEF.md`
 - `01-MSAC-GEOMETRY-CONTRACT.md`
 
-Research must validate and refine these rather than assuming every sentence is correct forever.
+RCS-001 reconciles the contract enough for parallel research while deliberately leaving detailed journal, fixture, STEP and kernel architecture questions open.
 
 ### R0.2 Terminology and success definitions
 
-Define unambiguous meanings for:
+`08-TERMINOLOGY.md` defines stable-enough meanings for at least:
 
 - SAC;
 - MSAC;
 - OpenSimachinist;
 - workpiece;
+- material body;
 - stock;
 - setup;
+- coordinate frame;
 - machine module;
+- geometry process provider;
 - process;
 - operation;
+- operation journal;
 - canonical trajectory;
 - preview geometry;
-- authoritative geometry;
+- committed engineering state;
 - valid solid;
-- regularized solid;
+- regularized material solid;
 - tolerance classes;
-- STEP conformance.
+- STEP conformance;
+- reconciliation;
+- replay;
+- provenance.
 
 ### R0.3 Research method and evidence rules
 
-Establish benchmark/fixture conventions, result recording, deterministic reproduction, source hierarchy and decision-record format.
+`06-RESEARCH-METHOD.md` establishes benchmark/fixture conventions, result recording, deterministic reproduction, source hierarchy and decision-record discipline.
+
+### R0.4 Foundation audit and invariant/hypothesis split
+
+`09-FOUNDATION-AUDIT.md` records:
+
+- accepted programme invariants;
+- research hypotheses that must remain falsifiable;
+- ownership/authority clarifications;
+- the corrected Gate-1 definition;
+- downstream cross-cutting requirements such as explicit units/frames and disconnected-body semantics.
 
 ## Track A — canonical manufacturing journal
 
@@ -55,7 +81,9 @@ Define a durable manufacturing language between interactive simulation and geome
 - How are controller/machine samples segmented into engaged operations?
 - How are lines/arcs/splines or other curves fitted without falsifying user intent?
 - How is path simplification bounded by explicit error?
+- How are dimensional units, handedness, axes and transform composition encoded?
 - How are coordinate frames and setup changes versioned?
+- How are material-body split/merge identities represented?
 - How are tool definitions identified and frozen for replay?
 - How are machine/process semantics encoded without coupling to Godot?
 - How deterministic must replay be across platforms/kernel versions?
@@ -65,8 +93,10 @@ Define a durable manufacturing language between interactive simulation and geome
 
 - journal schema proposal;
 - canonicalization policy;
-- deterministic fixtures;
+- deterministic fixtures/examples;
+- units/coordinate/transform contract;
 - compatibility/versioning strategy;
+- material-body identity hooks;
 - provenance hooks required by later tracks.
 
 ## Track B — OCCT baseline and forkability audit
@@ -77,7 +107,11 @@ Establish what current OCCT actually provides, where MSAC workloads fail, and wh
 
 ### Baseline
 
-At programme creation time the latest published OCCT release is **8.0.1** (30 July 2026). Upstream notes explicitly mention continued work on Boolean stability, shape healing and STEP export reliability, which reinforces the need to benchmark current behaviour rather than rely on old folklore.
+At programme creation time the latest published OCCT release is **8.0.1** (30 July 2026). The research baseline is pinned to upstream tag `V8.0.1`, commit `b8f597c677811d1f9f4d8a97f5ae2825c0353a42`.
+
+Upstream release notes mention continued work on Boolean stability, shape healing and STEP export reliability, which reinforces the need to benchmark current behaviour rather than rely on old folklore.
+
+RCS-004 may add comparison commits/versions, but every experiment must pin them explicitly.
 
 ### Audit areas
 
@@ -102,7 +136,7 @@ At programme creation time the latest published OCCT release is **8.0.1** (30 Ju
 - subsystem map;
 - MSAC-relevant failure/risk map;
 - candidate fork seams;
-- “reuse / wrap / replace / research” table;
+- `reuse / wrap / replace / research` table;
 - upstream version/provenance strategy.
 
 ## Track C — adversarial manufacturing corpus and measurement harness
@@ -123,7 +157,8 @@ Turn pathological manufacturing geometry into reproducible evidence.
 - repeated facing to same plane;
 - path reversal over same surface;
 - noisy analogue feed around a nominal cylinder;
-- extremely long series of redundant passes.
+- extremely long series of redundant passes;
+- representative parting/cut-through causing material-body separation.
 
 #### Mill
 
@@ -137,6 +172,7 @@ Turn pathological manufacturing geometry into reproducible evidence.
 - retraced path with jitter;
 - sub-tolerance plunge;
 - path touching fixture/workpiece boundaries;
+- cut-through causing disconnected material bodies;
 - very high sample/segment count.
 
 #### Generic
@@ -146,7 +182,8 @@ Turn pathological manufacturing geometry into reproducible evidence.
 - lower-dimensional contact;
 - near-degenerate slivers;
 - tolerance accumulation chains;
-- topology explosion sequences.
+- topology explosion sequences;
+- connected-to-disconnected material transitions.
 
 ### Metrics
 
@@ -156,6 +193,7 @@ Turn pathological manufacturing geometry into reproducible evidence.
 - deterministic repeatability;
 - geometric and volume deviation;
 - topology counts/growth;
+- material-body count/identity where applicable;
 - smallest face/edge statistics;
 - runtime;
 - peak memory;
@@ -165,7 +203,7 @@ Turn pathological manufacturing geometry into reproducible evidence.
 
 ### Deliverables
 
-- fixture format;
+- fixture format with explicit units/coordinate frames;
 - expected-result policy;
 - baseline benchmark specification;
 - minimized-regression procedure;
@@ -191,6 +229,7 @@ Investigate:
 Investigate stable ancestry independent of transient B-rep entity IDs:
 
 - stock origin;
+- material-body identity;
 - tool-envelope origin;
 - operation origin;
 - split/merge ancestry;
@@ -206,6 +245,7 @@ Questions include:
 
 - when zero-volume contact can be ignored;
 - when contact implies meaningful separation;
+- material connectivity and split/merge semantics;
 - representation of unresolved coincidence;
 - delayed face/edge creation;
 - canonicalization boundaries;
@@ -264,6 +304,7 @@ Prevent OCCT/B-rep assumptions from defining the solution space.
 - error bounds;
 - conversion cost;
 - provenance support;
+- material-body/connectivity support;
 - ability to reconcile to STEP B-rep;
 - licensing/dependency implications;
 - performance and memory.
@@ -274,17 +315,19 @@ No candidate should be accepted solely because it produces a watertight mesh.
 
 ### Objective
 
-Define and prove what “valid, correct and usable STEP output” means for this programme.
+Define and prove what `valid, correct and usable STEP output` means for this programme.
 
 ### Research areas
 
 - STEP solid entity/model choices;
 - AP profile expectations appropriate to downstream use;
 - B-rep validity before serialization;
+- dimensional units and unit conversion;
 - geometric tolerances;
 - analytic versus spline/approximated surfaces;
 - same-domain cleanup;
 - healing policy;
+- one-body versus multi-body/product export semantics and explicit body selection;
 - metadata/provenance possibilities;
 - writer round-trip;
 - independent CAD consumer tests;
@@ -296,18 +339,25 @@ Internal permissiveness ends at the export boundary. A visually plausible or man
 
 ## Integration gates
 
-### Gate 1 — research-ready
+### Gate 1 — research-foundation ready
 
-Requires:
+Gate 1 is completed by RCS-001 and requires:
 
-- stable-enough vocabulary;
-- versioned founding geometry contract;
-- research method;
-- initial journal schema direction;
-- initial adversarial fixture format;
-- current OCCT baseline pinned.
+- accepted stable-enough vocabulary (`08-TERMINOLOGY.md`);
+- Gate-1 geometry contract v0.1 (`01-MSAC-GEOMETRY-CONTRACT.md`);
+- fixed programme invariants separated from hypotheses (`09-FOUNDATION-AUDIT.md`);
+- accepted research method (`06-RESEARCH-METHOD.md`);
+- issue/dependency graph consistent with GitHub issues;
+- OCCT baseline pinned to tag `V8.0.1`, commit `b8f597c677811d1f9f4d8a97f5ae2825c0353a42`;
+- accepted programme decision records;
+- downstream ownership of unresolved units/coordinate/body-separation requirements;
+- green repository validation/CI and merged RCS-001 PR.
 
-After Gate 1, Tracks B–G can proceed substantially in parallel.
+Gate 1 deliberately **does not** require the final journal schema or adversarial fixture format; those are RCS-002 and RCS-003 outputs and therefore cannot be prerequisites for starting them.
+
+After Gate 1, **RCS-002 through RCS-005** (Tracks A, C, B, and G respectively) may proceed in parallel.
+
+RCS-006 then establishes the shared baseline harness from RCS-003/RCS-004/RCS-005 outputs. RCS-007 through RCS-012 proceed according to their declared dependencies rather than a blanket `all Tracks B–G` statement.
 
 ### Gate 2 — architecture-choice ready
 
@@ -340,9 +390,9 @@ Requires:
 
 - backend boundary stable enough to consume;
 - operation-journal/canonicalization contract;
-- preview/exact reconciliation model;
+- preview/engineering-state reconciliation model;
 - error/status model;
-- machine-module extension contract;
+- machine-module / geometry-process-provider extension contract;
 - initial lathe/mill capabilities and limitations documented;
 - productive-core-loop plan that does not wait for complete kernel research.
 
