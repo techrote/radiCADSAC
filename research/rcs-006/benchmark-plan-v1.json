@@ -23,6 +23,7 @@
       "tangent-contact-zero",
       "thin-skim-1um",
       "repeated-slot-20",
+      "repeated-slot-200",
       "lathe-od-finish",
       "lathe-parting",
       "mill-cut-through",
@@ -177,7 +178,8 @@
       "parameters": {"tool_width_mm": "2", "fuzzy_mm": "0"},
       "expected_classification": "body_separation_or_merge",
       "expected_body_count": 2,
-      "expect_volume_change": true
+      "expect_volume_change": true,
+      "step": {"enabled": true, "unit": "millimeter"}
     },
     {
       "id": "mill-cut-through",
@@ -187,7 +189,8 @@
       "parameters": {"slot_width_mm": "2", "fuzzy_mm": "0"},
       "expected_classification": "body_separation_or_merge",
       "expected_body_count": 2,
-      "expect_volume_change": true
+      "expect_volume_change": true,
+      "step": {"enabled": true, "unit": "millimeter"}
     },
     {
       "id": "step-cylinder-mm",
