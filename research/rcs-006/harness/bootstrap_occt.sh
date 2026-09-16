@@ -40,6 +40,9 @@ fi
 # Keep all broad modules disabled: TKBO supplies the Boolean stack and TKDESTEP
 # supplies STEP exchange; their dependency closure provides the modeling/data
 # toolkits needed by the research worker without pulling Visualization/Draw.
+# Some transitive toolkits (notably TKService) still contain platform service
+# sources. Disable Xlib explicitly so this research-only CI build remains
+# headless and does not acquire an irrelevant X11 development dependency.
 rm -rf "${BUILD_DIR}"
 cmake -S "${SOURCE_DIR}" -B "${BUILD_DIR}" -G Ninja \
   -DCMAKE_BUILD_TYPE=Release \
@@ -65,7 +68,8 @@ cmake -S "${SOURCE_DIR}" -B "${BUILD_DIR}" -G Ninja \
   -DUSE_DRACO=OFF \
   -DUSE_FFMPEG=OFF \
   -DUSE_EIGEN=OFF \
-  -DUSE_OPENGL=OFF
+  -DUSE_OPENGL=OFF \
+  -DUSE_XLIB=OFF
 
 cmake --build "${BUILD_DIR}" --parallel "${JOBS}"
 cmake --install "${BUILD_DIR}"
@@ -83,8 +87,10 @@ cat > "${INSTALL_DIR}/RCS006_SOURCE_PIN.txt" <<EOF
 repository=https://github.com/Open-Cascade-SAS/OCCT.git
 commit=${EXPECTED_COMMIT}
 version=${EXPECTED_VERSION}
-build_profile=release-shared-cxx17-minimal-v1
+build_profile=release-shared-cxx17-minimal-headless-v2
 selected_toolkits=TKBO;TKDESTEP
+xlib=off
+opengl=off
 EOF
 
 echo "RCS006_OCCT_PREFIX=${INSTALL_DIR}"
