@@ -18,3 +18,5 @@ jobs:
         run: python3 tools/validate_repo.py
       - name: Validate RCS-003 adversarial corpus
         run: python3 tools/validate_rcs003.py
+      - name: Validate RCS-004 OCCT audit
+        run: python3 tools/validate_rcs004.py
