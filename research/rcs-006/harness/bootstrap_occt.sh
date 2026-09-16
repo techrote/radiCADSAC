@@ -9,7 +9,7 @@ DEPS_ROOT="${RCS006_DEPS_ROOT:-${REPO_ROOT}/.deps/rcs006}"
 SOURCE_DIR="${DEPS_ROOT}/occt-src"
 BUILD_DIR="${DEPS_ROOT}/occt-build"
 INSTALL_DIR="${RCS006_OCCT_PREFIX:-${DEPS_ROOT}/occt-${EXPECTED_VERSION}}"
-JOBS="${RCS006_BUILD_JOBS:-2}"
+JOBS="${RCS006_BUILD_JOBS:-1}"
 
 if [[ -f "${INSTALL_DIR}/include/opencascade/Standard_Version.hxx" ]]; then
   if grep -q "#define OCC_VERSION_COMPLETE \"${EXPECTED_VERSION}\"" "${INSTALL_DIR}/include/opencascade/Standard_Version.hxx"; then
@@ -35,19 +35,25 @@ if [[ "${ACTUAL_COMMIT}" != "${EXPECTED_COMMIT}" ]]; then
   exit 2
 fi
 
+# OCCT documents BUILD_ADDITIONAL_TOOLKITS as the supported way to build only
+# selected toolkits while resolving their transitive toolkit dependencies.
+# Keep all broad modules disabled: TKBO supplies the Boolean stack and TKDESTEP
+# supplies STEP exchange; their dependency closure provides the modeling/data
+# toolkits needed by the research worker without pulling Visualization/Draw.
 rm -rf "${BUILD_DIR}"
 cmake -S "${SOURCE_DIR}" -B "${BUILD_DIR}" -G Ninja \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX="${INSTALL_DIR}" \
   -DBUILD_CPP_STANDARD=C++17 \
   -DBUILD_LIBRARY_TYPE=Shared \
-  -DBUILD_MODULE_FoundationClasses=ON \
-  -DBUILD_MODULE_ModelingData=ON \
-  -DBUILD_MODULE_ModelingAlgorithms=ON \
-  -DBUILD_MODULE_ApplicationFramework=ON \
-  -DBUILD_MODULE_DataExchange=ON \
+  -DBUILD_MODULE_FoundationClasses=OFF \
+  -DBUILD_MODULE_ModelingData=OFF \
+  -DBUILD_MODULE_ModelingAlgorithms=OFF \
+  -DBUILD_MODULE_ApplicationFramework=OFF \
+  -DBUILD_MODULE_DataExchange=OFF \
   -DBUILD_MODULE_Visualization=OFF \
   -DBUILD_MODULE_Draw=OFF \
+  '-DBUILD_ADDITIONAL_TOOLKITS=TKBO;TKDESTEP' \
   -DUSE_TCL=OFF \
   -DUSE_TK=OFF \
   -DUSE_FREETYPE=OFF \
@@ -78,6 +84,7 @@ repository=https://github.com/Open-Cascade-SAS/OCCT.git
 commit=${EXPECTED_COMMIT}
 version=${EXPECTED_VERSION}
 build_profile=release-shared-cxx17-minimal-v1
+selected_toolkits=TKBO;TKDESTEP
 EOF
 
 echo "RCS006_OCCT_PREFIX=${INSTALL_DIR}"
