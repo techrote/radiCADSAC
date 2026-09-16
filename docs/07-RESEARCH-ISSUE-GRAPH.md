@@ -1,6 +1,6 @@
 # Research issue graph
 
-Status: current issue graph; GitHub issues #1–#16 assigned  
+Status: current issue graph; RCS-001–RCS-017 assigned (GitHub #1–#16 and #20)  
 Date: 2026-09-16
 
 ## Dependency philosophy
@@ -29,6 +29,9 @@ RCS-001 corrects the original Gate-1 wording so the graph is no longer circular:
 | #14 | RCS-014 | Generate clean OpenSimachinist founding handoff | RCS-013 | production-ready founding spec/roadmap |
 | #15 | RCS-015 | Generate clean MSAC founding handoff | RCS-002, RCS-005, RCS-013 | production-ready MSAC spec/roadmap |
 | #16 | RCS-016 | Freeze genesis handoff release and production-repo launch checklist | RCS-014, RCS-015 | tagged/frozen genesis handoff plan |
+| #20 | RCS-017 | OCCT concurrency and global-state isolation probe | RCS-004, RCS-005, RCS-006 | measured thread/process isolation boundary |
+
+GitHub issue and pull-request numbers share one repository-wide sequence, so RCS-017 is GitHub issue #20; #17–#19 are not missing research issues.
 
 ## Gate 1 and first fan-out
 
@@ -49,6 +52,8 @@ RCS-006 combines the corpus, OCCT audit and STEP contract into the shared baseli
 
 After RCS-006 exists, RCS-007 through RCS-012 are intentionally parallel research campaigns subject to their individual declared dependencies. Individual issues may file narrower follow-ups when a rabbit hole is valuable but not blocking.
 
+RCS-017 is one such narrow follow-up: RCS-004 identified concurrency/global-state isolation as important but not appropriate to guess from source inspection alone. It waits for RCS-005/RCS-006 so it can stress the accepted STEP policy and common harness rather than inventing separate correctness criteria.
+
 ## Cross-cutting foundation requirements carried downstream
 
 RCS-001 identified two requirements that must be explicit in early research rather than hidden assumptions:
@@ -67,6 +72,8 @@ RCS-013 must not simply average earlier recommendations. It must:
 - select an initial architecture with explicit escape routes;
 - carry unresolved research into the OpenSimachinist roadmap rather than pretending it is solved;
 - avoid requiring universal computational-geometry perfection before productive implementation can begin.
+
+RCS-017 should be consumed by RCS-013 if it has completed by synthesis time. If not, RCS-013 must retain process isolation as an explicit reversible safety boundary rather than silently assuming thread-local OCCT state.
 
 ## Handoff discipline
 
