@@ -10,10 +10,23 @@ MSAC is a new class of CAD interaction: **Simulation Aided Creation**. The user 
 
 The initial target user is an experienced machinist who is also comfortable with console-game controls. Initial machine scope is deliberately narrow: **lathe and mill only**.
 
-The exported engineering object is the product. A successful workpiece must be exportable as a **valid, conventional, usable STEP solid**. STL is useful as a derived convenience format, but is not an architectural fallback.
+The exported engineering object is the product. A successful workpiece must be exportable as a **valid, conventional, usable STEP engineering result**. STL is useful as a derived convenience format, but is not an architectural fallback.
 
 ## Repository role
 
 The planning repository may be messy, speculative, contradictory, and research-heavy. The later production repositories should not inherit that archaeology. Instead, this repo will produce frozen founding handoffs containing fresh, reviewed implementation plans.
 
-See `docs/` for the RAG research corpus and the GitHub issues for the autonomous research sequence.
+## Current research foundation
+
+After RCS-001, start with:
+
+- [Founding brief](docs/00-FOUNDING-BRIEF.md) — preserved product intent;
+- [MSAC ↔ geometry contract](docs/01-MSAC-GEOMETRY-CONTRACT.md) — Gate-1 programme boundary;
+- [Revised research roadmap](docs/04-REVISED-RESEARCH-ROADMAP.md) — current gated-parallel plan;
+- [Research method](docs/06-RESEARCH-METHOD.md) — evidence and reproducibility rules;
+- [Research issue graph](docs/07-RESEARCH-ISSUE-GRAPH.md) — issue dependencies;
+- [Programme terminology](docs/08-TERMINOLOGY.md) — accepted vocabulary;
+- [Foundation audit](docs/09-FOUNDATION-AUDIT.md) — invariant/hypothesis split and Gate-1 reconciliation;
+- `docs/decisions/` — explicit programme decision records.
+
+The historical initial plan and critique remain under `docs/` for design archaeology; newer accepted decisions and current foundation documents supersede speculative historical material where they conflict.
