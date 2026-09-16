@@ -1,0 +1,313 @@
+{
+  "schema": "rcs-004-occt-audit/1.0",
+  "audit_date": "2026-09-16",
+  "audited_upstream": {
+    "repository": "Open-Cascade-SAS/OCCT",
+    "tag": "V8_0_1",
+    "commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42",
+    "tree": "76543d44e49c73bfffa2d141089e6c5add106f9a",
+    "release_date": "2026-07-30"
+  },
+  "classification_values": [
+    "reuse",
+    "wrap/isolate",
+    "modify/fork candidate",
+    "replace candidate",
+    "research only / insufficient evidence"
+  ],
+  "subsystems": [
+    {
+      "id": "brep_topology",
+      "area": "B-rep topology and TopoDS identity",
+      "classification": "wrap/isolate",
+      "reversibility": "high",
+      "evidence": [
+        "https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/src/ModelingData/TKBRep/TopoDS/TopoDS_Shape.hxx"
+      ],
+      "finding": "TopoDS_Shape is a wrapper around a shared TShape plus location/orientation; OCCT object identity is useful internally but is not durable manufacturing identity.",
+      "boundary": "Keep TopoDS/TShape private to the geometry backend."
+    },
+    {
+      "id": "entity_tolerances",
+      "area": "B-rep entity tolerance storage and propagation",
+      "classification": "wrap/isolate",
+      "reversibility": "high",
+      "evidence": [
+        "https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/src/ModelingData/TKBRep/BRep/BRep_TFace.hxx",
+        "https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/src/ModelingData/TKBRep/BRep/BRep_TEdge.hxx",
+        "https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/src/ModelingData/TKBRep/BRep/BRep_TVertex.hxx"
+      ],
+      "finding": "Faces, edges and vertices carry native tolerances; edges also carry same-parameter and same-range state.",
+      "boundary": "Map programme tolerance channels explicitly; do not equate them with one OCCT tolerance value."
+    },
+    {
+      "id": "analytic_geometry",
+      "area": "Analytic and spline geometry",
+      "classification": "reuse",
+      "reversibility": "high",
+      "evidence": [
+        "https://github.com/Open-Cascade-SAS/OCCT/tree/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/src/ModelingData/TKG3d/Geom"
+      ],
+      "finding": "OCCT provides native analytic and spline geometry integrated with B-rep and STEP workflows.",
+      "boundary": "Reuse internally without exposing concrete Geom classes in programme contracts."
+    },
+    {
+      "id": "boolean_orchestration",
+      "area": "BOPAlgo/BRepAlgoAPI Boolean orchestration",
+      "classification": "wrap/isolate",
+      "reversibility": "high",
+      "evidence": [
+        "https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/src/ModelingAlgorithms/TKBO/BOPAlgo/BOPAlgo_Options.hxx",
+        "https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/src/ModelingAlgorithms/TKBO/BOPAlgo/BOPAlgo_Builder.hxx"
+      ],
+      "finding": "Boolean APIs expose structured reports, fuzzy tolerance, parallel/non-destructive modes, images/origins, same-domain data and history.",
+      "boundary": "Translate options/status/history into programme-owned records."
+    },
+    {
+      "id": "boolean_intersection_classification",
+      "area": "Boolean intersection and classification internals",
+      "classification": "modify/fork candidate",
+      "reversibility": "medium",
+      "evidence": [
+        "https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/src/ModelingAlgorithms/TKBO/BOPAlgo/BOPAlgo_Builder.hxx"
+      ],
+      "finding": "Intersection/classification is central to General Fuse and therefore a plausible robustness seam, but no RCS-003 runtime evidence yet justifies modification.",
+      "boundary": "Do not fork until RCS-006/RCS-007 localize repeatable failures to this seam."
+    },
+    {
+      "id": "general_fuse_cells",
+      "area": "General Fuse and cell building",
+      "classification": "research only / insufficient evidence",
+      "reversibility": "high",
+      "evidence": [
+        "https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/src/ModelingAlgorithms/TKBO/BOPAlgo/BOPAlgo_CellsBuilder.hxx"
+      ],
+      "finding": "CellsBuilder exposes split parts, cell selection, material labels and internal-boundary removal, making it relevant to deferred/regularized research.",
+      "boundary": "Use only as an RCS-009 candidate until measured."
+    },
+    {
+      "id": "same_domain_unification",
+      "area": "Same-domain unification",
+      "classification": "wrap/isolate",
+      "reversibility": "high",
+      "evidence": [
+        "https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/src/ModelingAlgorithms/TKShHealing/ShapeUpgrade/ShapeUpgrade_UnifySameDomain.hxx"
+      ],
+      "finding": "Unification exposes explicit linear/angular tolerances, safe-input mode, keep-shape controls and history.",
+      "boundary": "Invoke only under measured reconciliation policy; never silently heal committed dimensions."
+    },
+    {
+      "id": "shape_healing",
+      "area": "Shape healing and shape processing",
+      "classification": "wrap/isolate",
+      "reversibility": "high",
+      "evidence": [
+        "https://github.com/Open-Cascade-SAS/OCCT/tree/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/src/ModelingAlgorithms/TKShHealing",
+        "https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/src/DataExchange/TKDESTEP/STEPControl/STEPControl_Writer.hxx"
+      ],
+      "finding": "OCCT contains broad healing facilities and STEP shape-processing hooks.",
+      "boundary": "Record pre/post metrics and policy; healing is not an unobservable fallback."
+    },
+    {
+      "id": "brep_validation",
+      "area": "B-rep validation",
+      "classification": "reuse",
+      "reversibility": "high",
+      "evidence": [
+        "https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/src/ModelingAlgorithms/TKTopAlgo/BRepCheck/BRepCheck_Analyzer.hxx"
+      ],
+      "finding": "BRepCheck_Analyzer checks topology and geometric/parameterization consistency and supports exact/parallel modes.",
+      "boundary": "Use as a validation layer, not as the complete programme STEP conformance oracle."
+    },
+    {
+      "id": "sweep_pipe_loft",
+      "area": "Sweep, pipe and loft machinery",
+      "classification": "reuse",
+      "reversibility": "high",
+      "evidence": [
+        "https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/src/ModelingAlgorithms/TKOffset/BRepOffsetAPI/BRepOffsetAPI_MakePipeShell.hxx"
+      ],
+      "finding": "Pipe-shell APIs expose frames, profiles, tolerances, approximation, transition policy, status and generated-shape history.",
+      "boundary": "Benchmark as cutter-envelope machinery; process-specialized solvers may bypass it."
+    },
+    {
+      "id": "operation_history",
+      "area": "Operation-local shape history",
+      "classification": "wrap/isolate",
+      "reversibility": "high",
+      "evidence": [
+        "https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/src/ModelingData/TKBRep/BRepTools/BRepTools_History.hxx"
+      ],
+      "finding": "BRepTools_History records generated, modified and removed relations and supports sequential history merging.",
+      "boundary": "Capture as backend evidence; do not serialize it as durable journal identity."
+    },
+    {
+      "id": "durable_programme_provenance",
+      "area": "Durable manufacturing provenance and semantic identity",
+      "classification": "replace candidate",
+      "reversibility": "high",
+      "evidence": [
+        "https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/src/ModelingData/TKBRep/BRepTools/BRepTools_History.hxx",
+        "https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/src/ApplicationFramework/TKCAF/TNaming/TNaming_NamedShape.hxx"
+      ],
+      "finding": "OCCT history/naming tracks OCCT topology evolution, not the complete backend-independent manufacturing semantics required by the programme.",
+      "boundary": "RCS-008 owns the durable semantic ancestry model."
+    },
+    {
+      "id": "ocaf_tnaming",
+      "area": "OCAF TNaming",
+      "classification": "research only / insufficient evidence",
+      "reversibility": "high",
+      "evidence": [
+        "https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/src/ApplicationFramework/TKCAF/TNaming/TNaming_NamedShape.hxx"
+      ],
+      "finding": "TNaming_NamedShape stores old/new shape pairs, evolution kind and version, but its suitability for programme provenance is unproven.",
+      "boundary": "Treat as prior art/internal option only."
+    },
+    {
+      "id": "meshing",
+      "area": "Meshing and tessellation",
+      "classification": "reuse",
+      "reversibility": "high",
+      "evidence": [
+        "https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/src/ModelingAlgorithms/TKMesh/BRepMesh/BRepMesh_IncrementalMesh.hxx"
+      ],
+      "finding": "Incremental meshing exposes explicit deflection parameters, parallel execution, custom context and status flags.",
+      "boundary": "Use for preview/diagnostics and sampled metrics, not as committed engineering geometry."
+    },
+    {
+      "id": "step_exchange",
+      "area": "STEP read/write, shape processing and sessions",
+      "classification": "wrap/isolate",
+      "reversibility": "high",
+      "evidence": [
+        "https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/src/DataExchange/TKDESTEP/STEPControl/STEPControl_Writer.hxx",
+        "https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/src/DataExchange/TKDESTEP/DESTEP/DESTEP_Parameters.hxx"
+      ],
+      "finding": "STEP writer supports explicit solid model modes, tolerance, work sessions, shape processing and per-call parameter objects.",
+      "boundary": "RCS-005 defines success; isolate OCCT sessions and translate status into programme conformance layers."
+    },
+    {
+      "id": "data_exchange_global_state",
+      "area": "Data-exchange global configuration",
+      "classification": "wrap/isolate",
+      "reversibility": "medium-high",
+      "evidence": [
+        "https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/src/DataExchange/TKXSBase/Interface/Interface_Static.hxx",
+        "https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/src/DataExchange/TKDESTEP/DESTEP/DESTEP_Parameters.hxx"
+      ],
+      "finding": "Interface_Static is explicitly a global parameter registry; newer DESTEP_Parameters allows many STEP choices to be passed as values.",
+      "boundary": "Prefer explicit parameter objects; serialize or process-isolate unavoidable global mutation."
+    },
+    {
+      "id": "threading_global_parallel",
+      "area": "Threading and global parallel controls",
+      "classification": "wrap/isolate",
+      "reversibility": "high",
+      "evidence": [
+        "https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/src/ModelingAlgorithms/TKBO/BOPAlgo/BOPAlgo_Options.hxx",
+        "https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/src/ModelingAlgorithms/TKMesh/BRepMesh/BRepMesh_IncrementalMesh.hxx"
+      ],
+      "finding": "Algorithms expose per-instance parallel settings, but Boolean and meshing also retain static/global defaults.",
+      "boundary": "Do not claim whole-library thread safety; measure intended concurrent worker topology."
+    },
+    {
+      "id": "memory_ownership",
+      "area": "Memory ownership, handles and shared shape state",
+      "classification": "wrap/isolate",
+      "reversibility": "high",
+      "evidence": [
+        "https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/src/FoundationClasses/TKernel/Standard/Standard_Transient.hxx",
+        "https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/src/ModelingData/TKBRep/TopoDS/TopoDS_Shape.hxx"
+      ],
+      "finding": "Standard_Transient reference counts are atomic while TopoDS shapes share TShape state.",
+      "boundary": "Keep OCCT ownership/C++ ABI private; use programme-owned values and opaque IDs across the stable boundary."
+    },
+    {
+      "id": "build_platform",
+      "area": "Build, Windows and dependency footprint",
+      "classification": "reuse",
+      "reversibility": "high",
+      "evidence": [
+        "https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/CMakeLists.txt"
+      ],
+      "finding": "OCCT 8.0.1 uses CMake 3.10+, defaults to C++17, supports vcpkg and defaults to shared libraries.",
+      "boundary": "Build a pinned toolkit subset behind OpenSimachinist rather than exposing OCCT to Godot modules."
+    },
+    {
+      "id": "license_boundary",
+      "area": "LGPL-2.1 plus Open CASCADE exception",
+      "classification": "wrap/isolate",
+      "reversibility": "medium",
+      "evidence": [
+        "https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/LICENSE_LGPL_21.txt",
+        "https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/OCCT_LGPL_EXCEPTION.txt",
+        "https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/CMakeLists.txt"
+      ],
+      "finding": "Modified OCCT library code remains subject to LGPL obligations; the header exception permits header material in object code under chosen terms with prominent notice; upstream itself recommends shared production libraries.",
+      "boundary": "Keep derived OCCT code identifiable, preserve notices/source availability, and perform distribution-specific legal/compliance review."
+    }
+  ],
+  "fork_candidate_seams": [
+    {
+      "id": "boolean_intersection_classification",
+      "trigger": "RCS-006/RCS-007 reproducibly localize material correctness/robustness failures to intersection/classification or tolerance decisions that cannot be safely controlled above the subsystem."
+    },
+    {
+      "id": "selected_healing_reconciliation",
+      "trigger": "Measured reconciliation requires deterministic behaviour that the public healing/unification APIs cannot express without silent dimensional/topological change."
+    },
+    {
+      "id": "history_extraction",
+      "trigger": "Required ancestry is demonstrably computed internally but irretrievably lost before public history/adapters can capture it."
+    }
+  ],
+  "upstream_velocity_evidence": [
+    "https://github.com/Open-Cascade-SAS/OCCT/releases/tag/V8_0_1",
+    "https://github.com/Open-Cascade-SAS/OCCT/commit/9248874be6f364c106cf3932e193fe670c6120fd",
+    "https://github.com/Open-Cascade-SAS/OCCT/commit/e62f6b248327911bf2b7f5e649d74bea8e3735ef",
+    "https://github.com/Open-Cascade-SAS/OCCT/commit/2fa332705f963f7fe5d9039348197b5231f030d2"
+  ],
+  "unresolved": [
+    {
+      "id": "baseline_failure_envelope",
+      "owner": "RCS-006",
+      "question": "Where does OCCT 8.0.1 fail or degrade across the RCS-003 corpus and parameter sweeps?"
+    },
+    {
+      "id": "tolerance_equivalence_mapping",
+      "owner": "RCS-007",
+      "question": "How should programme tolerance/equivalence/uncertainty channels map onto OCCT entity and fuzzy tolerances?"
+    },
+    {
+      "id": "general_fuse_material_semantics",
+      "owner": "RCS-009",
+      "question": "Can General Fuse/CellsBuilder provide useful regularized/deferred material-cell semantics at manufacturing scale?"
+    },
+    {
+      "id": "history_semantic_completeness",
+      "owner": "RCS-008",
+      "question": "How complete and stable is OCCT history for split/merge/replacement workloads compared with a programme-owned ancestry model?"
+    },
+    {
+      "id": "step_conformance_policy",
+      "owner": "RCS-005",
+      "question": "Which STEP schema/body/product/healing/unit/tolerance policy constitutes programme success?"
+    },
+    {
+      "id": "concurrent_exchange_isolation",
+      "owner": "follow-up/RCS-013",
+      "question": "Does the intended worker topology safely isolate STEP sessions, global translation parameters and concurrent exact operations?"
+    },
+    {
+      "id": "windows_toolkit_footprint",
+      "owner": "RCS-006/implementation spike",
+      "question": "What is the minimal OCCT toolkit/dependency footprint for the Windows baseline harness and first backend?"
+    },
+    {
+      "id": "production_distribution_compliance",
+      "owner": "RCS-013/handoff",
+      "question": "What notices, source distribution, relinking/replacement and third-party-license measures are required by the actual production distribution?"
+    }
+  ]
+}
