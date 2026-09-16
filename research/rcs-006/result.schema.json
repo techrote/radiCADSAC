@@ -10,7 +10,6 @@
     "profile",
     "case_id",
     "source_family_id",
-    "backend",
     "attempt",
     "classification",
     "notes",
@@ -27,14 +26,7 @@
     "step_fixture_id": {"type": ["string", "null"]},
     "backend": {
       "type": "object",
-      "required": ["id", "version", "source_revision", "build_profile", "configuration"],
-      "properties": {
-        "id": {"type": "string"},
-        "version": {"type": "string"},
-        "source_revision": {"type": "string"},
-        "build_profile": {"type": "string"},
-        "configuration": {"type": "object"}
-      }
+      "description": "Optional per-attempt backend identity. In result schema 1.0 the authoritative backend/version/source/build pin is campaign-scoped in campaign.json and the immutable benchmark plan."
     },
     "attempt": {"type": "integer", "minimum": 1},
     "classification": {
