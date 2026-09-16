@@ -10,6 +10,7 @@
     "profile",
     "case_id",
     "source_family_id",
+    "backend",
     "attempt",
     "classification",
     "notes",
@@ -24,6 +25,17 @@
     "case_id": {"type": "string"},
     "source_family_id": {"type": "string"},
     "step_fixture_id": {"type": ["string", "null"]},
+    "backend": {
+      "type": "object",
+      "required": ["id", "version", "source_revision", "build_profile", "configuration"],
+      "properties": {
+        "id": {"type": "string"},
+        "version": {"type": "string"},
+        "source_revision": {"type": "string"},
+        "build_profile": {"type": "string"},
+        "configuration": {"type": "object"}
+      }
+    },
     "attempt": {"type": "integer", "minimum": 1},
     "classification": {
       "enum": [
@@ -53,73 +65,15 @@
         {"type": "null"},
         {
           "type": "object",
-          "required": [
-            "worker_schema",
-            "case_id",
-            "parameters",
-            "backend",
-            "boolean_operations",
-            "input_metrics",
-            "result_metrics",
-            "material_volume_removed_mm3",
-            "step",
-            "timing",
-            "max_rss_kb"
-          ],
-          "properties": {
-            "worker_schema": {"const": "rcs-006-occt-worker/1.0"},
-            "case_id": {"type": "string"},
-            "parameters": {"type": "object"},
-            "backend": {
-              "type": "object",
-              "required": ["id", "version", "expected_commit", "run_parallel", "non_destructive"],
-              "properties": {
-                "id": {"const": "occt"},
-                "version": {"const": "8.0.1"},
-                "expected_commit": {"const": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42"},
-                "run_parallel": {"const": false},
-                "non_destructive": {"const": true}
-              }
-            },
-            "input_metrics": {"$ref": "#/$defs/metrics"},
-            "result_metrics": {"$ref": "#/$defs/metrics"},
-            "step": {"type": "object"},
-            "timing": {"type": "object"}
-          }
+          "required": ["worker_schema", "case_id", "parameters", "backend", "input_metrics", "result_metrics", "timing"]
         }
       ]
     }
   },
   "$defs": {
-    "metrics": {
+    "normalized_metrics": {
       "type": "object",
-      "required": [
-        "is_null",
-        "valid_brep",
-        "topology",
-        "volume_mm3",
-        "surface_area_mm2",
-        "min_face_area_mm2",
-        "min_edge_length_mm",
-        "bbox_mm",
-        "analytic_surfaces",
-        "analytic_curves"
-      ],
-      "properties": {
-        "is_null": {"type": "boolean"},
-        "valid_brep": {"type": "boolean"},
-        "topology": {
-          "type": "object",
-          "required": ["vertices", "edges", "faces", "shells", "solids"]
-        },
-        "volume_mm3": {"type": "number"},
-        "surface_area_mm2": {"type": "number"},
-        "min_face_area_mm2": {"type": "number"},
-        "min_edge_length_mm": {"type": "number"},
-        "bbox_mm": {"type": "object"},
-        "analytic_surfaces": {"type": "object"},
-        "analytic_curves": {"type": "object"}
-      }
+      "description": "Backend-neutral normalized geometry metrics may be promoted here in later minor schema revisions; backend-specific details remain in worker payloads."
     }
   }
 }
