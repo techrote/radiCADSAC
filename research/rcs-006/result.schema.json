@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://techrote.github.io/radiCADSAC/schemas/rcs-006-result-1.0.json",
+  "title": "RCS-006 benchmark attempt result",
+  "type": "object",
+  "required": [
+    "result_schema",
+    "run_started_utc",
+    "plan_id",
+    "profile",
+    "case_id",
+    "source_family_id",
+    "attempt",
+    "classification",
+    "notes",
+    "wall_ms",
+    "worker"
+  ],
+  "properties": {
+    "result_schema": {"const": "rcs-006-result/1.0"},
+    "run_started_utc": {"type": "string"},
+    "plan_id": {"type": "string"},
+    "profile": {"type": "string"},
+    "case_id": {"type": "string"},
+    "source_family_id": {"type": "string"},
+    "step_fixture_id": {"type": ["string", "null"]},
+    "attempt": {"type": "integer", "minimum": 1},
+    "classification": {
+      "enum": [
+        "success",
+        "rejected input",
+        "algorithm returned error/status",
+        "invalid topology",
+        "valid topology but wrong geometry",
+        "geometric tolerance breach",
+        "crash",
+        "hang/timeout",
+        "excessive runtime",
+        "excessive memory",
+        "nondeterministic result",
+        "STEP writer failure",
+        "STEP round-trip failure",
+        "downstream consumer failure"
+      ]
+    },
+    "notes": {"type": "array", "items": {"type": "string"}},
+    "exit_code": {"type": ["integer", "null"]},
+    "wall_ms": {"type": "number", "minimum": 0},
+    "stderr": {"type": "string"},
+    "step_file": {"type": ["string", "null"]},
+    "worker": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": [
+            "worker_schema",
+            "case_id",
+            "parameters",
+            "backend",
+            "boolean_operations",
+            "input_metrics",
+            "result_metrics",
+            "material_volume_removed_mm3",
+            "step",
+            "timing",
+            "max_rss_kb"
+          ],
+          "properties": {
+            "worker_schema": {"const": "rcs-006-occt-worker/1.0"},
+            "case_id": {"type": "string"},
+            "parameters": {"type": "object"},
+            "backend": {
+              "type": "object",
+              "required": ["id", "version", "expected_commit", "run_parallel", "non_destructive"],
+              "properties": {
+                "id": {"const": "occt"},
+                "version": {"const": "8.0.1"},
+                "expected_commit": {"const": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42"},
+                "run_parallel": {"const": false},
+                "non_destructive": {"const": true}
+              }
+            },
+            "input_metrics": {"$ref": "#/$defs/metrics"},
+            "result_metrics": {"$ref": "#/$defs/metrics"},
+            "step": {"type": "object"},
+            "timing": {"type": "object"}
+          }
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "metrics": {
+      "type": "object",
+      "required": [
+        "is_null",
+        "valid_brep",
+        "topology",
+        "volume_mm3",
+        "surface_area_mm2",
+        "min_face_area_mm2",
+        "min_edge_length_mm",
+        "bbox_mm",
+        "analytic_surfaces",
+        "analytic_curves"
+      ],
+      "properties": {
+        "is_null": {"type": "boolean"},
+        "valid_brep": {"type": "boolean"},
+        "topology": {
+          "type": "object",
+          "required": ["vertices", "edges", "faces", "shells", "solids"]
+        },
+        "volume_mm3": {"type": "number"},
+        "surface_area_mm2": {"type": "number"},
+        "min_face_area_mm2": {"type": "number"},
+        "min_edge_length_mm": {"type": "number"},
+        "bbox_mm": {"type": "object"},
+        "analytic_surfaces": {"type": "object"},
+        "analytic_curves": {"type": "object"}
+      }
+    }
+  }
+}
