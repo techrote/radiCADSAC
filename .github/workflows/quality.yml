@@ -30,7 +30,7 @@ jobs:
     timeout-minutes: 50
     env:
       RCS006_OCCT_PREFIX: ${{ github.workspace }}/.deps/rcs006/occt-8.0.1
-      RCS006_BUILD_JOBS: 2
+      RCS006_BUILD_JOBS: 1
     steps:
       - name: Checkout
         uses: actions/checkout@v4
