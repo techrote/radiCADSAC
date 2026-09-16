@@ -1,6 +1,6 @@
 # Source baseline and external research anchors
 
-Status: initial source map; expand during issues  
+Status: Gate-1 source baseline; expand during research issues  
 Date: 2026-09-16
 
 ## Purpose
@@ -11,9 +11,18 @@ This file records the initial external technical anchors used to prevent the pla
 
 At the founding date, the latest published Open CASCADE Technology release is **8.0.1**, released 2026-07-30.
 
-Primary source:
+Pinned Gate-1 baseline:
 
-- OCCT releases: https://github.com/Open-Cascade-SAS/OCCT/releases
+- upstream repository: `Open-Cascade-SAS/OCCT`;
+- release tag: `V8.0.1`;
+- commit: `b8f597c677811d1f9f4d8a97f5ae2825c0353a42`.
+
+Primary sources:
+
+- releases: https://github.com/Open-Cascade-SAS/OCCT/releases
+- pinned tag ref: https://api.github.com/repos/Open-Cascade-SAS/OCCT/git/ref/tags/V8.0.1
+
+The exact tag commit was verified during RCS-001. RCS-004 may intentionally introduce additional comparison versions/commits, but every experiment must record them explicitly.
 
 Relevant 8.0.1 release-note themes include:
 
@@ -23,7 +32,7 @@ Relevant 8.0.1 release-note themes include:
 - STEP export reliability fixes;
 - C++17/API baseline retained from 8.0.0p1.
 
-Implication: the programme must benchmark a pinned 8.0.1 baseline rather than infer current behaviour from older OCCT versions.
+Implication: the programme must benchmark the pinned 8.0.1 baseline rather than infer current behaviour from older OCCT versions.
 
 ## OCCT licensing baseline
 
@@ -45,7 +54,7 @@ Primary sources:
 - kernel manual: https://doc.cgal.org/latest/Kernel_23/index.html
 - exact-predicates/exact-constructions kernel: https://doc.cgal.org/latest/Kernel_23/classCGAL_1_1Exact__predicates__exact__constructions__kernel.html
 
-Implication: “floating point plus larger epsilon” is not the only robustness strategy worth evaluating.
+Implication: `floating point plus larger epsilon` is not the only robustness strategy worth evaluating.
 
 ## CGAL Nef baseline
 
@@ -79,7 +88,9 @@ The STEP conformance issue should inspect current OCCT 8.0.x documentation/sourc
 - `STEPControl_Writer`;
 - transfer modes for manifold solid B-rep / brep-with-voids;
 - shape healing applied before/while writing;
+- dimensional unit transfer/conversion;
 - tolerances transferred into STEP;
+- multi-body/product representation relevant to disconnected workpiece material;
 - XDE/STEPCAF capabilities if metadata becomes relevant;
 - thread-safety and determinism constraints;
 - read-back validation.
@@ -115,4 +126,4 @@ Any conclusion that drives architecture should state which category supports it.
 
 ## Source pinning rule
 
-Experiments must record exact versions/commits of external dependencies. “Current OCCT” is not a reproducible result.
+Experiments must record exact versions/commits of external dependencies. `Current OCCT` is not a reproducible result.
