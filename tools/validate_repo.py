@@ -36,8 +36,13 @@ for path in markdown_files:
     if "\t" in text:
         errors.append(f"{rel}: contains tab characters")
     for lineno, line in enumerate(text.splitlines(), 1):
-        if line.rstrip() != line:
-            errors.append(f"{rel}:{lineno}: trailing whitespace")
+        trailing_spaces = len(line) - len(line.rstrip(" "))
+        # Two trailing spaces are the standard Markdown hard-line-break syntax.
+        if trailing_spaces not in (0, 2):
+            errors.append(
+                f"{rel}:{lineno}: accidental trailing whitespace "
+                f"({trailing_spaces} spaces)"
+            )
     for match in local_link.finditer(text):
         target = match.group(1).strip()
         if not target or target.startswith(("plugin://", "sandbox:")):
