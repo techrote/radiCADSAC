@@ -22,3 +22,59 @@ jobs:
         run: python3 tools/validate_rcs004.py
       - name: Validate RCS-005 STEP conformance contract
         run: python3 tools/validate_rcs005.py
+      - name: Validate RCS-006 harness contracts
+        run: python3 tools/validate_rcs006.py
+
+  rcs006-occt-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    env:
+      RCS006_OCCT_PREFIX: ${{ github.workspace }}/.deps/rcs006/occt-8.0.1
+      RCS006_BUILD_JOBS: 2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install build prerequisites
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build
+      - name: Restore pinned OCCT build cache
+        uses: actions/cache@v4
+        with:
+          path: .deps/rcs006/occt-8.0.1
+          key: rcs006-occt-8.0.1-${{ runner.os }}-${{ hashFiles('research/rcs-006/harness/bootstrap_occt.sh') }}
+      - name: Bootstrap exact OCCT baseline
+        run: bash research/rcs-006/harness/bootstrap_occt.sh
+      - name: Configure RCS-006 worker
+        run: |
+          cmake -S research/rcs-006/harness -B .build/rcs006 -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_PREFIX_PATH="$RCS006_OCCT_PREFIX"
+      - name: Build RCS-006 worker
+        run: cmake --build .build/rcs006 --parallel 2
+      - name: Run process-isolated smoke campaign
+        shell: bash
+        run: |
+          set +e
+          export LD_LIBRARY_PATH="$RCS006_OCCT_PREFIX/lib:$RCS006_OCCT_PREFIX/lib64:${LD_LIBRARY_PATH:-}"
+          python3 research/rcs-006/harness/run_campaign.py \
+            --worker .build/rcs006/rcs006_occt_worker \
+            --profile smoke \
+            --repeats 2 \
+            --out-dir .results/rcs006-smoke
+          status=$?
+          set -e
+          # Exit 2 means the harness completed and measured one or more baseline defects.
+          # Such negative results are research output; structural validation below remains the CI gate.
+          if [[ "$status" -ne 0 && "$status" -ne 2 ]]; then
+            exit "$status"
+          fi
+      - name: Validate smoke result artifacts
+        run: python3 tools/validate_rcs006.py --results-dir .results/rcs006-smoke
+      - name: Upload RCS-006 smoke artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rcs006-occt-8.0.1-smoke
+          path: .results/rcs006-smoke
+          if-no-files-found: error
