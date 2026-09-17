@@ -1,139 +1,153 @@
 # Realistic lathe tool-envelope derivation research
 
-Status: RCS-020 candidate report pending hosted measured evidence  
+Status: **RCS-020 accepted measured research pending merge**  
 Date: 2026-09-17  
-Issue: RCS-020 / #39
+Issue: RCS-020 / #39  
+Measured summary: `research/rcs-020/measured-summary-v1.json`
 
 ## Purpose
 
-RCS-020 closes the most important qualification gap left by RCS-010. The accepted axisymmetric lathe material-domain experiment showed that a completed 2D `(z,r)` material boundary can outperform repeated general 3D cutter subtraction and reconcile to conventional B-rep/STEP. It did **not** show how a realistic insert/tool and canonical machine motion become that boundary.
-
-This campaign therefore begins with explicit tool geometry and pose/path semantics rather than target radii or finished profiles.
+RCS-020 closes the main qualification gap left by RCS-010. RCS-010 showed that a completed 2D axial/radial material profile can be a robust first-class lathe representation, but its experiment began after the removal profile was already known. RCS-020 starts instead from explicit tool geometry, approach/orientation, canonical tool-centre trajectories, and reachability rules, then derives the material profile before invoking the accepted RCS-010 reconstruction/STEP comparator.
 
 ## Hypotheses
 
 ### H1 — real radiused-tool motion can feed the specialized provider
 
-For a bounded fixed-axis subset, the swept material envelope of a circular insert nose plus explicit canonical tool-centre motion can be reduced into the RCS-010 axial/radial material domain within a declared construction budget.
+**Supported for the measured bounded subset.** Circular-nose external and internal tool paths produced material profiles within the declared independent-oracle budget, and all eight one-body qualified cases passed the RCS-010 repeated/batched/axisymmetric geometry checks plus their enabled STEP Layer A-C round trips.
 
-Falsification: the independently calculated material oracle disagrees beyond budget, or the resulting conventional B-rep/STEP comparison violates the accepted geometry/body gates.
+### H2 — approach and holder reachability belong in the capability predicate
 
-### H2 — tool approach and holder reachability belong in the capability predicate
-
-A rotationally symmetric target shape is not sufficient proof that the specialized provider may execute an operation. Tool/holder approach geometry may make a nominal undercut unreachable without collision.
-
-Falsification: no tested reachability condition changes the safe supported/refused boundary, or the proposed collision test cannot distinguish an intentionally unreachable case.
+**Supported.** The deliberately stepped undercut case detected holder collision after four conservative samples and returned `refused_unsupported`. RCS-020 therefore rejects the idea that rotational symmetry of the desired material alone is sufficient for specialized-provider admission.
 
 ### H3 — grooving/parting can preserve explicit connectivity semantics
 
-A bounded groove/parting tool model with cutting width and rounded corners can represent a partial groove and a complete parting event without losing the second disconnected body.
-
-Falsification: complete cut-through is collapsed back to one body, one body is dropped in STEP control, or corner-radius material differs from its independent oracle outside budget.
+**Supported for the measured model.** A 2.0 mm cutting-width tool with 0.2 mm corner radii produced a bounded partial-groove profile. Complete parting generated a 1.6 mm zero-material interval and two durable material regions; the independent OCCT connectivity/STEP control returned two solids before export and two solids after fresh STEP read-back.
 
 ## Tool-model source basis
 
-The research values are representative rather than catalogue-locked.
-
-Primary manufacturer material recorded in `research/rcs-020/experiment-plan-v1.json` supplies evidence that:
-
-- external turning practice uses geometry-critical entering/approach angle and insert nose radius;
-- a representative Sandvik training setup uses 95° entering angle with a CNMG-class insert and 0.8 mm nose radius;
-- current parting/grooving products specify cutting width and left/right corner radii.
-
-The experiment uses these values to define immutable abstract tools. Product identity is not part of programme semantics.
+The tested definitions are representative abstract tools, not product IDs. Primary manufacturer material recorded in `research/rcs-020/experiment-plan-v1.json` supports the use of geometry-critical insert nose radius, approach/entering angle, grooving/parting cutting width, and corner radii. The campaign exercised a 0.8 mm external nose at 95° and 45° approach configurations, a 0.4 mm internal boring nose, and a 2.0 mm / R0.2 grooving-parting profile.
 
 ## Experiment design
 
 ### Circular-nose generator
 
-For OD, shoulder, taper, retrace and boring cases, the candidate generator forms the Minkowski sum of each canonical tool-centre segment with a circular nose. Circular caps are polygonized under an explicit chord-error limit; vertical intersections of that candidate envelope then produce the derived radial material boundary.
+The candidate generator polygonizes the Minkowski capsule of a circular insert nose swept along each canonical tool-centre segment under a `0.0001 mm` circular chord-error policy, then derives an axial/radial material boundary.
 
-### Independent oracle
+### Independent circular-nose oracle
 
-The oracle does not reuse the polygon generator. It independently solves exact vertical intersections of the segment-plus-disc capsule from endpoint-circle and parallel-offset-line geometry, then integrates the resulting material state at a substantially finer step with a coarse/fine convergence check.
-
-The candidate therefore cannot pass simply because it compares with itself.
+The oracle does not call the polygon generator. It separately solves exact vertical intersections of endpoint circles and segment-offset lines, then integrates the material state at fine spatial resolution with a convergence check. The largest measured candidate/oracle material-volume difference among the eight one-body qualified cases was **0.0164630791 mm³**, below the predeclared `0.05 mm³` campaign budget.
 
 ### Facing
 
-Facing is explicitly represented rather than inferred from an OD fixture. A radial sweep of the radiused nose must cover from spindle axis through the stock OD. The new front plane is derived from the minimum axial support of that nose sweep. Its conventional B-rep reconstruction is then compared through RCS-010.
+Facing is not substituted with a target CAD plane. A radial sweep of the R0.8 nose derives its front plane from the minimum axial support of the tool envelope. The measured candidate and closed-form oracle both produced **z = 1.0 mm**, with zero material-volume disagreement.
 
-### Grooving and parting
+### Grooving and parting oracle correction
 
-The groove model uses explicit cutting width plus left/right corner radius. The candidate constructs rounded groove corners; a separately coded analytic radius function provides the material-volume oracle.
+The first complete ten-case hosted execution exposed a weakness in the *research oracle*, not the candidate profile. Uniform trapezoidal integration across a complete parting discontinuity produced a false `0.3141255 mm³` coarse/fine discrepancy. The candidate profile itself was already close to the physical rounded-groove solution.
 
-Complete parting has a finite zero-material axial interval and therefore two disconnected material bodies. Because the single-profile RCS-010 worker is a one-body reconstruction comparator, RCS-020 uses the already qualified RCS-006 parting case solely as a conventional multi-solid/STEP connectivity control. That control is not misrepresented as proof that a rectangular slot is geometrically equivalent to the rounded groove envelope.
+RCS-020 therefore replaced that discontinuity-sensitive acceptance oracle with an independent closed-form integral of the exact rounded-groove radius function. No tolerance was widened. For complete parting:
+
+- candidate material volume: **98017.69562984923 mm³**;
+- closed-form oracle: **98017.69561097043 mm³**;
+- absolute difference: **1.8878796e-05 mm³**.
+
+The discarded numerical quadrature remains recorded as diagnostic negative evidence in the measured summary.
 
 ### Reachability
 
-A deliberately stepped undercut case evaluates a conservative holder ray after a defined insert-to-holder setback. Collision with material causes `refused_unsupported`; the experiment does not alter the target profile or widen tolerance to make the operation executable.
+A conservative holder ray begins after a defined insert-to-holder setback. The undercut fixture reached material at approximately `(z=20.0202796 mm, r=8.7202796 mm)` where stock radius was `10 mm`, and the operation was explicitly refused instead of being converted into a feasible target profile.
 
-## Required cases
+## Measured campaign
 
-The machine-readable plan covers:
+Accepted hosted evidence is workflow run **35275577906**, source head `9a90435a7f9cd07ab36eb9185c227c6e827e5ef9`, artifact **10519883446**, artifact ZIP SHA-256 `e595847e03123b9898dd37d83e49f2a983c4633fdf93ce7b20cec53360db1eec`.
 
-- OD turning with R0.8 nose at 95° approach;
-- facing from the same radiused external tool;
-- shoulder creation;
-- a taper path under a second 45° approach configuration;
-- 20-event exact retrace/finishing history;
-- R0.4 through boring;
-- R0.4 blind boring;
-- partial R0.2-corner groove;
-- full parting producing two bodies;
-- holder-collision undercut refusal.
+The environment was Ubuntu 24.04.5 / GNU C++ 13.3.0 with the exact OCCT 8.0.1 baseline at commit `b8f597c677811d1f9f4d8a97f5ae2825c0353a42`, build profile `release-shared-cxx17-worker-only-headless-v4`.
 
-## Measurements
+### Aggregate results
 
-The hosted campaign records:
+- **10/10** required cases completed the campaign and validation.
+- **8** one-body tool-derived cases passed independent material-oracle checks and downstream RCS-010 geometry validation.
+- **24/24** enabled STEP strategy round trips passed.
+- Maximum candidate/oracle material-volume delta across the one-body qualified cases: **0.0164630791 mm³**.
+- Maximum OCCT strategy-to-axisymmetric volume delta: **7.28e-12 mm³**.
+- Maximum OCCT strategy bounding-box delta: **2.13e-14 mm**.
+- Maximum STEP read-back volume delta: **3.29e-10 mm³**.
+- Maximum STEP read-back bounding-box delta: **2.13e-14 mm**.
+- Across the eight one-body cases the repeated comparator used **28 material Booleans**, the batched comparator **8**, and the axisymmetric material provider **0**.
 
-- tool and canonical trajectory used to derive each envelope;
-- candidate profile point count and construction tolerance;
-- independently integrated material volume and convergence delta;
-- candidate/oracle material-volume error;
-- holder reachability result where applicable;
-- OCCT 8.0.1 repeated-3D, batched-3D and axisymmetric reconstruction metrics;
-- B-rep validity, body count, volume and bounds;
-- STEP Layer A-C fresh-readback results for qualified one-body cases;
-- multi-body STEP connectivity for complete parting;
-- material Boolean counts for exact retrace.
+### Tool-derived case results
 
-## Capability interpretation
+| Case | Key result |
+|---|---|
+| OD R0.8 / 95° | candidate/oracle volume delta `0.00976723 mm³`; all geometry/STEP checks pass |
+| Facing R0.8 / 95° | derived front plane exactly `z=1.0 mm`; zero oracle material delta; all checks pass |
+| Shoulder R0.8 / 95° | delta `0.01646308 mm³`; all checks pass |
+| Taper R0.8 / 45° | delta `0.01374463 mm³`; all checks pass |
+| Exact retrace ×20 | same derived material profile as first OD pass; 20 repeated Booleans vs 1 batch vs 0 axisymmetric material Booleans; all checks pass |
+| Through boring R0.4 | zero oracle material delta; all checks pass |
+| Blind boring R0.4 | delta `0.00903819 mm³`; all checks pass |
+| Rounded groove R0.2 | closed-form oracle delta `0.00157712 mm³`; all checks pass |
+| Complete parting | rounded-profile delta `1.89e-05 mm³`; two bodies; two-solid STEP read-back control passes |
+| Undercut holder collision | collision measured; `refused_unsupported` as intended |
 
-RCS-020 distinguishes four outcomes:
+## CI repair history and negative evidence
 
-1. **qualified exact/bounded material semantics** — tool-derived envelope and independent oracle agree, provider reconstruction is valid, and applicable STEP automated gates pass;
-2. **bounded material capability with analytic-surface qualification still open** — material is demonstrated but the research adapter discretizes a boundary whose exact analytic reconstruction has not been proven;
-3. **provider handoff required** — the manufacturing semantics remain valid but fall outside this specialized provider's demonstrated representation/reachability domain;
-4. **refused unsupported** — no safe specialized-provider execution exists under the tested tool/setup semantics.
+The campaign intentionally preserves three research-harness corrections discovered by hosted measurement:
 
-The expected holder-collision undercut belongs to category 4 and is a positive safety result, not an experiment failure.
+1. OCCT STEP routines emit human-readable transfer diagnostics before the worker JSON. The supervisor was corrected to parse the final complete JSON record instead of assuming stdout contains only JSON.
+2. Existing RCS-010 and RCS-006 research workers label their final schema fields differently (`schema` versus `worker_schema`). The supervisor now accepts both explicit research protocols.
+3. Uniform trapezoidal integration was demonstrated to be a poor acceptance oracle at a parting discontinuity and was replaced with the exact rounded-groove integral. The original false discrepancy remains recorded rather than deleted.
+
+None of these repairs widened a geometry, material, or STEP acceptance budget.
+
+## Capability matrix
+
+### Qualified bounded material semantics
+
+RCS-020 supports retaining the axisymmetric provider for the measured fixed-axis subset when admission includes explicit tool geometry, canonical path, and reachability:
+
+- OD turning with the tested circular-nose external tool class;
+- facing;
+- shoulder formation;
+- linear taper motion under the tested alternate approach configuration;
+- exact/repeated finishing/retrace;
+- through and blind boring with the tested circular-nose internal class;
+- bounded rounded-groove material profiles;
+- complete parting connectivity semantics.
+
+### Provider handoff or refusal
+
+The tested holder-collision undercut is `refused_unsupported`. Operations whose tool/setup semantics lie outside the qualified envelope or reachability predicate require another qualified provider or an explicit refusal; they may not be reduced to desired target profiles silently.
+
+### Still unqualified
+
+- exact toroidal/circular-insert-nose analytic surface reconstruction in STEP from this polygon research adapter;
+- broad holder/fixture interference beyond the deliberately bounded conservative reachability probe;
+- general undercut and form tooling;
+- live-tool, eccentric, or other non-axisymmetric lathe operations.
 
 ## STEP boundary
 
-The RCS-010 comparator revolves a polygonized radial profile. A successful read-back therefore demonstrates material/body/engineering geometry fidelity within RCS-005 automated budgets, but it does not automatically demonstrate that a circular insert nose has been reconstructed into an exact toroidal/other analytic surface class.
+All 24 enabled repeated/batched/axisymmetric STEP Layer A-C round trips passed with negligible geometric deltas. This qualifies the measured *material/B-rep exchange result*, not exact reconstruction of the insert nose as a toroidal or other preferred analytic class. The polygon research adapter often reconstructs many conical segments, which is precisely why `analytic_nose_surface_exactly_qualified` remains false.
 
-RCS-020 explicitly records `analytic_nose_surface_exactly_qualified = false` for that adapter. Gate 5 may retain this as a bounded reconstruction question or later evidence may qualify a provenance-assisted exact reconstruction path. The campaign will not obscure that distinction.
+RCS-022 remains responsible for independent Layer-D interoperability qualification of the exact production-candidate export profile.
 
 ## Implications for MSAC
 
-MSAC may continue to emit physical tool geometry revisions, frames/orientation and canonical trajectories rather than target CAD profiles. A tool change or orientation change remains semantic input, even when two motions happen to produce similar final material.
-
-Unsafe tool reachability must surface as an explicit backend capability/refusal status rather than being converted into a hidden geometry approximation.
+MSAC should preserve immutable physical tool definitions, setup/frame semantics, and canonical motion. It does not need to emit finished CAD profiles to make the lathe provider work. Tool orientation and reachability remain manufacturing semantics that may affect whether an operation is accepted.
 
 ## Implications for OpenSimachinist
 
-If measured evidence passes, the RCS-010 provider remains first-class but with a refined entry predicate: fixed-axis rotational material semantics plus a qualified tool-envelope/reachability model. The private 2D material representation remains replaceable; neither commercial insert IDs nor OCCT topology become programme identity.
+The RCS-010 provider remains a first-class bounded specialization, now with a stronger evidence-backed entry predicate: **qualified rotational material semantics + qualified tool-envelope construction + qualified reachability + explicit body/connectivity handling**.
+
+The `(z,r)` state, polygon research adapter, and OCCT topology remain replaceable derived implementation state.
 
 ## Unresolved questions
 
-Before measured evidence is frozen, the following remain OPEN:
+- provenance-assisted exact analytic reconstruction of nose-generated curved surfaces before STEP;
+- production-scale holder/fixture collision and reachability rather than the bounded research probe;
+- additional insert/form-tool families and complex undercut tooling;
+- live-tool/eccentric/non-axisymmetric lathe dispatch;
+- broader parameter sweeps beyond the ten representative qualification fixtures.
 
-- exact quantitative material/oracle deviations for the hosted campaign;
-- whether every polygonized profile remains robust through repeated/batched OCCT comparison;
-- exact nose-radius analytic surface reconstruction in conventional STEP;
-- broader holder/fixture interference beyond the deliberately bounded reachability model;
-- general undercut tooling and complex form tools;
-- live-tool/eccentric/non-axisymmetric operations, which remain outside this provider by design.
-
-The final RCS-020 report must replace candidate language with measured evidence and narrow the capability matrix if any required case falsifies the hypotheses.
+These do not invalidate the measured bounded provider capability. They remain explicit capability/reconstruction boundaries for Gate 5 and later work.
