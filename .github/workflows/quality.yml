@@ -88,12 +88,12 @@ jobs:
           printf '%s\n' "$output"
           grep -Fq "RCS-006 OCCT already installed" <<<"$output"
 
-  # Stage 2+ is intentionally paused while the dependency checkpoint is being
-  # proven. It will be enabled when worker configure/build is addressed next;
-  # the full smoke workload below is preserved unchanged.
+  # Stage 2+: compile the disposable OCCT worker, execute the process-isolated
+  # smoke campaign twice, validate its machine-readable records, and preserve
+  # the results as CI evidence. Measured geometry defects are research output;
+  # harness/build/contract failures remain CI failures.
   rcs006-worker-smoke:
     needs: rcs006-occt-cache-verify
-    if: ${{ false }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
