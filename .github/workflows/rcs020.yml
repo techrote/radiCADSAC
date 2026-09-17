@@ -20,8 +20,11 @@ jobs:
         run: |
           python3 -m py_compile research/rcs-020/tool_envelope.py
           python3 -m py_compile research/rcs-020/run_campaign.py
+          python3 -m py_compile research/rcs-020/refine_oracles.py
       - name: Exercise material-only campaign
-        run: python3 research/rcs-020/run_campaign.py --out-dir .results/rcs020-material-only
+        run: |
+          python3 research/rcs-020/run_campaign.py --out-dir .results/rcs020-material-only
+          python3 research/rcs-020/refine_oracles.py --results-dir .results/rcs020-material-only
 
   realistic-envelope-smoke:
     needs: validate-rcs020
@@ -78,6 +81,8 @@ jobs:
             --lathe-worker .build/rcs010/rcs010_lathe_worker \
             --baseline-worker .build/rcs006/rcs006_occt_worker \
             --out-dir .results/rcs020
+      - name: Refine groove and parting acceptance oracle
+        run: python3 research/rcs-020/refine_oracles.py --results-dir .results/rcs020
       - name: Validate measured RCS-020 evidence
         run: python3 tools/validate_rcs020.py --results-dir .results/rcs020
       - name: Upload RCS-020 evidence
