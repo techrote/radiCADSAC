@@ -6,7 +6,7 @@
     "version": "8.0.1",
     "tag": "V8_0_1",
     "commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42",
-    "build_profile": "release-shared-cxx17-minimal-headless-v3",
+    "build_profile": "release-shared-cxx17-worker-only-headless-v4",
     "run_parallel": false,
     "non_destructive_booleans": true
   },
