@@ -1,0 +1,25 @@
+name: RCS-013 architecture synthesis
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    paths:
+      - 'docs/20-OPENSIMACHINIST-ARCHITECTURE-SYNTHESIS.md'
+      - 'docs/decisions/DR-0015-gate-2-semantic-provider-hybrid-architecture.md'
+      - 'research/rcs-013/**'
+      - 'tools/validate_rcs013.py'
+      - 'README.md'
+      - '.github/workflows/rcs013-architecture.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate-rcs013:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Validate RCS-013 architecture synthesis
+        run: python3 tools/validate_rcs013.py
