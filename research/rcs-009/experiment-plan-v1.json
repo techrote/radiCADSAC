@@ -1,0 +1,188 @@
+{
+  "experiment_plan_schema": "rcs-009-experiment-plan/1.0",
+  "plan_id": "regularized-deferred-topology-v1",
+  "date": "2026-09-17",
+  "baseline": {
+    "source": "research/rcs-006/benchmark-plan-v1.json",
+    "backend": "occt",
+    "version": "8.0.1",
+    "tag": "V8_0_1",
+    "commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42",
+    "strategy": "immediate sequential B-rep materialization"
+  },
+  "candidate": {
+    "strategy": "regularized volumetric semantics with bounded deferred removal ledger",
+    "rules": [
+      "Retain canonical operation/provenance events even when geometry recomputation is elided.",
+      "Do not materialize a new B-rep for proven point/edge/face-only zero-volume contact.",
+      "Do not discard positive-volume material removal merely because it lies below a broad numerical tolerance.",
+      "Collapse geometry recomputation only for provenance-equivalent removal envelopes; never infer equivalence from transient topology identity.",
+      "At a reconciliation checkpoint, apply the unique pending positive-volume removal envelopes in one multi-tool Boolean where the tested representation permits it.",
+      "Force a connectivity checkpoint before any body-retention/split decision and reconcile before STEP export."
+    ]
+  },
+  "comparison_tolerances": {
+    "volume_abs_mm3": 1e-7,
+    "bbox_abs_mm": 1e-7
+  },
+  "profiles": {
+    "smoke": [
+      "face-contact-zero",
+      "tangent-contact-zero",
+      "tangent-overlap-1um",
+      "thin-skim-0.1um",
+      "repeated-slot-20",
+      "repeated-slot-200",
+      "overlapping-slots",
+      "mill-cut-through"
+    ],
+    "baseline": [
+      "face-contact-zero",
+      "face-overlap-0.1um",
+      "tangent-contact-zero",
+      "tangent-overlap-1um",
+      "thin-skim-0.1um",
+      "thin-skim-1um",
+      "repeated-slot-20",
+      "repeated-slot-200",
+      "overlapping-slots",
+      "mill-cut-through"
+    ]
+  },
+  "cases": [
+    {
+      "id": "face-contact-zero",
+      "category": "lower_dimensional_contact",
+      "source_baseline_case": "coincident-face-zero",
+      "source_family_id": "generic-coincidence-coplanarity",
+      "worker_case": "coincident_face",
+      "parameters": {"offset_mm": "0", "fuzzy_mm": "0"},
+      "expected_material_change": false,
+      "expected_body_count": 1,
+      "expected_candidate_boolean_operations": 0,
+      "expected_deferred_zero_measure_contacts": 1,
+      "expected_deduplicated_events": 0
+    },
+    {
+      "id": "face-overlap-0.1um",
+      "category": "lower_dimensional_contact",
+      "source_baseline_case": "coincident-face-overlap",
+      "source_family_id": "generic-barely-overlapping-solids",
+      "worker_case": "coincident_face",
+      "parameters": {"offset_mm": "-0.0001", "fuzzy_mm": "0"},
+      "expected_material_change": true,
+      "expected_body_count": 1,
+      "expected_candidate_boolean_operations": 1,
+      "expected_deferred_zero_measure_contacts": 0,
+      "expected_deduplicated_events": 0
+    },
+    {
+      "id": "tangent-contact-zero",
+      "category": "tangent_entry_exit",
+      "source_baseline_case": "tangent-contact-zero",
+      "source_family_id": "mill-tangent-corner-entry-exit",
+      "worker_case": "tangent_contact",
+      "parameters": {"offset_mm": "0", "fuzzy_mm": "0"},
+      "expected_material_change": false,
+      "expected_body_count": 1,
+      "expected_candidate_boolean_operations": 0,
+      "expected_deferred_zero_measure_contacts": 1,
+      "expected_deduplicated_events": 0
+    },
+    {
+      "id": "tangent-overlap-1um",
+      "category": "tangent_entry_exit",
+      "source_baseline_case": "tangent-contact-overlap",
+      "source_family_id": "mill-tangent-corner-entry-exit",
+      "worker_case": "tangent_contact",
+      "parameters": {"offset_mm": "-0.001", "fuzzy_mm": "0"},
+      "expected_material_change": true,
+      "expected_body_count": 1,
+      "expected_candidate_boolean_operations": 1,
+      "expected_deferred_zero_measure_contacts": 0,
+      "expected_deduplicated_events": 0
+    },
+    {
+      "id": "thin-skim-0.1um",
+      "category": "sliver",
+      "source_baseline_case": "thin-skim-0.1um",
+      "source_family_id": "lathe-sub-tolerance-skim",
+      "worker_case": "thin_skim",
+      "parameters": {"depth_mm": "0.0001", "fuzzy_mm": "0"},
+      "expected_material_change": true,
+      "expected_body_count": 1,
+      "expected_candidate_boolean_operations": 1,
+      "expected_deferred_zero_measure_contacts": 0,
+      "expected_deduplicated_events": 0
+    },
+    {
+      "id": "thin-skim-1um",
+      "category": "sliver",
+      "source_baseline_case": "thin-skim-1um",
+      "source_family_id": "lathe-sub-tolerance-skim",
+      "worker_case": "thin_skim",
+      "parameters": {"depth_mm": "0.001", "fuzzy_mm": "0"},
+      "expected_material_change": true,
+      "expected_body_count": 1,
+      "expected_candidate_boolean_operations": 1,
+      "expected_deferred_zero_measure_contacts": 0,
+      "expected_deduplicated_events": 0
+    },
+    {
+      "id": "repeated-slot-20",
+      "category": "repeated_pass",
+      "source_baseline_case": "repeated-slot-20",
+      "source_family_id": "mill-repeated-identical-slot",
+      "worker_case": "repeated_slot",
+      "parameters": {"count": "20", "fuzzy_mm": "0"},
+      "expected_material_change": true,
+      "expected_body_count": 1,
+      "expected_candidate_boolean_operations": 1,
+      "expected_deferred_zero_measure_contacts": 0,
+      "expected_deduplicated_events": 19
+    },
+    {
+      "id": "repeated-slot-200",
+      "category": "repeated_pass",
+      "source_baseline_case": "repeated-slot-200",
+      "source_family_id": "mill-repeated-identical-slot",
+      "worker_case": "repeated_slot",
+      "parameters": {"count": "200", "fuzzy_mm": "0"},
+      "expected_material_change": true,
+      "expected_body_count": 1,
+      "expected_candidate_boolean_operations": 1,
+      "expected_deferred_zero_measure_contacts": 0,
+      "expected_deduplicated_events": 199
+    },
+    {
+      "id": "overlapping-slots",
+      "category": "overlapping_removal",
+      "source_baseline_case": "overlapping-slots",
+      "source_family_id": "mill-overlapping-slots-pockets",
+      "worker_case": "overlapping_slots",
+      "parameters": {"fuzzy_mm": "0"},
+      "expected_material_change": true,
+      "expected_body_count": 1,
+      "expected_candidate_boolean_operations": 1,
+      "expected_deferred_zero_measure_contacts": 0,
+      "expected_deduplicated_events": 0,
+      "probe_cells_builder": true
+    },
+    {
+      "id": "mill-cut-through",
+      "category": "connectivity_split",
+      "source_baseline_case": "mill-cut-through",
+      "source_family_id": "mill-cut-through-separation",
+      "worker_case": "mill_cut_through",
+      "parameters": {"slot_width_mm": "2", "fuzzy_mm": "0"},
+      "expected_material_change": true,
+      "expected_body_count": 2,
+      "expected_candidate_boolean_operations": 1,
+      "expected_deferred_zero_measure_contacts": 0,
+      "expected_deduplicated_events": 0,
+      "expected_connectivity_checkpoint": true,
+      "probe_cells_builder": true,
+      "step": {"enabled": true, "unit": "millimeter"}
+    }
+  ]
+}
