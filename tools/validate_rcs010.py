@@ -13,12 +13,12 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 EXPECTED_OCCT_COMMIT = "b8f597c677811d1f9f4d8a97f5ae2825c0353a42"
 EXPECTED_SMOKE = {
-    "od-finish", "facing", "shoulder", "taper", "id-bore-through",
-    "repeated-finish-20", "exact-retrace-100",
+    "od-finish", "facing", "shoulder", "taper", "id-bore-through", "id-bore-blind",
+    "repeated-finish-20", "exact-retrace-100", "noisy-feed-canonicalized",
 }
 EXPECTED_CATEGORIES = {
     "od_turning", "facing", "shoulder", "taper_chamfer", "id_boring",
-    "repeated_finishing", "exact_retrace",
+    "repeated_finishing", "exact_retrace", "canonicalized_analogue_feed",
 }
 REQUIRED_FILES = (
     ROOT / "docs/18-LATHE-MATERIAL-DOMAIN-RESEARCH.md",
@@ -222,6 +222,8 @@ if args.results_dir is not None:
                 error("required STEP strategy round-trips did not all pass")
             if int(s.get("provenance_noop_events", 0)) < 99:
                 error("smoke evidence lacks exact-retrace no-op coverage")
+            if int(s.get("raw_samples", 0)) < 9:
+                error("smoke evidence lacks bounded analogue-feed canonicalization coverage")
             repeated = int(s.get("repeated_boolean_operations", 0))
             batched = int(s.get("batched_boolean_operations", 0))
             axis = int(s.get("axisymmetric_boolean_operations", -1))
