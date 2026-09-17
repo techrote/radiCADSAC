@@ -1,61 +1,48 @@
 # RCS-021 — manual/freehand mill independent material oracle and bounded fallback
 
-Status: executable research harness; acceptance depends on hosted measured evidence.  
+Status: **accepted measured research; merge pending**  
 Issue: RCS-021 / #40  
-Date: 2026-09-17
+Date: 2026-09-17  
+Frozen evidence: workflow `35280105714`, full artifact `10522213307`, SHA-256 `bbdf14b8474753393d98d42babb94fee7c7309fed9a6a38c93962b289db391ba`.
 
 ## Purpose
 
-RCS-021 closes the Genesis-v1 manual/freehand milling evidence gap exposed by RCS-011. A successful OCCT Boolean, a valid B-rep, or a watertight fallback mesh is not treated as proof that the correct material was removed. The campaign therefore separates physical truth from every candidate geometry representation.
+RCS-021 closes the Genesis-v1 manual/freehand milling evidence gap exposed by RCS-011. A successful OCCT Boolean, valid B-rep, or watertight fallback mesh is not treated as proof that the correct material was removed. Physical material truth is evaluated independently of every candidate geometry representation.
 
-The founding scope remains fixed-axis milling in the right-handed Z-up workpiece frame. It does not claim arbitrary five-axis cutter reorientation.
+The founding scope is fixed-axis milling in the right-handed Z-up workpiece frame. Flat-end simultaneous XYZ is measured. Rounded/ball-nose evidence is limited to the committed constant-Z fixture; arbitrary tool-axis rotation/five-axis motion is not qualified.
 
 ## Independent oracle
 
-`material_oracle.py` evaluates the manufacturing path through the representation-neutral cutter field in `field.py`. For the flat-end tool the field is the union of swept vertical cutter columns; simultaneous XYZ motion is evaluated by a monotone field-level feasibility solve rather than by replaying OCCT Booleans. The rounded fixture uses a vertical-axis ball-nose lower hemisphere plus the cutter body above it.
+`material_oracle.py` evaluates the manufacturing path through the representation-neutral cutter field in `field.py`. A conservative adaptive octree uses the 1-Lipschitz field plus each cell half diagonal to certify whole-cell material/removal or retain an explicit uncertainty interval.
 
-The oracle uses a conservative adaptive octree. The cutter field is constructed as a maximum of 1-Lipschitz segment fields, so at a cell centre `c` with half diagonal `d`:
+Closed-form controls cover stationary cylindrical removal, a straight stadium slot, exact tangency, positive `1 um` plunge, and a stock-spanning through strip producing two bodies. All five were contained by the hosted independent oracle.
 
-- `f(c) > d` certifies the complete cell is removed;
-- `f(c) < -d` certifies the complete cell remains material;
-- otherwise the cell is subdivided, or contributes a conservative interval at the configured depth.
+The live RCS-011 revisit is decisive: sequential `retrace-jitter` produced `11490.990137750125 mm3` and was inside the oracle interval; one-shot `freehand_batch` produced a valid one-solid `12000.000000001159 mm3` result outside the oracle interval.
 
-This produces an explicit lower/upper final-material volume interval and a boundary spatial half-diagonal. The oracle is independent of OCCT, Manifold and the directional material candidate.
+## Tri-dexel / directional candidate
 
-Closed-form controls cover a stationary flat cutter, a straight stadium slot, zero-volume tangency, a pure positive plunge and a full through-strip producing two material bodies. A known result must lie inside the oracle interval before the campaign can pass.
+`tridexel.py` measures a machining-native directional interval representation with analytic Z-column heights. It records material-volume estimate and bounds, XY spatial support, disconnected body count, X/Y/Z interval complexity, deterministic engineering signature, runtime/RSS, and `bounded_directional_material_state_requires_brep_before_step`.
 
-## Tri-dexel / directional material candidate
+At `0.5 mm` pitch, five of fourteen fixtures close the founding `150 mm3` material-interval and `0.4 mm` spatial-support budgets; nine remain `accepted_pending_refinement`. Measured `0.25 mm` refinement closes the volume budget for `retrace-jitter` and `ball-rounded`, but not for `simultaneous-xyz` or `cut-through`.
 
-`tridexel.py` measures a machining-native directional interval representation. The candidate retains analytic Z-column heights over an XY sampling lattice and derives X/Y/Z material-interval counts from the same remaining-material field. It records:
-
-- a material volume estimate plus conservative lower/upper bounds;
-- an XY spatial support radius tied directly to pitch;
-- disconnected body count;
-- directional interval/representation complexity;
-- deterministic engineering signature;
-- runtime and peak RSS;
-- an explicit `requires_brep_before_step` reconciliation class.
-
-Resolution is a representation error channel, not a manufacturing tolerance. Refinement runs are retained for decisive cases. A positive 1 µm plunge may not be snapped away merely because the directional field or mesh resolution is coarser; it must remain present through analytic evidence or the candidate must refuse authoritative use.
+The positive `1 um` plunge remains positive; the through-cut retains two material bodies. Resolution is representation error, not permission to erase manufacturing intent.
 
 ## Manifold external comparator
 
-`manifold_fallback.py` executes the maintained Manifold 3.5.3 Python package, pinned to source commit `0edd9d54876f3135e431575214dd6d8a72866fee`. It evaluates the same programme-owned final-material field through `Manifold.level_set` with explicit edge-length and requested root-tolerance controls.
+`manifold_fallback.py` executes pinned Manifold 3.5.3 at source commit `0edd9d54876f3135e431575214dd6d8a72866fee`. Thirteen fixtures executed; every executed result lay inside the independent material interval and matched expected body count.
 
-The Manifold result is deliberately a comparator, not STEP-authoritative state. It records volume, surface area, body count, mesh complexity, status and reported tolerance. Features below the declared external resolution policy are classified `refused_resolution_budget` even though the mesh diagnostic is still executed. Any future engineering use must recover retained analytic boundaries/provenance, reconcile to conventional B-rep, then pass RCS-005.
+The `1 um` plunge is correctly `refused_resolution_budget` for external authoritative use. The 160-segment fixture is explicitly `external_resource_bound_not_executed` because the Python LevelSet callback would duplicate the scaling experiment at disproportionate CI cost.
 
-## RCS-011 revisit
+Manifold remains a comparator, not STEP-authoritative state. Any future engineering use must recover retained analytic boundaries/provenance, reconcile to conventional B-rep, then pass RCS-005.
 
-When supplied the pinned `rcs011_mill_worker`, `run_campaign.py` directly reruns:
+## RCS-011 bounded revisit
 
-- `retrace-jitter` with sequential `segment_sweep` and one-shot `freehand_batch`, comparing both volumes with the independent oracle interval;
-- `slot-clean` with the old dense `sampled_fallback` under a strict process timeout.
+`run_campaign.py --rcs011-worker ...` reruns:
 
-The required regression behavior is stronger than checking kernel status: the exact sequential retrace must agree with the independent material truth while the previously valid-but-wrong one-shot batch must be rejected by that truth. The sampled fallback must terminate with an explicit bounded success/error/timeout classification rather than being allowed to monopolize the campaign.
+- `retrace-jitter` with sequential `segment_sweep` and one-shot `freehand_batch`, both compared to the independent oracle;
+- `slot-clean` with the old dense `sampled_fallback` under a strict `10 s` process bound.
 
-## Fixture coverage
-
-The committed profile includes self-crossing motion, exact and jittered retrace, simultaneous XYZ, flat-end and rounded/ball-nose tools, tangent and near-tangent entry, positive 1 µm removal, overlapping paths, two-body cut-through, 160-segment freehand motion, and stationary/near-stationary engagement. The 160-segment fixture is deliberately larger than the 50-segment RCS-011 smoke case.
+The accepted run independently reproduced the valid-but-wrong one-shot retrace and again contained the sampled fallback as `hang/timeout`.
 
 ## Reproduction
 
@@ -66,12 +53,13 @@ python3 tools/validate_rcs021.py
 python3 -m py_compile research/rcs-021/*.py
 ```
 
-Representation-only campaign with the pinned external package:
+Representation campaign:
 
 ```bash
-python3 -m pip install --disable-pip-version-check manifold3d==3.5.3
+python3 -m pip install --disable-pip-version-check --only-binary=:all: manifold3d==3.5.3
 python3 research/rcs-021/run_campaign.py \
   --profile ci \
+  --repeats 2 \
   --out-dir .results/rcs021-material
 python3 tools/validate_rcs021.py --results-dir .results/rcs021-material
 ```
@@ -82,9 +70,10 @@ Full hosted comparison after building the accepted RCS-011 worker against pinned
 export LD_LIBRARY_PATH="$RCS006_OCCT_PREFIX/lib:$RCS006_OCCT_PREFIX/lib64:${LD_LIBRARY_PATH:-}"
 python3 research/rcs-021/run_campaign.py \
   --profile ci \
+  --repeats 2 \
   --rcs011-worker .build/rcs011/rcs011_mill_worker \
   --out-dir .results/rcs021
 python3 tools/validate_rcs021.py --results-dir .results/rcs021
 ```
 
-The dedicated GitHub Actions workflow performs both passes and uploads the full result directory. Hosted run/artifact identity is frozen into `measured-summary-v1.json` only after the measured gates pass; no local or predicted values are promoted to evidence.
+`measured-summary-v1.json` freezes the accepted run identity, artifact digests, representative metrics and deliberately narrowed capability recommendation.

@@ -11,6 +11,7 @@ from typing import Any
 ROOT=Path(__file__).resolve().parents[1]
 BASE=ROOT/"research/rcs-021"
 PLAN=BASE/"experiment-plan-v1.json"
+MEASURED=BASE/"measured-summary-v1.json"
 FILES=[BASE/"field.py",BASE/"material_oracle.py",BASE/"tridexel.py",BASE/"manifold_fallback.py",BASE/"run_campaign.py"]
 README=BASE/"README.md"
 REPORT=ROOT/"docs/29-MANUAL-FREEHAND-MILL-ORACLE-FALLBACK-RESEARCH.md"
@@ -25,9 +26,46 @@ def load(path:Path)->Any:
     except (OSError,json.JSONDecodeError) as exc:
         fail(f"{path.relative_to(ROOT)}: cannot parse JSON: {exc}"); return None
 
+def validate_measured(summary:Any)->None:
+    require(isinstance(summary,dict),"measured summary must be a JSON object")
+    if not isinstance(summary,dict): return
+    require(summary.get("schema")=="rcs-021-measured-summary/1.0","unexpected RCS-021 measured summary schema")
+    require(summary.get("status")=="accepted-pending-merge","RCS-021 measured summary status drifted")
+    source=summary.get("source",{})
+    require(source.get("pull_request")==53,"RCS-021 measured evidence must identify PR #53")
+    require(source.get("head_sha")=="70bf1851652f855714fe30ba412f6d4d42c22d44","RCS-021 frozen evidence head drifted")
+    require(source.get("workflow_run_id")==35280105714,"RCS-021 frozen workflow run drifted")
+    require(source.get("artifact_id")==10522213307,"RCS-021 full artifact id drifted")
+    require(source.get("artifact_name")=="rcs021-manual-freehand-mill-oracle","RCS-021 full artifact name drifted")
+    require(source.get("artifact_zip_sha256")=="bbdf14b8474753393d98d42babb94fee7c7309fed9a6a38c93962b289db391ba","RCS-021 full artifact digest drifted")
+    campaign=summary.get("campaign",{})
+    require(campaign.get("case_count")==14,"RCS-021 measured campaign must contain fourteen cases")
+    require(campaign.get("all_required_checks_pass") is True,"RCS-021 frozen campaign checks must all pass")
+    require(campaign.get("structural_failures")==[],"RCS-021 frozen structural failures must be empty")
+    require(campaign.get("bounded_candidate_pass_at_0_5mm_count")==5,"RCS-021 measured bounded 0.5 mm subset drifted")
+    require(campaign.get("accepted_pending_refinement_at_0_5mm_count")==9,"RCS-021 measured pending 0.5 mm subset drifted")
+    require(campaign.get("external_executed_count")==13,"RCS-021 measured external execution count drifted")
+    require(campaign.get("external_executed_inside_oracle_count")==13,"every executed external result must remain inside the independent oracle")
+    require(campaign.get("external_body_count_match_count")==13,"every executed external result must retain expected body count")
+    live=summary.get("live_rcs011_revisit",{})
+    seq=live.get("retrace_jitter_segment_sweep",{})
+    batch=live.get("retrace_jitter_freehand_batch",{})
+    sampled=live.get("slot_clean_sampled_fallback",{})
+    require(seq.get("inside_independent_oracle_interval") is True and seq.get("valid_brep") is True,"frozen sequential retrace evidence drifted")
+    require(batch.get("inside_independent_oracle_interval") is False and batch.get("valid_brep") is True,"frozen valid-but-wrong batch evidence drifted")
+    require(sampled.get("classification")=="hang/timeout" and sampled.get("timeout_s")==10.0,"frozen sampled fallback containment drifted")
+    cap=summary.get("capability",{})
+    require("simultaneous-xyz" in cap.get("still_outside_150mm3_budget_at_0_25mm",[]),"simultaneous XYZ must remain pending at measured 0.25 mm")
+    require("cut-through" in cap.get("still_outside_150mm3_budget_at_0_25mm",[]),"cut-through must remain pending at measured 0.25 mm")
+    require("retrace-jitter" in cap.get("refinement_closes_150mm3_budget_at_0_25mm",[]),"measured retrace refinement conclusion drifted")
+    require("ball-rounded" in cap.get("refinement_closes_150mm3_budget_at_0_25mm",[]),"measured rounded refinement conclusion drifted")
+
 def validate_static()->dict[str,Any]|None:
-    for path in [PLAN,*FILES,README,REPORT,DECISION]: require(path.exists(),f"missing RCS-021 file: {path.relative_to(ROOT)}")
+    for path in [PLAN,MEASURED,*FILES,README,REPORT,DECISION]:
+        require(path.exists(),f"missing RCS-021 file: {path.relative_to(ROOT)}")
     plan=load(PLAN)
+    measured=load(MEASURED)
+    validate_measured(measured)
     if not isinstance(plan,dict): return None
     require(plan.get("schema")=="rcs-021-manual-mill-plan/1.0","unexpected RCS-021 plan schema")
     require(plan.get("issue")=="RCS-021" and plan.get("issue_number")==40,"plan must identify RCS-021/#40")
@@ -65,14 +103,18 @@ def validate_static()->dict[str,Any]|None:
         BASE/"field.py":("flat_segment_field","rounded_segment_field","removal_field","column_height","known_volume"),
         BASE/"material_oracle.py":("conservative-lipschitz-octree","material_volume_lower_mm3","closed_form_validation"),
         BASE/"tridexel.py":("directional_interval_counts","volume_lower_mm3","engineering_signature","reconciliation_class"),
-        BASE/"manifold_fallback.py":("PINNED_VERSION=\"3.5.3\"","Manifold.level_set","authoritative\":False"),
-        BASE/"run_campaign.py":("rcs011_retrace_detected","accepted_pending_refinement","refused_unresolved_ambiguity","all_required_checks_pass"),
+        BASE/"manifold_fallback.py":('PINNED_VERSION="3.5.3"',"Manifold.level_set",'authoritative":False'),
+        BASE/"run_campaign.py":("rcs011_retrace_detected","accepted_pending_refinement","refused_unresolved_ambiguity","all_required_checks_pass","external_executed_count"),
     }
     for path,markers in marker_sets.items():
         if path.exists():
             text=path.read_text(encoding="utf-8")
             for marker in markers: require(marker in text,f"{path.name} missing contract marker {marker!r}")
-    for path,markers in ((README,("Independent oracle","Tri-dexel","Manifold","Reproduction")),(REPORT,("Hypotheses","Independent material oracle","RCS-011","sub-tolerance","STEP")),(DECISION,("## Context","## Decision","## Evidence","## Consequences","## Reversibility"))):
+    for path,markers in (
+        (README,("Independent oracle","Tri-dexel","Manifold","Reproduction","accepted measured research")),
+        (REPORT,("Hypotheses","Independent material oracle","RCS-011","sub-tolerance","STEP","Accepted capability recommendation")),
+        (DECISION,("## Context","## Decision","## Evidence","## Consequences","## Reversibility","Status: **accepted**")),
+    ):
         if path.exists():
             text=path.read_text(encoding="utf-8")
             for marker in markers: require(marker in text,f"{path.name} missing marker {marker!r}")
@@ -89,10 +131,12 @@ def validate_results(plan:dict[str,Any],results:Path)->None:
     checks=payload.get("required_checks",{})
     for key in ("closed_form_oracle_validation","tridexel_deterministic","sub_tolerance_positive_removal_preserved","cut_through_two_bodies_preserved","high_segment_fixture_exceeds_rcs011_smoke","external_candidate_executed","rcs011_retrace_independently_detected","rcs011_sampled_fallback_revisited"):
         require(checks.get(key) is True,f"RCS-021 required runtime check failed/missing: {key}")
+    require(int(payload.get("external_executed_count",-1))==13,"RCS-021 current campaign must execute exactly thirteen external comparator fixtures")
     cases=payload.get("cases",[])
     require(isinstance(cases,list),"RCS-021 cases must be a list")
     if not isinstance(cases,list): return
     by_id={c.get("case_id"):c for c in cases if isinstance(c,dict)}
+    external_executed=0
     for case in cases:
         if not isinstance(case,dict): continue
         cid=case.get("case_id","<unknown>")
@@ -108,16 +152,23 @@ def validate_results(plan:dict[str,Any],results:Path)->None:
         require(tri.get("reconciliation_class")=="bounded_directional_material_state_requires_brep_before_step",f"{cid}: reconciliation class missing/drifted")
         require(int(tri.get("body_count",-1))==int(case.get("expected_body_count",-2)),f"{cid}: body count mismatch")
         ext=case.get("external")
-        if ext is not None and ext.get("classification")!="external_candidate_error":
+        if isinstance(ext,dict):
             require(ext.get("version")=="3.5.3",f"{cid}: external comparator version drifted")
             require(ext.get("authoritative") is False,f"{cid}: mesh comparator must remain non-authoritative")
+            if ext.get("executed") is True:
+                external_executed+=1
+                require(ext.get("volume_inside_oracle_interval") is True,f"{cid}: executed external volume outside independent oracle")
+                require(ext.get("body_count_matches_expected") is True,f"{cid}: executed external body count mismatch")
+    require(external_executed==13,"RCS-021 executed external case count disagrees with campaign summary")
     plunge=by_id.get("plunge-1um",{})
     require(plunge.get("positive_sub_tolerance_removal_preserved") is True,"1 um positive removal was silently erased")
     require(float(plunge.get("tridexel",{}).get("volume_estimate_mm3",12000.0))<12000.0,"1 um plunge estimate must remove positive material")
+    require(plunge.get("external",{}).get("classification")=="refused_resolution_budget","1 um external comparator must refuse resolution-qualified authority")
     cut=by_id.get("cut-through",{})
     require(cut.get("tridexel",{}).get("body_count")==2 and cut.get("oracle",{}).get("body_count_xy_grid")==2,"cut-through must preserve two material bodies")
     high=by_id.get("high-segment-freehand",{})
     require(int(high.get("segment_count",0))>50,"measured high-segment fixture must exceed RCS-011 smoke")
+    require(high.get("external",{}).get("classification")=="external_resource_bound_not_executed","high-segment external resource bound must remain explicit")
     revisit=payload.get("rcs011_revisit",[])
     if revisit:
         seq=next((r for r in revisit if r.get("case_id")=="retrace-jitter" and r.get("strategy")=="segment_sweep"),{})
@@ -125,7 +176,7 @@ def validate_results(plan:dict[str,Any],results:Path)->None:
         sample=next((r for r in revisit if r.get("case_id")=="slot-clean" and r.get("strategy")=="sampled_fallback"),{})
         require(seq.get("volume_inside_independent_oracle_interval") is True,"RCS-011 segment reference must agree with independent oracle")
         require(batch.get("valid_brep") is True and batch.get("volume_inside_independent_oracle_interval") is False,"RCS-011 valid-but-wrong retrace must be independently detected")
-        require(sample.get("classification") in {"hang/timeout","success","algorithm_error"},"RCS-011 sampled fallback revisit missing bounded classification")
+        require(sample.get("classification")=="hang/timeout" and sample.get("timeout_s")==10.0,"RCS-011 sampled fallback must remain bounded by the 10 s containment policy")
 
 def main()->int:
     ap=argparse.ArgumentParser(); ap.add_argument("--results-dir",type=Path); args=ap.parse_args()
