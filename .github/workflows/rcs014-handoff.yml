@@ -1,0 +1,18 @@
+name: rcs014-handoff
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-opensimachinist-handoff:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Validate RCS-014 OpenSimachinist handoff
+        run: python3 tools/validate_rcs014.py
