@@ -36,11 +36,42 @@ def run_json_process(command: list[str], timeout_s: int = 120) -> dict[str, Any]
             f"process failed rc={proc.returncode}: {' '.join(command)}\n"
             f"stdout={proc.stdout}\nstderr={proc.stderr}"
         )
-    try:
-        payload = json.loads(proc.stdout)
-    except json.JSONDecodeError as exc:
-        raise RuntimeError(f"process did not emit JSON: {exc}\nstdout={proc.stdout}") from exc
+
+    payload: dict[str, Any] | None = None
+    stdout = proc.stdout.strip()
+    if stdout:
+        try:
+            candidate = json.loads(stdout)
+            if isinstance(candidate, dict):
+                payload = candidate
+        except json.JSONDecodeError:
+            pass
+
+    if payload is None:
+        # OCCT STEP transfer code writes human-readable statistics to stdout before
+        # the research worker's final one-line JSON record. Scan backwards so those
+        # diagnostics remain observable without letting them corrupt the supervisor
+        # protocol. Do not accept arbitrary fragments or substrings as JSON.
+        for line in reversed([line.strip() for line in proc.stdout.splitlines() if line.strip()]):
+            try:
+                candidate = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            if isinstance(candidate, dict) and isinstance(candidate.get("schema"), str):
+                payload = candidate
+                break
+
+    if payload is None:
+        raise RuntimeError(
+            "process completed successfully but emitted no final JSON object\n"
+            f"command={' '.join(command)}\nstdout={proc.stdout}\nstderr={proc.stderr}"
+        )
+
+    prelude_lines = [line for line in proc.stdout.splitlines() if line.strip() and not line.lstrip().startswith("{")]
     payload["_supervisor_elapsed_ms"] = elapsed_ms
+    payload["_supervisor_stdout_diagnostic_lines"] = len(prelude_lines)
+    if proc.stderr.strip():
+        payload["_supervisor_stderr"] = proc.stderr.strip()[-4096:]
     return payload
 
 
