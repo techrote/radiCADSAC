@@ -1,298 +1,231 @@
 # Virtual tolerance, uncertainty, and equivalence research
 
-Status: RCS-007 research report; experiment plan and provisional interpretation  
+Status: RCS-007 measured research output  
 Date: 2026-09-17  
 Baseline: OCCT 8.0.1, tag `V8_0_1`, commit `b8f597c677811d1f9f4d8a97f5ae2825c0353a42`
 
 ## Purpose and scope
 
-RCS-007 asks whether MSAC/OpenSimachinist should treat geometric tolerance as one enlarged epsilon or as several explicit manufacturing and numerical policy channels. The practical target is routine machining input that repeatedly creates coincidence, tangency, retracing, very small removals and long operation histories.
+RCS-007 tests whether MSAC/OpenSimachinist should handle difficult near-geometry through one enlarged epsilon or through explicit, scoped manufacturing/numerical policies. The fixtures target routine machining situations: coincidence, tangency, retracing, tiny positive removals and long operation histories.
 
-This report does **not** choose a production kernel representation. It compares tolerance/equivalence mechanisms using the RCS-003 physical-intent corpus and the RCS-006 pinned OCCT benchmark substrate, then produces provisional architecture input for RCS-013.
-
-The primary danger is semantic conflation: a dimension may be acceptable within a manufacturing tolerance while a commanded positive cut is still physically meaningful; two surfaces may be close enough to classify as uncertain contact without being globally identical; preview tolerance may be much looser than export or validation tolerance. A single number cannot safely stand for all of these meanings.
+The work reuses the RCS-003 physical-intent corpus and the executable RCS-006 OCCT baseline. It does not select a production representation; it provides evidence and a provisional policy for RCS-008/RCS-009 and later RCS-013 synthesis.
 
 ## Source baseline
 
-**SOURCE:** OCCT 8.0.1 B-rep faces carry their own tolerance alongside the underlying surface. The corresponding edge and vertex representations also carry entity tolerances, as recorded by the accepted RCS-004 audit. These local kernel tolerances are part of B-rep validity and representation, not a complete manufacturing-policy model.
+**SOURCE:** OCCT B-rep faces, edges and vertices carry entity tolerances. Those tolerances are representation/validity state, not a complete manufacturing-tolerance model.
 
-Pinned source:
+Pinned sources:
 
 - `BRep_TFace.hxx`: https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/src/ModelingData/TKBRep/BRep/BRep_TFace.hxx
 - `BRep_TEdge.hxx`: https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/src/ModelingData/TKBRep/BRep/BRep_TEdge.hxx
 - `BRep_TVertex.hxx`: https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/src/ModelingData/TKBRep/BRep/BRep_TVertex.hxx
 
-**SOURCE:** `BOPAlgo_Options` describes `FuzzyValue` as an **additional tolerance for the operation to detect touching or coinciding cases**. It is an operation option, separate from the stored entity tolerances. The same API exposes per-instance parallel control and a distinct process-global parallel mode.
-
-Pinned source:
+**SOURCE:** `BOPAlgo_Options` defines `FuzzyValue` as an **additional tolerance for the operation to detect touching or coinciding cases**. It is an algorithm option distinct from stored B-rep entity tolerances.
 
 - `BOPAlgo_Options.hxx`: https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/src/ModelingAlgorithms/TKBO/BOPAlgo/BOPAlgo_Options.hxx
 
-**MEASURED BASELINE:** RCS-006 established a reproducible single-threaded, non-destructive OCCT 8.0.1 worker with explicit per-operation fuzzy value, process isolation, topology/volume metrics, repeatability checks and STEP round-trip evidence. That harness is reused rather than inventing a second measurement convention.
+**MEASURED BASELINE:** RCS-006 supplies the exact OCCT worker used here: non-destructive Booleans, `RunParallel=false`, explicit fuzzy value, process isolation, geometry metrics and pinned dependency identity.
 
 ## Hypotheses and falsification criteria
 
 ### H1 — One enlarged Boolean epsilon is insufficient
 
-**HYPOTHESIS:** increasing one operation-wide fuzzy tolerance can rescue some near-contact computations, but it cannot simultaneously preserve signed physical intent, sub-tolerance removal and unrelated nearby geometry over a broad operating range.
+**HYPOTHESIS:** one operation-wide fuzzy tolerance cannot preserve signed physical intent across coincidence, tangency, micro-removal and long histories.
 
-**Falsified if:** one fuzzy-value policy consistently preserves the RCS-003 physical oracle across coincidence, tangency, positive micro-skims, repeated passes and accumulation chains without creating new semantic errors.
+**Falsification criterion:** a single fuzzy policy must preserve the RCS-003 physical oracle across the tested families without introducing semantic loss or order-dependent final material.
+
+**RESULT:** not falsified. `0.0001 mm` fuzzy tolerance produced four physical-oracle mismatches and order-dependent material in the 100-step accumulation chain.
 
 ### H2 — Operation-local uncertainty is safer than global equivalence
 
-**HYPOTHESIS:** an explicit uncertainty/contact relation scoped to one operation can identify ambiguous near-contact without globally merging entities or rewriting commanded intent.
+**HYPOTHESIS:** a bounded, operation-local contact relation can avoid definitive wrong answers by deferring uncertain contact rather than globally merging nearby geometry.
 
-**Falsified if:** the local model either cannot make deterministic progress at practical reconciliation boundaries or produces more physical-oracle violations than the conventional baseline without compensating robustness benefit.
+**Falsification criterion:** decisive classifications outside the uncertainty band materially violate the physical oracle, or the model cannot retain signed intent inside the band.
 
-### H3 — Proven exact retraces may skip exact recomputation without losing intent
+**RESULT:** not falsified on the smoke corpus. There were 12 explicit uncertain-contact deferrals, zero decisive local-classification mismatches, and all positive skim commands retained removal intent. The cost is relocated work: deferral requires later reconciliation and is not itself a geometry solution.
 
-**HYPOTHESIS:** a repeated machining event can remain in the durable journal while an exact geometry backend skips a redundant recomputation when the same cutter/material envelope is already established in the same semantic context.
+### H3 — Proven exact retraces may skip redundant exact recomputation
 
-**Falsified if:** executing the repeated baseline and executing the first material-changing envelope once do not remain geometrically equivalent on the tested repeated-finishing fixtures, or if the proof condition cannot be represented without relying on transient kernel identity.
+**HYPOTHESIS:** journal events can remain preserved while redundant exact geometry work is skipped when the same material-removal envelope is already established.
 
-### H4 — Global quantization and blind perturbation expose useful failure modes but are not neutral semantics
+**Falsification criterion:** N repeated finishing passes differ geometrically from the one-effective-pass reference.
 
-**HYPOTHESIS:** fixed-grid quantization can provide a mathematically transitive equivalence relation only by introducing grid-boundary discontinuities and coordinate relocation; controlled perturbation can reveal sensitivity but cannot choose a physically correct side without semantic information.
+**RESULT:** not falsified in six smoke records spanning repeat counts 1, 10 and 100 at fuzzy values `0` and `0.0001 mm`; all were equivalent in validity, solid/face/edge counts and volume within the experiment budget.
 
-**Falsified if:** either comparator preserves signed physical intent across the sweep without boundary or direction-dependent failures.
+### H4 — Quantization and perturbation are not neutral general solutions
+
+**HYPOTHESIS:** fixed-grid equivalence causes grid aliasing/intent loss, while perturbation can choose physically different sides of a machining boundary.
+
+**RESULT:** supported. The `0.0001 mm` grid erased the `0.000001 mm` positive skim, and zero-fuzzy `±0.0001 mm` perturbations around both coincidence and tangency produced different material semantics.
 
 ## Policy channels are not one epsilon
 
-RCS-007 keeps these policy channels distinct even if an implementation later derives some from shared configuration.
+The programme must keep these channels conceptually distinct:
 
-| Channel | Programme meaning | Must not silently substitute for |
+| Channel | Meaning | Must not silently become |
 |---|---|---|
-| Input/sampling resolution | Resolution of captured/manual trajectory or imported observations. | Manufacturing acceptance or B-rep entity tolerance. |
-| Machine/control resolution | Smallest meaningful commanded/represented machine-state increment. | Numerical uncertainty or export accuracy. |
-| Manufacturing tolerance | Allowed deviation of the produced engineering result from intended dimensions. | Permission to erase a commanded operation. |
-| Numerical uncertainty | Bound/estimate on uncertainty introduced by computation/representation. | User intent or global entity identity. |
-| Topological equivalence | Rule for when topology may be treated as the same for a stated purpose. | Mere metric proximity. |
-| Contact classification | Local decision about clearance, overlap, contact or unresolved near-contact. | Durable naming or global snapping. |
-| Preview tolerance | Error budget suitable for responsive visualization. | Authoritative geometry/export. |
-| Export tolerance | Accuracy budget for reconciliation into conventional STEP B-rep. | Internal solver convenience. |
-| Validation tolerance | Threshold used by conformance checks to accept/reject measured deviations. | Automatic modification of the geometry being validated. |
+| Input/sampling resolution | Resolution of captured/imported trajectory. | Manufacturing tolerance. |
+| Machine/control resolution | Smallest meaningful commanded machine-state increment. | Numerical uncertainty. |
+| Manufacturing tolerance | Allowed deviation of produced engineering result. | Permission to erase a commanded cut. |
+| Numerical uncertainty | Bound/estimate from computation/representation. | User intent or identity. |
+| Topological equivalence | Purpose-specific rule for topology sameness. | Mere metric proximity. |
+| Contact classification | Local clearance/overlap/contact/unresolved decision. | Durable naming. |
+| Preview tolerance | Interactive visualization error budget. | Authoritative geometry. |
+| Export tolerance | Accuracy budget for STEP reconciliation. | Solver convenience. |
+| Validation tolerance | Acceptance threshold used by conformance checks. | Geometry modification rule. |
 
-**INFERENCE:** a positive 1 µm skim can be within a later manufacturing acceptance band and still be explicit material-removal intent. RCS-003 therefore requires the solver to preserve the distinction between “commanded removal is smaller than an accuracy channel” and “no removal was intended.”
+**MEASURED/INFERENCE:** a positive cut can be far smaller than a backend fuzzy or manufacturing-acceptance value and still carry explicit removal intent. The smoke test demonstrated this directly at `0.000001 mm` depth.
 
 ## Candidate model A — OCCT global fuzzy Boolean
 
-This is the measured control, not the programme recommendation.
+The measured control uses `BRepAlgoAPI_Cut::SetFuzzyValue` on otherwise identical operations.
 
-For each selected RCS-003 fixture the RCS-006 worker executes the same Boolean with a sweep of `BRepAlgoAPI_Cut::SetFuzzyValue`. It then compares material-volume change and validity with the physical oracle.
+The smoke profile executed 26 backend sweep attempts with zero worker failures. With fuzzy `0`, the selected signed contact and skim members matched the physical oracle. With fuzzy `0.0001 mm`, four real material changes were silently lost while the resulting B-reps remained valid one-solid shapes:
 
-Advantages:
+| Fixture | Physical member | Fuzzy | Expected | Measured removal |
+|---|---:|---:|---|---:|
+| Coincidence | `-0.0001 mm` penetration | `0.0001 mm` | removal | approximately `0 mm³` |
+| Tangency | `-0.0001 mm` penetration | `0.0001 mm` | removal | `0 mm³` |
+| Positive skim | `0.000001 mm` depth | `0.0001 mm` | removal | `0 mm³` |
+| Positive skim | `0.0001 mm` depth | `0.0001 mm` | removal | `0 mm³` |
 
-- already supported by the pinned kernel;
-- operation-local configuration rather than a permanent programme-wide global epsilon;
-- directly relevant to touching/coincident cases according to upstream documentation;
-- cheap to test and useful as one backend tuning channel.
+At `0.001 mm` penetration/depth, the same fuzzy value retained the expected material change. This is therefore scale-sensitive semantic suppression, not simply “more robustness.”
 
-Risks:
-
-- the value widens an algorithmic detection tolerance rather than expressing manufacturing intent;
-- a single fuzzy value applies to the operation even when only one local relationship is uncertain;
-- it can make a tiny positive overlap/removal indistinguishable from contact;
-- successful topology does not prove physically correct geometry;
-- a value that helps one scale may be excessive at another scale.
-
-**PROPOSAL:** retain fuzzy tolerance as an explicit backend parameter/diagnostic lever, never as the sole programme tolerance model.
+**INFERENCE:** OCCT fuzzy tolerance remains useful as an explicit backend knob, but it cannot define programme manufacturing tolerance or the truth of material change.
 
 ## Candidate model B — operation-local interval classification
 
-Define a signed separation/contact coordinate `d` for the relation currently being classified and a local uncertainty half-width `u` derived from explicit uncertainty sources. The experiment uses a fixed research value to expose behavior; production derivation remains open.
+For a signed contact coordinate `d` and local uncertainty half-width `u`, the experiment classifies:
 
-For a material-removal boundary:
+- `d < -u` → confidently overlapping; execute removal;
+- `d > +u` → confidently clear; no interaction;
+- `|d| <= u` → defer uncertain contact without rewriting signed intent.
 
-- `d < -u`: confidently overlapping; execute material removal;
-- `d > +u`: confidently clear; no material interaction;
-- `|d| <= u`: uncertain/contact band; preserve intent and defer/reconcile rather than globally merging the entities.
+The smoke research value was `u = 0.0001 mm`. It produced 12 uncertain-contact deferrals and zero decisive mismatches. Decisive `±0.001 mm` members correctly distinguished overlap from clearance. Positive skim operations remained removal intent rather than being classified from contact distance.
 
-This is deliberately a **local compatibility/contact relation**, not a durable topology identity relation.
+This is an **improvement in semantic safety**, not proof of a complete solver. It deliberately relocates ambiguous cases to an explicit reconciliation stage. RCS-009 must determine which such states may remain deferred and for how long.
 
-For an explicitly commanded positive skim, the command semantics remain “remove material” even when the depth lies inside a numerical uncertainty band. The geometry result may become deferred, unqualified or require a higher-confidence reconciliation path, but the system must not silently reinterpret the operation as a no-op merely because the numerical band is larger than the commanded depth.
-
-Advantages:
-
-- localizes uncertainty to the relationship that caused it;
-- preserves signed intent outside the uncertain band;
-- separates “cannot currently resolve confidently” from “these objects are the same forever”;
-- permits different uncertainty bounds for different operations or representations.
-
-Costs and risks:
-
-- uncertain states require a reconciliation policy rather than immediate forced topology;
-- the relation is not transitive and therefore cannot be used as global identity;
-- provenance/semantic context is required to know which relation is being classified;
-- poor uncertainty estimates merely relocate the boundary problem.
+The relation is local compatibility, not durable identity.
 
 ## Candidate model C — semantic replay collapse
 
-The canonical manufacturing journal remains immutable and records every user operation, including retraced passes. Geometry execution can nevertheless collapse a redundant exact recomputation when all of these are established:
+The prototype compared repeated identical OD finishing with one effective finishing execution while preserving the conceptual journal event stream.
 
-1. the operation is semantically the same material-removal envelope in the same setup/context;
-2. the previous committed material state already contains that envelope result;
-3. no intervening operation invalidates the proof;
-4. skipping recomputation does not alter status/provenance required by the programme contract.
+**MEASURED:** all six records were geometrically equivalent, including 100 repeats at both fuzzy settings. For the 100-repeat records the measured baseline/one-pass geometry-time ratios were about `2.20×` at fuzzy `0` and `25.42×` at fuzzy `0.0001 mm`.
 
-The RCS-007 prototype tests the geometric half of this hypothesis by comparing N repeated identical finishing cuts with the result after the first effective cut. RCS-008 owns the durable provenance/identity machinery needed to make the proof safe in a production architecture.
+The timing ratios are indicative only: run ordering/cache effects were not controlled as a performance benchmark. The important result is **zero measured geometry divergence** under the tested repeated envelope.
 
-This model is materially different from fuzzy tolerance: it does not change coordinate equivalence or enlarge an intersection threshold. It avoids asking the Boolean kernel to solve a known semantic no-op repeatedly.
-
-**Boundary:** collapse is not allowed merely because two transient B-rep objects happen to compare equal or lie near each other.
+**INFERENCE:** semantic replay collapse is promising for exact retraces, but production authorization must depend on durable semantic/provenance proof from RCS-008, never transient OCCT identity or proximity alone.
 
 ## Anchored quantization
 
-A fixed global grid can define
+For `Q(x)=round(x/q)*q`, bucket equality is a true equivalence relation. The smoke comparator used `q = 0.0001 mm`.
 
-`Q(x) = round(x / q) * q`
+**MEASURED:** the `0.000001 mm` positive skim quantized to zero in both backend-fuzzy configurations, creating two mismatch records for one physical fixture member. Thus transitivity was obtained by erasing valid sub-grid intent.
 
-and treat values as equivalent when their quantized representatives are equal. Unlike the interval compatibility relation, bucket equality is reflexive, symmetric and transitive.
+The algebraic boundary probe also used `x=0.000049 mm` and `y=0.000051 mm`: only `0.000002 mm` apart, yet they quantized to `0` and `0.0001 mm` respectively.
 
-The cost is geometric relocation and grid-boundary discontinuity. Two coordinates only `0.02q` apart can lie on opposite sides of a half-cell boundary and become inequivalent, while two farther-apart coordinates inside one cell become identical. A positive sub-grid skim can quantize to zero and disappear despite explicit removal intent.
-
-**INFERENCE:** anchored quantization can be valid for a deliberately defined canonical control grid or serialization channel, but it is unsuitable as the universal truth model for arbitrary manufacturing geometry.
+**INFERENCE:** fixed quantization can be valid where a grid is itself an explicit machine/control contract; it is unsuitable as universal arbitrary-geometry truth.
 
 ## Controlled perturbation
 
-Controlled perturbation evaluates an exact contact together with deterministic signed neighbors. It is useful for discovering whether a computation is structurally unstable around a degeneracy.
+At fuzzy `0`, `±0.0001 mm` neighbors around both coincidence and tangency were direction-sensitive: negative penetration removed material, exact/positive contact did not.
 
-It is not automatically semantics-preserving. At a machining boundary, `-δ` can mean real cutter penetration while `+δ` means clearance. If those neighbors produce different material sets, choosing a perturbation direction without manufacturing context changes the problem rather than resolving it.
+At fuzzy `0.0001 mm`, the negative neighbor no longer removed material. That does **not** show perturbation becoming neutral; it is the same fuzzy semantic-loss mechanism measured above.
 
-**PROPOSAL:** use perturbation as a diagnostic or explicitly justified local tie-breaker only when the semantic side and error bound are known. Do not introduce random jitter as a hidden robustness policy.
+**INFERENCE:** perturbation is a diagnostic unless manufacturing semantics explicitly determine the permitted side and bound. Random hidden jitter is rejected.
 
 ## Algebraic properties and failure modes
 
-### Interval compatibility is not transitive
+For local metric compatibility `a ~ b` iff `|a-b| <= u`, choose `a=0`, `b=0.75u`, `c=1.5u`. Then `a~b` and `b~c`, but not `a~c`. The relation is reflexive and symmetric but not transitive.
 
-Let `a ~ b` mean `|a-b| <= u`. Choose:
+**INFERENCE:** transitive closure of “close enough” can merge endpoints outside the intended uncertainty. It must not become global topology identity.
 
-- `a = 0`;
-- `b = 0.75u`;
-- `c = 1.5u`.
+Fixed-grid bucket equality is transitive but discontinuous at cell boundaries and relocates coordinates. These are different failure modes; neither algebraic property alone establishes manufacturing correctness.
 
-Then `a ~ b` and `b ~ c`, but `a !~ c`. The relation is reflexive and symmetric, but not transitive.
+For uncertainty accumulation the experiment records a conservative correlated bound `N*u` and an RSS diagnostic `sqrt(N)*u`. RSS is not accepted as a correctness bound without an independence argument.
 
-**INFERENCE:** taking a transitive closure of local “close enough” relationships can merge geometry across a chain whose endpoints exceed the intended uncertainty. RCS-007 therefore forbids using the local interval relation as programme-wide topological identity.
+The accumulation experiment provides stronger empirical evidence. With `0.00001 mm` nested finishing increments:
 
-### Anchored bucket equality is transitive but discontinuous
+- `N=10`, fuzzy `0`: both orders matched the analytic volume target;
+- `N=100`, fuzzy `0`: both orders matched within about `1.46e-11 mm³`;
+- `N=10`, fuzzy `0.0001 mm`: both orders returned valid one-solid B-reps but each missed the target by about `0.753980352 mm³`;
+- `N=100`, fuzzy `0.0001 mm`: deepest-first matched the target, while shallow-to-deep missed by about `7.539633873 mm³`; the final volumes differed by `7.539633873064304 mm³` despite identical intended final material.
 
-Fixed-grid bucket equality is an equivalence relation. However, `x = 0.49q` and `y = 0.51q` are separated by only `0.02q` yet fall into adjacent rounded buckets. Moving the grid origin can change the classification without changing the physical relationship.
-
-### Locality requirements
-
-An equivalence/contact decision must identify at least:
-
-- operation/revision context;
-- entities/semantic boundaries being compared;
-- purpose of the decision (contact classification, replay collapse, export reconciliation, etc.);
-- uncertainty source and bound;
-- lifetime/reconciliation boundary.
-
-A relation established for one operation must not silently propagate to unrelated geometry.
-
-### Deterministic replay
-
-The same journal, policy version, backend version and explicit tolerance inputs must reproduce the same classification decisions. Random perturbation is therefore excluded from the default model. If deterministic symbolic perturbation is later used, its ordering rule and semantic effect must be versioned.
-
-### Uncertainty accumulation
-
-RCS-007 records two bounds for a chain of `N` operations each assigned a nominal uncertainty `u`:
-
-- conservative correlated upper bound: `N*u`;
-- root-sum-square diagnostic: `sqrt(N)*u`.
-
-The latter is **not** accepted as a correctness bound unless independence is justified; sequential geometry errors are commonly correlated. The experiment also executes the same nested finishing envelopes shallow-to-deep and deep-to-shallow. Any final geometry divergence is direct evidence of order sensitivity that an uncertainty policy must expose rather than hide.
+This demonstrates both **valid-but-wrong geometry** and **operation-order dependence** from applying a fuzzy value larger than the individual incremental removals.
 
 ## Experiment design
 
-The machine-readable plan is `research/rcs-007/experiment-plan-v1.json`.
+The executable package is under `research/rcs-007/`:
 
-The campaign has four measured components:
+- `experiment-plan-v1.json` — hypotheses, constants and smoke/baseline sweeps;
+- `harness/run_tolerance_campaign.py` — backend/contact/quantization/perturbation orchestration;
+- `harness/repeated_finish_worker.cpp` — repeated and ordered finishing-chain OCCT experiments;
+- `harness/reconcile_results.py` — explicitly distinguishes deferred classifications from definitive answers and checks analytic-volume correctness;
+- `tools/validate_rcs007.py` — static/runtime evidence gate.
 
-1. **OCCT fuzzy sweeps** — RCS-006 `coincident_face`, `tangent_contact` and `thin_skim` cases across signed offsets/depths and fuzzy values.
-2. **Repeated finishing** — a dedicated pinned-OCCT worker applies the identical OD finishing envelope 1…N times, compared with one effective execution representing semantic replay collapse.
-3. **Tolerance-accumulation chain** — nested OD finishing envelopes are applied in ascending and descending depth order; final validity/topology/volume and runtime are compared.
-4. **Controlled perturbation pairs** — exact contact is compared with deterministic `±δ` neighbors for coincidence and tangency.
+The accepted smoke evidence was produced by workflow run `35191482255`, artifact `10483269288`, digest `sha256:745cfab6f747361b8b0b9f2eb2a6528fc73d3c11b5c9203764d0e81d54608ec6`. A durable compact record is `research/rcs-007/measured-summary-v1.json`.
 
-For every contact/skim member the campaign also evaluates operation-local interval and anchored-quantization classifications against the same physical oracle. Candidate-model failure is recorded as data rather than converted into a green result.
-
-Hosted CI runs a tractable smoke matrix; `--profile baseline` expands the parameter sweep using the same code and result schema.
-
-Runtime artifacts:
-
-- `.results/rcs007-smoke/results.json` — detailed machine-readable evidence;
-- `.results/rcs007-smoke/summary.md` — aggregate evidence index;
-- CI artifact `rcs007-virtual-tolerance-smoke` — preserved hosted-run evidence.
+The `baseline` profile expands offsets, fuzzy values, skim depths, repeats and chain counts without changing the result semantics.
 
 ## Measured results
 
-**MEASURED RESULTS PENDING:** the branch defines the executable experiment and static evidence contract before interpretation, as required by `docs/06-RESEARCH-METHOD.md`. This section must be replaced with the successful CI artifact measurements before RCS-007 is merged.
+**MEASURED:** 26 contact/skim backend attempts completed with zero worker failures. Four OCCT fuzzy-control records violated physical intent; all four were valid B-reps, so validity alone did not expose the error.
 
-At minimum the accepted evidence must report:
+**MEASURED:** the operation-local model produced zero **decisive** classification mismatches and 12 explicit deferrals. It therefore avoided asserting the wrong material result in the uncertain band, but it did not eliminate the need to resolve those cases later.
 
-- exact fuzzy-value/offset/depth members where OCCT matches or violates the RCS-003 physical oracle;
-- where the operation-local interval model improves or merely relocates a failure;
-- where anchored quantization erases or changes signed intent;
-- whether repeated exact finishing is geometrically equivalent to semantic replay collapse;
-- whether shallow-to-deep and deep-to-shallow accumulation chains are equivalent;
-- whether signed perturbation changes the material result around exact contact;
-- crashes/errors/timeouts/nondeterminism rather than silently dropping them.
+**MEASURED:** anchored quantization erased the `0.000001 mm` positive skim. The algebraic probe independently demonstrated grid-boundary discontinuity.
 
-No architecture recommendation becomes final from the experiment definition alone.
+**MEASURED:** all six repeated-finishing records were equivalent to the one-effective-pass reference. This supports further provenance-backed replay-collapse research.
+
+**MEASURED:** two fuzzy accumulation cases breached the analytic physical oracle. One 100-step case became order-dependent by `7.539633873064304 mm³` while both outputs remained valid one-solid B-reps.
+
+**MEASURED:** two zero-fuzzy perturbation pairs were direction-sensitive, confirming that blind perturbation can switch physical material semantics.
+
+No crash, worker error or timeout occurred in the accepted smoke campaign.
 
 ## Export and STEP reconciliation
 
-RCS-005 remains authoritative for successful STEP export. Internal uncertainty or deferred contact does not relax the export contract.
+RCS-005 remains authoritative. Internal uncertainty, contact deferral or semantic replay does not relax STEP success criteria.
 
-Before claiming STEP success, any internal virtual/local relation must be reconciled into ordinary conventional B-rep geometry whose:
+Before STEP success, any internal mechanism must reconcile to conventional B-rep geometry with explicit selected bodies, valid topology, bounded dimensions/volume, required analytic preservation, explicit units and the required serialized/read-back/interoperability gates.
 
-- selected material bodies are explicit and preserved;
-- topology is valid;
-- dimensions, bounding geometry and volume satisfy the declared export/validation budgets;
-- required analytic geometry is retained where mandated;
-- units/scale are explicit;
-- serialized/read-back and qualified interoperability gates pass.
-
-If an uncertain relationship cannot be reconciled within those budgets without choosing materially different outcomes, export must be refused or remain unqualified rather than silently snapping one result into existence.
-
-The manufacturing tolerance channel cannot be reused as permission for arbitrary export healing. Healing/reconciliation remains bounded and measured under the RCS-005 contract.
+If an uncertain relationship still admits materially distinct outcomes beyond the declared export/validation budgets, export must be refused or remain unqualified. Manufacturing tolerance cannot be used as permission for unmeasured healing.
 
 ## Interaction with RCS-008 and RCS-009
 
-RCS-007 deliberately does not solve durable semantic identity. The promising replay-collapse rule requires RCS-008 to define how “same cutter/material envelope in the same context” survives topology replacement without depending on OCCT handles or transient face IDs.
+RCS-008 must define backend-independent semantic identity/provenance sufficient to prove an operation is a safe replay/retrace candidate. The RCS-007 result does not authorize collapse from transient face IDs, B-rep handles or proximity.
 
-RCS-007 also does not choose a deferred material representation. The operation-local uncertain band creates a clear handoff question for RCS-009: which unresolved lower-dimensional contacts can remain deferred until a pass/tool-withdrawal/checkpoint/export boundary without losing useful material semantics?
-
-Neither later issue should reinterpret the local interval relation as a transitive global equivalence relation.
+RCS-009 must evaluate which lower-dimensional/uncertain contact states can remain deferred until a natural reconciliation boundary. It must not turn the non-transitive local compatibility relation into global topology identity.
 
 ## Provisional architecture recommendation
 
-**PROPOSAL pending measured CI evidence:** do not adopt a programme-wide “virtual tolerance” number and do not construct global topology identity by transitive closure of metric closeness.
+**MEASURED/INFERENCE, confidence medium-high for the tested scope:** reject a programme-wide epsilon and reject global transitive “virtual equivalence” built from metric closeness.
 
-Prefer a versioned policy containing separate channels, with this tentative division of responsibility:
+Carry forward this policy:
 
-- kernel entity tolerances remain backend validity state;
-- OCCT fuzzy tolerance remains an explicit, measured operation parameter rather than programme truth;
-- numerical uncertainty feeds operation-local contact classification;
-- explicit positive manufacturing commands retain their semantic sign even below a numerical uncertainty band;
-- uncertain local contacts may defer/reconcile rather than globally snap;
-- proven exact semantic retraces may skip redundant exact geometry computation while remaining in the canonical journal;
-- global quantization is reserved for explicitly defined grids/channels, not arbitrary engineering geometry;
-- controlled perturbation is diagnostic unless a deterministic semantic side and bound are established;
-- STEP export always collapses internal mechanisms back to the RCS-005 conformance contract.
+- separate the nine tolerance/resolution/uncertainty channels;
+- treat kernel entity tolerance and OCCT fuzzy value as explicit backend state, not manufacturing truth;
+- use bounded uncertainty for operation-local contact classification, with an explicit unresolved/deferred state;
+- preserve the sign and semantic meaning of explicit positive material-removal commands even inside numerical uncertainty bands;
+- permit semantic replay collapse only with durable provenance proof and unchanged canonical journal history;
+- use quantization only where the grid is itself a declared contract;
+- use perturbation diagnostically unless a deterministic semantic side is known;
+- validate geometry against physical oracles because valid topology can still be materially wrong;
+- reconcile any internal uncertainty/deferred representation back to RCS-005-conforming conventional STEP geometry or refuse export.
 
-Confidence: **medium before runtime evidence**. This section must be updated from the hosted experiment before merge. RCS-013 may later accept, modify or reject the resulting recommendation when RCS-008–RCS-012 evidence is available.
+This is recorded in `DR-0010`. The numerical research constants (`0.0001 mm` local band/grid, `0.000001 mm` nominal per-operation uncertainty) are **not** production defaults. RCS-008–RCS-012 and RCS-013 may revise the implementation model while preserving or explicitly overturning the measured separation-of-concerns conclusion.
 
 ## Open questions
 
-**OPEN:** how should operation-local numerical uncertainty be derived from input sampling, kernel tolerances, approximation error and operation history rather than supplied as a fixed research value?
+**OPEN:** derive operation-local numerical uncertainty from actual sampling, approximation and kernel evidence rather than a fixed research value.
 
-**OPEN:** which reconciliation boundaries are safe for each manufacturing process: end of engaged pass, withdrawal, setup change, explicit checkpoint or export?
+**OPEN:** determine safe reconciliation boundaries by process: pass end, tool withdrawal, setup change, checkpoint, export or another boundary.
 
-**OPEN:** what minimum provenance proof is sufficient to authorize semantic replay collapse? This is carried to RCS-008.
+**OPEN:** define the minimum durable proof for semantic replay collapse in RCS-008.
 
-**OPEN:** which uncertain lower-dimensional states are worth retaining instead of immediately materializing B-rep topology? This is carried to RCS-009.
+**OPEN:** determine which uncertain/lower-dimensional states merit deferred representation in RCS-009.
 
-**OPEN:** when a backend increases entity tolerance internally, should the programme merely record it as numerical evidence or impose an independent cap/rebuild policy before export?
+**OPEN:** decide whether backend-increased entity tolerances require an independent cap/rebuild policy before export.
 
-**OPEN:** broader manufacturing workloads may require scale-dependent uncertainty policies; this issue intentionally tests a bounded representative corpus rather than claiming universal computational-geometry equivalence.
+**OPEN:** repeat the strongest findings across broader RCS-003 members and later non-OCCT candidates; this report does not claim universal computational-geometry behavior.
