@@ -29,8 +29,10 @@
       "shoulder",
       "taper",
       "id-bore-through",
+      "id-bore-blind",
       "repeated-finish-20",
-      "exact-retrace-100"
+      "exact-retrace-100",
+      "noisy-feed-canonicalized"
     ],
     "baseline": [
       "od-finish",
