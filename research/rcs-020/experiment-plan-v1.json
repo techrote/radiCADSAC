@@ -101,6 +101,15 @@
       "expected": {"classification": "exact_or_bounded_qualified", "body_count": 1, "step": true}
     },
     {
+      "id": "face-roundnose-95",
+      "kind": "facing_external",
+      "tool": "external-r08-95",
+      "stock": {"z0_mm": 0.0, "z1_mm": 40.0, "outer_radius_mm": 10.0},
+      "tool_path_zr_mm": [[1.8, 10.8], [1.8, 0.8]],
+      "journal_events": 1,
+      "expected": {"classification": "exact_or_bounded_qualified", "body_count": 1, "result_front_z_mm": 1.0, "step": true}
+    },
+    {
       "id": "shoulder-roundnose-95",
       "kind": "round_nose_external",
       "tool": "external-r08-95",
