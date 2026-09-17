@@ -4,6 +4,7 @@
 #include <BRepGProp.hxx>
 #include <BRepPrimAPI_MakeBox.hxx>
 #include <DESTEP_Parameters.hxx>
+#include <DE_ShapeFixParameters.hxx>
 #include <GProp_GProps.hxx>
 #include <IFSelect_ReturnStatus.hxx>
 #include <NCollection_List.hxx>
@@ -11,6 +12,7 @@
 #include <Standard_Version.hxx>
 #include <STEPControl_Reader.hxx>
 #include <STEPControl_Writer.hxx>
+#include <TCollection_AsciiString.hxx>
 #include <TopoDS_Shape.hxx>
 #include <UnitsMethods_LengthUnit.hxx>
 #include <gp_Pnt.hxx>
@@ -19,6 +21,7 @@
 #include <atomic>
 #include <cctype>
 #include <chrono>
+#include <cmath>
 #include <filesystem>
 #include <fstream>
 #include <iomanip>
@@ -54,6 +57,16 @@ double volume(const TopoDS_Shape& s) {
   GProp_GProps p; BRepGProp::VolumeProperties(s, p); return p.Mass();
 }
 
+double serialized_uncertainty(const std::string& text) {
+  const std::string key = "UNCERTAINTY_MEASURE_WITH_UNIT(LENGTH_MEASURE(";
+  const auto begin = text.find(key);
+  if (begin == std::string::npos) return -1.0;
+  const auto value_begin = begin + key.size();
+  const auto value_end = text.find(')', value_begin);
+  if (value_end == std::string::npos) return -1.0;
+  return std::stod(text.substr(value_begin, value_end - value_begin));
+}
+
 struct Result {
   int job = -1;
   int iter = -1;
@@ -69,6 +82,11 @@ struct Result {
   double source_volume = 0.0;
   double readback_volume = 0.0;
   double cut_volume = 0.0;
+  double requested_step_tolerance_mm = 0.0;
+  double expected_uncertainty_file_units = 0.0;
+  double serialized_uncertainty_file_units = -1.0;
+  double shape_fix_requested_mm = 0.0;
+  double shape_fix_observed_mm = -1.0;
   double elapsed_ms = 0.0;
 };
 
@@ -119,6 +137,19 @@ Result run_job(int job, int iter, const std::filesystem::path& out_dir, const To
     }
 
     STEPControl_Writer writer;
+    r.requested_step_tolerance_mm = inch ? 0.001 : 0.00001;
+    r.expected_uncertainty_file_units = inch ? r.requested_step_tolerance_mm / 25.4 : r.requested_step_tolerance_mm;
+    writer.SetTolerance(r.requested_step_tolerance_mm);
+
+    DE_ShapeFixParameters shape_fix;
+    r.shape_fix_requested_mm = inch ? 0.00002 : 0.000001;
+    shape_fix.Tolerance3d = r.shape_fix_requested_mm;
+    writer.SetShapeFixParameters(shape_fix);
+    TCollection_AsciiString observed_shape_fix;
+    if (writer.GetShapeFixParameters().Find("FixShape.Tolerance3d", observed_shape_fix)) {
+      r.shape_fix_observed_mm = std::stod(observed_shape_fix.ToCString());
+    }
+
     if (writer.Transfer(cut.Shape(), STEPControl_ManifoldSolidBrep, params, true) != IFSelect_RetDone)
       throw std::runtime_error("STEP transfer failed");
     std::filesystem::create_directories(out_dir);
@@ -131,6 +162,7 @@ Result run_job(int job, int iter, const std::filesystem::path& out_dir, const To
     r.schema = schema_excerpt(text);
     r.inch_marker = upper.find("INCH") != std::string::npos;
     r.mm_marker = upper.find(".MILLI.") != std::string::npos && upper.find(".METRE.") != std::string::npos;
+    r.serialized_uncertainty_file_units = serialized_uncertainty(text);
 
     STEPControl_Reader reader;
     if (reader.ReadFile(path.string().c_str()) != IFSelect_RetDone) throw std::runtime_error("STEP read failed");
@@ -163,6 +195,11 @@ void emit(const Result& r) {
     << ",\"source_volume_mm3\":" << r.source_volume
     << ",\"cut_volume_mm3\":" << r.cut_volume
     << ",\"readback_volume_mm3\":" << r.readback_volume
+    << ",\"requested_step_tolerance_mm\":" << r.requested_step_tolerance_mm
+    << ",\"expected_uncertainty_file_units\":" << r.expected_uncertainty_file_units
+    << ",\"serialized_uncertainty_file_units\":" << r.serialized_uncertainty_file_units
+    << ",\"shape_fix_requested_mm\":" << r.shape_fix_requested_mm
+    << ",\"shape_fix_observed_mm\":" << r.shape_fix_observed_mm
     << ",\"elapsed_ms\":" << r.elapsed_ms << "}\n";
 }
 } // namespace
