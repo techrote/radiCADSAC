@@ -1,20 +1,21 @@
 # Regularized material solids and bounded deferred topology
 
-Status: RCS-009 research report; experimental recommendation pending measured campaign  
+Status: accepted RCS-009 research result  
 Date: 2026-09-17  
-Issue: RCS-009
+Issue: RCS-009  
+Measured evidence: `research/rcs-009/measured-summary-v1.json`
 
 ## Purpose and scope
 
 RCS-009 tests whether manufacturing state should be understood primarily as **volumetric material** and whether selected fragile topology construction can be delayed until a meaningful reconciliation boundary.
 
-This report deliberately separates three questions:
+This report separates three questions:
 
 1. what physical material set an operation means;
 2. when that material state must be represented as conventional B-rep topology;
 3. which manufacturing facts must survive even when no B-rep entity is created for them.
 
-The research does not replace the canonical operation journal, RCS-008 semantic lineage, or the RCS-005 STEP contract. It also does not claim that an unevaluated CSG tree or one batched Boolean is a universal manufacturing kernel.
+The accepted result does not replace the canonical operation journal, RCS-008 semantic lineage, or the RCS-005 STEP contract. It also does not claim that an unevaluated CSG tree or one batched Boolean is a universal manufacturing kernel.
 
 ## Evidence labels
 
@@ -23,7 +24,7 @@ Claims use the programme research labels:
 - **SOURCE** — primary-source statement;
 - **MEASURED** — reproducible RCS-009/RCS-006/RCS-007/RCS-008 experiment;
 - **INFERENCE** — conclusion supported by source/measured evidence;
-- **PROPOSAL** — candidate architecture rule still subject to later synthesis;
+- **PROPOSAL** — architecture input still subject to later synthesis;
 - **OPEN** — unresolved question.
 
 ## Hypotheses and falsification criteria
@@ -40,7 +41,7 @@ This hypothesis is falsified for the programme if representative machining seman
 
 ### H2 — bounded deferral can reduce needless topology churn
 
-**PROPOSAL:** exact B-rep edges/faces need not be materialized for every canonical operation if the backend retains the operation/provenance facts, preserves every positive-volume material change, and reconciles before a query or boundary that requires conventional exact topology.
+**PROPOSAL:** exact B-rep edges/faces need not be materialized for every canonical operation if the backend retains operation/provenance facts, preserves every positive-volume material change, and reconciles before a query or boundary that requires conventional exact topology.
 
 This hypothesis is falsified if the deferred candidate changes the physical result beyond declared bounds, loses body connectivity, makes replay/undo ambiguous, or cannot reconcile to an RCS-005-compatible STEP B-rep.
 
@@ -48,7 +49,7 @@ This hypothesis is falsified if the deferred candidate changes the physical resu
 
 **PROPOSAL:** OCCT General Fuse/`BOPAlgo_CellsBuilder` may be useful at reconciliation because it exposes split parts, cell selection, material labels, and internal-boundary removal. It is not sufficient evidence for a durable deferred representation because it still performs a General Fuse over valid B-rep arguments and creates split parts.
 
-A measured CellsBuilder failure is therefore a valid negative result rather than a failure of the RCS-009 campaign.
+A measured CellsBuilder failure would therefore be valid negative evidence rather than a failure of the RCS-009 candidate model.
 
 ## Precise programme definition — regularized material solid
 
@@ -81,18 +82,18 @@ The RCS-009 candidate state is specifically:
 
 The pending ledger is **derived backend state**. It does not replace the canonical operation journal and is safe to discard/rebuild from journal/provenance data.
 
-Deferred topology does not mean `ignore topology until export`. It means topology materialization is permitted to lag manufacturing intent only while queries and semantic boundaries remain answerable without falsifying material state.
+Deferred topology does not mean `ignore topology until export`. Topology materialization may lag manufacturing intent only while queries and semantic boundaries remain answerable without falsifying material state.
 
 ## Lower-dimensional debris versus meaningful contact
 
-The founding rules are:
+The accepted founding rules are:
 
 | Situation | Material meaning | Topology policy |
 |---|---|---|
 | Tool merely touches a face at zero penetration | no material removed | record contact if useful; no new material B-rep required |
 | Tool is exactly tangent at one point/curve | no material removed | semantic tangency may remain pending; do not invent removal |
 | Positive-volume overlap, however small | material removed | preserve removal intent; reconcile or retain exact pending envelope |
-| Cut disconnects volumetric interior | material-body transition | must resolve body connectivity before retention/scrap/export decision |
+| Cut disconnects volumetric interior | material-body transition | resolve body connectivity before retention/scrap/export decision |
 | Two material regions touch only at point/edge/face | no volumetric bridge | do not merge bodies solely due to lower-dimensional contact |
 | Contact is ambiguous inside an RCS-007 uncertainty interval | unresolved | retain pending classification; no global snap-to-same decision |
 | Exact retrace is proven equivalent by RCS-008 semantic lineage | journal event remains, geometry may be redundant | geometry recomputation may be elided; provenance cannot be discarded |
@@ -105,7 +106,7 @@ The distinction is intentionally physical rather than based on OCCT entity dimen
 
 **INFERENCE:** deferred topology must consume the RCS-007 classification result rather than replace it with a larger tolerance. An uncertain contact can remain unresolved in the pending ledger. A known positive-volume operation cannot be converted to `no change` merely because it is smaller than a broad kernel epsilon.
 
-This is why RCS-009's candidate uses zero fuzzy tolerance in the founding comparison and treats contact deferral as an explicit semantic state, not a fuzzy-Boolean side effect.
+RCS-009 therefore used zero fuzzy tolerance in the founding comparison and treated contact deferral as an explicit semantic state rather than a fuzzy-Boolean side effect.
 
 ## Interaction with RCS-008 provenance and identity
 
@@ -132,7 +133,7 @@ A pending state must reconcile before:
 
 ### Soft candidate boundaries
 
-End of an engaged pass or tool withdrawal is a useful default checkpoint, but reconciliation may remain deferrable when:
+End of an engaged pass or tool withdrawal remains a useful default checkpoint, but reconciliation may stay deferred when:
 
 - no exact/topology-dependent query is requested;
 - no body-connectivity decision is pending;
@@ -151,25 +152,37 @@ It compares:
 - **candidate:** retain/deduplicate pending removal envelopes and reconcile the tested set with one multi-tool `BRepAlgoAPI_Cut`;
 - **probe:** on selected cases, run `BOPAlgo_CellsBuilder` General Fuse, select stock cells outside the tool arguments, assign common material and remove internal boundaries.
 
-The tested categories are:
-
-- face-only coincidence/contact;
-- tangent entry/exit and positive tangent overlap;
-- sub-tolerance positive-volume skim;
-- repeated exact slot passes;
-- overlapping slot removals;
-- cut-through/body separation;
-- reconciled multi-body STEP write/read-back.
+The tested categories are face-only coincidence/contact, tangent entry/exit and positive tangent overlap, sub-tolerance positive-volume skim, repeated exact slot passes, overlapping slot removals, cut-through/body separation, and reconciled multi-body STEP write/read-back.
 
 The comparison records validity, solid/face/edge counts, volume, bounding box, smallest features, analytic classes, Boolean-materialization count, geometry time, memory, contact/dedup semantics, CellsBuilder result and STEP round-trip evidence.
+
+## Measured RCS-009 results
+
+**MEASURED:** CI run `35212264059` / job `105172585743`, against the exact pinned OCCT commit `b8f597c677811d1f9f4d8a97f5ae2825c0353a42`, produced eight complete smoke records with **zero candidate failures**. The preserved artifact is `10491869655`, digest `sha256:3b1c761b3cbf60dd6451ba6f6b25fc0970acc5ba5b484ce6f7f0133f1bdf9def`. The durable summary is `research/rcs-009/measured-summary-v1.json`.
+
+Measured aggregate results:
+
+- all **8/8** immediate-baseline cases and **8/8** deferred-candidate cases satisfied the declared physical material/body oracle;
+- all **8/8** candidate final volumes and bounding boxes matched the immediate baseline within the campaign's `1e-7` absolute comparison bounds;
+- materialized Boolean operations across the smoke set fell from **227** for immediate replay to **6** for the bounded candidate;
+- exactly **2** zero-volume contact cases were deferred without creating material topology;
+- **218** provenance-equivalent repeated-event geometry recomputations were elided while their journal-event semantics remained represented by the experiment plan;
+- both **2/2** `BOPAlgo_CellsBuilder` probes completed and reproduced the candidate material/body result within the campaign tolerance;
+- the required cut-through reconciliation produced **2** material solids and the automated STEP write/read-back passed **1/1**, preserving two solids and volume with a maximum bounding-box delta of approximately `5.0e-8 mm`.
+
+Representative cases sharpen the interpretation. The 20-pass repeated slot used 20 immediate Booleans versus one candidate reconciliation and measured about `52.49 ms` versus `4.69 ms`; the 200-pass case used 200 versus one and measured about `497.68 ms` versus `4.96 ms`. Those timings demonstrate that redundant recomputation can dominate these synthetic retrace fixtures. They are **not** a universal performance claim: the single `0.0001 mm` positive-volume skim was slower in the candidate (`~7.44 ms`) than the immediate baseline (`~4.67 ms`).
+
+**MEASURED:** the `0.0001 mm` positive-volume skim and `0.001 mm` tangent-overlap cases remained material-changing. Contact deferral therefore did not become a hidden small-feature threshold.
+
+**INFERENCE:** H1 and the bounded form of H2 survive the founding experiment set. The evidence supports semantic regularization and selective deferral/recomputation elision, not blanket batching. H3 also survives: CellsBuilder was useful and equivalent in both tested reconciliation probes, but the experiment provides no basis for treating its split-part topology as programme identity or as a persistent material ontology.
 
 ## OCCT General Fuse / CellsBuilder interpretation
 
 **SOURCE:** pinned OCCT 8.0.1 `BOPAlgo_CellsBuilder` is based on General Fuse, whose result is all split parts of its arguments. The API can select cells, assign material values and remove same-material internal boundaries. Its documentation requires valid B-rep arguments and notes limitations/warnings for internal-boundary removal. Pinned source: https://github.com/Open-Cascade-SAS/OCCT/blob/b8f597c677811d1f9f4d8a97f5ae2825c0353a42/src/ModelingAlgorithms/TKBO/BOPAlgo/BOPAlgo_CellsBuilder.hxx
 
-**INFERENCE:** this is relevant to reconciliation and cell-complex research because it can make material selection explicit after one global split. It is not itself a deferred-topology architecture: the General Fuse still constructs a split B-rep arrangement, and its topology/history remain OCCT-private evidence.
+**MEASURED:** both RCS-009 CellsBuilder probes—overlapping removal and cut-through—produced valid results equivalent to the candidate's selected material within the campaign bounds.
 
-RCS-009 therefore records CellsBuilder behaviour without making successful use a prerequisite for the candidate model.
+**INFERENCE:** CellsBuilder is relevant to reconciliation and cell-complex research because it can make material selection explicit after one global split. It is not itself a deferred-topology architecture: General Fuse still constructs a split B-rep arrangement, and its topology/history remain OCCT-private evidence.
 
 ## STEP reconciliation contract
 
@@ -182,8 +195,10 @@ For an RCS-009 state to be exportable:
 3. every selected material body is materialized as a conventional valid engineering solid;
 4. body count/selection obeys the preserve-all/explicit-selection rule from RCS-005;
 5. geometric/tolerance/analytic policies are checked under the RCS-005 gates;
-6. serialization and fresh read-back must pass the automated STEP checks;
+6. serialization and fresh read-back pass the automated STEP checks;
 7. independent-consumer qualification remains part of the RCS-005 profile rather than being replaced by OCCT self-readback.
+
+**MEASURED:** the founding cut-through case reached this boundary with two reconciled solids. AP242DIS millimetre write/read-back retained both solids, had zero measured volume delta, and a maximum bounding-box delta of about `5.0e-8 mm`.
 
 No pending ledger, SDF, mesh or CellsBuilder compound is allowed to masquerade as successful primary STEP output. A reconciliation failure is an explicit export refusal/failure, not permission to silently drop bodies or fall back to STL.
 
@@ -202,20 +217,20 @@ Deferred topology creates its own risks:
 - **export failure:** permissive internal state cannot be converted within RCS-005 accuracy/body/validity requirements;
 - **topology-dependent feature queries:** downstream logic assumes persistent face/edge names that RCS-008 explicitly rejected as durable identity.
 
-These failure modes are why the proposal is **bounded** deferred topology, not defer-everything-until-export.
+These failure modes are why the accepted result is **bounded** deferred topology, not defer-everything-until-export.
 
-## Provisional recommendation
+## Architecture recommendation
 
-**PROPOSAL:** carry regularized volumetric material semantics and bounded deferred topology into RCS-013 architecture synthesis as separate concepts:
+**INFERENCE/PROPOSAL:** carry regularized volumetric material semantics and bounded deferred topology into RCS-013 architecture synthesis as separate concepts:
 
-- regularized volumetric material semantics should define what subtractive material physically means;
-- deferred topology should be an implementation-private optimization/robustness tool available to process providers, not the durable project model;
+- regularized volumetric material semantics define what subtractive material physically means;
+- deferred topology is an implementation-private robustness/optimization tool available to process providers, not the durable project model;
 - local uncertainty and semantic lineage govern whether an event may stay pending or be recomputation-elided;
 - body-connectivity, exact-query, setup/version, checkpoint and STEP boundaries can force reconciliation;
 - immediate B-rep remains a valid strategy when cheap/reliable, and specialized RCS-010/RCS-011 material domains may defer/reconcile differently;
 - General Fuse/CellsBuilder remains a candidate reconciliation facility rather than the programme's material ontology.
 
-This recommendation becomes evidence-backed only after the RCS-009 CI campaign is measured. Its final status and quantitative findings are recorded in the issue's decision record and measured summary.
+The measured campaign supports this bounded recommendation. It does not justify a universal `batch everything` rule, a persistent CellsBuilder topology model, or a performance guarantee outside the tested fixtures.
 
 ## Open questions carried forward
 
