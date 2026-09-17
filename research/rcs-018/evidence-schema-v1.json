@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rcs-018-integration-evidence/1.0",
+  "title": "RCS-018 integration evidence",
+  "type": "object",
+  "required": [
+    "schema",
+    "issue",
+    "architecture_profile",
+    "source_contracts",
+    "scenarios",
+    "contract_result"
+  ],
+  "properties": {
+    "schema": {"const": "rcs-018-integration-evidence/1.0"},
+    "issue": {"const": "RCS-018"},
+    "architecture_profile": {"const": "semantic-provider-hybrid-v1"},
+    "source_contracts": {"type": "array", "items": {"type": "string"}, "minItems": 5},
+    "scenarios": {
+      "type": "object",
+      "required": ["lathe", "mill_body_split"],
+      "properties": {
+        "lathe": {"$ref": "#/$defs/scenario"},
+        "mill_body_split": {"$ref": "#/$defs/scenario"}
+      }
+    },
+    "contract_result": {
+      "type": "object",
+      "required": [
+        "pending_to_reconciled_exercised",
+        "multi_body_preserved",
+        "derived_discard_rebuild_equal",
+        "failure_injection_preserved_authority",
+        "step_layer_d_truthful",
+        "private_identity_absent"
+      ]
+    }
+  },
+  "$defs": {
+    "scenario": {
+      "type": "object",
+      "required": [
+        "fixture_id",
+        "trace",
+        "durable_authority",
+        "durable_authority_sha256",
+        "replay",
+        "worker_failure_injection",
+        "step_handoff"
+      ]
+    }
+  }
+}
