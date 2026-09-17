@@ -13,6 +13,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 EXPECTED_COMMIT = "b8f597c677811d1f9f4d8a97f5ae2825c0353a42"
 EXPECTED_VERSION = "8.0.1"
+EXPECTED_BUILD_PROFILE = "release-shared-cxx17-minimal-headless-v3"
 
 REQUIRED_FILES = (
     ROOT / "docs/14-BASELINE-BENCHMARK-HARNESS.md",
@@ -87,6 +88,8 @@ def validate_static() -> dict[str, Any]:
         error("benchmark plan must identify OCCT 8.0.1 baseline")
     if backend.get("tag") != "V8_0_1" or backend.get("commit") != EXPECTED_COMMIT:
         error("benchmark plan must pin V8_0_1 and accepted commit")
+    if backend.get("build_profile") != EXPECTED_BUILD_PROFILE:
+        error(f"benchmark plan must report actual OCCT build profile {EXPECTED_BUILD_PROFILE}")
     if backend.get("run_parallel") is not False or backend.get("non_destructive_booleans") is not True:
         error("baseline execution policy must be single-threaded and non-destructive")
 
@@ -171,7 +174,14 @@ def validate_static() -> dict[str, Any]:
             error(f"campaign runner missing required isolation/result feature {required!r}")
 
     bootstrap_text = (ROOT / "research/rcs-006/harness/bootstrap_occt.sh").read_text(encoding="utf-8") if (ROOT / "research/rcs-006/harness/bootstrap_occt.sh").is_file() else ""
-    for required in (EXPECTED_COMMIT, "git -C", "checkout --detach", "BUILD_LIBRARY_TYPE=Shared", "BUILD_CPP_STANDARD=C++17"):
+    for required in (
+        EXPECTED_COMMIT,
+        "git -C",
+        "checkout --detach",
+        "BUILD_LIBRARY_TYPE=Shared",
+        "BUILD_CPP_STANDARD=C++17",
+        f"build_profile={EXPECTED_BUILD_PROFILE}",
+    ):
         if required not in bootstrap_text:
             error(f"bootstrap script missing pin/build requirement {required!r}")
 
@@ -205,8 +215,13 @@ def validate_runtime(results_dir: Path, plan: dict[str, Any]) -> None:
     if campaign.get("campaign_schema") != "rcs-006-campaign/1.0":
         error("runtime campaign has unexpected schema")
     backend = campaign.get("backend") or {}
+    plan_backend = plan.get("backend") or {}
     if backend.get("commit") != EXPECTED_COMMIT or backend.get("version") != EXPECTED_VERSION:
         error("runtime campaign does not report pinned OCCT baseline")
+    if backend.get("build_profile") != EXPECTED_BUILD_PROFILE:
+        error("runtime campaign does not report the actual pinned build profile")
+    if backend != plan_backend:
+        error("runtime campaign backend metadata does not exactly match benchmark plan")
     if campaign.get("profile") != "smoke":
         error("CI runtime validation expects smoke profile")
     if int(campaign.get("repeats", 0)) < 2:
