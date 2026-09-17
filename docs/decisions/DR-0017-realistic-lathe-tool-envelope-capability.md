@@ -1,80 +1,103 @@
 # DR-0017 — realistic lathe tool-envelope capability
 
-Status: **proposed pending RCS-020 measured evidence**  
+Status: **accepted**  
 Date: 2026-09-17  
-Issue: RCS-020 / #39
+Issue: RCS-020 / #39  
+Evidence: `research/rcs-020/measured-summary-v1.json`
 
 ## Context
 
-DR-0013 accepted an axisymmetric axial/radial material domain as a first-class provider for a bounded fixed-axis lathe subset. Its decisive limitation was upstream: the RCS-010 experiment began from an oracle-derived completed material-removal profile rather than deriving that profile from realistic insert/tool geometry, orientation, canonical tool trajectory and reachability.
+DR-0013 accepted an axisymmetric axial/radial material domain as a first-class provider for a bounded fixed-axis lathe subset. Its main unresolved upstream assumption was that RCS-010 began from a completed material-removal profile instead of deriving that profile from realistic tool geometry, orientation, canonical tool motion, and reachability.
 
-RCS-020 exists to determine whether that missing seam can be qualified without weakening programme ownership of tool/process semantics.
+RCS-020 measured that missing seam using non-zero circular nose radii, multiple approach configurations, boring, rounded grooving/parting, explicit facing, exact retrace, and a deliberate holder-collision undercut.
 
 ## Decision
 
-**PROPOSED, not yet accepted:** retain the RCS-010 axisymmetric provider as the preferred fixed-axis lathe material solver only when a versioned capability predicate can demonstrate all of the following:
+Retain the RCS-010 axisymmetric provider as the preferred first-class fixed-axis lathe material solver **only under an explicit versioned capability predicate** that establishes:
 
-1. the immutable tool geometry and canonical tool trajectory generate the removal/material envelope within a declared construction error;
-2. the derived envelope agrees with an independent material oracle within its research/production policy budget;
-3. tool/holder reachability does not invalidate the commanded motion under the qualified reachability model;
-4. material-body connectivity is preserved explicitly, including complete parting;
-5. reconciliation to conventional B-rep satisfies the applicable RCS-005 automated geometry/STEP gates;
-6. any unqualified analytic reconstruction property remains explicitly unqualified rather than inferred from a successful file.
+1. immutable tool geometry plus canonical trajectory generate the material envelope within a declared construction/error budget;
+2. the derived material envelope is independently validated rather than self-oracled;
+3. the operation satisfies the qualified tool/holder reachability predicate;
+4. material-body connectivity is represented explicitly, including complete parting;
+5. conventional B-rep reconciliation satisfies applicable RCS-005 automated geometry/STEP gates;
+6. unqualified reconstruction properties remain explicit instead of being inferred from successful geometry or serialization.
 
-Operations that fail the capability/reachability predicate must hand off to another qualified provider or return a stable refusal. They may not be converted into target-profile CAD features silently.
+For the RCS-020 measured subset, this admits bounded tool-derived material semantics for:
 
-This decision remains **proposed** until RCS-020's hosted campaign is measured and accepted. The final issue pass must either accept, narrow, replace or reject it from evidence.
+- OD turning with the tested R0.8 circular-nose external tool class;
+- facing;
+- shoulder formation;
+- linear taper motion with the tested alternate approach configuration;
+- exact/repeated finishing and retrace;
+- through/blind boring with the tested R0.4 internal tool class;
+- rounded grooving under the tested width/corner-radius model;
+- complete parting connectivity semantics.
+
+The tested holder-collision undercut is **not** admitted. It returned `refused_unsupported`, demonstrating that rotational representability of a target material set is insufficient proof that the specified manufacturing action belongs in the specialized provider.
+
+Operations outside the qualified envelope/reachability predicate must hand off to another qualified provider or fail closed. They may not be converted silently into target-profile CAD operations.
+
+### Explicitly not accepted by this decision
+
+RCS-020 does **not** qualify:
+
+- exact toroidal/circular-insert-nose analytic surface reconstruction in STEP from the polygon research adapter;
+- general holder/fixture collision and reachability outside the bounded probe;
+- arbitrary form/undercut tool families;
+- live-tool, eccentric, or non-axisymmetric lathe operations.
+
+These remain visible capability or reconstruction questions rather than hidden approximations.
 
 ## Alternatives considered
 
-### Keep DR-0013 unchanged and defer real tool envelopes to implementation
+### Leave DR-0013 unchanged and defer tool-envelope derivation to implementation
 
-Rejected as a Genesis-v2 stopping point. Tool-envelope derivation determines what the supposedly first-class lathe provider actually supports, so postponing it risks founding implementation around an unrealistically broad capability.
+Rejected. Tool-envelope derivation changes the provider admission predicate and therefore is a founding capability question rather than routine implementation detail.
 
 ### Store target radii/profiles in the journal
 
-Rejected. This would move backend-derived geometry into durable manufacturing intent and undermine the accepted direct-machining/journal boundary. The journal should preserve tool/process motion; the provider derives material consequences.
+Rejected. It would replace direct manufacturing intent with backend-derived CAD targets and weaken the accepted journal/backend boundary. Tool/process motion remains durable intent; the provider derives its material consequences.
 
-### Treat circular nose radius as a cosmetic rendering property
+### Treat insert nose radius or approach angle as rendering-only properties
 
-Rejected. Nose radius changes the physical swept envelope and must belong to the immutable tool revision when geometry-critical.
+Rejected. The measured material profiles depend on nose radius, and the reachability predicate depends on approach/holder geometry. Geometry-critical tool properties belong to immutable tool revisions.
 
-### Ignore holder/reachability and model only the final rotational material set
+### Accept every rotationally symmetric target and ignore holder/reachability
 
-Rejected. A rotationally representable result does not prove that the specified tool can create it. This would let the process-specific provider falsify manufacturing semantics.
+Rejected by the measured undercut fixture. A conservative holder probe found collision and the correct result was refusal rather than profile approximation.
 
-### Require exact analytic insert-nose STEP surfaces before accepting any lathe specialization
+### Require exact analytic insert-nose STEP reconstruction before accepting any material specialization
 
-Not selected as the RCS-020 material criterion. Material-set correctness, body semantics and conventional B-rep/STEP fidelity can be qualified independently from exact analytic reconstruction of every nose-generated surface. The latter remains visible as a separate reconstruction capability rather than becoming a hidden blocker or hidden success.
+Rejected as a conflation of two different correctness questions. RCS-020 demonstrates bounded material-set correctness, body semantics, conventional B-rep validity, and automated STEP read-back. Exact preferred analytic reconstruction of nose-generated surfaces remains separately unqualified and must not be inferred from those passes.
 
 ## Evidence
 
-Current evidence before RCS-020 measurement:
+Hosted accepted evidence is workflow run **35275577906** from source head `9a90435a7f9cd07ab36eb9185c227c6e827e5ef9`, artifact **10519883446**, artifact ZIP SHA-256 `e595847e03123b9898dd37d83e49f2a983c4633fdf93ce7b20cec53360db1eec`.
 
-- RCS-010 showed zero acceptance failures in its bounded oracle-profile set and successful automated STEP round trips, supporting the downstream axisymmetric material representation.
-- RCS-008 requires durable identity to remain semantic rather than tied to regenerated topology.
-- RCS-007/DR-0010 prohibit using a global tolerance to erase real positive material or ambiguity.
-- RCS-009/DR-0012 permits bounded deferred/reconciliation behavior while preserving signed manufacturing intent.
-- Primary manufacturer training/handbook/catalogue sources recorded in `research/rcs-020/experiment-plan-v1.json` establish that insert nose radius, approach/entering angle, and grooving/parting width/corner radii are physically meaningful tool parameters.
+Measured findings include:
 
-Evidence still required before acceptance:
+- all **10 required cases** completed and passed their acceptance classifications;
+- **8 one-body tool-derived cases** passed independent material-oracle checks plus downstream RCS-010 repeated/batched/axisymmetric comparison;
+- **24/24** enabled STEP strategy read-back attempts passed;
+- maximum one-body candidate/oracle material-volume error was **0.0164630791 mm³** under the predeclared `0.05 mm³` campaign budget;
+- maximum OCCT strategy-to-axisymmetric volume difference was approximately **7.28e-12 mm³**;
+- maximum STEP read-back volume difference was approximately **3.29e-10 mm³**;
+- exact retrace retained 20 journal events while comparing **20** repeated 3D material Booleans, **1** batched Boolean, and **0** axisymmetric material Booleans;
+- complete rounded parting differed from its closed-form material oracle by approximately **1.89e-05 mm³**, produced two material regions, and the independent OCCT/STEP connectivity control retained **2 solids before and after STEP read-back**;
+- the undercut holder collision was detected and returned `refused_unsupported`.
 
-- the complete RCS-020 independent-oracle campaign;
-- OCCT repeated/batched/axisymmetric comparison on tool-derived profiles;
-- applicable STEP Layer A-C evidence;
-- explicit two-body parting evidence;
-- a demonstrated reachability refusal/handoff boundary.
+The campaign also produced useful negative research-tool evidence. A uniform numerical integration oracle gave a false `0.3141255 mm³` parting discrepancy because it crossed a material discontinuity. It was replaced with an exact closed-form rounded-groove integral **without changing any acceptance tolerance**; the obsolete numerical value remains recorded diagnostically.
 
 ## Consequences
 
-If accepted, the lathe provider's production entry predicate becomes more concrete: an operation is not accepted merely because its desired final material is rotationally symmetric. The provider must know the tool revision, path/frame semantics, and qualified envelope/reachability class.
+The lathe provider entry predicate is now materially stronger than DR-0013 alone: rotational symmetry is necessary but not sufficient. The backend needs the immutable tool revision, path/frame semantics, a qualified envelope construction, and a qualified reachability result before accepting specialized execution.
 
-The provider remains implementation-private. MSAC does not receive or persist RCS-020 polygons, OCCT objects or target B-rep topology.
+MSAC still does not persist RCS-020 polygons, OCCT topology, or target CAD profiles. The programme-facing boundary remains manufacturing-semantic and backend-independent.
 
-A future exact/provenance-assisted reconstruction implementation may improve analytic STEP fidelity without changing durable journal meaning, provided it preserves the same material/error contract.
+Future exact/provenance-assisted analytic reconstruction may improve STEP surface classes without changing durable manufacturing meaning, provided it preserves the accepted material/error/body contract and is independently qualified.
 
 ## Reversibility
 
-Highly reversible before Genesis-v2 Gate 5. RCS-020 can narrow or reject tool classes without changing the canonical journal's ownership model.
+The qualified subset can be narrowed if later regression evidence falsifies it, or widened through new versioned tool/envelope/reachability qualification. Neither change requires coupling project meaning to OCCT topology.
 
-After production handoff, widening the provider capability remains additive when new tool/envelope classes are qualified. Changing the meaning of an already accepted tool/process operation is not an implementation tweak: it requires a versioned capability/policy change and replay/regression evidence.
+After production handoff, changing the interpretation of an already accepted tool/process operation requires an explicit capability/policy version change and replay/regression evidence; it is not an invisible provider optimization.
