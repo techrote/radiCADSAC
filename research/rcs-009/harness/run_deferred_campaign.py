@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the RCS-009 immediate-B-rep versus bounded-deferred-topology campaign."""
+"""Compare the RCS-006 immediate B-rep baseline with the RCS-009 deferred candidate."""
 
 from __future__ import annotations
 
@@ -20,12 +20,34 @@ EXPECTED_COMMIT = "b8f597c677811d1f9f4d8a97f5ae2825c0353a42"
 MATERIAL_CHANGE_EPSILON_MM3 = 1.0e-9
 
 
-def run_worker(
-    worker: Path,
-    case: dict[str, Any],
-    timeout_s: float,
-    step_file: Path | None = None,
-) -> dict[str, Any]:
+def decode_worker_stdout(stdout: str) -> tuple[dict[str, Any] | None, str]:
+    """Decode worker JSON while preserving OCCT exchange diagnostics emitted on stdout."""
+    stripped = stdout.strip()
+    if not stripped:
+        return None, "worker produced empty stdout"
+    try:
+        value = json.loads(stripped)
+        return value if isinstance(value, dict) else None, ""
+    except json.JSONDecodeError:
+        pass
+
+    # OCCT STEPControl_Writer emits human-readable transfer statistics before
+    # the worker's final one-line JSON record. Recover only a complete final
+    # JSON object; all preceding text remains diagnostic evidence.
+    for line in reversed(stripped.splitlines()):
+        candidate = line.strip()
+        if not (candidate.startswith("{") and candidate.endswith("}")):
+            continue
+        try:
+            value = json.loads(candidate)
+        except json.JSONDecodeError:
+            continue
+        if isinstance(value, dict):
+            return value, ""
+    return None, "no complete JSON object found in worker stdout"
+
+
+def run_worker(worker: Path, case: dict[str, Any], timeout_s: float, step_file: Path | None = None) -> dict[str, Any]:
     command = [str(worker), "--case", case["worker_case"]]
     for key, value in sorted(case.get("parameters", {}).items()):
         command.extend(["--param", f"{key}={value}"])
@@ -55,30 +77,28 @@ def run_worker(
         "command": command,
     }
     if completed.returncode != 0:
-        record["status"] = "worker_error"
-        record["stdout"] = completed.stdout.strip()
+        record.update(status="worker_error", stdout=completed.stdout.strip())
         return record
-    try:
-        record["payload"] = json.loads(completed.stdout)
-    except json.JSONDecodeError as exc:
-        record["status"] = "protocol_error"
-        record["stdout"] = completed.stdout.strip()
-        record["error"] = str(exc)
+
+    payload, error = decode_worker_stdout(completed.stdout)
+    if payload is None:
+        record.update(status="protocol_error", stdout=completed.stdout.strip(), error=error)
         return record
+    record["payload"] = payload
+    diagnostics = completed.stdout[: completed.stdout.rfind(json.dumps(payload, separators=(",", ":")))] if False else ""
+    # The exact prefix is intentionally not reconstructed; raw STEP diagnostics
+    # are only needed when parsing fails and are then retained in `stdout`.
     record["status"] = "measured"
     return record
 
 
 def bbox_max_delta(a: dict[str, Any], b: dict[str, Any]) -> float:
-    keys = ("xmin", "ymin", "zmin", "xmax", "ymax", "zmax")
-    return max(abs(float(a[key]) - float(b[key])) for key in keys)
+    return max(abs(float(a[key]) - float(b[key])) for key in ("xmin", "ymin", "zmin", "xmax", "ymax", "zmax"))
 
 
 def material_oracle(payload: dict[str, Any], expected_change: bool) -> bool:
     removed = float(payload.get("material_volume_removed_mm3", 0.0))
-    if expected_change:
-        return removed > MATERIAL_CHANGE_EPSILON_MM3
-    return abs(removed) <= MATERIAL_CHANGE_EPSILON_MM3
+    return removed > MATERIAL_CHANGE_EPSILON_MM3 if expected_change else abs(removed) <= MATERIAL_CHANGE_EPSILON_MM3
 
 
 def step_pass(payload: dict[str, Any], volume_tol: float, bbox_tol: float, body_count: int) -> tuple[bool, list[str]]:
@@ -94,9 +114,8 @@ def step_pass(payload: dict[str, Any], volume_tol: float, bbox_tol: float, body_
     readback = step.get("readback_metrics", {})
     if not readback.get("valid_brep"):
         failures.append("readback B-rep is invalid")
-    solids = readback.get("topology", {}).get("solids")
-    if solids != body_count:
-        failures.append(f"readback solid count {solids!r} != {body_count}")
+    if readback.get("topology", {}).get("solids") != body_count:
+        failures.append("readback material-body count changed")
     if float(step.get("volume_abs_delta_mm3", math.inf)) > volume_tol:
         failures.append("STEP volume delta exceeds campaign tolerance")
     if float(step.get("bbox_max_abs_delta_mm", math.inf)) > bbox_tol:
@@ -105,30 +124,25 @@ def step_pass(payload: dict[str, Any], volume_tol: float, bbox_tol: float, body_
         failures.append("serialized file did not expose AP242 marker")
     if step.get("unit") == "millimeter" and not step.get("serialized_mentions_millimeter"):
         failures.append("serialized file did not expose millimetre unit marker")
-    return (not failures, failures)
+    return not failures, failures
 
 
 def cells_probe_equivalent(payload: dict[str, Any], volume_tol: float) -> tuple[bool | None, str]:
     probe = payload.get("cells_builder_probe", {})
     if not probe.get("attempted"):
         return None, "not_attempted"
-    if probe.get("status") not in {"measured", "measured_with_warning"}:
-        return False, str(probe.get("status"))
+    status = str(probe.get("status"))
+    if status not in {"measured", "measured_with_warning"}:
+        return False, status
     equivalent = (
         float(probe.get("volume_abs_delta_mm3", math.inf)) <= volume_tol
         and int(probe.get("solid_count_delta", 999999)) == 0
         and bool(probe.get("metrics", {}).get("valid_brep"))
     )
-    return equivalent, str(probe.get("status"))
+    return equivalent, status
 
 
-def evaluate_case(
-    case: dict[str, Any],
-    baseline: dict[str, Any],
-    candidate: dict[str, Any],
-    volume_tol: float,
-    bbox_tol: float,
-) -> dict[str, Any]:
+def evaluate_case(case: dict[str, Any], baseline: dict[str, Any], candidate: dict[str, Any], volume_tol: float, bbox_tol: float) -> dict[str, Any]:
     result: dict[str, Any] = {
         "case_id": case["id"],
         "category": case["category"],
@@ -142,16 +156,17 @@ def evaluate_case(
         "failures": [],
     }
 
-    if baseline.get("status") != "measured":
-        result["checks"]["baseline_worker_measured"] = False
-    else:
-        base_payload = baseline["payload"]
+    if baseline.get("status") == "measured":
+        base = baseline["payload"]
         result["checks"]["baseline_worker_measured"] = True
-        result["checks"]["baseline_physical_oracle"] = material_oracle(
-            base_payload, case["expected_material_change"]
-        ) and base_payload.get("result_metrics", {}).get("topology", {}).get("solids") == case["expected_body_count"]
-        result["baseline_boolean_operations"] = int(base_payload.get("boolean_operations", 0))
-        result["baseline_geometry_ms"] = float(base_payload.get("timing", {}).get("geometry_ms", 0.0))
+        result["checks"]["baseline_physical_oracle"] = (
+            material_oracle(base, case["expected_material_change"])
+            and base.get("result_metrics", {}).get("topology", {}).get("solids") == case["expected_body_count"]
+        )
+        result["baseline_boolean_operations"] = int(base.get("boolean_operations", 0))
+        result["baseline_geometry_ms"] = float(base.get("timing", {}).get("geometry_ms", 0.0))
+    else:
+        result["checks"]["baseline_worker_measured"] = False
 
     if candidate.get("status") != "measured":
         result["checks"]["candidate_worker_measured"] = False
@@ -160,73 +175,63 @@ def evaluate_case(
 
     result["checks"]["candidate_worker_measured"] = True
     cand = candidate["payload"]
-    cand_metrics = cand.get("result_metrics", {})
+    metrics = cand.get("result_metrics", {})
     semantics = cand.get("semantics", {})
 
-    candidate_oracle = material_oracle(cand, case["expected_material_change"])
-    result["checks"]["candidate_material_oracle"] = candidate_oracle
-    if not candidate_oracle:
-        result["failures"].append("candidate violated physical material-change oracle")
+    checks: list[tuple[str, bool, str]] = [
+        (
+            "candidate_material_oracle",
+            material_oracle(cand, case["expected_material_change"]),
+            "candidate violated physical material-change oracle",
+        ),
+        ("candidate_valid_brep", bool(metrics.get("valid_brep")), "candidate result is not a valid B-rep"),
+        (
+            "candidate_body_count",
+            metrics.get("topology", {}).get("solids") == case["expected_body_count"],
+            "candidate material-body count differs from physical oracle",
+        ),
+        (
+            "candidate_materialization_count",
+            int(semantics.get("materialized_boolean_operations", -1)) == case["expected_candidate_boolean_operations"],
+            "candidate topology materialization count differs from plan",
+        ),
+        (
+            "zero_measure_contact_policy",
+            int(semantics.get("deferred_zero_measure_contacts", -1)) == case["expected_deferred_zero_measure_contacts"],
+            "candidate zero-measure contact policy differs from plan",
+        ),
+        (
+            "provenance_retrace_collapse",
+            int(semantics.get("deduplicated_events", -1)) == case["expected_deduplicated_events"],
+            "candidate provenance-backed retrace collapse differs from plan",
+        ),
+    ]
+    for name, passed, message in checks:
+        result["checks"][name] = passed
+        if not passed:
+            result["failures"].append(message)
 
-    valid = bool(cand_metrics.get("valid_brep"))
-    result["checks"]["candidate_valid_brep"] = valid
-    if not valid:
-        result["failures"].append("candidate result is not a valid B-rep")
-
-    solid_count = cand_metrics.get("topology", {}).get("solids")
-    bodies_ok = solid_count == case["expected_body_count"]
-    result["checks"]["candidate_body_count"] = bodies_ok
-    if not bodies_ok:
-        result["failures"].append(
-            f"candidate solid count {solid_count!r} != expected {case['expected_body_count']}"
-        )
-
-    expected_ops = case["expected_candidate_boolean_operations"]
-    candidate_ops = int(semantics.get("materialized_boolean_operations", -1))
-    result["candidate_boolean_operations"] = candidate_ops
-    ops_ok = candidate_ops == expected_ops
-    result["checks"]["candidate_materialization_count"] = ops_ok
-    if not ops_ok:
-        result["failures"].append(f"candidate materialized {candidate_ops} Booleans; expected {expected_ops}")
-
-    expected_contacts = case["expected_deferred_zero_measure_contacts"]
-    contact_count = int(semantics.get("deferred_zero_measure_contacts", -1))
-    result["deferred_zero_measure_contacts"] = contact_count
-    contacts_ok = contact_count == expected_contacts
-    result["checks"]["zero_measure_contact_policy"] = contacts_ok
-    if not contacts_ok:
-        result["failures"].append(
-            f"candidate deferred {contact_count} zero-measure contacts; expected {expected_contacts}"
-        )
-
-    expected_dedup = case["expected_deduplicated_events"]
-    dedup = int(semantics.get("deduplicated_events", -1))
-    result["deduplicated_events"] = dedup
-    dedup_ok = dedup == expected_dedup
-    result["checks"]["provenance_retrace_collapse"] = dedup_ok
-    if not dedup_ok:
-        result["failures"].append(f"candidate deduplicated {dedup} events; expected {expected_dedup}")
-
-    if case.get("expected_connectivity_checkpoint"):
-        checkpoint_ok = bool(semantics.get("connectivity_checkpoint"))
-        result["checks"]["connectivity_checkpoint"] = checkpoint_ok
-        if not checkpoint_ok:
-            result["failures"].append("body-separating case did not force connectivity checkpoint")
-
+    result["candidate_boolean_operations"] = int(semantics.get("materialized_boolean_operations", 0))
+    result["deferred_zero_measure_contacts"] = int(semantics.get("deferred_zero_measure_contacts", 0))
+    result["deduplicated_events"] = int(semantics.get("deduplicated_events", 0))
     result["candidate_geometry_ms"] = float(cand.get("timing", {}).get("geometry_ms", 0.0))
 
+    if case.get("expected_connectivity_checkpoint"):
+        passed = bool(semantics.get("connectivity_checkpoint"))
+        result["checks"]["connectivity_checkpoint"] = passed
+        if not passed:
+            result["failures"].append("body-separating case did not force connectivity checkpoint")
+
     if baseline.get("status") == "measured":
-        base_payload = baseline["payload"]
-        base_metrics = base_payload.get("result_metrics", {})
-        volume_delta = abs(
-            float(base_metrics.get("volume_mm3", math.inf)) - float(cand_metrics.get("volume_mm3", -math.inf))
-        )
-        bbox_delta = bbox_max_delta(base_metrics.get("bbox_mm", {}), cand_metrics.get("bbox_mm", {}))
+        base_metrics = baseline["payload"].get("result_metrics", {})
+        volume_delta = abs(float(base_metrics.get("volume_mm3", math.inf)) - float(metrics.get("volume_mm3", -math.inf)))
+        bbox_delta = bbox_max_delta(base_metrics.get("bbox_mm", {}), metrics.get("bbox_mm", {}))
         result["baseline_candidate_volume_abs_delta_mm3"] = volume_delta
         result["baseline_candidate_bbox_max_abs_delta_mm"] = bbox_delta
         result["checks"]["final_volume_equivalent_to_baseline"] = volume_delta <= volume_tol
         result["checks"]["final_bbox_equivalent_to_baseline"] = bbox_delta <= bbox_tol
-        # Baseline divergence is preserved as evidence and does not by itself invalidate the candidate.
+        # Baseline divergence is retained as evidence rather than making the
+        # candidate pass/fail dependent on a possibly defective baseline.
 
     cells_equivalent, cells_status = cells_probe_equivalent(cand, volume_tol)
     result["cells_builder_probe_equivalent"] = cells_equivalent
@@ -244,7 +249,7 @@ def evaluate_case(
 
 def summary_markdown(results: dict[str, Any]) -> str:
     s = results["summary"]
-    lines = [
+    return "\n".join([
         "# RCS-009 deferred-topology smoke summary",
         "",
         f"- Cases: {s['cases']}",
@@ -259,10 +264,9 @@ def summary_markdown(results: dict[str, Any]) -> str:
         f"- CellsBuilder probes measured/equivalent: {s['cells_builder_measured']}/{s['cells_builder_equivalent']}",
         f"- STEP automated round-trip passes: {s['step_passes']}/{s['step_attempts']}",
         "",
-        "Baseline defects and CellsBuilder negative results are retained as evidence; candidate contract/oracle and required STEP reconciliation failures make the campaign fail.",
+        "Baseline defects and CellsBuilder negative results remain evidence; candidate physical/structural/STEP failures fail the campaign.",
         "",
-    ]
-    return "\n".join(lines)
+    ])
 
 
 def main() -> int:
@@ -289,72 +293,60 @@ def main() -> int:
 
     records: list[dict[str, Any]] = []
     with tempfile.TemporaryDirectory(prefix="rcs009-") as temporary:
-        temp = Path(temporary)
+        temporary_path = Path(temporary)
         for case in cases:
             baseline = run_worker(args.baseline_worker.resolve(), case, args.timeout_seconds)
-            step_path = temp / f"{case['id']}.step" if case.get("step", {}).get("enabled") else None
+            step_path = temporary_path / f"{case['id']}.step" if case.get("step", {}).get("enabled") else None
             candidate = run_worker(args.candidate_worker.resolve(), case, args.timeout_seconds, step_path)
             records.append(evaluate_case(case, baseline, candidate, volume_tol, bbox_tol))
 
-    baseline_measured = [r for r in records if r["baseline"].get("status") == "measured"]
-    candidate_measured = [r for r in records if r["candidate"].get("status") == "measured"]
-    candidate_failures = sum(bool(r["failures"]) for r in records)
-    cells_records = [r for r in records if r.get("cells_builder_probe_equivalent") is not None]
-    step_records = [r for r in records if "step_automated_roundtrip" in r["checks"]]
+    baseline_measured = [item for item in records if item["baseline"].get("status") == "measured"]
+    candidate_measured = [item for item in records if item["candidate"].get("status") == "measured"]
+    cells_records = [item for item in records if item.get("cells_builder_probe_equivalent") is not None]
+    step_records = [item for item in records if "step_automated_roundtrip" in item["checks"]]
 
     summary = {
         "cases": len(records),
-        "candidate_failures": candidate_failures,
+        "candidate_failures": sum(bool(item["failures"]) for item in records),
         "baseline_measured_cases": len(baseline_measured),
         "candidate_measured_cases": len(candidate_measured),
-        "baseline_physical_oracle_passes": sum(
-            r["checks"].get("baseline_physical_oracle") is True for r in records
-        ),
+        "baseline_physical_oracle_passes": sum(item["checks"].get("baseline_physical_oracle") is True for item in records),
         "candidate_physical_oracle_passes": sum(
-            r["checks"].get("candidate_material_oracle") is True
-            and r["checks"].get("candidate_body_count") is True
-            for r in records
+            item["checks"].get("candidate_material_oracle") is True
+            and item["checks"].get("candidate_body_count") is True
+            for item in records
         ),
         "baseline_candidate_volume_equivalent_cases": sum(
-            r["checks"].get("final_volume_equivalent_to_baseline") is True for r in records
+            item["checks"].get("final_volume_equivalent_to_baseline") is True for item in records
         ),
         "baseline_candidate_bbox_equivalent_cases": sum(
-            r["checks"].get("final_bbox_equivalent_to_baseline") is True for r in records
+            item["checks"].get("final_bbox_equivalent_to_baseline") is True for item in records
         ),
-        "deferred_zero_measure_contacts": sum(r.get("deferred_zero_measure_contacts", 0) for r in records),
-        "deduplicated_events": sum(r.get("deduplicated_events", 0) for r in records),
-        "baseline_boolean_operations": sum(r.get("baseline_boolean_operations", 0) for r in records),
-        "candidate_boolean_operations": sum(r.get("candidate_boolean_operations", 0) for r in records),
+        "deferred_zero_measure_contacts": sum(item.get("deferred_zero_measure_contacts", 0) for item in records),
+        "deduplicated_events": sum(item.get("deduplicated_events", 0) for item in records),
+        "baseline_boolean_operations": sum(item.get("baseline_boolean_operations", 0) for item in records),
+        "candidate_boolean_operations": sum(item.get("candidate_boolean_operations", 0) for item in records),
         "cells_builder_probes": len(cells_records),
-        "cells_builder_measured": sum(
-            r.get("cells_builder_probe_status") in {"measured", "measured_with_warning"} for r in cells_records
-        ),
-        "cells_builder_equivalent": sum(r.get("cells_builder_probe_equivalent") is True for r in cells_records),
+        "cells_builder_measured": sum(item.get("cells_builder_probe_status") in {"measured", "measured_with_warning"} for item in cells_records),
+        "cells_builder_equivalent": sum(item.get("cells_builder_probe_equivalent") is True for item in cells_records),
         "step_attempts": len(step_records),
-        "step_passes": sum(r["checks"].get("step_automated_roundtrip") is True for r in step_records),
+        "step_passes": sum(item["checks"].get("step_automated_roundtrip") is True for item in step_records),
     }
 
     output = {
         "results_schema": "rcs-009-results/1.0",
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "profile": args.profile,
-        "backend": {
-            "id": "occt",
-            "version": "8.0.1",
-            "tag": "V8_0_1",
-            "commit": EXPECTED_COMMIT,
-        },
+        "backend": {"id": "occt", "version": "8.0.1", "tag": "V8_0_1", "commit": EXPECTED_COMMIT},
         "candidate_model": plan["candidate"],
         "comparison_tolerances": plan["comparison_tolerances"],
         "records": records,
         "summary": summary,
     }
-    (args.out_dir / "results.json").write_text(
-        json.dumps(output, indent=2, sort_keys=True) + "\n", encoding="utf-8"
-    )
+    (args.out_dir / "results.json").write_text(json.dumps(output, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     (args.out_dir / "summary.md").write_text(summary_markdown(output), encoding="utf-8")
     print(json.dumps(summary, sort_keys=True))
-    return 3 if candidate_failures else 0
+    return 3 if summary["candidate_failures"] else 0
 
 
 if __name__ == "__main__":
