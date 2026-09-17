@@ -1,0 +1,148 @@
+{
+  "schema": "rcs-013-architecture/1.0",
+  "status": "gate-2-accepted",
+  "date": "2026-09-17",
+  "source_main": "d9ec50cdcd4b018c5f8d3fa0bc4ffbb950b1beb2",
+  "architecture": {
+    "id": "semantic-provider-hybrid-v1",
+    "summary": "Programme-owned manufacturing semantics and lineage dispatch to process-specialized geometry providers; OCCT is isolated behind B-rep validation/reconciliation/STEP adapters; bounded deferred or hybrid representations are allowed locally and must reconcile before topology-dependent/export boundaries.",
+    "durable_authority": [
+      "canonical manufacturing journal",
+      "immutable workpiece revisions and material-body transitions",
+      "semantic lineage graph",
+      "versioned machine/tool/setup definitions",
+      "versioned tolerance/export/dispatch policies"
+    ],
+    "replaceable_derived_state": [
+      "OCCT TopoDS topology",
+      "provider-private axisymmetric material state",
+      "pending removal/deferred-topology ledger",
+      "preview mesh",
+      "fallback cell/mesh/voxel state",
+      "reconciled B-rep cache"
+    ],
+    "external_boundary_rule": "No OCCT, Godot, mesh, voxel, or provider-private topology object is part of the stable MSAC/OpenSimachinist contract.",
+    "deployment_default": "process-isolated geometry workers until RCS-017 demonstrates a safely narrower concurrency boundary"
+  },
+  "options": [
+    {
+      "id": "deep-occt-fork",
+      "decision": "rejected-initially",
+      "reason": "No accepted measurement requires a wholesale fork; it would increase upstream-sync and LGPL-derived-code maintenance cost while leaving journal/provenance/process semantics unsolved.",
+      "evidence": ["docs/12-OCCT-8.0.1-AUDIT.md", "docs/decisions/DR-0004-stable-backend-boundary.md"]
+    },
+    {
+      "id": "monolithic-occt-brep-core",
+      "decision": "rejected-as-universal-core",
+      "reason": "Immediate B-rep replay works as a baseline but does not capture accepted deferred-topology, specialized-lathe, mill-dispatch and bounded-hybrid findings.",
+      "evidence": ["research/rcs-009/measured-summary-v1.json", "research/rcs-010/measured-summary-v1.json", "research/rcs-011/measured-summary-v1.json"]
+    },
+    {
+      "id": "whole-model-discrete-core",
+      "decision": "rejected-initially",
+      "reason": "The measured 0.5 mm sparse occupancy candidate erased real 0.001 mm manufacturing features and cannot by itself preserve analytic STEP semantics.",
+      "evidence": ["research/rcs-012/measured-summary-v1.json", "docs/decisions/DR-0014-bounded-hybrid-representation-fallbacks.md"]
+    },
+    {
+      "id": "semantic-provider-hybrid",
+      "decision": "selected",
+      "reason": "It preserves the implementation-independent journal/lineage contract while admitting the measured lathe specialization, mill hierarchy, bounded topology deferral, OCCT reconciliation and local hybrid escape routes.",
+      "evidence": [
+        "docs/decisions/DR-0004-stable-backend-boundary.md",
+        "docs/decisions/DR-0010-separate-tolerance-channels-and-local-uncertainty.md",
+        "docs/decisions/DR-0011-semantic-lineage-not-topology-id.md",
+        "docs/decisions/DR-0012-regularized-material-and-bounded-deferred-topology.md",
+        "docs/decisions/DR-0013-axisymmetric-lathe-material-domain.md",
+        "docs/decisions/DR-0014-bounded-hybrid-representation-fallbacks.md"
+      ]
+    }
+  ],
+  "components": [
+    {"id":"journal-ingress","role":"Validate/version canonical operations, immutable revisions, units, coordinate frames and machine/tool/setup revisions.","authority":"programme"},
+    {"id":"semantic-lineage","role":"Own backend-independent body/operation/envelope ancestry and split/merge/replacement/ambiguity relations.","authority":"programme"},
+    {"id":"policy-dispatch","role":"Apply capability, tolerance, uncertainty, reconciliation and provider-dispatch policies without collapsing them into one epsilon.","authority":"programme"},
+    {"id":"lathe-axisymmetric-provider","role":"First-class fixed-axis turning provider for the qualified OD/facing/shoulder/taper/boring/retrace subset.","authority":"provider-private"},
+    {"id":"mill-provider","role":"Dispatch explicit analytic operations, strict recognized/canonicalized paths, exact segment-envelope removal, and bounded fallback rather than one universal freehand batch.","authority":"provider-private"},
+    {"id":"generic-brep-provider","role":"Use isolated OCCT exact/parametric B-rep operations where they are qualified and process-specialized providers do not apply.","authority":"provider-private"},
+    {"id":"deferred-material-coordinator","role":"Permit regularized material semantics and bounded pending removal/contact state; force reconciliation at connectivity, exact-query, provider-handoff and export boundaries.","authority":"provider-private"},
+    {"id":"bounded-fallback-adapter","role":"Host local cell/mesh/voxel/SDF/exact alternatives with explicit scope/error metadata; never silently promote them to whole-model engineering truth.","authority":"provider-private"},
+    {"id":"brep-reconciler","role":"Recover known analytic boundaries from semantics/provenance first, resolve pending state, validate bodies, and produce conventional B-rep for topology-dependent use and export.","authority":"backend"},
+    {"id":"step-conformance-adapter","role":"Export selected material bodies through the four RCS-005 conformance gates; success/refusal is programme-level, not a writer return code.","authority":"programme-policy-over-backend"},
+    {"id":"worker-supervisor","role":"Contain crashes/hangs/global state with process-isolated workers and timeouts; may be relaxed only by later measured concurrency evidence.","authority":"deployment"}
+  ],
+  "solver_dispatch": {
+    "lathe": [
+      "axisymmetric-provider when support predicate proves rotationally symmetric qualified envelope semantics",
+      "batched/generic B-rep fallback for qualified axisymmetric-intent operations not yet implemented by the specialized provider",
+      "reconcile and hand off when symmetry/support predicate fails",
+      "refuse rather than approximate if no qualified provider preserves requested semantics"
+    ],
+    "mill": [
+      "explicit analytic/recognized operation",
+      "strict canonicalized simple path/batch with equivalence proof",
+      "per-segment exact cutter-envelope baseline",
+      "bounded local hybrid/deferred fallback for pathological regions when an explicit error contract exists",
+      "reconcile or refuse when the fallback cannot meet geometry/STEP requirements"
+    ],
+    "forbidden_shortcuts": [
+      "one global fuzzy epsilon as manufacturing truth",
+      "unproven n-ary freehand batching",
+      "dense sampled-pose B-rep subtraction as universal fallback",
+      "whole-model mesh/voxel success fallback",
+      "implicit largest/first body selection"
+    ]
+  },
+  "reconciliation_boundaries": [
+    "material-body connectivity or retention decision",
+    "topology-dependent exact inspection/query",
+    "provider handoff when representation assumptions change",
+    "persistent engineering checkpoint when provider-private state cannot be safely replayed",
+    "STEP export",
+    "explicit user/API request for reconciled engineering geometry"
+  ],
+  "tolerance_policy": {
+    "separate_channels": [
+      "input_sampling_resolution",
+      "machine_control_resolution",
+      "manufacturing_tolerance",
+      "numerical_uncertainty",
+      "topological_equivalence",
+      "contact_classification",
+      "preview_tolerance",
+      "export_tolerance",
+      "validation_tolerance"
+    ],
+    "uncertain_contact": "defer/reconcile while retaining signed manufacturing intent",
+    "positive_removal": "never silently converted to a no-op by numerical/fuzzy/manufacturing tolerance",
+    "retrace_elision": "requires semantic-lineage proof and preserves the journal event"
+  },
+  "external_api": {
+    "transport": "not selected; schema semantics are stable before RPC/ABI choice",
+    "request_families": ["capabilities","apply_canonical_operations","commit_revision","replay_revision","query_material_state","request_preview","request_reconciliation","inspect_reconciled_geometry","export_step"],
+    "common_request_fields": ["contract_version","project_revision","journal_schema_version","operation_ids","setup_revision","tool_revision","coordinate_frame","tolerance_policy_version","requested_body_ids"],
+    "common_response_fields": ["contract_version","engineering_status","revision_id","material_body_ids","lineage_events","provider_profile","reconciliation_state","diagnostics"],
+    "private_types_forbidden": ["TopoDS_*","OCCT Handle","Godot Object","triangle index identity","voxel/cell identity"]
+  },
+  "engineering_status_model": ["accepted_pending","reconciled","success","refused_unsupported","refused_unresolved_ambiguity","invalid_topology","wrong_geometry","tolerance_breach","kernel_error","crash","timeout","nondeterministic_result","step_writer_failure","step_roundtrip_failure","interoperability_unqualified"],
+  "versioning": {
+    "durable_versions": ["programme API contract","journal schema and canonicalization profile","machine/tool/setup definitions","semantic lineage schema","tolerance policy","provider capability/dispatch profile","exporter conformance profile"],
+    "replay_rule": "A saved project remains defined by canonical manufacturing intent and semantic revisions. Provider-private geometry caches may be invalidated and rebuilt; replay records the implementation/profile used for diagnostics and reproducibility.",
+    "migration_rule": "Schema migrations transform programme-owned semantic data explicitly; they do not reinterpret backend-private topology IDs."
+  },
+  "dependency_strategy": {
+    "occt": "Keep pinned and isolated behind programme adapters. Prefer shared-library use and explicit per-call parameters. Do not deep-fork unless a measured narrow seam cannot be corrected above the kernel.",
+    "optional_fallbacks": "Manifold/OpenVDB-style or exact-geometry libraries may be introduced behind optional replaceable adapters after workload-specific qualification.",
+    "cgal_nef": "Not an initial mandatory dependency; GPL-3+ package licensing and analytic reconstruction cost are material constraints.",
+    "provenance": "Record exact dependency versions/commits/build profiles and preserve applicable notices/source obligations."
+  },
+  "evidence": {
+    "step":"docs/decisions/DR-0009-step-conformance-and-body-preservation.md",
+    "tolerance":"research/rcs-007/measured-summary-v1.json",
+    "lineage":"research/rcs-008/measured-summary-v1.json",
+    "deferred_topology":"research/rcs-009/measured-summary-v1.json",
+    "lathe":"research/rcs-010/measured-summary-v1.json",
+    "mill":"research/rcs-011/measured-summary-v1.json",
+    "hybrid":"research/rcs-012/measured-summary-v1.json",
+    "occt_audit":"docs/12-OCCT-8.0.1-AUDIT.md"
+  }
+}
