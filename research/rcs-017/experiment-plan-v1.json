@@ -1,0 +1,81 @@
+{
+  "schema": "rcs017-experiment-plan/1.0",
+  "issue": "RCS-017",
+  "date": "2026-09-17",
+  "occt": {
+    "version": "8.0.1",
+    "tag": "V8_0_1",
+    "commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42",
+    "build_profile": "release-shared-cxx17-worker-only-headless-v4"
+  },
+  "execution_topologies": [
+    "sequential",
+    "threads-one-process",
+    "process-isolated"
+  ],
+  "hypotheses": [
+    {
+      "id": "H1",
+      "statement": "STEP transfers using distinct STEPControl_Writer instances and explicit DESTEP_Parameters retain their own unit/schema/precision configuration under concurrent threads.",
+      "falsified_by": "A threaded job emits another job's schema/unit markers, readback geometry is corrupted, or threaded transfer fails while the same sequential baseline succeeds reproducibly."
+    },
+    {
+      "id": "H2",
+      "statement": "BRepAlgoAPI Boolean work with SetRunParallel set explicitly per instance can execute independently of BOPAlgo_Options global parallel mode.",
+      "falsified_by": "Per-instance jobs produce wrong geometry/nondeterminism correlated with another thread's local flag, or require the process-global flag for correctness."
+    },
+    {
+      "id": "H3",
+      "statement": "BOPAlgo_Options::SetParallelMode is process-global and therefore unsuitable for per-job conflicting policy in one process.",
+      "falsified_by": "Independent threads can repeatedly set conflicting values without observing another thread's value."
+    },
+    {
+      "id": "H4",
+      "statement": "Read-only shared TopoDS_TShape ownership through copied TopoDS_Shape handles is compatible with the intended immutable-input ownership pattern, distinct from concurrent mutation safety.",
+      "falsified_by": "The shared input changes volume or triggers failures when multiple non-destructive readers/Boolean jobs use it concurrently."
+    },
+    {
+      "id": "H5",
+      "statement": "Worker-process isolation contains process-global state and failures with acceptable overhead for the founding OpenSimachinist architecture.",
+      "falsified_by": "Process-isolated jobs show the same cross-talk attributable to process-global state or overhead is disproportionate to geometry/STEP work."
+    }
+  ],
+  "step_configs": [
+    {
+      "id": "mm-ap242",
+      "unit": "millimeter",
+      "schema": "AP242DIS",
+      "write_precision_mm": 0.00001
+    },
+    {
+      "id": "inch-ap203",
+      "unit": "inch",
+      "schema": "AP203",
+      "write_precision": 0.001
+    }
+  ],
+  "boolean_workload": {
+    "stock_mm": [40.0, 20.0, 10.0],
+    "tool_origin_mm": [10.0, -1.0, -1.0],
+    "tool_size_mm": [5.0, 22.0, 12.0],
+    "non_destructive": true,
+    "parallel_policy": "alternating explicit SetRunParallel per job"
+  },
+  "measurements": [
+    "STEP transfer/write/read status",
+    "serialized schema and unit markers",
+    "readback BRep validity",
+    "source/cut/readback volume",
+    "global parallel state observations",
+    "shared-input post-run volume",
+    "worker failures/timeouts",
+    "wall-clock overhead by execution topology"
+  ],
+  "negative_result_policy": "Research failures and cross-talk are preserved as evidence; CI fails only when the pinned baseline or campaign itself cannot execute and produce evidence.",
+  "boundaries": [
+    "No claim of global OCCT thread safety or unsafety beyond measured APIs and topology.",
+    "No production scheduler implementation.",
+    "No concurrent mutation of shared TopoDS_TShape state is claimed safe.",
+    "RCS-005 STEP conformance remains the correctness contract; file creation alone is not success."
+  ]
+}
