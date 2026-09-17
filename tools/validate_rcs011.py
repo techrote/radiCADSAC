@@ -50,6 +50,7 @@ REQUIRED_FILES = (
     ROOT / "docs/19-MILL-CUTTER-SWEEP-RESEARCH.md",
     ROOT / "research/rcs-011/README.md",
     ROOT / "research/rcs-011/experiment-plan-v1.json",
+    ROOT / "research/rcs-011/measured-summary-v1.json",
     ROOT / "research/rcs-011/harness/CMakeLists.txt",
     ROOT / "research/rcs-011/harness/mill_worker.cpp",
     ROOT / "research/rcs-011/harness/run_mill_campaign.py",
@@ -175,15 +176,56 @@ def check_static() -> None:
         if "unrecognized" not in expected_values or "strict_linear_slot" not in expected_values or "explicit_drill" not in expected_values:
             error("recognition samples must test explicit tag, strict recognition, and false-positive rejection")
 
+    durable_path = ROOT / "research/rcs-011/measured-summary-v1.json"
+    durable = load_json(durable_path) if durable_path.is_file() else None
+    if durable_path.is_file():
+        if not isinstance(durable, dict):
+            error("durable RCS-011 measured summary must be an object")
+        else:
+            if durable.get("schema") != "rcs-011-measured-summary/1.0":
+                error("unexpected durable RCS-011 measured-summary schema")
+            durable_backend = durable.get("backend")
+            if not isinstance(durable_backend, dict) or durable_backend.get("commit") != EXPECTED_COMMIT:
+                error("durable RCS-011 summary must pin the accepted OCCT commit")
+            if durable.get("structural_failure_count") != 0:
+                error("durable RCS-011 summary records structural harness failures")
+            if durable.get("required_acceptance_failure_count") != 0:
+                error("durable RCS-011 summary records required reference failures")
+            if int(durable.get("attempt_count", 0)) < 80:
+                error("durable RCS-011 summary does not cover the full repeated campaign")
+            if int(durable.get("tolerated_negative_result_count", 0)) < 1:
+                error("durable RCS-011 summary must preserve measured negative candidate evidence")
+            evidence = durable.get("evidence_source")
+            if not isinstance(evidence, dict) or not str(evidence.get("artifact_digest", "")).startswith("sha256:"):
+                error("durable RCS-011 summary must pin its workflow artifact digest")
+            findings = durable.get("selected_findings")
+            if not isinstance(findings, dict):
+                error("durable RCS-011 summary lacks selected findings")
+            else:
+                for finding in (
+                    "high_segment_line",
+                    "stationary_engaged",
+                    "retrace_jitter_freehand_batch",
+                    "sampled_pose_fallback",
+                    "step_roundtrip",
+                ):
+                    if finding not in findings:
+                        error(f"durable RCS-011 summary missing finding {finding!r}")
+
     report_path = ROOT / "docs/19-MILL-CUTTER-SWEEP-RESEARCH.md"
     if report_path.is_file():
         report = report_path.read_text(encoding="utf-8")
         terms = (
+            "Status: accepted RCS-011 research output",
             "## Hypotheses and falsification criteria",
             "## Strategy hierarchy under test",
             "## Recognition policy",
             "## Stationary and near-stationary engaged motion",
             "## Topology and reconciliation boundaries",
+            "## Measured campaign",
+            "## Accepted architecture recommendation",
+            "## RCS-013 inputs",
+            "retrace-jitter",
             "sampled fallback",
             "five-axis",
             EXPECTED_COMMIT,
