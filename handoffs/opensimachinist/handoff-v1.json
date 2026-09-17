@@ -1,0 +1,80 @@
+{
+  "schema": "opensimachinist-handoff/1.0",
+  "status": "gate-3-candidate",
+  "date": "2026-09-17",
+  "source_main": "23519b5989b14f1b0947dca77588729585150115",
+  "architecture": "semantic-provider-hybrid-v1",
+  "programme_contracts": {
+    "external_boundary": "docs/01-MSAC-GEOMETRY-CONTRACT.md",
+    "journal": "docs/10-CANONICAL-JOURNAL-CONTRACT.md",
+    "step": "docs/13-STEP-CONFORMANCE-CONTRACT.md",
+    "architecture_decision": "docs/decisions/DR-0015-gate-2-semantic-provider-hybrid-architecture.md"
+  },
+  "handoff_files": [
+    "handoffs/opensimachinist/README.md",
+    "handoffs/opensimachinist/00-FOUNDING-SPEC.md",
+    "handoffs/opensimachinist/01-IMPLEMENTATION-ROADMAP.md",
+    "handoffs/opensimachinist/02-INITIAL-ISSUE-GRAPH.md",
+    "handoffs/opensimachinist/03-UNRESOLVED-RESEARCH-REGISTER.md",
+    "handoffs/opensimachinist/04-CLEAN-REPO-BOOTSTRAP-CHECKLIST.md"
+  ],
+  "major_decision_evidence": {
+    "step_primary_output": ["docs/decisions/DR-0001-step-is-primary-output.md", "docs/decisions/DR-0009-step-conformance-and-body-preservation.md"],
+    "journal_is_durable_intent": ["docs/decisions/DR-0002-journal-is-durable-intent.md", "docs/10-CANONICAL-JOURNAL-CONTRACT.md"],
+    "lathe_and_mill_initial_scope": ["docs/decisions/DR-0003-initial-scope-lathe-mill.md"],
+    "stable_backend_boundary": ["docs/decisions/DR-0004-stable-backend-boundary.md", "docs/01-MSAC-GEOMETRY-CONTRACT.md"],
+    "pathological_inputs_are_normal": ["docs/decisions/DR-0005-pathological-geometry-is-normal-input.md", "docs/11-ADVERSARIAL-MANUFACTURING-CORPUS.md"],
+    "canonical_numerics_frames": ["docs/decisions/DR-0006-canonical-journal-numerics-and-frames.md", "docs/10-CANONICAL-JOURNAL-CONTRACT.md"],
+    "bounded_canonicalization": ["docs/decisions/DR-0007-bounded-deterministic-canonicalization.md"],
+    "immutable_revisions_body_transitions": ["docs/decisions/DR-0008-immutable-revisions-and-body-transitions.md"],
+    "separate_tolerance_channels": ["docs/decisions/DR-0010-separate-tolerance-channels-and-local-uncertainty.md", "research/rcs-007/measured-summary-v1.json"],
+    "semantic_lineage": ["docs/decisions/DR-0011-semantic-lineage-not-topology-id.md", "research/rcs-008/measured-summary-v1.json"],
+    "bounded_deferred_topology": ["docs/decisions/DR-0012-regularized-material-and-bounded-deferred-topology.md", "research/rcs-009/measured-summary-v1.json"],
+    "axisymmetric_lathe_provider": ["docs/decisions/DR-0013-axisymmetric-lathe-material-domain.md", "research/rcs-010/measured-summary-v1.json"],
+    "mill_strategy_hierarchy": ["docs/19-MILL-CUTTER-SWEEP-RESEARCH.md", "research/rcs-011/measured-summary-v1.json"],
+    "bounded_hybrid_fallbacks": ["docs/decisions/DR-0014-bounded-hybrid-representation-fallbacks.md", "research/rcs-012/measured-summary-v1.json"],
+    "selected_architecture": ["docs/decisions/DR-0015-gate-2-semantic-provider-hybrid-architecture.md", "research/rcs-013/architecture-v1.json"]
+  },
+  "gate3": {
+    "criteria": {
+      "initial_backend_architecture_decision": "satisfied",
+      "stable_programme_facing_api_contract": "satisfied",
+      "explicit_unresolved_research_register": "satisfied",
+      "baseline_test_corpus_and_benchmark_design": "satisfied",
+      "licensing_and_provenance_plan": "satisfied",
+      "step_acceptance_contract": "satisfied",
+      "staged_implementation_roadmap_with_measurable_milestones": "satisfied"
+    },
+    "assertion": "Gate 3 is satisfied when this handoff is validated and merged; it does not assert that unresolved production research is solved."
+  },
+  "production_issue_graph": [
+    {"id":"OSM-001","title":"Repository foundation, build and CI","depends_on":[]},
+    {"id":"OSM-002","title":"Programme API and semantic data contracts","depends_on":["OSM-001"]},
+    {"id":"OSM-003","title":"Journal ingress and immutable revision substrate","depends_on":["OSM-002"]},
+    {"id":"OSM-004","title":"Semantic lineage persistence","depends_on":["OSM-003"]},
+    {"id":"OSM-005","title":"Process-isolated worker supervisor and pinned OCCT adapter","depends_on":["OSM-001","OSM-002"]},
+    {"id":"OSM-006","title":"Generic B-rep reconciliation and validation vertical slice","depends_on":["OSM-003","OSM-004","OSM-005"]},
+    {"id":"OSM-007","title":"STEP conformance/export vertical slice","depends_on":["OSM-006"]},
+    {"id":"OSM-008","title":"Axisymmetric lathe provider vertical slice","depends_on":["OSM-004","OSM-006"]},
+    {"id":"OSM-009","title":"Mill fixed-orientation strategy vertical slice","depends_on":["OSM-004","OSM-006"]},
+    {"id":"OSM-010","title":"Deferred-material coordinator","depends_on":["OSM-006"]},
+    {"id":"OSM-011","title":"Bounded fallback adapter seam","depends_on":["OSM-006","OSM-010"]},
+    {"id":"OSM-012","title":"End-to-end journal-to-STEP benchmark slice","depends_on":["OSM-007","OSM-008","OSM-009"]},
+    {"id":"OSM-013","title":"Pathological freehand mill fallback qualification","depends_on":["OSM-009","OSM-011"]},
+    {"id":"OSM-014","title":"Real lathe tool-envelope qualification","depends_on":["OSM-008"]},
+    {"id":"OSM-015","title":"Independent STEP interoperability qualification","depends_on":["OSM-007","OSM-012"]}
+  ],
+  "unresolved_ids": [
+    "mill-pathological-freehand-fallback",
+    "lathe-real-tool-envelope",
+    "production-step-interoperability-profile",
+    "hybrid-reconciliation-curved-geometry",
+    "occt-thread-global-state-boundary",
+    "provider-handoff-reconciliation-frequency",
+    "semantic-lineage-persistence-encoding",
+    "bounded-deferred-resource-policy",
+    "targeted-exact-arithmetic-seams",
+    "distribution-license-compliance",
+    "live-tool-and-non-axisymmetric-lathe"
+  ]
+}
