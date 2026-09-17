@@ -27,6 +27,13 @@ from tool_envelope import (  # noqa: E402
 SCHEMA = "rcs-020-campaign-results/1.0"
 
 
+def is_worker_payload(candidate: Any) -> bool:
+    return isinstance(candidate, dict) and (
+        isinstance(candidate.get("schema"), str)
+        or isinstance(candidate.get("worker_schema"), str)
+    )
+
+
 def run_json_process(command: list[str], timeout_s: int = 120) -> dict[str, Any]:
     started = time.perf_counter()
     proc = subprocess.run(command, text=True, capture_output=True, timeout=timeout_s)
@@ -42,7 +49,7 @@ def run_json_process(command: list[str], timeout_s: int = 120) -> dict[str, Any]
     if stdout:
         try:
             candidate = json.loads(stdout)
-            if isinstance(candidate, dict):
+            if is_worker_payload(candidate):
                 payload = candidate
         except json.JSONDecodeError:
             pass
@@ -51,19 +58,19 @@ def run_json_process(command: list[str], timeout_s: int = 120) -> dict[str, Any]
         # OCCT STEP transfer code writes human-readable statistics to stdout before
         # the research worker's final one-line JSON record. Scan backwards so those
         # diagnostics remain observable without letting them corrupt the supervisor
-        # protocol. Do not accept arbitrary fragments or substrings as JSON.
+        # protocol. RCS-010 uses `schema`; RCS-006 uses `worker_schema`.
         for line in reversed([line.strip() for line in proc.stdout.splitlines() if line.strip()]):
             try:
                 candidate = json.loads(line)
             except json.JSONDecodeError:
                 continue
-            if isinstance(candidate, dict) and isinstance(candidate.get("schema"), str):
+            if is_worker_payload(candidate):
                 payload = candidate
                 break
 
     if payload is None:
         raise RuntimeError(
-            "process completed successfully but emitted no final JSON object\n"
+            "process completed successfully but emitted no final research-worker JSON object\n"
             f"command={' '.join(command)}\nstdout={proc.stdout}\nstderr={proc.stderr}"
         )
 
