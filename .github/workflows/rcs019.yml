@@ -1,0 +1,89 @@
+name: RCS-019 canonicalizer conformance
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "research/rcs-019/**"
+      - "tools/validate_rcs019.py"
+      - "docs/27-CANONICALIZER-CONFORMANCE.md"
+      - ".github/workflows/rcs019.yml"
+      - "docs/10-CANONICAL-JOURNAL-CONTRACT.md"
+      - "docs/decisions/DR-0006-canonical-journal-numerics-and-frames.md"
+      - "docs/decisions/DR-0007-bounded-deterministic-canonicalization.md"
+      - "docs/decisions/DR-0010-separate-tolerance-channels-and-local-uncertainty.md"
+  pull_request:
+    paths:
+      - "research/rcs-019/**"
+      - "tools/validate_rcs019.py"
+      - "docs/27-CANONICALIZER-CONFORMANCE.md"
+      - ".github/workflows/rcs019.yml"
+      - "docs/10-CANONICAL-JOURNAL-CONTRACT.md"
+      - "docs/decisions/DR-0006-canonical-journal-numerics-and-frames.md"
+      - "docs/decisions/DR-0007-bounded-deterministic-canonicalization.md"
+      - "docs/decisions/DR-0010-separate-tolerance-channels-and-local-uncertainty.md"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  conformance:
+    name: conformance-${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2022]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Record runtimes
+        shell: bash
+        run: |
+          python --version
+          node --version
+      - name: Validate contracts and adversarial boundaries
+        run: python tools/validate_rcs019.py
+      - name: Run Python independent path
+        run: python research/rcs-019/reference.py research/rcs-019/vectors-v1.json --output .results/python.json
+      - name: Run Node independent path
+        run: node research/rcs-019/independent_verify.mjs research/rcs-019/vectors-v1.json --output .results/node.json
+      - name: Produce platform conformance summary
+        shell: bash
+        run: python research/rcs-019/summarize.py --python .results/python.json --node .results/node.json --runner-os "${{ runner.os }}" --output ".results/platform-${{ runner.os }}.json"
+      - name: Upload platform evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: rcs019-${{ runner.os }}
+          path: .results/platform-${{ runner.os }}.json
+          if-no-files-found: error
+
+  cross-platform:
+    name: cross-platform-logical-identity
+    needs: conformance
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download Linux and Windows evidence
+        uses: actions/download-artifact@v4
+        with:
+          pattern: rcs019-*
+          merge-multiple: true
+          path: .results/platform
+      - name: Require cross-platform logical identity
+        run: python3 research/rcs-019/summarize.py --combine .results/platform --output .results/cross-platform.json
+      - name: Upload cross-platform evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: rcs019-cross-platform
+          path: .results/cross-platform.json
+          if-no-files-found: error
