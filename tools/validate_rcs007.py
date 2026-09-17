@@ -37,6 +37,7 @@ REQUIRED_FILES = (
     ROOT / "research/rcs-007/harness/CMakeLists.txt",
     ROOT / "research/rcs-007/harness/repeated_finish_worker.cpp",
     ROOT / "research/rcs-007/harness/run_tolerance_campaign.py",
+    ROOT / "research/rcs-007/harness/reconcile_results.py",
 )
 
 errors: list[str] = []
@@ -142,6 +143,17 @@ if runner_path.is_file():
         if term not in runner:
             error(f"campaign runner missing required concept {term!r}")
 
+reconcile_path = ROOT / "research/rcs-007/harness/reconcile_results.py"
+if reconcile_path.is_file():
+    reconcile = reconcile_path.read_text(encoding="utf-8")
+    for term in (
+        "deferred_without_rewriting_physical_intent",
+        "analytic_volume_oracle_within_tolerance",
+        "rcs-007-evidence-interpretation/1.0",
+    ):
+        if term not in reconcile:
+            error(f"evidence reconciler missing required concept {term!r}")
+
 parser = argparse.ArgumentParser()
 parser.add_argument("--results-dir", type=Path)
 args = parser.parse_args()
@@ -157,6 +169,9 @@ if args.results_dir is not None:
     if results:
         if results.get("results_schema") != "rcs-007-results/1.0":
             error("unexpected runtime result schema")
+        interpretation = results.get("evidence_interpretation")
+        if not isinstance(interpretation, dict) or interpretation.get("postprocessor_schema") != "rcs-007-evidence-interpretation/1.0":
+            error("runtime results were not reconciled by the evidence interpretation pass")
         backend = results.get("backend")
         if not isinstance(backend, dict) or backend.get("commit") != EXPECTED_OCCT_COMMIT:
             error("runtime results do not report the exact OCCT commit")
@@ -176,6 +191,19 @@ if args.results_dir is not None:
             ]
             if len(measured) != len(sweeps):
                 error("one or more runtime backend sweep attempts did not produce worker payloads")
+            local_records = [
+                item.get("operation_local_interval")
+                for item in measured
+                if isinstance(item.get("operation_local_interval"), dict)
+            ]
+            if not any(record.get("decisive") is False for record in local_records):
+                error("runtime evidence has no explicit operation-local deferred classification")
+            if not any(record.get("decisive") is True for record in local_records):
+                error("runtime evidence has no decisive operation-local classification")
+            for record in local_records:
+                if record.get("decisive") is False and record.get("matches_physical_oracle") is not None:
+                    error("deferred local classification was incorrectly scored as a definitive oracle answer")
+                    break
 
         repeated = results.get("repeated_finishing")
         if not isinstance(repeated, list) or not any(
@@ -206,8 +234,13 @@ if args.results_dir is not None:
                     error(f"accumulation_chains[{index}] does not contain both operation orders")
                     continue
                 for order in ("ascending", "descending"):
-                    if not has_payload(orders.get(order)):
+                    run = orders.get(order)
+                    if not has_payload(run):
                         error(f"accumulation_chains[{index}] {order} worker produced no payload")
+                        continue
+                    payload = run["payload"]
+                    if "analytic_volume_oracle_within_tolerance" not in payload:
+                        error(f"accumulation_chains[{index}] {order} lacks analytic-volume oracle interpretation")
 
         perturb = results.get("controlled_perturbation")
         if not isinstance(perturb, list) or not perturb:
@@ -224,9 +257,11 @@ if args.results_dir is not None:
                 "backend_sweep_worker_failures",
                 "occt_global_fuzzy_oracle_mismatches",
                 "operation_local_interval_oracle_mismatches",
+                "operation_local_interval_deferred_cases",
                 "anchored_quantization_oracle_mismatches",
                 "semantic_replay_collapse_non_equivalent_cases",
                 "accumulation_order_divergent_cases",
+                "accumulation_geometry_breach_cases",
                 "controlled_perturbation_direction_sensitive_pairs",
             }
             missing = required_summary - set(summary)
