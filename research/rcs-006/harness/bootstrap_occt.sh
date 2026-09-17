@@ -11,19 +11,15 @@ BUILD_DIR="${DEPS_ROOT}/occt-build"
 INSTALL_DIR="${RCS006_OCCT_PREFIX:-${DEPS_ROOT}/occt-${EXPECTED_VERSION}}"
 JOBS="${RCS006_BUILD_JOBS:-1}"
 
-# These are the toolkits the worker links directly plus the disabled-module
-# toolkit targets referenced by OCCT's installed DataExchange CMake exports.
-# BUILD_ADDITIONAL_TOOLKITS builds transitive dependencies, but dependencies
-# belonging to otherwise-disabled modules are not necessarily installed/exported
-# unless they are selected explicitly. An install missing any of these targets
-# makes find_package(OpenCASCADE ... DataExchange) reject an otherwise valid
-# 8.0.1 installation.
+# Build and verify only the ABI surface linked by the research worker. The
+# worker deliberately resolves these libraries directly rather than consuming
+# OCCT's broader installed package target graph, so application-framework and
+# visualization toolkits are neither required nor useful here.
 REQUIRED_TOOLKITS=(
   TKernel TKMath TKG2d TKG3d TKGeomBase TKBRep TKGeomAlgo TKTopAlgo TKPrim
   TKBO TKShHealing TKDE TKXSBase TKDESTEP
-  TKCAF TKCDF TKLCAF TKService TKV3d TKVCAF
 )
-ADDITIONAL_TOOLKITS="TKBO;TKDESTEP;TKCAF;TKCDF;TKLCAF;TKService;TKV3d;TKVCAF"
+ADDITIONAL_TOOLKITS="TKernel;TKMath;TKG2d;TKG3d;TKGeomBase;TKBRep;TKGeomAlgo;TKTopAlgo;TKPrim;TKBO;TKShHealing;TKDE;TKXSBase;TKDESTEP"
 
 install_is_usable() {
   [[ -f "${INSTALL_DIR}/include/opencascade/Standard_Version.hxx" ]] || return 1
@@ -72,11 +68,9 @@ if [[ "${ACTUAL_COMMIT}" != "${EXPECTED_COMMIT}" ]]; then
   exit 2
 fi
 
-# Keep broad modules disabled and select only the Boolean/STEP worker toolkits
-# plus the package-export dependencies identified above. This preserves the
-# headless minimal build while producing a self-consistent installed CMake
-# package. Disable Xlib/OpenGL explicitly because TKService/TKV3d are required
-# as package dependencies but the research worker does not render anything.
+# Keep every broad OCCT module disabled and opt in only to the exact worker
+# toolkits. This avoids spending hosted-CI time compiling unrelated OCAF and
+# visualization code while preserving the same pinned Boolean/STEP baseline.
 rm -rf "${BUILD_DIR}"
 cmake -S "${SOURCE_DIR}" -B "${BUILD_DIR}" -G Ninja \
   -DCMAKE_BUILD_TYPE=Release \
@@ -117,7 +111,7 @@ cat > "${INSTALL_DIR}/RCS006_SOURCE_PIN.txt" <<EOF
 repository=https://github.com/Open-Cascade-SAS/OCCT.git
 commit=${EXPECTED_COMMIT}
 version=${EXPECTED_VERSION}
-build_profile=release-shared-cxx17-minimal-headless-v3
+build_profile=release-shared-cxx17-worker-only-headless-v4
 selected_toolkits=${ADDITIONAL_TOOLKITS}
 xlib=off
 opengl=off
