@@ -1,0 +1,48 @@
+{
+  "schema": "rcs-019-experiment-plan/1.0",
+  "issue": "RCS-019",
+  "production_boundary": "research-only",
+  "journal_contract": "msac-journal/1.0",
+  "independent_decision_paths": 2,
+  "hypotheses": [
+    "Given the same normalized physical trace and explicit normalization policy, independent implementations can produce identical logical canonical decisions without relying on floating-point persistence semantics.",
+    "Differently sampled representations of the same piecewise-linear physical motion can converge to the same logical line/polyline under exact bounded simplification; the general contract remains bounded physical equivalence rather than byte identity.",
+    "Exact integer/rational boundary rules can make ties-to-even, q15 sign/norm checks, transform ordering, timestamp collisions, semantic segmentation, overflow/refusal and fit fallback deterministic on Linux and Windows.",
+    "Long noisy traces of 10000 and 100000 samples remain bounded and tractable without changing the declared fitting error or depending on render-frame state."
+  ],
+  "falsification": [
+    "Python and Node decision paths disagree on any expected logical vector.",
+    "Linux and Windows produce different normalized logical signatures for the same vector suite.",
+    "Any exact half-way conversion differs from round-to-nearest ties-to-even.",
+    "A semantic setup/tool/body/engagement boundary is crossed by fitting or lost because displacement quantizes to the same coordinate.",
+    "A fit whose certified error exceeds its declared bound is accepted instead of falling back to polyline.",
+    "A signed 64-bit overflow wraps or is accepted.",
+    "The 100000-sample trace exceeds the 20-second per-path conformance containment budget in hosted validation."
+  ],
+  "metrics": [
+    "expected-vector pass count",
+    "cross-implementation logical signature",
+    "cross-platform logical signature",
+    "explicit refusal code",
+    "certified versus allowed fit error",
+    "long-trace sample count and maximum observed deviation",
+    "runtime/platform versions"
+  ],
+  "protected_semantics": [
+    "canonical-journal-authority",
+    "semantic-boundaries-before-fitting",
+    "positive-removal-intent",
+    "genesis-v1-history",
+    "backend-independent-durable-meaning"
+  ],
+  "resource_limits": {
+    "validator_path_timeout_seconds": 20,
+    "maximum_required_trace_samples": 100000,
+    "hosted_ci_job_timeout_minutes": 10
+  },
+  "external_dependencies": {
+    "production_geometry_libraries": [],
+    "language_runtimes": ["CPython 3.12.x", "Node.js 22.x"],
+    "reason": "The conformance oracle uses exact integer/rational decisions only; no geometry kernel is needed to test durable normalization semantics."
+  }
+}
