@@ -8,7 +8,9 @@ This directory contains the disposable research harness for RCS-011. It compares
 - `harness/mill_worker.cpp` — one-attempt OCCT 8.0.1 worker.
 - `harness/run_mill_campaign.py` — process-isolated campaign orchestration, reference comparison, repeatability checks and evidence generation.
 - `harness/CMakeLists.txt` — worker build against the exact RCS-006 OCCT installation.
-- `measured-summary-v1.json` — added only after a successful hosted measured campaign and pinned to that evidence.
+- `measured-summary-v1.json` — durable accepted summary pinned to the successful hosted RCS-011 campaign and artifact digest.
+
+The accepted interpretation and architecture recommendation are in `docs/19-MILL-CUTTER-SWEEP-RESEARCH.md`.
 
 ## Reproduce
 
@@ -40,6 +42,8 @@ The campaign writes `campaign.json`, `results.jsonl`, `measured-summary.json`, `
 
 `success` means the attempt produced a valid B-rep satisfying the case body/material oracle and, where enabled, automated STEP write/read-back budgets. It does not mean the entire strategy is selected for production.
 
-A `sampled_fallback` geometry-budget breach is preserved as expected negative evidence because that strategy explicitly approximates the swept envelope. Structural harness failures, nondeterminism in required exact strategies, invalid topology, wrong body count, or required STEP failures remain CI failures.
+A candidate strategy is being researched, so a contained algorithm error, invalid/wrong result, fidelity breach, timeout or nondeterministic candidate is evidence rather than something the harness is allowed to hide. Such a result is recorded under the RCS-006 failure taxonomy and may disqualify or narrow that candidate strategy.
 
-The `plunge-1um` case is deliberately diagnostic rather than an architecture pass gate because RCS-007 already established that tiny positive removals can fall below conventional kernel resolution. The event remains physical material intent even if the pinned OCCT baseline loses it.
+The campaign itself fails its acceptance gate when the harness/recognition contract breaks, or when a required case's designated correctness-reference strategy cannot produce a repeatable accepted result. This distinction is what allows RCS-011 to preserve the measured `retrace-jitter` freehand-batch failure and sampled-pose timeouts without falsely declaring either strategy successful.
+
+The `plunge-1um` case is deliberately diagnostic rather than an architecture pass gate because RCS-007 already established that tiny positive removals can interact with conventional kernel resolution. The event remains physical material intent even if a backend loses it.
