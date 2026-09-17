@@ -6,7 +6,7 @@ import importlib.metadata
 import time
 from typing import Any
 
-from field import P, STOCK, final_field
+from field import P, STOCK, final_field, segment_count
 
 PINNED_VERSION="3.5.3"
 PINNED_COMMIT="0edd9d54876f3135e431575214dd6d8a72866fee"
@@ -15,6 +15,23 @@ LICENSE="Apache-2.0"
 
 def evaluate(case: dict[str, Any], edge_length_mm: float, root_tolerance_mm: float, authoritative_min_feature_mm: float) -> dict[str, Any]:
     started=time.perf_counter()
+    # The external Python callback evaluates the programme field once per
+    # LevelSet sample.  The 160-segment scaling fixture is intentionally kept
+    # out of that adapter path so CI cost is bounded; Manifold is still run on
+    # every decisive correctness fixture, including retrace and cut-through.
+    if segment_count(case)>100:
+        return {
+            "schema":"rcs-021-manifold-fallback/1.0",
+            "candidate":"Manifold LevelSet",
+            "version":PINNED_VERSION,
+            "source_commit":PINNED_COMMIT,
+            "license":LICENSE,
+            "classification":"external_resource_bound_not_executed",
+            "executed":False,
+            "reason":"Python LevelSet callback cost is intentionally bounded on the 160-segment scaling-only fixture; directional candidate supplies the required scaling measurement.",
+            "runtime_ms":(time.perf_counter()-started)*1000.0,
+            "authoritative":False,
+        }
     try:
         installed=importlib.metadata.version("manifold3d")
         if installed != PINNED_VERSION:
@@ -41,6 +58,7 @@ def evaluate(case: dict[str, Any], edge_length_mm: float, root_tolerance_mm: flo
             "version":installed,
             "source_commit":PINNED_COMMIT,
             "license":LICENSE,
+            "executed":True,
             "edge_length_mm":float(edge_length_mm),
             "requested_root_tolerance_mm":float(root_tolerance_mm),
             "reported_tolerance_mm":float(result.get_tolerance()),
@@ -65,6 +83,7 @@ def evaluate(case: dict[str, Any], edge_length_mm: float, root_tolerance_mm: flo
             "version":PINNED_VERSION,
             "source_commit":PINNED_COMMIT,
             "license":LICENSE,
+            "executed":False,
             "classification":"external_candidate_error",
             "error":f"{type(exc).__name__}: {exc}",
             "runtime_ms":(time.perf_counter()-started)*1000.0,
