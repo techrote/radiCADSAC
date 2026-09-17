@@ -1,0 +1,110 @@
+{
+  "schema": "rcs-009-measured-summary/1.0",
+  "date": "2026-09-17",
+  "source": {
+    "workflow_run_id": 35212264059,
+    "workflow_run_number": 48,
+    "job_id": 105172585743,
+    "artifact_id": 10491869655,
+    "artifact_name": "rcs009-deferred-topology-smoke",
+    "artifact_digest": "sha256:3b1c761b3cbf60dd6451ba6f6b25fc0970acc5ba5b484ce6f7f0133f1bdf9def",
+    "head_sha": "b9af8077a997e0d89eeabf649652a9d152fc9bb6"
+  },
+  "backend": {
+    "id": "occt",
+    "version": "8.0.1",
+    "tag": "V8_0_1",
+    "commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42"
+  },
+  "summary": {
+    "cases": 8,
+    "candidate_failures": 0,
+    "baseline_measured_cases": 8,
+    "candidate_measured_cases": 8,
+    "baseline_physical_oracle_passes": 8,
+    "candidate_physical_oracle_passes": 8,
+    "baseline_candidate_volume_equivalent_cases": 8,
+    "baseline_candidate_bbox_equivalent_cases": 8,
+    "deferred_zero_measure_contacts": 2,
+    "deduplicated_events": 218,
+    "baseline_boolean_operations": 227,
+    "candidate_boolean_operations": 6,
+    "cells_builder_probes": 2,
+    "cells_builder_measured": 2,
+    "cells_builder_equivalent": 2,
+    "step_attempts": 1,
+    "step_passes": 1
+  },
+  "representative_measurements": {
+    "face_contact_zero": {
+      "baseline_boolean_operations": 1,
+      "candidate_boolean_operations": 0,
+      "volume_abs_delta_mm3": 0.0,
+      "bbox_max_abs_delta_mm": 0.0,
+      "baseline_geometry_ms": 3.469752,
+      "candidate_geometry_ms": 0.200477
+    },
+    "tangent_contact_zero": {
+      "baseline_boolean_operations": 1,
+      "candidate_boolean_operations": 0,
+      "volume_abs_delta_mm3": 0.0,
+      "bbox_max_abs_delta_mm": 0.0,
+      "baseline_geometry_ms": 3.257713,
+      "candidate_geometry_ms": 0.238939
+    },
+    "thin_skim_0_1um": {
+      "baseline_boolean_operations": 1,
+      "candidate_boolean_operations": 1,
+      "volume_abs_delta_mm3": 0.0,
+      "bbox_max_abs_delta_mm": 0.0,
+      "baseline_geometry_ms": 4.670099,
+      "candidate_geometry_ms": 7.438993
+    },
+    "repeated_slot_20": {
+      "baseline_boolean_operations": 20,
+      "candidate_boolean_operations": 1,
+      "geometry_recomputations_elided": 19,
+      "volume_abs_delta_mm3": 0.0,
+      "bbox_max_abs_delta_mm": 0.0,
+      "baseline_geometry_ms": 52.485074,
+      "candidate_geometry_ms": 4.694624,
+      "observed_geometry_time_ratio_baseline_over_candidate": 11.179824837942292
+    },
+    "repeated_slot_200": {
+      "baseline_boolean_operations": 200,
+      "candidate_boolean_operations": 1,
+      "geometry_recomputations_elided": 199,
+      "volume_abs_delta_mm3": 0.0,
+      "bbox_max_abs_delta_mm": 0.0,
+      "baseline_geometry_ms": 497.678821,
+      "candidate_geometry_ms": 4.961135,
+      "observed_geometry_time_ratio_baseline_over_candidate": 100.3155167113977
+    },
+    "overlapping_slots": {
+      "baseline_boolean_operations": 2,
+      "candidate_boolean_operations": 1,
+      "volume_abs_delta_mm3": 1.8189894035458565e-12,
+      "bbox_max_abs_delta_mm": 0.0,
+      "cells_builder_status": "measured",
+      "cells_builder_equivalent": true
+    },
+    "mill_cut_through": {
+      "expected_and_candidate_solids": 2,
+      "connectivity_checkpoint": true,
+      "cells_builder_status": "measured",
+      "cells_builder_equivalent": true,
+      "step_roundtrip_passed": true,
+      "step_readback_solids": 2,
+      "step_volume_abs_delta_mm3": 0.0,
+      "step_bbox_max_abs_delta_mm": 5.000000058430487e-08
+    }
+  },
+  "interpretation": {
+    "regularized_contact": "For the two exact zero-volume contact fixtures, the candidate preserved the physical result while avoiding both immediate Boolean materializations.",
+    "positive_volume_preservation": "The 0.1 micrometre skim and 1 micrometre tangent overlap remained positive material changes; the candidate did not use contact deferral as a broad tolerance eraser.",
+    "provenance_retrace": "The repeated-slot fixtures preserved all journal-event semantics while reducing 20 and 200 immediate materializations to one reconciliation cut using the RCS-008 provenance-equivalence premise.",
+    "overlapping_removal": "One batched multi-tool cut matched the sequential baseline volume/bounds; CellsBuilder also reproduced the candidate result within the campaign tolerance.",
+    "connectivity_and_export": "The cut-through case reconciled to two valid solids, CellsBuilder preserved the same body count/material result, and the AP242DIS millimetre write/read-back preserved both solids and volume within RCS-005 automated round-trip bounds.",
+    "performance_boundary": "Timing is diagnostic rather than a universal benchmark: deferring known no-op/retrace work was substantially faster in these fixtures, while the single 0.1 micrometre skim candidate was slower than immediate baseline. The architecture recommendation is therefore semantic/robustness-driven, not a blanket performance claim."
+  }
+}
