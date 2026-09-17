@@ -1,8 +1,8 @@
 # Programme terminology
 
-Status: accepted Gate-1 vocabulary  
-Date: 2026-09-16  
-Issue: RCS-001
+Status: accepted Gate-1 vocabulary, reconciled through RCS-009  
+Date: 2026-09-17  
+Issue: RCS-001; terminology refinement: DR-0012 / RCS-009
 
 ## Purpose
 
@@ -51,15 +51,15 @@ A workpiece identity survives:
 
 A workpiece is not synonymous with a single transient B-rep object.
 
-A workpiece may temporarily contain more than one disconnected **material body** after a cut separates material. The policy for body selection, retention, parting, falling scrap, and export is an explicit research requirement for RCS-002/RCS-003/RCS-005; it is not silently defined here.
+A workpiece may contain more than one disconnected **material body** after a cut separates material. Body selection, retention, parting, scrap classification and export are explicit semantic decisions and must not be inferred by silently taking the largest or first backend solid.
 
 ## Material body
 
-A **material body** is a connected volumetric component of the material state associated with a workpiece revision.
+A **material body** is a connected volumetric component of the regularized material state associated with a workpiece revision.
 
-This term exists so the programme can discuss parting/cut-through events without overloading `workpiece` or assuming every manufacturing state is one connected solid.
+This term exists so the programme can discuss parting/cut-through events without overloading `workpiece` or assuming every manufacturing state is one connected solid. Point-, edge-, or face-only contact does not by itself create a volumetric bridge between material bodies.
 
-Whether multiple bodies are retained, classified as workpiece/scrap, or exported is process and product policy to be researched.
+Whether multiple bodies are retained, classified as workpiece/scrap, or selected for export is process and product policy. RCS-005 requires preserve-all or explicit recorded selection at the export boundary.
 
 ## Stock
 
@@ -91,7 +91,7 @@ A setup change does not change the intrinsic geometry merely because the workpie
 
 A **coordinate frame** is a named, versioned spatial reference with explicit handedness, axes, origin, units, and transform semantics.
 
-The programme requires coordinate conventions to be explicit. RCS-002 must define the canonical journal representation and RCS-005 must reconcile dimensional units with STEP export. No consumer may assume an unstated Godot, OCCT, machine-controller, metric, or imperial convention.
+The programme requires coordinate conventions to be explicit. RCS-002 defines the canonical journal representation and RCS-005 reconciles dimensional units with STEP export. No consumer may assume an unstated Godot, OCCT, machine-controller, metric, or imperial convention.
 
 ## Machine module
 
@@ -164,7 +164,7 @@ Raw telemetry may be retained for diagnostics, research, or re-canonicalization,
 
 A **canonical manufacturing operation** is an operation normalized into a stable, versioned representation whose meaning is independent of the original frame/sample timing implementation within declared error bounds.
 
-The exact schema and normalization algorithms are RCS-002 deliverables.
+The accepted RCS-002 contract defines the founding schema and normalization rules.
 
 ## Canonical trajectory
 
@@ -179,7 +179,7 @@ It must have explicit:
 - ordering/parameterization;
 - approximation/error bounds if raw motion is fitted or simplified.
 
-A canonical trajectory may contain lines, arcs, splines, sampled segments, or another representation selected by RCS-002. The term does not preselect one curve type.
+A canonical trajectory may contain lines, arcs, splines, sampled segments, or another versioned representation. The term does not preselect one curve type.
 
 ## Operation journal
 
@@ -187,9 +187,9 @@ The **operation journal** is the versioned durable record of canonical manufactu
 
 The journal is the programme's durable source of manufacturing intent. It must be sufficient, subject to versioned compatibility rules, to regenerate engineering geometry using a later or alternate backend.
 
-Backend snapshots, B-reps, meshes, caches, and previews may accelerate loading/replay but are derived artifacts and cannot be the only record required to understand the workpiece.
+Backend snapshots, B-reps, meshes, pending-topology ledgers, caches, and previews may accelerate loading/replay but are derived artifacts and cannot be the only record required to understand the workpiece.
 
-The journal may be a linear history, revision graph, or another versioned structure; RCS-002 decides the detailed model.
+The accepted founding model uses immutable workpiece revisions connected by canonical operations; future versioned extensions may add graph structure without changing the journal's authority.
 
 ## Workpiece revision
 
@@ -235,15 +235,25 @@ Because some algorithms may defer reconciliation, documents should prefer `commi
 
 ## Regularized material solid
 
-A **regularized material solid** is the intended volumetric material set after removing lower-dimensional artifacts that have no physical material volume, according to an explicitly defined regularization policy.
+A **regularized material solid** is the volumetric material set `M` satisfying `M = cl(int(M))` after the operation's set semantics are applied. For subtractive material set `A` and removal envelope `B`, the founding physical interpretation is the regularized difference `cl(int(A \ B))`, subject to explicit process/body-retention policy.
 
-The term does not yet choose a particular topological representation or algorithm. RCS-009 must define when point/edge/face-only contacts are physically irrelevant versus semantically meaningful.
+A point-, edge-, or face-only contact has no material volume and does not by itself remove material or join two material bodies. Such contact may nevertheless remain semantically meaningful as contact, tangency, uncertainty or provenance evidence. Conversely, any known positive-volume removal remains a material change regardless of whether it is numerically small.
+
+This term defines physical material semantics, not a particular kernel data structure. DR-0012 / RCS-009 records the accepted founding rule.
+
+## Deferred topology
+
+**Deferred topology** is backend-private derived engineering state in which some canonical manufacturing events have not yet been converted into newly materialized B-rep faces/edges, while enough semantic/provenance information is retained to reconstruct the intended regularized volumetric material at a required reconciliation boundary.
+
+A deferred state may retain the last reconciled material bodies plus pending immutable removal envelopes and contact/uncertainty classifications. It never replaces the operation journal. Geometry recomputation may be elided only when RCS-008 semantic lineage proves equivalence; transient topology identity or a broad epsilon is insufficient proof.
+
+Deferral is bounded. Material-body connectivity decisions, exact topology-dependent queries, incompatible setup/tool-definition transitions, explicit conventional checkpoints, downstream B-rep contracts, and primary STEP export can force reconciliation.
 
 ## Valid solid
 
 A **valid solid** is an engineering solid/body satisfying the topology and geometry checks required by the relevant backend/conformance level.
 
-For primary STEP export, `valid` must ultimately be defined by RCS-005 and cannot mean only:
+For primary STEP export, `valid` is governed by the accepted RCS-005 contract and cannot mean only:
 
 - visually plausible;
 - watertight triangle mesh;
@@ -252,7 +262,7 @@ For primary STEP export, `valid` must ultimately be defined by RCS-005 and canno
 
 ## Tolerance classes
 
-**Tolerance classes** are distinct policy domains that must not be silently collapsed into one epsilon before research.
+**Tolerance classes** are distinct policy domains that must not be silently collapsed into one epsilon.
 
 The founding set is:
 
@@ -266,31 +276,31 @@ The founding set is:
 8. export geometric tolerance;
 9. validation/acceptance tolerance.
 
-RCS-007 determines whether these remain numeric tolerances, semantic/equivalence policies, uncertainty bounds, or another formal model.
+RCS-007 retained these as separate channels and established that ambiguity may require a semantic/uncertainty state rather than an enlarged global numeric epsilon.
 
 ## Reconciliation
 
-**Reconciliation** is the process of converting a permissive, deferred, specialized, or hybrid internal material state into a more conventional engineering representation with explicit validity and error guarantees.
+**Reconciliation** is the process of converting a permissive, deferred, specialized, or hybrid internal material state into a conventional engineering representation with explicit validity and error guarantees.
 
-Reconciliation may occur at boundaries such as:
+Under DR-0012, hard reconciliation boundaries include:
 
-- end of an engaged pass;
-- tool withdrawal;
-- explicit checkpoint;
-- setup change;
-- save/export;
-- backend policy boundary.
+- primary STEP export;
+- body-retention/scrap/clamping decisions after a possible volumetric connectivity change;
+- exact engineering queries that require current boundary topology or body count;
+- setup/frame/tool-definition transitions that cannot preserve pending-envelope semantics explicitly;
+- explicit committed/checkpoint requests requiring conventional valid solids;
+- transfer to a downstream component whose contract requires reconciled B-rep.
 
-The exact boundaries are research outcomes.
+End of an engaged pass and tool withdrawal remain useful **soft** checkpoint candidates rather than universal hard boundaries. Process-specific RCS-010/RCS-011 research may choose stronger boundaries.
 
 ## STEP conformance
 
 **STEP conformance** is the programme-defined evidence that a primary export is a conventional, usable engineering STEP result within declared tolerances.
 
-It includes more than file serialization. RCS-005 must define at least:
+The accepted RCS-005 contract includes more than file serialization. It separates:
 
 - selected STEP application protocol/profile/entity expectations;
-- pre-export solid validity;
+- pre-export solid validity and material-body selection;
 - dimensional/geometric acceptance;
 - topology acceptance;
 - tolerance representation;
@@ -298,6 +308,8 @@ It includes more than file serialization. RCS-005 must define at least:
 - write/read round trip;
 - independent downstream interoperability strategy;
 - explicit refusal/failure conditions.
+
+A deferred or permissive state must reconcile before it can satisfy this contract.
 
 ## Replay
 
@@ -316,7 +328,7 @@ Determinism may mean bitwise equality or a weaker geometric/topological equivale
 
 **Provenance** is structured ancestry that relates derived geometry/material state to its manufacturing causes.
 
-Potential provenance sources include:
+Accepted provenance sources include or may reference:
 
 - initial stock;
 - material body;
@@ -324,15 +336,15 @@ Potential provenance sources include:
 - tool/tool envelope;
 - operation;
 - solver/reconciliation event;
-- split/merge relationships.
+- split/merge/replacement relationships.
 
-Programme provenance must not depend on transient B-rep object identity. RCS-008 researches the detailed ancestry model.
+Programme provenance does not depend on transient B-rep object identity. RCS-008 established semantic lineage as the durable basis and DR-0012 uses that lineage as the prerequisite for safe geometry-recomputation elision.
 
 ## Backend snapshot/cache
 
 A **backend snapshot** or **cache** is a derived acceleration artifact associated with a workpiece revision and backend version.
 
-It may be discarded and regenerated. It must not be required to preserve the durable meaning of the project.
+It may be discarded and regenerated. It must not be required to preserve the durable meaning of the project. An RCS-009 pending/deferred ledger is one such replaceable backend-derived artifact.
 
 ## Geometry failure versus invalid manufacturing intent
 
