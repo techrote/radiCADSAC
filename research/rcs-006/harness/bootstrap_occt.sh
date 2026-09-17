@@ -11,13 +11,50 @@ BUILD_DIR="${DEPS_ROOT}/occt-build"
 INSTALL_DIR="${RCS006_OCCT_PREFIX:-${DEPS_ROOT}/occt-${EXPECTED_VERSION}}"
 JOBS="${RCS006_BUILD_JOBS:-1}"
 
-if [[ -f "${INSTALL_DIR}/include/opencascade/Standard_Version.hxx" ]]; then
-  if grep -q "#define OCC_VERSION_COMPLETE \"${EXPECTED_VERSION}\"" "${INSTALL_DIR}/include/opencascade/Standard_Version.hxx"; then
-    echo "RCS-006 OCCT already installed at ${INSTALL_DIR}"
-    echo "RCS006_OCCT_PREFIX=${INSTALL_DIR}"
-    exit 0
-  fi
-  echo "Existing OCCT install has unexpected version; rebuilding" >&2
+# These are the toolkits the worker links directly plus the disabled-module
+# toolkit targets referenced by OCCT's installed DataExchange CMake exports.
+# BUILD_ADDITIONAL_TOOLKITS builds transitive dependencies, but dependencies
+# belonging to otherwise-disabled modules are not necessarily installed/exported
+# unless they are selected explicitly. An install missing any of these targets
+# makes find_package(OpenCASCADE ... DataExchange) reject an otherwise valid
+# 8.0.1 installation.
+REQUIRED_TOOLKITS=(
+  TKernel TKMath TKG2d TKG3d TKGeomBase TKBRep TKGeomAlgo TKTopAlgo TKPrim
+  TKBO TKShHealing TKDE TKXSBase TKDESTEP
+  TKCAF TKCDF TKLCAF TKService TKV3d TKVCAF
+)
+ADDITIONAL_TOOLKITS="TKBO;TKDESTEP;TKCAF;TKCDF;TKLCAF;TKService;TKV3d;TKVCAF"
+
+install_is_usable() {
+  [[ -f "${INSTALL_DIR}/include/opencascade/Standard_Version.hxx" ]] || return 1
+  grep -q "#define OCC_VERSION_COMPLETE \"${EXPECTED_VERSION}\"" \
+    "${INSTALL_DIR}/include/opencascade/Standard_Version.hxx" || return 1
+  [[ -f "${INSTALL_DIR}/lib/cmake/opencascade/OpenCASCADEConfig.cmake" ]] || return 1
+
+  local toolkit libdir found
+  for toolkit in "${REQUIRED_TOOLKITS[@]}"; do
+    found=0
+    for libdir in lib lib64; do
+      if compgen -G "${INSTALL_DIR}/${libdir}/lib${toolkit}.so*" >/dev/null; then
+        found=1
+        break
+      fi
+    done
+    if [[ "${found}" -ne 1 ]]; then
+      echo "OCCT install is missing required toolkit ${toolkit}" >&2
+      return 1
+    fi
+  done
+  return 0
+}
+
+if install_is_usable; then
+  echo "RCS-006 OCCT already installed at ${INSTALL_DIR}"
+  echo "RCS006_OCCT_PREFIX=${INSTALL_DIR}"
+  exit 0
+fi
+if [[ -d "${INSTALL_DIR}" ]]; then
+  echo "Existing OCCT install is incomplete or has an unexpected version; rebuilding" >&2
   rm -rf "${INSTALL_DIR}"
 fi
 
@@ -35,14 +72,11 @@ if [[ "${ACTUAL_COMMIT}" != "${EXPECTED_COMMIT}" ]]; then
   exit 2
 fi
 
-# OCCT documents BUILD_ADDITIONAL_TOOLKITS as the supported way to build only
-# selected toolkits while resolving their transitive toolkit dependencies.
-# Keep all broad modules disabled: TKBO supplies the Boolean stack and TKDESTEP
-# supplies STEP exchange; their dependency closure provides the modeling/data
-# toolkits needed by the research worker without pulling Visualization/Draw.
-# Some transitive toolkits (notably TKService) still contain platform service
-# sources. Disable Xlib explicitly so this research-only CI build remains
-# headless and does not acquire an irrelevant X11 development dependency.
+# Keep broad modules disabled and select only the Boolean/STEP worker toolkits
+# plus the package-export dependencies identified above. This preserves the
+# headless minimal build while producing a self-consistent installed CMake
+# package. Disable Xlib/OpenGL explicitly because TKService/TKV3d are required
+# as package dependencies but the research worker does not render anything.
 rm -rf "${BUILD_DIR}"
 cmake -S "${SOURCE_DIR}" -B "${BUILD_DIR}" -G Ninja \
   -DCMAKE_BUILD_TYPE=Release \
@@ -56,7 +90,7 @@ cmake -S "${SOURCE_DIR}" -B "${BUILD_DIR}" -G Ninja \
   -DBUILD_MODULE_DataExchange=OFF \
   -DBUILD_MODULE_Visualization=OFF \
   -DBUILD_MODULE_Draw=OFF \
-  '-DBUILD_ADDITIONAL_TOOLKITS=TKBO;TKDESTEP' \
+  "-DBUILD_ADDITIONAL_TOOLKITS=${ADDITIONAL_TOOLKITS}" \
   -DUSE_TCL=OFF \
   -DUSE_TK=OFF \
   -DUSE_FREETYPE=OFF \
@@ -74,21 +108,17 @@ cmake -S "${SOURCE_DIR}" -B "${BUILD_DIR}" -G Ninja \
 cmake --build "${BUILD_DIR}" --parallel "${JOBS}"
 cmake --install "${BUILD_DIR}"
 
-if [[ ! -f "${INSTALL_DIR}/include/opencascade/Standard_Version.hxx" ]]; then
-  echo "OCCT installation did not produce Standard_Version.hxx" >&2
+if ! install_is_usable; then
+  echo "OCCT installation is incomplete or is not ${EXPECTED_VERSION}" >&2
   exit 3
-fi
-if ! grep -q "#define OCC_VERSION_COMPLETE \"${EXPECTED_VERSION}\"" "${INSTALL_DIR}/include/opencascade/Standard_Version.hxx"; then
-  echo "OCCT installed version is not ${EXPECTED_VERSION}" >&2
-  exit 4
 fi
 
 cat > "${INSTALL_DIR}/RCS006_SOURCE_PIN.txt" <<EOF
 repository=https://github.com/Open-Cascade-SAS/OCCT.git
 commit=${EXPECTED_COMMIT}
 version=${EXPECTED_VERSION}
-build_profile=release-shared-cxx17-minimal-headless-v2
-selected_toolkits=TKBO;TKDESTEP
+build_profile=release-shared-cxx17-minimal-headless-v3
+selected_toolkits=${ADDITIONAL_TOOLKITS}
 xlib=off
 opengl=off
 EOF
