@@ -1,7 +1,8 @@
 # RCS-007 virtual tolerance research
 
 Status: measured RCS-007 experiment package  
-Baseline: OCCT 8.0.1 / `V8_0_1` / `b8f597c677811d1f9f4d8a97f5ae2825c0353a42`
+Baseline: OCCT 8.0.1 / `V8_0_1` / `b8f597c677811d1f9f4d8a97f5ae2825c0353a42`  
+Build profile: `release-shared-cxx17-worker-only-headless-v4`
 
 This directory compares conventional operation-wide fuzzy tolerance with manufacturing-aware local classification and semantic replay rules. It is research infrastructure, not production OpenSimachinist code.
 
@@ -11,7 +12,7 @@ This directory compares conventional operation-wide fuzzy tolerance with manufac
 - `harness/run_tolerance_campaign.py` — orchestrates RCS-006 worker sweeps, policy comparisons, perturbation probes, repeated-pass tests and accumulation chains.
 - `harness/reconcile_results.py` — converts raw model predictions into the accepted evidence semantics: uncertain contact is explicitly deferred rather than scored as a no-op, and accumulation chains are checked against analytic geometry rather than topology alone.
 - `harness/repeated_finish_worker.cpp` — small OCCT worker for repeated OD finishing and ordered tolerance-accumulation chains.
-- `harness/CMakeLists.txt` — builds the RCS-007 worker against the same pinned minimal OCCT install as RCS-006.
+- `harness/CMakeLists.txt` — builds the RCS-007 worker against the same pinned worker-only headless OCCT install as RCS-006.
 - `measured-summary-v1.json` — durable compact summary/provenance of the accepted hosted smoke evidence.
 
 The main interpretation is in `docs/15-VIRTUAL-TOLERANCE-RESEARCH.md`; the architecture decision is `docs/decisions/DR-0010-separate-tolerance-channels-and-local-uncertainty.md`.
