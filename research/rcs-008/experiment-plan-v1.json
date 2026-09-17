@@ -1,0 +1,98 @@
+{
+  "experiment_plan_schema": "rcs-008-experiment-plan/1.0",
+  "issue": "RCS-008",
+  "baseline": {
+    "backend": "occt",
+    "version": "8.0.1",
+    "tag": "V8_0_1",
+    "commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42"
+  },
+  "hypotheses": [
+    {
+      "id": "H1_transient_topology_identity_is_not_durable",
+      "statement": "Equivalent deterministic replay can regenerate engineering-equivalent geometry without preserving OCCT IsSame face identity.",
+      "falsification": "Independent replay preserves a complete and stable one-to-one OCCT face identity mapping across process restart/reconstruction and that mapping remains meaningful after split, merge, replacement and unification."
+    },
+    {
+      "id": "H2_operation_history_is_useful_but_not_programme_identity",
+      "statement": "OCCT Generated/Modified/Removed history provides useful local ancestry evidence, but a programme-level lineage graph is needed to compose manufacturing semantics across regenerated topology and backend replacement.",
+      "falsification": "OCCT operation history alone provides backend-independent durable semantic identities for all tested split, merge, replacement and replay cases."
+    },
+    {
+      "id": "H3_semantic_retrace_proof_can_authorize_geometry_reuse",
+      "statement": "A canonical operation/envelope lineage proof can identify exact retraces as candidates for geometry recomputation elision while preserving the journal event.",
+      "falsification": "The repeated-finishing fixture changes committed material despite identical canonical target body, setup, tool revision and removal-envelope semantics."
+    },
+    {
+      "id": "H4_ambiguity_must_remain_explicit",
+      "statement": "When multiple descendants are semantically indistinguishable, a correct naming model must preserve ambiguity rather than invent an arbitrary stable topology name.",
+      "falsification": "A backend-independent deterministic semantic discriminator exists for every deliberately symmetric ambiguous fixture without adding information absent from manufacturing intent."
+    }
+  ],
+  "lineage_relation_types": [
+    "preserved",
+    "generated",
+    "split",
+    "merged",
+    "replaced",
+    "retired",
+    "ambiguous"
+  ],
+  "semantic_anchor_types": [
+    "stock_region",
+    "material_body",
+    "setup_revision",
+    "operation",
+    "tool_revision",
+    "tool_envelope",
+    "material_boundary_role",
+    "reconciliation_event"
+  ],
+  "worker_cases": [
+    {
+      "id": "independent_replay",
+      "mode": "replay_cut",
+      "purpose": "Compare engineering-equivalent independent reconstruction with OCCT IsSame topology identity."
+    },
+    {
+      "id": "split_material",
+      "mode": "split_cut",
+      "purpose": "Measure one-to-many ancestry when a through cut divides one material body."
+    },
+    {
+      "id": "overlapping_mill_cuts",
+      "mode": "overlap_cuts",
+      "purpose": "Measure replacement/modification ancestry across sequential overlapping removal envelopes."
+    },
+    {
+      "id": "same_domain_merge",
+      "mode": "same_domain_merge",
+      "purpose": "Measure many-to-one history when coincident-domain faces are reconciled/unified."
+    },
+    {
+      "id": "lathe_exact_retrace",
+      "mode": "repeated_finish",
+      "purpose": "Test geometry equivalence and topology/history behavior for a repeated finishing envelope."
+    }
+  ],
+  "semantic_cases": [
+    {
+      "id": "symmetric_ambiguous_split",
+      "purpose": "Require an explicit ambiguous lineage relation when manufacturing semantics do not distinguish two symmetric descendants."
+    },
+    {
+      "id": "proven_retrace_candidate",
+      "purpose": "Construct the minimum semantic proof tuple for a candidate exact-retrace geometry reuse decision."
+    }
+  ],
+  "profiles": {
+    "smoke": {
+      "worker_cases": ["independent_replay", "split_material", "overlapping_mill_cuts", "same_domain_merge", "lathe_exact_retrace"],
+      "semantic_cases": ["symmetric_ambiguous_split", "proven_retrace_candidate"]
+    },
+    "baseline": {
+      "worker_cases": ["independent_replay", "split_material", "overlapping_mill_cuts", "same_domain_merge", "lathe_exact_retrace"],
+      "semantic_cases": ["symmetric_ambiguous_split", "proven_retrace_candidate"]
+    }
+  }
+}
