@@ -28,10 +28,12 @@ jobs:
         run: python3 tools/validate_rcs007.py
       - name: Validate RCS-008 provenance research
         run: python3 tools/validate_rcs008.py
+      - name: Validate RCS-009 regularized/deferred topology research
+        run: python3 tools/validate_rcs009.py
 
   # Stage 1: establish the exact pinned OCCT install independently of the
   # worker and campaign. A successful dependency build is persisted before any
-  # later RCS-006/RCS-007/RCS-008 stage can fail.
+  # later research stage can fail.
   rcs006-occt-bootstrap:
     runs-on: ubuntu-latest
     timeout-minutes: 45
@@ -64,8 +66,7 @@ jobs:
           key: rcs006-occt-8.0.1-${{ runner.os }}-${{ hashFiles('research/rcs-006/harness/bootstrap_occt.sh') }}
 
   # Stage 1 proof: a fresh job must restore the exact cache and the bootstrap
-  # must take its already-installed fast path. This catches save/scope/key
-  # mistakes before worker configuration is involved.
+  # must take its already-installed fast path.
   rcs006-occt-cache-verify:
     needs: rcs006-occt-bootstrap
     runs-on: ubuntu-latest
@@ -92,10 +93,6 @@ jobs:
           printf '%s\n' "$output"
           grep -Fq "RCS-006 OCCT already installed" <<<"$output"
 
-  # Stage 2+: compile the disposable OCCT worker, execute the process-isolated
-  # smoke campaign twice, validate its machine-readable records, and preserve
-  # the results as CI evidence. Measured geometry defects are research output;
-  # harness/build/contract failures remain CI failures.
   rcs006-worker-smoke:
     needs: rcs006-occt-cache-verify
     runs-on: ubuntu-latest
@@ -134,8 +131,6 @@ jobs:
             --out-dir .results/rcs006-smoke
           status=$?
           set -e
-          # Exit 2 means the harness completed and measured one or more baseline defects.
-          # Such negative results are research output; structural validation below remains the CI gate.
           if [[ "$status" -ne 0 && "$status" -ne 2 ]]; then
             exit "$status"
           fi
@@ -149,9 +144,6 @@ jobs:
           path: .results/rcs006-smoke
           if-no-files-found: warn
 
-  # RCS-007 reuses the exact RCS-006 baseline and executes separate tolerance
-  # hypotheses over the same geometry substrate. Candidate-model regressions
-  # are evidence; build/protocol/incomplete-result failures remain CI failures.
   rcs007-tolerance-smoke:
     needs: rcs006-occt-cache-verify
     runs-on: ubuntu-latest
@@ -207,9 +199,6 @@ jobs:
           path: .results/rcs007-smoke
           if-no-files-found: error
 
-  # RCS-008 probes local OCCT ancestry and compares it with a backend-independent
-  # semantic lineage graph. A missing OCCT relation is valid negative evidence;
-  # worker/protocol/model incompleteness remains a CI failure.
   rcs008-provenance-smoke:
     needs: rcs006-occt-cache-verify
     runs-on: ubuntu-latest
@@ -253,4 +242,61 @@ jobs:
         with:
           name: rcs008-provenance-smoke
           path: .results/rcs008-smoke
+          if-no-files-found: error
+
+  # RCS-009 compares the immediate RCS-006 B-rep baseline with a bounded
+  # deferred-removal candidate over the same physical fixture geometry. A
+  # CellsBuilder warning/failure is preserved as evidence; candidate material,
+  # body, protocol and STEP-reconciliation failures remain CI failures.
+  rcs009-deferred-topology-smoke:
+    needs: rcs006-occt-cache-verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      RCS006_OCCT_PREFIX: ${{ github.workspace }}/.deps/rcs006/occt-8.0.1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install build prerequisites
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build
+      - name: Restore verified pinned OCCT cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .deps/rcs006/occt-8.0.1
+          key: rcs006-occt-8.0.1-${{ runner.os }}-${{ hashFiles('research/rcs-006/harness/bootstrap_occt.sh') }}
+          fail-on-cache-miss: true
+      - name: Configure RCS-006 baseline worker
+        run: |
+          cmake -S research/rcs-006/harness -B .build/rcs006 -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_PREFIX_PATH="$RCS006_OCCT_PREFIX"
+      - name: Build RCS-006 baseline worker
+        run: cmake --build .build/rcs006 --parallel 2
+      - name: Configure RCS-009 deferred-topology worker
+        run: |
+          cmake -S research/rcs-009/harness -B .build/rcs009 -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_PREFIX_PATH="$RCS006_OCCT_PREFIX"
+      - name: Build RCS-009 deferred-topology worker
+        run: cmake --build .build/rcs009 --parallel 2
+      - name: Run RCS-009 smoke comparison
+        shell: bash
+        run: |
+          set -euo pipefail
+          export LD_LIBRARY_PATH="$RCS006_OCCT_PREFIX/lib:$RCS006_OCCT_PREFIX/lib64:${LD_LIBRARY_PATH:-}"
+          python3 research/rcs-009/harness/run_deferred_campaign.py \
+            --baseline-worker .build/rcs006/rcs006_occt_worker \
+            --candidate-worker .build/rcs009/rcs009_deferred_worker \
+            --profile smoke \
+            --out-dir .results/rcs009-smoke
+      - name: Validate RCS-009 runtime evidence
+        run: python3 tools/validate_rcs009.py --results-dir .results/rcs009-smoke
+      - name: Upload RCS-009 deferred-topology evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rcs009-deferred-topology-smoke
+          path: .results/rcs009-smoke
           if-no-files-found: error
