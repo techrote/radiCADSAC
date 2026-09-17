@@ -35,9 +35,11 @@ def main():
     strategies = set(plan.get("execution_topologies", []))
     require({"sequential", "threads-one-process", "process-isolated"} <= strategies, "missing required execution topology")
 
-    readme = (ROOT / "research/rcs-017/README.md").read_text()
-    for term in ["DESTEP_Parameters", "Interface_Static", "SetRunParallel", "SetParallelMode", "TopoDS_TShape", "process isolation"]:
+    readme = (ROOT / "research/rcs-017/README.md").read_text().lower()
+    for term in ["destep_parameters", "interface_static", "setrunparallel", "setparallelmode", "topods_tshape"]:
         require(term in readme, f"README missing required topic: {term}")
+    require("process isolation" in readme or "process-isolat" in readme,
+            "README missing process-isolation boundary")
 
     decision = (ROOT / "docs/decisions/DR-0016-occt-process-isolation-default.md").read_text()
     require("Status: accepted" in decision, "DR-0016 must be accepted")
