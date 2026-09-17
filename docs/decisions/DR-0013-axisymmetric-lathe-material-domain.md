@@ -32,7 +32,7 @@ Retained as a baseline/general fallback but rejected as the preferred architectu
 
 ### Batched 3D cutter-envelope subtraction only
 
-Retained as a serious fallback. In the hosted campaign it was correct and far cheaper than repeated 3D replay, but the axisymmetric provider also supplied a compact process-native material state, direct provenance/no-op semantics, analytic reconstruction and lower measured reconstruction cost for the founding set.
+Retained as a serious fallback. In the hosted campaign it was correct and far cheaper than repeated 3D replay, but the axisymmetric provider also supplied a compact process-native material state, direct provenance/no-op semantics, analytic reconstruction and lower measured reconstruction cost for the founding set. This preserves **batched 3D** subtraction as a qualified fallback rather than confusing it with the specialized representation.
 
 ### Axisymmetric domain as the entire kernel
 
