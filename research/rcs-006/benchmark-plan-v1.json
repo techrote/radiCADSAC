@@ -1,0 +1,229 @@
+{
+  "benchmark_plan_schema": "rcs-006-benchmark-plan/1.0",
+  "plan_id": "occt-8.0.1-baseline-v1",
+  "backend": {
+    "id": "occt",
+    "version": "8.0.1",
+    "tag": "V8_0_1",
+    "commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42",
+    "build_profile": "release-shared-cxx17-minimal-headless-v2",
+    "run_parallel": false,
+    "non_destructive_booleans": true
+  },
+  "source_contracts": {
+    "corpus": "research/rcs-003/corpus-v1.json",
+    "step_conformance": "research/rcs-005/conformance-v1.json",
+    "step_fixtures": "research/rcs-005/fixtures-v1.json"
+  },
+  "worker_timeout_seconds": 60,
+  "default_repeats": 2,
+  "profiles": {
+    "smoke": [
+      "coincident-face-zero",
+      "tangent-contact-zero",
+      "thin-skim-1um",
+      "repeated-slot-20",
+      "repeated-slot-200",
+      "lathe-od-finish",
+      "lathe-parting",
+      "mill-cut-through",
+      "step-cylinder-mm",
+      "step-block-inch"
+    ],
+    "baseline": [
+      "coincident-face-clearance",
+      "coincident-face-zero",
+      "coincident-face-overlap",
+      "tangent-contact-zero",
+      "tangent-contact-overlap",
+      "thin-skim-0.1um",
+      "thin-skim-1um",
+      "thin-skim-10um",
+      "repeated-slot-2",
+      "repeated-slot-20",
+      "repeated-slot-200",
+      "overlapping-slots",
+      "lathe-od-finish",
+      "lathe-parting",
+      "mill-cut-through",
+      "step-cylinder-mm",
+      "step-block-mm",
+      "step-block-inch"
+    ]
+  },
+  "cases": [
+    {
+      "id": "coincident-face-clearance",
+      "source_family_id": "generic-coincidence-coplanarity",
+      "worker_case": "coincident_face",
+      "parameters": {"offset_mm": "0.0001", "fuzzy_mm": "0"},
+      "expected_classification": "no_material_change",
+      "expected_body_count": 1,
+      "expect_volume_change": false
+    },
+    {
+      "id": "coincident-face-zero",
+      "source_family_id": "generic-coincidence-coplanarity",
+      "worker_case": "coincident_face",
+      "parameters": {"offset_mm": "0", "fuzzy_mm": "0"},
+      "expected_classification": "no_material_change",
+      "expected_body_count": 1,
+      "expect_volume_change": false
+    },
+    {
+      "id": "coincident-face-overlap",
+      "source_family_id": "generic-barely-overlapping-solids",
+      "worker_case": "coincident_face",
+      "parameters": {"offset_mm": "-0.0001", "fuzzy_mm": "0"},
+      "expected_classification": "regularized_material_change",
+      "expected_body_count": 1,
+      "expect_volume_change": true
+    },
+    {
+      "id": "tangent-contact-zero",
+      "source_family_id": "mill-tangent-corner-entry-exit",
+      "worker_case": "tangent_contact",
+      "parameters": {"offset_mm": "0", "fuzzy_mm": "0"},
+      "expected_classification": "no_material_change",
+      "expected_body_count": 1,
+      "expect_volume_change": false
+    },
+    {
+      "id": "tangent-contact-overlap",
+      "source_family_id": "mill-tangent-corner-entry-exit",
+      "worker_case": "tangent_contact",
+      "parameters": {"offset_mm": "-0.001", "fuzzy_mm": "0"},
+      "expected_classification": "regularized_material_change",
+      "expected_body_count": 1,
+      "expect_volume_change": true
+    },
+    {
+      "id": "thin-skim-0.1um",
+      "source_family_id": "lathe-sub-tolerance-skim",
+      "worker_case": "thin_skim",
+      "parameters": {"depth_mm": "0.0001", "fuzzy_mm": "0"},
+      "expected_classification": "regularized_material_change",
+      "expected_body_count": 1,
+      "expect_volume_change": true
+    },
+    {
+      "id": "thin-skim-1um",
+      "source_family_id": "lathe-sub-tolerance-skim",
+      "worker_case": "thin_skim",
+      "parameters": {"depth_mm": "0.001", "fuzzy_mm": "0"},
+      "expected_classification": "regularized_material_change",
+      "expected_body_count": 1,
+      "expect_volume_change": true
+    },
+    {
+      "id": "thin-skim-10um",
+      "source_family_id": "lathe-sub-tolerance-skim",
+      "worker_case": "thin_skim",
+      "parameters": {"depth_mm": "0.01", "fuzzy_mm": "0"},
+      "expected_classification": "regularized_material_change",
+      "expected_body_count": 1,
+      "expect_volume_change": true
+    },
+    {
+      "id": "repeated-slot-2",
+      "source_family_id": "mill-repeated-identical-slot",
+      "worker_case": "repeated_slot",
+      "parameters": {"count": "2", "fuzzy_mm": "0"},
+      "expected_classification": "regularized_material_change",
+      "expected_body_count": 1,
+      "expect_volume_change": true
+    },
+    {
+      "id": "repeated-slot-20",
+      "source_family_id": "mill-repeated-identical-slot",
+      "worker_case": "repeated_slot",
+      "parameters": {"count": "20", "fuzzy_mm": "0"},
+      "expected_classification": "regularized_material_change",
+      "expected_body_count": 1,
+      "expect_volume_change": true
+    },
+    {
+      "id": "repeated-slot-200",
+      "source_family_id": "mill-repeated-identical-slot",
+      "worker_case": "repeated_slot",
+      "parameters": {"count": "200", "fuzzy_mm": "0"},
+      "expected_classification": "regularized_material_change",
+      "expected_body_count": 1,
+      "expect_volume_change": true,
+      "notes": "High-operation-count baseline member."
+    },
+    {
+      "id": "overlapping-slots",
+      "source_family_id": "mill-overlapping-slots-pockets",
+      "worker_case": "overlapping_slots",
+      "parameters": {"fuzzy_mm": "0"},
+      "expected_classification": "regularized_material_change",
+      "expected_body_count": 1,
+      "expect_volume_change": true
+    },
+    {
+      "id": "lathe-od-finish",
+      "source_family_id": "lathe-sub-tolerance-skim",
+      "worker_case": "lathe_od_finish",
+      "parameters": {"depth_mm": "0.1", "fuzzy_mm": "0"},
+      "expected_classification": "regularized_material_change",
+      "expected_body_count": 1,
+      "expect_volume_change": true
+    },
+    {
+      "id": "lathe-parting",
+      "source_family_id": "lathe-parting-cut-through",
+      "step_fixture_id": "step-lathe-parting-all-bodies-v1",
+      "worker_case": "lathe_parting",
+      "parameters": {"tool_width_mm": "2", "fuzzy_mm": "0"},
+      "expected_classification": "body_separation_or_merge",
+      "expected_body_count": 2,
+      "expect_volume_change": true,
+      "step": {"enabled": true, "unit": "millimeter"}
+    },
+    {
+      "id": "mill-cut-through",
+      "source_family_id": "mill-cut-through-separation",
+      "step_fixture_id": "step-mill-cut-through-all-bodies-v1",
+      "worker_case": "mill_cut_through",
+      "parameters": {"slot_width_mm": "2", "fuzzy_mm": "0"},
+      "expected_classification": "body_separation_or_merge",
+      "expected_body_count": 2,
+      "expect_volume_change": true,
+      "step": {"enabled": true, "unit": "millimeter"}
+    },
+    {
+      "id": "step-cylinder-mm",
+      "source_family_id": "lathe-repeated-finishing-pass",
+      "step_fixture_id": "step-lathe-analytic-mm-v1",
+      "worker_case": "step_cylinder",
+      "parameters": {},
+      "expected_classification": "no_material_change",
+      "expected_body_count": 1,
+      "expect_volume_change": false,
+      "step": {"enabled": true, "unit": "millimeter"}
+    },
+    {
+      "id": "step-block-mm",
+      "source_family_id": "generic-coincidence-coplanarity",
+      "step_fixture_id": "step-block-mm-equivalent-v1",
+      "worker_case": "step_block",
+      "parameters": {},
+      "expected_classification": "no_material_change",
+      "expected_body_count": 1,
+      "expect_volume_change": false,
+      "step": {"enabled": true, "unit": "millimeter"}
+    },
+    {
+      "id": "step-block-inch",
+      "source_family_id": "generic-coincidence-coplanarity",
+      "step_fixture_id": "step-block-inch-v1",
+      "worker_case": "step_block",
+      "parameters": {},
+      "expected_classification": "no_material_change",
+      "expected_body_count": 1,
+      "expect_volume_change": false,
+      "step": {"enabled": true, "unit": "inch"}
+    }
+  ]
+}

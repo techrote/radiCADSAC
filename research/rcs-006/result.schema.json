@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://techrote.github.io/radiCADSAC/schemas/rcs-006-result-1.0.json",
+  "title": "RCS-006 benchmark attempt result",
+  "type": "object",
+  "required": [
+    "result_schema",
+    "run_started_utc",
+    "plan_id",
+    "profile",
+    "case_id",
+    "source_family_id",
+    "attempt",
+    "classification",
+    "notes",
+    "wall_ms",
+    "worker"
+  ],
+  "properties": {
+    "result_schema": {"const": "rcs-006-result/1.0"},
+    "run_started_utc": {"type": "string"},
+    "plan_id": {"type": "string"},
+    "profile": {"type": "string"},
+    "case_id": {"type": "string"},
+    "source_family_id": {"type": "string"},
+    "step_fixture_id": {"type": ["string", "null"]},
+    "backend": {
+      "type": "object",
+      "description": "Optional per-attempt backend identity. In result schema 1.0 the authoritative backend/version/source/build pin is campaign-scoped in campaign.json and the immutable benchmark plan."
+    },
+    "attempt": {"type": "integer", "minimum": 1},
+    "classification": {
+      "enum": [
+        "success",
+        "rejected input",
+        "algorithm returned error/status",
+        "invalid topology",
+        "valid topology but wrong geometry",
+        "geometric tolerance breach",
+        "crash",
+        "hang/timeout",
+        "excessive runtime",
+        "excessive memory",
+        "nondeterministic result",
+        "STEP writer failure",
+        "STEP round-trip failure",
+        "downstream consumer failure"
+      ]
+    },
+    "notes": {"type": "array", "items": {"type": "string"}},
+    "exit_code": {"type": ["integer", "null"]},
+    "wall_ms": {"type": "number", "minimum": 0},
+    "stderr": {"type": "string"},
+    "step_file": {"type": ["string", "null"]},
+    "worker": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["worker_schema", "case_id", "parameters", "backend", "input_metrics", "result_metrics", "timing"]
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "normalized_metrics": {
+      "type": "object",
+      "description": "Backend-neutral normalized geometry metrics may be promoted here in later minor schema revisions; backend-specific details remain in worker payloads."
+    }
+  }
+}
