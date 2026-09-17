@@ -1,6 +1,6 @@
 # RCS-010 lathe-specialized material-domain research
 
-Status: RCS-010 research candidate pending measured CI evidence  
+Status: accepted RCS-010 research artifact  
 Date: 2026-09-17  
 Pinned backend: OCCT 8.0.1 / `V8_0_1` / `b8f597c677811d1f9f4d8a97f5ae2825c0353a42`
 
@@ -14,11 +14,19 @@ This is research infrastructure. It does not define the production OpenSimachini
 
 Every concrete case is reduced to the same physical target material profile, then measured through three materially different strategies:
 
-1. **Repeated 3D subtraction** — construct the completed removal envelope and apply it once for every canonical geometry event. This deliberately represents the operation-count/topology work imposed by an immediate 3D replay architecture.
-2. **Batched 3D removal** — construct the same completed removal envelope, then subtract it from stock once. This measures how much benefit comes merely from batching before attributing benefit to a new representation.
+1. **Repeated 3D subtraction** — construct the completed removal envelope and apply it once for every canonical geometry event. This represents the operation-count/topology work imposed by immediate 3D replay.
+2. **Batched 3D removal** — construct the same completed removal envelope, then subtract it from stock once. This separates batching benefit from representation benefit.
 3. **Axisymmetric 2D material domain** — apply OD, facing, taper and ID operations directly to a piecewise-linear `(z, radius)` material section, then revolve the final section into a conventional exact OCCT B-rep for validation and STEP.
 
 The 2D solver uses decimal arithmetic for its material profile and analytic volume oracle. The OCCT worker independently reconstructs the profile and measures the resulting 3D B-rep.
+
+## Accepted measured result
+
+Hosted CI run `35214872300`, job `105180888767`, artifact `10493944652` (`sha256:7a2511d30fbcdf4dc04b9e8a969b2a3387a84d90226d1f2784249899ca81096c`) measured the complete nine-case founding set with **zero acceptance failures**.
+
+All three strategies agreed with the analytic material oracle and each other within the declared geometry budgets. All outputs were valid one-body B-reps. The axisymmetric reconstruction retained analytic planes/cylinders and a true cone in the taper case and introduced no B-spline surfaces. All **21/21** enabled AP242DIS manifold-solid STEP write/read-back combinations passed.
+
+The campaign represented 135 canonical journal events, including 100-event exact retrace and 9 raw analogue samples. It measured 127 repeated 3D material Booleans, 9 batched 3D Booleans and 0 material Booleans for direct axisymmetric state updates/reconstruction. The 100-pass retrace preserved all events while identifying 99 material no-ops. Aggregate conceptual runtimes were about 858.9 ms repeated, 63.7 ms batched and 10.2 ms axisymmetric on this hosted run; these timings are comparative evidence, not production performance promises.
 
 ## Semantic boundaries
 
@@ -32,7 +40,7 @@ The 2D solver uses decimal arithmetic for its material profile and analytic volu
 
 ## Coverage
 
-The founding plan covers:
+The accepted hosted set covers:
 
 - OD turning;
 - facing;
@@ -44,16 +52,14 @@ The founding plan covers:
 - exact retracing;
 - bounded noisy analogue input canonicalized into one geometry envelope.
 
-The broader profile adds the blind-bore and analogue cases to the hosted smoke subset.
-
 ## Files
 
-- `experiment-plan-v1.json` — versioned shared cases and acceptance oracles.
+- `experiment-plan-v1.json` — versioned cases and acceptance oracles.
 - `harness/profile_solver.py` — deterministic 2D axial/radial material solver and analytic volume oracle.
 - `harness/lathe_worker.cpp` — pinned-OCCT reconstruction, repeated/batched 3D comparisons, B-rep metrics and STEP round-trip probes.
 - `harness/run_lathe_campaign.py` — campaign orchestration and cross-strategy acceptance checks.
 - `harness/CMakeLists.txt` — worker build against the accepted minimal OCCT install.
-- `measured-summary-v1.json` — added only after a successful measured campaign is pinned and reviewed.
+- `measured-summary-v1.json` — pinned workflow/job/artifact evidence and representative results.
 
 ## Reproduce
 
@@ -75,10 +81,10 @@ python3 research/rcs-010/harness/run_lathe_campaign.py \
 python3 tools/validate_rcs010.py --results-dir .results/rcs010-smoke
 ```
 
-Use `--profile baseline` for the larger research set.
+The `smoke` profile is the complete founding RCS-010 measured set. Future extensions should add versioned cases rather than silently changing these accepted measurements.
 
 ## Interpretation rule
 
 A strategy is not accepted because it merely returns a shape. Required cases must produce valid conventional B-reps, preserve the physical material/body oracle, agree with the analytic material-domain volume, preserve expected analytic surface classes, and pass the automated portion of the RCS-005 STEP contract where export is enabled.
 
-Runtime and topology counts are comparative evidence, not correctness oracles. A faster wrong result fails.
+Runtime and topology counts are comparative evidence, not correctness oracles. A faster wrong result fails. The blind-bore case also demonstrates why topology-count equality is not an identity requirement: the axisymmetric reconstruction used six faces while the repeated/batched result used five, despite equivalent valid material and successful STEP. RCS-008 semantic lineage remains the durable identity model.
