@@ -32,8 +32,8 @@ Start with:
 - [OCCT 8.0.1 audit](docs/12-OCCT-8.0.1-AUDIT.md) — accepted RCS-004 subsystem/forkability and licensing evidence;
 - [STEP conformance contract](docs/13-STEP-CONFORMANCE-CONTRACT.md) — accepted RCS-005 measurable export success/refusal and interoperability contract;
 - [Baseline benchmark harness](docs/14-BASELINE-BENCHMARK-HARNESS.md) — accepted RCS-006 measurement substrate;
-- [Tolerance, uncertainty and equivalence research](docs/15-TOLERANCE-UNCERTAINTY-EQUIVALENCE.md) — accepted RCS-007 separated policy channels;
-- [Provenance and semantic identity research](docs/16-PROVENANCE-SEMANTIC-IDENTITY.md) — accepted RCS-008 lineage/topological-naming architecture;
+- [Tolerance, uncertainty and equivalence research](docs/15-VIRTUAL-TOLERANCE-RESEARCH.md) — accepted RCS-007 separated policy channels;
+- [Provenance and semantic identity research](docs/16-PROVENANCE-SEMANTIC-IDENTITY-RESEARCH.md) — accepted RCS-008 lineage/topological-naming architecture;
 - [Regularized/deferred topology research](docs/17-REGULARIZED-DEFERRED-TOPOLOGY.md) — accepted RCS-009 regularized material and bounded deferred topology;
 - [Lathe material-domain research](docs/18-LATHE-MATERIAL-DOMAIN-RESEARCH.md) — accepted RCS-010 axisymmetric fixed-axis lathe provider evidence;
 - `docs/decisions/` — explicit programme decision records.
