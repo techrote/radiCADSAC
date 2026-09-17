@@ -1,0 +1,84 @@
+{
+  "schema": "msac-handoff/1.0",
+  "status": "gate-4-candidate",
+  "date": "2026-09-17",
+  "source_main": "2e77ea087b01ac1415c4c76ff1dc0661aab286fb",
+  "frontend_architecture": "sac-machine-module-client-v1",
+  "backend_architecture": "semantic-provider-hybrid-v1",
+  "programme_contracts": {
+    "founding_brief": "docs/00-FOUNDING-BRIEF.md",
+    "external_boundary": "docs/01-MSAC-GEOMETRY-CONTRACT.md",
+    "journal": "docs/10-CANONICAL-JOURNAL-CONTRACT.md",
+    "step": "docs/13-STEP-CONFORMANCE-CONTRACT.md",
+    "backend_architecture_decision": "docs/decisions/DR-0015-gate-2-semantic-provider-hybrid-architecture.md",
+    "backend_handoff": "handoffs/opensimachinist/handoff-v1.json"
+  },
+  "handoff_files": [
+    "handoffs/msac/README.md",
+    "handoffs/msac/00-FOUNDING-SPEC.md",
+    "handoffs/msac/01-IMPLEMENTATION-ROADMAP.md",
+    "handoffs/msac/02-INITIAL-ISSUE-GRAPH.md",
+    "handoffs/msac/03-INTEGRATION-ESCAPE-ROUTES.md",
+    "handoffs/msac/04-CLEAN-REPO-BOOTSTRAP-CHECKLIST.md"
+  ],
+  "major_decision_evidence": {
+    "sac_product_intent": ["docs/00-FOUNDING-BRIEF.md"],
+    "target_user": ["docs/00-FOUNDING-BRIEF.md"],
+    "lathe_and_mill_initial_scope": ["docs/decisions/DR-0003-initial-scope-lathe-mill.md"],
+    "journal_is_durable_intent": ["docs/decisions/DR-0002-journal-is-durable-intent.md", "docs/10-CANONICAL-JOURNAL-CONTRACT.md"],
+    "stable_backend_boundary": ["docs/decisions/DR-0004-stable-backend-boundary.md", "docs/01-MSAC-GEOMETRY-CONTRACT.md"],
+    "canonical_numerics_frames": ["docs/decisions/DR-0006-canonical-journal-numerics-and-frames.md", "docs/10-CANONICAL-JOURNAL-CONTRACT.md"],
+    "bounded_canonicalization": ["docs/decisions/DR-0007-bounded-deterministic-canonicalization.md"],
+    "immutable_revisions_body_transitions": ["docs/decisions/DR-0008-immutable-revisions-and-body-transitions.md"],
+    "step_primary_and_body_preserving": ["docs/decisions/DR-0001-step-is-primary-output.md", "docs/decisions/DR-0009-step-conformance-and-body-preservation.md", "docs/13-STEP-CONFORMANCE-CONTRACT.md"],
+    "separate_tolerance_channels": ["docs/decisions/DR-0010-separate-tolerance-channels-and-local-uncertainty.md"],
+    "semantic_lineage": ["docs/decisions/DR-0011-semantic-lineage-not-topology-id.md"],
+    "backend_architecture": ["docs/decisions/DR-0015-gate-2-semantic-provider-hybrid-architecture.md", "docs/20-OPENSIMACHINIST-ARCHITECTURE-SYNTHESIS.md"],
+    "backend_clean_handoff": ["handoffs/opensimachinist/00-FOUNDING-SPEC.md", "handoffs/opensimachinist/handoff-v1.json"]
+  },
+  "gate4": {
+    "criteria": {
+      "backend_boundary_stable_enough_to_consume": "satisfied",
+      "operation_journal_and_canonicalization_contract": "satisfied",
+      "preview_engineering_state_reconciliation_model": "satisfied",
+      "error_and_status_model": "satisfied",
+      "machine_module_geometry_provider_extension_contract": "satisfied",
+      "initial_lathe_mill_capabilities_and_limitations": "satisfied",
+      "productive_core_loop_plan": "satisfied"
+    },
+    "assertion": "Gate 4 is satisfied when this handoff is validated and merged; it does not assert that unresolved backend research, STEP interoperability qualification, control defaults or publication polish are complete."
+  },
+  "production_issue_graph": [
+    {"id":"MSAC-001","title":"Repository foundation, Godot shell and deterministic CI","depends_on":[]},
+    {"id":"MSAC-002","title":"Programme model and OpenSimachinist semantic client contracts","depends_on":["MSAC-001"]},
+    {"id":"MSAC-003","title":"Machine-module, tool, setup and frame extension contracts","depends_on":["MSAC-002"]},
+    {"id":"MSAC-004","title":"Device-independent manual-control and physical machine-state pipeline","depends_on":["MSAC-002"]},
+    {"id":"MSAC-005","title":"Canonical msac-journal/1.0 producer and bounded normalization","depends_on":["MSAC-003","MSAC-004"]},
+    {"id":"MSAC-006","title":"Project persistence, immutable revision graph, undo/redo and crash recovery","depends_on":["MSAC-005"]},
+    {"id":"MSAC-007","title":"OpenSimachinist adapter, capability discovery and resilient request lifecycle","depends_on":["MSAC-002","MSAC-006"]},
+    {"id":"MSAC-008","title":"Preview, authoritative engineering state and status presentation","depends_on":["MSAC-007"]},
+    {"id":"MSAC-009","title":"Thin lathe productive vertical slice","depends_on":["MSAC-003","MSAC-005","MSAC-007","MSAC-008"]},
+    {"id":"MSAC-010","title":"Thin mill productive vertical slice","depends_on":["MSAC-003","MSAC-005","MSAC-007","MSAC-008"]},
+    {"id":"MSAC-011","title":"Engineering inspection, DRO and material-body management","depends_on":["MSAC-008","MSAC-009","MSAC-010"]},
+    {"id":"MSAC-012","title":"STEP export UX, body selection and conformance-status presentation","depends_on":["MSAC-007","MSAC-011"]},
+    {"id":"MSAC-013","title":"Integrated productive-core lifecycle and recovery qualification","depends_on":["MSAC-006","MSAC-009","MSAC-010","MSAC-011","MSAC-012"]},
+    {"id":"MSAC-014","title":"Gamepad/control usability qualification with target user","depends_on":["MSAC-004","MSAC-009","MSAC-010"]},
+    {"id":"MSAC-015","title":"First-person and workpiece-follow/free-flight camera system","depends_on":["MSAC-008","MSAC-014"]}
+  ],
+  "integration_escape_routes": [
+    "replaceable-backend-transport",
+    "capability-version-discovery",
+    "pathological-mill-pending-fallback-refusal",
+    "lathe-tool-envelope-capability-gating",
+    "step-interoperability-qualification-status",
+    "deferred-reconciliation-state",
+    "process-isolated-worker-tolerance",
+    "backend-crash-replay-recovery",
+    "semantic-lineage-not-topology-persistence",
+    "backend-private-hybrid-representations",
+    "explicit-version-migration",
+    "remappable-control-profiles",
+    "camera-presentation-only",
+    "unsupported-operation-authority-label"
+  ]
+}
