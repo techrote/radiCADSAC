@@ -20,7 +20,8 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install pinned external comparator
-        run: python3 -m pip install --disable-pip-version-check --only-binary=:all: manifold3d==3.5.3
+        run: |
+          python3 -m pip install --disable-pip-version-check --only-binary=:all: manifold3d==3.5.3
       - name: Validate RCS-021 static research contracts
         run: python3 tools/validate_rcs021.py
       - name: Compile RCS-021 Python harness
@@ -56,7 +57,8 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install pinned external comparator
-        run: python3 -m pip install --disable-pip-version-check --only-binary=:all: manifold3d==3.5.3
+        run: |
+          python3 -m pip install --disable-pip-version-check --only-binary=:all: manifold3d==3.5.3
       - name: Restore pinned OCCT cache
         id: occt-cache
         uses: actions/cache/restore@v4
