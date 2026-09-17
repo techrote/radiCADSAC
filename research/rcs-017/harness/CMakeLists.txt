@@ -22,7 +22,7 @@ set(OCCT_TOOLKITS TKernel TKMath TKG2d TKG3d TKGeomBase TKBRep TKGeomAlgo TKTopA
 set(OCCT_LIBRARIES "")
 foreach(toolkit IN LISTS OCCT_TOOLKITS)
   find_library(OCCT_${toolkit}_LIBRARY NAMES ${toolkit} PATHS "${RCS006_OCCT_ROOT}/lib" "${RCS006_OCCT_ROOT}/lib64" NO_DEFAULT_PATH REQUIRED)
-  list(APPEND OCCT_LIBRARIES "${OCCT_${toolkit}_LIBRARY")
+  list(APPEND OCCT_LIBRARIES "${OCCT_${toolkit}_LIBRARY}")
 endforeach()
 
 add_executable(rcs017_concurrency_probe concurrency_probe.cpp)
