@@ -58,7 +58,7 @@
   },
   "profiles": {
     "smoke": {
-      "contact_offsets_mm": [-0.0001, 0.0, 0.0001],
+      "contact_offsets_mm": [-0.001, -0.0001, 0.0, 0.0001, 0.001],
       "fuzzy_values_mm": [0.0, 0.0001],
       "skim_depths_mm": [0.000001, 0.0001, 0.001],
       "repeat_counts": [1, 10, 100],
