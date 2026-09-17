@@ -1,0 +1,259 @@
+{
+  "schema": "rcs-019-conformance-vectors/1.0",
+  "policy": {
+    "id": "rcs-019-reference-policy/1.0",
+    "integer_min": "-9223372036854775808",
+    "integer_max": "9223372036854775807",
+    "q15_scale": "1000000000000000",
+    "q15_norm_tolerance_tokens": "2",
+    "duplicate_timestamp_rule": "stable-source-order",
+    "min_arc_sweep_nrad": "100",
+    "full_circle_nrad": "6283185307",
+    "full_circle_guard_nrad": "100"
+  },
+  "vectors": [
+    {
+      "id": "unit-inch-mm-exact",
+      "family": "unit_conversion",
+      "operation": "convert_length",
+      "input": {"numerator": "1", "denominator": "1", "unit": "inch"},
+      "expected": {"status": "accepted", "length_nm": "25400000"}
+    },
+    {
+      "id": "unit-mm-equivalent",
+      "family": "unit_conversion",
+      "operation": "convert_length",
+      "input": {"numerator": "254", "denominator": "10", "unit": "mm"},
+      "expected": {"status": "accepted", "length_nm": "25400000"}
+    },
+    {
+      "id": "unit-half-nm-even-down",
+      "family": "ties_to_even",
+      "operation": "convert_length",
+      "input": {"numerator": "5", "denominator": "10000000", "unit": "mm"},
+      "expected": {"status": "accepted", "length_nm": "0"}
+    },
+    {
+      "id": "unit-one-and-half-nm-even-up",
+      "family": "ties_to_even",
+      "operation": "convert_length",
+      "input": {"numerator": "15", "denominator": "10000000", "unit": "mm"},
+      "expected": {"status": "accepted", "length_nm": "2"}
+    },
+    {
+      "id": "ties-even-negative-half",
+      "family": "ties_to_even",
+      "operation": "round_rational",
+      "input": {"numerator": "-5", "denominator": "2"},
+      "expected": {"status": "accepted", "integer": "-2"}
+    },
+    {
+      "id": "ties-even-positive-two-half",
+      "family": "ties_to_even",
+      "operation": "round_rational",
+      "input": {"numerator": "5", "denominator": "2"},
+      "expected": {"status": "accepted", "integer": "2"}
+    },
+    {
+      "id": "i64-min-coordinate",
+      "family": "integer_boundaries",
+      "operation": "validate_i64",
+      "input": {"value": "-9223372036854775808", "quantity": "length_nm"},
+      "expected": {"status": "accepted", "value": "-9223372036854775808"}
+    },
+    {
+      "id": "i64-max-rate",
+      "family": "integer_boundaries",
+      "operation": "validate_i64",
+      "input": {"value": "9223372036854775807", "quantity": "rate_nm_s"},
+      "expected": {"status": "accepted", "value": "9223372036854775807"}
+    },
+    {
+      "id": "i64-positive-overflow",
+      "family": "overflow_refusal",
+      "operation": "validate_i64",
+      "input": {"value": "9223372036854775808", "quantity": "length_nm"},
+      "expected": {"status": "refused", "code": "INTEGER_OVERFLOW"}
+    },
+    {
+      "id": "i64-negative-overflow",
+      "family": "overflow_refusal",
+      "operation": "validate_i64",
+      "input": {"value": "-9223372036854775809", "quantity": "angular_rate_nrad_s"},
+      "expected": {"status": "refused", "code": "INTEGER_OVERFLOW"}
+    },
+    {
+      "id": "q15-sign-canonicalization",
+      "family": "q15_rotation",
+      "operation": "canonicalize_q15",
+      "input": {"q": ["-1000000000000000", "0", "0", "0"]},
+      "expected": {"status": "accepted", "q": ["1000000000000000", "0", "0", "0"]}
+    },
+    {
+      "id": "q15-quarter-turn-near-unit",
+      "family": "q15_rotation",
+      "operation": "canonicalize_q15",
+      "input": {"q": ["707106781186548", "0", "0", "707106781186547"]},
+      "expected": {"status": "accepted", "q": ["707106781186548", "0", "0", "707106781186547"]}
+    },
+    {
+      "id": "q15-zero-refusal",
+      "family": "q15_rotation",
+      "operation": "canonicalize_q15",
+      "input": {"q": ["0", "0", "0", "0"]},
+      "expected": {"status": "refused", "code": "ZERO_QUATERNION"}
+    },
+    {
+      "id": "q15-near-zero-refusal",
+      "family": "q15_rotation",
+      "operation": "canonicalize_q15",
+      "input": {"q": ["1", "0", "0", "0"]},
+      "expected": {"status": "refused", "code": "QUATERNION_NORM_OUT_OF_RANGE"}
+    },
+    {
+      "id": "q15-upper-norm-boundary-accepted",
+      "family": "q15_rotation",
+      "operation": "canonicalize_q15",
+      "input": {"q": ["1000000000000002", "0", "0", "0"]},
+      "expected": {"status": "accepted", "q": ["1000000000000002", "0", "0", "0"]}
+    },
+    {
+      "id": "q15-upper-norm-beyond-refused",
+      "family": "q15_rotation",
+      "operation": "canonicalize_q15",
+      "input": {"q": ["1000000000000003", "0", "0", "0"]},
+      "expected": {"status": "refused", "code": "QUATERNION_NORM_OUT_OF_RANGE"}
+    },
+    {
+      "id": "transform-child-parent-order",
+      "family": "transform_composition",
+      "operation": "apply_transform_chain",
+      "input": {
+        "point_nm": ["3", "5", "7"],
+        "transforms": [
+          {"q": ["0", "0", "0", "1000000000000000"], "t_nm": ["10", "20", "30"]},
+          {"q": ["0", "1000000000000000", "0", "0"], "t_nm": ["100", "200", "300"]}
+        ]
+      },
+      "expected": {"status": "accepted", "point_nm": ["107", "185", "263"]}
+    },
+    {
+      "id": "frame-graph-acyclic",
+      "family": "frame_graph",
+      "operation": "validate_frame_graph",
+      "input": {"frames": [{"id": "workpiece", "parent": null}, {"id": "setup:A", "parent": "workpiece"}, {"id": "tool", "parent": "setup:A"}]},
+      "expected": {"status": "accepted", "topological_order": ["workpiece", "setup:A", "tool"]}
+    },
+    {
+      "id": "frame-graph-cycle-refused",
+      "family": "frame_graph",
+      "operation": "validate_frame_graph",
+      "input": {"frames": [{"id": "A", "parent": "B"}, {"id": "B", "parent": "A"}]},
+      "expected": {"status": "refused", "code": "FRAME_CYCLE"}
+    },
+    {
+      "id": "duplicate-timestamp-stable-order",
+      "family": "timestamp_ordering",
+      "operation": "stable_timestamp_order",
+      "input": {"samples": [{"id": "s2", "time_ns": "20"}, {"id": "s0", "time_ns": "10"}, {"id": "s1", "time_ns": "10"}, {"id": "s3", "time_ns": "20"}]},
+      "expected": {"status": "accepted", "ids": ["s0", "s1", "s2", "s3"]}
+    },
+    {
+      "id": "semantic-boundaries-all-contexts",
+      "family": "semantic_segmentation",
+      "operation": "segment_samples",
+      "input": {
+        "samples": [
+          {"id": "a", "x_num": "0", "x_den": "1", "engaged": false, "tool": "T1", "setup": "S1", "body": "B1"},
+          {"id": "b", "x_num": "1", "x_den": "4", "engaged": true,  "tool": "T1", "setup": "S1", "body": "B1"},
+          {"id": "c", "x_num": "1", "x_den": "2", "engaged": true,  "tool": "T2", "setup": "S1", "body": "B1"},
+          {"id": "d", "x_num": "3", "x_den": "4", "engaged": true,  "tool": "T2", "setup": "S2", "body": "B1"},
+          {"id": "e", "x_num": "1", "x_den": "1", "engaged": true,  "tool": "T2", "setup": "S2", "body": "B2"}
+        ]
+      },
+      "expected": {"status": "accepted", "segments": [["a"], ["b"], ["c"], ["d"], ["e"]], "quantized_x_nm": ["0", "0", "0", "1", "1"]}
+    },
+    {
+      "id": "subquantization-event-preserved",
+      "family": "subquantization_semantics",
+      "operation": "segment_samples",
+      "input": {
+        "samples": [
+          {"id": "off", "x_num": "1", "x_den": "4", "engaged": false, "tool": "T1", "setup": "S1", "body": "B1"},
+          {"id": "on",  "x_num": "1", "x_den": "4", "engaged": true,  "tool": "T1", "setup": "S1", "body": "B1"}
+        ]
+      },
+      "expected": {"status": "accepted", "segments": [["off"], ["on"]], "quantized_x_nm": ["0", "0"]}
+    },
+    {
+      "id": "arc-quarter-accepted",
+      "family": "curve_classification",
+      "operation": "classify_arc",
+      "input": {"sweep_nrad": "1570796327", "certified_error_nm": "2", "allowed_error_nm": "2"},
+      "expected": {"status": "accepted", "representation": "arc"}
+    },
+    {
+      "id": "arc-near-zero-fallback",
+      "family": "curve_classification",
+      "operation": "classify_arc",
+      "input": {"sweep_nrad": "99", "certified_error_nm": "0", "allowed_error_nm": "2"},
+      "expected": {"status": "accepted", "representation": "polyline", "reason": "ARC_SWEEP_AMBIGUOUS"}
+    },
+    {
+      "id": "arc-near-full-circle-fallback",
+      "family": "curve_classification",
+      "operation": "classify_arc",
+      "input": {"sweep_nrad": "6283185258", "certified_error_nm": "0", "allowed_error_nm": "2"},
+      "expected": {"status": "accepted", "representation": "polyline", "reason": "ARC_SWEEP_AMBIGUOUS"}
+    },
+    {
+      "id": "arc-bound-breach-fallback",
+      "family": "curve_classification",
+      "operation": "classify_arc",
+      "input": {"sweep_nrad": "1570796327", "certified_error_nm": "3", "allowed_error_nm": "2"},
+      "expected": {"status": "accepted", "representation": "polyline", "reason": "FIT_BOUND_UNCERTIFIED"}
+    },
+    {
+      "id": "spline-certified-boundary",
+      "family": "fit_certification",
+      "operation": "choose_fit",
+      "input": {"candidate": "cubic_bspline", "certified_error_nm": "8", "allowed_error_nm": "8"},
+      "expected": {"status": "accepted", "representation": "cubic_bspline"}
+    },
+    {
+      "id": "spline-one-nm-over-fallback",
+      "family": "fit_certification",
+      "operation": "choose_fit",
+      "input": {"candidate": "cubic_bspline", "certified_error_nm": "9", "allowed_error_nm": "8"},
+      "expected": {"status": "accepted", "representation": "polyline", "reason": "FIT_BOUND_UNCERTIFIED"}
+    },
+    {
+      "id": "equivalent-linear-sampling",
+      "family": "sampling_invariance",
+      "operation": "equivalent_linear_sampling",
+      "input": {"start_nm": ["0", "0"], "end_nm": ["100000000", "40000000"], "sample_counts": [11, 101, 1001]},
+      "expected": {"status": "accepted", "all_identical": true, "representation": "line", "max_error_nm": "0"}
+    },
+    {
+      "id": "equivalent-v-path-sampling",
+      "family": "sampling_invariance",
+      "operation": "equivalent_v_sampling",
+      "input": {"start_nm": ["0", "0"], "mid_nm": ["50000000", "20000000"], "end_nm": ["100000000", "0"], "sample_counts": [11, 101, 1001]},
+      "expected": {"status": "accepted", "all_identical": true, "representation": "polyline", "points_nm": [["0", "0"], ["50000000", "20000000"], ["100000000", "0"]], "max_error_nm": "0"}
+    },
+    {
+      "id": "noisy-analogue-10k",
+      "family": "long_noisy_trace",
+      "operation": "noisy_line_trace",
+      "input": {"sample_count": 10000, "seed": "19019", "length_nm": "100000000", "noise_radius_nm": "3", "allowed_error_nm": "3"},
+      "expected": {"status": "accepted", "representation": "line", "max_error_nm": "3", "sample_count": 10000}
+    },
+    {
+      "id": "noisy-analogue-100k",
+      "family": "long_noisy_trace",
+      "operation": "noisy_line_trace",
+      "input": {"sample_count": 100000, "seed": "19019", "length_nm": "1000000000", "noise_radius_nm": "3", "allowed_error_nm": "3"},
+      "expected": {"status": "accepted", "representation": "line", "max_error_nm": "3", "sample_count": 100000}
+    }
+  ]
+}

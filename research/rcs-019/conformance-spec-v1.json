@@ -1,0 +1,46 @@
+{
+  "schema": "rcs-019-canonicalizer-conformance/1.0",
+  "journal_contract": "msac-journal/1.0",
+  "reference_policy": "rcs-019-reference-policy/1.0",
+  "identical_input_invariant": "logical-identity",
+  "different_sampling_invariant": "bounded-physical-equivalence",
+  "numeric_rules": {
+    "integer_domain": "signed-64-bit",
+    "length_token": "nanometre",
+    "angle_token": "nanoradian",
+    "rounding": "round-to-nearest-ties-to-even",
+    "q15_scale": "1000000000000000",
+    "overflow": "refuse"
+  },
+  "reference_policy_parameters": {
+    "q15_norm_tolerance_tokens": "2",
+    "duplicate_timestamp_order": "stable-source-order",
+    "min_arc_sweep_nrad": "100",
+    "full_circle_nrad": "6283185307",
+    "full_circle_guard_nrad": "100",
+    "fit_failure": "polyline-fallback"
+  },
+  "semantic_boundaries": ["engagement", "tool revision", "setup/frame revision", "target material body"],
+  "families": [
+    "unit_conversion",
+    "ties_to_even",
+    "integer_boundaries",
+    "overflow_refusal",
+    "q15_rotation",
+    "transform_composition",
+    "frame_graph",
+    "timestamp_ordering",
+    "semantic_segmentation",
+    "subquantization_semantics",
+    "curve_classification",
+    "fit_certification",
+    "sampling_invariance",
+    "long_noisy_trace"
+  ],
+  "oracle_independence": {
+    "expected_values": "versioned hand-authored vectors derived from accepted contract rules",
+    "decision_paths": ["Python implementation", "Node.js implementation"],
+    "prohibition": "Neither implementation may call the other or generate the vector oracle."
+  },
+  "policy_scope_note": "Arc ambiguity guards and q15 admissible norm deviation are explicit parameters of this research normalization policy. They do not silently alter historical msac-journal/1.0 meaning and are not manufacturing tolerances."
+}
