@@ -193,6 +193,8 @@ jobs:
             --finish-worker .build/rcs007/rcs007_finish_worker \
             --profile smoke \
             --out-dir .results/rcs007-smoke
+      - name: Reconcile RCS-007 evidence semantics
+        run: python3 research/rcs-007/harness/reconcile_results.py --results-dir .results/rcs007-smoke
       - name: Validate RCS-007 runtime evidence
         run: python3 tools/validate_rcs007.py --results-dir .results/rcs007-smoke
       - name: Upload RCS-007 smoke evidence
