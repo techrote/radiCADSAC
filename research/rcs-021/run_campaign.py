@@ -75,7 +75,7 @@ def main() -> int:
     cases=profile_cases(plan,args.profile)
     records=[]
     structural=[]
-    external_success=0
+    external_executed=0
     deterministic=True
     closed_form_ok=True
 
@@ -128,8 +128,8 @@ def main() -> int:
                 float(policies["manifold_root_tolerance_mm"]),
                 float(policies["manifold_authoritative_min_feature_mm"]),
             )
-            if external.get("classification") != "external_candidate_error":
-                external_success+=1
+            if external.get("executed") is True:
+                external_executed+=1
             if external.get("volume_mm3") is not None:
                 external["volume_inside_oracle_interval"]=(
                     float(oracle["material_volume_lower_mm3"]) - 1e-9 <= float(external["volume_mm3"]) <= float(oracle["material_volume_upper_mm3"]) + 1e-9
@@ -212,7 +212,7 @@ def main() -> int:
         "sub_tolerance_positive_removal_preserved":sub["positive_sub_tolerance_removal_preserved"],
         "cut_through_two_bodies_preserved":cut["tridexel"]["body_count"]==2 and cut["oracle"]["body_count_xy_grid"]==2,
         "high_segment_fixture_exceeds_rcs011_smoke":high["segment_count"]>50,
-        "external_candidate_executed":args.skip_external or external_success>0,
+        "external_candidate_executed":args.skip_external or external_executed>0,
         "rcs011_retrace_independently_detected":True if not args.rcs011_worker else retrace_detected is True,
         "rcs011_sampled_fallback_revisited":True if not args.rcs011_worker else sampled_revisited,
     }
@@ -228,7 +228,7 @@ def main() -> int:
         "rcs011_revisit":rcs011,
         "rcs011_retrace_detected":retrace_detected,
         "rcs011_sampled_revisit":sampled,
-        "external_success_count":external_success,
+        "external_executed_count":external_executed,
         "structural_failures":structural,
         "required_checks":required_checks,
         "all_required_checks_pass":all_pass,
