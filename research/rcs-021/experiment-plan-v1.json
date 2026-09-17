@@ -1,0 +1,284 @@
+{
+  "schema": "rcs-021-manual-mill-plan/1.0",
+  "issue": "RCS-021",
+  "issue_number": 40,
+  "date": "2026-09-17",
+  "purpose": "Establish an OCCT-independent material-set oracle, measure a machining-native directional material field, execute a maintained external fallback comparator, and revisit RCS-011 valid-but-wrong and timeout evidence without weakening physical truth.",
+  "baseline": {
+    "units": "mm",
+    "frame": "right-handed-z-up-workpiece-v1",
+    "stock_mm": [40.0, 30.0, 10.0],
+    "material_semantics": "regularized-volumetric-rCS009",
+    "step_contract": "msac-step-conformance/1.0",
+    "rcs011_occt": {
+      "version": "8.0.1",
+      "tag": "V8_0_1",
+      "commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42"
+    },
+    "external": {
+      "name": "Manifold",
+      "package": "manifold3d",
+      "version": "3.5.3",
+      "tag": "v3.5.3",
+      "commit": "0edd9d54876f3135e431575214dd6d8a72866fee",
+      "license": "Apache-2.0",
+      "pypi_sdist_sha256": "bca52ab870cb64343303bddbf63f17e06f97f88e46e20c22f8630dcef0df1dbd"
+    }
+  },
+  "sources": [
+    {
+      "kind": "primary-source",
+      "title": "Manifold v3.5.3 release",
+      "url": "https://github.com/elalish/manifold/releases/tag/v3.5.3",
+      "fact_used": "Pinned maintained external mesh/level-set fallback candidate and source commit."
+    },
+    {
+      "kind": "primary-source",
+      "title": "Manifold LevelSet API",
+      "url": "https://github.com/elalish/manifold/blob/v3.5.3/include/manifold/manifold.h",
+      "fact_used": "LevelSet exposes edgeLength and tolerance construction controls; Decompose/Volume expose comparison metrics."
+    },
+    {
+      "kind": "primary-source",
+      "title": "Multi-dexel based material removal simulation and cutting force prediction with GPGPUs",
+      "url": "https://doi.org/10.1016/j.advengsoft.2011.08.003",
+      "fact_used": "Multi-dexel workpiece representation uses three independent orthogonal dexel sets and is directly motivated by machining material-removal workloads."
+    },
+    {
+      "kind": "primary-source",
+      "title": "Tri-Dexel Based Cutter-Workpiece Engagement Determination For Robotic Machining Simulator",
+      "url": "https://doi.org/10.1016/j.procir.2022.05.108",
+      "fact_used": "Tri-dexel workpiece models remain an active machining-simulation technique with scalable resolution and swept-volume engagement."
+    },
+    {
+      "kind": "programme-evidence",
+      "title": "RCS-011 measured summary",
+      "path": "research/rcs-011/measured-summary-v1.json",
+      "fact_used": "Near-coincident retrace produced a valid materially wrong freehand batch; dense sampled-pose B-rep fallback timed out 10/10."
+    },
+    {
+      "kind": "programme-evidence",
+      "title": "RCS-012 measured summary",
+      "path": "research/rcs-012/measured-summary-v1.json",
+      "fact_used": "A coarse 0.5 mm volumetric representation erased a real 0.001 mm plunge/cusp, so representation resolution is an explicit semantic error channel."
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "H1",
+      "statement": "A conservative OCCT-independent material field can bound the final material set of fixed-axis manual/freehand cutter paths strongly enough to identify RCS-011's valid-but-wrong retrace result.",
+      "falsified_by": "The independent oracle interval includes both the RCS-011 exact-reference material result and the effectively unchanged-stock freehand-batch result, or fails closed-form validation."
+    },
+    {
+      "id": "H2",
+      "statement": "A directional z/tri-dexel material field can represent self-crossing, retrace, overlap, stationary engagement, cut-through and sub-tolerance Z removal without replaying one B-rep Boolean per canonical segment.",
+      "falsified_by": "It erases positive-volume sub-tolerance removal, loses required disconnected bodies, is nondeterministic, or its declared interval fails to contain the independent oracle on its claimed domain."
+    },
+    {
+      "id": "H3",
+      "statement": "Resolution must remain an explicit representation error channel rather than a manufacturing tolerance; refinement should monotonically tighten material bounds on qualified fixture classes.",
+      "falsified_by": "Refinement widens the declared material interval, changes semantic classification without an uncertainty explanation, or requires silently snapping a physical feature to zero."
+    },
+    {
+      "id": "H4",
+      "statement": "Manifold 3.5.3 can serve as an executable external robustness comparator for local fallback/reconciliation work, but mesh success alone is insufficient for STEP-authoritative qualification.",
+      "falsified_by": "The pinned package cannot execute on the supported CI platform, or its measured material/topology behavior supplies no useful independent comparator evidence."
+    },
+    {
+      "id": "H5",
+      "statement": "A bounded founding fallback can be narrower than all fixed-axis manual motion: unsupported error budgets or reconciliation classes must refine, remain accepted_pending, or refuse rather than invent exactness.",
+      "falsified_by": "The recommendation relies on watertightness/validity alone, lacks explicit material/spatial bounds, or silently accepts a case outside its measured domain."
+    }
+  ],
+  "policies": {
+    "oracle_max_depth_ci": 7,
+    "oracle_max_depth_baseline": 8,
+    "oracle_field_numeric_error_mm": 1e-10,
+    "tridexel_pitch_ci_mm": 0.5,
+    "tridexel_refinement_pitches_mm": [1.0, 0.5, 0.25],
+    "manifold_edge_length_mm": 0.75,
+    "manifold_root_tolerance_mm": 0.05,
+    "manifold_authoritative_min_feature_mm": 0.1,
+    "rcs011_worker_timeout_s": 10.0,
+    "qualification_max_volume_interval_mm3": 150.0,
+    "qualification_max_spatial_support_radius_mm": 0.4,
+    "step_reconciliation": "mandatory-before-STEP; no mesh/dexel state is STEP-authoritative until conventional B-rep reconstruction passes RCS-005",
+    "sub_tolerance_policy": "positive physical removal is never snapped to zero; a representation unable to resolve it must preserve an analytic witness or refuse authoritative use",
+    "provenance_policy": "operation/body/boundary lineage is programme-owned; ray/cell/triangle IDs are diagnostic only"
+  },
+  "profiles": {
+    "ci": [
+      "closed-form-stationary-flat",
+      "closed-form-horizontal-slot",
+      "self-cross",
+      "retrace-exact",
+      "retrace-jitter",
+      "simultaneous-xyz",
+      "ball-rounded",
+      "tangent-zero",
+      "tangent-overlap",
+      "plunge-1um",
+      "overlapping-paths",
+      "cut-through",
+      "high-segment-freehand",
+      "stationary-near"
+    ],
+    "baseline": [
+      "closed-form-stationary-flat",
+      "closed-form-horizontal-slot",
+      "self-cross",
+      "retrace-exact",
+      "retrace-jitter",
+      "simultaneous-xyz",
+      "ball-rounded",
+      "tangent-zero",
+      "tangent-overlap",
+      "plunge-1um",
+      "overlapping-paths",
+      "cut-through",
+      "high-segment-freehand",
+      "stationary-near"
+    ]
+  },
+  "cases": [
+    {
+      "id": "closed-form-stationary-flat",
+      "source_family": "mill-stationary-engaged",
+      "tool": {"kind": "flat", "radius_mm": 2.0},
+      "paths": [[[20.0, 15.0, 8.0]]],
+      "known_oracle": "stationary_flat_cylinder",
+      "expected_body_count": 1,
+      "required": true
+    },
+    {
+      "id": "closed-form-horizontal-slot",
+      "source_family": "mill-repeated-identical-slot",
+      "tool": {"kind": "flat", "radius_mm": 2.5},
+      "paths": [[[5.0, 15.0, 7.0], [35.0, 15.0, 7.0]]],
+      "known_oracle": "flat_stadium_slot",
+      "expected_body_count": 1,
+      "required": true
+    },
+    {
+      "id": "self-cross",
+      "source_family": "mill-self-crossing-freehand",
+      "tool": {"kind": "flat", "radius_mm": 2.0},
+      "paths": [[[8.0, 8.0, 7.0], [32.0, 22.0, 7.0], [8.0, 22.0, 7.0], [32.0, 8.0, 7.0]]],
+      "expected_body_count": 1,
+      "required": true
+    },
+    {
+      "id": "retrace-exact",
+      "source_family": "mill-retraced-jittery-path",
+      "tool": {"kind": "flat", "radius_mm": 2.5},
+      "paths": [[[5.0, 15.0, 7.0], [35.0, 15.0, 7.0], [5.0, 15.0, 7.0]]],
+      "expected_body_count": 1,
+      "required": true
+    },
+    {
+      "id": "retrace-jitter",
+      "source_family": "mill-retraced-jittery-path",
+      "tool": {"kind": "flat", "radius_mm": 2.5},
+      "paths": [
+        [[5.0, 15.0, 7.0], [35.0, 15.0, 7.0]],
+        [[35.0, 15.001, 7.0], [5.0, 15.001, 7.0]]
+      ],
+      "expected_body_count": 1,
+      "required": true,
+      "rcs011_revisit": ["segment_sweep", "freehand_batch"]
+    },
+    {
+      "id": "simultaneous-xyz",
+      "source_family": "mill-simultaneous-xyz",
+      "tool": {"kind": "flat", "radius_mm": 2.0},
+      "paths": [[[8.0, 8.0, 9.25], [20.0, 15.0, 7.75], [32.0, 22.0, 6.5]]],
+      "expected_body_count": 1,
+      "required": true,
+      "qualification_note": "Measured, but accepted only if the candidate's conservative material interval closes inside policy."
+    },
+    {
+      "id": "ball-rounded",
+      "source_family": "mill-rounded-cutter",
+      "tool": {"kind": "ball", "radius_mm": 2.0},
+      "paths": [[[5.0, 15.0, 9.0], [35.0, 15.0, 9.0]]],
+      "expected_body_count": 1,
+      "required": true
+    },
+    {
+      "id": "tangent-zero",
+      "source_family": "mill-tangent-corner-entry-exit",
+      "tool": {"kind": "flat", "radius_mm": 2.5},
+      "paths": [[[-5.0, -2.5, 7.0], [15.0, -2.5, 7.0]]],
+      "known_oracle": "no_positive_volume_contact",
+      "expected_body_count": 1,
+      "required": true
+    },
+    {
+      "id": "tangent-overlap",
+      "source_family": "mill-tangent-corner-entry-exit",
+      "tool": {"kind": "flat", "radius_mm": 2.5},
+      "paths": [[[-5.0, -2.499, 7.0], [15.0, -2.499, 7.0]]],
+      "expected_body_count": 1,
+      "required": true
+    },
+    {
+      "id": "plunge-1um",
+      "source_family": "mill-sub-tolerance-plunge",
+      "tool": {"kind": "flat", "radius_mm": 2.5},
+      "paths": [[[20.0, 15.0, 12.0], [20.0, 15.0, 9.999999]]],
+      "known_oracle": "pure_plunge",
+      "minimum_positive_feature_mm": 0.000001,
+      "expected_body_count": 1,
+      "required": true
+    },
+    {
+      "id": "overlapping-paths",
+      "source_family": "mill-overlapping-slots-pockets",
+      "tool": {"kind": "flat", "radius_mm": 2.5},
+      "paths": [
+        [[5.0, 13.0, 7.0], [35.0, 13.0, 7.0]],
+        [[5.0, 16.0, 7.0], [35.0, 16.0, 7.0]],
+        [[20.0, 7.0, 7.0], [20.0, 23.0, 7.0]]
+      ],
+      "expected_body_count": 1,
+      "required": true
+    },
+    {
+      "id": "cut-through",
+      "source_family": "mill-cut-through-separation",
+      "tool": {"kind": "flat", "radius_mm": 1.5},
+      "paths": [[[20.0, -5.0, -0.1], [20.0, 35.0, -0.1]]],
+      "known_oracle": "through_strip_two_bodies",
+      "expected_body_count": 2,
+      "required": true
+    },
+    {
+      "id": "high-segment-freehand",
+      "source_family": "mill-very-high-segment-count",
+      "tool": {"kind": "flat", "radius_mm": 1.5},
+      "generated_path": {"kind": "sinusoidal", "segments": 160, "x0": 4.0, "x1": 36.0, "y_center": 15.0, "y_amplitude": 3.0, "cycles": 2.0, "z_center": 7.0, "z_amplitude": 0.15},
+      "expected_body_count": 1,
+      "required": true
+    },
+    {
+      "id": "stationary-near",
+      "source_family": "mill-stationary-engaged",
+      "tool": {"kind": "flat", "radius_mm": 2.5},
+      "paths": [[[20.0, 15.0, 7.0], [20.0002, 15.0001, 7.0], [19.9998, 15.0001, 7.0], [20.0, 15.0, 7.0]]],
+      "expected_body_count": 1,
+      "required": true
+    }
+  ],
+  "rcs011_controls": [
+    {
+      "case_id": "retrace-jitter",
+      "strategies": ["segment_sweep", "freehand_batch"],
+      "required_result": "independent oracle must separate the materially correct sequential result from the valid-but-wrong near-full-stock batch"
+    },
+    {
+      "case_id": "slot-clean",
+      "strategies": ["sampled_fallback"],
+      "required_result": "bounded execution must record success/error/timeout and compare any successful material result to the same oracle family; prior 10/10 timeout evidence remains preserved"
+    }
+  ]
+}
