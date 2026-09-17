@@ -1,0 +1,40 @@
+name: rcs012-alternative-hybrid
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-rcs012-contracts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Validate RCS-012 static research contracts
+        run: python3 tools/validate_rcs012.py
+
+  rcs012-alternative-hybrid-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run deterministic alternative-representation campaign
+        run: |
+          python3 research/rcs-012/harness/run_campaign.py \
+            --out-dir .results/rcs012 \
+            --repeats 2
+      - name: Validate runtime evidence
+        run: python3 tools/validate_rcs012.py --results-dir .results/rcs012
+      - name: Upload RCS-012 evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rcs012-alternative-hybrid-evidence
+          path: .results/rcs012
+          if-no-files-found: error
