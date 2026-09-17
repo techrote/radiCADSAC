@@ -1,6 +1,6 @@
 # RCS-018 — integrated semantic contract vertical-slice report
 
-Status: accepted research result pending PR merge  
+Status: accepted on `main`; implementation merged via PR #48  
 Date: 2026-09-17  
 Issue: RCS-018 / GitHub #37  
 Experiment contract: `rcs-018-experiment-plan/1.0`  
