@@ -58,6 +58,10 @@ def load_object(path: Path) -> dict[str, Any]:
     return value
 
 
+def has_payload(run: Any) -> bool:
+    return isinstance(run, dict) and isinstance(run.get("payload"), dict)
+
+
 for path in REQUIRED_FILES:
     if not path.is_file():
         error(f"missing required file: {path.relative_to(ROOT)}")
@@ -168,29 +172,43 @@ if args.results_dir is not None:
                 error("runtime backend sweeps lack required fixture families")
             measured = [
                 item for item in sweeps
-                if isinstance(item, dict)
-                and isinstance(item.get("worker"), dict)
-                and isinstance(item["worker"].get("payload"), dict)
+                if isinstance(item, dict) and has_payload(item.get("worker"))
             ]
             if len(measured) != len(sweeps):
                 error("one or more runtime backend sweep attempts did not produce worker payloads")
+
         repeated = results.get("repeated_finishing")
         if not isinstance(repeated, list) or not any(
             isinstance(item, dict) and int(item.get("repeat_count", 0)) > 1
             for item in repeated
         ):
             error("runtime results lack repeated finishing passes")
+        elif isinstance(repeated, list):
+            for index, item in enumerate(repeated):
+                if not isinstance(item, dict):
+                    error(f"repeated_finishing[{index}] is not an object")
+                    continue
+                if not has_payload(item.get("baseline")):
+                    error(f"repeated_finishing[{index}] baseline worker produced no payload")
+                if not has_payload(item.get("semantic_replay_collapse_reference")):
+                    error(f"repeated_finishing[{index}] collapse reference produced no payload")
+
         chains = results.get("accumulation_chains")
         if not isinstance(chains, list) or not chains:
             error("runtime results lack tolerance accumulation chains")
         else:
-            for item in chains:
+            for index, item in enumerate(chains):
                 if not isinstance(item, dict):
+                    error(f"accumulation_chains[{index}] is not an object")
                     continue
                 orders = item.get("orders")
                 if not isinstance(orders, dict) or not {"ascending", "descending"}.issubset(orders):
-                    error("accumulation chain does not contain both operation orders")
-                    break
+                    error(f"accumulation_chains[{index}] does not contain both operation orders")
+                    continue
+                for order in ("ascending", "descending"):
+                    if not has_payload(orders.get(order)):
+                        error(f"accumulation_chains[{index}] {order} worker produced no payload")
+
         perturb = results.get("controlled_perturbation")
         if not isinstance(perturb, list) or not perturb:
             error("runtime results lack controlled perturbation pairs")
@@ -200,6 +218,20 @@ if args.results_dir is not None:
         summary = results.get("summary")
         if not isinstance(summary, dict):
             error("runtime results lack aggregate summary")
+        else:
+            required_summary = {
+                "backend_sweep_attempts",
+                "backend_sweep_worker_failures",
+                "occt_global_fuzzy_oracle_mismatches",
+                "operation_local_interval_oracle_mismatches",
+                "anchored_quantization_oracle_mismatches",
+                "semantic_replay_collapse_non_equivalent_cases",
+                "accumulation_order_divergent_cases",
+                "controlled_perturbation_direction_sensitive_pairs",
+            }
+            missing = required_summary - set(summary)
+            if missing:
+                error(f"runtime summary missing fields: {sorted(missing)}")
 
 if errors:
     print("RCS-007 validation failed:")
