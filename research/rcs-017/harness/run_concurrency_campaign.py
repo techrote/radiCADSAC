@@ -2,7 +2,6 @@
 import argparse
 import json
 import math
-import os
 import pathlib
 import subprocess
 import time
@@ -35,28 +34,42 @@ def job_records(run_result):
     return [r for r in run_result["records"] if r.get("type") == "job"]
 
 
+def configuration_ok(r):
+    cfg = r.get("config")
+    schema = (r.get("schema") or "").upper()
+    uncertainty = float(r.get("serialized_uncertainty_file_units", -1.0))
+    expected_uncertainty = float(r.get("expected_uncertainty_file_units", -2.0))
+    shape_fix_observed = float(r.get("shape_fix_observed_mm", -1.0))
+    shape_fix_requested = float(r.get("shape_fix_requested_mm", -2.0))
+    precision_ok = math.isclose(uncertainty, expected_uncertainty, rel_tol=1e-9, abs_tol=1e-14)
+    shape_fix_ok = math.isclose(shape_fix_observed, shape_fix_requested, rel_tol=1e-12, abs_tol=1e-15)
+    if cfg == "inch-ap203":
+        schema_unit_ok = r.get("inch_marker") and "CONFIG_CONTROL_DESIGN" in schema
+    elif cfg == "mm-ap242":
+        schema_unit_ok = r.get("mm_marker") and not r.get("inch_marker") and "AP242" in schema
+    else:
+        schema_unit_ok = False
+    return bool(schema_unit_ok and precision_ok and shape_fix_ok)
+
+
 def summarize_jobs(records):
     ok = [r for r in records if r.get("ok")]
-    wrong_config = 0
+    wrong_config = sum(1 for r in ok if not configuration_ok(r))
     max_volume_delta = 0.0
+    max_uncertainty_delta = 0.0
+    max_shape_fix_delta = 0.0
     for r in ok:
-        cfg = r.get("config")
-        schema = (r.get("schema") or "").upper()
-        if cfg == "inch-ap203":
-            if not r.get("inch_marker") or "AP203" not in schema:
-                wrong_config += 1
-        elif cfg == "mm-ap242":
-            if not r.get("mm_marker") or "AP242" not in schema:
-                wrong_config += 1
-        else:
-            wrong_config += 1
         max_volume_delta = max(max_volume_delta, abs(float(r.get("cut_volume_mm3", 0.0)) - float(r.get("readback_volume_mm3", 0.0))))
+        max_uncertainty_delta = max(max_uncertainty_delta, abs(float(r.get("serialized_uncertainty_file_units", 0.0)) - float(r.get("expected_uncertainty_file_units", 0.0))))
+        max_shape_fix_delta = max(max_shape_fix_delta, abs(float(r.get("shape_fix_observed_mm", 0.0)) - float(r.get("shape_fix_requested_mm", 0.0))))
     return {
         "attempts": len(records),
         "successes": len(ok),
         "failures": len(records) - len(ok),
         "wrong_configuration_observations": wrong_config,
         "max_step_volume_abs_delta_mm3": max_volume_delta,
+        "max_serialized_uncertainty_abs_delta_file_units": max_uncertainty_delta,
+        "max_shape_fix_parameter_abs_delta_mm": max_shape_fix_delta,
         "errors": sorted({r.get("error", "") for r in records if r.get("error")}),
     }
 
