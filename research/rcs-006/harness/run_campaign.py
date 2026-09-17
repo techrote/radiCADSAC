@@ -228,6 +228,42 @@ def validate_plan(plan: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any],
     return step_fixtures, step_matrix, conformance
 
 
+def parse_worker_stdout(stdout: str) -> tuple[dict[str, Any], str]:
+    """Extract the worker's final JSON record while retaining OCCT stdout chatter.
+
+    OCCT's STEP exchange stack may write transfer diagnostics directly to stdout.
+    The worker owns the final stdout line and emits its JSON record only after all
+    geometry/STEP work has completed, so the protocol delimiter is the last
+    non-empty line that is a JSON object. Any other stdout is preserved as
+    diagnostic text rather than being silently discarded.
+    """
+    text = stdout.strip()
+    if not text:
+        raise json.JSONDecodeError("worker stdout was empty", stdout, 0)
+
+    try:
+        value = json.loads(text)
+        if not isinstance(value, dict):
+            raise json.JSONDecodeError("worker payload was not an object", text, 0)
+        return value, ""
+    except json.JSONDecodeError as whole_error:
+        lines = stdout.splitlines()
+        for index in range(len(lines) - 1, -1, -1):
+            candidate = lines[index].strip()
+            if not candidate.startswith("{") or not candidate.endswith("}"):
+                continue
+            try:
+                value = json.loads(candidate)
+            except json.JSONDecodeError:
+                continue
+            if not isinstance(value, dict):
+                continue
+            chatter_lines = lines[:index] + lines[index + 1 :]
+            chatter = "\n".join(line for line in chatter_lines if line.strip()).strip()
+            return value, chatter
+        raise whole_error
+
+
 def run_worker(
     worker: Path,
     case: dict[str, Any],
@@ -282,11 +318,11 @@ def run_worker(
         }
 
     try:
-        worker_result = json.loads(completed.stdout.strip())
+        worker_result, stdout_chatter = parse_worker_stdout(completed.stdout)
     except json.JSONDecodeError as exc:
         return {
             "classification": "algorithm returned error/status",
-            "notes": [f"worker stdout was not valid JSON: {exc}"],
+            "notes": [f"worker stdout did not contain a final JSON record: {exc}"],
             "exit_code": completed.returncode,
             "stdout": completed.stdout,
             "stderr": completed.stderr,
@@ -295,12 +331,17 @@ def run_worker(
             "step_file": str(step_path) if step_path else None,
         }
 
+    diagnostics = completed.stderr.strip()
+    if stdout_chatter:
+        diagnostic_block = "[worker stdout diagnostics]\n" + stdout_chatter
+        diagnostics = diagnostic_block if not diagnostics else diagnostics + "\n" + diagnostic_block
+
     return {
         "classification": "success",
         "notes": [],
         "exit_code": completed.returncode,
         "stdout": "",
-        "stderr": completed.stderr,
+        "stderr": diagnostics,
         "wall_ms": wall_ms,
         "worker": worker_result,
         "step_file": str(step_path) if step_path else None,
