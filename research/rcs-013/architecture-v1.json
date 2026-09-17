@@ -1,6 +1,6 @@
 {
   "schema": "rcs-013-architecture/1.0",
-  "status": "gate-2-proposed",
+  "status": "gate-2-accepted",
   "date": "2026-09-17",
   "source_main": "d9ec50cdcd4b018c5f8d3fa0bc4ffbb950b1beb2",
   "architecture": {
@@ -58,61 +58,17 @@
     }
   ],
   "components": [
-    {
-      "id": "journal-ingress",
-      "role": "Validate/version canonical operations, immutable revisions, units, coordinate frames and machine/tool/setup revisions.",
-      "authority": "programme"
-    },
-    {
-      "id": "semantic-lineage",
-      "role": "Own backend-independent body/operation/envelope ancestry and split/merge/replacement/ambiguity relations.",
-      "authority": "programme"
-    },
-    {
-      "id": "policy-dispatch",
-      "role": "Apply capability, tolerance, uncertainty, reconciliation and provider-dispatch policies without collapsing them into one epsilon.",
-      "authority": "programme"
-    },
-    {
-      "id": "lathe-axisymmetric-provider",
-      "role": "First-class fixed-axis turning provider for the qualified OD/facing/shoulder/taper/boring/retrace subset.",
-      "authority": "provider-private"
-    },
-    {
-      "id": "mill-provider",
-      "role": "Dispatch explicit analytic operations, strict recognized/canonicalized paths, exact segment-envelope removal, and bounded fallback rather than one universal freehand batch.",
-      "authority": "provider-private"
-    },
-    {
-      "id": "generic-brep-provider",
-      "role": "Use isolated OCCT exact/parametric B-rep operations where they are qualified and process-specialized providers do not apply.",
-      "authority": "provider-private"
-    },
-    {
-      "id": "deferred-material-coordinator",
-      "role": "Permit regularized material semantics and bounded pending removal/contact state; force reconciliation at connectivity, exact-query, provider-handoff and export boundaries.",
-      "authority": "provider-private"
-    },
-    {
-      "id": "bounded-fallback-adapter",
-      "role": "Host local cell/mesh/voxel/SDF/exact alternatives with explicit scope/error metadata; never silently promote them to whole-model engineering truth.",
-      "authority": "provider-private"
-    },
-    {
-      "id": "brep-reconciler",
-      "role": "Recover known analytic boundaries from semantics/provenance first, resolve pending state, validate bodies, and produce conventional B-rep for topology-dependent use and export.",
-      "authority": "backend"
-    },
-    {
-      "id": "step-conformance-adapter",
-      "role": "Export selected material bodies through the four RCS-005 conformance gates; success/refusal is programme-level, not a writer return code.",
-      "authority": "programme-policy-over-backend"
-    },
-    {
-      "id": "worker-supervisor",
-      "role": "Contain crashes/hangs/global state with process-isolated workers and timeouts; may be relaxed only by later measured concurrency evidence.",
-      "authority": "deployment"
-    }
+    {"id":"journal-ingress","role":"Validate/version canonical operations, immutable revisions, units, coordinate frames and machine/tool/setup revisions.","authority":"programme"},
+    {"id":"semantic-lineage","role":"Own backend-independent body/operation/envelope ancestry and split/merge/replacement/ambiguity relations.","authority":"programme"},
+    {"id":"policy-dispatch","role":"Apply capability, tolerance, uncertainty, reconciliation and provider-dispatch policies without collapsing them into one epsilon.","authority":"programme"},
+    {"id":"lathe-axisymmetric-provider","role":"First-class fixed-axis turning provider for the qualified OD/facing/shoulder/taper/boring/retrace subset.","authority":"provider-private"},
+    {"id":"mill-provider","role":"Dispatch explicit analytic operations, strict recognized/canonicalized paths, exact segment-envelope removal, and bounded fallback rather than one universal freehand batch.","authority":"provider-private"},
+    {"id":"generic-brep-provider","role":"Use isolated OCCT exact/parametric B-rep operations where they are qualified and process-specialized providers do not apply.","authority":"provider-private"},
+    {"id":"deferred-material-coordinator","role":"Permit regularized material semantics and bounded pending removal/contact state; force reconciliation at connectivity, exact-query, provider-handoff and export boundaries.","authority":"provider-private"},
+    {"id":"bounded-fallback-adapter","role":"Host local cell/mesh/voxel/SDF/exact alternatives with explicit scope/error metadata; never silently promote them to whole-model engineering truth.","authority":"provider-private"},
+    {"id":"brep-reconciler","role":"Recover known analytic boundaries from semantics/provenance first, resolve pending state, validate bodies, and produce conventional B-rep for topology-dependent use and export.","authority":"backend"},
+    {"id":"step-conformance-adapter","role":"Export selected material bodies through the four RCS-005 conformance gates; success/refusal is programme-level, not a writer return code.","authority":"programme-policy-over-backend"},
+    {"id":"worker-supervisor","role":"Contain crashes/hangs/global state with process-isolated workers and timeouts; may be relaxed only by later measured concurrency evidence.","authority":"deployment"}
   ],
   "solver_dispatch": {
     "lathe": [
@@ -162,67 +118,14 @@
   },
   "external_api": {
     "transport": "not selected; schema semantics are stable before RPC/ABI choice",
-    "request_families": [
-      "capabilities",
-      "apply_canonical_operations",
-      "commit_revision",
-      "replay_revision",
-      "query_material_state",
-      "request_preview",
-      "request_reconciliation",
-      "inspect_reconciled_geometry",
-      "export_step"
-    ],
-    "common_request_fields": [
-      "contract_version",
-      "project_revision",
-      "journal_schema_version",
-      "operation_ids",
-      "setup_revision",
-      "tool_revision",
-      "coordinate_frame",
-      "tolerance_policy_version",
-      "requested_body_ids"
-    ],
-    "common_response_fields": [
-      "contract_version",
-      "engineering_status",
-      "revision_id",
-      "material_body_ids",
-      "lineage_events",
-      "provider_profile",
-      "reconciliation_state",
-      "diagnostics"
-    ],
-    "private_types_forbidden": ["TopoDS_*", "OCCT Handle", "Godot Object", "triangle index identity", "voxel/cell identity"]
+    "request_families": ["capabilities","apply_canonical_operations","commit_revision","replay_revision","query_material_state","request_preview","request_reconciliation","inspect_reconciled_geometry","export_step"],
+    "common_request_fields": ["contract_version","project_revision","journal_schema_version","operation_ids","setup_revision","tool_revision","coordinate_frame","tolerance_policy_version","requested_body_ids"],
+    "common_response_fields": ["contract_version","engineering_status","revision_id","material_body_ids","lineage_events","provider_profile","reconciliation_state","diagnostics"],
+    "private_types_forbidden": ["TopoDS_*","OCCT Handle","Godot Object","triangle index identity","voxel/cell identity"]
   },
-  "engineering_status_model": [
-    "accepted_pending",
-    "reconciled",
-    "success",
-    "refused_unsupported",
-    "refused_unresolved_ambiguity",
-    "invalid_topology",
-    "wrong_geometry",
-    "tolerance_breach",
-    "kernel_error",
-    "crash",
-    "timeout",
-    "nondeterministic_result",
-    "step_writer_failure",
-    "step_roundtrip_failure",
-    "interoperability_unqualified"
-  ],
+  "engineering_status_model": ["accepted_pending","reconciled","success","refused_unsupported","refused_unresolved_ambiguity","invalid_topology","wrong_geometry","tolerance_breach","kernel_error","crash","timeout","nondeterministic_result","step_writer_failure","step_roundtrip_failure","interoperability_unqualified"],
   "versioning": {
-    "durable_versions": [
-      "programme API contract",
-      "journal schema and canonicalization profile",
-      "machine/tool/setup definitions",
-      "semantic lineage schema",
-      "tolerance policy",
-      "provider capability/dispatch profile",
-      "exporter conformance profile"
-    ],
+    "durable_versions": ["programme API contract","journal schema and canonicalization profile","machine/tool/setup definitions","semantic lineage schema","tolerance policy","provider capability/dispatch profile","exporter conformance profile"],
     "replay_rule": "A saved project remains defined by canonical manufacturing intent and semantic revisions. Provider-private geometry caches may be invalidated and rebuilt; replay records the implementation/profile used for diagnostics and reproducibility.",
     "migration_rule": "Schema migrations transform programme-owned semantic data explicitly; they do not reinterpret backend-private topology IDs."
   },
@@ -233,13 +136,13 @@
     "provenance": "Record exact dependency versions/commits/build profiles and preserve applicable notices/source obligations."
   },
   "evidence": {
-    "step": "docs/decisions/DR-0009-step-conformance-and-body-preservation.md",
-    "tolerance": "research/rcs-007/measured-summary-v1.json",
-    "lineage": "research/rcs-008/measured-summary-v1.json",
-    "deferred_topology": "research/rcs-009/measured-summary-v1.json",
-    "lathe": "research/rcs-010/measured-summary-v1.json",
-    "mill": "research/rcs-011/measured-summary-v1.json",
-    "hybrid": "research/rcs-012/measured-summary-v1.json",
-    "occt_audit": "docs/12-OCCT-8.0.1-AUDIT.md"
+    "step":"docs/decisions/DR-0009-step-conformance-and-body-preservation.md",
+    "tolerance":"research/rcs-007/measured-summary-v1.json",
+    "lineage":"research/rcs-008/measured-summary-v1.json",
+    "deferred_topology":"research/rcs-009/measured-summary-v1.json",
+    "lathe":"research/rcs-010/measured-summary-v1.json",
+    "mill":"research/rcs-011/measured-summary-v1.json",
+    "hybrid":"research/rcs-012/measured-summary-v1.json",
+    "occt_audit":"docs/12-OCCT-8.0.1-AUDIT.md"
   }
 }
