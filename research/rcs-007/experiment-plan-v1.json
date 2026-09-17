@@ -1,0 +1,94 @@
+{
+  "experiment_plan_schema": "rcs-007-experiment-plan/1.0",
+  "plan_id": "virtual-tolerance-research-v1",
+  "baseline": {
+    "harness": "rcs-006-result/1.0",
+    "worker_schema": "rcs-006-occt-worker/1.0",
+    "backend": "occt",
+    "version": "8.0.1",
+    "tag": "V8_0_1",
+    "commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42",
+    "run_parallel": false,
+    "non_destructive": true
+  },
+  "policy_channels": [
+    "input_sampling_resolution",
+    "machine_control_resolution",
+    "manufacturing_tolerance",
+    "numerical_uncertainty",
+    "topological_equivalence",
+    "contact_classification",
+    "preview_tolerance",
+    "export_tolerance",
+    "validation_tolerance"
+  ],
+  "candidate_models": [
+    {
+      "id": "occt_global_fuzzy",
+      "kind": "measured_backend_control",
+      "summary": "Apply one operation-wide OCCT fuzzy Boolean value; geometry is allowed to change according to the widened Boolean tolerance."
+    },
+    {
+      "id": "operation_local_interval",
+      "kind": "semantic_relation_model",
+      "summary": "Use bounded uncertainty only to classify the current operation/contact relation; do not globally snap coordinates or merge unrelated topology."
+    },
+    {
+      "id": "semantic_replay_collapse",
+      "kind": "provenance_conditioned_execution_model",
+      "summary": "Keep repeated manufacturing events in the journal but skip redundant exact geometry recomputation only when the same semantic envelope is already established in the same operation context."
+    },
+    {
+      "id": "anchored_quantization",
+      "kind": "negative_comparator",
+      "summary": "Quantize coordinates to a fixed global grid to obtain a true equivalence relation; measure boundary aliasing and erased sub-grid intent."
+    },
+    {
+      "id": "controlled_perturbation",
+      "kind": "negative_comparator",
+      "summary": "Perturb exact contact to signed neighboring members and check whether the chosen perturbation direction changes physical material semantics."
+    }
+  ],
+  "constants": {
+    "local_interval_half_width_mm": 0.0001,
+    "anchored_quantum_mm": 0.0001,
+    "per_operation_numerical_uncertainty_mm": 0.000001,
+    "volume_change_threshold_mm3": 1e-09,
+    "geometry_equivalence_volume_mm3": 1e-07
+  },
+  "profiles": {
+    "smoke": {
+      "contact_offsets_mm": [-0.0001, 0.0, 0.0001],
+      "fuzzy_values_mm": [0.0, 0.0001],
+      "skim_depths_mm": [0.000001, 0.0001, 0.001],
+      "repeat_counts": [1, 10, 100],
+      "chain_counts": [10, 100],
+      "chain_increment_mm": 0.00001
+    },
+    "baseline": {
+      "contact_offsets_mm": [-0.001, -0.0001, -0.00001, 0.0, 0.00001, 0.0001, 0.001],
+      "fuzzy_values_mm": [0.0, 0.000001, 0.00001, 0.0001, 0.001],
+      "skim_depths_mm": [0.000001, 0.00001, 0.0001, 0.001, 0.01],
+      "repeat_counts": [1, 2, 10, 100, 500],
+      "chain_counts": [10, 100, 500],
+      "chain_increment_mm": 0.00001
+    }
+  },
+  "backend_sweeps": [
+    {"family": "coincidence", "worker_case": "coincident_face", "parameter": "offset_mm", "intent": "signed_contact"},
+    {"family": "tangency", "worker_case": "tangent_contact", "parameter": "offset_mm", "intent": "signed_contact"},
+    {"family": "sub_tolerance_skim", "worker_case": "thin_skim", "parameter": "depth_mm", "intent": "positive_removal"}
+  ],
+  "repeated_finish": {
+    "mode": "repeated",
+    "depth_mm": 0.001
+  },
+  "accumulation_chain": {
+    "mode": "chain",
+    "orders": ["ascending", "descending"]
+  },
+  "perturbation": {
+    "delta_mm": 0.0001,
+    "families": ["coincidence", "tangency"]
+  }
+}
