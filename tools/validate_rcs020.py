@@ -13,6 +13,8 @@ ROOT = Path(__file__).resolve().parents[1]
 PLAN = ROOT / "research/rcs-020/experiment-plan-v1.json"
 GENERATOR = ROOT / "research/rcs-020/tool_envelope.py"
 RUNNER = ROOT / "research/rcs-020/run_campaign.py"
+REFINE = ROOT / "research/rcs-020/refine_oracles.py"
+MEASURED = ROOT / "research/rcs-020/measured-summary-v1.json"
 README = ROOT / "research/rcs-020/README.md"
 REPORT = ROOT / "docs/28-REALISTIC-LATHE-TOOL-ENVELOPE-RESEARCH.md"
 DECISION = ROOT / "docs/decisions/DR-0017-realistic-lathe-tool-envelope-capability.md"
@@ -37,8 +39,52 @@ def require(condition: bool, message: str) -> None:
         fail(message)
 
 
+def validate_frozen_summary() -> None:
+    summary = load_json(MEASURED)
+    if not isinstance(summary, dict):
+        return
+    require(summary.get("schema") == "rcs-020-measured-summary/1.0", "unexpected RCS-020 measured-summary schema")
+    require(summary.get("status") == "accepted-pending-merge", "RCS-020 measured summary must be accepted-pending-merge before PR merge")
+    source = summary.get("source", {})
+    require(source.get("pull_request") == 52, "RCS-020 measured summary must identify PR #52")
+    require(source.get("head_sha") == "9a90435a7f9cd07ab36eb9185c227c6e827e5ef9", "RCS-020 frozen evidence source head changed")
+    require(source.get("workflow_run_id") == 35275577906, "RCS-020 frozen evidence workflow run changed")
+    require(source.get("artifact_id") == 10519883446, "RCS-020 frozen evidence artifact changed")
+    require(source.get("artifact_zip_sha256") == "e595847e03123b9898dd37d83e49f2a983c4633fdf93ce7b20cec53360db1eec", "RCS-020 frozen evidence artifact digest changed")
+    backend = summary.get("backend", {})
+    require(backend.get("version") == "8.0.1", "RCS-020 measured summary backend version drifted")
+    require(backend.get("commit") == "b8f597c677811d1f9f4d8a97f5ae2825c0353a42", "RCS-020 measured summary backend commit drifted")
+
+    campaign = summary.get("campaign", {})
+    require(campaign.get("case_count") == 10, "RCS-020 frozen summary must cover ten cases")
+    require(campaign.get("qualified_tool_derived_one_body_cases") == 8, "RCS-020 frozen summary must cover eight one-body qualified cases")
+    require(campaign.get("explicit_refusal_cases") == 1, "RCS-020 frozen summary must preserve one explicit refusal")
+    require(campaign.get("multi_body_parting_cases") == 1, "RCS-020 frozen summary must preserve one parting case")
+    require(campaign.get("step_strategy_attempts") == 24 and campaign.get("step_strategy_passes") == 24, "RCS-020 frozen STEP result must remain 24/24")
+    require(float(campaign.get("max_tool_profile_oracle_volume_abs_delta_mm3", 1.0)) <= 0.05, "RCS-020 frozen material-oracle maximum exceeds campaign budget")
+    require(float(campaign.get("max_occt_strategy_volume_abs_delta_mm3", 1.0)) <= 0.0001, "RCS-020 frozen OCCT strategy maximum exceeds budget")
+    require(float(campaign.get("max_step_volume_abs_delta_mm3", 1.0)) <= 0.0001, "RCS-020 frozen STEP volume maximum exceeds budget")
+    booleans = campaign.get("material_boolean_operations", {})
+    require(booleans == {"repeated_3d": 28, "batched_3d": 8, "axisymmetric_2d": 0}, "RCS-020 frozen Boolean-count aggregate changed")
+
+    findings = summary.get("representative_findings", {})
+    retrace = findings.get("exact_retrace_roundnose_20", {})
+    require(retrace.get("journal_events") == 20, "frozen retrace event count changed")
+    require(retrace.get("repeated_3d_material_booleans") == 20, "frozen retrace repeated Boolean count changed")
+    require(retrace.get("batched_3d_material_booleans") == 1, "frozen retrace batch Boolean count changed")
+    require(retrace.get("axisymmetric_material_booleans") == 0, "frozen retrace axisymmetric Boolean count changed")
+    parting = findings.get("complete_parting_r02", {})
+    require(parting.get("material_body_count") == 2 and parting.get("step_readback_solids") == 2, "frozen parting must preserve two solids")
+    require(float(parting.get("tool_profile_closed_form_oracle_volume_abs_delta_mm3", 1.0)) <= 0.05, "frozen parting oracle delta exceeds budget")
+    require("Uniform trapezoidal integration" in str(parting.get("discarded_numeric_oracle_diagnostic", {}).get("interpretation", "")), "frozen summary must preserve rejected numerical-oracle finding")
+    undercut = findings.get("undercut_holder_collision", {})
+    require(undercut.get("classification") == "refused_unsupported" and undercut.get("collision_detected") is True, "frozen undercut refusal evidence changed")
+    capability = summary.get("capability", {})
+    require("exact toroidal/circular-insert-nose analytic surface reconstruction in STEP from the polygon research adapter" in capability.get("still_unqualified", []), "RCS-020 must preserve analytic-nose STEP limitation")
+
+
 def validate_static() -> dict[str, Any] | None:
-    for path in (PLAN, GENERATOR, RUNNER, README, REPORT, DECISION):
+    for path in (PLAN, GENERATOR, RUNNER, REFINE, MEASURED, README, REPORT, DECISION):
         require(path.exists(), f"missing required RCS-020 file: {path.relative_to(ROOT)}")
     plan = load_json(PLAN)
     if not isinstance(plan, dict):
@@ -56,8 +102,7 @@ def validate_static() -> dict[str, Any] | None:
         require(all(isinstance(s, dict) and str(s.get("url", "")).startswith("https://") and s.get("fact_used") for s in sources), "every RCS-020 source must have URL and fact_used")
         require(any("sandvik" in str(s.get("url", "")).lower() for s in sources), "tool-geometry plan must cite a primary manufacturer source")
 
-    hypotheses = plan.get("hypotheses", [])
-    require(isinstance(hypotheses, list) and len(hypotheses) >= 3, "RCS-020 requires explicit hypotheses")
+    require(isinstance(plan.get("hypotheses"), list) and len(plan["hypotheses"]) >= 3, "RCS-020 requires explicit hypotheses")
     require(len(plan.get("falsification", [])) >= 4, "RCS-020 requires falsification criteria")
 
     policies = plan.get("policies", {})
@@ -72,8 +117,7 @@ def validate_static() -> dict[str, Any] | None:
     require(isinstance(tools, dict) and len(tools) >= 4, "RCS-020 requires external, internal and groove/parting tool definitions")
     classes = {t.get("class") for t in tools.values() if isinstance(t, dict)}
     require({"external_turning", "internal_boring", "groove_parting"}.issubset(classes), "missing required RCS-020 tool class")
-    nose_radii = [float(t.get("nose_radius_mm", 0.0)) for t in tools.values() if isinstance(t, dict) and "nose_radius_mm" in t]
-    require(any(r > 0.0 for r in nose_radii), "at least one non-zero insert nose radius is required")
+    require(any(float(t.get("nose_radius_mm", 0.0)) > 0.0 for t in tools.values() if isinstance(t, dict)), "at least one non-zero insert nose radius is required")
     approaches = {float(t["approach_angle_deg"]) for t in tools.values() if isinstance(t, dict) and "approach_angle_deg" in t}
     require(len(approaches) >= 2, "RCS-020 must exercise multiple tool approach angles")
 
@@ -97,28 +141,33 @@ def validate_static() -> dict[str, Any] | None:
     require(by_id.get("undercut-holder-collision", {}).get("expected", {}).get("classification") == "refused_unsupported", "undercut reachability fixture must fail closed")
     require(by_id.get("face-roundnose-95", {}).get("expected", {}).get("result_front_z_mm") == 1.0, "facing fixture must declare tool-derived front plane")
 
-    for path in (GENERATOR, RUNNER):
+    for path in (GENERATOR, RUNNER, REFINE):
         if path.exists():
-            text = path.read_text(encoding="utf-8")
-            compile(text, str(path), "exec")
+            compile(path.read_text(encoding="utf-8"), str(path), "exec")
     if GENERATOR.exists():
         text = GENERATOR.read_text(encoding="utf-8")
         for marker in ("_capsule_polygon", "_oracle_segment_vertical_bounds", "oracle_round_nose_volume", "derive_groove_profile", "groove_oracle_volume", "holder_clearance_collision"):
             require(marker in text, f"tool-envelope implementation missing {marker}")
     if RUNNER.exists():
         text = RUNNER.read_text(encoding="utf-8")
-        for marker in ("facing_case", "connectivity_step_control", "analytic_nose_surface_exactly_qualified", "refused_unsupported"):
+        for marker in ("facing_case", "connectivity_step_control", "analytic_nose_surface_exactly_qualified", "refused_unsupported", "worker_schema"):
             require(marker in text, f"RCS-020 runner missing {marker}")
+    if REFINE.exists():
+        text = REFINE.read_text(encoding="utf-8")
+        for marker in ("closed-form", "exact_groove_material_volume_mm3", "oracle_numeric_diagnostic"):
+            require(marker in text, f"RCS-020 oracle refinement missing {marker}")
 
     for path, markers in (
-        (README, ("RCS-020", "Reproduction", "independent")),
-        (REPORT, ("RCS-020", "Hypotheses", "Capability", "STEP", "Unresolved")),
-        (DECISION, ("Status:", "## Context", "## Decision", "## Alternatives considered", "## Evidence", "## Consequences", "## Reversibility")),
+        (README, ("accepted measured research", "Reproduction", "independent", "24/24")),
+        (REPORT, ("RCS-020 accepted measured research", "Hypotheses", "Capability matrix", "24/24", "Unresolved questions")),
+        (DECISION, ("Status: **accepted**", "## Context", "## Decision", "## Alternatives considered", "## Evidence", "## Consequences", "## Reversibility")),
     ):
         if path.exists():
             text = path.read_text(encoding="utf-8")
             for marker in markers:
                 require(marker in text, f"{path.name} missing marker {marker!r}")
+
+    validate_frozen_summary()
     return plan
 
 
@@ -130,6 +179,8 @@ def validate_results(plan: dict[str, Any], results_dir: Path) -> None:
         return
     require(campaign.get("schema") == "rcs-020-campaign-results/1.0", "unexpected RCS-020 result schema")
     require(campaign.get("plan_schema") == plan.get("schema"), "RCS-020 result/plan schema mismatch")
+    refinement = campaign.get("oracle_refinement", {})
+    require(refinement.get("method") == "closed_form_rounded_groove_integral" and refinement.get("refined_cases") == 2, "measured groove/parting oracle refinement missing")
     cases = campaign.get("cases", [])
     require(isinstance(cases, list) and len(cases) == 10, "measured RCS-020 campaign must contain ten cases")
     if not isinstance(cases, list):
@@ -177,7 +228,9 @@ def validate_results(plan: dict[str, Any], results_dir: Path) -> None:
     parting = by_id.get("complete-parting-r02", {})
     require(isinstance(parting, dict) and parting.get("body_count_pass") is True, "parting material model must expose two disconnected bodies")
     if isinstance(parting, dict):
-        require(parting.get("material_profile_within_budget") is True, "parting rounded-corner profile exceeded oracle budget")
+        require(parting.get("material_profile_within_budget") is True, "parting rounded-corner profile exceeded exact oracle budget")
+        require(parting.get("oracle", {}).get("method") == "closed_form_rounded_groove_integral", "parting acceptance must use the exact rounded-groove oracle")
+        require("oracle_numeric_diagnostic" in parting, "parting must preserve rejected numerical-oracle evidence")
         control = parting.get("connectivity_step_control")
         require(isinstance(control, dict) and control.get("passed") is True, "parting multi-body OCCT/STEP control failed")
         if isinstance(control, dict):
