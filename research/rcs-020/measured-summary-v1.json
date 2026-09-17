@@ -1,0 +1,156 @@
+{
+  "schema": "rcs-020-measured-summary/1.0",
+  "date": "2026-09-17",
+  "status": "accepted-pending-merge",
+  "source": {
+    "pull_request": 52,
+    "head_sha": "9a90435a7f9cd07ab36eb9185c227c6e827e5ef9",
+    "workflow_run_id": 35275577906,
+    "workflow_name": "rcs020-realistic-lathe-tool-envelope",
+    "artifact_id": 10519883446,
+    "artifact_name": "rcs020-realistic-lathe-tool-envelope",
+    "artifact_zip_sha256": "e595847e03123b9898dd37d83e49f2a983c4633fdf93ce7b20cec53360db1eec"
+  },
+  "environment": {
+    "runner": "ubuntu-24.04",
+    "os": "Ubuntu 24.04.5 LTS",
+    "runner_image_version": "20260907.300.1",
+    "compiler": "GNU C++ 13.3.0"
+  },
+  "backend": {
+    "id": "occt",
+    "version": "8.0.1",
+    "tag": "V8_0_1",
+    "commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42",
+    "build_profile": "release-shared-cxx17-worker-only-headless-v4"
+  },
+  "campaign": {
+    "case_count": 10,
+    "qualified_tool_derived_one_body_cases": 8,
+    "explicit_refusal_cases": 1,
+    "multi_body_parting_cases": 1,
+    "step_strategy_attempts": 24,
+    "step_strategy_passes": 24,
+    "max_tool_profile_oracle_volume_abs_delta_mm3": 0.016463079120512703,
+    "max_occt_strategy_volume_abs_delta_mm3": 7.275957614183426e-12,
+    "max_occt_strategy_bbox_abs_delta_mm": 2.1316282072803006e-14,
+    "max_step_volume_abs_delta_mm3": 3.292370820418e-10,
+    "max_step_bbox_abs_delta_mm": 2.1316282072803006e-14,
+    "max_measured_faces": 107,
+    "material_boolean_operations": {
+      "repeated_3d": 28,
+      "batched_3d": 8,
+      "axisymmetric_2d": 0
+    }
+  },
+  "representative_findings": {
+    "od_roundnose_95": {
+      "tool_nose_radius_mm": 0.8,
+      "approach_angle_deg": 95.0,
+      "tool_profile_oracle_volume_abs_delta_mm3": 0.00976723135499924,
+      "occt_axisymmetric_volume_mm3": 10961.204046344643,
+      "all_geometry_and_step_checks_pass": true
+    },
+    "facing_roundnose_95": {
+      "tool_nose_radius_mm": 0.8,
+      "derived_front_z_mm": 1.0,
+      "closed_form_oracle_front_z_mm": 1.0,
+      "tool_profile_oracle_volume_abs_delta_mm3": 0.0,
+      "all_geometry_and_step_checks_pass": true
+    },
+    "shoulder_roundnose_95": {
+      "tool_profile_oracle_volume_abs_delta_mm3": 0.016463079120512703,
+      "all_geometry_and_step_checks_pass": true
+    },
+    "taper_roundnose_45": {
+      "approach_angle_deg": 45.0,
+      "tool_profile_oracle_volume_abs_delta_mm3": 0.013744625332037685,
+      "all_geometry_and_step_checks_pass": true
+    },
+    "exact_retrace_roundnose_20": {
+      "journal_events": 20,
+      "tool_profile_oracle_volume_abs_delta_mm3": 0.00976723135499924,
+      "repeated_3d_material_booleans": 20,
+      "batched_3d_material_booleans": 1,
+      "axisymmetric_material_booleans": 0,
+      "same_derived_material_profile_as_first_od_pass": true,
+      "all_geometry_and_step_checks_pass": true
+    },
+    "through_bore_roundnose": {
+      "tool_nose_radius_mm": 0.4,
+      "tool_profile_oracle_volume_abs_delta_mm3": 0.0,
+      "all_geometry_and_step_checks_pass": true
+    },
+    "blind_bore_roundnose": {
+      "tool_nose_radius_mm": 0.4,
+      "tool_profile_oracle_volume_abs_delta_mm3": 0.009038192676598555,
+      "all_geometry_and_step_checks_pass": true
+    },
+    "partial_groove_r02": {
+      "cutting_width_mm": 2.0,
+      "corner_radius_mm": 0.2,
+      "tool_profile_closed_form_oracle_volume_abs_delta_mm3": 0.0015771166217746213,
+      "all_geometry_and_step_checks_pass": true
+    },
+    "complete_parting_r02": {
+      "cutting_width_mm": 2.0,
+      "corner_radius_mm": 0.2,
+      "effective_zero_material_gap_mm": 1.6,
+      "candidate_volume_mm3": 98017.69562984923,
+      "closed_form_oracle_volume_mm3": 98017.69561097043,
+      "tool_profile_closed_form_oracle_volume_abs_delta_mm3": 1.887879625428468e-05,
+      "material_body_count": 2,
+      "occt_connectivity_control_solids": 2,
+      "step_readback_solids": 2,
+      "connectivity_step_control_passed": true,
+      "discarded_numeric_oracle_diagnostic": {
+        "volume_mm3": 98017.38148441406,
+        "coarse_volume_mm3": 98017.06735891338,
+        "coarse_fine_delta_mm3": 0.31412550067761913,
+        "interpretation": "Uniform trapezoidal integration crosses a discontinuous full-stock to zero-radius parting boundary and was rejected as an acceptance oracle; the closed-form rounded-groove integral replaced it without widening the acceptance budget."
+      }
+    },
+    "undercut_holder_collision": {
+      "classification": "refused_unsupported",
+      "collision_detected": true,
+      "samples_to_first_collision": 4,
+      "first_collision": {
+        "nose_z_mm": 18.5,
+        "nose_r_mm": 7.2,
+        "holder_distance_mm": 2.1499999999999995,
+        "probe_z_mm": 20.020279579551076,
+        "probe_r_mm": 8.720279579551077,
+        "stock_outer_radius_mm": 10.0
+      }
+    }
+  },
+  "capability": {
+    "qualified_bounded_material_semantics": [
+      "fixed-axis OD turning with tested circular-nose external tool",
+      "facing with tested circular-nose external tool",
+      "shoulder formation with tested circular-nose external tool",
+      "linear taper motion with tested alternate approach angle",
+      "exact/repeated retrace under preserved journal semantics",
+      "through and blind boring with tested circular-nose internal tool",
+      "bounded rounded grooving material profile",
+      "complete parting connectivity semantics"
+    ],
+    "requires_handoff_or_refusal": [
+      "tested holder-collision undercut/reachability case",
+      "tool/setup geometries outside the qualified envelope/reachability predicates"
+    ],
+    "still_unqualified": [
+      "exact toroidal/circular-insert-nose analytic surface reconstruction in STEP from the polygon research adapter",
+      "general holder/fixture interference beyond the bounded conservative probe",
+      "general undercut/form tooling",
+      "live-tool, eccentric, or other non-axisymmetric lathe operations"
+    ]
+  },
+  "interpretation": [
+    "RCS-010's axisymmetric material-domain provider remains justified as a first-class bounded fixed-axis lathe solver when its entry predicate includes explicit tool geometry, canonical path semantics, and qualified reachability.",
+    "The tested realistic tool-derived material profiles stayed inside the declared independent-oracle budget and reconciled through OCCT 8.0.1 with negligible strategy/STEP deltas.",
+    "A rotationally representable target is not sufficient for provider admission: the tested undercut was correctly refused because the holder-clearance predicate detected collision.",
+    "Complete parting preserved two material bodies and two-solid STEP read-back in the independent connectivity control.",
+    "Successful polygon-profile STEP round trips do not qualify exact circular insert-nose analytic surface preservation; that remains explicitly open rather than silently inferred."
+  ]
+}
