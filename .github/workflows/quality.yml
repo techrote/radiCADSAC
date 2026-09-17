@@ -24,10 +24,12 @@ jobs:
         run: python3 tools/validate_rcs005.py
       - name: Validate RCS-006 harness contracts
         run: python3 tools/validate_rcs006.py
+      - name: Validate RCS-007 tolerance research
+        run: python3 tools/validate_rcs007.py
 
   # Stage 1: establish the exact pinned OCCT install independently of the
   # worker and campaign. A successful dependency build is persisted before any
-  # later RCS-006 stage can fail.
+  # later RCS-006/RCS-007 stage can fail.
   rcs006-occt-bootstrap:
     runs-on: ubuntu-latest
     timeout-minutes: 45
@@ -144,3 +146,61 @@ jobs:
           name: rcs006-occt-8.0.1-smoke
           path: .results/rcs006-smoke
           if-no-files-found: warn
+
+  # RCS-007 reuses the exact RCS-006 baseline and executes separate tolerance
+  # hypotheses over the same geometry substrate. Candidate-model regressions
+  # are evidence; build/protocol/incomplete-result failures remain CI failures.
+  rcs007-tolerance-smoke:
+    needs: rcs006-occt-cache-verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      RCS006_OCCT_PREFIX: ${{ github.workspace }}/.deps/rcs006/occt-8.0.1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install build prerequisites
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build
+      - name: Restore verified pinned OCCT cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .deps/rcs006/occt-8.0.1
+          key: rcs006-occt-8.0.1-${{ runner.os }}-${{ hashFiles('research/rcs-006/harness/bootstrap_occt.sh') }}
+          fail-on-cache-miss: true
+      - name: Configure RCS-006 baseline worker
+        run: |
+          cmake -S research/rcs-006/harness -B .build/rcs006 -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_PREFIX_PATH="$RCS006_OCCT_PREFIX"
+      - name: Build RCS-006 baseline worker
+        run: cmake --build .build/rcs006 --parallel 2
+      - name: Configure RCS-007 finishing worker
+        run: |
+          cmake -S research/rcs-007/harness -B .build/rcs007 -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_PREFIX_PATH="$RCS006_OCCT_PREFIX"
+      - name: Build RCS-007 finishing worker
+        run: cmake --build .build/rcs007 --parallel 2
+      - name: Run RCS-007 smoke campaign
+        shell: bash
+        run: |
+          set -euo pipefail
+          export LD_LIBRARY_PATH="$RCS006_OCCT_PREFIX/lib:$RCS006_OCCT_PREFIX/lib64:${LD_LIBRARY_PATH:-}"
+          python3 research/rcs-007/harness/run_tolerance_campaign.py \
+            --worker .build/rcs006/rcs006_occt_worker \
+            --finish-worker .build/rcs007/rcs007_finish_worker \
+            --profile smoke \
+            --out-dir .results/rcs007-smoke
+      - name: Reconcile RCS-007 evidence semantics
+        run: python3 research/rcs-007/harness/reconcile_results.py --results-dir .results/rcs007-smoke
+      - name: Validate RCS-007 runtime evidence
+        run: python3 tools/validate_rcs007.py --results-dir .results/rcs007-smoke
+      - name: Upload RCS-007 smoke evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rcs007-virtual-tolerance-smoke
+          path: .results/rcs007-smoke
+          if-no-files-found: error
