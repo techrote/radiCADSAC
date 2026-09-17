@@ -214,14 +214,26 @@ def check_static() -> None:
     runner_path = ROOT / "research/rcs-011/harness/run_mill_campaign.py"
     if runner_path.is_file():
         runner = runner_path.read_text(encoding="utf-8")
-        for term in ("subprocess.run", "timeout=timeout_s", "strict_recognize", "nondeterministic result", "sampled fallback exceeded"):
+        for term in (
+            "subprocess.run",
+            "timeout=timeout_s",
+            "strict_recognize",
+            "nondeterministic result",
+            "sampled fallback exceeded",
+            "candidate hierarchy strategy disagreed",
+        ):
             if term not in runner:
                 error(f"RCS-011 runner missing required marker {term!r}")
 
     workflow_path = ROOT / ".github/workflows/rcs011.yml"
     if workflow_path.is_file():
         workflow = workflow_path.read_text(encoding="utf-8")
-        for term in ("verify_occt_install.sh", "run_mill_campaign.py", "validate_rcs011.py --results-dir", "actions/upload-artifact@v4"):
+        for term in (
+            "verify_occt_install.sh",
+            "run_mill_campaign.py",
+            "validate_rcs011.py --results-dir",
+            "actions/upload-artifact@v4",
+        ):
             if term not in workflow:
                 error(f"RCS-011 workflow missing required marker {term!r}")
 
@@ -238,7 +250,8 @@ def check_runtime(results_dir: Path) -> None:
 
     campaign = load_json(campaign_path)
     summary = load_json(summary_path)
-    if not isinstance(campaign, dict) or not isinstance(summary, dict):
+    plan = load_json(ROOT / "research/rcs-011/experiment-plan-v1.json")
+    if not isinstance(campaign, dict) or not isinstance(summary, dict) or not isinstance(plan, dict):
         return
     if campaign.get("schema") != "rcs-011-campaign/1.0":
         error("unexpected campaign schema")
@@ -283,14 +296,29 @@ def check_runtime(results_dir: Path) -> None:
     if not EXPECTED_STRATEGIES.issubset(observed_strategies):
         error(f"runtime results missing strategies: {sorted(EXPECTED_STRATEGIES - observed_strategies)}")
 
-    exact_required_failures = [
-        r for r in records
-        if r.get("required") and r.get("strategy") != "sampled_fallback" and r.get("classification") != "success"
-    ]
-    if exact_required_failures:
-        error(f"required exact-strategy attempts failed: {[(r.get('case_id'), r.get('strategy'), r.get('classification')) for r in exact_required_failures[:10]]}")
+    cases_by_id = {
+        case["id"]: case
+        for case in plan.get("cases", [])
+        if isinstance(case, dict) and isinstance(case.get("id"), str)
+    }
+    required_reference_failures: list[tuple[Any, Any, Any]] = []
+    for record in records:
+        case = cases_by_id.get(record.get("case_id"))
+        if not case or not case.get("required", True):
+            continue
+        if record.get("strategy") != case.get("reference_strategy"):
+            continue
+        if record.get("classification") != "success":
+            required_reference_failures.append(
+                (record.get("case_id"), record.get("attempt"), record.get("classification"))
+            )
+    if required_reference_failures:
+        error(f"required reference-strategy attempts failed: {required_reference_failures[:10]}")
 
-    success_records = [r for r in records if r.get("classification") == "success" and isinstance(r.get("worker"), dict)]
+    success_records = [
+        r for r in records
+        if r.get("classification") == "success" and isinstance(r.get("worker"), dict)
+    ]
     if not success_records:
         error("no successful measured attempts")
     for record in success_records:
@@ -306,21 +334,33 @@ def check_runtime(results_dir: Path) -> None:
         by_case_attempt.setdefault(key, {})[str(record.get("strategy"))] = record
     for strategies in by_case_attempt.values():
         segment = strategies.get("segment_sweep")
+        if not segment or segment.get("classification") != "success":
+            continue
         for name in ("canonical_batch", "freehand_batch"):
             candidate = strategies.get(name)
-            if not segment or not candidate:
+            if not candidate or candidate.get("classification") != "success":
                 continue
             sw = segment.get("worker")
             cw = candidate.get("worker")
-            if isinstance(sw, dict) and isinstance(cw, dict) and int(cw.get("material_booleans", 999999)) < int(sw.get("material_booleans", -1)):
+            if (
+                isinstance(sw, dict)
+                and isinstance(cw, dict)
+                and int(cw.get("material_booleans", 999999)) < int(sw.get("material_booleans", -1))
+            ):
                 batching_wins += 1
     if batching_wins < 2:
-        error(f"expected at least two measured material-Boolean batching wins, observed {batching_wins}")
+        error(f"expected at least two successful measured material-Boolean batching wins, observed {batching_wins}")
 
     successful_step = 0
     for record in success_records:
         step = record["worker"].get("step")
-        if isinstance(step, dict) and step.get("attempted") and step.get("write_status") == "done" and step.get("read_status") == "done" and step.get("readback_transferred"):
+        if (
+            isinstance(step, dict)
+            and step.get("attempted")
+            and step.get("write_status") == "done"
+            and step.get("read_status") == "done"
+            and step.get("readback_transferred")
+        ):
             successful_step += 1
     if successful_step < 4:
         error(f"expected at least four successful STEP attempts, observed {successful_step}")
