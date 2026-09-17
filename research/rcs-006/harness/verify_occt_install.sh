@@ -4,7 +4,7 @@ set -euo pipefail
 EXPECTED_REPOSITORY="https://github.com/Open-Cascade-SAS/OCCT.git"
 EXPECTED_COMMIT="b8f597c677811d1f9f4d8a97f5ae2825c0353a42"
 EXPECTED_VERSION="8.0.1"
-EXPECTED_BUILD_PROFILE="release-shared-cxx17-minimal-headless-v3"
+EXPECTED_BUILD_PROFILE="release-shared-cxx17-worker-only-headless-v4"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/../../.." && pwd)"
 INSTALL_DIR="${RCS006_OCCT_PREFIX:-${REPO_ROOT}/.deps/rcs006/occt-${EXPECTED_VERSION}}"
@@ -15,7 +15,6 @@ CONFIG_FILE="${INSTALL_DIR}/lib/cmake/opencascade/OpenCASCADEConfig.cmake"
 REQUIRED_TOOLKITS=(
   TKernel TKMath TKG2d TKG3d TKGeomBase TKBRep TKGeomAlgo TKTopAlgo TKPrim
   TKBO TKShHealing TKDE TKXSBase TKDESTEP
-  TKCAF TKCDF TKLCAF TKService TKV3d TKVCAF
 )
 
 fail() {
@@ -51,4 +50,5 @@ echo "RCS-006 OCCT install verified"
 echo "  prefix=${INSTALL_DIR}"
 echo "  version=${EXPECTED_VERSION}"
 echo "  commit=${EXPECTED_COMMIT}"
+echo "  build_profile=${EXPECTED_BUILD_PROFILE}"
 echo "  required_toolkits=${#REQUIRED_TOOLKITS[@]}"
