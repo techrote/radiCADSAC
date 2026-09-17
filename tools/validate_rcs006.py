@@ -13,7 +13,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 EXPECTED_COMMIT = "b8f597c677811d1f9f4d8a97f5ae2825c0353a42"
 EXPECTED_VERSION = "8.0.1"
-EXPECTED_BUILD_PROFILE = "release-shared-cxx17-minimal-headless-v3"
+EXPECTED_BUILD_PROFILE = "release-shared-cxx17-worker-only-headless-v4"
 
 REQUIRED_FILES = (
     ROOT / "docs/14-BASELINE-BENCHMARK-HARNESS.md",
