@@ -25,12 +25,79 @@ jobs:
       - name: Validate RCS-006 harness contracts
         run: python3 tools/validate_rcs006.py
 
-  rcs006-occt-smoke:
+  # Stage 1: establish the exact pinned OCCT install independently of the
+  # worker and campaign. A successful dependency build is persisted before any
+  # later RCS-006 stage can fail.
+  rcs006-occt-bootstrap:
     runs-on: ubuntu-latest
-    timeout-minutes: 50
+    timeout-minutes: 45
     env:
       RCS006_OCCT_PREFIX: ${{ github.workspace }}/.deps/rcs006/occt-8.0.1
       RCS006_BUILD_JOBS: 2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Restore pinned OCCT build cache
+        id: rcs006-occt-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .deps/rcs006/occt-8.0.1
+          key: rcs006-occt-8.0.1-${{ runner.os }}-${{ hashFiles('research/rcs-006/harness/bootstrap_occt.sh') }}
+      - name: Install cold-bootstrap prerequisites
+        if: steps.rcs006-occt-cache.outputs.cache-hit != 'true'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build
+      - name: Bootstrap exact OCCT baseline
+        run: bash research/rcs-006/harness/bootstrap_occt.sh
+      - name: Verify pinned OCCT install
+        run: bash research/rcs-006/harness/verify_occt_install.sh
+      - name: Save pinned OCCT build cache
+        if: success() && steps.rcs006-occt-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: .deps/rcs006/occt-8.0.1
+          key: rcs006-occt-8.0.1-${{ runner.os }}-${{ hashFiles('research/rcs-006/harness/bootstrap_occt.sh') }}
+
+  # Stage 1 proof: a fresh job must restore the exact cache and the bootstrap
+  # must take its already-installed fast path. This catches save/scope/key
+  # mistakes before worker configuration is involved.
+  rcs006-occt-cache-verify:
+    needs: rcs006-occt-bootstrap
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      RCS006_OCCT_PREFIX: ${{ github.workspace }}/.deps/rcs006/occt-8.0.1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Restore pinned OCCT cache for reuse proof
+        id: rcs006-occt-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .deps/rcs006/occt-8.0.1
+          key: rcs006-occt-8.0.1-${{ runner.os }}-${{ hashFiles('research/rcs-006/harness/bootstrap_occt.sh') }}
+          fail-on-cache-miss: true
+      - name: Verify restored OCCT install
+        run: bash research/rcs-006/harness/verify_occt_install.sh
+      - name: Prove bootstrap reuses restored install
+        shell: bash
+        run: |
+          set -euo pipefail
+          output="$(bash research/rcs-006/harness/bootstrap_occt.sh 2>&1)"
+          printf '%s\n' "$output"
+          grep -Fq "RCS-006 OCCT already installed" <<<"$output"
+
+  # Stage 2+ is intentionally paused while the dependency checkpoint is being
+  # proven. It will be enabled when worker configure/build is addressed next;
+  # the full smoke workload below is preserved unchanged.
+  rcs006-worker-smoke:
+    needs: rcs006-occt-cache-verify
+    if: ${{ false }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      RCS006_OCCT_PREFIX: ${{ github.workspace }}/.deps/rcs006/occt-8.0.1
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -38,20 +105,12 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y ninja-build
-      - name: Restore pinned OCCT build cache
-        id: rcs006-occt-cache
+      - name: Restore verified pinned OCCT cache
         uses: actions/cache/restore@v4
         with:
           path: .deps/rcs006/occt-8.0.1
           key: rcs006-occt-8.0.1-${{ runner.os }}-${{ hashFiles('research/rcs-006/harness/bootstrap_occt.sh') }}
-      - name: Bootstrap exact OCCT baseline
-        run: bash research/rcs-006/harness/bootstrap_occt.sh
-      - name: Save pinned OCCT build cache
-        if: success() && steps.rcs006-occt-cache.outputs.cache-hit != 'true'
-        uses: actions/cache/save@v4
-        with:
-          path: .deps/rcs006/occt-8.0.1
-          key: rcs006-occt-8.0.1-${{ runner.os }}-${{ hashFiles('research/rcs-006/harness/bootstrap_occt.sh') }}
+          fail-on-cache-miss: true
       - name: Configure RCS-006 worker
         run: |
           cmake -S research/rcs-006/harness -B .build/rcs006 -G Ninja \
