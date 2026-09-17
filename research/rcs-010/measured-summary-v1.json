@@ -1,0 +1,85 @@
+{
+  "schema": "rcs-010-measured-summary/1.0",
+  "status": "accepted",
+  "source": {
+    "workflow_run_id": 35214872300,
+    "job_id": 105180888767,
+    "artifact_id": 10493944652,
+    "artifact_name": "rcs010-lathe-material-domain-smoke",
+    "artifact_digest": "sha256:7a2511d30fbcdf4dc04b9e8a969b2a3387a84d90226d1f2784249899ca81096c",
+    "head_sha": "91fbd1a8bd3e39a2feefd3889fd2843d8a68b0a7"
+  },
+  "backend": {
+    "id": "occt",
+    "version": "8.0.1",
+    "tag": "V8_0_1",
+    "commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42",
+    "build_profile": "release-shared-cxx17-worker-only-headless-v4"
+  },
+  "summary": {
+    "cases": 9,
+    "failed_cases": 0,
+    "step_strategy_attempts": 21,
+    "step_strategy_passes": 21,
+    "journal_events": 135,
+    "provenance_noop_events": 118,
+    "raw_samples": 9,
+    "repeated_boolean_operations": 127,
+    "batched_boolean_operations": 9,
+    "axisymmetric_boolean_operations": 0,
+    "repeated_total_ms": 858.864569,
+    "batched_total_ms": 63.743574,
+    "axisymmetric_total_ms": 10.203245999999998,
+    "max_strategy_axis_volume_abs_delta_mm3": 1.8189894035458565e-12,
+    "max_strategy_axis_bbox_abs_delta_mm": 2.1316282072803006e-14,
+    "max_step_volume_abs_delta_mm3": 3.892637323588133e-10,
+    "max_step_bbox_abs_delta_mm": 2.1316282072803006e-14
+  },
+  "representative_measurements": {
+    "taper": {
+      "axisymmetric_analytic_surfaces": {"cone": 1, "cylinder": 1, "plane": 2},
+      "axisymmetric_faces": 4,
+      "repeated_faces": 4,
+      "strategy_volume_abs_delta_mm3": 0.0,
+      "axisymmetric_step_volume_abs_delta_mm3": 3.892637323588133e-10,
+      "axisymmetric_step_roundtrip_passed": true
+    },
+    "blind_bore": {
+      "axisymmetric_analytic_surfaces": {"cylinder": 3, "plane": 3},
+      "axisymmetric_faces": 6,
+      "repeated_faces": 5,
+      "strategy_volume_abs_delta_mm3": 1.8189894035458565e-12,
+      "axisymmetric_step_volume_abs_delta_mm3": 7.275957614183426e-11,
+      "axisymmetric_step_roundtrip_passed": true
+    },
+    "exact_retrace_100": {
+      "journal_events": 100,
+      "provenance_noop_events": 99,
+      "repeated_boolean_operations": 100,
+      "batched_boolean_operations": 1,
+      "axisymmetric_boolean_operations": 0,
+      "repeated_total_ms": 708.3571029999999,
+      "batched_total_ms": 6.495452,
+      "axisymmetric_total_ms": 1.09845,
+      "axisymmetric_step_volume_abs_delta_mm3": 0.0,
+      "axisymmetric_step_roundtrip_passed": true
+    },
+    "noisy_feed": {
+      "raw_samples": 9,
+      "canonical_geometry_events": 1,
+      "journal_events": 9,
+      "repeated_boolean_operations_after_canonicalization": 1,
+      "strategy_volume_abs_delta_mm3": 0.0,
+      "axisymmetric_step_volume_abs_delta_mm3": 7.275957614183426e-12,
+      "axisymmetric_step_roundtrip_passed": true
+    }
+  },
+  "interpretation": {
+    "correctness": "All hosted OD, facing, shoulder, taper, through-bore, blind-bore, repeated/retrace and bounded analogue cases produced valid one-body B-reps. Repeated 3D, batched 3D and axisymmetric reconstruction agreed in volume/bounds within the declared campaign budgets.",
+    "analytic_geometry": "Axisymmetric reconstruction retained planes/cylinders and a true cone for the taper case and introduced no B-spline surfaces in the measured set.",
+    "step": "All 21 enabled strategy/file combinations passed the automated AP242DIS millimetre manifold-solid write/read-back gates; this is not a substitute for independent downstream qualification in RCS-005.",
+    "operation_scaling": "The exact-retrace case preserved 100 journal events while the 2D material state required zero 3D material Booleans; 99 events were proven material no-ops. Aggregate timing strongly favored the specialized reconstruction on this small hosted set but is not a production performance claim.",
+    "topology": "Topology counts were generally equal across strategies; the blind-bore reconstruction used one additional face despite equivalent valid material. Therefore face-count identity is not a requirement and RCS-008 semantic lineage remains the durable identity model.",
+    "scope_limit": "The comparison starts from an oracle-derived completed axisymmetric removal envelope. Real insert/nose-radius/orientation envelope generation, parting/grooving connectivity and non-axisymmetric/live-tool operations remain outside the accepted provider subset until separately qualified."
+  }
+}
