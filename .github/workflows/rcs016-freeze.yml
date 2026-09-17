@@ -1,0 +1,18 @@
+name: rcs016-freeze
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-genesis-freeze:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Validate RCS-016 frozen genesis handoff
+        run: python3 tools/validate_rcs016.py

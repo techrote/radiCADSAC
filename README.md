@@ -44,3 +44,9 @@ Start with:
 Issue-specific research should additionally consume accepted outputs from its declared dependencies. Machine-readable research assets live under the corresponding `research/rcs-NNN/` directory.
 
 The historical initial plan and critique remain under `docs/` for design archaeology; newer accepted decisions and current foundation documents supersede speculative historical material where they conflict.
+
+## Frozen genesis handoffs
+
+The clean production-repository launch boundary is the [frozen genesis handoff index](handoffs/README.md), with exact package revisions, shared-contract audit, decision/evidence mapping, unresolved-research preservation, release/tag procedure, and separate OpenSimachinist/MSAC launch checklists.
+
+The machine-readable freeze record is [`handoffs/genesis-release-v1.json`](handoffs/genesis-release-v1.json). Production repositories must start with fresh Git histories and may reference this repository for archaeology; they must not import radiCADSAC history as their production history.
