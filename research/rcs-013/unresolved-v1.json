@@ -1,0 +1,116 @@
+{
+  "schema": "rcs-013-unresolved/1.0",
+  "date": "2026-09-17",
+  "items": [
+    {
+      "id": "mill-pathological-freehand-fallback",
+      "priority": 1,
+      "blocks": ["mvp-capability"],
+      "severity": "high",
+      "question": "Which bounded local fallback can robustly preserve arbitrary/self-crossing/retraced freehand mill removal without the valid-but-wrong n-ary batching result or sampled-pose B-rep timeout behavior measured by RCS-011?",
+      "current_safe_policy": "Use qualified explicit/canonical/segment strategies where applicable; constrain/contain pathological regions and refuse authoritative completion when no bounded fallback can preserve semantics.",
+      "evidence": ["research/rcs-011/measured-summary-v1.json", "docs/decisions/DR-0014-bounded-hybrid-representation-fallbacks.md"],
+      "owner": "OpenSimachinist implementation research"
+    },
+    {
+      "id": "lathe-real-tool-envelope",
+      "priority": 2,
+      "blocks": ["mvp-capability"],
+      "severity": "high",
+      "question": "How are real insert nose radius, orientation, grooving/parting and undercut envelopes generated and qualified inside the axisymmetric provider?",
+      "current_safe_policy": "Keep the accepted provider subset limited to qualified rotationally symmetric envelopes and hand off/refuse unsupported operations.",
+      "evidence": ["research/rcs-010/measured-summary-v1.json", "docs/decisions/DR-0013-axisymmetric-lathe-material-domain.md"],
+      "owner": "lathe provider implementation"
+    },
+    {
+      "id": "production-step-interoperability-profile",
+      "priority": 3,
+      "blocks": ["step-integrity"],
+      "severity": "high",
+      "question": "Which concrete exporter build/profile and independent CAD/CAM consumer matrix will be qualified before production may claim STEP success?",
+      "current_safe_policy": "Automated B-rep/write/read-back gates remain necessary but production export is interoperability_unqualified until the selected profile has current independent qualification.",
+      "evidence": ["docs/13-STEP-CONFORMANCE-CONTRACT.md", "docs/decisions/DR-0009-step-conformance-and-body-preservation.md"],
+      "owner": "OpenSimachinist export qualification"
+    },
+    {
+      "id": "hybrid-reconciliation-curved-geometry",
+      "priority": 4,
+      "blocks": ["step-integrity", "later-capability"],
+      "severity": "high",
+      "question": "How should non-orthogonal/curved fallback islands reconstruct exact/analytic boundaries and bound residual fitting error before STEP?",
+      "current_safe_policy": "Prefer provenance-known analytic recovery; permit bounded fallbacks only where reconciliation can satisfy RCS-005, otherwise refuse export for that state.",
+      "evidence": ["research/rcs-012/measured-summary-v1.json", "docs/decisions/DR-0014-bounded-hybrid-representation-fallbacks.md"],
+      "owner": "reconciliation/fallback subsystem"
+    },
+    {
+      "id": "occt-thread-global-state-boundary",
+      "priority": 5,
+      "blocks": ["performance"],
+      "severity": "medium",
+      "question": "Which OCCT Boolean/STEP paths are safely instance-local under conflicting concurrent jobs, and can worker-process isolation be relaxed?",
+      "current_safe_policy": "Use process-isolated geometry workers with explicit per-call STEP parameters and timeouts. RCS-017 may narrow this boundary after measurement.",
+      "evidence": ["docs/12-OCCT-8.0.1-AUDIT.md", "docs/07-RESEARCH-ISSUE-GRAPH.md"],
+      "owner": "RCS-017"
+    },
+    {
+      "id": "provider-handoff-reconciliation-frequency",
+      "priority": 6,
+      "blocks": ["performance"],
+      "severity": "medium",
+      "question": "At realistic interactive workloads, how often do lathe/mill/provider transitions force expensive reconciliation and does this erase specialization benefits?",
+      "current_safe_policy": "Make provider assumptions/capabilities explicit and cache reconciled checkpoints; measure handoff cost in production vertical slices.",
+      "evidence": ["docs/decisions/DR-0012-regularized-material-and-bounded-deferred-topology.md", "docs/decisions/DR-0013-axisymmetric-lathe-material-domain.md"],
+      "owner": "implementation benchmark"
+    },
+    {
+      "id": "semantic-lineage-persistence-encoding",
+      "priority": 7,
+      "blocks": ["mvp-implementation"],
+      "severity": "medium",
+      "question": "Which concrete persistent ID/graph encoding, indexing and migration format should implement the accepted semantic-lineage model?",
+      "current_safe_policy": "Preserve the semantic relation model and backend independence; choose serialization in production without exposing topology IDs.",
+      "evidence": ["docs/decisions/DR-0011-semantic-lineage-not-topology-id.md"],
+      "owner": "programme data model implementation"
+    },
+    {
+      "id": "bounded-deferred-resource-policy",
+      "priority": 8,
+      "blocks": ["performance", "reliability"],
+      "severity": "medium",
+      "question": "What pending-state size/time/query thresholds force reconciliation before deferred topology becomes unbounded or stale?",
+      "current_safe_policy": "Treat connectivity, exact topology queries, provider handoff and export as hard boundaries; add measured resource thresholds during implementation.",
+      "evidence": ["docs/decisions/DR-0012-regularized-material-and-bounded-deferred-topology.md"],
+      "owner": "material coordinator implementation"
+    },
+    {
+      "id": "targeted-exact-arithmetic-seams",
+      "priority": 9,
+      "blocks": ["later-capability"],
+      "severity": "medium",
+      "question": "Which measured intersection/classification seams justify exact predicates/constructions, and which library/license choice is acceptable?",
+      "current_safe_policy": "Do not blanket-rewrite with exact arithmetic; introduce it only at reproduced failure seams behind replaceable adapters.",
+      "evidence": ["docs/12-OCCT-8.0.1-AUDIT.md", "docs/19-ALTERNATIVE-HYBRID-GEOMETRY-REPRESENTATIONS.md"],
+      "owner": "future robustness research"
+    },
+    {
+      "id": "distribution-license-compliance",
+      "priority": 10,
+      "blocks": ["release"],
+      "severity": "medium",
+      "question": "What exact source/notice/relinking packaging is required for distributed OCCT-derived binaries and any optional third-party fallback dependencies?",
+      "current_safe_policy": "Keep dependencies distinguishable, pinned and adapter-isolated; preserve licenses/notices/source provenance and perform a release compliance audit before distribution.",
+      "evidence": ["docs/12-OCCT-8.0.1-AUDIT.md", "docs/19-ALTERNATIVE-HYBRID-GEOMETRY-REPRESENTATIONS.md"],
+      "owner": "release engineering"
+    },
+    {
+      "id": "live-tool-and-non-axisymmetric-lathe",
+      "priority": 11,
+      "blocks": ["later-capability"],
+      "severity": "low",
+      "question": "How should live-tool, eccentric and otherwise non-axisymmetric lathe operations dispatch without polluting the fixed-axis provider?",
+      "current_safe_policy": "Reconcile and hand off to mill/general providers; do not approximate them inside the axisymmetric domain.",
+      "evidence": ["docs/decisions/DR-0013-axisymmetric-lathe-material-domain.md"],
+      "owner": "later process expansion"
+    }
+  ]
+}
