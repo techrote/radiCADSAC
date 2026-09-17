@@ -1,0 +1,54 @@
+{
+  "schema": "rcs-019-measured-summary/1.0",
+  "measured_at": "2026-09-17",
+  "source_head_sha": "47e621769a7ac277f400a46f292794566427e214",
+  "pull_request": 50,
+  "workflow_run_id": 35271407927,
+  "workflow_run_url": "https://github.com/techrote/radiCADSAC/actions/runs/35271407927",
+  "platforms": ["Linux", "Windows"],
+  "runner_images": {
+    "Linux": {
+      "label": "ubuntu-24.04",
+      "os": "Ubuntu 24.04.5 LTS",
+      "image_version": "20260907.300.1"
+    },
+    "Windows": {
+      "label": "windows-2022",
+      "os": "Microsoft Windows Server 2022 10.0.20348 Datacenter",
+      "image_version": "20260913.307.1"
+    }
+  },
+  "runtimes": {
+    "Linux": {
+      "python": "3.12.14",
+      "node": "22.23.2"
+    },
+    "Windows": {
+      "python": "3.12.10",
+      "node": "22.23.2"
+    }
+  },
+  "vector_schema": "rcs-019-conformance-vectors/1.0",
+  "vector_count": 32,
+  "logical_signature_sha256": "120e693501ae003b384831c669a40b3ff980ea9d3e8de65e0d87a63888310405",
+  "all_vectors_match_expected": true,
+  "independent_paths_agree": true,
+  "cross_platform_logical_identity": true,
+  "required_platforms_present": true,
+  "journal_contract_revision_required": false,
+  "evidence_artifacts": {
+    "linux": {
+      "artifact_id": 10518705860,
+      "zip_sha256": "3e1af7ed4ac9db0c035e88f827faae450cba167621acf936e8a5f6f2f7edc7e3"
+    },
+    "windows": {
+      "artifact_id": 10519520669,
+      "zip_sha256": "e544caaddce97171a03b3b75ac28cf3bbff74972b9fe8c7a51aaea4793ba7aaf"
+    },
+    "cross_platform": {
+      "artifact_id": 10518695950,
+      "zip_sha256": "9eca4dcf46bf504e1127e807bb13992fd1b9ce60a5ee63c0dc32199917e46aa6"
+    }
+  },
+  "evidence_note": "Hosted workflow run 35271407927 completed both platform conformance jobs and the cross-platform logical-identity job successfully. The logical signature excludes runtime metadata and was identical on Linux and Windows."
+}
