@@ -6,6 +6,7 @@
 #include <DESTEP_Parameters.hxx>
 #include <GProp_GProps.hxx>
 #include <IFSelect_ReturnStatus.hxx>
+#include <NCollection_List.hxx>
 #include <Standard_Failure.hxx>
 #include <Standard_Version.hxx>
 #include <STEPControl_Reader.hxx>
@@ -16,12 +17,12 @@
 
 #include <algorithm>
 #include <atomic>
+#include <cctype>
 #include <chrono>
 #include <filesystem>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
-#include <mutex>
 #include <sstream>
 #include <stdexcept>
 #include <string>
@@ -92,8 +93,12 @@ Result run_job(int job, int iter, const std::filesystem::path& out_dir, const To
 
     const TopoDS_Shape tool = BRepPrimAPI_MakeBox(gp_Pnt(10.0, -1.0, -1.0), 5.0, 22.0, 12.0).Shape();
     BRepAlgoAPI_Cut cut;
-    cut.SetArguments({shared_stock});
-    cut.SetTools({tool});
+    NCollection_List<TopoDS_Shape> objects;
+    NCollection_List<TopoDS_Shape> tools;
+    objects.Append(shared_stock);
+    tools.Append(tool);
+    cut.SetArguments(objects);
+    cut.SetTools(tools);
     cut.SetNonDestructive(true);
     cut.SetRunParallel(r.instance_parallel);
     cut.Build();
@@ -135,7 +140,7 @@ Result run_job(int job, int iter, const std::filesystem::path& out_dir, const To
     r.readback_volume = volume(rb);
     r.ok = r.valid;
   } catch (const Standard_Failure& e) {
-    r.error = e.GetMessageString() ? e.GetMessageString() : "Standard_Failure";
+    r.error = e.what();
   } catch (const std::exception& e) {
     r.error = e.what();
   }
@@ -160,6 +165,7 @@ void emit(const Result& r) {
     << ",\"readback_volume_mm3\":" << r.readback_volume
     << ",\"elapsed_ms\":" << r.elapsed_ms << "}\n";
 }
+} // namespace
 
 int main(int argc, char** argv) {
   if (std::string(OCC_VERSION_COMPLETE) != kExpectedVersion) {
