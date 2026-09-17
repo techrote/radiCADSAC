@@ -25,7 +25,7 @@ Start with:
 - [Revised research roadmap](docs/04-REVISED-RESEARCH-ROADMAP.md) — current gated-parallel plan;
 - [Research method](docs/06-RESEARCH-METHOD.md) — evidence and reproducibility rules;
 - [Research issue graph](docs/07-RESEARCH-ISSUE-GRAPH.md) — issue dependencies;
-- [Programme terminology](docs/08-TERMINOLOGY.md) — accepted vocabulary;
+- [Programme terminology](docs/08-TERMINOLOGY.md) — accepted research vocabulary;
 - [Foundation audit](docs/09-FOUNDATION-AUDIT.md) — invariant/hypothesis split and Gate-1 reconciliation;
 - [Canonical manufacturing journal contract](docs/10-CANONICAL-JOURNAL-CONTRACT.md) — accepted RCS-002 durable operation/history and normalization contract;
 - [Adversarial manufacturing corpus](docs/11-ADVERSARIAL-MANUFACTURING-CORPUS.md) — accepted RCS-003 fixture semantics and regression lifecycle;
@@ -36,6 +36,7 @@ Start with:
 - [Provenance and semantic identity research](docs/16-PROVENANCE-SEMANTIC-IDENTITY-RESEARCH.md) — accepted RCS-008 lineage/topological-naming architecture;
 - [Regularized/deferred topology research](docs/17-REGULARIZED-DEFERRED-TOPOLOGY.md) — accepted RCS-009 regularized material and bounded deferred topology;
 - [Lathe material-domain research](docs/18-LATHE-MATERIAL-DOMAIN-RESEARCH.md) — accepted RCS-010 axisymmetric fixed-axis lathe provider evidence;
+- [Mill cutter-sweep hierarchy research](docs/19-MILL-CUTTER-SWEEP-RESEARCH.md) — RCS-011 fixed-orientation mill strategy hierarchy and measured campaign;
 - `docs/decisions/` — explicit programme decision records.
 
 Issue-specific research should additionally consume accepted outputs from its declared dependencies. Machine-readable research assets live under the corresponding `research/rcs-NNN/` directory.

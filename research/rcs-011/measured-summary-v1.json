@@ -1,0 +1,138 @@
+{
+  "schema": "rcs-011-measured-summary/1.0",
+  "evidence_source": {
+    "workflow_run_id": 35224846835,
+    "artifact_id": 10498519366,
+    "artifact_digest": "sha256:b26df04d099b129fb4e97f392e202d253e45041299b62b863ec02254f3b54aaf",
+    "head_sha": "595489c4e055d796402dc42a294b19d1fbf2feff"
+  },
+  "profile": "smoke",
+  "attempt_count": 88,
+  "successful_attempt_count": 76,
+  "classifications": {
+    "success": 76,
+    "geometric tolerance breach": 2,
+    "hang/timeout": 10
+  },
+  "structural_failure_count": 0,
+  "required_acceptance_failure_count": 0,
+  "tolerated_negative_result_count": 12,
+  "backend": {
+    "backend": "OCCT",
+    "version": "8.0.1",
+    "tag": "V8_0_1",
+    "commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42",
+    "build_profile": "release-shared-cxx17-worker-only-headless-v4"
+  },
+  "recognition_results": [
+    {
+      "id": "tagged-drill",
+      "expected": "explicit_drill",
+      "observed": "explicit_drill"
+    },
+    {
+      "id": "exact-two-point-slot",
+      "expected": "strict_linear_slot",
+      "observed": "strict_linear_slot"
+    },
+    {
+      "id": "dense-collinear-slot",
+      "expected": "strict_linear_slot",
+      "observed": "strict_linear_slot"
+    },
+    {
+      "id": "jittered-slot",
+      "expected": "unrecognized",
+      "observed": "unrecognized"
+    },
+    {
+      "id": "self-crossing",
+      "expected": "unrecognized",
+      "observed": "unrecognized"
+    }
+  ],
+  "strategy_aggregates": {
+    "explicit_analytic": {
+      "attempts": 10,
+      "runtime_ms_total": 280.057826,
+      "runtime_ms_mean": 28.0057826,
+      "material_booleans_total": 10,
+      "envelope_primitives_total": 22,
+      "max_faces": 18,
+      "max_edges": 76
+    },
+    "segment_sweep": {
+      "attempts": 30,
+      "runtime_ms_total": 16842.592305,
+      "runtime_ms_mean": 561.4197435,
+      "material_booleans_total": 156,
+      "envelope_primitives_total": 420,
+      "max_faces": 1137,
+      "max_edges": 3984
+    },
+    "canonical_batch": {
+      "attempts": 26,
+      "runtime_ms_total": 838.872259,
+      "runtime_ms_mean": 32.264317653846156,
+      "material_booleans_total": 26,
+      "envelope_primitives_total": 78,
+      "max_faces": 33,
+      "max_edges": 132
+    },
+    "freehand_batch": {
+      "attempts": 12,
+      "runtime_ms_total": 53798.912287,
+      "runtime_ms_mean": 4483.242690583334,
+      "material_booleans_total": 12,
+      "envelope_primitives_total": 360,
+      "max_faces": 1137,
+      "max_edges": 3984
+    }
+  },
+  "selected_findings": {
+    "high_segment_line": {
+      "segments": 50,
+      "segment_sweep_material_booleans": 50,
+      "canonical_batch_material_booleans": 1,
+      "segment_sweep_faces": 1137,
+      "canonical_batch_faces": 16,
+      "segment_sweep_volume_mm3": 11602.300888,
+      "canonical_batch_volume_mm3": 11602.300888,
+      "interpretation": "Strict collinear canonical simplification preserved measured material while collapsing fifty sequential cuts to one bounded batch."
+    },
+    "stationary_engaged": {
+      "segment_sweep_material_booleans": 10,
+      "canonical_batch_material_booleans": 1,
+      "segment_sweep_volume_mm3": 11941.095138,
+      "canonical_batch_volume_mm3": 11941.095138,
+      "interpretation": "Duplicate stationary samples may be collapsed for derived geometry work without deleting the journal events."
+    },
+    "retrace_jitter_freehand_batch": {
+      "reference_strategy": "segment_sweep",
+      "reference_volume_mm3": 11490.990138,
+      "candidate_volume_mm3": 12000.0,
+      "candidate_valid_brep": true,
+      "classification": "geometric tolerance breach",
+      "repeat_count": 2,
+      "interpretation": "A one-shot n-ary freehand batch of near-coincident retraced envelopes returned a valid but materially wrong result; this batching mode cannot be a universal exact fallback."
+    },
+    "sampled_pose_fallback": {
+      "spacing_mm": 0.25,
+      "attempt_count": 10,
+      "timeout_count": 10,
+      "timeout_s": 30.0,
+      "cases": [
+        "slot-clean",
+        "overlapping-slots",
+        "self-cross",
+        "retrace-jitter",
+        "ball-path"
+      ],
+      "interpretation": "Dense pose-solid subtraction was not tractable in the tested OCCT B-rep form and is rejected as the authoritative RCS-011 fallback implementation."
+    },
+    "step_roundtrip": {
+      "successful_attempt_count": 32,
+      "interpretation": "Successful STEP-required exact-strategy attempts wrote and re-read AP242DIS millimetre B-rep within the campaign's RCS-005 geometry budgets."
+    }
+  }
+}

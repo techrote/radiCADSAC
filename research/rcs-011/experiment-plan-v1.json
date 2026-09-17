@@ -1,0 +1,272 @@
+{
+  "schema": "rcs-011-mill-experiment-plan/1.0",
+  "issue": "RCS-011",
+  "baseline": {
+    "backend": "OCCT",
+    "version": "8.0.1",
+    "tag": "V8_0_1",
+    "commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42",
+    "build_profile": "release-shared-cxx17-worker-only-headless-v4"
+  },
+  "policies": {
+    "units": "mm",
+    "frame": "right-handed-z-up-workpiece-v1",
+    "material_semantics": "regularized-volumetric-rCS009",
+    "step_contract": "msac-step-conformance/1.0",
+    "volume_compare_abs_mm3": 1e-05,
+    "bbox_compare_abs_mm": 1e-05,
+    "step_volume_abs_mm3": 1e-05,
+    "step_bbox_abs_mm": 1e-05
+  },
+  "strategies": [
+    {
+      "id": "explicit_analytic",
+      "hierarchy_level": 1,
+      "description": "Explicitly tagged or strictly proven analytic operation; direct primitive material-removal envelope."
+    },
+    {
+      "id": "segment_sweep",
+      "hierarchy_level": 2,
+      "description": "Exact fixed-orientation cutter envelope per canonical segment with one material cut per segment."
+    },
+    {
+      "id": "canonical_batch",
+      "hierarchy_level": 3,
+      "description": "Deterministically simplify equivalent collinear/duplicate canonical samples, then subtract all exact segment envelopes in one Boolean."
+    },
+    {
+      "id": "freehand_batch",
+      "hierarchy_level": 4,
+      "description": "Preserve arbitrary canonical polyline segments, including crossing/retrace, and subtract their exact fixed-orientation envelope set in one Boolean."
+    },
+    {
+      "id": "sampled_fallback",
+      "hierarchy_level": 5,
+      "description": "Backend-local sampled cutter poses with an explicit under-approximation bound; negative fidelity evidence is retained rather than silently accepted."
+    }
+  ],
+  "profiles": {
+    "smoke": [
+      "drill-explicit",
+      "slot-clean",
+      "overlapping-slots",
+      "face-skim-zero",
+      "face-skim-positive",
+      "plunge-1um",
+      "self-cross",
+      "retrace-exact",
+      "retrace-jitter",
+      "tangent-zero",
+      "tangent-overlap",
+      "stationary-engaged",
+      "ball-path",
+      "cut-through",
+      "high-segment-line"
+    ],
+    "baseline": [
+      "drill-explicit",
+      "slot-clean",
+      "overlapping-slots",
+      "face-skim-zero",
+      "face-skim-positive",
+      "plunge-1um",
+      "self-cross",
+      "retrace-exact",
+      "retrace-jitter",
+      "tangent-zero",
+      "tangent-overlap",
+      "stationary-engaged",
+      "ball-path",
+      "cut-through",
+      "high-segment-line"
+    ]
+  },
+  "cases": [
+    {
+      "id": "drill-explicit",
+      "source_family": "mill-sub-tolerance-plunge",
+      "tool": "drill",
+      "strategies": ["explicit_analytic", "segment_sweep", "canonical_batch"],
+      "reference_strategy": "explicit_analytic",
+      "expected_body_count": 1,
+      "step": true,
+      "required": true,
+      "semantic_tag": "drill"
+    },
+    {
+      "id": "slot-clean",
+      "source_family": "mill-repeated-identical-slot",
+      "tool": "flat_end_mill",
+      "strategies": ["explicit_analytic", "segment_sweep", "canonical_batch", "sampled_fallback"],
+      "reference_strategy": "explicit_analytic",
+      "expected_body_count": 1,
+      "step": true,
+      "required": true,
+      "semantic_tag": "slot"
+    },
+    {
+      "id": "overlapping-slots",
+      "source_family": "mill-overlapping-slots-pockets",
+      "tool": "flat_end_mill",
+      "strategies": ["segment_sweep", "canonical_batch", "freehand_batch", "sampled_fallback"],
+      "reference_strategy": "segment_sweep",
+      "expected_body_count": 1,
+      "step": false,
+      "required": true
+    },
+    {
+      "id": "face-skim-zero",
+      "source_family": "mill-coplanar-face-skim",
+      "tool": "flat_end_mill",
+      "strategies": ["explicit_analytic", "segment_sweep", "canonical_batch"],
+      "reference_strategy": "explicit_analytic",
+      "expected_body_count": 1,
+      "expected_no_material_change": true,
+      "step": true,
+      "required": true,
+      "semantic_tag": "face_skim"
+    },
+    {
+      "id": "face-skim-positive",
+      "source_family": "mill-coplanar-face-skim",
+      "tool": "flat_end_mill",
+      "strategies": ["explicit_analytic", "segment_sweep", "canonical_batch"],
+      "reference_strategy": "explicit_analytic",
+      "expected_body_count": 1,
+      "step": false,
+      "required": true,
+      "semantic_tag": "face_skim"
+    },
+    {
+      "id": "plunge-1um",
+      "source_family": "mill-sub-tolerance-plunge",
+      "tool": "flat_end_mill",
+      "strategies": ["explicit_analytic", "segment_sweep", "canonical_batch"],
+      "reference_strategy": "explicit_analytic",
+      "expected_body_count": 1,
+      "step": false,
+      "required": false,
+      "semantic_tag": "plunge",
+      "note": "Deliberately below ordinary OCCT modelling resolution; material loss is recorded, not hidden."
+    },
+    {
+      "id": "self-cross",
+      "source_family": "mill-self-crossing-freehand",
+      "tool": "flat_end_mill",
+      "strategies": ["segment_sweep", "freehand_batch", "sampled_fallback"],
+      "reference_strategy": "segment_sweep",
+      "expected_body_count": 1,
+      "step": true,
+      "required": true
+    },
+    {
+      "id": "retrace-exact",
+      "source_family": "mill-retraced-jittery-path",
+      "tool": "flat_end_mill",
+      "strategies": ["segment_sweep", "canonical_batch", "freehand_batch"],
+      "reference_strategy": "segment_sweep",
+      "expected_body_count": 1,
+      "step": false,
+      "required": true
+    },
+    {
+      "id": "retrace-jitter",
+      "source_family": "mill-retraced-jittery-path",
+      "tool": "flat_end_mill",
+      "strategies": ["segment_sweep", "freehand_batch", "sampled_fallback"],
+      "reference_strategy": "segment_sweep",
+      "expected_body_count": 1,
+      "step": false,
+      "required": true
+    },
+    {
+      "id": "tangent-zero",
+      "source_family": "mill-tangent-corner-entry-exit",
+      "tool": "flat_end_mill",
+      "strategies": ["segment_sweep", "canonical_batch"],
+      "reference_strategy": "segment_sweep",
+      "expected_body_count": 1,
+      "expected_no_material_change": true,
+      "step": false,
+      "required": true
+    },
+    {
+      "id": "tangent-overlap",
+      "source_family": "mill-tangent-corner-entry-exit",
+      "tool": "flat_end_mill",
+      "strategies": ["segment_sweep", "canonical_batch"],
+      "reference_strategy": "segment_sweep",
+      "expected_body_count": 1,
+      "step": false,
+      "required": true
+    },
+    {
+      "id": "stationary-engaged",
+      "source_family": "mill-repeated-identical-slot",
+      "tool": "flat_end_mill",
+      "strategies": ["segment_sweep", "canonical_batch"],
+      "reference_strategy": "segment_sweep",
+      "expected_body_count": 1,
+      "step": false,
+      "required": true
+    },
+    {
+      "id": "ball-path",
+      "source_family": "mill-self-crossing-freehand",
+      "tool": "ball_end",
+      "strategies": ["segment_sweep", "canonical_batch", "sampled_fallback"],
+      "reference_strategy": "segment_sweep",
+      "expected_body_count": 1,
+      "step": true,
+      "required": true
+    },
+    {
+      "id": "cut-through",
+      "source_family": "mill-cut-through-separation",
+      "tool": "flat_end_mill",
+      "strategies": ["segment_sweep", "canonical_batch", "freehand_batch"],
+      "reference_strategy": "segment_sweep",
+      "expected_body_count": 2,
+      "step": true,
+      "required": true
+    },
+    {
+      "id": "high-segment-line",
+      "source_family": "mill-very-high-segment-count",
+      "tool": "flat_end_mill",
+      "strategies": ["segment_sweep", "canonical_batch", "freehand_batch"],
+      "reference_strategy": "segment_sweep",
+      "expected_body_count": 1,
+      "step": false,
+      "required": true
+    }
+  ],
+  "recognition_samples": [
+    {
+      "id": "tagged-drill",
+      "semantic_tag": "drill",
+      "points": [[20, 15, 12], [20, 15, 4]],
+      "expected": "explicit_drill"
+    },
+    {
+      "id": "exact-two-point-slot",
+      "points": [[5, 15, 7], [35, 15, 7]],
+      "expected": "strict_linear_slot"
+    },
+    {
+      "id": "dense-collinear-slot",
+      "points": [[5, 15, 7], [15, 15, 7], [25, 15, 7], [35, 15, 7]],
+      "expected": "strict_linear_slot"
+    },
+    {
+      "id": "jittered-slot",
+      "points": [[5, 15, 7], [15, 15.002, 7], [25, 14.999, 7], [35, 15, 7]],
+      "expected": "unrecognized"
+    },
+    {
+      "id": "self-crossing",
+      "points": [[8, 8, 7], [32, 22, 7], [8, 22, 7], [32, 8, 7]],
+      "expected": "unrecognized"
+    }
+  ]
+}
