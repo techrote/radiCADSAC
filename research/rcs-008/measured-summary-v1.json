@@ -1,0 +1,72 @@
+{
+  "summary_schema": "rcs-008-measured-summary/1.0",
+  "date": "2026-09-17",
+  "baseline": {
+    "backend": "occt",
+    "version": "8.0.1",
+    "tag": "V8_0_1",
+    "commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42"
+  },
+  "evidence": {
+    "workflow_run": 35206566700,
+    "branch_head": "7ac2e08db6adef619b5dc693965a6e0552c307dd",
+    "artifact_name": "rcs008-provenance-smoke",
+    "artifact_id": 10490421492,
+    "artifact_digest": "sha256:d0522ab66e0c5a471428a7d9a0876f8409c5cc0828321deb0dd7ceb587974baa"
+  },
+  "measured": {
+    "worker_cases": 5,
+    "worker_failures": 0,
+    "independent_replay": {
+      "engineering_equivalent": true,
+      "same_face_identity_matches": 0,
+      "faces_each": 11,
+      "volume_mm3_each": 18240.0
+    },
+    "split_cut": {
+      "result_solids": 2,
+      "source_faces": 6,
+      "modified_face_relations": 8,
+      "one_to_many_source_faces": 4,
+      "identity_preserved_source_faces": 2
+    },
+    "overlapping_mill_cuts": {
+      "source_faces_before_second_cut": 11,
+      "modified_face_relations": 7,
+      "one_to_many_source_faces": 3,
+      "removed_source_faces": 1,
+      "identity_preserved_source_faces": 6,
+      "volume_before_second_cut_mm3": 19980.0,
+      "volume_after_second_cut_mm3": 19139.999999999996
+    },
+    "same_domain_merge": {
+      "faces_before": 10,
+      "faces_after": 6,
+      "modified_face_relations": 10,
+      "many_to_one_descendants": 4,
+      "identity_preserved_source_faces": 0,
+      "volume_before_mm3": 7999.999999999997,
+      "volume_after_mm3": 7999.999999999998
+    },
+    "lathe_exact_retrace": {
+      "engineering_equivalent": true,
+      "same_face_identity_matches": 0,
+      "faces_each": 3,
+      "modified_face_relations_on_retrace": 3,
+      "volume_mm3_each": 75390.68405228197
+    },
+    "semantic_model": {
+      "explicit_ambiguous_cases": 1,
+      "retrace_proof_candidate": true,
+      "arbitrary_numeric_topology_name_forbidden": true
+    }
+  },
+  "interpretation": [
+    "Engineering-equivalent deterministic replay does not preserve OCCT face identity in the tested independent reconstruction.",
+    "The tested through-cut produces genuine one-to-many topology ancestry while splitting one material solid into two.",
+    "Sequential overlapping mill removal replaces/splits prior topology while preserving the retained material body semantic identity.",
+    "Same-domain reconciliation demonstrates many-to-one topology ancestry without changing material volume.",
+    "The exact lathe retrace is geometry-equivalent yet regenerates all three faces, supporting semantic rather than topology-identity proof for replay optimization.",
+    "Ambiguous semantic ancestry remains explicit rather than being resolved by backend enumeration or address."
+  ]
+}
