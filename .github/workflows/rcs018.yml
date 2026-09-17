@@ -1,0 +1,43 @@
+name: RCS-018 semantic vertical slice
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "research/rcs-018/**"
+      - "tools/validate_rcs018.py"
+      - "docs/26-INTEGRATED-SEMANTIC-CONTRACT-VERTICAL-SLICE.md"
+      - ".github/workflows/rcs018.yml"
+      - "research/rcs-002/fixtures/**"
+  pull_request:
+    paths:
+      - "research/rcs-018/**"
+      - "tools/validate_rcs018.py"
+      - "docs/26-INTEGRATED-SEMANTIC-CONTRACT-VERTICAL-SLICE.md"
+      - ".github/workflows/rcs018.yml"
+      - "research/rcs-002/fixtures/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  semantic-contract:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate RCS-018 contracts and adversarial boundaries
+        run: python3 tools/validate_rcs018.py
+      - name: Generate integration evidence
+        run: python3 research/rcs-018/vertical_slice.py --output research/rcs-018/generated-evidence.json
+      - name: Upload integration evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: rcs018-integration-evidence
+          path: research/rcs-018/generated-evidence.json
+          if-no-files-found: error
