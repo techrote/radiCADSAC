@@ -1,0 +1,97 @@
+{
+  "schema": "rcs-018-experiment-plan/1.0",
+  "issue": "RCS-018",
+  "date": "2026-09-17",
+  "production_boundary": "research-only",
+  "baseline": {
+    "architecture": "semantic-provider-hybrid-v1",
+    "journal": "msac-journal/1.0",
+    "step": "msac-step-conformance/1.0",
+    "worker_boundary": "process-isolated per RCS-017"
+  },
+  "hypotheses": [
+    {
+      "id": "H1",
+      "claim": "Programme-owned journal, revision, body and lineage semantics compose without backend-private identity in durable state.",
+      "falsified_if": "Any correct replay requires OCCT/Godot/provider object identity or a private ID enters durable evidence."
+    },
+    {
+      "id": "H2",
+      "claim": "accepted_pending can be represented as a transaction/reconciliation status without mutating the committed journal until the operation is reconciled and accepted.",
+      "falsified_if": "The mill scenario requires a partially realized backend object to become durable authority or a failed attempt changes committed history."
+    },
+    {
+      "id": "H3",
+      "claim": "Derived state can be discarded and rebuilt from programme authority with the J2 engineering invariant preserved.",
+      "falsified_if": "A clean replay changes programme status/body mapping/lineage signature for the same fixture and profile."
+    },
+    {
+      "id": "H4",
+      "claim": "Process isolation maps provider success/error/crash/timeout into stable statuses without durable-state corruption.",
+      "falsified_if": "A failed worker mutates authority, escapes containment, or worker identity becomes project meaning."
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "lathe",
+      "path": "research/rcs-002/fixtures/lathe-finishing-pass-v1.json",
+      "reason": "Canonical repeated fixed-axis turning trace with immutable tool/setup references."
+    },
+    {
+      "id": "mill_body_split",
+      "path": "research/rcs-002/fixtures/mill-cut-through-v1.json",
+      "reason": "Canonical milling.general trace with cut-through and explicit two-body split."
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "lathe_trace",
+      "required": "journal ingress -> provider adapter -> commit -> replay -> STEP handoff"
+    },
+    {
+      "id": "mill_pending_reconcile",
+      "required": "accepted_pending -> reconciled -> commit -> success"
+    },
+    {
+      "id": "two_body_split",
+      "required": "preserve body:left and body:right with explicit split lineage"
+    },
+    {
+      "id": "undo_replay",
+      "required": "discard derived state and independently rebuild the selected revision invariant"
+    },
+    {
+      "id": "worker_failure_mapping",
+      "required": "error/crash/timeout remain contained and leave durable authority unchanged"
+    },
+    {
+      "id": "step_handoff",
+      "required": "Layer A semantic preconditions; inherited automated B/C evidence; explicit Layer-D unqualified state"
+    }
+  ],
+  "metrics": [
+    "stable programme status trace",
+    "durable authority SHA-256",
+    "material-body ID set",
+    "semantic-lineage relation set",
+    "derived replay engineering-invariant SHA-256",
+    "worker failure classification",
+    "STEP layer status and body-selection mode"
+  ],
+  "protected_semantics": [
+    "canonical-journal-authority",
+    "durable-material-body-identity",
+    "semantic-lineage",
+    "positive-removal-intent",
+    "preserve-all-default-step-body-selection",
+    "process-isolation-default",
+    "genesis-v1-handoff-immutability"
+  ],
+  "negative_controls": [
+    "private TopoDS-style identity injected into durable state must be rejected",
+    "pending state submitted to STEP must return RECONCILIATION_UNRESOLVED",
+    "unknown or duplicate STEP body selection must be refused",
+    "duplicate durable body IDs must be rejected",
+    "provider error/crash/timeout must not alter durable authority"
+  ]
+}
