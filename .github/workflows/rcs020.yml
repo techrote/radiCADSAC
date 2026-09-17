@@ -1,0 +1,94 @@
+name: rcs020-realistic-lathe-tool-envelope
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-rcs020:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Validate RCS-020 research contracts
+        run: python3 tools/validate_rcs020.py
+      - name: Compile RCS-020 Python harness
+        run: |
+          python3 -m py_compile research/rcs-020/tool_envelope.py
+          python3 -m py_compile research/rcs-020/run_campaign.py
+          python3 -m py_compile research/rcs-020/refine_oracles.py
+      - name: Exercise material-only campaign
+        run: |
+          python3 research/rcs-020/run_campaign.py --out-dir .results/rcs020-material-only
+          python3 research/rcs-020/refine_oracles.py --results-dir .results/rcs020-material-only
+
+  realistic-envelope-smoke:
+    needs: validate-rcs020
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      RCS006_OCCT_PREFIX: ${{ github.workspace }}/.deps/rcs006/occt-8.0.1
+      RCS006_BUILD_JOBS: 2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Restore pinned OCCT cache
+        id: occt-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .deps/rcs006/occt-8.0.1
+          key: rcs006-occt-8.0.1-${{ runner.os }}-${{ hashFiles('research/rcs-006/harness/bootstrap_occt.sh') }}
+      - name: Install cold-bootstrap/build prerequisites
+        if: steps.occt-cache.outputs.cache-hit != 'true'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build
+      - name: Ensure Ninja is available on cache hit
+        if: steps.occt-cache.outputs.cache-hit == 'true'
+        run: |
+          if ! command -v ninja >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y ninja-build
+          fi
+      - name: Bootstrap exact OCCT baseline if required
+        run: bash research/rcs-006/harness/bootstrap_occt.sh
+      - name: Verify exact OCCT baseline
+        run: bash research/rcs-006/harness/verify_occt_install.sh
+      - name: Configure RCS-010 lathe comparator
+        run: |
+          cmake -S research/rcs-010/harness -B .build/rcs010 -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_PREFIX_PATH="$RCS006_OCCT_PREFIX"
+      - name: Build RCS-010 lathe comparator
+        run: cmake --build .build/rcs010 --parallel 2
+      - name: Configure RCS-006 multi-body control
+        run: |
+          cmake -S research/rcs-006/harness -B .build/rcs006 -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_PREFIX_PATH="$RCS006_OCCT_PREFIX"
+      - name: Build RCS-006 multi-body control
+        run: cmake --build .build/rcs006 --parallel 2
+      - name: Run RCS-020 realistic tool-envelope campaign
+        shell: bash
+        run: |
+          set -euo pipefail
+          export LD_LIBRARY_PATH="$RCS006_OCCT_PREFIX/lib:$RCS006_OCCT_PREFIX/lib64:${LD_LIBRARY_PATH:-}"
+          python3 research/rcs-020/run_campaign.py \
+            --lathe-worker .build/rcs010/rcs010_lathe_worker \
+            --baseline-worker .build/rcs006/rcs006_occt_worker \
+            --out-dir .results/rcs020
+      - name: Refine groove and parting acceptance oracle
+        run: python3 research/rcs-020/refine_oracles.py --results-dir .results/rcs020
+      - name: Validate measured RCS-020 evidence
+        run: python3 tools/validate_rcs020.py --results-dir .results/rcs020
+      - name: Upload RCS-020 evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rcs020-realistic-lathe-tool-envelope
+          path: .results/rcs020
+          if-no-files-found: error
