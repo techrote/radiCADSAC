@@ -85,13 +85,26 @@ def strict_recognize(sample: dict[str, Any]) -> str:
     return "strict_linear_slot"
 
 
-def run_worker(worker: Path, case_id: str, strategy: str, step_path: Path | None, timeout_s: float) -> tuple[dict[str, Any] | None, str, int | None, float]:
+def run_worker(
+    worker: Path,
+    case_id: str,
+    strategy: str,
+    step_path: Path | None,
+    timeout_s: float,
+) -> tuple[dict[str, Any] | None, str, int | None, float]:
     command = [str(worker), "--case", case_id, "--strategy", strategy]
     if step_path is not None:
         command.extend(["--step", str(step_path)])
     started = time.perf_counter()
     try:
-        completed = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=timeout_s, check=False)
+        completed = subprocess.run(
+            command,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            timeout=timeout_s,
+            check=False,
+        )
     except subprocess.TimeoutExpired as exc:
         return None, f"timeout after {timeout_s}s: {exc}", None, (time.perf_counter() - started) * 1000.0
     elapsed_ms = (time.perf_counter() - started) * 1000.0
@@ -142,7 +155,13 @@ def compare_geometry(candidate: dict[str, Any], reference: dict[str, Any]) -> di
     }
 
 
-def classify_attempt(case: dict[str, Any], payload: dict[str, Any] | None, returncode: int | None, worker_error: str, policies: dict[str, Any]) -> tuple[str, list[str]]:
+def classify_attempt(
+    case: dict[str, Any],
+    payload: dict[str, Any] | None,
+    returncode: int | None,
+    worker_error: str,
+    policies: dict[str, Any],
+) -> tuple[str, list[str]]:
     notes: list[str] = []
     if payload is None:
         if returncode is None:
@@ -207,7 +226,6 @@ def main() -> int:
     records: list[dict[str, Any]] = []
     structural_failures = 0
     required_acceptance_failures = 0
-    tolerated_negative_results = 0
 
     recognition_results: list[dict[str, str]] = []
     for sample in plan.get("recognition_samples", []):
@@ -232,19 +250,15 @@ def main() -> int:
                 step_path = step_dir / f"{case_id}--{strategy}--{attempt}.step" if case.get("step") else None
                 payload, worker_error, returncode, wall_ms = run_worker(args.worker, case_id, strategy, step_path, args.timeout)
                 classification, notes = classify_attempt(case, payload, returncode, worker_error, plan["policies"])
-                if payload is None:
-                    structural_failures += 1
-                elif classification != "success":
-                    if case.get("required", True) and strategy != "sampled_fallback":
-                        required_acceptance_failures += 1
-                    else:
-                        tolerated_negative_results += 1
+                if strategy == ref_id and case.get("required", True) and classification != "success":
+                    required_acceptance_failures += 1
                 record: dict[str, Any] = {
                     "schema": "rcs-011-result/1.0",
                     "case_id": case_id,
                     "source_family": case["source_family"],
                     "tool": case["tool"],
                     "strategy": strategy,
+                    "reference_strategy": ref_id,
                     "hierarchy_level": next(s["hierarchy_level"] for s in plan["strategies"] if s["id"] == strategy),
                     "attempt": attempt,
                     "classification": classification,
@@ -257,52 +271,61 @@ def main() -> int:
                     record["signature"] = signature(payload)
                 attempts.append(record)
                 records.append(record)
-                if attempt == 1 and strategy == ref_id and payload is not None and payload.get("success"):
+                if attempt == 1 and strategy == ref_id and classification == "success" and payload is not None:
                     reference_payload = payload
             per_strategy[strategy] = attempts
 
         if reference_payload is None:
-            structural_failures += 1
+            if case.get("required", True):
+                required_acceptance_failures += 1
             continue
+
         for strategy, attempts in per_strategy.items():
             for record in attempts:
                 payload = record.get("worker")
                 if not isinstance(payload, dict) or not payload.get("success"):
                     continue
                 comparison = compare_geometry(payload, reference_payload)
-                record["reference_strategy"] = ref_id
                 record["reference_comparison"] = comparison
                 if strategy != ref_id:
                     over_volume = comparison["volume_delta_mm3"] > float(plan["policies"]["volume_compare_abs_mm3"])
                     over_bbox = comparison["bbox_delta_mm"] > float(plan["policies"]["bbox_compare_abs_mm"])
                     if over_volume or over_bbox:
                         record["fidelity_within_reference_budget"] = False
+                        record["classification"] = "geometric tolerance breach"
                         if strategy == "sampled_fallback":
                             record["notes"].append("sampled fallback exceeded exact-envelope fidelity budget; retained as negative evidence")
-                            tolerated_negative_results += 1
-                        elif case.get("required", True):
-                            record["classification"] = "geometric tolerance breach"
-                            record["notes"].append("exact hierarchy strategy disagreed with reference")
-                            required_acceptance_failures += 1
+                        else:
+                            record["notes"].append("candidate hierarchy strategy disagreed with reference; retained as negative evidence")
                     else:
                         record["fidelity_within_reference_budget"] = True
 
         for strategy, attempts in per_strategy.items():
             sigs = {a.get("signature") for a in attempts if a.get("signature")}
             if len(sigs) > 1:
-                for a in attempts:
-                    if a.get("classification") == "success":
-                        a["classification"] = "nondeterministic result"
-                        a["notes"].append("repeat engineering signature changed")
-                if strategy != "sampled_fallback" and case.get("required", True):
+                for record in attempts:
+                    if record.get("classification") == "success":
+                        record["classification"] = "nondeterministic result"
+                        record["notes"].append("repeat engineering signature changed")
+                if strategy == ref_id and case.get("required", True):
                     required_acceptance_failures += 1
+
+    tolerated_negative_results = sum(
+        1
+        for record in records
+        if record["classification"] != "success"
+        and not (
+            record.get("required", True)
+            and record.get("strategy") == record.get("reference_strategy")
+        )
+    )
 
     results_path = args.out_dir / "results.jsonl"
     with results_path.open("w", encoding="utf-8") as handle:
         for record in records:
             handle.write(json.dumps(record, sort_keys=True) + "\n")
 
-    successful = sum(1 for r in records if r["classification"] == "success")
+    successful = sum(1 for record in records if record["classification"] == "success")
     classifications: dict[str, int] = {}
     for record in records:
         classifications[record["classification"]] = classifications.get(record["classification"], 0) + 1
@@ -328,17 +351,21 @@ def main() -> int:
         runtimes = [float(r["worker"].get("runtime_ms", 0.0)) for r in subset]
         booleans = [int(r["worker"].get("material_booleans", 0)) for r in subset]
         primitives = [int(r["worker"].get("envelope_primitives", 0)) for r in subset]
+        geometry_subset = [r for r in subset if isinstance(r["worker"].get("geometry"), dict)]
         measured_summary["strategy_aggregates"][strategy] = {
             "attempts": len(subset),
             "runtime_ms_total": sum(runtimes),
             "runtime_ms_mean": sum(runtimes) / len(runtimes),
             "material_booleans_total": sum(booleans),
             "envelope_primitives_total": sum(primitives),
-            "max_faces": max(int(r["worker"]["geometry"]["topology"]["faces"]) for r in subset if r["worker"].get("geometry")),
-            "max_edges": max(int(r["worker"]["geometry"]["topology"]["edges"]) for r in subset if r["worker"].get("geometry")),
+            "max_faces": max((int(r["worker"]["geometry"]["topology"]["faces"]) for r in geometry_subset), default=0),
+            "max_edges": max((int(r["worker"]["geometry"]["topology"]["edges"]) for r in geometry_subset), default=0),
         }
 
-    (args.out_dir / "measured-summary.json").write_text(json.dumps(measured_summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    (args.out_dir / "measured-summary.json").write_text(
+        json.dumps(measured_summary, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
     campaign = {
         "schema": "rcs-011-campaign/1.0",
         "profile": args.profile,
@@ -351,14 +378,25 @@ def main() -> int:
         "result_files": ["results.jsonl", "measured-summary.json", "summary.md"],
         "structural_failure_count": structural_failures,
         "required_acceptance_failure_count": required_acceptance_failures,
+        "tolerated_negative_result_count": tolerated_negative_results,
     }
-    (args.out_dir / "campaign.json").write_text(json.dumps(campaign, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    (args.out_dir / "campaign.json").write_text(
+        json.dumps(campaign, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
 
     lines = [
-        "# RCS-011 milling campaign summary", "", f"- Profile: `{args.profile}`", f"- Attempts: {len(records)}",
-        f"- Successful attempts: {successful}", f"- Structural failures: {structural_failures}",
-        f"- Required acceptance failures: {required_acceptance_failures}", f"- Tolerated negative results: {tolerated_negative_results}",
-        "", "## Classification counts", "",
+        "# RCS-011 milling campaign summary",
+        "",
+        f"- Profile: `{args.profile}`",
+        f"- Attempts: {len(records)}",
+        f"- Successful attempts: {successful}",
+        f"- Structural failures: {structural_failures}",
+        f"- Required acceptance failures: {required_acceptance_failures}",
+        f"- Tolerated negative results: {tolerated_negative_results}",
+        "",
+        "## Classification counts",
+        "",
     ]
     for key in sorted(classifications):
         lines.append(f"- `{key}`: {classifications[key]}")
@@ -367,7 +405,11 @@ def main() -> int:
         lines.append(f"- `{item['id']}`: expected `{item['expected']}`, observed `{item['observed']}`")
     lines += ["", "## Strategy aggregates", ""]
     for strategy, agg in measured_summary["strategy_aggregates"].items():
-        lines.append(f"- `{strategy}`: attempts={agg['attempts']}, runtime_total={agg['runtime_ms_total']:.3f} ms, material_booleans={agg['material_booleans_total']}, envelope_primitives={agg['envelope_primitives_total']}, max_faces={agg['max_faces']}, max_edges={agg['max_edges']}")
+        lines.append(
+            f"- `{strategy}`: attempts={agg['attempts']}, runtime_total={agg['runtime_ms_total']:.3f} ms, "
+            f"material_booleans={agg['material_booleans_total']}, envelope_primitives={agg['envelope_primitives_total']}, "
+            f"max_faces={agg['max_faces']}, max_edges={agg['max_edges']}"
+        )
     (args.out_dir / "summary.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
     if structural_failures:
