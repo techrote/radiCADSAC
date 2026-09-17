@@ -36,7 +36,9 @@ Start with:
 - [Provenance and semantic identity research](docs/16-PROVENANCE-SEMANTIC-IDENTITY-RESEARCH.md) — accepted RCS-008 lineage/topological-naming architecture;
 - [Regularized/deferred topology research](docs/17-REGULARIZED-DEFERRED-TOPOLOGY.md) — accepted RCS-009 regularized material and bounded deferred topology;
 - [Lathe material-domain research](docs/18-LATHE-MATERIAL-DOMAIN-RESEARCH.md) — accepted RCS-010 axisymmetric fixed-axis lathe provider evidence;
-- [Mill cutter-sweep hierarchy research](docs/19-MILL-CUTTER-SWEEP-RESEARCH.md) — RCS-011 fixed-orientation mill strategy hierarchy and measured campaign;
+- [Mill cutter-sweep hierarchy research](docs/19-MILL-CUTTER-SWEEP-RESEARCH.md) — accepted RCS-011 fixed-orientation mill strategy hierarchy and measured campaign;
+- [Alternative/hybrid geometry representation research](docs/19-ALTERNATIVE-HYBRID-GEOMETRY-REPRESENTATIONS.md) — accepted RCS-012 bounded hybrid fallback trade study;
+- [OpenSimachinist architecture synthesis](docs/20-OPENSIMACHINIST-ARCHITECTURE-SYNTHESIS.md) — accepted RCS-013 Gate-2 semantic-provider hybrid architecture;
 - `docs/decisions/` — explicit programme decision records.
 
 Issue-specific research should additionally consume accepted outputs from its declared dependencies. Machine-readable research assets live under the corresponding `research/rcs-NNN/` directory.
