@@ -11,7 +11,7 @@ RCS-011 determines how the initial fixed-orientation milling provider should dis
 
 The programme invariant is the final material set, not rendering individual flutes. A cutter envelope represents the volume occupied by the cutting portion of the tool over a canonical trajectory. The durable source of intent remains the canonical manufacturing journal; sweep tessellation, OCCT topology and batching decisions are backend-private derived state.
 
-This work consumes the accepted RCS-007 separate tolerance channels, RCS-008 semantic lineage, RCS-009 regularized material semantics/bounded deferred topology, and RCS-010 process-provider dispatch precedent. The STEP output gate remains `msac-step-conformance/1.0`.
+This work consumes the accepted RCS-007 separate tolerance channels, RCS-008 semantic lineage, RCS-009 regularized volumetric material semantics/bounded deferred topology, and RCS-010 process-provider dispatch precedent. The STEP output gate remains `msac-step-conformance/1.0`.
 
 ## Questions
 
