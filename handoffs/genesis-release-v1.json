@@ -1,0 +1,223 @@
+{
+  "schema": "radicadsac-genesis-freeze/1.0",
+  "status": "frozen-on-main",
+  "date": "2026-09-17",
+  "repository": "techrote/radiCADSAC",
+  "joint_freeze_baseline": {
+    "commit": "7f16e4fe310ac3b5e5a4d08547273efaceff0c7f",
+    "meaning": "first accepted main state containing both complete founding handoff packages before the RCS-016 freeze artifacts"
+  },
+  "packages": {
+    "opensimachinist": {
+      "schema": "opensimachinist-handoff/1.0",
+      "assumed_production_repository": "techrote/OpenSimachinist",
+      "origin_merge_commit": "2e77ea087b01ac1415c4c76ff1dc0661aab286fb",
+      "origin_pr": 33,
+      "origin_issue": 14,
+      "manifest_declared_input_main": "23519b5989b14f1b0947dca77588729585150115",
+      "package_tree_sha": "d4793b03f31bd9fd58efcea94afba2f69fa3f7f3",
+      "manifest_blob_sha": "2d53fc62c8ec5866eff686483ac721983df03b64",
+      "manifest": "handoffs/opensimachinist/handoff-v1.json",
+      "bootstrap": "handoffs/opensimachinist/04-CLEAN-REPO-BOOTSTRAP-CHECKLIST.md",
+      "launch_wrapper": "handoffs/launch/opensimachinist-v1.md",
+      "unresolved_register": "handoffs/opensimachinist/03-UNRESOLVED-RESEARCH-REGISTER.md"
+    },
+    "msac": {
+      "schema": "msac-handoff/1.0",
+      "assumed_production_repository": "techrote/MSAC",
+      "origin_merge_commit": "7f16e4fe310ac3b5e5a4d08547273efaceff0c7f",
+      "origin_pr": 34,
+      "origin_issue": 15,
+      "manifest_declared_input_main": "2e77ea087b01ac1415c4c76ff1dc0661aab286fb",
+      "package_tree_sha": "e04d53756dd83089d367d756253482bebe791f32",
+      "manifest_blob_sha": "2c195f9944f2710426ef7a20eb40d5c3f96bab6a",
+      "manifest": "handoffs/msac/handoff-v1.json",
+      "bootstrap": "handoffs/msac/04-CLEAN-REPO-BOOTSTRAP-CHECKLIST.md",
+      "launch_wrapper": "handoffs/launch/msac-v1.md",
+      "unresolved_register": "handoffs/msac/03-INTEGRATION-ESCAPE-ROUTES.md"
+    }
+  },
+  "shared_contracts": {
+    "external_boundary": "docs/01-MSAC-GEOMETRY-CONTRACT.md",
+    "journal": "docs/10-CANONICAL-JOURNAL-CONTRACT.md",
+    "journal_schema": "msac-journal/1.0",
+    "step": "docs/13-STEP-CONFORMANCE-CONTRACT.md",
+    "step_profile": "msac-step-conformance/1.0",
+    "backend_architecture": "semantic-provider-hybrid-v1",
+    "request_families": [
+      "capabilities",
+      "apply_canonical_operations",
+      "commit_revision",
+      "replay_revision",
+      "query_material_state",
+      "request_preview",
+      "request_reconciliation",
+      "inspect_reconciled_geometry",
+      "export_step"
+    ],
+    "status_classes": [
+      "accepted_pending",
+      "reconciled",
+      "success",
+      "refused_unsupported",
+      "refused_unresolved_ambiguity",
+      "invalid_topology",
+      "wrong_geometry",
+      "tolerance_breach",
+      "kernel_error",
+      "crash",
+      "timeout",
+      "nondeterministic_result",
+      "step_writer_failure",
+      "step_roundtrip_failure",
+      "interoperability_unqualified"
+    ],
+    "preview_authoritative": false,
+    "step_primary_engineering_output": true,
+    "default_step_body_selection": "all committed material bodies",
+    "backend_transport_frozen": false,
+    "backend_private_types_allowed_in_stable_api": false,
+    "process_isolation_founding_default": true
+  },
+  "evidence_index": [
+    {
+      "id": "step-primary",
+      "sources": [
+        "docs/decisions/DR-0001-step-is-primary-output.md",
+        "docs/decisions/DR-0009-step-conformance-and-body-preservation.md",
+        "docs/13-STEP-CONFORMANCE-CONTRACT.md"
+      ],
+      "consumers": ["opensimachinist", "msac"]
+    },
+    {
+      "id": "journal-durable-intent",
+      "sources": [
+        "docs/decisions/DR-0002-journal-is-durable-intent.md",
+        "docs/10-CANONICAL-JOURNAL-CONTRACT.md"
+      ],
+      "consumers": ["opensimachinist", "msac"]
+    },
+    {
+      "id": "stable-boundary",
+      "sources": [
+        "docs/decisions/DR-0004-stable-backend-boundary.md",
+        "docs/01-MSAC-GEOMETRY-CONTRACT.md"
+      ],
+      "consumers": ["opensimachinist", "msac"]
+    },
+    {
+      "id": "canonical-numerics-frames",
+      "sources": [
+        "docs/decisions/DR-0006-canonical-journal-numerics-and-frames.md",
+        "docs/10-CANONICAL-JOURNAL-CONTRACT.md"
+      ],
+      "consumers": ["opensimachinist", "msac"]
+    },
+    {
+      "id": "immutable-revisions-bodies",
+      "sources": [
+        "docs/decisions/DR-0008-immutable-revisions-and-body-transitions.md"
+      ],
+      "consumers": ["opensimachinist", "msac"]
+    },
+    {
+      "id": "tolerance-channels",
+      "sources": [
+        "docs/decisions/DR-0010-separate-tolerance-channels-and-local-uncertainty.md",
+        "research/rcs-007/measured-summary-v1.json"
+      ],
+      "consumers": ["opensimachinist", "msac"]
+    },
+    {
+      "id": "semantic-lineage",
+      "sources": [
+        "docs/decisions/DR-0011-semantic-lineage-not-topology-id.md",
+        "research/rcs-008/measured-summary-v1.json"
+      ],
+      "consumers": ["opensimachinist", "msac"]
+    },
+    {
+      "id": "deferred-topology",
+      "sources": [
+        "docs/decisions/DR-0012-regularized-material-and-bounded-deferred-topology.md",
+        "research/rcs-009/measured-summary-v1.json"
+      ],
+      "consumers": ["opensimachinist", "msac"]
+    },
+    {
+      "id": "lathe-provider",
+      "sources": [
+        "docs/decisions/DR-0013-axisymmetric-lathe-material-domain.md",
+        "research/rcs-010/measured-summary-v1.json"
+      ],
+      "consumers": ["opensimachinist", "msac"]
+    },
+    {
+      "id": "mill-hierarchy",
+      "sources": [
+        "docs/19-MILL-CUTTER-SWEEP-RESEARCH.md",
+        "research/rcs-011/measured-summary-v1.json"
+      ],
+      "consumers": ["opensimachinist", "msac"]
+    },
+    {
+      "id": "hybrid-fallbacks",
+      "sources": [
+        "docs/decisions/DR-0014-bounded-hybrid-representation-fallbacks.md",
+        "research/rcs-012/measured-summary-v1.json"
+      ],
+      "consumers": ["opensimachinist", "msac"]
+    },
+    {
+      "id": "selected-architecture",
+      "sources": [
+        "docs/decisions/DR-0015-gate-2-semantic-provider-hybrid-architecture.md",
+        "docs/20-OPENSIMACHINIST-ARCHITECTURE-SYNTHESIS.md",
+        "research/rcs-013/architecture-v1.json"
+      ],
+      "consumers": ["opensimachinist", "msac"]
+    }
+  ],
+  "issue_classification": {
+    "accepted_historical_research": [
+      "RCS-001",
+      "RCS-002",
+      "RCS-003",
+      "RCS-004",
+      "RCS-005",
+      "RCS-006",
+      "RCS-007",
+      "RCS-008",
+      "RCS-009",
+      "RCS-010",
+      "RCS-011",
+      "RCS-012"
+    ],
+    "accepted_architecture": ["RCS-013"],
+    "accepted_handoffs": ["RCS-014", "RCS-015"],
+    "freeze_issue": "RCS-016",
+    "active_nonblocking_research": ["RCS-017"],
+    "active_nonblocking_github_issues": [20]
+  },
+  "document_classification": {
+    "superseded_historical": ["docs/02-INITIAL-RESEARCH-PLAN.md"],
+    "historical_review": ["docs/03-PLAN-REVIEW.md"],
+    "accepted_decision_range": "DR-0001..DR-0015",
+    "post_freeze_role": "roadmap and issue graph remain genesis history; production implementation decisions live in production repositories"
+  },
+  "unresolved_preservation": {
+    "opensimachinist_source": "handoffs/opensimachinist/03-UNRESOLVED-RESEARCH-REGISTER.md",
+    "msac_source": "handoffs/msac/03-INTEGRATION-ESCAPE-ROUTES.md",
+    "rcs017": "active and non-blocking; process isolation remains the conservative founding default until measured evidence supports a production decision"
+  },
+  "tag_plan": {
+    "joint": "radiCADSAC-genesis-v1",
+    "opensimachinist": "opensimachinist-handoff-v1",
+    "msac": "msac-handoff-v1",
+    "target": "RCS-016 merge commit on main",
+    "created_by_this_pr": false,
+    "reason": "the final RCS-016 merge commit does not exist while the PR contents are being validated; exact post-merge commands are documented in handoffs/README.md"
+  },
+  "production_repository_creation_authorized": false,
+  "self_contained": true
+}
