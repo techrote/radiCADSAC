@@ -30,7 +30,12 @@ Start with:
 - [Canonical manufacturing journal contract](docs/10-CANONICAL-JOURNAL-CONTRACT.md) — accepted RCS-002 durable operation/history and normalization contract;
 - [Adversarial manufacturing corpus](docs/11-ADVERSARIAL-MANUFACTURING-CORPUS.md) — accepted RCS-003 fixture semantics and regression lifecycle;
 - [OCCT 8.0.1 audit](docs/12-OCCT-8.0.1-AUDIT.md) — accepted RCS-004 subsystem/forkability and licensing evidence;
-- [STEP conformance contract](docs/13-STEP-CONFORMANCE-CONTRACT.md) — RCS-005 measurable export success/refusal and interoperability contract;
+- [STEP conformance contract](docs/13-STEP-CONFORMANCE-CONTRACT.md) — accepted RCS-005 measurable export success/refusal and interoperability contract;
+- [Baseline benchmark harness](docs/14-BASELINE-BENCHMARK-HARNESS.md) — accepted RCS-006 measurement substrate;
+- [Tolerance, uncertainty and equivalence research](docs/15-TOLERANCE-UNCERTAINTY-EQUIVALENCE.md) — accepted RCS-007 separated policy channels;
+- [Provenance and semantic identity research](docs/16-PROVENANCE-SEMANTIC-IDENTITY.md) — accepted RCS-008 lineage/topological-naming architecture;
+- [Regularized/deferred topology research](docs/17-REGULARIZED-DEFERRED-TOPOLOGY.md) — accepted RCS-009 regularized material and bounded deferred topology;
+- [Lathe material-domain research](docs/18-LATHE-MATERIAL-DOMAIN-RESEARCH.md) — accepted RCS-010 axisymmetric fixed-axis lathe provider evidence;
 - `docs/decisions/` — explicit programme decision records.
 
 Issue-specific research should additionally consume accepted outputs from its declared dependencies. Machine-readable research assets live under the corresponding `research/rcs-NNN/` directory.
