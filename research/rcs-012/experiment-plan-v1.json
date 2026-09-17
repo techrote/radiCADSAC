@@ -1,0 +1,125 @@
+{
+  "schema": "rcs-012-plan/1.0",
+  "campaign": "alternative-hybrid-geometry",
+  "date": "2026-09-17",
+  "shared_fixture_policy": {
+    "units": "mm",
+    "frame": "right-handed-z-up-workpiece-v1",
+    "source": "research/rcs-003/corpus-v1.json",
+    "note": "Bounded axis-aligned material proxies preserve the cited physical oracles; they are not substitutes for the complete corpus."
+  },
+  "candidates": [
+    {
+      "id": "exact-orthogonal-cell-deferred-csg",
+      "kind": "experiment",
+      "implementation": "stdlib Python Decimal; deferred subtractive boxes evaluated by exact orthogonal cell decomposition",
+      "analytic_semantics": "retains source planes and operation/provenance records exactly inside the bounded axis-aligned subset",
+      "step_reconciliation": "constructive planar B-rep can be regenerated exactly for the bounded subset; general curved surfaces remain outside this prototype"
+    },
+    {
+      "id": "sparse-voxel-center-0p5mm",
+      "kind": "experiment",
+      "implementation": "stdlib Python deterministic sparse occupancy grid, 0.5 mm cubic cells, center classification",
+      "analytic_semantics": "lost in occupancy state unless retained out-of-band",
+      "step_reconciliation": "requires surface extraction and analytic recognition/fitting; maximum center-quantization surface displacement is bounded explicitly"
+    }
+  ],
+  "source_review": [
+    {
+      "id": "cgal-epeck",
+      "version": "CGAL 6.2.1",
+      "release": "v6.2.1",
+      "family": "exact predicates/exact constructions",
+      "license": "Kernel_23: LGPL v3 or later",
+      "role": "candidate exact predicate/construction substrate, not automatically a full manufacturing topology model"
+    },
+    {
+      "id": "cgal-nef3",
+      "version": "CGAL 6.2.1",
+      "release": "v6.2.1",
+      "family": "set-closed Nef polyhedra",
+      "license": "Nef_3: GPL v3 or later",
+      "role": "strong regularized/set-closed research candidate; copyleft and polyhedral-to-analytic reconciliation are material architecture costs"
+    },
+    {
+      "id": "manifold",
+      "version": "Manifold 3.5.3",
+      "release": "v3.5.3",
+      "family": "guaranteed-manifold mesh Boolean",
+      "license": "Apache-2.0",
+      "role": "promising local mesh fallback/intermediate; still loses native analytic B-rep and needs reconstruction for STEP"
+    },
+    {
+      "id": "openvdb",
+      "version": "OpenVDB 13.1.0",
+      "release": "v13.1.0",
+      "family": "sparse voxel / level set",
+      "license": "Apache-2.0",
+      "role": "promising local volumetric fallback for pathological regions and preview/repair; grid resolution and STEP reconstruction remain explicit costs"
+    }
+  ],
+  "cases": [
+    {
+      "id": "face-contact-zero",
+      "source_family": "mill-lower-dimensional-touch",
+      "stock": {"x0":"0","x1":"20","y0":"0","y1":"20","z0":"0","z1":"10"},
+      "removals": [{"x0":"5","x1":"15","y0":"5","y1":"15","z0":"10","z1":"12","repeat":1}],
+      "expected": {"material_volume_mm3":"4000","body_count":1,"classification":"no_material_change"}
+    },
+    {
+      "id": "tiny-plunge-1um",
+      "source_family": "mill-sub-tolerance-plunge",
+      "stock": {"x0":"0","x1":"20","y0":"0","y1":"20","z0":"0","z1":"10"},
+      "removals": [{"x0":"5","x1":"15","y0":"5","y1":"15","z0":"9.999","z1":"10","repeat":1}],
+      "expected": {"material_volume_mm3":"3999.9","body_count":1,"classification":"regularized_material_change"}
+    },
+    {
+      "id": "repeated-slot-200",
+      "source_family": "mill-repeated-identical-slot",
+      "stock": {"x0":"0","x1":"40","y0":"0","y1":"20","z0":"0","z1":"10"},
+      "removals": [{"x0":"5","x1":"35","y0":"8","y1":"12","z0":"5","z1":"10","repeat":200}],
+      "expected": {"material_volume_mm3":"7400","body_count":1,"classification":"no_material_change"}
+    },
+    {
+      "id": "overlapping-slots",
+      "source_family": "mill-overlapping-slots-pockets",
+      "stock": {"x0":"0","x1":"40","y0":"0","y1":"20","z0":"0","z1":"10"},
+      "removals": [
+        {"x0":"5","x1":"25","y0":"6","y1":"10","z0":"4","z1":"10","repeat":1},
+        {"x0":"15","x1":"35","y0":"6","y1":"10","z0":"4","z1":"10","repeat":1}
+      ],
+      "expected": {"material_volume_mm3":"7280","body_count":1,"classification":"regularized_material_change"}
+    },
+    {
+      "id": "cut-through-two-bodies",
+      "source_family": "mill-cut-through-separation",
+      "stock": {"x0":"0","x1":"30","y0":"0","y1":"20","z0":"0","z1":"10"},
+      "removals": [{"x0":"14","x1":"16","y0":"0","y1":"20","z0":"0","z1":"10","repeat":1}],
+      "expected": {"material_volume_mm3":"5600","body_count":2,"classification":"body_separation_or_merge"}
+    },
+    {
+      "id": "tiny-cusp-1um",
+      "source_family": "mill-tiny-cusp",
+      "stock": {"x0":"0","x1":"30","y0":"0","y1":"20","z0":"0","z1":"10"},
+      "removals": [
+        {"x0":"0","x1":"14.9995","y0":"0","y1":"20","z0":"0","z1":"10","repeat":1},
+        {"x0":"15.0005","x1":"30","y0":"0","y1":"20","z0":"0","z1":"10","repeat":1}
+      ],
+      "expected": {"material_volume_mm3":"0.2","body_count":1,"classification":"regularized_material_change"}
+    },
+    {
+      "id": "high-segment-equivalent-100000",
+      "source_family": "mill-very-high-segment-count",
+      "stock": {"x0":"0","x1":"40","y0":"0","y1":"20","z0":"0","z1":"10"},
+      "removals": [{"x0":"5","x1":"35","y0":"8","y1":"12","z0":"5","z1":"10","repeat":100000}],
+      "expected": {"material_volume_mm3":"7400","body_count":1,"classification":"regularized_material_change"}
+    },
+    {
+      "id": "corner-tangent-zero",
+      "source_family": "mill-tangent-corner-entry-exit",
+      "stock": {"x0":"0","x1":"20","y0":"0","y1":"20","z0":"0","z1":"10"},
+      "removals": [{"x0":"20","x1":"22","y0":"20","y1":"22","z0":"0","z1":"10","repeat":1}],
+      "expected": {"material_volume_mm3":"4000","body_count":1,"classification":"no_material_change"}
+    }
+  ]
+}
