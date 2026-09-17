@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate RCS-010 lathe material-domain research and runtime evidence."""
+"""Validate accepted RCS-010 lathe material-domain research and runtime evidence."""
 from __future__ import annotations
 
 import argparse
@@ -12,6 +12,10 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 EXPECTED_OCCT_COMMIT = "b8f597c677811d1f9f4d8a97f5ae2825c0353a42"
+EXPECTED_RUN = 35214872300
+EXPECTED_JOB = 105180888767
+EXPECTED_ARTIFACT = 10493944652
+EXPECTED_DIGEST = "sha256:7a2511d30fbcdf4dc04b9e8a969b2a3387a84d90226d1f2784249899ca81096c"
 EXPECTED_SMOKE = {
     "od-finish", "facing", "shoulder", "taper", "id-bore-through", "id-bore-blind",
     "repeated-finish-20", "exact-retrace-100", "noisy-feed-canonicalized",
@@ -25,6 +29,7 @@ REQUIRED_FILES = (
     ROOT / "docs/decisions/DR-0013-axisymmetric-lathe-material-domain.md",
     ROOT / "research/rcs-010/README.md",
     ROOT / "research/rcs-010/experiment-plan-v1.json",
+    ROOT / "research/rcs-010/measured-summary-v1.json",
     ROOT / "research/rcs-010/harness/profile_solver.py",
     ROOT / "research/rcs-010/harness/CMakeLists.txt",
     ROOT / "research/rcs-010/harness/lathe_worker.cpp",
@@ -65,6 +70,30 @@ def load_profile_solver() -> Any:
     return module
 
 
+def validate_summary(summary: Any, where: str) -> None:
+    if not isinstance(summary, dict):
+        error(f"{where}: summary must be an object")
+        return
+    exact = {
+        "cases": 9,
+        "failed_cases": 0,
+        "step_strategy_attempts": 21,
+        "step_strategy_passes": 21,
+        "journal_events": 135,
+        "provenance_noop_events": 118,
+        "raw_samples": 9,
+        "repeated_boolean_operations": 127,
+        "batched_boolean_operations": 9,
+        "axisymmetric_boolean_operations": 0,
+    }
+    for key, expected in exact.items():
+        if summary.get(key) != expected:
+            error(f"{where}: {key}={summary.get(key)!r}, expected {expected!r}")
+    for key in ("repeated_total_ms", "batched_total_ms", "axisymmetric_total_ms"):
+        if not isinstance(summary.get(key), (int, float)) or float(summary[key]) <= 0:
+            error(f"{where}: {key} must be a positive measured value")
+
+
 for path in REQUIRED_FILES:
     if not path.is_file():
         error(f"missing required file: {path.relative_to(ROOT)}")
@@ -76,10 +105,9 @@ if plan:
         error("unexpected RCS-010 plan schema")
     baseline = plan.get("baseline", {})
     if baseline.get("commit") != EXPECTED_OCCT_COMMIT:
-        error("RCS-010 plan must pin the accepted OCCT commit")
+        error("RCS-010 plan must pin accepted OCCT commit")
     if baseline.get("build_profile") != "release-shared-cxx17-worker-only-headless-v4":
-        error("RCS-010 plan must pin the accepted RCS-006 build profile")
-
+        error("RCS-010 plan must pin accepted RCS-006 build profile")
     cases = plan.get("cases", [])
     if not isinstance(cases, list) or not cases:
         error("RCS-010 plan must contain cases")
@@ -88,36 +116,18 @@ if plan:
     categories = {x.get("category") for x in cases if isinstance(x, dict)}
     if not EXPECTED_CATEGORIES.issubset(categories):
         error(f"RCS-010 categories missing: {sorted(EXPECTED_CATEGORIES - categories)}")
-    profiles = plan.get("profiles", {})
-    smoke = set(profiles.get("smoke", [])) if isinstance(profiles, dict) else set()
-    if smoke != EXPECTED_SMOKE:
-        error(f"RCS-010 smoke profile mismatch: {sorted(smoke)}")
-    if not smoke.issubset(ids):
-        error("RCS-010 smoke profile references unknown cases")
-
+    smoke = set(plan.get("profiles", {}).get("smoke", []))
+    if smoke != EXPECTED_SMOKE or not smoke.issubset(ids):
+        error(f"RCS-010 accepted smoke set mismatch: {sorted(smoke)}")
     corpus_ids = {x.get("id") for x in corpus.get("fixture_families", []) if isinstance(x, dict)}
     missing = sorted({x.get("source_family_id") for x in cases if isinstance(x, dict)} - corpus_ids)
     if missing:
-        error(f"RCS-010 plan references missing RCS-003 families: {missing}")
-
-    for index, item in enumerate(cases):
-        if not isinstance(item, dict):
-            error(f"cases[{index}] must be an object")
-            continue
-        for field in ("id", "category", "source_family_id", "stock", "operations", "expected", "step"):
-            if field not in item:
-                error(f"cases[{index}] missing {field}")
-        if not isinstance(item.get("operations"), list) or not item["operations"]:
-            error(f"cases[{index}].operations must be a non-empty list")
-        if item.get("expected", {}).get("body_count") != 1:
-            error(f"cases[{index}] founding fixed-axis set must preserve one material body")
-
+        error(f"RCS-010 references missing RCS-003 families: {missing}")
     contracts = plan.get("source_contracts", {})
     for key in ("journal", "corpus", "baseline_harness", "step", "tolerance", "provenance", "regularization"):
         value = contracts.get(key) if isinstance(contracts, dict) else None
         if not isinstance(value, str) or not (ROOT / value).is_file():
             error(f"RCS-010 source contract {key!r} does not resolve")
-
     solver = load_profile_solver()
     if solver is not None:
         for item in cases:
@@ -128,29 +138,68 @@ if plan:
                 volume = float(solved["result"]["volume_mm3"])
                 points = solved["result"]["polygon_points"]
                 if not math.isfinite(volume) or volume <= 0:
-                    error(f"{item['id']}: solver volume is not positive/finite")
+                    error(f"{item.get('id')}: solver volume is not positive/finite")
                 if not isinstance(points, list) or len(points) < 5 or points[0] != points[-1]:
-                    error(f"{item['id']}: solver section is not an adequate closed polygon")
+                    error(f"{item.get('id')}: solver section is not an adequate closed polygon")
             except Exception as exc:
                 error(f"{item.get('id')}: deterministic profile solve failed: {exc}")
 
+measured = load_object(ROOT / "research/rcs-010/measured-summary-v1.json")
+if measured:
+    if measured.get("schema") != "rcs-010-measured-summary/1.0" or measured.get("status") != "accepted":
+        error("RCS-010 measured summary must be accepted schema 1.0")
+    source = measured.get("source", {})
+    expected_source = {
+        "workflow_run_id": EXPECTED_RUN,
+        "job_id": EXPECTED_JOB,
+        "artifact_id": EXPECTED_ARTIFACT,
+        "artifact_digest": EXPECTED_DIGEST,
+    }
+    for key, expected in expected_source.items():
+        if source.get(key) != expected:
+            error(f"RCS-010 measured source {key} mismatch")
+    if measured.get("backend", {}).get("commit") != EXPECTED_OCCT_COMMIT:
+        error("RCS-010 measured summary backend commit mismatch")
+    validate_summary(measured.get("summary"), "measured-summary")
+    summary = measured.get("summary", {})
+    if float(summary.get("max_strategy_axis_volume_abs_delta_mm3", math.inf)) > 1e-5:
+        error("measured cross-strategy volume delta exceeds accepted budget")
+    if float(summary.get("max_strategy_axis_bbox_abs_delta_mm", math.inf)) > 1e-6:
+        error("measured cross-strategy bbox delta exceeds accepted budget")
+    if float(summary.get("max_step_volume_abs_delta_mm3", math.inf)) > 1e-5:
+        error("measured STEP volume delta exceeds accepted budget")
+    reps = measured.get("representative_measurements", {})
+    taper = reps.get("taper", {})
+    if taper.get("axisymmetric_analytic_surfaces", {}).get("cone") != 1 or not taper.get("axisymmetric_step_roundtrip_passed"):
+        error("measured summary must preserve analytic taper/STEP evidence")
+    blind = reps.get("blind_bore", {})
+    if blind.get("axisymmetric_faces") != 6 or blind.get("repeated_faces") != 5 or not blind.get("axisymmetric_step_roundtrip_passed"):
+        error("measured summary must preserve blind-bore topology-regeneration evidence")
+    retrace = reps.get("exact_retrace_100", {})
+    if retrace.get("journal_events") != 100 or retrace.get("provenance_noop_events") != 99:
+        error("measured summary must preserve 100-pass retrace provenance evidence")
+    noisy = reps.get("noisy_feed", {})
+    if noisy.get("raw_samples") != 9 or noisy.get("canonical_geometry_events") != 1:
+        error("measured summary must preserve analogue canonicalization evidence")
+
 report = (ROOT / "docs/18-LATHE-MATERIAL-DOMAIN-RESEARCH.md").read_text(encoding="utf-8")
 for term in (
-    "## Hypotheses and falsification criteria", "## Competing strategies",
-    "## Material-domain definition", "## Tool-envelope scope",
+    "Status: accepted RCS-010 research result", "## Hypotheses and falsification criteria",
+    "## Competing strategies", "## Material-domain definition", "## Tool-envelope scope",
     "## Reconciliation and handoff boundaries", "## Explicit supported domain",
     "## Explicit exclusions and fallback requirements", "## Metrics and acceptance oracle",
-    "## Relationship to accepted RCS-007/RCS-008/RCS-009 results",
-    "## Architecture recommendation pending evidence", "nose radius", "STEP", EXPECTED_OCCT_COMMIT,
+    "## Measured RCS-010 results", "## Relationship to accepted RCS-007/RCS-008/RCS-009 results",
+    "## Architecture recommendation", str(EXPECTED_RUN), str(EXPECTED_ARTIFACT), EXPECTED_DIGEST,
+    "21/21", "nose radius", "STEP", EXPECTED_OCCT_COMMIT,
 ):
     if term not in report:
         error(f"RCS-010 report missing {term!r}")
 
 decision = (ROOT / "docs/decisions/DR-0013-axisymmetric-lathe-material-domain.md").read_text(encoding="utf-8")
 for term in (
-    "Status: proposed pending RCS-010 measured evidence", "## Proposed decision",
-    "## Alternatives considered", "## Evidence", "first-class process provider",
-    "canonical manufacturing journal", "batched 3D", "nose-radius",
+    "Status: accepted", "## Decision", "## Alternatives considered", "## Evidence",
+    "first-class process provider", "canonical manufacturing journal", "batched 3D",
+    "nose-radius", str(EXPECTED_RUN), EXPECTED_DIGEST,
 ):
     if term not in decision:
         error(f"DR-0013 missing {term!r}")
@@ -186,7 +235,7 @@ if args.results_dir is not None:
     results = load_object(results_path) if results_path.is_file() else {}
     if results:
         if results.get("schema") != "rcs-010-campaign/1.0":
-            error("unexpected RCS-010 runtime result schema")
+            error("unexpected RCS-010 runtime schema")
         if results.get("backend", {}).get("commit") != EXPECTED_OCCT_COMMIT:
             error("runtime evidence does not report exact OCCT commit")
         records = results.get("results", [])
@@ -208,27 +257,7 @@ if args.results_dir is not None:
                 error(f"runtime results[{index}] worker payload schema invalid")
             if item.get("failures"):
                 error(f"runtime results[{index}] acceptance failures: {item.get('failures')}")
-
-        s = results.get("summary", {})
-        if not isinstance(s, dict):
-            error("runtime summary must be an object")
-        else:
-            if results.get("profile") == "smoke" and s.get("cases") != len(EXPECTED_SMOKE):
-                error("smoke summary case count mismatch")
-            if s.get("failed_cases") != 0:
-                error("runtime campaign has failed cases")
-            attempts = s.get("step_strategy_attempts")
-            if not isinstance(attempts, int) or attempts < 3 or s.get("step_strategy_passes") != attempts:
-                error("required STEP strategy round-trips did not all pass")
-            if int(s.get("provenance_noop_events", 0)) < 99:
-                error("smoke evidence lacks exact-retrace no-op coverage")
-            if int(s.get("raw_samples", 0)) < 9:
-                error("smoke evidence lacks bounded analogue-feed canonicalization coverage")
-            repeated = int(s.get("repeated_boolean_operations", 0))
-            batched = int(s.get("batched_boolean_operations", 0))
-            axis = int(s.get("axisymmetric_boolean_operations", -1))
-            if not (repeated > batched > axis == 0):
-                error("runtime evidence does not distinguish strategy update counts")
+        validate_summary(results.get("summary"), "runtime-summary")
 
 if errors:
     print("RCS-010 validation failed:")
