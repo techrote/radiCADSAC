@@ -1,0 +1,137 @@
+{
+  "schema": "rcs-010-lathe-plan/1.0",
+  "plan_id": "axisymmetric-lathe-comparison-v1",
+  "baseline": {
+    "occt_version": "8.0.1",
+    "tag": "V8_0_1",
+    "commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42",
+    "build_profile": "release-shared-cxx17-worker-only-headless-v4"
+  },
+  "source_contracts": {
+    "journal": "docs/10-CANONICAL-JOURNAL-CONTRACT.md",
+    "corpus": "research/rcs-003/corpus-v1.json",
+    "baseline_harness": "research/rcs-006/benchmark-plan-v1.json",
+    "step": "research/rcs-005/conformance-v1.json",
+    "tolerance": "docs/decisions/DR-0010-separate-tolerance-channels-and-local-uncertainty.md",
+    "provenance": "docs/decisions/DR-0011-semantic-lineage-not-topology-id.md",
+    "regularization": "docs/decisions/DR-0012-regularized-material-and-bounded-deferred-topology.md"
+  },
+  "comparison_tolerances": {
+    "volume_abs_mm3": 1e-05,
+    "bbox_abs_mm": 1e-06,
+    "step_volume_abs_mm3": 1e-05,
+    "step_bbox_abs_mm": 1e-06
+  },
+  "profiles": {
+    "smoke": [
+      "od-finish",
+      "facing",
+      "shoulder",
+      "taper",
+      "id-bore-through",
+      "repeated-finish-20",
+      "exact-retrace-100"
+    ],
+    "baseline": [
+      "od-finish",
+      "facing",
+      "shoulder",
+      "taper",
+      "id-bore-through",
+      "id-bore-blind",
+      "repeated-finish-20",
+      "exact-retrace-100",
+      "noisy-feed-canonicalized"
+    ]
+  },
+  "cases": [
+    {
+      "id": "od-finish",
+      "category": "od_turning",
+      "source_family_id": "lathe-sub-tolerance-skim",
+      "stock": {"z0_mm": "0", "z1_mm": "40", "outer_radius_mm": "10", "inner_radius_mm": "0"},
+      "operations": [{"kind": "od_turn", "z0_mm": "5", "z1_mm": "35", "target_radius_mm": "9.5"}],
+      "expected": {"body_count": 1, "surface_classes": ["plane", "cylinder"]},
+      "step": true
+    },
+    {
+      "id": "facing",
+      "category": "facing",
+      "source_family_id": "lathe-facing-existing-plane",
+      "stock": {"z0_mm": "0", "z1_mm": "40", "outer_radius_mm": "10", "inner_radius_mm": "0"},
+      "operations": [{"kind": "face_front", "new_z0_mm": "1"}],
+      "expected": {"body_count": 1, "surface_classes": ["plane", "cylinder"]},
+      "step": false
+    },
+    {
+      "id": "shoulder",
+      "category": "shoulder",
+      "source_family_id": "lathe-tangent-shoulder-contact",
+      "stock": {"z0_mm": "0", "z1_mm": "40", "outer_radius_mm": "10", "inner_radius_mm": "0"},
+      "operations": [{"kind": "od_turn", "z0_mm": "20", "z1_mm": "40", "target_radius_mm": "8.5"}],
+      "expected": {"body_count": 1, "surface_classes": ["plane", "cylinder"]},
+      "step": true
+    },
+    {
+      "id": "taper",
+      "category": "taper_chamfer",
+      "source_family_id": "lathe-tangent-shoulder-contact",
+      "stock": {"z0_mm": "0", "z1_mm": "40", "outer_radius_mm": "10", "inner_radius_mm": "0"},
+      "operations": [{"kind": "taper_outer", "z0_mm": "28", "z1_mm": "40", "radius0_mm": "10", "radius1_mm": "8"}],
+      "expected": {"body_count": 1, "surface_classes": ["plane", "cylinder", "cone"]},
+      "step": true
+    },
+    {
+      "id": "id-bore-through",
+      "category": "id_boring",
+      "source_family_id": "lathe-od-id-surface-retrace",
+      "stock": {"z0_mm": "0", "z1_mm": "40", "outer_radius_mm": "10", "inner_radius_mm": "0"},
+      "operations": [{"kind": "id_bore", "z0_mm": "0", "z1_mm": "40", "target_inner_radius_mm": "3"}],
+      "expected": {"body_count": 1, "surface_classes": ["plane", "cylinder"]},
+      "step": true
+    },
+    {
+      "id": "id-bore-blind",
+      "category": "id_boring",
+      "source_family_id": "lathe-bore-shoulder-meeting",
+      "stock": {"z0_mm": "0", "z1_mm": "40", "outer_radius_mm": "10", "inner_radius_mm": "0"},
+      "operations": [{"kind": "id_bore", "z0_mm": "0", "z1_mm": "25", "target_inner_radius_mm": "4"}],
+      "expected": {"body_count": 1, "surface_classes": ["plane", "cylinder"]},
+      "step": true
+    },
+    {
+      "id": "repeated-finish-20",
+      "category": "repeated_finishing",
+      "source_family_id": "lathe-repeated-finishing-pass",
+      "stock": {"z0_mm": "0", "z1_mm": "40", "outer_radius_mm": "10", "inner_radius_mm": "0"},
+      "operations": [{"kind": "od_turn", "z0_mm": "5", "z1_mm": "35", "target_radius_mm": "9.8", "repeat": 20}],
+      "expected": {"body_count": 1, "surface_classes": ["plane", "cylinder"], "journal_events": 20},
+      "step": false
+    },
+    {
+      "id": "exact-retrace-100",
+      "category": "exact_retrace",
+      "source_family_id": "lathe-repeated-finishing-pass",
+      "stock": {"z0_mm": "0", "z1_mm": "40", "outer_radius_mm": "10", "inner_radius_mm": "0"},
+      "operations": [{"kind": "od_turn", "z0_mm": "5", "z1_mm": "35", "target_radius_mm": "9.9", "repeat": 100}],
+      "expected": {"body_count": 1, "surface_classes": ["plane", "cylinder"], "journal_events": 100, "provenance_noop_events": 99},
+      "step": true
+    },
+    {
+      "id": "noisy-feed-canonicalized",
+      "category": "canonicalized_analogue_feed",
+      "source_family_id": "lathe-noisy-analogue-feed",
+      "stock": {"z0_mm": "0", "z1_mm": "40", "outer_radius_mm": "10", "inner_radius_mm": "0"},
+      "operations": [{
+        "kind": "noisy_od_trace",
+        "z0_mm": "5",
+        "z1_mm": "35",
+        "nominal_radius_mm": "9.7",
+        "max_deviation_mm": "0.01",
+        "raw_radius_mm": ["9.700", "9.703", "9.697", "9.704", "9.696", "9.701", "9.699", "9.702", "9.698"]
+      }],
+      "expected": {"body_count": 1, "surface_classes": ["plane", "cylinder"], "raw_samples": 9, "canonical_geometry_events": 1},
+      "step": true
+    }
+  ]
+}
