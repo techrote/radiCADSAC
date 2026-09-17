@@ -1,0 +1,109 @@
+{
+  "schema": "rcs017-measured-summary/1.0",
+  "date": "2026-09-17",
+  "issue": "RCS-017",
+  "source": {
+    "github_actions_run_id": 35258066758,
+    "branch_head": "131ef4a9a913ca469b64f4b672685044efbcf20a",
+    "artifact_id": 10512917975,
+    "artifact_name": "rcs017-concurrency-stress",
+    "artifact_zip_sha256": "6b0f29e87904ed07487152b40cfe4a1726ac42db57c49954a16f662743f578ed"
+  },
+  "occt": {
+    "version": "8.0.1",
+    "tag": "V8_0_1",
+    "commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42",
+    "build_profile": "release-shared-cxx17-worker-only-headless-v4"
+  },
+  "profile": "stress",
+  "sequential": {
+    "attempts": 160,
+    "successes": 160,
+    "failures": 0,
+    "wrong_configuration_observations": 0,
+    "max_serialized_uncertainty_abs_delta_file_units": 2.5139937874507634e-18,
+    "max_shape_fix_parameter_abs_delta_mm": 0.0,
+    "max_step_volume_abs_delta_mm3": 8.708411769475788e-09,
+    "wall_ms": 2762.5773649999983,
+    "timeouts": 0
+  },
+  "threads_one_process": {
+    "attempts": 160,
+    "successes": 160,
+    "failures": 0,
+    "wrong_configuration_observations": 10,
+    "max_serialized_uncertainty_abs_delta_file_units": 0.00099,
+    "max_shape_fix_parameter_abs_delta_mm": 0.0,
+    "max_step_volume_abs_delta_mm3": 8.708411769475788e-09,
+    "wall_ms": 1279.0362479999972,
+    "timeouts": 0
+  },
+  "process_isolated": {
+    "workers": 8,
+    "attempts": 160,
+    "successes": 160,
+    "failures": 0,
+    "wrong_configuration_observations": 0,
+    "max_serialized_uncertainty_abs_delta_file_units": 2.5139937874507634e-18,
+    "max_shape_fix_parameter_abs_delta_mm": 0.0,
+    "max_step_volume_abs_delta_mm3": 8.708411769475788e-09,
+    "wall_ms": 1319.7611140000022,
+    "timeouts": 0,
+    "worker_returncodes": [0, 0, 0, 0, 0, 0, 0, 0]
+  },
+  "global_parallel_state_race": {
+    "attempts": 16000,
+    "mismatches": 6505,
+    "worker_returncode": 0,
+    "timed_out": false
+  },
+  "shared_immutable_shape": {
+    "expected_volume_mm3": 8000.0,
+    "sequential_final_volume_mm3": 7999.999999999998,
+    "threaded_final_volume_mm3": 7999.999999999998
+  },
+  "derived": {
+    "process_vs_threads_wall_delta_ms": 40.72486600000504,
+    "process_vs_threads_wall_overhead_fraction": 0.03184027851944535,
+    "threaded_configuration_mismatch_fraction": 0.0625,
+    "global_parallel_mismatch_fraction": 0.4065625
+  },
+  "observations": [
+    "All 160 sequential, 160 one-process threaded, and 160 process-isolated geometry/STEP jobs completed without worker failure or timeout and produced valid read-back B-reps.",
+    "The sequential control had zero configuration mismatches.",
+    "The one-process threaded run had 10 of 160 configuration mismatches. The observed mismatch was serialized STEP uncertainty/tolerance; schema/unit selection and writer-local shape-fix tolerance remained correct in the measured records.",
+    "The process-isolated run had zero configuration mismatches across 160 attempts.",
+    "Conflicting callers of BOPAlgo_Options::SetParallelMode observed another thread's process-global value in 6505 of 16000 set/yield/read attempts.",
+    "The shared immutable stock shape retained its measured volume under the tested non-destructive threaded workload. This is not evidence that concurrent mutation is safe.",
+    "At this campaign size, eight process-isolated workers completed the equal 160-attempt workload about 40.7 ms slower than one-process threads, approximately 3.18 percent wall-time overhead, while eliminating the observed STEP tolerance cross-talk."
+  ],
+  "concrete_counterexample_from_prior_smoke": {
+    "source_run_id": 35257947594,
+    "job": 2,
+    "iteration": 0,
+    "requested_config": "mm-ap242",
+    "schema_correct": true,
+    "unit_correct": true,
+    "requested_step_tolerance_mm": 0.00001,
+    "expected_serialized_uncertainty_file_units": 0.00001,
+    "observed_serialized_uncertainty_file_units": 0.001,
+    "shape_fix_requested_mm": 0.000001,
+    "shape_fix_observed_mm": 0.000001,
+    "valid_brep": true
+  },
+  "architecture_input": {
+    "decision": "Retain process-isolated OCCT workers as the founding scheduler-level concurrency boundary.",
+    "threading": "Allow thread-level parallelism inside an isolated worker only for explicitly qualified APIs with job-local or immutable ownership and without concurrent mutation of process-global configuration.",
+    "step": "Prefer explicit DESTEP_Parameters and job-local sessions/writers, but do not infer full isolation from those APIs: the measured STEP writer tolerance path crossed jobs under same-process concurrency.",
+    "global_state": "Do not multiplex conflicting Interface_Static or BOPAlgo_Options process-global settings across jobs in one address space.",
+    "topology": "Read-only shared TopoDS_Shape/TShape ownership passed this narrow non-destructive workload; concurrent mutation remains unqualified."
+  },
+  "remaining_unknowns": [
+    "ThreadSanitizer qualification of the used OCCT subset.",
+    "Windows/MSVC and macOS concurrency behavior.",
+    "Concurrent mutation of shared topology.",
+    "All legacy Interface_Static consumers and other lazy/static caches outside the measured surfaces.",
+    "Long-duration soak, cancellation, allocator pressure, signals, and malformed STEP inputs.",
+    "Production worker-pool startup and recycling overhead under realistic mixed workloads."
+  ]
+}
