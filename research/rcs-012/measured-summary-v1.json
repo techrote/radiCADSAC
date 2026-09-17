@@ -1,0 +1,59 @@
+{
+  "schema": "rcs-012-measured-summary/1.0",
+  "date": "2026-09-17",
+  "campaign": "alternative-hybrid-geometry",
+  "command": "python3 research/rcs-012/harness/run_campaign.py --out-dir .results/rcs012 --repeats 2",
+  "environment_note": "Reference run used CPython stdlib only. CI reruns the same deterministic campaign on ubuntu-latest.",
+  "result_summary": {
+    "campaign": "alternative-hybrid-geometry",
+    "candidate_count": 2,
+    "candidates": {
+      "exact-orthogonal-cell-deferred-csg": {
+        "attempts": 16,
+        "cases": 8,
+        "max_volume_error_mm3": "0",
+        "nondeterministic_case_groups": 0,
+        "oracle_body_exact_attempts": 16,
+        "oracle_volume_exact_attempts": 16
+      },
+      "sparse-voxel-center-0p5mm": {
+        "attempts": 16,
+        "cases": 8,
+        "max_volume_error_mm3": "0.2",
+        "nondeterministic_case_groups": 0,
+        "oracle_body_exact_attempts": 14,
+        "oracle_volume_exact_attempts": 12
+      }
+    },
+    "case_count": 8,
+    "schema": "rcs-012-summary/1.0"
+  },
+  "decisive_cases": {
+    "tiny-plunge-1um": {
+      "exact_cell": {"material_volume_mm3":"3999.9","volume_error_mm3":"0","body_count":1},
+      "voxel_0p5": {"material_volume_mm3":"4000","volume_error_mm3":"0.1","body_count":1},
+      "finding": "0.5 mm occupancy completely misses a real 0.001 mm plunge."
+    },
+    "tiny-cusp-1um": {
+      "exact_cell": {"material_volume_mm3":"0.2","volume_error_mm3":"0","body_count":1},
+      "voxel_0p5": {"material_volume_mm3":"0","volume_error_mm3":"0.2","body_count":0},
+      "finding": "0.5 mm occupancy erases the entire positive-volume 0.001 mm cusp and changes body existence."
+    },
+    "cut-through-two-bodies": {
+      "exact_cell": {"material_volume_mm3":"5600","body_count":2},
+      "voxel_0p5": {"material_volume_mm3":"5600","body_count":2},
+      "finding": "Both bounded candidates preserve the obvious through-cut separation at this grid alignment."
+    },
+    "high-segment-equivalent-100000": {
+      "raw_operation_count": 100000,
+      "unique_envelope_count": 1,
+      "finding": "Exact duplicate envelope canonicalization makes representation work depend on unique material boundaries rather than journal segmentation, while the journal event count remains explicit."
+    }
+  },
+  "interpretation": [
+    "The exact orthogonal cell/deferred-CSG prototype is exact and deterministic for its deliberately narrow axis-aligned planar subset, including lower-dimensional contact and disconnected bodies.",
+    "The sparse voxel prototype is robust and deterministic for coarse material occupancy but has an explicit resolution floor; it cannot be authoritative for sub-cell manufacturing features.",
+    "Neither prototype alone replaces an analytic B-rep kernel: the cell prototype does not cover arbitrary curved geometry, while voxel state requires surface extraction and analytic recognition before STEP.",
+    "The strongest architecture candidate is hybrid: preserve analytic/process/provenance semantics globally; permit exact/deferred cell-like or volumetric fallback locally; reconcile only bounded fallback regions back to conventional B-rep under the STEP contract."
+  ]
+}
