@@ -26,10 +26,12 @@ jobs:
         run: python3 tools/validate_rcs006.py
       - name: Validate RCS-007 tolerance research
         run: python3 tools/validate_rcs007.py
+      - name: Validate RCS-008 provenance research
+        run: python3 tools/validate_rcs008.py
 
   # Stage 1: establish the exact pinned OCCT install independently of the
   # worker and campaign. A successful dependency build is persisted before any
-  # later RCS-006/RCS-007 stage can fail.
+  # later RCS-006/RCS-007/RCS-008 stage can fail.
   rcs006-occt-bootstrap:
     runs-on: ubuntu-latest
     timeout-minutes: 45
@@ -203,4 +205,52 @@ jobs:
         with:
           name: rcs007-virtual-tolerance-smoke
           path: .results/rcs007-smoke
+          if-no-files-found: error
+
+  # RCS-008 probes local OCCT ancestry and compares it with a backend-independent
+  # semantic lineage graph. A missing OCCT relation is valid negative evidence;
+  # worker/protocol/model incompleteness remains a CI failure.
+  rcs008-provenance-smoke:
+    needs: rcs006-occt-cache-verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      RCS006_OCCT_PREFIX: ${{ github.workspace }}/.deps/rcs006/occt-8.0.1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install build prerequisites
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build
+      - name: Restore verified pinned OCCT cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .deps/rcs006/occt-8.0.1
+          key: rcs006-occt-8.0.1-${{ runner.os }}-${{ hashFiles('research/rcs-006/harness/bootstrap_occt.sh') }}
+          fail-on-cache-miss: true
+      - name: Configure RCS-008 provenance worker
+        run: |
+          cmake -S research/rcs-008/harness -B .build/rcs008 -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_PREFIX_PATH="$RCS006_OCCT_PREFIX"
+      - name: Build RCS-008 provenance worker
+        run: cmake --build .build/rcs008 --parallel 2
+      - name: Run RCS-008 provenance smoke campaign
+        shell: bash
+        run: |
+          set -euo pipefail
+          export LD_LIBRARY_PATH="$RCS006_OCCT_PREFIX/lib:$RCS006_OCCT_PREFIX/lib64:${LD_LIBRARY_PATH:-}"
+          python3 research/rcs-008/harness/run_provenance_campaign.py \
+            --worker .build/rcs008/rcs008_provenance_worker \
+            --profile smoke \
+            --out-dir .results/rcs008-smoke
+      - name: Validate RCS-008 runtime evidence
+        run: python3 tools/validate_rcs008.py --results-dir .results/rcs008-smoke
+      - name: Upload RCS-008 provenance evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rcs008-provenance-smoke
+          path: .results/rcs008-smoke
           if-no-files-found: error
