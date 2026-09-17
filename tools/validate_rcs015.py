@@ -307,7 +307,7 @@ require_terms(
     (
         "productive engineering loop first",
         "journal → backend → valid STEP",
-        "game/publication polish",
+        "publication polish",
         "canonical journal → backend → conventional valid STEP",
     ),
     "implementation roadmap",
