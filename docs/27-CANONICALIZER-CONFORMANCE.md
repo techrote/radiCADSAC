@@ -1,6 +1,6 @@
 # RCS-019 — canonicalizer conformance and deterministic normalization qualification
 
-Status: candidate research result pending hosted Linux/Windows evidence  
+Status: accepted research result pending PR merge  
 Date: 2026-09-17  
 Issue: RCS-019 / GitHub #38  
 Journal contract under test: `msac-journal/1.0`  
@@ -56,15 +56,17 @@ Each conformance path has a 20-second validation containment budget; hosted CI j
 
 ## Cross-platform qualification
 
-The CI matrix runs CPython 3.12 and Node.js 22 on `ubuntu-24.04` (**Linux**) and `windows-2022` (**Windows**). Each platform serializes only normalized logical decisions into a SHA-256 signature. A final job fails unless both platforms are present and signatures are identical. Runtime and host version strings are preserved separately as evidence metadata so they cannot alter the logical signature.
+Hosted workflow run `35271407927` passed both platform jobs and the final cross-platform logical-identity gate on source head `47e621769a7ac277f400a46f292794566427e214`. All 32 vectors matched their independent expectations on both platforms, the Python and Node decision paths agreed on each platform, and both produced logical signature `120e693501ae003b384831c669a40b3ff980ea9d3e8de65e0d87a63888310405`.
 
-A durable measured summary is committed only after a real hosted run has passed and been inspected; the report does not pre-claim cross-platform success.
+The Linux observation used Ubuntu 24.04.5 LTS / runner image `ubuntu-24.04` version `20260907.300.1`, CPython 3.12.14 and Node.js 22.23.2. The Windows observation used Windows Server 2022 10.0.20348 / runner image `windows-2022` version `20260913.307.1`, CPython 3.12.10 and Node.js 22.23.2. Runtime and host strings were excluded from the logical signature and retained only as evidence metadata.
+
+The workflow also preserved per-platform and combined artifacts. Their IDs and archive digests, along with the run identity and runtime observations, are frozen in `research/rcs-019/measured-summary-v1.json`.
 
 ## Contract reconciliation
 
-No accepted RCS-002 semantic rule needed to be weakened to construct this suite. Two values that RCS-002 intentionally leaves to a versioned normalization policy—the admissible q15 norm deviation and exact arc-ambiguity guards—are made explicit in `rcs-019-reference-policy/1.0`. This resolves executable test ambiguity at the policy layer rather than silently editing historical journal meaning.
+No accepted RCS-002 semantic rule needed to be weakened to construct or pass this suite. Two values that RCS-002 intentionally leaves to a versioned normalization policy—the admissible q15 norm deviation and exact arc-ambiguity guards—are made explicit in `rcs-019-reference-policy/1.0`. This resolves executable test ambiguity at the policy layer rather than silently editing historical journal meaning.
 
-Assuming the required hosted evidence passes without divergence, the recommendation is **no journal contract revision** before Gate 5. Production implementations must, however, version every threshold that affects durable segmentation or fit/refusal output; relying on an implementation default would violate identical-input determinism.
+The hosted evidence showed no cross-platform or independent-implementation divergence, so the recommendation is **no journal contract revision** before Gate 5. Production implementations must, however, version every threshold that affects durable segmentation or fit/refusal output; relying on an implementation default would violate identical-input determinism.
 
 DR-0010 remains unchanged. Manufacturing tolerance, uncertainty, fit error, storage quantization and topology/contact policy are not collapsed into one epsilon.
 
@@ -78,8 +80,8 @@ RCS-023 can consume the explicit quantization/fit-bound channels. RCS-026 should
 
 - **ACCEPTED SOURCE:** RCS-002, DR-0006 and DR-0007 define fixed tokens, transform convention, ties-to-even, semantic boundaries and deterministic/bounded normalization.
 - **ACCEPTED SOURCE:** DR-0010 forbids collapsing small positive manufacturing intent into a numerical no-op.
-- **MEASURED (local):** both independent implementations currently match all 32 vectors and the adversarial validator rejects deliberately corrupted expectations.
-- **PENDING MEASURED:** hosted Linux/Windows runtime evidence and its frozen run identity will be recorded after the workflow passes.
+- **MEASURED (local):** both independent implementations match all 32 vectors and the adversarial validator rejects deliberately corrupted expectations.
+- **MEASURED (hosted):** workflow run `35271407927` passed Linux, Windows and cross-platform identity jobs; both platforms produced the same frozen logical signature, with exact runtime/image observations recorded in `measured-summary-v1.json`.
 - **OPEN:** production fitting algorithms may be more sophisticated than these research decisions, but they must expose equivalent certified bounds/fallback semantics and pass policy-specific vectors.
 
 No claim is made that arbitrary differently sampled splines are byte-identical, that a 100,000-sample smoke test is a production scale limit, or that q15 storage precision is manufacturing accuracy.
