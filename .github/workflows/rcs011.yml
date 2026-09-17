@@ -1,0 +1,71 @@
+name: rcs011-mill-research
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-rcs011:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Validate RCS-011 research contracts
+        run: python3 tools/validate_rcs011.py
+
+  mill-hierarchy-smoke:
+    needs: validate-rcs011
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      RCS006_OCCT_PREFIX: ${{ github.workspace }}/.deps/rcs006/occt-8.0.1
+      RCS006_BUILD_JOBS: 2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Restore pinned OCCT cache
+        id: occt-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .deps/rcs006/occt-8.0.1
+          key: rcs006-occt-8.0.1-${{ runner.os }}-${{ hashFiles('research/rcs-006/harness/bootstrap_occt.sh') }}
+      - name: Ensure Ninja is available
+        run: |
+          if ! command -v ninja >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y ninja-build
+          fi
+      - name: Bootstrap exact OCCT baseline if required
+        run: bash research/rcs-006/harness/bootstrap_occt.sh
+      - name: Verify exact OCCT baseline
+        run: bash research/rcs-006/harness/verify_occt_install.sh
+      - name: Configure RCS-011 worker
+        run: |
+          cmake -S research/rcs-011/harness -B .build/rcs011 -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_PREFIX_PATH="$RCS006_OCCT_PREFIX"
+      - name: Build RCS-011 worker
+        run: cmake --build .build/rcs011 --parallel 2
+      - name: Run RCS-011 smoke campaign
+        shell: bash
+        run: |
+          set -euo pipefail
+          export LD_LIBRARY_PATH="$RCS006_OCCT_PREFIX/lib:$RCS006_OCCT_PREFIX/lib64:${LD_LIBRARY_PATH:-}"
+          python3 research/rcs-011/harness/run_mill_campaign.py \
+            --worker .build/rcs011/rcs011_mill_worker \
+            --profile smoke \
+            --repeats 2 \
+            --out-dir .results/rcs011-smoke
+      - name: Validate measured RCS-011 evidence
+        run: python3 tools/validate_rcs011.py --results-dir .results/rcs011-smoke
+      - name: Upload RCS-011 evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rcs011-mill-hierarchy-smoke
+          path: .results/rcs011-smoke
+          if-no-files-found: error
