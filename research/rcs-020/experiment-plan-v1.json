@@ -1,0 +1,180 @@
+{
+  "schema": "rcs-020-lathe-tool-envelope-plan/1.0",
+  "issue": "RCS-020",
+  "purpose": "Qualify tool-geometry-derived fixed-axis lathe removal envelopes upstream of the accepted RCS-010 axisymmetric material-domain provider.",
+  "baseline": {
+    "material_provider": "RCS-010 axisymmetric axial/radial material domain",
+    "occt": {
+      "version": "8.0.1",
+      "tag": "V8_0_1",
+      "commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42",
+      "build_profile": "release-shared-cxx17-worker-only-headless-v4"
+    }
+  },
+  "sources": [
+    {
+      "kind": "primary-vendor-training",
+      "url": "https://videos.sandvik.coromant.com/creating-a-testturningmp4",
+      "fact_used": "A representative CNMG turning setup is shown with 95 degree entering angle and 0.8 mm insert nose radius; these values seed an abstract research tool, not a proprietary catalogue dependency."
+    },
+    {
+      "kind": "primary-vendor-handbook",
+      "url": "https://www.sandvik.coromant.com/api/publications/view?fileName=C-1020-18.pdf",
+      "fact_used": "Turning guidance treats entering angle and insert nose radius as geometry-critical parameters and notes that changing entering angle changes cutting-force direction."
+    },
+    {
+      "kind": "primary-vendor-catalogue",
+      "url": "https://epublications.sandvik.coromant.com/frontend/getcatalog.do?catalogId=1248966&catalogVersion=1&startpage=31",
+      "fact_used": "Current parting/grooving inserts expose explicit cutting width and left/right corner radii, supporting a width-plus-corner-radius abstract groove/parting model."
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "H1",
+      "statement": "For a bounded fixed-axis subset, realistic circular-nose turning/boring geometry plus canonical tool-centre trajectories can derive a material envelope that agrees with an independent capsule oracle and remains suitable for the RCS-010 material domain."
+    },
+    {
+      "id": "H2",
+      "statement": "Tool/holder approach geometry creates a real capability predicate: some undercut/reachability requests must hand off or refuse rather than be represented as an axisymmetric target profile."
+    },
+    {
+      "id": "H3",
+      "statement": "A grooving/parting tool described by cutting width and corner radius can express both a one-body groove and a complete cut-through that produces two material bodies without silently discarding either body."
+    }
+  ],
+  "falsification": [
+    "Independent envelope/material oracle disagreement exceeds the declared construction budget for a case claimed qualified.",
+    "The OCCT reconstruction/STEP comparator produces invalid topology, wrong body count, material deviation outside budget, or a hidden approximation that is reported as exact.",
+    "A reachability collision is ignored to keep an operation inside the specialized provider.",
+    "A complete parting case loses either disconnected material body."
+  ],
+  "policies": {
+    "units": "mm",
+    "frame": "right-handed z/r workpiece section; z is spindle axis and r is non-negative radial coordinate",
+    "nose_model": "Minkowski sweep of a circular insert nose along an explicit canonical tool-centre polyline",
+    "generator_algorithm": "independently polygonized capsule envelope with bounded circular chord error",
+    "oracle_algorithm": "closed-form vertical bounds of the exact segment-plus-disc capsule, integrated on a separately implemented high-resolution material oracle",
+    "profile_chord_tolerance_mm": 0.0001,
+    "profile_sampling_step_mm": 0.02,
+    "max_material_profile_volume_delta_mm3": 0.05,
+    "max_occt_strategy_volume_delta_mm3": 0.0001,
+    "max_occt_bbox_delta_mm": 0.00001,
+    "max_step_volume_delta_mm3": 0.0001,
+    "max_step_bbox_delta_mm": 0.00001,
+    "analytic_nose_surface_policy": "The research polygon adapter is a bounded material/reconstruction probe, not qualification that an exact circular nose is preserved as a torus in STEP. Exact analytic nose-surface reconstruction remains separately visible in results rather than being silently claimed."
+  },
+  "tools": {
+    "external-r08-95": {
+      "class": "external_turning",
+      "nose_radius_mm": 0.8,
+      "approach_angle_deg": 95.0,
+      "holder_setback_mm": 2.0,
+      "holder_length_mm": 12.0
+    },
+    "external-r08-45": {
+      "class": "external_turning",
+      "nose_radius_mm": 0.8,
+      "approach_angle_deg": 45.0,
+      "holder_setback_mm": 2.0,
+      "holder_length_mm": 12.0
+    },
+    "boring-r04-93": {
+      "class": "internal_boring",
+      "nose_radius_mm": 0.4,
+      "approach_angle_deg": 93.0
+    },
+    "groove-w2-r02": {
+      "class": "groove_parting",
+      "cutting_width_mm": 2.0,
+      "left_corner_radius_mm": 0.2,
+      "right_corner_radius_mm": 0.2
+    }
+  },
+  "cases": [
+    {
+      "id": "od-roundnose-95",
+      "kind": "round_nose_external",
+      "tool": "external-r08-95",
+      "stock": {"z0_mm": 0.0, "z1_mm": 40.0, "outer_radius_mm": 10.0},
+      "tool_path_zr_mm": [[4.0, 10.0], [36.0, 10.0]],
+      "journal_events": 1,
+      "expected": {"classification": "exact_or_bounded_qualified", "body_count": 1, "step": true}
+    },
+    {
+      "id": "shoulder-roundnose-95",
+      "kind": "round_nose_external",
+      "tool": "external-r08-95",
+      "stock": {"z0_mm": 0.0, "z1_mm": 40.0, "outer_radius_mm": 10.0},
+      "tool_path_zr_mm": [[20.0, 11.0], [20.0, 9.4], [36.0, 9.4]],
+      "journal_events": 2,
+      "expected": {"classification": "exact_or_bounded_qualified", "body_count": 1, "step": true}
+    },
+    {
+      "id": "taper-roundnose-45",
+      "kind": "round_nose_external",
+      "tool": "external-r08-45",
+      "stock": {"z0_mm": 0.0, "z1_mm": 40.0, "outer_radius_mm": 10.0},
+      "tool_path_zr_mm": [[8.0, 10.8], [32.0, 9.0]],
+      "journal_events": 1,
+      "expected": {"classification": "exact_or_bounded_qualified", "body_count": 1, "step": true}
+    },
+    {
+      "id": "exact-retrace-roundnose-20",
+      "kind": "round_nose_external",
+      "tool": "external-r08-95",
+      "stock": {"z0_mm": 0.0, "z1_mm": 40.0, "outer_radius_mm": 10.0},
+      "tool_path_zr_mm": [[4.0, 10.0], [36.0, 10.0]],
+      "journal_events": 20,
+      "expected": {"classification": "exact_or_bounded_qualified", "body_count": 1, "provenance_noop_events": 19, "step": true}
+    },
+    {
+      "id": "through-bore-roundnose",
+      "kind": "round_nose_internal",
+      "tool": "boring-r04-93",
+      "stock": {"z0_mm": 0.0, "z1_mm": 40.0, "outer_radius_mm": 10.0},
+      "tool_path_zr_mm": [[-1.0, 3.6], [41.0, 3.6]],
+      "journal_events": 1,
+      "expected": {"classification": "exact_or_bounded_qualified", "body_count": 1, "step": true}
+    },
+    {
+      "id": "blind-bore-roundnose",
+      "kind": "round_nose_internal",
+      "tool": "boring-r04-93",
+      "stock": {"z0_mm": 0.0, "z1_mm": 40.0, "outer_radius_mm": 10.0},
+      "tool_path_zr_mm": [[-1.0, 3.6], [24.0, 3.6]],
+      "journal_events": 1,
+      "expected": {"classification": "exact_or_bounded_qualified", "body_count": 1, "step": true}
+    },
+    {
+      "id": "partial-groove-r02",
+      "kind": "groove",
+      "tool": "groove-w2-r02",
+      "stock": {"z0_mm": 0.0, "z1_mm": 40.0, "outer_radius_mm": 10.0},
+      "groove_center_z_mm": 20.0,
+      "bottom_radius_mm": 6.0,
+      "journal_events": 1,
+      "expected": {"classification": "exact_or_bounded_qualified", "body_count": 1, "step": true}
+    },
+    {
+      "id": "complete-parting-r02",
+      "kind": "parting",
+      "tool": "groove-w2-r02",
+      "stock": {"z0_mm": 0.0, "z1_mm": 80.0, "outer_radius_mm": 20.0},
+      "groove_center_z_mm": 40.0,
+      "bottom_radius_mm": 0.0,
+      "journal_events": 1,
+      "expected": {"classification": "body_separation", "body_count": 2, "step_connectivity_control": true}
+    },
+    {
+      "id": "undercut-holder-collision",
+      "kind": "reachability_refusal",
+      "tool": "external-r08-45",
+      "stock_outer_sections": [
+        {"z0_mm": 0.0, "z1_mm": 20.0, "outer_radius_mm": 8.0},
+        {"z0_mm": 20.0, "z1_mm": 40.0, "outer_radius_mm": 10.0}
+      ],
+      "tool_path_zr_mm": [[18.5, 7.2], [19.2, 7.2]],
+      "expected": {"classification": "refused_unsupported", "reason": "holder_clearance_collision"}
+    }
+  ]
+}
