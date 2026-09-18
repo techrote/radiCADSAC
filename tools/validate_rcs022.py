@@ -117,7 +117,7 @@ def main() -> int:
                 if case["consumer_mesh_diagnostic"].get("status") == "accepted" and case["consumer_mesh_diagnostic"].get("mode") != "import-plus-mesh-diagnostic":
                     fail(f"consumer diagnostic mode mismatch for {cid}")
             checks = case.get("checks", {})
-            if case.get("qualified") != bool(checks) or case.get("qualified") != all(checks.values()):
+            if not checks or case.get("qualified") != all(checks.values()):
                 fail(f"case qualification/check mismatch for {cid}")
             expected_blockers.update(f"{cid}:{name}" for name, ok in checks.items() if not ok)
 
