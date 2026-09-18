@@ -1,0 +1,61 @@
+{
+  "schema": "rcs024-experiment-plan/1.0",
+  "date": "2026-09-18",
+  "issue": "RCS-024",
+  "baseline": {
+    "version": "8.0.1",
+    "tag": "V8_0_1",
+    "commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42"
+  },
+  "candidate": {
+    "kind": "exact-current-development-snapshot",
+    "version": "8.1.0.dev1",
+    "ref": "3d097a0328e71b826377d4814ab05ec3c3d23871",
+    "commit": "3d097a0328e71b826377d4814ab05ec3c3d23871",
+    "reason": "V8_0_1 remains the latest stable release, so a distinct stable differential does not exist at execution time. The issue explicitly permits an exact current-upstream commit for questions not represented by the stable baseline."
+  },
+  "hypotheses": [
+    {
+      "id": "H1-step",
+      "claim": "Distinct same-process STEP writers/work sessions do not provide a sufficient isolation boundary for conflicting writer tolerance state on the founding baseline; current upstream must be measured rather than presumed fixed.",
+      "falsification": "Sequential controls serialize their requested uncertainties and the deliberately interleaved distinct-writer control also serializes each requested uncertainty on a tested version."
+    },
+    {
+      "id": "H2-parallel",
+      "claim": "Per-instance SetRunParallel remains job-local while BOPAlgo_Options global parallel mode remains process-global.",
+      "falsification": "SetRunParallel mutates the process-global flag or conflicting threads no longer observe the shared global flag."
+    },
+    {
+      "id": "H3-robustness",
+      "claim": "The RCS-007 valid-but-materially-wrong fuzzy skim and order-sensitive finish chain remain decisive warnings unless the current candidate demonstrates materially correct outcomes under the same fixture.",
+      "falsification": "The positive skim removes the analytic target within the declared material oracle and the 100-cut chain becomes order-independent within the existing oracle."
+    },
+    {
+      "id": "H4-mill",
+      "claim": "The RCS-011 retrace-jitter one-shot freehand batch remains materially unsafe and dense sampled fallback remains pathologically expensive unless directly disproved.",
+      "falsification": "Batch and segment reference volumes agree within 0.05 mm3 and the bounded sampled control completes inside 8 seconds under the same hosted-Linux envelope."
+    },
+    {
+      "id": "H5-brepgraph",
+      "claim": "BRepGraph history, UID and freshness facilities are useful backend-private derived-state aids but are not durable programme identity or canonical manufacturing provenance.",
+      "falsification": "The facilities cannot represent one-to-many and many-to-one history or detect graph-generation staleness; no result can promote a graph-local UID to programme identity because that would contradict the canonical journal/provenance contract."
+    }
+  ],
+  "required_probes": [
+    "sequential and interleaved distinct STEP writers",
+    "per-instance and process-global Boolean parallel controls",
+    "1 um positive fuzzy skim",
+    "100-step ascending/descending repeated finish chain",
+    "retrace-jitter segment reference versus one-shot batch",
+    "bounded dense sampled fallback timeout",
+    "BRepGraph split, many-to-one merge, generation freshness and rebuild UID observation"
+  ],
+  "protected_semantics": [
+    "canonical operation journal remains durable manufacturing intent",
+    "BRepGraph and OCCT identifiers remain backend-private derived-state identities",
+    "process isolation remains required unless separately and broadly qualified",
+    "STEP remains mandatory primary engineering output",
+    "valid B-rep is not accepted as proof of materially correct machining",
+    "disconnected bodies, source semantics and provenance may not be silently dropped"
+  ]
+}

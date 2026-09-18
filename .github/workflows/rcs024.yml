@@ -1,0 +1,130 @@
+name: rcs024-occt-current-differential
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-rcs024:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate RCS-024 contracts
+        run: python3 tools/validate_rcs024.py
+
+  differential-linux:
+    needs: validate-rcs024
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    env:
+      RCS006_OCCT_PREFIX: ${{ github.workspace }}/.deps/rcs006/occt-8.0.1
+      RCS006_BUILD_JOBS: 2
+      RCS024_OCCT_PREFIX: ${{ github.workspace }}/.deps/rcs024/occt-8.1.0-dev1
+      RCS024_BUILD_JOBS: 2
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare diagnostic artifact directory
+        run: mkdir -p .results/rcs024/bootstrap
+      - name: Restore baseline OCCT cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .deps/rcs006/occt-8.0.1
+          key: rcs006-occt-8.0.1-${{ runner.os }}-${{ hashFiles('research/rcs-006/harness/bootstrap_occt.sh') }}
+      - name: Restore candidate OCCT cache
+        id: candidate-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .deps/rcs024/occt-8.1.0-dev1
+          key: rcs024-occt-3d097a0328e71b826377d4814ab05ec3c3d23871-${{ runner.os }}-${{ hashFiles('research/rcs-024/bootstrap_candidate.sh') }}
+      - name: Ensure Ninja
+        run: |
+          if ! command -v ninja >/dev/null 2>&1; then sudo apt-get update && sudo apt-get install -y ninja-build; fi
+      - name: Bootstrap exact baseline and candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash research/rcs-006/harness/bootstrap_occt.sh 2>&1 | tee .results/rcs024/bootstrap/baseline-bootstrap.log
+          bash research/rcs-006/harness/verify_occt_install.sh 2>&1 | tee .results/rcs024/bootstrap/baseline-verify.log
+          bash research/rcs-024/bootstrap_candidate.sh 2>&1 | tee .results/rcs024/bootstrap/candidate-bootstrap.log
+      - name: Save candidate cache
+        if: steps.candidate-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: .deps/rcs024/occt-8.1.0-dev1
+          key: rcs024-occt-3d097a0328e71b826377d4814ab05ec3c3d23871-${{ runner.os }}-${{ hashFiles('research/rcs-024/bootstrap_candidate.sh') }}
+      - name: Configure and build baseline probes
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .results/rcs024/probe-build
+          cmake -S research/rcs-024/harness -B .build/rcs024-baseline -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release -DRCS024_OCCT_ROOT="$RCS006_OCCT_PREFIX" \
+            -DRCS024_EXPECTED_VERSION=8.0.1 \
+            -DRCS024_EXPECTED_COMMIT=b8f597c677811d1f9f4d8a97f5ae2825c0353a42 \
+            -DRCS024_LABEL=baseline-8.0.1 \
+            2>&1 | tee .results/rcs024/probe-build/baseline-probe-build.log
+          cmake --build .build/rcs024-baseline --parallel 2 \
+            2>&1 | tee -a .results/rcs024/probe-build/baseline-probe-build.log
+      - name: Configure and build candidate probes
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .results/rcs024/probe-build
+          cmake -S research/rcs-024/harness -B .build/rcs024-candidate -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release -DRCS024_OCCT_ROOT="$RCS024_OCCT_PREFIX" \
+            -DRCS024_EXPECTED_VERSION=8.1.0.dev1 \
+            -DRCS024_EXPECTED_COMMIT=3d097a0328e71b826377d4814ab05ec3c3d23871 \
+            -DRCS024_LABEL=current-8.1.0.dev1 \
+            2>&1 | tee .results/rcs024/probe-build/candidate-probe-build.log
+          cmake --build .build/rcs024-candidate --parallel 2 \
+            2>&1 | tee -a .results/rcs024/probe-build/candidate-probe-build.log
+      - name: Run differential campaign
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .results/rcs024
+          BASE_LIB="$RCS006_OCCT_PREFIX/lib:$RCS006_OCCT_PREFIX/lib64"
+          CAND_LIB="$RCS024_OCCT_PREFIX/lib:$RCS024_OCCT_PREFIX/lib64"
+          # Each executable must resolve the OCCT build it was linked against. Use small launchers.
+          cat > .build/rcs024-baseline/run-worker <<EOF
+          #!/usr/bin/env bash
+          LD_LIBRARY_PATH="$BASE_LIB:\${LD_LIBRARY_PATH:-}" exec "${GITHUB_WORKSPACE}/.build/rcs024-baseline/rcs024_diff_worker" "\$@"
+          EOF
+          cat > .build/rcs024-baseline/run-graph <<EOF
+          #!/usr/bin/env bash
+          LD_LIBRARY_PATH="$BASE_LIB:\${LD_LIBRARY_PATH:-}" exec "${GITHUB_WORKSPACE}/.build/rcs024-baseline/rcs024_brepgraph_probe" "\$@"
+          EOF
+          cat > .build/rcs024-candidate/run-worker <<EOF
+          #!/usr/bin/env bash
+          LD_LIBRARY_PATH="$CAND_LIB:\${LD_LIBRARY_PATH:-}" exec "${GITHUB_WORKSPACE}/.build/rcs024-candidate/rcs024_diff_worker" "\$@"
+          EOF
+          cat > .build/rcs024-candidate/run-graph <<EOF
+          #!/usr/bin/env bash
+          LD_LIBRARY_PATH="$CAND_LIB:\${LD_LIBRARY_PATH:-}" exec "${GITHUB_WORKSPACE}/.build/rcs024-candidate/rcs024_brepgraph_probe" "\$@"
+          EOF
+          chmod +x .build/rcs024-{baseline,candidate}/run-{worker,graph}
+          python3 research/rcs-024/run_differential.py \
+            --baseline-worker .build/rcs024-baseline/run-worker --candidate-worker .build/rcs024-candidate/run-worker \
+            --baseline-graph .build/rcs024-baseline/run-graph --candidate-graph .build/rcs024-candidate/run-graph \
+            --out-dir .results/rcs024
+          python3 - <<'PY'
+          import json, os, pathlib, subprocess
+          roots={"baseline":os.environ["RCS006_OCCT_PREFIX"],"candidate":os.environ["RCS024_OCCT_PREFIX"]}
+          out={}
+          for k,p in roots.items():
+              out[k]={"install_bytes":int(subprocess.check_output(["du","-sb",p],text=True).split()[0])}
+          pathlib.Path('.results/rcs024/footprint.json').write_text(json.dumps(out,indent=2)+"\n")
+          PY
+      - name: Validate measured evidence
+        run: python3 tools/validate_rcs024.py --results-dir .results/rcs024
+      - name: Upload differential evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rcs024-occt-differential
+          path: .results/rcs024
+          if-no-files-found: error
