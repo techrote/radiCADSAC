@@ -14,18 +14,74 @@ from typing import Any
 HERE = Path(__file__).resolve().parent
 
 
-def run_json(command: list[str], timeout: int = 180) -> dict[str, Any]:
-    p = subprocess.run(command, text=True, capture_output=True, timeout=timeout)
-    if p.returncode != 0:
-        raise RuntimeError(f"command failed ({p.returncode}): {' '.join(command)}\nstdout={p.stdout}\nstderr={p.stderr}")
-    for line in reversed([x.strip() for x in p.stdout.splitlines() if x.strip()]):
+def _last_json_payload(stdout: str) -> dict[str, Any] | None:
+    for line in reversed([x.strip() for x in stdout.splitlines() if x.strip()]):
         try:
             value = json.loads(line)
         except json.JSONDecodeError:
             continue
         if isinstance(value, dict) and isinstance(value.get("schema"), str):
             return value
-    raise RuntimeError(f"no JSON payload from {' '.join(command)}\nstdout={p.stdout}\nstderr={p.stderr}")
+    return None
+
+
+def run_json(command: list[str], timeout: int = 180) -> dict[str, Any]:
+    """Run a programme-owned probe whose process failure is a harness failure."""
+    p = subprocess.run(command, text=True, capture_output=True, timeout=timeout)
+    value = _last_json_payload(p.stdout)
+    if p.returncode != 0:
+        raise RuntimeError(
+            f"command failed ({p.returncode}): {' '.join(command)}\n"
+            f"stdout={p.stdout}\nstderr={p.stderr}"
+        )
+    if value is not None:
+        return value
+    raise RuntimeError(
+        f"no JSON payload from {' '.join(command)}\nstdout={p.stdout}\nstderr={p.stderr}"
+    )
+
+
+def run_independent_probe(
+    command: list[str], *, role: str, timeout: int = 180
+) -> dict[str, Any]:
+    """Run independent software without converting its crash/refusal into a CI lie.
+
+    A parser/consumer process failure is interoperability evidence, not a failure of
+    the campaign harness itself. Preserve the exit status and bounded diagnostics so
+    the profile becomes explicitly unqualified while the evidence job can finish.
+    """
+    try:
+        p = subprocess.run(command, text=True, capture_output=True, timeout=timeout)
+    except subprocess.TimeoutExpired as exc:
+        return {
+            "schema": "rcs-022-independent-probe-failure/1.0",
+            "status": "rejected",
+            "role": role,
+            "failure_kind": "timeout",
+            "timeout_s": timeout,
+            "stdout": (exc.stdout or "")[-4000:] if isinstance(exc.stdout, str) else "",
+            "stderr": (exc.stderr or "")[-4000:] if isinstance(exc.stderr, str) else "",
+        }
+
+    value = _last_json_payload(p.stdout)
+    if value is not None:
+        if p.returncode != 0:
+            value = dict(value)
+            value["process_exit_code"] = p.returncode
+            value["process_failure"] = True
+            value.setdefault("status", "rejected")
+            value["stderr_tail"] = p.stderr[-4000:]
+        return value
+
+    return {
+        "schema": "rcs-022-independent-probe-failure/1.0",
+        "status": "rejected",
+        "role": role,
+        "failure_kind": "process_exit" if p.returncode != 0 else "missing_json_payload",
+        "process_exit_code": p.returncode,
+        "stdout_tail": p.stdout[-4000:],
+        "stderr_tail": p.stderr[-4000:],
+    }
 
 
 def max_bbox_delta(a: list[float], b: list[float]) -> float:
@@ -36,7 +92,13 @@ def rel_delta(a: float, b: float) -> float:
     return abs(a - b) / max(abs(a), abs(b), 1.0e-30)
 
 
-def classify_positive(case: dict[str, Any], exporter: dict[str, Any], parser: dict[str, Any], consumer: dict[str, Any], policies: dict[str, Any]) -> tuple[dict[str, bool], list[str]]:
+def classify_positive(
+    case: dict[str, Any],
+    exporter: dict[str, Any],
+    parser: dict[str, Any],
+    consumer: dict[str, Any],
+    policies: dict[str, Any],
+) -> tuple[dict[str, bool], list[str]]:
     checks: dict[str, bool] = {}
     blockers: list[str] = []
     expected_bodies = int(case["body_count"])
@@ -46,25 +108,47 @@ def classify_positive(case: dict[str, Any], exporter: dict[str, Any], parser: di
     checks["layer_c_read_ok"] = bool(exporter["layer_c_readback"].get("read_ok"))
     checks["layer_c_valid_brep"] = bool(rb.get("valid_brep"))
     checks["layer_c_body_count"] = int(rb.get("body_count", -1)) == expected_bodies
-    checks["layer_c_bbox"] = max_bbox_delta(pre["bbox_mm"], rb["bbox_mm"]) <= float(policies["layer_c_max_bbox_delta_mm"])
+    checks["layer_c_bbox"] = (
+        max_bbox_delta(pre["bbox_mm"], rb["bbox_mm"])
+        <= float(policies["layer_c_max_bbox_delta_mm"])
+    )
     av = abs(float(pre["volume_mm3"]) - float(rb["volume_mm3"]))
-    checks["layer_c_volume"] = av <= float(policies["layer_c_max_abs_volume_delta_mm3"]) or rel_delta(float(pre["volume_mm3"]), float(rb["volume_mm3"])) <= float(policies["layer_c_max_rel_volume_delta"])
+    checks["layer_c_volume"] = (
+        av <= float(policies["layer_c_max_abs_volume_delta_mm3"])
+        or rel_delta(float(pre["volume_mm3"]), float(rb["volume_mm3"]))
+        <= float(policies["layer_c_max_rel_volume_delta"])
+    )
 
     checks["parser_accepts"] = parser.get("status") == "accepted"
     checks["parser_ap242"] = "242" in str(parser.get("file_schema", ""))
     checks["parser_body_count"] = int(parser.get("solid_count", -1)) == expected_bodies
     expected_si = 0.001 if case["unit"] == "mm" else 0.0254
-    checks["parser_units"] = math.isclose(float(parser.get("units", {}).get("length_to_si", 0.0)), expected_si, rel_tol=0.0, abs_tol=1.0e-12)
+    checks["parser_units"] = math.isclose(
+        float(parser.get("units", {}).get("length_to_si", 0.0)),
+        expected_si,
+        rel_tol=0.0,
+        abs_tol=1.0e-12,
+    )
     required = case["required_analytic"]
-    checks["parser_analytic"] = int(parser.get("analytic_surfaces", {}).get(required, 0)) > 0
+    checks["parser_analytic"] = (
+        int(parser.get("analytic_surfaces", {}).get(required, 0)) > 0
+    )
 
     checks["consumer_accepts"] = consumer.get("status") == "accepted"
-    checks["consumer_clean"] = bool(consumer.get("clean_import")) and int(consumer.get("skipped_faces", 999999)) == 0
+    checks["consumer_clean"] = bool(consumer.get("clean_import")) and int(
+        consumer.get("skipped_faces", 999999)
+    ) == 0
     checks["consumer_body_count"] = int(consumer.get("solid_count", -1)) == expected_bodies
     diag = consumer.get("mesh_diagnostic", {})
     if consumer.get("status") == "accepted" and diag:
-        checks["consumer_bbox"] = max_bbox_delta(pre["bbox_mm"], diag["bbox_mm"]) <= float(policies["consumer_max_bbox_delta_mm"])
-        checks["consumer_volume"] = rel_delta(float(pre["volume_mm3"]), float(diag["volume_mm3"])) <= float(policies["consumer_max_rel_mesh_volume_delta"])
+        checks["consumer_bbox"] = (
+            max_bbox_delta(pre["bbox_mm"], diag["bbox_mm"])
+            <= float(policies["consumer_max_bbox_delta_mm"])
+        )
+        checks["consumer_volume"] = (
+            rel_delta(float(pre["volume_mm3"]), float(diag["volume_mm3"]))
+            <= float(policies["consumer_max_rel_mesh_volume_delta"])
+        )
     else:
         checks["consumer_bbox"] = False
         checks["consumer_volume"] = False
@@ -77,11 +161,11 @@ def classify_positive(case: dict[str, Any], exporter: dict[str, Any], parser: di
 def mutate_schema(text: str) -> str:
     start = text.find("FILE_SCHEMA")
     if start < 0:
-        return text[: max(1, len(text)//3)]
+        return text[: max(1, len(text) // 3)]
     end = text.find(";", start)
     if end < 0:
-        return text[: max(1, len(text)//3)]
-    return text[:start] + "FILE_SCHEMA(('RCS022_NOT_A_STEP_SCHEMA'));" + text[end+1:]
+        return text[: max(1, len(text) // 3)]
+    return text[:start] + "FILE_SCHEMA(('RCS022_NOT_A_STEP_SCHEMA'));" + text[end + 1 :]
 
 
 def main() -> int:
@@ -101,29 +185,48 @@ def main() -> int:
     blockers: list[str] = []
 
     for case in plan["cases"]:
+        print(f"RCS-022 positive fixture: {case['id']}", file=sys.stderr, flush=True)
         step = out / f"{case['id']}.step"
-        exporter = run_json([args.exporter, "--case", case["id"], "--unit", case["unit"], "--step-file", str(step)])
+        exporter = run_json(
+            [
+                args.exporter,
+                "--case",
+                case["id"],
+                "--unit",
+                case["unit"],
+                "--step-file",
+                str(step),
+            ]
+        )
         if exporter.get("status") != "exported":
-            parser = {"status":"not_run"}
-            consumer = {"status":"not_run"}
+            parser = {"status": "not_run"}
+            consumer = {"status": "not_run"}
             checks = {"export_status": False}
             case_blockers = [f"{case['id']}:export_status"]
             sha = None
         else:
-            parser = run_json([args.parser_probe, str(step)])
-            consumer = run_json([args.consumer_probe, str(step)])
-            checks, case_blockers = classify_positive(case, exporter, parser, consumer, plan["policies"])
+            parser = run_independent_probe(
+                [args.parser_probe, str(step)], role="part21_schema_parser"
+            )
+            consumer = run_independent_probe(
+                [args.consumer_probe, str(step)], role="downstream_solid_consumer"
+            )
+            checks, case_blockers = classify_positive(
+                case, exporter, parser, consumer, plan["policies"]
+            )
             sha = hashlib.sha256(step.read_bytes()).hexdigest()
         blockers.extend(case_blockers)
-        positives.append({
-            "case": case,
-            "step_sha256": sha,
-            "exporter": exporter,
-            "parser": parser,
-            "consumer": consumer,
-            "checks": checks,
-            "qualified": all(checks.values()),
-        })
+        positives.append(
+            {
+                "case": case,
+                "step_sha256": sha,
+                "exporter": exporter,
+                "parser": parser,
+                "consumer": consumer,
+                "checks": checks,
+                "qualified": all(checks.values()),
+            }
+        )
 
     # Adversarial/boundary probes are expected to be rejected by the semantic gate.
     neg: list[dict[str, Any]] = []
@@ -131,40 +234,120 @@ def main() -> int:
     parting = next(x for x in positives if x["case"]["id"] == "two-body-parting")
     cylinder = next(x for x in positives if x["case"]["id"] == "analytic-cylinder")
 
-    wrong_unit_detected = not math.isclose(float(base["parser"].get("units", {}).get("length_to_si", 0.0)), 0.0254, abs_tol=1.0e-12)
-    neg.append({"id":"wrong_unit_scale","passed":wrong_unit_detected,"failure_code":"STEP_UNIT_SCALE_MISMATCH"})
+    wrong_unit_detected = not math.isclose(
+        float(base["parser"].get("units", {}).get("length_to_si", 0.0)),
+        0.0254,
+        abs_tol=1.0e-12,
+    )
+    neg.append(
+        {
+            "id": "wrong_unit_scale",
+            "passed": wrong_unit_detected,
+            "failure_code": "STEP_UNIT_SCALE_MISMATCH",
+        }
+    )
     omitted = int(base["parser"].get("solid_count", -1)) != 2
-    neg.append({"id":"omitted_body","passed":omitted,"failure_code":"STEP_BODY_COUNT_MISMATCH"})
+    neg.append(
+        {
+            "id": "omitted_body",
+            "passed": omitted,
+            "failure_code": "STEP_BODY_COUNT_MISMATCH",
+        }
+    )
 
     invalid_step = out / "invalid-open-shell.step"
-    invalid = run_json([args.exporter, "--case", "invalid-open-shell", "--unit", "mm", "--step-file", str(invalid_step)])
-    neg.append({"id":"invalid_open_non_solid","passed":invalid.get("status") == "refused" and invalid.get("failure_code") == "PREEXPORT_SOLID_CONTRACT_FAILED","failure_code":invalid.get("failure_code")})
+    invalid = run_json(
+        [
+            args.exporter,
+            "--case",
+            "invalid-open-shell",
+            "--unit",
+            "mm",
+            "--step-file",
+            str(invalid_step),
+        ]
+    )
+    neg.append(
+        {
+            "id": "invalid_open_non_solid",
+            "passed": invalid.get("status") == "refused"
+            and invalid.get("failure_code") == "PREEXPORT_SOLID_CONTRACT_FAILED",
+            "failure_code": invalid.get("failure_code"),
+        }
+    )
 
-    analytic_loss = int(base["parser"].get("analytic_surfaces", {}).get("cylinder", 0)) == 0 and int(cylinder["parser"].get("analytic_surfaces", {}).get("cylinder", 0)) > 0
-    neg.append({"id":"analytic_degradation","passed":analytic_loss,"failure_code":"STEP_ANALYTIC_GEOMETRY_LOST"})
+    analytic_loss = (
+        int(base["parser"].get("analytic_surfaces", {}).get("cylinder", 0)) == 0
+        and int(cylinder["parser"].get("analytic_surfaces", {}).get("cylinder", 0)) > 0
+    )
+    neg.append(
+        {
+            "id": "analytic_degradation",
+            "passed": analytic_loss,
+            "failure_code": "STEP_ANALYTIC_GEOMETRY_LOST",
+        }
+    )
 
-    deviation = max_bbox_delta(base["exporter"]["pre_export"]["bbox_mm"], parting["exporter"]["pre_export"]["bbox_mm"]) > float(plan["policies"]["layer_c_max_bbox_delta_mm"])
-    neg.append({"id":"excessive_dimension_volume_deviation","passed":deviation,"failure_code":"STEP_DIMENSION_VOLUME_DEVIATION"})
+    deviation = (
+        max_bbox_delta(
+            base["exporter"]["pre_export"]["bbox_mm"],
+            parting["exporter"]["pre_export"]["bbox_mm"],
+        )
+        > float(plan["policies"]["layer_c_max_bbox_delta_mm"])
+    )
+    neg.append(
+        {
+            "id": "excessive_dimension_volume_deviation",
+            "passed": deviation,
+            "failure_code": "STEP_DIMENSION_VOLUME_DEVIATION",
+        }
+    )
 
     base_path = out / "metric-block.step"
     malformed_schema = out / "adversarial-schema.step"
     malformed_schema.write_text(mutate_schema(base_path.read_text(errors="replace")))
-    bad_parser = run_json([args.parser_probe, str(malformed_schema)])
-    parser_failure = bad_parser.get("status") != "accepted" or "242" not in str(bad_parser.get("file_schema", ""))
-    neg.append({"id":"parser_schema_failure","passed":parser_failure,"failure_code":"STEP_SCHEMA_PARSER_REJECTION","observation":bad_parser})
+    bad_parser = run_independent_probe(
+        [args.parser_probe, str(malformed_schema)], role="part21_schema_parser"
+    )
+    parser_failure = bad_parser.get("status") != "accepted" or "242" not in str(
+        bad_parser.get("file_schema", "")
+    )
+    neg.append(
+        {
+            "id": "parser_schema_failure",
+            "passed": parser_failure,
+            "failure_code": "STEP_SCHEMA_PARSER_REJECTION",
+            "observation": bad_parser,
+        }
+    )
 
     truncated = out / "adversarial-truncated.step"
     raw = base_path.read_bytes()
-    truncated.write_bytes(raw[: max(64, len(raw)//3)])
-    bad_consumer = run_json([args.consumer_probe, str(truncated)])
-    downstream_failure = bad_consumer.get("status") != "accepted" or int(bad_consumer.get("solid_count", 0)) == 0
-    neg.append({"id":"downstream_import_failure","passed":downstream_failure,"failure_code":"STEP_DOWNSTREAM_IMPORT_REJECTION","observation":bad_consumer})
+    truncated.write_bytes(raw[: max(64, len(raw) // 3)])
+    bad_consumer = run_independent_probe(
+        [args.consumer_probe, str(truncated)], role="downstream_solid_consumer"
+    )
+    downstream_failure = bad_consumer.get("status") != "accepted" or int(
+        bad_consumer.get("solid_count", 0)
+    ) == 0
+    neg.append(
+        {
+            "id": "downstream_import_failure",
+            "passed": downstream_failure,
+            "failure_code": "STEP_DOWNSTREAM_IMPORT_REJECTION",
+            "observation": bad_consumer,
+        }
+    )
 
     negative_ok = all(x["passed"] for x in neg)
     if not negative_ok:
         blockers.extend(f"negative:{x['id']}" for x in neg if not x["passed"])
     all_positive = all(x["qualified"] for x in positives)
-    status = "interoperability_qualified" if all_positive and negative_ok else "interoperability_unqualified"
+    status = (
+        "interoperability_qualified"
+        if all_positive and negative_ok
+        else "interoperability_unqualified"
+    )
     summary = {
         "schema": "rcs-022-measured-summary/1.0",
         "profile_id": profile["id"],
@@ -173,7 +356,7 @@ def main() -> int:
             "exporter": "OCCT 8.0.1",
             "parser": "step-io 0.2.4 (Rust; independent of OCCT)",
             "consumer": "vcad-kernel-step 0.10.0 / vcad-kernel-tessellate 0.10.0 (Rust vcad kernel; independent of OCCT)",
-            "same_kernel_layer_c_only": "OCCT writer->fresh OCCT reader is Layer C only and is never counted as Layer D"
+            "same_kernel_layer_c_only": "OCCT writer->fresh OCCT reader is Layer C only and is never counted as Layer D",
         },
         "positive_cases": positives,
         "negative_cases": neg,
@@ -182,11 +365,14 @@ def main() -> int:
         "blockers": sorted(set(blockers)),
         "closure_semantics": "A deterministic unqualified result is a valid research outcome; it must retain exact blockers and must not be relabelled success.",
     }
-    Path(args.output).write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n")
+    output = Path(args.output)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n")
     print(json.dumps(summary, sort_keys=True))
     # Exit nonzero only when the harness itself failed to observe a required negative control.
     # Positive interoperability disagreement is preserved as a bounded negative research result.
     return 0 if negative_ok else 1
+
 
 if __name__ == "__main__":
     raise SystemExit(main())
