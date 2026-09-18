@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "length_unit": "mm",
+  "positive": [
+    {"id":"metric_block","body_count":1,"bbox_mm":[0,0,0,25.4,12.7,6.35],"volume_mm3":2048.383,"analytic_min":{"plane":6}},
+    {"id":"metric_cylinder","body_count":1,"bbox_mm":[-10,-10,0,10,10,25],"volume_mm3":7853.981633974483,"analytic_min":{"plane":2,"cylinder":1}},
+    {"id":"inch_equivalent","body_count":1,"bbox_mm":[0,0,0,25.4,12.7,6.35],"volume_mm3":2048.383,"analytic_min":{"plane":6},"export_unit":"inch"},
+    {"id":"analytic_cone","body_count":1,"bbox_mm":[-12,-12,0,12,12,30],"volume_mm3":7194.247176720625,"analytic_min":{"plane":2,"cone":1}},
+    {"id":"through_hole","body_count":1,"bbox_mm":[0,0,0,40,30,10],"volume_mm3":11497.345175425633,"analytic_min":{"plane":6,"cylinder":1}},
+    {"id":"blind_bore","body_count":1,"bbox_mm":[0,0,0,40,30,10],"volume_mm3":11798.938070170254,"analytic_min":{"plane":7,"cylinder":1}},
+    {"id":"two_body_parting","body_count":2,"bbox_mm":[-20,-20,0,20,20,80],"volume_mm3":98017.69079200155,"analytic_min":{"plane":4,"cylinder":2}},
+    {"id":"accepted_lathe","body_count":1,"bbox_mm":[-20,-20,0,20,20,80],"volume_mm3":80424.77193189871,"analytic_min":{"plane":3,"cylinder":2},"provenance":"RCS-020 representative accepted lathe topology"},
+    {"id":"accepted_mill","body_count":2,"bbox_mm":[0,0,0,40,30,10],"volume_mm3":11400.0,"analytic_min":{"plane":12},"provenance":"RCS-021 stock-spanning cut-through topology"},
+    {"id":"healed_reconciled","body_count":2,"bbox_mm":[0,0,0,40,20,10],"volume_mm3":8000.0,"analytic_min":{"plane":10},"require_pre_post_measurement":true},
+    {"id":"trimmed_analytic","body_count":1,"bbox_mm":[-15,-15,0,15,15,20],"volume_mm3":null,"analytic_min":{"plane":4,"cylinder":1}}
+  ],
+  "negative_required_codes": [
+    "UNIT_OR_SCALE_MISMATCH",
+    "BODY_COUNT_MISMATCH",
+    "VOID_OR_CONNECTIVITY_MISMATCH",
+    "ANALYTIC_GEOMETRY_LOST",
+    "GEOMETRIC_DEVIATION_EXCEEDED",
+    "INDEPENDENT_PARSE_FAILED",
+    "DOWNSTREAM_CONSUMER_FAILURE"
+  ]
+}
