@@ -1,0 +1,9 @@
+[package]
+name = "rcs022-stepio-probe"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+publish = false
+
+[dependencies]
+step-io = "=0.2.4"

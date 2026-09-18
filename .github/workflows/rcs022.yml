@@ -1,0 +1,85 @@
+name: rcs022-step-layer-d-interop
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  rcs022-layer-d:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    env:
+      RCS006_OCCT_PREFIX: ${{ github.workspace }}/.deps/rcs006/occt-8.0.1
+      RCS006_BUILD_JOBS: 2
+      CARGO_TARGET_DIR: ${{ github.workspace }}/.build/rcs022-rust
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate static RCS-022 contracts
+        run: python3 tools/validate_rcs022.py
+      - name: Compile Python harness
+        run: python3 -m py_compile research/rcs-022/run_campaign.py tools/validate_rcs022.py
+      - name: Restore pinned OCCT cache
+        id: occt-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .deps/rcs006/occt-8.0.1
+          key: rcs006-occt-8.0.1-${{ runner.os }}-${{ hashFiles('research/rcs-006/harness/bootstrap_occt.sh') }}
+      - name: Install cold-bootstrap/build prerequisites
+        if: steps.occt-cache.outputs.cache-hit != 'true'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build
+      - name: Ensure Ninja is available on cache hit
+        if: steps.occt-cache.outputs.cache-hit == 'true'
+        run: |
+          if ! command -v ninja >/dev/null 2>&1; then sudo apt-get update && sudo apt-get install -y ninja-build; fi
+      - name: Bootstrap exact OCCT baseline if required
+        run: bash research/rcs-006/harness/bootstrap_occt.sh
+      - name: Verify exact OCCT baseline
+        run: bash research/rcs-006/harness/verify_occt_install.sh
+      - name: Configure OCCT exporter probe
+        run: |
+          cmake -S research/rcs-022/harness -B .build/rcs022-exporter -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$RCS006_OCCT_PREFIX"
+      - name: Build OCCT exporter probe
+        run: cmake --build .build/rcs022-exporter --parallel 2
+      - name: Resolve and build independent Part-21/schema parser
+        run: |
+          cargo generate-lockfile --manifest-path research/rcs-022/parser_probe/Cargo.toml
+          cargo build --locked --release --manifest-path research/rcs-022/parser_probe/Cargo.toml
+      - name: Resolve and build independent downstream solid consumer
+        run: |
+          cargo generate-lockfile --manifest-path research/rcs-022/consumer_probe/Cargo.toml
+          cargo build --locked --release --manifest-path research/rcs-022/consumer_probe/Cargo.toml
+      - name: Run full Layer-D qualification and adversarial controls
+        shell: bash
+        run: |
+          set -euo pipefail
+          export LD_LIBRARY_PATH="$RCS006_OCCT_PREFIX/lib:$RCS006_OCCT_PREFIX/lib64:${LD_LIBRARY_PATH:-}"
+          mkdir -p .results/rcs022
+          python3 research/rcs-022/run_campaign.py \
+            --exporter .build/rcs022-exporter/rcs022_step_exporter \
+            --parser-probe .build/rcs022-rust/release/rcs022-stepio-probe \
+            --consumer-probe .build/rcs022-rust/release/rcs022-vcad-probe \
+            --out-dir .results/rcs022/step \
+            --output .results/rcs022/measured-summary-v1.json
+      - name: Validate measured evidence
+        run: python3 tools/validate_rcs022.py --summary .results/rcs022/measured-summary-v1.json
+      - name: Emit measured summary to job log
+        run: cat .results/rcs022/measured-summary-v1.json
+      - name: Upload RCS-022 evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rcs022-step-layer-d-evidence
+          path: .results/rcs022
+          if-no-files-found: error

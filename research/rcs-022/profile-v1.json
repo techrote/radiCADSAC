@@ -1,0 +1,40 @@
+{
+  "schema": "rcs-022-export-profile/1.0",
+  "id": "rcs-022-occt-ap242dis-layer-d/1.0",
+  "exporter": {
+    "product": "Open CASCADE Technology",
+    "version": "8.0.1",
+    "source_commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42",
+    "schema_mode": "AP242DIS",
+    "model_type": "STEPControl_ManifoldSolidBrep",
+    "tessellated": false,
+    "assembly_mode": "auto",
+    "precision_mode": "greatest",
+    "precision_value_file_unit": 0.0001,
+    "surface_curves": true,
+    "nonmanifold": false,
+    "units": ["mm", "inch"]
+  },
+  "layer_d": {
+    "parser": {
+      "product": "step-io",
+      "version": "0.2.4",
+      "implementation": "Rust universal-schema ISO 10303 Part-21 reader; no OCCT dependency",
+      "role": "independent Part-21/schema-aware parser evidence"
+    },
+    "solid_consumer": {
+      "product": "vcad-kernel-step",
+      "version": "0.10.0",
+      "source_commit": "eba7a2e6a89ff06801776fbc599d5c8a64036168",
+      "implementation": "Rust vcad B-rep kernel STEP reader; no OCCT dependency",
+      "role": "independent downstream solid consumer"
+    },
+    "consumer_mesh_diagnostic": {
+      "product": "vcad-kernel-tessellate",
+      "version": "0.10.0",
+      "authority": "bounded diagnostic only; OCCT Layer-C B-rep metrics remain strict contract checks"
+    }
+  },
+  "refusal_policy": "invalid/open/non-solid, non-positive material, excessive topology tolerance, missing body, unit/schema/parser/consumer disagreement are explicit rejection/unqualification conditions; no tolerance widening, healing-after-export, body dropping, or tessellated substitution is permitted",
+  "provenance_policy": "every emitted STEP is SHA-256 digested and bound in campaign evidence to fixture source, exporter profile id, expected body set, and independent parser/consumer observations"
+}

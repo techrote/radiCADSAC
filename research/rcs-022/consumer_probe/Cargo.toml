@@ -1,0 +1,9 @@
+[package]
+name = "rcs022-vcad-probe"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+vcad-kernel-step = "=0.10.0"
+vcad-kernel-tessellate = "=0.10.0"
