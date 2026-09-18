@@ -8,8 +8,9 @@
     "source_commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42",
     "license": "LGPL-2.1 with OCCT exception",
     "build_profile": "release-shared-cxx17-worker-only-headless-v4",
-    "toolkits": ["TKernel","TKMath","TKG2d","TKG3d","TKGeomBase","TKBRep","TKGeomAlgo","TKTopAlgo","TKPrim","TKBO","TKShHealing","TKDE","TKXSBase","TKDESTEP"],
+    "toolkits": ["TKernel", "TKMath", "TKG2d", "TKG3d", "TKGeomBase", "TKBRep", "TKGeomAlgo", "TKTopAlgo", "TKPrim", "TKBO", "TKShHealing", "TKDE", "TKXSBase", "TKDESTEP"],
     "schema_mode": "AP242DIS",
+    "observed_serialized_schema_identifier": "AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF {1 0 10303 442 1 1 4 }",
     "schema_claim": "OCCT implementation mode only; not ISO 10303-242:2025 Edition-4 certification",
     "model_type": "STEPControl_ManifoldSolidBrep",
     "tessellated": false,
@@ -68,9 +69,15 @@
       "execution": "separate bounded child process after a successful vcad B-rep import",
       "authority": "bounded diagnostic only; OCCT Layer-C B-rep metrics remain strict contract checks"
     },
-    "dependency_lock_policy": "direct crate versions are exact pins; generated Cargo.lock files and cargo metadata are retained with final campaign evidence"
+    "dependency_lock_policy": "direct versions and complete transitive graphs are frozen in committed Cargo.lock files; CI uses cargo build --locked and retains cargo metadata with each evidence artifact"
+  },
+  "measured_status": {
+    "result": "interoperability_unqualified",
+    "frozen_record": "research/rcs-022/frozen-result-v1.json",
+    "reason": "all 11 positive fixtures passed Layer C, independent Part-21 parsing and clean independent vcad B-rep import with exact body counts; the bounded vcad mesh-diagnostic path failed the declared metric envelope",
+    "production_layer_d_authorized": false
   },
   "refusal_policy": "invalid/open/non-solid, non-positive material, excessive topology tolerance, missing body, unit/schema/parser/consumer disagreement are explicit rejection/unqualification conditions; no tolerance widening, healing-after-export, body dropping, or tessellated substitution is permitted",
   "provenance_policy": "every emitted STEP is SHA-256 digested and bound in campaign evidence to fixture source, exporter profile id, expected body set, and independent parser/consumer observations",
-  "rerun_triggers": ["OCCT exporter version or source commit","STEP schema or solid model mode","precision/tolerance or shape-processing policy","body/product representation policy","process/global-state configuration or independent probe bounds","step-io parser version","vcad STEP/B-rep consumer version or implementation","consumer diagnostic implementation"]
+  "rerun_triggers": ["OCCT exporter version or source commit", "STEP schema or solid model mode", "precision/tolerance or shape-processing policy", "body/product representation policy", "process/global-state configuration or independent probe bounds", "step-io parser version", "vcad STEP/B-rep consumer version or implementation", "consumer diagnostic implementation"]
 }
