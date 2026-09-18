@@ -2,7 +2,9 @@
 set -euo pipefail
 
 EXPECTED_COMMIT="3d097a0328e71b826377d4814ab05ec3c3d23871"
-EXPECTED_VERSION="8.1.0.dev1"
+EXPECTED_VERSION_COMPLETE="8.1.0"
+EXPECTED_VERSION_DEVELOPMENT="dev1"
+EXPECTED_VERSION_EXT="${EXPECTED_VERSION_COMPLETE}.${EXPECTED_VERSION_DEVELOPMENT}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 DEPS_ROOT="${RCS024_DEPS_ROOT:-${REPO_ROOT}/.deps/rcs024}"
@@ -16,7 +18,9 @@ ADDITIONAL_TOOLKITS="TKernel;TKMath;TKG2d;TKG3d;TKGeomBase;TKBRep;TKGeomAlgo;TKT
 
 install_is_usable() {
   [[ -f "${INSTALL_DIR}/include/opencascade/Standard_Version.hxx" ]] || return 1
-  grep -q "#define OCC_VERSION_COMPLETE \"${EXPECTED_VERSION}\"" "${INSTALL_DIR}/include/opencascade/Standard_Version.hxx" || return 1
+  local version_header="${INSTALL_DIR}/include/opencascade/Standard_Version.hxx"
+  grep -Fq "#define OCC_VERSION_COMPLETE \"${EXPECTED_VERSION_COMPLETE}\"" "${version_header}" || return 1
+  grep -Fq "#define OCC_VERSION_DEVELOPMENT \"${EXPECTED_VERSION_DEVELOPMENT}\"" "${version_header}" || return 1
   [[ -f "${INSTALL_DIR}/include/opencascade/BRepGraph.hxx" ]] || return 1
   local toolkit libdir found
   for toolkit in "${REQUIRED_TOOLKITS[@]}"; do
@@ -59,7 +63,9 @@ install_is_usable
 cat > "${INSTALL_DIR}/RCS024_SOURCE_PIN.txt" <<EOF
 repository=https://github.com/Open-Cascade-SAS/OCCT.git
 commit=${EXPECTED_COMMIT}
-version=${EXPECTED_VERSION}
+version=${EXPECTED_VERSION_EXT}
+version_complete=${EXPECTED_VERSION_COMPLETE}
+version_development=${EXPECTED_VERSION_DEVELOPMENT}
 build_profile=release-shared-cxx17-worker-only-headless-v4-compatible
 selected_toolkits=${ADDITIONAL_TOOLKITS}
 EOF
