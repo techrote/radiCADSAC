@@ -60,6 +60,14 @@ def static():
     if "std::string(OCC_VERSION_COMPLETE)!=RCS024_EXPECTED_VERSION" in text:
       fail(rel+" regressed to release-only version comparison")
 
+  graph_probe=(ROOT/"research/rcs-024/harness/brepgraph_probe.cpp").read_text(encoding="utf-8")
+  # BRepGraph.hxx intentionally forward-declares these public views.  Keep their
+  # defining headers explicit so both exact pins compile rather than depending on
+  # accidental transitive includes from a particular upstream snapshot.
+  for header in ("BRepGraph_ShapesView.hxx", "BRepGraph_LayerRegistry.hxx", "BRepGraph_UIDsView.hxx"):
+    if f"#include <{header}>" not in graph_probe:
+      fail("BRepGraph probe lost complete-view include: "+header)
+
   validate_probe_logging((ROOT/".github/workflows/rcs024.yml").read_text(encoding="utf-8"))
 
 def dynamic(results):
