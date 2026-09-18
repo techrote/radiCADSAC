@@ -4,8 +4,28 @@
   "exporter": {
     "product": "Open CASCADE Technology",
     "version": "8.0.1",
+    "source_repository": "https://github.com/Open-Cascade-SAS/OCCT.git",
     "source_commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42",
+    "license": "LGPL-2.1 with OCCT exception",
+    "build_profile": "release-shared-cxx17-worker-only-headless-v4",
+    "toolkits": [
+      "TKernel",
+      "TKMath",
+      "TKG2d",
+      "TKG3d",
+      "TKGeomBase",
+      "TKBRep",
+      "TKGeomAlgo",
+      "TKTopAlgo",
+      "TKPrim",
+      "TKBO",
+      "TKShHealing",
+      "TKDE",
+      "TKXSBase",
+      "TKDESTEP"
+    ],
     "schema_mode": "AP242DIS",
+    "schema_claim": "OCCT implementation mode only; not ISO 10303-242:2025 Edition-4 certification",
     "model_type": "STEPControl_ManifoldSolidBrep",
     "tessellated": false,
     "assembly_mode": "auto",
@@ -13,28 +33,60 @@
     "precision_value_file_unit": 0.0001,
     "surface_curves": true,
     "nonmanifold": false,
-    "units": ["mm", "inch"]
+    "units": ["mm", "inch"],
+    "shape_processing": {
+      "programme_healing": "none during serialization; any reconciliation is explicit and measured before writer transfer",
+      "writer_translation_defaults": "OCCT 8.0.1 defaults not otherwise overridden by the fields pinned in this profile",
+      "healed_fixture": "healed-same-domain uses ShapeUpgrade_UnifySameDomain before export and records pre/post metrics"
+    }
+  },
+  "execution": {
+    "process_isolation": "one short-lived exporter process per fixture; no concurrent OCCT calls within a fixture",
+    "global_state_policy": "DESTEP_Parameters constructed and populated per fixture; the RCS-022 harness performs no Interface_Static mutation",
+    "layer_c_readback": {
+      "product": "Open CASCADE Technology",
+      "version": "8.0.1",
+      "reader": "STEPControl_Reader",
+      "session": "fresh reader instance in the same short-lived fixture process after serialization",
+      "root_policy": "TransferRoots then OneShape",
+      "authority": "Layer C only; never counted as independent Layer D evidence"
+    }
   },
   "layer_d": {
     "parser": {
       "product": "step-io",
       "version": "0.2.4",
-      "implementation": "Rust universal-schema ISO 10303 Part-21 reader; no OCCT dependency",
-      "role": "independent Part-21/schema-aware parser evidence"
+      "source_repository": "https://github.com/elgar328/step-io",
+      "implementation": "pure Rust universal-schema ISO 10303 Part-21 reader; no OCCT dependency",
+      "role": "independent Part-21/schema-aware parser evidence",
+      "limitations": "parser/schema evidence only; does not replace a downstream solid-kernel import"
     },
     "solid_consumer": {
       "product": "vcad-kernel-step",
       "version": "0.10.0",
+      "source_repository": "https://github.com/ecto/vcad",
       "source_commit": "eba7a2e6a89ff06801776fbc599d5c8a64036168",
-      "implementation": "Rust vcad B-rep kernel STEP reader; no OCCT dependency",
-      "role": "independent downstream solid consumer"
+      "implementation": "pure Rust vcad B-rep kernel STEP reader using stepperoni; no OCCT dependency",
+      "role": "independent downstream solid consumer",
+      "declared_upstream_scope": "vcad documents AP214 as its primary STEP target; RCS-022 therefore treats acceptance of the OCCT AP242DIS files as measured evidence, not assumed capability"
     },
     "consumer_mesh_diagnostic": {
       "product": "vcad-kernel-tessellate",
       "version": "0.10.0",
       "authority": "bounded diagnostic only; OCCT Layer-C B-rep metrics remain strict contract checks"
-    }
+    },
+    "dependency_lock_policy": "direct crate versions are exact pins; generated Cargo.lock files and cargo metadata are retained with final campaign evidence"
   },
   "refusal_policy": "invalid/open/non-solid, non-positive material, excessive topology tolerance, missing body, unit/schema/parser/consumer disagreement are explicit rejection/unqualification conditions; no tolerance widening, healing-after-export, body dropping, or tessellated substitution is permitted",
-  "provenance_policy": "every emitted STEP is SHA-256 digested and bound in campaign evidence to fixture source, exporter profile id, expected body set, and independent parser/consumer observations"
+  "provenance_policy": "every emitted STEP is SHA-256 digested and bound in campaign evidence to fixture source, exporter profile id, expected body set, and independent parser/consumer observations",
+  "rerun_triggers": [
+    "OCCT exporter version or source commit",
+    "STEP schema or solid model mode",
+    "precision/tolerance or shape-processing policy",
+    "body/product representation policy",
+    "process/global-state configuration",
+    "step-io parser version",
+    "vcad STEP/B-rep consumer version or implementation",
+    "consumer diagnostic implementation"
+  ]
 }
