@@ -12,13 +12,15 @@ Disconnected material is not normalized away. Each solid is transferred into the
 
 `step-io 0.2.4` is the schema-capable Part-21 parser. It is a Rust implementation with no OCCT dependency and exposes the file schema, units, B-rep solids, surfaces, and warnings. It replaces STEPcode only as the concrete RCS-022 parser implementation; it does not change the normative requirement for implementation independence.
 
-`vcad-kernel-step 0.10.0` is the downstream solid consumer. It builds vcad B-rep solids and exposes explicit skipped-face/degradation reporting. It is independently implemented from OCCT. `vcad-kernel-tessellate 0.10.0` is used only to calculate consumer-side bbox/volume diagnostics. Those mesh-derived properties are bounded observations, not a replacement for the strict B-rep round-trip criteria at Layer C.
+`vcad-kernel-step 0.10.0` is the downstream solid consumer. It builds vcad B-rep solids and exposes explicit skipped-face/degradation reporting. It is independently implemented from OCCT. Its B-rep import observation runs separately from `vcad-kernel-tessellate 0.10.0`, which is invoked only after an accepted import to calculate consumer-side bbox/volume diagnostics. This separation prevents a tessellator crash, timeout, or resource exhaustion from erasing the independent B-rep import observation.
+
+The independent parser/consumer children are deliberately bounded to 8 seconds wall time, 6 seconds CPU time and 1 GiB address space. A bound hit is evidence that the exact tested implementation/profile did not interoperate within the declared qualification envelope. It therefore produces a fail-closed `interoperability_unqualified` blocker instead of being allowed to terminate the CI runner or being reclassified as success.
 
 FreeCAD or another OCCT-backed application would not satisfy this evidence role merely by being a different product, because it would reuse the same underlying STEP/kernel stack. RCS-022 therefore does not count such wrappers as independent.
 
 ## Evidence gates
 
-A positive fixture requires: successful exporter status; valid fresh-reader B-rep; exact expected body count; Layer-C bbox within 0.005 mm and volume within either 0.001 mm3 absolute or 1e-6 relative; independent parser acceptance of AP242; correct parser unit scale; exact parser solid count; required analytic surface recognition; independent consumer acceptance without skipped faces; exact consumer solid count; consumer bbox within 0.05 mm; and consumer tessellated volume within 2% relative of exporter material volume.
+A positive fixture requires: successful exporter status; valid fresh-reader B-rep; exact expected body count; Layer-C bbox within 0.005 mm and volume within either 0.001 mm3 absolute or 1e-6 relative; independent parser acceptance of AP242; correct parser unit scale; exact parser solid count; required analytic surface recognition; independent consumer acceptance without skipped faces; exact consumer solid count; successful bounded consumer diagnostic; consumer bbox within 0.05 mm; and consumer tessellated volume within 2% relative of exporter material volume.
 
 The wider consumer diagnostic bounds acknowledge tessellation and f32 conversion inside that independent inspection path. They are not export tolerances and cannot make a Layer-C failure pass.
 
@@ -32,7 +34,7 @@ The RCS-021 mill cut-through case consumes the protected two-body material invar
 
 ## Provenance and canonical-state boundary
 
-Every generated STEP file is hashed with SHA-256 and evidence binds the digest to the fixture source description, exporter profile id, expected body count, same-kernel readback, independent parser observation, and independent consumer observation. These files are derived interchange artifacts. They neither replace nor mutate the canonical journal, protected source semantics, machine state, body lineage, or provenance records.
+Every generated STEP file is hashed with SHA-256 and evidence binds the digest to the fixture source description, exporter profile id, expected body count, same-kernel readback, independent parser observation, and independent consumer observation. Generated Cargo lockfiles, Cargo metadata, Rust compiler identity and Cargo identity are retained with the workflow artifact so the exact independent dependency graph is evidence-bearing. These files are derived interchange artifacts. They neither replace nor mutate the canonical journal, protected source semantics, machine state, body lineage, or provenance records.
 
 ## Qualification semantics
 
