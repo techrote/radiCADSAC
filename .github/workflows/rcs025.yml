@@ -1,0 +1,41 @@
+name: rcs025-provider-handoff-stress
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-rcs025:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate static RCS-025 contracts
+        run: python3 tools/validate_rcs025.py
+      - name: Compile research harness
+        run: python3 -m py_compile research/rcs-025/*.py
+      - name: Run adversarial and boundary tests
+        run: python3 -m unittest discover -v -s research/rcs-025 -p 'test_*.py'
+      - name: Run deterministic handoff/reconciliation campaign
+        run: |
+          python3 research/rcs-025/run_campaign.py \
+            --out-dir .results/rcs025 \
+            --compare-reference research/rcs-025/reference-results-v1.json
+      - name: Validate live evidence against frozen reference
+        run: python3 tools/validate_rcs025.py --results-dir .results/rcs025
+      - name: Upload RCS-025 evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rcs025-provider-handoff-stress
+          path: .results/rcs025
+          if-no-files-found: error
