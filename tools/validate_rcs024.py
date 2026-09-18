@@ -61,12 +61,21 @@ def static():
       fail(rel+" regressed to release-only version comparison")
 
   graph_probe=(ROOT/"research/rcs-024/harness/brepgraph_probe.cpp").read_text(encoding="utf-8")
-  # BRepGraph.hxx intentionally forward-declares these public views.  Keep their
+  # BRepGraph.hxx intentionally forward-declares these public views. Keep their
   # defining headers explicit so both exact pins compile rather than depending on
   # accidental transitive includes from a particular upstream snapshot.
   for header in ("BRepGraph_ShapesView.hxx", "BRepGraph_LayerRegistry.hxx", "BRepGraph_UIDsView.hxx"):
     if f"#include <{header}>" not in graph_probe:
       fail("BRepGraph probe lost complete-view include: "+header)
+  # FindModified/FindOriginals expose layer-owned vectors. Their addresses are not
+  # stable across Record/Clear mutations, so the probe must snapshot scalar evidence
+  # before it mutates the history layer again.
+  for token in ("const std::size_t split_image_count", "const std::size_t merge_origin_count", "if(split_image_count!=2 || merge_origin_count!=2)"):
+    if token not in graph_probe: fail("BRepGraph borrowed-history boundary guard lost: "+token)
+  clear_at=graph_probe.find("graph.Clear()")
+  if clear_at < 0: fail("BRepGraph clear/freshness boundary missing")
+  if re.search(r"(?:split_images|merge_origins)->", graph_probe[clear_at:]):
+    fail("BRepGraph borrowed history pointer escaped across graph.Clear()")
 
   runner=(ROOT/"research/rcs-024/run_differential.py").read_text(encoding="utf-8")
   for token in ("differential-partial.json", "write_partial()", "def require(condition, message):"):
