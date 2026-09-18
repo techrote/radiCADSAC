@@ -11,7 +11,15 @@ import subprocess
 import sys
 from typing import Any
 
+try:
+    import resource
+except ImportError:  # pragma: no cover - CI qualification is Linux, guard local portability.
+    resource = None  # type: ignore[assignment]
+
 HERE = Path(__file__).resolve().parent
+INDEPENDENT_WALL_TIMEOUT_S = 8
+INDEPENDENT_CPU_LIMIT_S = 6
+INDEPENDENT_ADDRESS_SPACE_BYTES = 1024 * 1024 * 1024
 
 
 def _last_json_payload(stdout: str) -> dict[str, Any] | None:
@@ -23,6 +31,20 @@ def _last_json_payload(stdout: str) -> dict[str, Any] | None:
         if isinstance(value, dict) and isinstance(value.get("schema"), str):
             return value
     return None
+
+
+def _bound_independent_child() -> None:
+    """Keep an incompatible third-party parser/consumer from taking down CI."""
+    if resource is None:
+        return
+    resource.setrlimit(
+        resource.RLIMIT_AS,
+        (INDEPENDENT_ADDRESS_SPACE_BYTES, INDEPENDENT_ADDRESS_SPACE_BYTES),
+    )
+    resource.setrlimit(
+        resource.RLIMIT_CPU,
+        (INDEPENDENT_CPU_LIMIT_S, INDEPENDENT_CPU_LIMIT_S),
+    )
 
 
 def run_json(command: list[str], timeout: int = 180) -> dict[str, Any]:
@@ -41,35 +63,52 @@ def run_json(command: list[str], timeout: int = 180) -> dict[str, Any]:
     )
 
 
-def run_independent_probe(
-    command: list[str], *, role: str, timeout: int = 180
-) -> dict[str, Any]:
-    """Run independent software without converting its crash/refusal into a CI lie.
+def run_independent_probe(command: list[str], *, role: str) -> dict[str, Any]:
+    """Run independent software as bounded evidence, not as authority over CI.
 
-    A parser/consumer process failure is interoperability evidence, not a failure of
-    the campaign harness itself. Preserve the exit status and bounded diagnostics so
-    the profile becomes explicitly unqualified while the evidence job can finish.
+    A parser/consumer refusal, crash, resource exhaustion, or timeout is an
+    interoperability observation. It must make the exact profile unqualified while
+    allowing the campaign to finish and retain the blocker instead of killing the
+    evidence runner or being cosmetically relabelled as success.
     """
+    kwargs: dict[str, Any] = {
+        "text": True,
+        "capture_output": True,
+        "timeout": INDEPENDENT_WALL_TIMEOUT_S,
+    }
+    if resource is not None:
+        kwargs["preexec_fn"] = _bound_independent_child
     try:
-        p = subprocess.run(command, text=True, capture_output=True, timeout=timeout)
+        p = subprocess.run(command, **kwargs)
     except subprocess.TimeoutExpired as exc:
         return {
             "schema": "rcs-022-independent-probe-failure/1.0",
             "status": "rejected",
             "role": role,
-            "failure_kind": "timeout",
-            "timeout_s": timeout,
-            "stdout": (exc.stdout or "")[-4000:] if isinstance(exc.stdout, str) else "",
-            "stderr": (exc.stderr or "")[-4000:] if isinstance(exc.stderr, str) else "",
+            "failure_kind": "wall_timeout",
+            "wall_timeout_s": INDEPENDENT_WALL_TIMEOUT_S,
+            "cpu_limit_s": INDEPENDENT_CPU_LIMIT_S,
+            "address_space_limit_bytes": INDEPENDENT_ADDRESS_SPACE_BYTES,
+            "stdout_tail": (exc.stdout or "")[-4000:]
+            if isinstance(exc.stdout, str)
+            else "",
+            "stderr_tail": (exc.stderr or "")[-4000:]
+            if isinstance(exc.stderr, str)
+            else "",
         }
 
     value = _last_json_payload(p.stdout)
     if value is not None:
+        value = dict(value)
+        value["probe_bounds"] = {
+            "wall_timeout_s": INDEPENDENT_WALL_TIMEOUT_S,
+            "cpu_limit_s": INDEPENDENT_CPU_LIMIT_S,
+            "address_space_limit_bytes": INDEPENDENT_ADDRESS_SPACE_BYTES,
+        }
         if p.returncode != 0:
-            value = dict(value)
             value["process_exit_code"] = p.returncode
             value["process_failure"] = True
-            value.setdefault("status", "rejected")
+            value["status"] = "rejected"
             value["stderr_tail"] = p.stderr[-4000:]
         return value
 
@@ -79,6 +118,9 @@ def run_independent_probe(
         "role": role,
         "failure_kind": "process_exit" if p.returncode != 0 else "missing_json_payload",
         "process_exit_code": p.returncode,
+        "wall_timeout_s": INDEPENDENT_WALL_TIMEOUT_S,
+        "cpu_limit_s": INDEPENDENT_CPU_LIMIT_S,
+        "address_space_limit_bytes": INDEPENDENT_ADDRESS_SPACE_BYTES,
         "stdout_tail": p.stdout[-4000:],
         "stderr_tail": p.stderr[-4000:],
     }
@@ -96,7 +138,8 @@ def classify_positive(
     case: dict[str, Any],
     exporter: dict[str, Any],
     parser: dict[str, Any],
-    consumer: dict[str, Any],
+    consumer_import: dict[str, Any],
+    consumer_diagnostic: dict[str, Any],
     policies: dict[str, Any],
 ) -> tuple[dict[str, bool], list[str]]:
     checks: dict[str, bool] = {}
@@ -134,13 +177,19 @@ def classify_positive(
         int(parser.get("analytic_surfaces", {}).get(required, 0)) > 0
     )
 
-    checks["consumer_accepts"] = consumer.get("status") == "accepted"
-    checks["consumer_clean"] = bool(consumer.get("clean_import")) and int(
-        consumer.get("skipped_faces", 999999)
+    checks["consumer_accepts"] = consumer_import.get("status") == "accepted"
+    checks["consumer_clean"] = bool(consumer_import.get("clean_import")) and int(
+        consumer_import.get("skipped_faces", 999999)
     ) == 0
-    checks["consumer_body_count"] = int(consumer.get("solid_count", -1)) == expected_bodies
-    diag = consumer.get("mesh_diagnostic", {})
-    if consumer.get("status") == "accepted" and diag:
+    checks["consumer_body_count"] = (
+        int(consumer_import.get("solid_count", -1)) == expected_bodies
+    )
+
+    diag = consumer_diagnostic.get("mesh_diagnostic", {})
+    checks["consumer_diagnostic_accepts"] = (
+        consumer_diagnostic.get("status") == "accepted"
+    )
+    if consumer_diagnostic.get("status") == "accepted" and diag:
         checks["consumer_bbox"] = (
             max_bbox_delta(pre["bbox_mm"], diag["bbox_mm"])
             <= float(policies["consumer_max_bbox_delta_mm"])
@@ -152,6 +201,7 @@ def classify_positive(
     else:
         checks["consumer_bbox"] = False
         checks["consumer_volume"] = False
+
     for name, ok in checks.items():
         if not ok:
             blockers.append(f"{case['id']}:{name}")
@@ -200,7 +250,8 @@ def main() -> int:
         )
         if exporter.get("status") != "exported":
             parser = {"status": "not_run"}
-            consumer = {"status": "not_run"}
+            consumer_import = {"status": "not_run"}
+            consumer_diagnostic = {"status": "not_run"}
             checks = {"export_status": False}
             case_blockers = [f"{case['id']}:export_status"]
             sha = None
@@ -208,11 +259,29 @@ def main() -> int:
             parser = run_independent_probe(
                 [args.parser_probe, str(step)], role="part21_schema_parser"
             )
-            consumer = run_independent_probe(
-                [args.consumer_probe, str(step)], role="downstream_solid_consumer"
+            consumer_import = run_independent_probe(
+                [args.consumer_probe, str(step), "--import-only"],
+                role="downstream_solid_consumer_import",
             )
+            if consumer_import.get("status") == "accepted":
+                consumer_diagnostic = run_independent_probe(
+                    [args.consumer_probe, str(step)],
+                    role="downstream_consumer_mesh_diagnostic",
+                )
+            else:
+                consumer_diagnostic = {
+                    "schema": "rcs-022-independent-probe-not-run/1.0",
+                    "status": "not_run",
+                    "role": "downstream_consumer_mesh_diagnostic",
+                    "reason": "independent B-rep import did not accept the fixture",
+                }
             checks, case_blockers = classify_positive(
-                case, exporter, parser, consumer, plan["policies"]
+                case,
+                exporter,
+                parser,
+                consumer_import,
+                consumer_diagnostic,
+                plan["policies"],
             )
             sha = hashlib.sha256(step.read_bytes()).hexdigest()
         blockers.extend(case_blockers)
@@ -222,7 +291,8 @@ def main() -> int:
                 "step_sha256": sha,
                 "exporter": exporter,
                 "parser": parser,
-                "consumer": consumer,
+                "consumer": consumer_import,
+                "consumer_mesh_diagnostic": consumer_diagnostic,
                 "checks": checks,
                 "qualified": all(checks.values()),
             }
@@ -325,7 +395,8 @@ def main() -> int:
     raw = base_path.read_bytes()
     truncated.write_bytes(raw[: max(64, len(raw) // 3)])
     bad_consumer = run_independent_probe(
-        [args.consumer_probe, str(truncated)], role="downstream_solid_consumer"
+        [args.consumer_probe, str(truncated), "--import-only"],
+        role="downstream_solid_consumer_import",
     )
     downstream_failure = bad_consumer.get("status") != "accepted" or int(
         bad_consumer.get("solid_count", 0)
@@ -352,6 +423,12 @@ def main() -> int:
         "schema": "rcs-022-measured-summary/1.0",
         "profile_id": profile["id"],
         "qualification_status": status,
+        "probe_resource_bounds": {
+            "wall_timeout_s": INDEPENDENT_WALL_TIMEOUT_S,
+            "cpu_limit_s": INDEPENDENT_CPU_LIMIT_S,
+            "address_space_limit_bytes": INDEPENDENT_ADDRESS_SPACE_BYTES,
+            "scope": "independent parser/consumer child processes only",
+        },
         "implementation_independence": {
             "exporter": "OCCT 8.0.1",
             "parser": "step-io 0.2.4 (Rust; independent of OCCT)",
