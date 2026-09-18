@@ -1,0 +1,95 @@
+{
+  "schema": "rcs-025-provider-handoff-stress-plan/1.0",
+  "issue": "RCS-025",
+  "status": "predeclared_before_frozen_evidence_run",
+  "architecture_profile": "semantic-provider-hybrid-v1",
+  "purpose": "Stress provider transitions, deferred state, reconciliation, durable lineage, replay and propagated error budgets without creating a production scheduler.",
+  "accepted_predecessors": [
+    "research/rcs-018/evidence-schema-v1.json",
+    "docs/decisions/DR-0017-realistic-lathe-tool-envelope-capability.md",
+    "docs/decisions/DR-0018-manual-freehand-mill-bounded-directional-fallback.md",
+    "docs/decisions/DR-0019-step-layer-d-independent-interoperability.md",
+    "docs/decisions/DR-0020-conservative-propagated-error-budgets.md",
+    "docs/decisions/DR-0021-retain-occt-8-0-1-after-current-differential.md"
+  ],
+  "hypotheses": [
+    {
+      "id": "H1",
+      "claim": "Durable body and operation lineage can survive provider changes and regenerated backend topology without importing provider-private identity into programme authority.",
+      "falsified_if": "A provider transition requires a backend topology identifier to preserve durable identity, changes a durable body without an explicit lineage event, or maps an ambiguous lineage silently."
+    },
+    {
+      "id": "H2",
+      "claim": "A bounded directional/manual-mill fallback can remain useful as accepted_pending state while being barred from STEP until an independently validated conventional B-rep is reconstructed.",
+      "falsified_if": "The fallback must be treated as STEP-authoritative, its representation error is cancelled arithmetically during handoff, or reconciliation cannot preserve the durable body/operation context."
+    },
+    {
+      "id": "H3",
+      "claim": "Hard semantic/query boundaries alone permit pending-state growth proportional to boundary distance, while adding a finite pending-size threshold bounds that growth at measurable reconciliation cost.",
+      "falsified_if": "A threshold does not bound the declared pending-state proxy, or the policy comparison does not account for its additional reconciliation work."
+    },
+    {
+      "id": "H4",
+      "claim": "Connectivity-dependent decisions can fail closed while material state is pending and resume after explicit reconciliation without silently discarding split/merge bodies.",
+      "falsified_if": "Body selection/connectivity is allowed before pending material is reconciled, or a split/merge loses a durable body or lineage event."
+    },
+    {
+      "id": "H5",
+      "claim": "A mixed-provider revision chain can discard provider-private derived state and replay from durable programme authority to the same declared engineering invariant.",
+      "falsified_if": "Replay requires provider-private state or the deterministic programme-level replay signature changes."
+    },
+    {
+      "id": "H6",
+      "claim": "RCS-023 conservative budgets can cross provider/reconciliation boundaries without reset, with breaches failing closed and positive material-removal intent remaining explicit under uncertainty.",
+      "falsified_if": "A handoff resets accumulated error, widens the engineering requirement, converts an over-budget state to success, or classifies explicit positive removal as no change merely because uncertainty overlaps zero."
+    }
+  ],
+  "reconciliation_policies": [
+    {
+      "id": "hard_semantic_boundaries_only",
+      "rules": ["reconcile before exact/connectivity/export queries", "reconcile at explicit semantic provider boundary"]
+    },
+    {
+      "id": "hard_plus_pending_threshold",
+      "rules": ["all hard boundaries above", "also reconcile when pending_state_units reaches 2 in the deterministic stress fixture"],
+      "note": "The value 2 is a research-fixture threshold used to expose scaling behavior, not a frozen production tuning constant."
+    }
+  ],
+  "fixtures": [
+    "lathe-to-generic-nonaxis",
+    "mill-exact-fallback-brep-retrace-jitter",
+    "repeated-defer-reconcile-policy",
+    "split-merge-while-pending",
+    "regenerated-topology-lineage",
+    "undo-discard-private-replay-mixed-provider",
+    "budget-pass-breach-positive-intent",
+    "arbitrary-nonorthogonal-tool-axis-refusal-control"
+  ],
+  "measurements": [
+    "material volume/dimensions/surface-deviation invariant where inherited evidence exists",
+    "body count/connectivity and durable body IDs",
+    "semantic lineage events and explicit ambiguity",
+    "analytic surface retention/recovery labels",
+    "backend topology identifiers as diagnostics only",
+    "pending-state units and peak pending state",
+    "reconciliation count and deterministic work-unit cost",
+    "conservative accumulated error-budget trace",
+    "deterministic replay signature",
+    "STEP eligibility/status with Layer-D qualification preserved",
+    "refusal/pending/breach classifications"
+  ],
+  "resource_measurement_scope": {
+    "ci_authoritative": ["pending_state_units", "reconciliation_work_units", "deterministic_signatures"],
+    "deferred_to_rcs026": ["wall-clock latency distributions", "long-running RSS/memory trend", "platform-specific resource leaks"],
+    "reason": "RCS-025 isolates semantic/resource-policy behavior deterministically; RCS-026 owns Windows/Linux scale, soak and process resource qualification."
+  },
+  "boundaries": {
+    "production_scheduler": false,
+    "provider_private_ids_durable": false,
+    "healing_or_tolerance_widening": false,
+    "silent_ambiguous_mapping": false,
+    "fallback_direct_step_authority": false,
+    "occt_reference_backend": "8.0.1",
+    "step_layer_d_state": "interoperability_unqualified"
+  }
+}
