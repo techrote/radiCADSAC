@@ -95,7 +95,7 @@ void probe_step(const std::filesystem::path& out){
   auto cross_a=transfer_write(ca,shape,false,out/"cross-mm-after-inch-set.step");
   auto cross_b=transfer_write(cb,shape,true,out/"cross-inch.step");
   std::cout<<std::setprecision(17)<<"{\"probe\":\"step\",\"label\":"<<q(RCS024_LABEL)
-    <<",\"version\":"<<q(OCC_VERSION_COMPLETE)<<",\"commit\":"<<q(RCS024_EXPECTED_COMMIT)
+    <<",\"version\":"<<q(OCC_VERSION_STRING_EXT)<<",\"commit\":"<<q(RCS024_EXPECTED_COMMIT)
     <<",\"seq_mm\":"<<a.uncertainty<<",\"seq_inch\":"<<b.uncertainty
     <<",\"cross_mm\":"<<cross_a.uncertainty<<",\"cross_inch\":"<<cross_b.uncertainty
     <<",\"seq_valid\":"<<(a.ok&&b.ok?"true":"false")<<",\"cross_valid\":"<<(cross_a.ok&&cross_b.ok?"true":"false")<<"}\n";
@@ -158,7 +158,7 @@ void probe_sampled(){
 
 int main(int argc,char**argv){
   try{
-    if(std::string(OCC_VERSION_COMPLETE)!=RCS024_EXPECTED_VERSION)throw std::runtime_error(std::string("version mismatch: ")+OCC_VERSION_COMPLETE);
+    if(std::string(OCC_VERSION_STRING_EXT)!=RCS024_EXPECTED_VERSION)throw std::runtime_error(std::string("version mismatch: ")+OCC_VERSION_STRING_EXT);
     std::string probe,out=".results/rcs024-worker";for(int i=1;i<argc;++i){std::string a=argv[i];if(a=="--probe"&&i+1<argc)probe=argv[++i];else if(a=="--out-dir"&&i+1<argc)out=argv[++i];else throw std::runtime_error("bad args");}
     if(probe=="step")probe_step(out);else if(probe=="parallel")probe_parallel();else if(probe=="fuzzy")probe_fuzzy();else if(probe=="chain")probe_chain();else if(probe=="mill")probe_mill();else if(probe=="sampled")probe_sampled();else throw std::runtime_error("unknown probe");return 0;
   }catch(const Standard_Failure&f){std::cerr<<"OCCT failure: "<<(f.GetMessageString()?f.GetMessageString():"")<<"\n";return 20;}catch(const std::exception&e){std::cerr<<e.what()<<"\n";return 21;}
