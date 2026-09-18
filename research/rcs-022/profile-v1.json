@@ -1,0 +1,68 @@
+{
+  "id": "rcs022-occt-8.0.1-ap242dis-manifold-v1",
+  "verdict_policy": "qualified_only_when_all_required_layer_d_checks_pass",
+  "exporter": {
+    "implementation": "Open CASCADE Technology",
+    "version": "8.0.1",
+    "commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42",
+    "build": "research/rcs-006/harness/bootstrap_occt.sh",
+    "license": "LGPL-2.1-or-later with OCCT exception",
+    "schema_selector": "DESTEP_Parameters::WriteMode_StepSchema_AP242DIS",
+    "schema_claim_boundary": "AP242DIS is an OCCT exporter selector; it is not an ISO 10303-242 Edition 4 certification claim",
+    "model_type": "STEPControl_ManifoldSolidBrep",
+    "tessellated": false,
+    "assembly": false,
+    "surface_curves": true,
+    "nonmanifold": false,
+    "clean_duplicates": false,
+    "precision_mode": "WriteMode_PrecisionMode_Average",
+    "precision_value_mm_dormant_unless_mode_changes": 0.0001,
+    "healing": "none in writer; any reconciliation is explicit upstream and measured",
+    "process_isolation": "one fixture export per worker process; no reliance on mutable Interface_Static session state"
+  },
+  "units": {
+    "canonical_internal": "mm",
+    "metric_export": "UnitsMethods_LengthUnit_Millimeter",
+    "inch_export": "UnitsMethods_LengthUnit_Inch",
+    "inch_to_mm": 25.4
+  },
+  "body_policy": {
+    "all_material_bodies_required": true,
+    "implicit_primary_body": false,
+    "silent_drop_forbidden": true,
+    "silent_fuse_forbidden": true,
+    "each_body_transferred": "STEPControl_ManifoldSolidBrep"
+  },
+  "layer_d": {
+    "schema_parser": {
+      "implementation": "STEPcode p21read",
+      "commit": "ed686ee1d9cb8bf763ab8d61ef6d417c3b45c146",
+      "schema_source": "data/ap242/242_mim_lf.exp",
+      "license": "BSD-3-Clause",
+      "independence": "independent implementation from OCCT"
+    },
+    "solid_consumer": {
+      "implementation": "vcad-kernel-step/vcad-kernel",
+      "commit": "eba7a2e6a89ff06801776fbc599d5c8a64036168",
+      "version_line": "0.10.0 workspace at pinned commit",
+      "license": "Apache-2.0",
+      "independence": "Rust B-rep kernel independent of OCCT",
+      "documented_protocol_target": "AP214",
+      "qualification_rule": "AP242DIS files must actually import and satisfy body/extent/volume checks; protocol-target mismatch is never waived"
+    }
+  },
+  "tolerances": {
+    "bbox_mm": 0.02,
+    "volume_relative": 0.005,
+    "heal_volume_relative": 1e-9,
+    "no_silent_tolerance_widening": true
+  },
+  "rerun_triggers": [
+    "exporter version/commit/build/profile change",
+    "STEPcode commit or AP242 schema source change",
+    "vcad consumer commit/API/import behavior change",
+    "fixture or tolerance contract change",
+    "body/product structure policy change",
+    "healing/reconciliation policy change"
+  ]
+}
