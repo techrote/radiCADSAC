@@ -1,0 +1,10 @@
+[package]
+name = "rcs022-vcad-probe"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+serde_json = "1.0"
+vcad-kernel = { git = "https://github.com/ecto/vcad.git", rev = "eba7a2e6a89ff06801776fbc599d5c8a64036168", package = "vcad-kernel" }
+vcad-kernel-step = { git = "https://github.com/ecto/vcad.git", rev = "eba7a2e6a89ff06801776fbc599d5c8a64036168", package = "vcad-kernel-step" }
