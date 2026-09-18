@@ -22,10 +22,12 @@ def static():
     fail("candidate may not be an unpinned master ref")
 
   bootstrap=(ROOT/"research/rcs-024/bootstrap_candidate.sh").read_text(encoding="utf-8")
-  for token in ('EXPECTED_VERSION_COMPLETE="8.1.0"','EXPECTED_VERSION_DEVELOPMENT="dev1"','OCC_VERSION_COMPLETE','OCC_VERSION_DEVELOPMENT'):
+  for token in ('EXPECTED_VERSION_COMPLETE="8.1.0"','EXPECTED_VERSION_DEVELOPMENT="dev1"','OCC_VERSION_COMPLETE','OCC_VERSION_DEVELOPMENT','-DUSE_GIT_HASH=OFF'):
     if token not in bootstrap: fail("candidate bootstrap lost development-version guard: "+token)
   if 'OCC_VERSION_COMPLETE \\"8.1.0.dev1\\"' in bootstrap:
     fail("candidate bootstrap must not treat OCC_VERSION_COMPLETE as the extended development version")
+  if re.search(r'-DUSE_GIT_HASH=(?:ON|TRUE|1)', bootstrap, re.I):
+    fail("candidate bootstrap must keep OCCT automatic git suffix disabled; exact commit is verified separately")
 
   for rel in ("research/rcs-024/harness/diff_worker.cpp","research/rcs-024/harness/brepgraph_probe.cpp"):
     text=(ROOT/rel).read_text(encoding="utf-8")
@@ -63,6 +65,11 @@ def adversarial_self_test():
   complete="8.1.0"; development="dev1"
   assert complete != CAND_VERSION
   assert complete+"."+development == CAND_VERSION
+  # Upstream enables USE_GIT_HASH by default for development builds. That would produce a suffix such as
+  # dev1-<hash> and violate this campaign's version contract even though the exact source commit is already
+  # verified independently. The build therefore pins USE_GIT_HASH=OFF and rejects an auto-suffixed variant.
+  auto_suffixed=complete+"."+development+"-3d097a0"
+  assert auto_suffixed != CAND_VERSION
 
 def main():
   ap=argparse.ArgumentParser();ap.add_argument("--results-dir");a=ap.parse_args();static();adversarial_self_test();
