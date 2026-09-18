@@ -1,0 +1,74 @@
+{
+  "schema": "rcs024-measured-result/1.0",
+  "source_evidence": {
+    "workflow_run_id": 35400220872,
+    "head_sha": "5ee2dda2677ca9f6dc19da8e3210bb19e982819d",
+    "artifact_id": 10569839655,
+    "artifact_sha256": "65d61055cd637a09aa61ca6ac6bfc3c661adfbd18cceaf17668a794bbd23a3ae"
+  },
+  "pins": {
+    "baseline": {
+      "version": "8.0.1",
+      "commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42"
+    },
+    "candidate": {
+      "version": "8.1.0.dev1",
+      "commit": "3d097a0328e71b826377d4814ab05ec3c3d23871",
+      "release_status": "development_snapshot"
+    }
+  },
+  "classification": {
+    "step_baseline": "cross_talk",
+    "step_candidate": "cross_talk",
+    "fuzzy_baseline_valid_but_wrong": true,
+    "fuzzy_candidate_valid_but_wrong": true,
+    "chain_baseline_order_sensitive": true,
+    "chain_candidate_order_sensitive": true,
+    "mill_baseline_valid_but_wrong": true,
+    "mill_candidate_valid_but_wrong": true,
+    "sampled_baseline_timeout": true,
+    "sampled_candidate_timeout": true,
+    "overall_candidate_delta": "same_defects_no_upgrade_case"
+  },
+  "observations": {
+    "step": {
+      "baseline": {"seq_mm": 0.00001, "cross_mm": 0.001, "cross_valid": true},
+      "candidate": {"seq_mm": 0.00001, "cross_mm": 0.001, "cross_valid": true}
+    },
+    "parallel": {
+      "baseline": {"global_after_instance_true": false, "thread_a_observed_thread_b_global": true},
+      "candidate": {"global_after_instance_true": false, "thread_a_observed_thread_b_global": true}
+    },
+    "fuzzy": {
+      "baseline": {"expected_removed_mm3": 0.0075398221888583, "measured_removed_mm3": 0.0, "valid_brep": true},
+      "candidate": {"expected_removed_mm3": 0.0075398221888583, "measured_removed_mm3": 0.0, "valid_brep": true}
+    },
+    "chain": {
+      "baseline": {"order_delta_mm3": 7.539633873064304, "both_valid": true},
+      "candidate": {"order_delta_mm3": 7.539633873064304, "both_valid": true}
+    },
+    "mill": {
+      "baseline": {"delta_mm3": 509.00986225103406, "batch_valid": true, "segment_valid": true},
+      "candidate": {"delta_mm3": 509.00986225103406, "batch_valid": true, "segment_valid": true}
+    },
+    "sampled": {
+      "baseline": {"timed_out": true, "timeout_s": 8},
+      "candidate": {"timed_out": true, "timeout_s": 8}
+    },
+    "brepgraph": {
+      "baseline": {"split_image_count": 2, "merge_origin_count": 2, "stamp_valid": true, "stale_after_clear": true, "replay_uid_valid": true, "numerical_uid_collision_across_graph_rebuild": true},
+      "candidate": {"split_image_count": 2, "merge_origin_count": 2, "stamp_valid": true, "stale_after_clear": true, "replay_uid_valid": true, "numerical_uid_collision_across_graph_rebuild": true}
+    }
+  },
+  "installed_footprint_bytes": {
+    "baseline": 83056872,
+    "candidate": 82947242
+  },
+  "decision": {
+    "recommended_baseline": "8.0.1",
+    "process_isolation_required": true,
+    "programme_identity_must_ignore_brepgraph_uid": true,
+    "backend_private_brepgraph_use_permitted": true,
+    "recommendation": "retain_8_0_1_preserve_current_findings_and_selectively_use_backend_private_brepgraph_facilities"
+  }
+}

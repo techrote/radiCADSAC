@@ -5,13 +5,15 @@ BASE="b8f597c677811d1f9f4d8a97f5ae2825c0353a42"
 CAND="3d097a0328e71b826377d4814ab05ec3c3d23871"
 BASE_VERSION="8.0.1"
 CAND_VERSION="8.1.0.dev1"
+MEASURED="research/rcs-024/measured-result-v1.json"
 REQUIRED=[
  "research/rcs-024/README.md","research/rcs-024/experiment-plan-v1.json","research/rcs-024/bootstrap_candidate.sh",
  "research/rcs-024/harness/CMakeLists.txt","research/rcs-024/harness/diff_worker.cpp","research/rcs-024/harness/brepgraph_probe.cpp",
- "research/rcs-024/run_differential.py","docs/32-OCCT-CURRENT-DIFFERENTIAL.md",
+ "research/rcs-024/run_differential.py",MEASURED,"docs/32-OCCT-CURRENT-DIFFERENTIAL.md",
  "docs/decisions/DR-0021-retain-occt-8-0-1-after-current-differential.md",".github/workflows/rcs024.yml"]
 
 def fail(msg): raise SystemExit("RCS-024 validation failed: "+msg)
+def close(a,b,tol=1e-9): return abs(float(a)-float(b)) <= tol
 
 def validate_probe_logging(workflow):
   """Fail closed if either probe build can become diagnostically opaque again."""
@@ -25,8 +27,6 @@ def validate_probe_logging(workflow):
   )
   for token in required:
     if token not in workflow: fail("probe-build diagnostics contract lost: "+token)
-  # Bootstrap, both probe builds and the differential launcher all use pipelines;
-  # each must preserve the failing producer's status through tee/launch plumbing.
   if workflow.count("set -euo pipefail") < 4:
     fail("probe-build diagnostics must preserve failure status through pipefail")
   for label in ("baseline", "candidate"):
@@ -36,6 +36,20 @@ def validate_probe_logging(workflow):
     )
     if not re.search(pattern, workflow, re.S):
       fail(label+" probe configure/build output must be retained across both phases")
+
+def load_frozen():
+  p=ROOT/MEASURED
+  if not p.is_file(): fail("missing "+MEASURED)
+  m=json.loads(p.read_text(encoding="utf-8"))
+  if m.get("schema")!="rcs024-measured-result/1.0": fail("wrong frozen measured-result schema")
+  if m["pins"]["baseline"]["commit"]!=BASE or m["pins"]["candidate"]["commit"]!=CAND: fail("frozen pin drift")
+  if m["source_evidence"]["head_sha"]!="5ee2dda2677ca9f6dc19da8e3210bb19e982819d": fail("frozen source-evidence head drift")
+  if m["source_evidence"]["artifact_sha256"]!="65d61055cd637a09aa61ca6ac6bfc3c661adfbd18cceaf17668a794bbd23a3ae": fail("frozen artifact digest drift")
+  if m["classification"].get("overall_candidate_delta")!="same_defects_no_upgrade_case": fail("frozen comparative classification weakened")
+  dec=m.get("decision",{})
+  if dec.get("recommended_baseline")!="8.0.1" or not dec.get("process_isolation_required") or not dec.get("programme_identity_must_ignore_brepgraph_uid"):
+    fail("frozen decision weakened")
+  return m
 
 def static():
   for p in REQUIRED:
@@ -61,15 +75,9 @@ def static():
       fail(rel+" regressed to release-only version comparison")
 
   graph_probe=(ROOT/"research/rcs-024/harness/brepgraph_probe.cpp").read_text(encoding="utf-8")
-  # BRepGraph.hxx intentionally forward-declares these public views. Keep their
-  # defining headers explicit so both exact pins compile rather than depending on
-  # accidental transitive includes from a particular upstream snapshot.
   for header in ("BRepGraph_ShapesView.hxx", "BRepGraph_LayerRegistry.hxx", "BRepGraph_UIDsView.hxx"):
     if f"#include <{header}>" not in graph_probe:
       fail("BRepGraph probe lost complete-view include: "+header)
-  # FindModified/FindOriginals expose layer-owned vectors. Their addresses are not
-  # stable across Record/Clear mutations, so the probe must snapshot scalar evidence
-  # before it mutates the history layer again.
   for token in ("const std::size_t split_image_count", "const std::size_t merge_origin_count", "if(split_image_count!=2 || merge_origin_count!=2)"):
     if token not in graph_probe: fail("BRepGraph borrowed-history boundary guard lost: "+token)
   clear_at=graph_probe.find("graph.Clear()")
@@ -83,30 +91,51 @@ def static():
   if re.search(r"^\s*assert\s", runner, re.M):
     fail("differential continuity gates must not disappear under python -O")
 
+  docs=(ROOT/"docs/32-OCCT-CURRENT-DIFFERENTIAL.md").read_text(encoding="utf-8")
+  dr=(ROOT/"docs/decisions/DR-0021-retain-occt-8-0-1-after-current-differential.md").read_text(encoding="utf-8")
+  for token in ("RCS-024 measured and frozen", "same defect", "Retain OCCT 8.0.1", "509.00986225103406"):
+    if token.lower() not in docs.lower(): fail("measured differential documentation not frozen: "+token)
+  for token in ("accepted by RCS-024 measured evidence", "Retain OCCT 8.0.1", "process-isolated", "numerical UID collision"):
+    if token.lower() not in dr.lower(): fail("DR-0021 acceptance evidence missing: "+token)
+
+  load_frozen()
   validate_probe_logging((ROOT/".github/workflows/rcs024.yml").read_text(encoding="utf-8"))
 
 def dynamic(results):
-  p=pathlib.Path(results)/"differential.json"
+  results=pathlib.Path(results)
+  p=results/"differential.json"
   if not p.is_file(): fail("missing differential.json")
   d=json.loads(p.read_text())
+  frozen=load_frozen()
   if d.get("schema")!="rcs024-differential/1.0": fail("wrong evidence schema")
   if d["pins"]["baseline"]["commit"]!=BASE or d["pins"]["candidate"]["commit"]!=CAND: fail("pin drift")
+  expected_class={k:v for k,v in frozen["classification"].items() if k!="overall_candidate_delta"}
+  if d.get("classification")!=expected_class: fail("final-head classification differs from frozen measured result")
   for label, expected_version in (("baseline",BASE_VERSION),("candidate",CAND_VERSION)):
     r=d["runs"][label]
     for probe in ("step","parallel","fuzzy","chain","mill","sampled","brepgraph"):
       if probe not in r: fail(f"{label} missing {probe}")
     for probe in ("step","brepgraph"):
       if r[probe].get("version") != expected_version: fail(f"{label} {probe} version drift")
-    g=r["brepgraph"]
-    if g["split_image_count"]!=2 or g["merge_origin_count"]!=2 or not g["stale_after_clear"]: fail(label+" BRepGraph boundary probe failed")
-    q=r["parallel"]
-    if q["global_after_instance_true"] or not q["thread_a_observed_thread_b_global"]: fail(label+" parallel ownership semantics changed")
-  if not d["runs"]["baseline"]["sampled"]["timed_out"]: fail("baseline timeout control did not reproduce")
+    g=r["brepgraph"]; fg=frozen["observations"]["brepgraph"][label]
+    for key in ("split_image_count","merge_origin_count","stamp_valid","stale_after_clear","replay_uid_valid","numerical_uid_collision_across_graph_rebuild"):
+      if g.get(key)!=fg[key]: fail(f"{label} BRepGraph measured-result drift: {key}")
+    q=r["parallel"]; fq=frozen["observations"]["parallel"][label]
+    for key in ("global_after_instance_true","thread_a_observed_thread_b_global"):
+      if q.get(key)!=fq[key]: fail(f"{label} parallel measured-result drift: {key}")
+    for probe,key in (("step","cross_mm"),("fuzzy","expected_removed_mm3"),("fuzzy","measured_removed_mm3"),("chain","order_delta_mm3"),("mill","delta_mm3")):
+      if not close(r[probe][key], frozen["observations"][probe][label][key]): fail(f"{label} {probe} measured-result drift: {key}")
+    if r["sampled"].get("timed_out") is not True: fail(label+" sampled fallback no longer reproduces bounded timeout")
   dec=d.get("decision_input",{})
-  if not dec.get("process_isolation_required") or not dec.get("programme_identity_must_ignore_brepgraph_uid"): fail("protected boundary weakened")
+  if not dec.get("process_isolation_required") or not dec.get("programme_identity_must_ignore_brepgraph_uid") or dec.get("recommended_baseline")!="8.0.1":
+    fail("protected decision boundary weakened")
+  footprint=results/"footprint.json"
+  if not footprint.is_file(): fail("missing footprint.json")
+  fp=json.loads(footprint.read_text())
+  for label in ("baseline","candidate"):
+    if fp[label]["install_bytes"]!=frozen["installed_footprint_bytes"][label]: fail(label+" installed footprint drift")
 
 def adversarial_self_test():
-  # Boundary guards: exact pin equality, programme identity, process isolation, and dev/release version distinction are fail-closed.
   sample={"pins":{"baseline":{"commit":BASE},"candidate":{"commit":CAND}},"process_isolation_required":True,"programme_identity":False}
   assert sample["pins"]["baseline"]["commit"]==BASE
   assert sample["pins"]["candidate"]["commit"]==CAND
@@ -115,14 +144,9 @@ def adversarial_self_test():
   complete="8.1.0"; development="dev1"
   assert complete != CAND_VERSION
   assert complete+"."+development == CAND_VERSION
-  # Upstream enables USE_GIT_HASH by default for development builds. That would produce a suffix such as
-  # dev1-<hash> and violate this campaign's version contract even though the exact source commit is already
-  # verified independently. The build therefore pins USE_GIT_HASH=OFF and rejects an auto-suffixed variant.
   auto_suffixed=complete+"."+development+"-3d097a0"
   assert auto_suffixed != CAND_VERSION
 
-  # Diagnostic boundary: a future refactor must not keep tee while dropping pipefail or one side of the
-  # configure/build transcript. Exercise the validator itself against deliberately incomplete workflows.
   good="""Configure and build baseline probes\nset -euo pipefail\nbaseline-probe-build.log\ntee -a x/baseline-probe-build.log\nConfigure and build candidate probes\nset -euo pipefail\ncandidate-probe-build.log\ntee -a x/candidate-probe-build.log\nset -euo pipefail\nset -euo pipefail\nif: always()\npath: .results/rcs024\n.results/rcs024/probe-build/baseline-probe-build.log\n.results/rcs024/probe-build/candidate-probe-build.log\n"""
   validate_probe_logging(good)
   for bad in (good.replace("set -euo pipefail\n", "", 1), good.replace("candidate-probe-build.log", "candidate-missing.log")):
@@ -134,7 +158,7 @@ def adversarial_self_test():
       raise AssertionError("adversarial diagnostics contract unexpectedly accepted")
 
 def main():
-  ap=argparse.ArgumentParser();ap.add_argument("--results-dir");a=ap.parse_args();static();adversarial_self_test();
+  ap=argparse.ArgumentParser();ap.add_argument("--results-dir");a=ap.parse_args();static();adversarial_self_test()
   if a.results_dir: dynamic(a.results_dir)
   print("RCS-024 validation passed")
 if __name__=="__main__":main()
