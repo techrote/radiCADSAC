@@ -1,0 +1,178 @@
+{
+  "schema": "rcs-021-measured-summary/1.0",
+  "date": "2026-09-17",
+  "status": "accepted-pending-merge",
+  "source": {
+    "pull_request": 53,
+    "head_sha": "70bf1851652f855714fe30ba412f6d4d42c22d44",
+    "workflow_run_id": 35280105714,
+    "workflow_name": "rcs021-manual-freehand-mill-oracle",
+    "artifact_id": 10522213307,
+    "artifact_name": "rcs021-manual-freehand-mill-oracle",
+    "artifact_zip_sha256": "bbdf14b8474753393d98d42babb94fee7c7309fed9a6a38c93962b289db391ba",
+    "representation_artifact_id": 10522641465,
+    "representation_artifact_name": "rcs021-material-oracle-directional-external",
+    "representation_artifact_zip_sha256": "bbb4f6308764473a9d210927ed6040680a2a90a82d5b3684763f53d89d912e36"
+  },
+  "environment": {
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "python": "3.12.14"
+  },
+  "baseline": {
+    "stock_mm": [40.0, 30.0, 10.0],
+    "frame": "right-handed-z-up-workpiece-v1",
+    "occt": {
+      "version": "8.0.1",
+      "commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42"
+    },
+    "manifold": {
+      "version": "3.5.3",
+      "commit": "0edd9d54876f3135e431575214dd6d8a72866fee",
+      "license": "Apache-2.0"
+    }
+  },
+  "campaign": {
+    "case_count": 14,
+    "all_required_checks_pass": true,
+    "structural_failures": [],
+    "oracle_max_depth": 7,
+    "tridexel_pitch_mm": 0.5,
+    "repeat_count": 2,
+    "bounded_candidate_pass_at_0_5mm_count": 5,
+    "accepted_pending_refinement_at_0_5mm_count": 9,
+    "refused_unresolved_ambiguity_count": 0,
+    "external_executed_count": 13,
+    "external_executed_inside_oracle_count": 13,
+    "external_body_count_match_count": 13,
+    "external_resource_bound_not_executed_count": 1,
+    "external_resolution_refusal_count": 1,
+    "required_checks": {
+      "closed_form_oracle_validation": true,
+      "cut_through_two_bodies_preserved": true,
+      "external_candidate_executed": true,
+      "high_segment_fixture_exceeds_rcs011_smoke": true,
+      "rcs011_retrace_independently_detected": true,
+      "rcs011_sampled_fallback_revisited": true,
+      "sub_tolerance_positive_removal_preserved": true,
+      "tridexel_deterministic": true
+    }
+  },
+  "live_rcs011_revisit": {
+    "retrace_jitter_segment_sweep": {
+      "volume_mm3": 11490.990137750125,
+      "valid_brep": true,
+      "inside_independent_oracle_interval": true,
+      "material_booleans": 2
+    },
+    "retrace_jitter_freehand_batch": {
+      "volume_mm3": 12000.000000001159,
+      "valid_brep": true,
+      "inside_independent_oracle_interval": false,
+      "material_booleans": 1
+    },
+    "slot_clean_sampled_fallback": {
+      "classification": "hang/timeout",
+      "timeout_s": 10.0
+    }
+  },
+  "representative_findings": {
+    "closed_form_controls": {
+      "closed-form-stationary-flat": {
+        "closed_form_volume_mm3": 11974.86725877128,
+        "closed_form_body_count": 1,
+        "oracle_volume_lower_mm3": 11966.6748046875,
+        "oracle_volume_upper_mm3": 11981.575012207031,
+        "contained": true
+      },
+      "closed-form-horizontal-slot": {
+        "closed_form_volume_mm3": 11491.095137745191,
+        "closed_form_body_count": 1,
+        "oracle_volume_lower_mm3": 11385.337829589844,
+        "oracle_volume_upper_mm3": 11556.70166015625,
+        "contained": true
+      },
+      "tangent-zero": {
+        "closed_form_volume_mm3": 12000.0,
+        "closed_form_body_count": 1,
+        "oracle_volume_lower_mm3": 11988.269805908203,
+        "oracle_volume_upper_mm3": 12000.0,
+        "contained": true
+      },
+      "plunge-1um": {
+        "closed_form_volume_mm3": 11999.999980365046,
+        "closed_form_body_count": 1,
+        "oracle_volume_lower_mm3": 11994.575500488281,
+        "oracle_volume_upper_mm3": 12000.0,
+        "contained": true
+      },
+      "cut-through": {
+        "closed_form_volume_mm3": 11100.0,
+        "closed_form_body_count": 2,
+        "oracle_volume_lower_mm3": 11062.5,
+        "oracle_volume_upper_mm3": 11255.859375,
+        "contained": true
+      }
+    },
+    "plunge_1um": {
+      "tridexel_material_volume_mm3": 11999.999979999993,
+      "positive_removed_volume_mm3": 0.000020000006770715117,
+      "external_classification": "refused_resolution_budget",
+      "physical_removal_preserved": true
+    },
+    "cut_through": {
+      "tridexel_body_count": 2,
+      "oracle_body_count": 2,
+      "external_body_count": 2
+    },
+    "refinement": {
+      "retrace-jitter": [
+        {"pitch_mm": 1.0, "volume_interval_width_mm3": 240.0, "spatial_support_radius_xy_mm": 0.7071067811865475},
+        {"pitch_mm": 0.5, "volume_interval_width_mm3": 225.0, "spatial_support_radius_xy_mm": 0.35355339059327373},
+        {"pitch_mm": 0.25, "volume_interval_width_mm3": 108.75, "spatial_support_radius_xy_mm": 0.17677669529663687}
+      ],
+      "simultaneous-xyz": [
+        {"pitch_mm": 1.0, "volume_interval_width_mm3": 404.0, "spatial_support_radius_xy_mm": 0.7071067811865475},
+        {"pitch_mm": 0.5, "volume_interval_width_mm3": 277.25, "spatial_support_radius_xy_mm": 0.35355339059327373},
+        {"pitch_mm": 0.25, "volume_interval_width_mm3": 225.8125, "spatial_support_radius_xy_mm": 0.17677669529663687}
+      ],
+      "ball-rounded": [
+        {"pitch_mm": 1.0, "volume_interval_width_mm3": 446.6644355390381, "spatial_support_radius_xy_mm": 0.7071067811865475},
+        {"pitch_mm": 0.5, "volume_interval_width_mm3": 240.42016385971147, "spatial_support_radius_xy_mm": 0.35355339059327373},
+        {"pitch_mm": 0.25, "volume_interval_width_mm3": 129.75900536497647, "spatial_support_radius_xy_mm": 0.17677669529663687}
+      ],
+      "plunge-1um": [
+        {"pitch_mm": 1.0, "volume_interval_width_mm3": 0.000020000006770715117, "spatial_support_radius_xy_mm": 0.7071067811865475},
+        {"pitch_mm": 0.5, "volume_interval_width_mm3": 0.000015000005078036338, "spatial_support_radius_xy_mm": 0.35355339059327373},
+        {"pitch_mm": 0.25, "volume_interval_width_mm3": 0.0000062499566411133856, "spatial_support_radius_xy_mm": 0.17677669529663687}
+      ],
+      "cut-through": [
+        {"pitch_mm": 1.0, "volume_interval_width_mm3": 600.0, "spatial_support_radius_xy_mm": 0.7071067811865475},
+        {"pitch_mm": 0.5, "volume_interval_width_mm3": 600.0, "spatial_support_radius_xy_mm": 0.35355339059327373},
+        {"pitch_mm": 0.25, "volume_interval_width_mm3": 300.0, "spatial_support_radius_xy_mm": 0.17677669529663687}
+      ]
+    },
+    "high_segment_freehand": {
+      "segments": 160,
+      "oracle_resource_bound_applied": true,
+      "oracle_effective_max_depth": 4,
+      "external_classification": "external_resource_bound_not_executed"
+    }
+  },
+  "capability": {
+    "independent_oracle": "accepted for the measured fixed-axis flat-end domain and the qualified constant-Z rounded fixture; closed-form controls passed and live RCS-011 valid-but-wrong geometry was independently rejected",
+    "bounded_at_0_5mm": ["closed-form-stationary-flat", "tangent-zero", "tangent-overlap", "plunge-1um", "stationary-near"],
+    "accepted_pending_refinement_at_0_5mm": ["closed-form-horizontal-slot", "self-cross", "retrace-exact", "retrace-jitter", "simultaneous-xyz", "ball-rounded", "overlapping-paths", "cut-through", "high-segment-freehand"],
+    "refinement_closes_150mm3_budget_at_0_25mm": ["retrace-jitter", "ball-rounded"],
+    "still_outside_150mm3_budget_at_0_25mm": ["simultaneous-xyz", "cut-through"],
+    "requires_reconciliation": ["all directional/deferred material states before STEP", "all Manifold mesh/level-set states before STEP"],
+    "still_unqualified": ["arbitrary tool-axis rotation / five-axis motion", "rounded simultaneous-Z paths", "authoritative fallback for fixture classes whose declared material interval has not closed inside policy"]
+  },
+  "interpretation": [
+    "A valid OCCT B-rep is not a sufficient manual/freehand milling oracle: the live one-shot retrace batch remained valid but was independently materially wrong.",
+    "The directional material representation is useful and deterministic, but RCS-021 does not qualify it universally at a single 0.5 mm pitch. Five fixtures closed the declared founding budget there; nine remained accepted_pending_refinement.",
+    "Measured refinement closed the 150 mm3 volume-interval budget at 0.25 mm for retrace-jitter and ball-rounded, while simultaneous-xyz and cut-through remained outside it; capability narrows rather than widening tolerance.",
+    "The 1 um plunge retained positive physical removal even though Manifold correctly refused resolution-qualified authority for that feature.",
+    "The through-cut preserved two remaining material bodies in the independent control, directional candidate, and external comparator.",
+    "Manifold executed on 13 of 14 fixtures and agreed with the independent oracle interval and expected body count on every executed fixture; the 160-segment case was explicitly resource-bounded out of the Python LevelSet comparator."
+  ]
+}
