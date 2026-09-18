@@ -12,6 +12,31 @@ REQUIRED=[
  "docs/decisions/DR-0021-retain-occt-8-0-1-after-current-differential.md",".github/workflows/rcs024.yml"]
 
 def fail(msg): raise SystemExit("RCS-024 validation failed: "+msg)
+
+def validate_probe_logging(workflow):
+  """Fail closed if either probe build can become diagnostically opaque again."""
+  required=(
+    "Configure and build baseline probes",
+    "Configure and build candidate probes",
+    ".results/rcs024/probe-build/baseline-probe-build.log",
+    ".results/rcs024/probe-build/candidate-probe-build.log",
+    "if: always()",
+    "path: .results/rcs024",
+  )
+  for token in required:
+    if token not in workflow: fail("probe-build diagnostics contract lost: "+token)
+  # Bootstrap, both probe builds and the differential launcher all use pipelines;
+  # each must preserve the failing producer's status through tee/launch plumbing.
+  if workflow.count("set -euo pipefail") < 4:
+    fail("probe-build diagnostics must preserve failure status through pipefail")
+  for label in ("baseline", "candidate"):
+    pattern=(
+      rf"Configure and build {label} probes.*?set -euo pipefail.*?"
+      rf"{label}-probe-build\.log.*?tee -a .*?{label}-probe-build\.log"
+    )
+    if not re.search(pattern, workflow, re.S):
+      fail(label+" probe configure/build output must be retained across both phases")
+
 def static():
   for p in REQUIRED:
     if not (ROOT/p).is_file(): fail("missing "+p)
@@ -34,6 +59,8 @@ def static():
     if "OCC_VERSION_STRING_EXT" not in text: fail(rel+" must bind evidence to the extended OCCT version")
     if "std::string(OCC_VERSION_COMPLETE)!=RCS024_EXPECTED_VERSION" in text:
       fail(rel+" regressed to release-only version comparison")
+
+  validate_probe_logging((ROOT/".github/workflows/rcs024.yml").read_text(encoding="utf-8"))
 
 def dynamic(results):
   p=pathlib.Path(results)/"differential.json"
@@ -70,6 +97,18 @@ def adversarial_self_test():
   # verified independently. The build therefore pins USE_GIT_HASH=OFF and rejects an auto-suffixed variant.
   auto_suffixed=complete+"."+development+"-3d097a0"
   assert auto_suffixed != CAND_VERSION
+
+  # Diagnostic boundary: a future refactor must not keep tee while dropping pipefail or one side of the
+  # configure/build transcript. Exercise the validator itself against deliberately incomplete workflows.
+  good="""Configure and build baseline probes\nset -euo pipefail\nbaseline-probe-build.log\ntee -a x/baseline-probe-build.log\nConfigure and build candidate probes\nset -euo pipefail\ncandidate-probe-build.log\ntee -a x/candidate-probe-build.log\nset -euo pipefail\nset -euo pipefail\nif: always()\npath: .results/rcs024\n.results/rcs024/probe-build/baseline-probe-build.log\n.results/rcs024/probe-build/candidate-probe-build.log\n"""
+  validate_probe_logging(good)
+  for bad in (good.replace("set -euo pipefail\n", "", 1), good.replace("candidate-probe-build.log", "candidate-missing.log")):
+    try:
+      validate_probe_logging(bad)
+    except SystemExit:
+      pass
+    else:
+      raise AssertionError("adversarial diagnostics contract unexpectedly accepted")
 
 def main():
   ap=argparse.ArgumentParser();ap.add_argument("--results-dir");a=ap.parse_args();static();adversarial_self_test();
