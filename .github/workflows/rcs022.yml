@@ -60,6 +60,21 @@ jobs:
         run: |
           cargo generate-lockfile --manifest-path research/rcs-022/consumer_probe/Cargo.toml
           cargo build --locked --release --manifest-path research/rcs-022/consumer_probe/Cargo.toml
+      - name: Capture independent dependency provenance
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .results/rcs022/dependencies
+          cp research/rcs-022/parser_probe/Cargo.lock .results/rcs022/dependencies/parser-Cargo.lock
+          cp research/rcs-022/consumer_probe/Cargo.lock .results/rcs022/dependencies/consumer-Cargo.lock
+          cargo metadata --locked --format-version 1 \
+            --manifest-path research/rcs-022/parser_probe/Cargo.toml \
+            > .results/rcs022/dependencies/parser-cargo-metadata.json
+          cargo metadata --locked --format-version 1 \
+            --manifest-path research/rcs-022/consumer_probe/Cargo.toml \
+            > .results/rcs022/dependencies/consumer-cargo-metadata.json
+          rustc --version --verbose > .results/rcs022/dependencies/rustc-version.txt
+          cargo --version --verbose > .results/rcs022/dependencies/cargo-version.txt
       - name: Run full Layer-D qualification and adversarial controls
         shell: bash
         run: |
