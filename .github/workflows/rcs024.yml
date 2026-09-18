@@ -57,21 +57,31 @@ jobs:
           path: .deps/rcs024/occt-8.1.0-dev1
           key: rcs024-occt-3d097a0328e71b826377d4814ab05ec3c3d23871-${{ runner.os }}-${{ hashFiles('research/rcs-024/bootstrap_candidate.sh') }}
       - name: Configure and build baseline probes
+        shell: bash
         run: |
+          set -euo pipefail
+          mkdir -p .results/rcs024/probe-build
           cmake -S research/rcs-024/harness -B .build/rcs024-baseline -G Ninja \
             -DCMAKE_BUILD_TYPE=Release -DRCS024_OCCT_ROOT="$RCS006_OCCT_PREFIX" \
             -DRCS024_EXPECTED_VERSION=8.0.1 \
             -DRCS024_EXPECTED_COMMIT=b8f597c677811d1f9f4d8a97f5ae2825c0353a42 \
-            -DRCS024_LABEL=baseline-8.0.1
-          cmake --build .build/rcs024-baseline --parallel 2
+            -DRCS024_LABEL=baseline-8.0.1 \
+            2>&1 | tee .results/rcs024/probe-build/baseline-probe-build.log
+          cmake --build .build/rcs024-baseline --parallel 2 \
+            2>&1 | tee -a .results/rcs024/probe-build/baseline-probe-build.log
       - name: Configure and build candidate probes
+        shell: bash
         run: |
+          set -euo pipefail
+          mkdir -p .results/rcs024/probe-build
           cmake -S research/rcs-024/harness -B .build/rcs024-candidate -G Ninja \
             -DCMAKE_BUILD_TYPE=Release -DRCS024_OCCT_ROOT="$RCS024_OCCT_PREFIX" \
             -DRCS024_EXPECTED_VERSION=8.1.0.dev1 \
             -DRCS024_EXPECTED_COMMIT=3d097a0328e71b826377d4814ab05ec3c3d23871 \
-            -DRCS024_LABEL=current-8.1.0.dev1
-          cmake --build .build/rcs024-candidate --parallel 2
+            -DRCS024_LABEL=current-8.1.0.dev1 \
+            2>&1 | tee .results/rcs024/probe-build/candidate-probe-build.log
+          cmake --build .build/rcs024-candidate --parallel 2 \
+            2>&1 | tee -a .results/rcs024/probe-build/candidate-probe-build.log
       - name: Run differential campaign
         shell: bash
         run: |
