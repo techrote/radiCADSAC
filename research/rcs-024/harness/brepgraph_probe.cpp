@@ -1,6 +1,8 @@
 #include <BRepGraph.hxx>
 #include <BRepGraph_Iterator.hxx>
 #include <BRepGraph_LayerHistory.hxx>
+#include <BRepGraph_LayerRegistry.hxx>
+#include <BRepGraph_ShapesView.hxx>
 #include <BRepGraph_UIDsView.hxx>
 #include <BRepGraph_VersionStamp.hxx>
 #include <BRepPrimAPI_MakeBox.hxx>
