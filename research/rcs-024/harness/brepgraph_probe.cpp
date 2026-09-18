@@ -24,7 +24,7 @@
 
 int main(){
   try{
-    if(std::string(OCC_VERSION_COMPLETE)!=RCS024_EXPECTED_VERSION) throw std::runtime_error("version mismatch");
+    if(std::string(OCC_VERSION_STRING_EXT)!=RCS024_EXPECTED_VERSION) throw std::runtime_error("version mismatch");
     const TopoDS_Shape box=BRepPrimAPI_MakeBox(10.,20.,30.).Shape();
     BRepGraph graph; graph.Shapes().Add(box);
     std::vector<BRepGraph_FaceId> faces;
@@ -52,7 +52,7 @@ int main(){
     const auto replay_stamp=replay.UIDs().StampOf(replay_it.CurrentId()); const auto replay_uid=replay_stamp.ItemUID();
     const bool numerical_uid_collision=(uid==replay_uid);
 
-    std::cout<<"{\"probe\":\"brepgraph\",\"label\":\""<<RCS024_LABEL<<"\",\"version\":\""<<OCC_VERSION_COMPLETE
+    std::cout<<"{\"probe\":\"brepgraph\",\"label\":\""<<RCS024_LABEL<<"\",\"version\":\""<<OCC_VERSION_STRING_EXT
       <<"\",\"commit\":\""<<RCS024_EXPECTED_COMMIT<<"\",\"face_count\":"<<faces.size()
       <<",\"split_image_count\":"<<(split_images?split_images->Size():0)
       <<",\"merge_origin_count\":"<<(merge_origins?merge_origins->Size():0)
