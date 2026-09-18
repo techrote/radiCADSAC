@@ -68,6 +68,12 @@ def static():
     if f"#include <{header}>" not in graph_probe:
       fail("BRepGraph probe lost complete-view include: "+header)
 
+  runner=(ROOT/"research/rcs-024/run_differential.py").read_text(encoding="utf-8")
+  for token in ("differential-partial.json", "write_partial()", "def require(condition, message):"):
+    if token not in runner: fail("differential failure evidence contract lost: "+token)
+  if re.search(r"^\s*assert\s", runner, re.M):
+    fail("differential continuity gates must not disappear under python -O")
+
   validate_probe_logging((ROOT/".github/workflows/rcs024.yml").read_text(encoding="utf-8"))
 
 def dynamic(results):
