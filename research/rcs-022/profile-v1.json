@@ -8,22 +8,7 @@
     "source_commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42",
     "license": "LGPL-2.1 with OCCT exception",
     "build_profile": "release-shared-cxx17-worker-only-headless-v4",
-    "toolkits": [
-      "TKernel",
-      "TKMath",
-      "TKG2d",
-      "TKG3d",
-      "TKGeomBase",
-      "TKBRep",
-      "TKGeomAlgo",
-      "TKTopAlgo",
-      "TKPrim",
-      "TKBO",
-      "TKShHealing",
-      "TKDE",
-      "TKXSBase",
-      "TKDESTEP"
-    ],
+    "toolkits": ["TKernel","TKMath","TKG2d","TKG3d","TKGeomBase","TKBRep","TKGeomAlgo","TKTopAlgo","TKPrim","TKBO","TKShHealing","TKDE","TKXSBase","TKDESTEP"],
     "schema_mode": "AP242DIS",
     "schema_claim": "OCCT implementation mode only; not ISO 10303-242:2025 Edition-4 certification",
     "model_type": "STEPControl_ManifoldSolidBrep",
@@ -43,6 +28,12 @@
   "execution": {
     "process_isolation": "one short-lived exporter process per fixture; no concurrent OCCT calls within a fixture",
     "global_state_policy": "DESTEP_Parameters constructed and populated per fixture; the RCS-022 harness performs no Interface_Static mutation",
+    "independent_probe_bounds": {
+      "wall_timeout_seconds": 8,
+      "cpu_limit_seconds": 6,
+      "address_space_bytes": 1073741824,
+      "policy": "a timeout, crash or resource-limit termination is retained as independent interoperability rejection evidence; it cannot kill the campaign runner or be relabelled success"
+    },
     "layer_c_readback": {
       "product": "Open CASCADE Technology",
       "version": "8.0.1",
@@ -68,25 +59,18 @@
       "source_commit": "eba7a2e6a89ff06801776fbc599d5c8a64036168",
       "implementation": "pure Rust vcad B-rep kernel STEP reader using stepperoni; no OCCT dependency",
       "role": "independent downstream solid consumer",
+      "mode": "import-only observation is executed separately from tessellation so a diagnostic failure cannot erase the B-rep import observation",
       "declared_upstream_scope": "vcad documents AP214 as its primary STEP target; RCS-022 therefore treats acceptance of the OCCT AP242DIS files as measured evidence, not assumed capability"
     },
     "consumer_mesh_diagnostic": {
       "product": "vcad-kernel-tessellate",
       "version": "0.10.0",
+      "execution": "separate bounded child process after a successful vcad B-rep import",
       "authority": "bounded diagnostic only; OCCT Layer-C B-rep metrics remain strict contract checks"
     },
     "dependency_lock_policy": "direct crate versions are exact pins; generated Cargo.lock files and cargo metadata are retained with final campaign evidence"
   },
   "refusal_policy": "invalid/open/non-solid, non-positive material, excessive topology tolerance, missing body, unit/schema/parser/consumer disagreement are explicit rejection/unqualification conditions; no tolerance widening, healing-after-export, body dropping, or tessellated substitution is permitted",
   "provenance_policy": "every emitted STEP is SHA-256 digested and bound in campaign evidence to fixture source, exporter profile id, expected body set, and independent parser/consumer observations",
-  "rerun_triggers": [
-    "OCCT exporter version or source commit",
-    "STEP schema or solid model mode",
-    "precision/tolerance or shape-processing policy",
-    "body/product representation policy",
-    "process/global-state configuration",
-    "step-io parser version",
-    "vcad STEP/B-rep consumer version or implementation",
-    "consumer diagnostic implementation"
-  ]
+  "rerun_triggers": ["OCCT exporter version or source commit","STEP schema or solid model mode","precision/tolerance or shape-processing policy","body/product representation policy","process/global-state configuration or independent probe bounds","step-io parser version","vcad STEP/B-rep consumer version or implementation","consumer diagnostic implementation"]
 }
