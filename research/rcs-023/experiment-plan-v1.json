@@ -1,0 +1,138 @@
+{
+  "schema": "rcs-023-uncertainty-plan/1.0",
+  "issue": "RCS-023",
+  "issue_number": 42,
+  "title": "Propagated uncertainty and error-budget algebra",
+  "model_version": "rcs-uncertainty-budget/1.0",
+  "units": "millimetres for geometric error; nrad only at declared transform input boundaries",
+  "dependencies": ["RCS-002", "RCS-005", "RCS-007", "RCS-008", "RCS-009", "RCS-012"],
+  "accepted_inputs": [
+    "DR-0010 separate tolerance channels and local uncertainty",
+    "DR-0011 semantic lineage not backend topology identity",
+    "DR-0012 regularized material and bounded deferred topology",
+    "DR-0014 alternative/hybrid representation bounded fallback",
+    "RCS-018 reusable integration trace envelope",
+    "RCS-019 bounded deterministic canonicalization",
+    "RCS-020 realistic lathe tool-envelope evidence",
+    "RCS-021 bounded directional manual/freehand mill fallback",
+    "RCS-022 exact STEP profile remains interoperability_unqualified"
+  ],
+  "sources": [
+    "docs/10-CANONICAL-JOURNAL-CONTRACT.md",
+    "docs/13-STEP-CONFORMANCE-CONTRACT.md",
+    "docs/15-VIRTUAL-TOLERANCE-RESEARCH.md",
+    "docs/16-PROVENANCE-SEMANTIC-IDENTITY-RESEARCH.md",
+    "docs/17-REGULARIZED-DEFERRED-TOPOLOGY.md",
+    "docs/19-ALTERNATIVE-HYBRID-GEOMETRY-REPRESENTATIONS.md",
+    "research/rcs-007/measured-summary-v1.json",
+    "research/rcs-018/evidence-schema-v1.json",
+    "research/rcs-021/reference/accepted evidence via DR-0018",
+    "research/rcs-022 frozen independent interoperability evidence"
+  ],
+  "channel_model": {
+    "composable_error_channels": [
+      "source_quantization",
+      "trajectory_fit",
+      "frame_translation",
+      "frame_rotation",
+      "tool_envelope",
+      "numerical_algorithm",
+      "fallback_representation",
+      "reconciliation"
+    ],
+    "non_error_policy_channels": [
+      "manufacturing_requirement",
+      "contact_policy",
+      "export_validation"
+    ],
+    "rule": "Non-error policy/requirement channels are comparison/decision criteria and are forbidden from being numerically added as if they were solver error."
+  },
+  "composition": {
+    "default": "conservative interval/Minkowski sum",
+    "transform_rule": "propagate each local error through the downstream sensitivity that actually follows that stage",
+    "rotation_rule": "spatial displacement <= radius * angle_rad",
+    "handoff_rule": "source residual + conversion residual + destination residual; never max-only replacement",
+    "correlation_rule": "when independence/correlation is unproven, compose conservatively",
+    "rss_rule": "diagnostic only; may not serve as correctness bound without explicit independence evidence",
+    "cancellation_rule": "only a proven shared bounded source with known coefficients may cancel",
+    "unknown_rule": "an unmeasured required channel remains unresolved and forces refusal rather than zero"
+  },
+  "status_contract": {
+    "decisively_no_material_change": "The entire physical relation interval proves clearance/no interaction, or a durable semantic replay proof establishes no additional envelope effect.",
+    "decisively_positive_material_change": "The entire physical relation/feature interval proves positive material change.",
+    "bounded_representation_inexact": "A fallback/approximate state has a demonstrated bound within its local representation budget but still requires conventional B-rep reconciliation before STEP.",
+    "accepted_pending": "The uncertainty interval overlaps a decision boundary or a positive command cannot yet be proven positive after uncertainty; signed intent remains preserved.",
+    "error_budget_breach": "A known propagated bound exceeds the requested downstream budget.",
+    "refused_accuracy_unproven": "A required bound is unknown or reconciliation is incomplete; requested accuracy cannot be demonstrated.",
+    "export_eligible": "All required channels are bounded, reconciliation is complete, and the final propagated geometric bound fits each applicable RCS-005 geometric budget."
+  },
+  "hypotheses": [
+    {
+      "id": "H1",
+      "statement": "Conservative interval composition can carry distinct error channels end-to-end without collapsing manufacturing tolerance into numerical uncertainty.",
+      "falsified_by": "A required representative pipeline cannot be expressed without combining requirement/policy channels as numerical error, or produces an unsound accepted export."
+    },
+    {
+      "id": "H2",
+      "statement": "Boundary decisions are safe when made only if the complete propagated physical interval lies on one side of the decision boundary.",
+      "falsified_by": "A contact member whose interval intersects zero is classified decisively, or a strictly one-sided member remains decisive on the wrong side."
+    },
+    {
+      "id": "H3",
+      "statement": "Explicit positive-removal intent can remain pending when uncertainty exceeds feature depth without silently becoming no material change.",
+      "falsified_by": "The 1 nm positive-removal fixture is collapsed to no-op under its 5 nm uncertainty bound."
+    },
+    {
+      "id": "H4",
+      "statement": "Naive RSS or max-only provider-handoff algebra is unsafe without evidence of independence/correlation structure.",
+      "falsified_by": "The correlated same-sign witness is bounded by RSS and the source+conversion+destination handoff is bounded by max-only accounting."
+    },
+    {
+      "id": "H5",
+      "statement": "Error propagation is stage/order sensitive when downstream transforms have different gains.",
+      "falsified_by": "Reordering unequal local error sources around a gain leaves the propagated bound unchanged."
+    },
+    {
+      "id": "H6",
+      "statement": "STEP/export eligibility can fail closed by comparing the final propagated bound with RCS-005 budgets while refusing unknown channels.",
+      "falsified_by": "An over-budget or unbounded reconciliation case is marked export eligible."
+    }
+  ],
+  "cases": [
+    "lathe-full-pipeline",
+    "mill-fallback-full-pipeline",
+    "contact-boundary-sweep",
+    "positive-removal-1nm-under-5nm-uncertainty",
+    "repeated-correlated-chain",
+    "provider-handoff-separate-budgets",
+    "order-sensitive-transform-chain",
+    "reconciliation-proves-final-bound",
+    "reconciliation-budget-breach",
+    "reconciliation-unknown-refusal",
+    "semantic-exact-retrace"
+  ],
+  "required_pipeline_stages": [
+    "normalized/canonical trajectory and quantization",
+    "coordinate transform translation/orientation",
+    "tool-envelope derivation",
+    "provider-local material operation",
+    "contact/ambiguity decision",
+    "fallback or approximate representation",
+    "B-rep reconciliation",
+    "RCS-005 validation/STEP budget comparison"
+  ],
+  "rcs005_mapping": {
+    "geometric_fields": ["max_dimension_error_nm", "max_surface_deviation_nm", "max_angular_error_nrad", "max_volume_error_abs_mm3", "max_volume_error_rel"],
+    "prototype_scope": "This executable v1 model closes the linear/spatial geometric bound path used for dimension/surface eligibility. Volume/angular budgets remain separate declared RCS-005 acceptance channels and may not be inferred from a linear bound without a geometry-specific sensitivity proof.",
+    "fail_closed_rule": "Every required geometric channel must be bounded and reconciled. The final propagated spatial bound must be <= each applicable requested dimension/surface budget; unresolved required channels or incomplete reconciliation refuse export."
+  },
+  "provenance_rule": "Durable traces retain programme journal/revision/body/semantic identifiers only. Provider-private topology handles/process identity are rejected from durable context.",
+  "out_of_scope": [
+    "production scheduler or geometry service",
+    "statistical calibration claiming independent errors without evidence",
+    "implicit tolerance widening",
+    "hidden snapping/healing",
+    "changing accepted fixture physical intent",
+    "claiming RCS-022 Layer-D interoperability qualification"
+  ]
+}
