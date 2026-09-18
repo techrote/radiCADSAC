@@ -1,0 +1,33 @@
+{
+  "schema": "rcs-022-fixture-plan/1.0",
+  "profile": "rcs-022-occt-ap242dis-layer-d/1.0",
+  "policies": {
+    "layer_c_max_bbox_delta_mm": 0.005,
+    "layer_c_max_abs_volume_delta_mm3": 0.001,
+    "layer_c_max_rel_volume_delta": 0.000001,
+    "consumer_max_bbox_delta_mm": 0.05,
+    "consumer_max_rel_mesh_volume_delta": 0.02
+  },
+  "cases": [
+    {"id":"metric-block","unit":"mm","body_count":1,"required_analytic":"plane","source":"RCS-005 step-mm-native"},
+    {"id":"inch-equivalent","unit":"inch","body_count":1,"required_analytic":"plane","source":"RCS-005 step-inch-equivalent"},
+    {"id":"analytic-cylinder","unit":"mm","body_count":1,"required_analytic":"cylinder","source":"RCS-005 step-analytic-retention-cylinder"},
+    {"id":"analytic-cone","unit":"mm","body_count":1,"required_analytic":"cone","source":"RCS-005 step-analytic-retention-cone"},
+    {"id":"through-hole","unit":"mm","body_count":1,"required_analytic":"cylinder","source":"RCS-005 through-hole"},
+    {"id":"blind-hole","unit":"mm","body_count":1,"required_analytic":"cylinder","source":"RCS-005 blind-hole"},
+    {"id":"two-body-parting","unit":"mm","body_count":2,"required_analytic":"cylinder","source":"RCS-005 lathe-parting-disconnected-bodies"},
+    {"id":"mill-cut-through","unit":"mm","body_count":2,"required_analytic":"plane","source":"RCS-005/RCS-021 cut-through disconnected bodies"},
+    {"id":"lathe-accepted-r020","unit":"mm","body_count":1,"required_analytic":"cylinder","source":"RCS-020 qualified fixed-axis material-domain representative; conventional B-rep reconstruction, not exact tool-nose replay"},
+    {"id":"healed-same-domain","unit":"mm","body_count":1,"required_analytic":"plane","source":"RCS-005 same-domain cleanup"},
+    {"id":"trimmed-curved","unit":"mm","body_count":1,"required_analytic":"cylinder","source":"RCS-005 trimmed analytic/curved coverage"}
+  ],
+  "negative_cases": [
+    "wrong_unit_scale",
+    "omitted_body",
+    "invalid_open_non_solid",
+    "analytic_degradation",
+    "excessive_dimension_volume_deviation",
+    "parser_schema_failure",
+    "downstream_import_failure"
+  ]
+}

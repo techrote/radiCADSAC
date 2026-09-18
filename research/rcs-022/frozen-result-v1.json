@@ -1,0 +1,180 @@
+{
+  "schema": "rcs-022-frozen-result/1.0",
+  "date": "2026-09-18",
+  "source_head": "be3812856d600e3fa09bc8462ff0e2c2b851fcd9",
+  "workflow_run_id": 35349677095,
+  "workflow_job_id": 105614535156,
+  "artifact": {
+    "id": 10549412055,
+    "name": "rcs022-step-layer-d-evidence",
+    "sha256": "d30bce4672da74d3714cb16d655f5b102ba1ce46e46f4d754684eade377b30d0",
+    "size_bytes": 69626
+  },
+  "profile_id": "rcs-022-occt-ap242dis-layer-d/1.0",
+  "serialized_schema_identifier": "AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF {1 0 10303 442 1 1 4 }",
+  "qualification_status": "interoperability_unqualified",
+  "probe_resource_bounds": {
+    "wall_timeout_s": 8,
+    "cpu_limit_s": 6,
+    "address_space_limit_bytes": 1073741824
+  },
+  "independence": {
+    "exporter": "OCCT 8.0.1 @ b8f597c677811d1f9f4d8a97f5ae2825c0353a42",
+    "parser": "step-io 0.2.4; Rust implementation with no OCCT dependency",
+    "consumer": "vcad-kernel-step 0.10.0 plus vcad-kernel-tessellate 0.10.0; Rust vcad kernel with no OCCT dependency",
+    "same_kernel_readback": "OCCT fresh-reader evidence is Layer C only"
+  },
+  "aggregates": {
+    "positive_fixture_count": 11,
+    "layer_c_pass_count": 11,
+    "independent_parser_accept_count": 11,
+    "independent_parser_warning_count": 0,
+    "independent_consumer_clean_brep_import_count": 11,
+    "independent_consumer_exact_body_count_count": 11,
+    "positive_qualified_count": 0,
+    "negative_control_count": 7,
+    "negative_control_pass_count": 7
+  },
+  "positive_cases": [
+    {
+      "id": "metric-block",
+      "unit": "mm",
+      "expected_bodies": 1,
+      "step_sha256": "7ba121a35d8d761bab76923877551c0b11cff3c80711bed405d684845a2ea455",
+      "layer_c": "pass",
+      "parser": "accepted; MILLIMETRE; 1 solid; 6 planes; 0 warnings",
+      "consumer_import": "accepted cleanly; 1 solid; 0 skipped faces",
+      "consumer_diagnostic": "rejected: requested allocation 1610612736 bytes under 1 GiB address-space bound",
+      "failed_checks": ["consumer_diagnostic_accepts", "consumer_bbox", "consumer_volume"]
+    },
+    {
+      "id": "inch-equivalent",
+      "unit": "inch",
+      "expected_bodies": 1,
+      "step_sha256": "1dfcb51790255933ba48b8b027725ca62e15fac25dd2a703c8d135d4ac8b312f",
+      "layer_c": "pass",
+      "parser": "accepted; INCH; length_to_si=0.0254; 1 solid; 0 warnings",
+      "consumer_import": "accepted cleanly; 1 solid; 0 skipped faces",
+      "consumer_diagnostic": "rejected: requested allocation 1610612736 bytes under 1 GiB address-space bound",
+      "failed_checks": ["consumer_diagnostic_accepts", "consumer_bbox", "consumer_volume"]
+    },
+    {
+      "id": "analytic-cylinder",
+      "unit": "mm",
+      "expected_bodies": 1,
+      "step_sha256": "de15fc674be6a58d782f9e8551f4b55ebf03e7efde42659f8bc7399e9954fd03",
+      "layer_c": "pass",
+      "parser": "accepted; 1 solid; cylinder retained; 0 warnings",
+      "consumer_import": "accepted cleanly; 1 solid; 0 skipped faces",
+      "consumer_diagnostic": "accepted; bbox delta 8.63e-7 mm; 64 triangles; volume relative delta 0.3376088054611151",
+      "failed_checks": ["consumer_volume"]
+    },
+    {
+      "id": "analytic-cone",
+      "unit": "mm",
+      "expected_bodies": 1,
+      "step_sha256": "34518152bd99db78da42433b555d8c58abb475fd868bf8c760f205940a6c76e0",
+      "layer_c": "pass",
+      "parser": "accepted; 1 solid; cone retained; 0 warnings",
+      "consumer_import": "accepted cleanly; 1 solid; 0 skipped faces",
+      "consumer_diagnostic": "accepted; bbox delta 4.82e-7 mm; 64 triangles; volume relative delta 0.14835417845000495",
+      "failed_checks": ["consumer_volume"]
+    },
+    {
+      "id": "through-hole",
+      "unit": "mm",
+      "expected_bodies": 1,
+      "step_sha256": "c992b21d47e70719706a3dc312b9d87628d4fbf5572dcf9db768c80cf840bca6",
+      "layer_c": "pass",
+      "parser": "accepted; 1 solid; cylinder retained; 0 warnings",
+      "consumer_import": "accepted cleanly; 1 solid; 7 faces; 0 skipped faces",
+      "consumer_diagnostic": "rejected: requested allocation 1610612736 bytes under 1 GiB address-space bound",
+      "failed_checks": ["consumer_diagnostic_accepts", "consumer_bbox", "consumer_volume"]
+    },
+    {
+      "id": "blind-hole",
+      "unit": "mm",
+      "expected_bodies": 1,
+      "step_sha256": "b17116cdba3369f7c1fcb318a349e2d0950ab7974a4e661a34d9fc4eaa2c0954",
+      "layer_c": "pass",
+      "parser": "accepted; 1 solid; cylinder retained; 0 warnings",
+      "consumer_import": "accepted cleanly; 1 solid; 8 faces; 0 skipped faces",
+      "consumer_diagnostic": "rejected: requested allocation 1610612736 bytes under 1 GiB address-space bound",
+      "failed_checks": ["consumer_diagnostic_accepts", "consumer_bbox", "consumer_volume"]
+    },
+    {
+      "id": "two-body-parting",
+      "unit": "mm",
+      "expected_bodies": 2,
+      "step_sha256": "7637c92059da89e90736b872e1327787faa9a608c25ef5ce693f8dfdae10dc25",
+      "layer_c": "pass; exactly 2 solids",
+      "parser": "accepted; exactly 2 solids; 0 warnings",
+      "consumer_import": "accepted cleanly; exactly 2 solids; 0 skipped faces",
+      "consumer_diagnostic": "rejected: requested allocation 1610612736 bytes under 1 GiB address-space bound",
+      "failed_checks": ["consumer_diagnostic_accepts", "consumer_bbox", "consumer_volume"]
+    },
+    {
+      "id": "mill-cut-through",
+      "unit": "mm",
+      "expected_bodies": 2,
+      "step_sha256": "4c4beed2fd2fc21f0d7f9da755bde4b911867613df825fa427cae73c57033bb6",
+      "layer_c": "pass; exactly 2 solids; bbox max delta about 5e-8 mm",
+      "parser": "accepted; exactly 2 solids; 0 warnings",
+      "consumer_import": "accepted cleanly; exactly 2 solids; 0 skipped faces",
+      "consumer_diagnostic": "rejected: requested allocation 1610612736 bytes under 1 GiB address-space bound",
+      "failed_checks": ["consumer_diagnostic_accepts", "consumer_bbox", "consumer_volume"]
+    },
+    {
+      "id": "lathe-accepted-r020",
+      "unit": "mm",
+      "expected_bodies": 1,
+      "step_sha256": "061cbab5f4fa67e5111bd0786ea54ad9d0a6c87721d72f9fcc5e1d1e3454d982",
+      "layer_c": "pass",
+      "parser": "accepted; 1 solid; 3 cylindrical surfaces; 0 warnings",
+      "consumer_import": "accepted cleanly; 1 solid; 0 skipped faces",
+      "consumer_diagnostic": "rejected: requested allocation 1610612736 bytes under 1 GiB address-space bound",
+      "failed_checks": ["consumer_diagnostic_accepts", "consumer_bbox", "consumer_volume"]
+    },
+    {
+      "id": "healed-same-domain",
+      "unit": "mm",
+      "expected_bodies": 1,
+      "step_sha256": "6d506158fc7eeac3bc582e311071663161dd59c3e199ce89656872768e988671",
+      "layer_c": "pass",
+      "reconciliation": {
+        "policy": "ShapeUpgrade_UnifySameDomain",
+        "body_count_before": 1,
+        "body_count_after": 1,
+        "volume_abs_delta_mm3": 9.094947017729282e-13,
+        "bbox_max_abs_delta_mm": 0.0,
+        "plane_faces_before": 10,
+        "plane_faces_after": 6
+      },
+      "parser": "accepted; 1 solid; 6 planes; 0 warnings",
+      "consumer_import": "accepted cleanly; 1 solid; 0 skipped faces",
+      "consumer_diagnostic": "rejected: requested allocation 1610612736 bytes under 1 GiB address-space bound",
+      "failed_checks": ["consumer_diagnostic_accepts", "consumer_bbox", "consumer_volume"]
+    },
+    {
+      "id": "trimmed-curved",
+      "unit": "mm",
+      "expected_bodies": 1,
+      "step_sha256": "b663caab132c42c0908f0079322758bc73992b9ca02e3a030c19573eef654a54",
+      "layer_c": "pass",
+      "parser": "accepted; 1 solid; underlying cylinder retained; 0 warnings",
+      "consumer_import": "accepted cleanly; 1 solid; 0 skipped faces",
+      "consumer_diagnostic": "rejected: requested allocation 1610612736 bytes under 1 GiB address-space bound",
+      "failed_checks": ["consumer_diagnostic_accepts", "consumer_bbox", "consumer_volume"]
+    }
+  ],
+  "negative_cases": [
+    {"id": "wrong_unit_scale", "passed": true, "failure_code": "STEP_UNIT_SCALE_MISMATCH"},
+    {"id": "omitted_body", "passed": true, "failure_code": "STEP_BODY_COUNT_MISMATCH"},
+    {"id": "invalid_open_non_solid", "passed": true, "failure_code": "PREEXPORT_SOLID_CONTRACT_FAILED"},
+    {"id": "analytic_degradation", "passed": true, "failure_code": "STEP_ANALYTIC_GEOMETRY_LOST"},
+    {"id": "excessive_dimension_volume_deviation", "passed": true, "failure_code": "STEP_DIMENSION_VOLUME_DEVIATION"},
+    {"id": "parser_schema_failure", "passed": true, "failure_code": "STEP_SCHEMA_PARSER_REJECTION"},
+    {"id": "downstream_import_failure", "passed": true, "failure_code": "STEP_DOWNSTREAM_IMPORT_REJECTION"}
+  ],
+  "conclusion": "The exact profile remains interoperability_unqualified. Independent parsing and independent B-rep import succeeded for every declared positive fixture, including exact two-body preservation, but the independent consumer metric path did not satisfy the declared qualification envelope. This bounded negative result does not authorize production Layer-D qualification and does not relax Layer-C accuracy, material-body preservation, journal authority, source semantics, or provenance."
+}
