@@ -52,14 +52,10 @@ jobs:
             -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$RCS006_OCCT_PREFIX"
       - name: Build OCCT exporter probe
         run: cmake --build .build/rcs022-exporter --parallel 2
-      - name: Resolve and build independent Part-21/schema parser
-        run: |
-          cargo generate-lockfile --manifest-path research/rcs-022/parser_probe/Cargo.toml
-          cargo build --locked --release --manifest-path research/rcs-022/parser_probe/Cargo.toml
-      - name: Resolve and build independent downstream solid consumer
-        run: |
-          cargo generate-lockfile --manifest-path research/rcs-022/consumer_probe/Cargo.toml
-          cargo build --locked --release --manifest-path research/rcs-022/consumer_probe/Cargo.toml
+      - name: Build independent Part-21/schema parser from committed lock
+        run: cargo build --locked --release --manifest-path research/rcs-022/parser_probe/Cargo.toml
+      - name: Build independent downstream solid consumer from committed lock
+        run: cargo build --locked --release --manifest-path research/rcs-022/consumer_probe/Cargo.toml
       - name: Capture independent dependency provenance
         shell: bash
         run: |
