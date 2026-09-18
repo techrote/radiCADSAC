@@ -27,6 +27,8 @@ jobs:
       RCS024_BUILD_JOBS: 2
     steps:
       - uses: actions/checkout@v4
+      - name: Prepare diagnostic artifact directory
+        run: mkdir -p .results/rcs024/bootstrap
       - name: Restore baseline OCCT cache
         uses: actions/cache/restore@v4
         with:
@@ -42,10 +44,12 @@ jobs:
         run: |
           if ! command -v ninja >/dev/null 2>&1; then sudo apt-get update && sudo apt-get install -y ninja-build; fi
       - name: Bootstrap exact baseline and candidate
+        shell: bash
         run: |
-          bash research/rcs-006/harness/bootstrap_occt.sh
-          bash research/rcs-006/harness/verify_occt_install.sh
-          bash research/rcs-024/bootstrap_candidate.sh
+          set -euo pipefail
+          bash research/rcs-006/harness/bootstrap_occt.sh 2>&1 | tee .results/rcs024/bootstrap/baseline-bootstrap.log
+          bash research/rcs-006/harness/verify_occt_install.sh 2>&1 | tee .results/rcs024/bootstrap/baseline-verify.log
+          bash research/rcs-024/bootstrap_candidate.sh 2>&1 | tee .results/rcs024/bootstrap/candidate-bootstrap.log
       - name: Save candidate cache
         if: steps.candidate-cache.outputs.cache-hit != 'true'
         uses: actions/cache/save@v4
