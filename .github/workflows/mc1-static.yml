@@ -1,5 +1,6 @@
 name: mc1-static
 on:
+  workflow_dispatch:
   push:
     branches: [main, mc-1-workflow-adoption]
     paths:
