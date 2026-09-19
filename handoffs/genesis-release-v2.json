@@ -1,0 +1,74 @@
+{
+  "date": "2026-09-19",
+  "evidence": {
+    "decision_delta": "research/rcs-027/decision-delta-v1.json",
+    "matrix": "research/rcs-027/evidence-matrix-v1.json",
+    "predecessors": [
+      "RCS-018",
+      "RCS-019",
+      "RCS-020",
+      "RCS-021",
+      "RCS-022",
+      "RCS-023",
+      "RCS-024",
+      "RCS-025",
+      "RCS-026"
+    ],
+    "windows_step": "research/rcs-027/windows-step-qualification-v1.json"
+  },
+  "gate5_evidence_binding": {
+    "artifact_digest": "sha256:8132c933649644c675781b610deb0c002189da8974ea7f3850e1f14c4055272a",
+    "artifact_id": 10577237158,
+    "live_summary_sha256": "7266e6d6d9095532abc8d0f4531b0bd9ef99c8fcb2a25b8422c4a97e8b118121",
+    "source_head_sha": "2a79aa17600e86d2ec2678e9522781b32fbae930",
+    "workflow_run_id": 35417316840
+  },
+  "gate5_status": "accepted",
+  "genesis_v1_preservation": {
+    "manifest": "handoffs/genesis-release-v1.json",
+    "meaning": "historical frozen v1 packages are not rewritten",
+    "msac_tree_sha": "e04d53756dd83089d367d756253482bebe791f32",
+    "opensimachinist_tree_sha": "d4793b03f31bd9fd58efcea94afba2f69fa3f7f3"
+  },
+  "packages": {
+    "msac": {
+      "manifest": "handoffs/v2/msac/handoff-v2.json",
+      "package_tree_sha": "a38d265aae2fda8e35dcf58e7d127d459e74055a",
+      "path": "handoffs/v2/msac"
+    },
+    "opensimachinist": {
+      "manifest": "handoffs/v2/opensimachinist/handoff-v2.json",
+      "package_tree_sha": "b93e6e7ca28d26753e735f8ffe4acc56c5821676",
+      "path": "handoffs/v2/opensimachinist"
+    }
+  },
+  "production_repository_creation_authorized": false,
+  "repository": "techrote/radiCADSAC",
+  "schema": "radicadsac-genesis-freeze/2.0",
+  "self_contained": true,
+  "shared_contracts": {
+    "backend_architecture": "semantic-provider-hybrid-v2",
+    "default_step_body_selection": "all committed material bodies",
+    "journal_schema": "msac-journal/1.0",
+    "occt_commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42",
+    "occt_version": "8.0.1",
+    "preview_authoritative": false,
+    "process_isolation": true,
+    "source_audio_provenance_authority": "programme-owned immutable metadata",
+    "step_layer_d_status": "interoperability_unqualified",
+    "step_primary_engineering_output": true,
+    "step_profile": "rcs-022-occt-ap242dis-layer-d/1.0"
+  },
+  "source_base_main": "6a235965c2deb35ad4e657f77849613a79ce4fc3",
+  "status": "gate5_foundation_qualified",
+  "tag_plan": {
+    "commands": "documented in docs/35-GENESIS-V2-SYNTHESIS-AND-GATE5.md",
+    "created_by_pr": false,
+    "names": [
+      "radiCADSAC-genesis-v2",
+      "opensimachinist-handoff-v2",
+      "msac-handoff-v2"
+    ],
+    "target": "verified RCS-027 merge commit on main"
+  }
+}

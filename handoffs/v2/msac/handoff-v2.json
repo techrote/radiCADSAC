@@ -1,0 +1,31 @@
+{
+  "documents": [
+    "README.md",
+    "00-FOUNDING-SPEC.md",
+    "01-IMPLEMENTATION-ROADMAP.md",
+    "02-INITIAL-ISSUE-GRAPH.md",
+    "03-INTEGRATION-ESCAPE-ROUTES.md",
+    "04-CLEAN-REPO-BOOTSTRAP-CHECKLIST.md"
+  ],
+  "evidence": [
+    "docs/35-GENESIS-V2-SYNTHESIS-AND-GATE5.md",
+    "research/rcs-027/evidence-matrix-v1.json",
+    "research/rcs-027/decision-delta-v1.json",
+    "docs/36-GENESIS-V1-V2-DELTA.md"
+  ],
+  "production_repo_creation_authorized": false,
+  "production_repository": "techrote/MSAC",
+  "schema": "msac-handoff/2.0",
+  "shared_contracts": {
+    "backend_architecture": "semantic-provider-hybrid-v2",
+    "default_step_body_selection": "all committed material bodies",
+    "journal_schema": "msac-journal/1.0",
+    "occt_commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42",
+    "occt_version": "8.0.1",
+    "source_audio_provenance_authority": "programme-owned immutable metadata",
+    "step_layer_d_status": "interoperability_unqualified",
+    "step_profile": "rcs-022-occt-ap242dis-layer-d/1.0"
+  },
+  "source_base_main": "6a235965c2deb35ad4e657f77849613a79ce4fc3",
+  "status": "candidate_gate5_pending_windows_step"
+}

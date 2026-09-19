@@ -1,0 +1,114 @@
+{
+  "gate5_status": "accepted",
+  "items": [
+    {
+      "classification": "accepted",
+      "gate5": [
+        "composition"
+      ],
+      "id": "RCS-018",
+      "issue": 37,
+      "source": "docs/26-INTEGRATED-SEMANTIC-CONTRACT-VERTICAL-SLICE.md"
+    },
+    {
+      "classification": "accepted",
+      "gate5": [
+        "canonicalization",
+        "cross_platform"
+      ],
+      "id": "RCS-019",
+      "issue": 38,
+      "source": "docs/27-CANONICALIZER-CONFORMANCE.md"
+    },
+    {
+      "classification": "accepted",
+      "gate5": [
+        "lathe"
+      ],
+      "id": "RCS-020",
+      "issue": 39,
+      "source": "docs/28-REALISTIC-LATHE-TOOL-ENVELOPE-RESEARCH.md"
+    },
+    {
+      "classification": "accepted_bounded",
+      "gate5": [
+        "mill"
+      ],
+      "id": "RCS-021",
+      "issue": 40,
+      "source": "docs/29-MANUAL-FREEHAND-MILL-ORACLE-FALLBACK-RESEARCH.md"
+    },
+    {
+      "classification": "accepted_negative",
+      "gate5": [
+        "step"
+      ],
+      "id": "RCS-022",
+      "issue": 41,
+      "qualification_status": "interoperability_unqualified",
+      "source": "docs/30-STEP-LAYER-D-INTEROPERABILITY-QUALIFICATION.md"
+    },
+    {
+      "classification": "accepted",
+      "gate5": [
+        "uncertainty"
+      ],
+      "id": "RCS-023",
+      "issue": 42,
+      "source": "docs/31-PROPAGATED-UNCERTAINTY-ERROR-BUDGET-ALGEBRA.md"
+    },
+    {
+      "classification": "accepted",
+      "gate5": [
+        "occt"
+      ],
+      "id": "RCS-024",
+      "issue": 43,
+      "source": "docs/32-OCCT-CURRENT-DIFFERENTIAL.md"
+    },
+    {
+      "classification": "accepted",
+      "gate5": [
+        "handoff",
+        "reconciliation"
+      ],
+      "id": "RCS-025",
+      "issue": 44,
+      "source": "docs/33-PROVIDER-HANDOFF-RECONCILIATION-STRESS.md"
+    },
+    {
+      "blocker": "exact Windows/MSVC OCCT 8.0.1 STEP soak not run",
+      "blocker_resolution": {
+        "evidence": "research/rcs-027/windows-step-qualification-v1.json",
+        "resolution": "exact Windows/MSVC OCCT 8.0.1 three-repetition STEP campaign executed successfully; Layer-D remains interoperability_unqualified",
+        "status": "cleared_by_rcs027",
+        "workflow_run_id": 35417316840
+      },
+      "classification": "accepted_with_gate5_blocker",
+      "gate5": [
+        "platform",
+        "recovery"
+      ],
+      "id": "RCS-026",
+      "issue": 45,
+      "source": "docs/34-WINDOWS-LINUX-SCALE-SOAK-FAULT-RECOVERY.md"
+    }
+  ],
+  "rcs027_closure_probe": {
+    "artifact_digest": "sha256:8132c933649644c675781b610deb0c002189da8974ea7f3850e1f14c4055272a",
+    "artifact_id": 10577237158,
+    "live_summary_sha256": "7266e6d6d9095532abc8d0f4531b0bd9ef99c8fcb2a25b8422c4a97e8b118121",
+    "negative_controls_passed": 7,
+    "occt_commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42",
+    "occt_version": "8.0.1",
+    "positive_case_count": 11,
+    "qualification_status": "interoperability_unqualified",
+    "required_layer_d_status": "interoperability_unqualified",
+    "required_repetitions": 3,
+    "source_head_sha": "2a79aa17600e86d2ec2678e9522781b32fbae930",
+    "status": "accepted",
+    "workflow_run_id": 35417316840
+  },
+  "schema": "rcs-027-evidence-matrix/1.0",
+  "source_base_main": "6a235965c2deb35ad4e657f77849613a79ce4fc3"
+}
