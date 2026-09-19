@@ -4,343 +4,343 @@
   "tasks": {
     "MC-001": {
       "state": "IN_PROGRESS",
-      "issue": null,
+      "issue": 63,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-002": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 64,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-003": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 65,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-004": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 66,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-005": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 67,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-006": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 68,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-007": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 69,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-008": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 70,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-009": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 71,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-010": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 72,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-011": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 73,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-012": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 74,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-013": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 75,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-014": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 76,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-015": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 77,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-016": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 78,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-017": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 79,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-018": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 80,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-019": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 81,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-020": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 82,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-021": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 83,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-022": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 84,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-023": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 85,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-024": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 86,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-025": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 87,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-026": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 88,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-027": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 89,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-028": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 90,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-029": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 91,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-030": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 92,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-031": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 93,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-032": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 94,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-033": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 95,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-034": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 96,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-035": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 97,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-036": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 98,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-037": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 99,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-038": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 100,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-039": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 101,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-040": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 102,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-041": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 103,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-042": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 104,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-043": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 105,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-044": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 106,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-045": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 107,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-046": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 108,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-047": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 109,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-048": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 110,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-049": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 111,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-050": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 112,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-051": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 113,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-052": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 114,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-053": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 115,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-054": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 116,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-055": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 117,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-056": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 118,
       "accepted_artifacts": [],
       "blockers": []
     },
     "MC-057": {
       "state": "NOT_STARTED",
-      "issue": null,
+      "issue": 119,
       "accepted_artifacts": [],
       "blockers": []
     }

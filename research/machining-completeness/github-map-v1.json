@@ -1,0 +1,292 @@
+{
+  "schema": "radicadsac-mc-github-map/1.0",
+  "programme_issue": 62,
+  "generated_from": "research/machining-completeness/task-graph-v1.json",
+  "tasks": {
+    "MC-001": {
+      "issue": 63,
+      "url": "https://github.com/techrote/radiCADSAC/issues/63",
+      "package": "MG-00"
+    },
+    "MC-002": {
+      "issue": 64,
+      "url": "https://github.com/techrote/radiCADSAC/issues/64",
+      "package": "MG-01"
+    },
+    "MC-003": {
+      "issue": 65,
+      "url": "https://github.com/techrote/radiCADSAC/issues/65",
+      "package": "MG-01"
+    },
+    "MC-004": {
+      "issue": 66,
+      "url": "https://github.com/techrote/radiCADSAC/issues/66",
+      "package": "MG-01"
+    },
+    "MC-005": {
+      "issue": 67,
+      "url": "https://github.com/techrote/radiCADSAC/issues/67",
+      "package": "MG-01"
+    },
+    "MC-006": {
+      "issue": 68,
+      "url": "https://github.com/techrote/radiCADSAC/issues/68",
+      "package": "MG-02"
+    },
+    "MC-007": {
+      "issue": 69,
+      "url": "https://github.com/techrote/radiCADSAC/issues/69",
+      "package": "MG-02"
+    },
+    "MC-008": {
+      "issue": 70,
+      "url": "https://github.com/techrote/radiCADSAC/issues/70",
+      "package": "MG-02"
+    },
+    "MC-009": {
+      "issue": 71,
+      "url": "https://github.com/techrote/radiCADSAC/issues/71",
+      "package": "MG-03"
+    },
+    "MC-010": {
+      "issue": 72,
+      "url": "https://github.com/techrote/radiCADSAC/issues/72",
+      "package": "MG-03"
+    },
+    "MC-011": {
+      "issue": 73,
+      "url": "https://github.com/techrote/radiCADSAC/issues/73",
+      "package": "MG-03"
+    },
+    "MC-012": {
+      "issue": 74,
+      "url": "https://github.com/techrote/radiCADSAC/issues/74",
+      "package": "MG-03"
+    },
+    "MC-013": {
+      "issue": 75,
+      "url": "https://github.com/techrote/radiCADSAC/issues/75",
+      "package": "MG-03"
+    },
+    "MC-014": {
+      "issue": 76,
+      "url": "https://github.com/techrote/radiCADSAC/issues/76",
+      "package": "MG-03"
+    },
+    "MC-015": {
+      "issue": 77,
+      "url": "https://github.com/techrote/radiCADSAC/issues/77",
+      "package": "MG-03"
+    },
+    "MC-016": {
+      "issue": 78,
+      "url": "https://github.com/techrote/radiCADSAC/issues/78",
+      "package": "MG-06"
+    },
+    "MC-017": {
+      "issue": 79,
+      "url": "https://github.com/techrote/radiCADSAC/issues/79",
+      "package": "MG-06"
+    },
+    "MC-018": {
+      "issue": 80,
+      "url": "https://github.com/techrote/radiCADSAC/issues/80",
+      "package": "MG-04"
+    },
+    "MC-019": {
+      "issue": 81,
+      "url": "https://github.com/techrote/radiCADSAC/issues/81",
+      "package": "MG-04"
+    },
+    "MC-020": {
+      "issue": 82,
+      "url": "https://github.com/techrote/radiCADSAC/issues/82",
+      "package": "MG-04"
+    },
+    "MC-021": {
+      "issue": 83,
+      "url": "https://github.com/techrote/radiCADSAC/issues/83",
+      "package": "MG-04"
+    },
+    "MC-022": {
+      "issue": 84,
+      "url": "https://github.com/techrote/radiCADSAC/issues/84",
+      "package": "MG-04"
+    },
+    "MC-023": {
+      "issue": 85,
+      "url": "https://github.com/techrote/radiCADSAC/issues/85",
+      "package": "MG-04"
+    },
+    "MC-024": {
+      "issue": 86,
+      "url": "https://github.com/techrote/radiCADSAC/issues/86",
+      "package": "MG-05"
+    },
+    "MC-025": {
+      "issue": 87,
+      "url": "https://github.com/techrote/radiCADSAC/issues/87",
+      "package": "MG-05"
+    },
+    "MC-026": {
+      "issue": 88,
+      "url": "https://github.com/techrote/radiCADSAC/issues/88",
+      "package": "MG-05"
+    },
+    "MC-027": {
+      "issue": 89,
+      "url": "https://github.com/techrote/radiCADSAC/issues/89",
+      "package": "MG-05"
+    },
+    "MC-028": {
+      "issue": 90,
+      "url": "https://github.com/techrote/radiCADSAC/issues/90",
+      "package": "MG-05"
+    },
+    "MC-029": {
+      "issue": 91,
+      "url": "https://github.com/techrote/radiCADSAC/issues/91",
+      "package": "MG-05"
+    },
+    "MC-030": {
+      "issue": 92,
+      "url": "https://github.com/techrote/radiCADSAC/issues/92",
+      "package": "MG-05"
+    },
+    "MC-031": {
+      "issue": 93,
+      "url": "https://github.com/techrote/radiCADSAC/issues/93",
+      "package": "MG-07"
+    },
+    "MC-032": {
+      "issue": 94,
+      "url": "https://github.com/techrote/radiCADSAC/issues/94",
+      "package": "MG-07"
+    },
+    "MC-033": {
+      "issue": 95,
+      "url": "https://github.com/techrote/radiCADSAC/issues/95",
+      "package": "MG-07"
+    },
+    "MC-034": {
+      "issue": 96,
+      "url": "https://github.com/techrote/radiCADSAC/issues/96",
+      "package": "MG-08"
+    },
+    "MC-035": {
+      "issue": 97,
+      "url": "https://github.com/techrote/radiCADSAC/issues/97",
+      "package": "MG-08"
+    },
+    "MC-036": {
+      "issue": 98,
+      "url": "https://github.com/techrote/radiCADSAC/issues/98",
+      "package": "MG-08"
+    },
+    "MC-037": {
+      "issue": 99,
+      "url": "https://github.com/techrote/radiCADSAC/issues/99",
+      "package": "MG-08"
+    },
+    "MC-038": {
+      "issue": 100,
+      "url": "https://github.com/techrote/radiCADSAC/issues/100",
+      "package": "MG-08"
+    },
+    "MC-039": {
+      "issue": 101,
+      "url": "https://github.com/techrote/radiCADSAC/issues/101",
+      "package": "MG-09"
+    },
+    "MC-040": {
+      "issue": 102,
+      "url": "https://github.com/techrote/radiCADSAC/issues/102",
+      "package": "MG-09"
+    },
+    "MC-041": {
+      "issue": 103,
+      "url": "https://github.com/techrote/radiCADSAC/issues/103",
+      "package": "MG-09"
+    },
+    "MC-042": {
+      "issue": 104,
+      "url": "https://github.com/techrote/radiCADSAC/issues/104",
+      "package": "MG-10"
+    },
+    "MC-043": {
+      "issue": 105,
+      "url": "https://github.com/techrote/radiCADSAC/issues/105",
+      "package": "MG-10"
+    },
+    "MC-044": {
+      "issue": 106,
+      "url": "https://github.com/techrote/radiCADSAC/issues/106",
+      "package": "MG-10"
+    },
+    "MC-045": {
+      "issue": 107,
+      "url": "https://github.com/techrote/radiCADSAC/issues/107",
+      "package": "MG-11"
+    },
+    "MC-046": {
+      "issue": 108,
+      "url": "https://github.com/techrote/radiCADSAC/issues/108",
+      "package": "MG-11"
+    },
+    "MC-047": {
+      "issue": 109,
+      "url": "https://github.com/techrote/radiCADSAC/issues/109",
+      "package": "MG-11"
+    },
+    "MC-048": {
+      "issue": 110,
+      "url": "https://github.com/techrote/radiCADSAC/issues/110",
+      "package": "MG-11"
+    },
+    "MC-049": {
+      "issue": 111,
+      "url": "https://github.com/techrote/radiCADSAC/issues/111",
+      "package": "MG-12"
+    },
+    "MC-050": {
+      "issue": 112,
+      "url": "https://github.com/techrote/radiCADSAC/issues/112",
+      "package": "MG-12"
+    },
+    "MC-051": {
+      "issue": 113,
+      "url": "https://github.com/techrote/radiCADSAC/issues/113",
+      "package": "MG-12"
+    },
+    "MC-052": {
+      "issue": 114,
+      "url": "https://github.com/techrote/radiCADSAC/issues/114",
+      "package": "MG-13"
+    },
+    "MC-053": {
+      "issue": 115,
+      "url": "https://github.com/techrote/radiCADSAC/issues/115",
+      "package": "MG-13"
+    },
+    "MC-054": {
+      "issue": 116,
+      "url": "https://github.com/techrote/radiCADSAC/issues/116",
+      "package": "MG-06"
+    },
+    "MC-055": {
+      "issue": 117,
+      "url": "https://github.com/techrote/radiCADSAC/issues/117",
+      "package": "MG-03"
+    },
+    "MC-056": {
+      "issue": 118,
+      "url": "https://github.com/techrote/radiCADSAC/issues/118",
+      "package": "MG-00"
+    },
+    "MC-057": {
+      "issue": 119,
+      "url": "https://github.com/techrote/radiCADSAC/issues/119",
+      "package": "MG-12"
+    }
+  }
+}
