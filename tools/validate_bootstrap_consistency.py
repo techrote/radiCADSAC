@@ -71,11 +71,15 @@ def static():
         if rel.get("packages",{}).get(name,{}).get("package_tree_sha")!=actual: fail(f"{name} corrected package tree mismatch")
 
     readme=read("README.md"); agents=read("AGENTS.md"); hidx=read("handoffs/README.md")
-    for phrase in ["Genesis v2 is the current bootstrap authority","evidence-dependencies-v2.1.json"]:
-        if phrase not in readme: fail(f"README missing current-route phrase {phrase!r}")
-    if "The **current** production bootstrap outputs" not in agents: fail("AGENTS current routing missing")
-    if "v1 packages" not in agents: fail("AGENTS historical v1 routing missing")
-    if "Current bootstrap route" not in hidx or "Genesis-v1 historical freeze" not in hidx: fail("handoff index routing missing")
+    auth=load("handoffs/current-authority.json")
+    if auth.get("programme")!="MC-1" or auth.get("capability_status")!="NOT_ESTABLISHED" or auth.get("production_authorized") is not False:
+        fail("current authority must route to MC-1 with production held")
+    for phrase in ["MC-1 is the current execution authority","Genesis-v2.1","not current production-bootstrap authorization"]:
+        if phrase not in readme: fail(f"README missing MC-1/current-history phrase {phrase!r}")
+    for phrase in ["Current MC-1 execution authority","Current routing is `handoffs/current-authority.json` → MC-1","not current production-bootstrap authorization"]:
+        if phrase not in agents: fail(f"AGENTS missing MC-1/current-history phrase {phrase!r}")
+    if "Current execution route" not in hidx or "Genesis-v1 historical freeze" not in hidx or "MC-1" not in hidx:
+        fail("handoff index current/historical routing missing")
 
     if "pending PR merge" in read("docs/27-CANONICALIZER-CONFORMANCE.md"): fail("stale RCS-019 pending-merge status remains")
 
@@ -98,6 +102,9 @@ def static():
     if "does **not** execute a new native geometry reconstruction" not in read("docs/33-PROVIDER-HANDOFF-RECONCILIATION-STRESS.md"): fail("RCS-025 model/native boundary missing")
     if "do not execute 100,000 native OCCT material-changing geometry operations" not in read("docs/34-WINDOWS-LINUX-SCALE-SOAK-FAULT-RECOVERY.md"): fail("RCS-026 scale scope boundary missing")
     if "Gate 5 accepts the **foundation and bounded/refusal policies**" not in read("docs/35-GENESIS-V2-SYNTHESIS-AND-GATE5.md"): fail("Gate5 claim boundary missing")
+    dr=read("docs/decisions/DR-0026-machining-completeness-programme.md")
+    if "MC-1 is the current programme" not in dr or "NOT_ESTABLISHED" not in dr:
+        fail("DR-0026 current programme boundary missing")
 
 def adversarial():
     rel={"gate5_status":"accepted","consistency_revision":"2.1"}
