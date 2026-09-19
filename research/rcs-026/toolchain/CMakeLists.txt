@@ -13,5 +13,5 @@ endif()
 enable_testing()
 add_test(
   NAME rcs026-toolchain-probe
-  COMMAND rcs026_toolchain_probe "${CMAKE_BINARY_DIR}/toolchain.json"
+  COMMAND rcs026_toolchain_probe "${CMAKE_BINARY_DIR}/toolchain.json" "${CMAKE_GENERATOR}"
 )
