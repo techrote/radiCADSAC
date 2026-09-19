@@ -3,7 +3,38 @@ name: rcs011-mill-research
 on:
   push:
     branches: [main]
+    # MC-1 planning-only changes must not dispatch historical campaigns on merge.
+    paths-ignore:
+      - 'docs/machining-completeness/**'
+      - 'docs/decisions/DR-0026-machining-completeness-programme.md'
+      - 'research/machining-completeness/**'
+      - 'handoffs/current-authority.json'
+      - 'README.md'
+      - 'AGENTS.md'
+      - 'handoffs/README.md'
+      - 'tools/validate_machining_completeness.py'
+      - 'tools/validate_mc_ci_impact.py'
+      - 'tools/mc_workflow.py'
+      - 'tools/mc_inventory.py'
+      - 'tools/validate_bootstrap_consistency.py'
+      - '.github/workflows/**'
   pull_request:
+    # MC-1 planning-only impact routing: native historical campaigns are not
+    # evidence for documentation/registry adoption and must not be dispatched by it.
+    paths-ignore:
+      - 'docs/machining-completeness/**'
+      - 'docs/decisions/DR-0026-machining-completeness-programme.md'
+      - 'research/machining-completeness/**'
+      - 'handoffs/current-authority.json'
+      - 'README.md'
+      - 'AGENTS.md'
+      - 'handoffs/README.md'
+      - 'tools/validate_machining_completeness.py'
+      - 'tools/validate_bootstrap_consistency.py'
+      - 'tools/validate_mc_ci_impact.py'
+      - 'tools/mc_workflow.py'
+      - 'tools/mc_inventory.py'
+      - '.github/workflows/**'
 
 permissions:
   contents: read

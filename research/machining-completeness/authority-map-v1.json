@@ -1,0 +1,35 @@
+{
+  "schema": "radicadsac-mc-authority-map/1.0",
+  "current": [
+    "handoffs/current-authority.json",
+    "docs/decisions/DR-0026-machining-completeness-programme.md",
+    "docs/machining-completeness/00-PROGRAMME.md",
+    "docs/machining-completeness/01-DOMAIN-AND-SEMANTICS.md",
+    "docs/machining-completeness/02-COMPLETENESS-ARGUMENT.md",
+    "docs/machining-completeness/03-ORACLE-AND-CORPUS.md",
+    "docs/machining-completeness/04-REPRESENTATION-AND-RECONSTRUCTION.md",
+    "docs/machining-completeness/05-QUALIFICATION.md",
+    "docs/machining-completeness/06-MC1-DECISION.md",
+    "docs/machining-completeness/07-EXECUTION-PROTOCOL.md",
+    "docs/machining-completeness/08-SOURCES-AND-EVIDENCE.md",
+    "docs/machining-completeness/09-REVIEW-AND-CHANGELOG.md",
+    "docs/machining-completeness/10-RAG-INDEX.md",
+    "docs/machining-completeness/11-FORMAT-CONTRACTS.md",
+    "docs/machining-completeness/12-ROADMAP.md"
+  ],
+  "historical_current_at_phase": [
+    "docs/04-REVISED-RESEARCH-ROADMAP.md",
+    "docs/07-RESEARCH-ISSUE-GRAPH.md",
+    "docs/20-OPENSIMACHINIST-ARCHITECTURE-SYNTHESIS.md",
+    "docs/24-GENESIS-V2-REVISED-ROADMAP.md",
+    "docs/35-GENESIS-V2-SYNTHESIS-AND-GATE5.md",
+    "docs/37-GENESIS-V2-BOOTSTRAP-CONSISTENCY.md",
+    "handoffs/genesis-release-v1.json",
+    "handoffs/genesis-release-v2.json",
+    "handoffs/opensimachinist/",
+    "handoffs/msac/",
+    "handoffs/v2/opensimachinist/",
+    "handoffs/v2/msac/"
+  ],
+  "rule": "Historical files preserve their phase meaning and evidence; current production readiness/routing follows DR-0026 and handoffs/current-authority.json."
+}

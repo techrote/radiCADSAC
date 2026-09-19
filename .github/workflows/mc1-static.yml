@@ -1,0 +1,67 @@
+name: mc1-static
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, mc-1-workflow-adoption]
+    paths:
+      - 'docs/machining-completeness/**'
+      - 'docs/decisions/DR-0026-machining-completeness-programme.md'
+      - 'research/machining-completeness/**'
+      - 'handoffs/current-authority.json'
+      - 'README.md'
+      - 'AGENTS.md'
+      - 'handoffs/README.md'
+      - 'tools/validate_machining_completeness.py'
+      - 'tools/validate_mc_ci_impact.py'
+      - 'tools/validate_bootstrap_consistency.py'
+      - 'tools/mc_workflow.py'
+      - '.github/workflows/mc1-static.yml'
+  pull_request:
+    paths:
+      - 'docs/machining-completeness/**'
+      - 'docs/decisions/DR-0026-machining-completeness-programme.md'
+      - 'research/machining-completeness/**'
+      - 'handoffs/current-authority.json'
+      - 'README.md'
+      - 'AGENTS.md'
+      - 'handoffs/README.md'
+      - 'tools/validate_machining_completeness.py'
+      - 'tools/validate_mc_ci_impact.py'
+      - 'tools/mc_workflow.py'
+      - '.github/workflows/mc1-static.yml'
+permissions:
+  contents: read
+  issues: read
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate repository baseline contracts
+        run: python3 tools/validate_repo.py
+      - name: Validate MC-1 contracts and adversarial self-tests
+        run: python3 tools/validate_machining_completeness.py --self-test
+      - name: Validate planning/native CI impact routing
+        run: python3 tools/validate_mc_ci_impact.py --self-test
+      - name: Validate preserved Genesis-v2.1 consistency under MC-1 routing
+        run: |
+          python3 tools/validate_bootstrap_consistency.py
+          python3 tools/validate_bootstrap_consistency.py --adversarial-self-test
+      - name: Compile MC tooling
+        run: python3 -m py_compile tools/validate_machining_completeness.py tools/validate_mc_ci_impact.py tools/validate_bootstrap_consistency.py tools/mc_workflow.py
+      - name: Verify completed planning tasks
+        run: |
+          python3 tools/mc_workflow.py verify MC-001
+          python3 tools/mc_workflow.py verify MC-056
+      - name: Check live managed GitHub task issues for zero drift
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 tools/mc_workflow.py sync --check
+      - name: Show current evidence-ready frontier
+        run: python3 tools/mc_workflow.py ready

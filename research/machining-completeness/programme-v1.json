@@ -1,0 +1,54 @@
+{
+  "schema": "radicadsac-mc-programme/1.0",
+  "id": "MC-1",
+  "title": "Machining Completeness and Engineering Realization",
+  "source_plan_sha256": "b7cb369e1fef31bb6a02d02960931b3090424114395af9487babf6c0ecbb609c",
+  "baseline": "e86c15ca0479240a0045ebc80c83973137b58c60",
+  "capability_status": "NOT_ESTABLISHED",
+  "production_authorized": false,
+  "expensive_execution_authorized": false,
+  "gates": [
+    {
+      "id": "MC-A",
+      "owner": "MC-005",
+      "state": "NOT_ESTABLISHED"
+    },
+    {
+      "id": "MC-B",
+      "owner": "MC-038",
+      "state": "NOT_ESTABLISHED"
+    },
+    {
+      "id": "MC-C",
+      "owner": "MC-016",
+      "state": "NOT_ESTABLISHED"
+    },
+    {
+      "id": "MC-D",
+      "owner": "MC-041",
+      "state": "NOT_ESTABLISHED"
+    },
+    {
+      "id": "MC-E",
+      "owner": "MC-044",
+      "state": "NOT_ESTABLISHED"
+    },
+    {
+      "id": "MC-F",
+      "owner": "MC-048",
+      "state": "NOT_ESTABLISHED"
+    },
+    {
+      "id": "MC-1",
+      "owner": "MC-052",
+      "state": "NOT_ESTABLISHED"
+    }
+  ],
+  "invariants": [
+    "supported physical machining domain is not narrowed after candidate failure",
+    "pending/refusal/resource exhaustion is not solved",
+    "STEP remains primary conventional engineering output",
+    "historical journal/body/provenance meaning is preserved unless explicitly versioned",
+    "production bootstrap requires MC-1 PASS plus separate explicit authorization"
+  ]
+}

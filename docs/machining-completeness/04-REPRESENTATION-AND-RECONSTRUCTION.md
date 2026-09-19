@@ -1,0 +1,52 @@
+# Actual sweeps, material candidates and conventional reconstruction
+
+Status: architecture under investigation. No candidate or complete reconstruction route is qualified by this document. Owners: MC-016–044 and MC-054. [Proof](02-COMPLETENESS-ARGUMENT.md), [oracles](03-ORACLE-AND-CORPUS.md), [qualification](05-QUALIFICATION.md).
+
+## Sweep contract
+
+Start mandatory native cases from stock, qualified effective cutter, setup and engaged motion. A hand-authored final removal solid or oracle-derived field is a labelled analytic control, not evidence that the machining action was solved.
+
+For each admitted tool/motion constructor derive effective cutting region, finite length/shoulders, endpoints, self-overlap, reversal, orientation and certified error. Milling flat/rounded/ball/corner-radius tools must follow the actual arbitrary admitted fixed-axis XYZ trajectory, not nearest-XY height. Side/reoriented/form/undercut operations cannot assume one top-down material interval. Meshing an already built field is distinct from native cutter-sweep construction; mesh Boolean tests need independent cutter and sweep construction certificates first.
+
+Lathe reductions need proved rotational symmetry and correct relation between spindle phase and feed time. Taking all spindle angles independently of time can change synchronized cutting. Test internal shoulders, realistic rounded/form tools, finish retraces, tiny removal, thin webs, complete parting and re-chucking. Material whose symmetry was broken by milling or eccentric setup cannot be restored by choosing an axisymmetric provider.
+
+Rigid transforms and line/arc/polyline/spline approximations retain source meaning and complete error accounting. A centreline fitting bound alone is not a swept-volume enclosure. Exact duplicates/collinear simplification/redundancy require contextual equivalence proof; jitter is not retrace. Report raw samples, canonical segments, unique sweeps and actual changes separately.
+
+## Candidate roles and selection
+
+| Role | Test first | Decisive obstruction |
+|---|---|---|
+| Exact arrangement/cell reference | Equality, multiple roots, full language | Only planar/algebraic subset or inexact constructions behind an exact label |
+| Adaptive interval/implicit | Sound cell bounds plus critical events | Infinite refinement at equality or uncertified topology |
+| Multi-/tri-directional | Multi-interval full-3D support and re-clamping | Off-ray components, hidden height-field assumptions |
+| Native Manifold/mesh | Actual independently constructed cutter Booleans | Sweep error before Boolean, feature loss, failed reconstruction |
+| Sparse volume/level set | Local certified refinement | Resampling/extraction changes topology or imposes a floor |
+| Native B-rep/process provider | Proved admission and analytic speed | Valid-but-wrong material or universal fast-path assumptions |
+
+Keep representation-neutral nominal expressions and certificates. Compare domain obstruction first, then bound quality, output feasibility, latency, memory, expression growth and implementation burden. Distinguish native cost from Python callback/evaluator overhead. Source rejection and minimal counterexamples precede full engines. MC-026 selects one primary and one independent challenger, records unproved gaps and produces bounded implementation blueprints; it is not a completeness declaration.
+
+## Early output screen
+
+MC-016 starts alongside proof/oracle development from early independently known machining witnesses, not after the complete material engine. Regular-closed material need not have a closed manifold boundary. Test singular pinches, touching shells/cavities, exact-zero/positive bridges, multiple components and empty states. An arbitrary CSG pathology without a physically plausible machining construction is not a product-domain obstruction.
+
+Explore analytic recovery, certified trimmed boundaries, validated parametric/spline patches and qualified decompositions/grouped-solid alternatives. Any changed mapping from durable bodies to output solids, contacts or downstream meaning requires an explicit versioned MC-054 profile decision and appropriate product approval. An unresolved genuine product choice blocks only affected output tasks; it cannot be silently resolved by dropping material, adding internal faces or narrowing D. If no acceptable mapping is demonstrated, MC-1 remains blocked.
+
+## Reconstruction chain
+
+Recover exact planes/cylinders/cones/spheres/tori and other qualified analytic pieces from operation provenance where applicable. Construct exact/certified boundary pieces or approved approximate patches; compute trims, edge curves, p-curves, vertices/incidences/orientations; match exact/approximate and cross-resolution seams; bound sewing changes; build closed shells/solids; compare the actual result to nominal material.
+
+Topology requires certified adjacency/arrangements/stratification or an equally reviewed construction, including local-to-global assembly. Cover coincident patches, tangent envelopes, repeated roots, cusps, pinches, point/edge/face contact, cavities meeting exterior and simultaneous events. Preserve voids/channels and all components. Distance or volume alone does not certify topology. Assumed feature separation must be established per case, with a route when it fails.
+
+Durable lineage is programme-owned through splits/disappearance. Kernel handles, tessellation, greatest volume and nearest-face heuristics cannot resolve authority. Ambiguity blocks that case. Existing durable bodies do not fuse at contact.
+
+## No disguised output success
+
+Triangle-per-face B-rep wrapping is not usable engineering reconstruction. True manufactured planar faces are legitimate, but analytic retention, patch quality, trims, dimensions, topology and follow-on engineering operations must demonstrate the intended output. Mesh/STL is diagnostic/derived, not the primary architecture.
+
+Compare reconstructed and fresh-read STEP solids to nominal material independently, not only to the export input B-rep. Check missing/extra material, surface/dimensional and smooth-patch angular error, bodies/voids and protected features. Candidate geometry must be tied to the oracle certificates.
+
+Run both authority continuation from unchanged nominal history and actual engineering-use continuation from reconstructed or independently imported STEP geometry. The latter carries inherited plus new approximation error and must actually consume the exported geometry. Successful journal replay does not prove downstream usability; imported approximation must not silently replace saved authority.
+
+## Empty outcome
+
+Complete removal is a valid solved material/topology/body result. Record that no positive-volume workpiece remains and apply the explicit empty-output contract. Do not fabricate a residual solid or count an empty placeholder STEP as successful nonempty export.

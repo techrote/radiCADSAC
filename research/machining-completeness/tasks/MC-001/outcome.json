@@ -1,0 +1,30 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-001",
+  "result_kind": "COMPLETED_RESEARCH",
+  "evidence_class": [
+    "SOURCE_FACT",
+    "REQUIREMENT",
+    "DOCUMENTATION_RECONCILIATION"
+  ],
+  "source_baseline": "e86c15ca0479240a0045ebc80c83973137b58c60",
+  "issue": 63,
+  "accepted_claims": [
+    "historical Gate 5 scope preserved",
+    "MC-1 current authority established",
+    "production hold explicit",
+    "inherited evidence scopes pinned"
+  ],
+  "open_claims": [
+    "geometry completeness NOT_ESTABLISHED"
+  ],
+  "native_execution": false,
+  "artifacts": [
+    "docs/decisions/DR-0026-machining-completeness-programme.md",
+    "docs/machining-completeness/08-SOURCES-AND-EVIDENCE.md",
+    "handoffs/current-authority.json"
+  ],
+  "verification": [
+    "python3 tools/validate_machining_completeness.py --self-test"
+  ]
+}

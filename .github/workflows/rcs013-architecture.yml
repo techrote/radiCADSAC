@@ -3,6 +3,21 @@ name: RCS-013 architecture synthesis
 on:
   push:
     branches: [main]
+    # MC-1 planning-only changes must not dispatch historical campaigns on merge.
+    paths-ignore:
+      - 'docs/machining-completeness/**'
+      - 'docs/decisions/DR-0026-machining-completeness-programme.md'
+      - 'research/machining-completeness/**'
+      - 'handoffs/current-authority.json'
+      - 'README.md'
+      - 'AGENTS.md'
+      - 'handoffs/README.md'
+      - 'tools/validate_machining_completeness.py'
+      - 'tools/validate_mc_ci_impact.py'
+      - 'tools/mc_workflow.py'
+      - 'tools/mc_inventory.py'
+      - 'tools/validate_bootstrap_consistency.py'
+      - '.github/workflows/**'
   pull_request:
     paths:
       - 'docs/20-OPENSIMACHINIST-ARCHITECTURE-SYNTHESIS.md'
