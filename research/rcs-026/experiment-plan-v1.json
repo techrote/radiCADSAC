@@ -1,0 +1,104 @@
+{
+  "accepted_dependencies": [
+    "RCS-018",
+    "RCS-019",
+    "RCS-020",
+    "RCS-021",
+    "RCS-022",
+    "RCS-023",
+    "RCS-024",
+    "RCS-025"
+  ],
+  "claim_limits": [
+    "This harness is research qualification infrastructure, not production deployment infrastructure.",
+    "100k qualification refers to journal event count, separately reporting material-operation count.",
+    "Python tracemalloc is coordinator-allocation evidence, not OCCT worker RSS.",
+    "Linux live STEP soak does not qualify Windows STEP execution.",
+    "No source, audio, body, journal, lineage, tolerance, or provenance contract is weakened to obtain a pass."
+  ],
+  "fixed_inputs": {
+    "cache_recovery_events": 10000,
+    "canonicalizer_repeats": 5,
+    "journal_tiers": [10000, 100000],
+    "linux_live_step_soak_repetitions": 3,
+    "provider_pending_resource_guard": 2,
+    "worker_recovery_cycles": 12,
+    "workload_seed": 1511501862
+  },
+  "hypotheses": [
+    {
+      "claim": "The accepted RCS-019 canonicalizer produces identical programme-level results on pinned Windows/MSVC and Linux toolchain runners.",
+      "falsified_by": "Any vector status/value/signature difference or refusal divergence.",
+      "id": "H1"
+    },
+    {
+      "claim": "Process-isolated provider faults are contained and a clean job succeeds after timeout, crash, or forced kill.",
+      "falsified_by": "Coordinator failure, orphaned tracked child, fault misclassification, or failed post-fault clean job.",
+      "id": "H2"
+    },
+    {
+      "claim": "Programme-authority replay remains deterministic through 100000 journal events for lathe, mill, and mixed-provider stress histories.",
+      "falsified_by": "Repeated replay signature/body/lineage/status disagreement, failure to complete the tier, or unbounded deferred state.",
+      "id": "H3"
+    },
+    {
+      "claim": "Deletion or corruption of derived cache state does not alter replayed programme authority.",
+      "falsified_by": "Replay signature, body mapping, lineage, or status depends on disposable cache content.",
+      "id": "H4"
+    },
+    {
+      "claim": "Repeated live Linux STEP export/read-back preserves the accepted RCS-022 engineering-level outcome without manufacturing Layer-D qualification.",
+      "falsified_by": "Run-to-run programme-level export/parser/consumer/body/check divergence, adversarial-control miss, or status other than the measured Layer-D result.",
+      "id": "H5"
+    },
+    {
+      "claim": "The research coordinator shows no obvious monotonic allocation or latency pathology over the bounded CI campaign.",
+      "falsified_by": "Campaign failure, runaway allocation, or material repeat-to-repeat drift requiring minimization; timing/memory are observational rather than cross-platform equality gates.",
+      "id": "H6"
+    }
+  ],
+  "issue": 45,
+  "platform_matrix": {
+    "linux": {
+      "compiler_family": "GCC_or_Clang",
+      "cpp_standard": "C++17",
+      "github_runner": "ubuntu-24.04",
+      "python": "3.12"
+    },
+    "occt_baseline": {
+      "decision": "DR-0021",
+      "source_commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42",
+      "version": "8.0.1"
+    },
+    "windows": {
+      "compiler_family": "MSVC",
+      "cpp_standard": "C++17",
+      "github_runner": "windows-2025",
+      "python": "3.12"
+    }
+  },
+  "qualification_rules": {
+    "cross_platform_equal_fields": [
+      "canonicalizer logical result",
+      "operation/status determinism",
+      "programme body mapping",
+      "lineage status",
+      "journal/replay signature",
+      "cache recovery result",
+      "bounded reconciliation state"
+    ],
+    "layer_d": "interoperability_unqualified",
+    "not_required_equal": [
+      "wall-clock latency",
+      "Python allocation observations",
+      "compiler version strings",
+      "OS metadata",
+      "STEP byte identity",
+      "private B-rep identity"
+    ],
+    "windows_step_scope": "A live exact-pinned OCCT 8.0.1 Windows STEP soak is not pre-assumed. If absent, it must be named as a Gate-5 blocker rather than silently inferred from Linux."
+  },
+  "schema": "rcs-026-experiment-plan/1.0",
+  "status": "predeclared_before_measured_campaign",
+  "title": "Windows/Linux scale, soak and fault-recovery qualification"
+}
