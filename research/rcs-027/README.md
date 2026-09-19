@@ -11,6 +11,12 @@ RCS-027 is the final Genesis-v2 synthesis issue. It consumes RCS-018 through RCS
 - `summarize_windows_step.py` — deterministic three-run programme-level STEP projection and closure record.
 - `test_contract.py` — adversarial/boundary checks.
 
+## Windows OCCT install-layout contract
+
+The shared RCS-022 STEP harness consumes a stable installation-root contract: `include/opencascade`, `lib`, and `bin`. OCCT's native Windows layout instead uses `inc` plus compiler-qualified `win64/<compiler>/lib` and `win64/<compiler>/bin` paths. The RCS-027 Windows bootstrap therefore selects OCCT's supported `INSTALL_DIR_LAYOUT=Unix` with versioned include directories disabled. This changes installation layout only; it does not change the exact OCCT source commit, compiler pin, selected worker toolkits, STEP profile, body semantics, or process-isolation policy.
+
+The post-install guard deliberately verifies the same `include/opencascade` and `lib` paths that the RCS-022 harness consumes, and the workflow loads runtime DLLs from the corresponding `bin` directory. Native configure/build/install output and the PowerShell transcript are both retained in the always-uploaded Gate-5 evidence directory so future bootstrap failures remain diagnosable.
+
 ## Protected boundaries
 
 The campaign may not rewrite canonical journal meaning, discard disconnected bodies, promote backend topology identity, reset propagated error, relax manufacturing tolerance, erase positive-removal intent, mutate source/audio identity or provenance, or report Layer-D interoperability qualification not supported by RCS-022 evidence.
