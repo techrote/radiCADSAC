@@ -23,7 +23,7 @@
     "linux_live_step_soak_repetitions": 3,
     "provider_pending_resource_guard": 2,
     "worker_recovery_cycles": 12,
-    "workload_seed": 1511501862
+    "workload_seed": 1511505958
   },
   "hypotheses": [
     {
