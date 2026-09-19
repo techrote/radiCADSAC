@@ -1,0 +1,172 @@
+{
+  "schema": "radicadsac-bootstrap-evidence-dependencies/2.1",
+  "repository": "techrote/radiCADSAC",
+  "source_commit": "a68fa92d1128a163b232e2be69d6f731bd56caa5",
+  "purpose": "Exact immutable research vectors/results required or referenced by Genesis-v2 production bootstrap. Git blob SHA is part of the evidence identity.",
+  "copy_policy": "Production repositories may copy exact fixture/evidence contents while retaining source_commit and blob_sha provenance. Any content change is a deliberate supersession/requalification event.",
+  "items": [
+    {
+      "path": "research/rcs-019/vectors-v1.json",
+      "blob_sha": "fe38455ac1bb50bb15841442955d6699945edb2f",
+      "claim_class": [
+        "MEASURED_DETERMINISTIC_MODEL"
+      ],
+      "required_by": [
+        "OSM-002",
+        "MSAC-002"
+      ]
+    },
+    {
+      "path": "research/rcs-019/measured-summary-v1.json",
+      "blob_sha": "fd53ac6f57bfe8e522be647ab803283c26e0da7a",
+      "claim_class": [
+        "MEASURED_PLATFORM_PROCESS",
+        "MEASURED_DETERMINISTIC_MODEL"
+      ],
+      "required_by": [
+        "OSM-002",
+        "MSAC-002"
+      ]
+    },
+    {
+      "path": "research/rcs-020/measured-summary-v1.json",
+      "blob_sha": "da46c04361b9740b332ada6a3c693fad7281418e",
+      "claim_class": [
+        "MEASURED_NATIVE_GEOMETRY",
+        "MEASURED_INDEPENDENT_ORACLE"
+      ],
+      "required_by": [
+        "OSM-005",
+        "MSAC-006"
+      ]
+    },
+    {
+      "path": "research/rcs-021/experiment-plan-v1.json",
+      "blob_sha": "a3f934e170fb39365c39e959816cda9f671222f2",
+      "claim_class": [
+        "SOURCE"
+      ],
+      "required_by": [
+        "OSM-006",
+        "MSAC-007"
+      ]
+    },
+    {
+      "path": "research/rcs-021/measured-summary-v1.json",
+      "blob_sha": "b5f0cd8c06fdde15680e4a25da36cf81d762f996",
+      "claim_class": [
+        "MEASURED_NATIVE_GEOMETRY",
+        "MEASURED_INDEPENDENT_ORACLE"
+      ],
+      "required_by": [
+        "OSM-006",
+        "MSAC-007"
+      ]
+    },
+    {
+      "path": "research/rcs-022/profile-v1.json",
+      "blob_sha": "cb8239fc054d23175c23d45f723cfaf0ff9c8de8",
+      "claim_class": [
+        "SOURCE"
+      ],
+      "required_by": [
+        "OSM-008",
+        "MSAC-008"
+      ]
+    },
+    {
+      "path": "research/rcs-022/fixture-plan-v1.json",
+      "blob_sha": "3b1fc584c6df1b122d4ca9bd3f797012deb28abd",
+      "claim_class": [
+        "SOURCE"
+      ],
+      "required_by": [
+        "OSM-008",
+        "MSAC-008"
+      ]
+    },
+    {
+      "path": "research/rcs-022/frozen-result-v1.json",
+      "blob_sha": "d66da2fab78ff867b32a62aa8b2a72631b989a9d",
+      "claim_class": [
+        "MEASURED_NATIVE_GEOMETRY",
+        "MEASURED_INDEPENDENT_ORACLE"
+      ],
+      "required_by": [
+        "OSM-008",
+        "MSAC-008"
+      ]
+    },
+    {
+      "path": "research/rcs-023/reference-results-v1.json",
+      "blob_sha": "c8a62cf5a29c8d60c2fcc3d35784fdd21ee93023",
+      "claim_class": [
+        "MEASURED_DETERMINISTIC_MODEL"
+      ],
+      "required_by": [
+        "OSM-003",
+        "OSM-007",
+        "MSAC-004",
+        "MSAC-008"
+      ]
+    },
+    {
+      "path": "research/rcs-024/measured-result-v1.json",
+      "blob_sha": "4f700fe41d5aff8b6f88bd74dcea5ee2fea65603",
+      "claim_class": [
+        "MEASURED_NATIVE_GEOMETRY",
+        "MEASURED_PLATFORM_PROCESS"
+      ],
+      "required_by": [
+        "OSM-004"
+      ]
+    },
+    {
+      "path": "research/rcs-025/reference-results-v1.json",
+      "blob_sha": "425f9d9fa4f779cad038cd32313b2f028297e717",
+      "claim_class": [
+        "MEASURED_DETERMINISTIC_MODEL"
+      ],
+      "required_by": [
+        "OSM-007",
+        "MSAC-004"
+      ]
+    },
+    {
+      "path": "research/rcs-026/measured-result-v1.json",
+      "blob_sha": "3b6bcc17ea173121ab43522c116395e7a51afca9",
+      "claim_class": [
+        "MEASURED_PLATFORM_PROCESS",
+        "MEASURED_NATIVE_GEOMETRY"
+      ],
+      "required_by": [
+        "OSM-010",
+        "MSAC-010"
+      ]
+    },
+    {
+      "path": "research/rcs-027/evidence-matrix-v1.json",
+      "blob_sha": "5225d33b03c126addc65527d9dd6e5482a3e8a58",
+      "claim_class": [
+        "INFERENCE"
+      ],
+      "required_by": [
+        "OSM-001",
+        "MSAC-001"
+      ]
+    },
+    {
+      "path": "research/rcs-027/windows-step-qualification-v1.json",
+      "blob_sha": "e676f5bdb1cc4ebf2c2dff384b96798258830ff1",
+      "claim_class": [
+        "MEASURED_NATIVE_GEOMETRY",
+        "MEASURED_PLATFORM_PROCESS"
+      ],
+      "required_by": [
+        "OSM-004",
+        "OSM-008",
+        "MSAC-008"
+      ]
+    }
+  ]
+}

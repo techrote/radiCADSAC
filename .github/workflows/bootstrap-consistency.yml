@@ -1,0 +1,27 @@
+name: genesis-v2-bootstrap-consistency
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.10'
+      - name: Validate corrected bootstrap contracts and immutable evidence pins
+        run: python tools/validate_bootstrap_consistency.py
+      - name: Run adversarial consistency controls
+        run: python tools/validate_bootstrap_consistency.py --adversarial-self-test
+      - name: Compile consistency validator
+        run: python -m py_compile tools/validate_bootstrap_consistency.py
