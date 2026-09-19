@@ -54,8 +54,15 @@ def static():
     if pk.get("opensimachinist")!="b93e6e7ca28d26753e735f8ffe4acc56c5821676": fail("original OpenSimachinist tree provenance missing")
     if pk.get("msac")!="a38d265aae2fda8e35dcf58e7d127d459e74055a": fail("original MSAC tree provenance missing")
 
+    if rel.get("self_contained") is not False: fail("corrected handoff must not claim standalone self-containment")
+    if rel.get("evidence_dependency_manifest")!="handoffs/evidence-dependencies-v2.1.json": fail("release does not route exact evidence manifest")
     deps=load("handoffs/evidence-dependencies-v2.1.json")
     for e in dependency_errors(deps): fail(e)
+    dep_paths={x.get("path") for x in deps.get("items",[])}
+    for required in ["docs/10-CANONICAL-JOURNAL-CONTRACT.md","docs/13-STEP-CONFORMANCE-CONTRACT.md",
+                     "research/rcs-019/vectors-v1.json","research/rcs-022/frozen-result-v1.json",
+                     "research/rcs-025/reference-results-v1.json","research/rcs-027/windows-step-qualification-v1.json"]:
+        if required not in dep_paths: fail(f"exact dependency manifest missing {required}")
     for obj,name in [(om,"opensimachinist"),(ms,"msac")]:
         if obj.get("evidence_dependency_manifest")!="handoffs/evidence-dependencies-v2.1.json": fail(f"{name} does not route exact evidence dependencies")
 
@@ -66,8 +73,7 @@ def static():
     readme=read("README.md"); agents=read("AGENTS.md"); hidx=read("handoffs/README.md")
     for phrase in ["Genesis v2 is the current bootstrap authority","evidence-dependencies-v2.1.json"]:
         if phrase not in readme: fail(f"README missing current-route phrase {phrase!r}")
-    if "current** production bootstrap outputs" not in agents and "current** production bootstrap" not in agents:
-        if "current**" not in agents and "current" not in agents: fail("AGENTS current routing missing")
+    if "The **current** production bootstrap outputs" not in agents: fail("AGENTS current routing missing")
     if "v1 packages" not in agents: fail("AGENTS historical v1 routing missing")
     if "Current bootstrap route" not in hidx or "Genesis-v1 historical freeze" not in hidx: fail("handoff index routing missing")
 
