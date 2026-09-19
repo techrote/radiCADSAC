@@ -1,0 +1,2667 @@
+{
+  "schema": "radicadsac-mc-task-graph/1.0",
+  "programme": "MC-1",
+  "baseline": "e86c15ca0479240a0045ebc80c83973137b58c60",
+  "package_order": [
+    "MG-00",
+    "MG-01",
+    "MG-02",
+    "MG-03",
+    "MG-04",
+    "MG-05",
+    "MG-06",
+    "MG-07",
+    "MG-08",
+    "MG-09",
+    "MG-10",
+    "MG-11",
+    "MG-12",
+    "MG-13"
+  ],
+  "packages": [
+    {
+      "id": "MG-00",
+      "title": "Authority, evidence and execution safety",
+      "tasks": [
+        "MC-001",
+        "MC-056"
+      ]
+    },
+    {
+      "id": "MG-01",
+      "title": "Domain and numeric contract",
+      "tasks": [
+        "MC-002",
+        "MC-003",
+        "MC-004",
+        "MC-005"
+      ]
+    },
+    {
+      "id": "MG-02",
+      "title": "Constructive completeness argument",
+      "tasks": [
+        "MC-006",
+        "MC-007",
+        "MC-008"
+      ]
+    },
+    {
+      "id": "MG-03",
+      "title": "Independent oracles and adversarial corpus",
+      "tasks": [
+        "MC-009",
+        "MC-010",
+        "MC-011",
+        "MC-012",
+        "MC-013",
+        "MC-014",
+        "MC-015",
+        "MC-055"
+      ]
+    },
+    {
+      "id": "MG-04",
+      "title": "Actual sweep and process semantics",
+      "tasks": [
+        "MC-018",
+        "MC-019",
+        "MC-020",
+        "MC-021",
+        "MC-022",
+        "MC-023"
+      ]
+    },
+    {
+      "id": "MG-05",
+      "title": "Candidate falsification and selection",
+      "tasks": [
+        "MC-024",
+        "MC-025",
+        "MC-026",
+        "MC-027",
+        "MC-028",
+        "MC-029",
+        "MC-030"
+      ]
+    },
+    {
+      "id": "MG-06",
+      "title": "Early output representability",
+      "tasks": [
+        "MC-016",
+        "MC-017",
+        "MC-054"
+      ]
+    },
+    {
+      "id": "MG-07",
+      "title": "Native material realization",
+      "tasks": [
+        "MC-031",
+        "MC-032",
+        "MC-033"
+      ]
+    },
+    {
+      "id": "MG-08",
+      "title": "Topology and reconstruction",
+      "tasks": [
+        "MC-034",
+        "MC-035",
+        "MC-036",
+        "MC-037",
+        "MC-038"
+      ]
+    },
+    {
+      "id": "MG-09",
+      "title": "Composed headless engineering journey",
+      "tasks": [
+        "MC-039",
+        "MC-040",
+        "MC-041"
+      ]
+    },
+    {
+      "id": "MG-10",
+      "title": "Independent STEP qualification",
+      "tasks": [
+        "MC-042",
+        "MC-043",
+        "MC-044"
+      ]
+    },
+    {
+      "id": "MG-11",
+      "title": "Native scale, platforms and recovery",
+      "tasks": [
+        "MC-045",
+        "MC-046",
+        "MC-047",
+        "MC-048"
+      ]
+    },
+    {
+      "id": "MG-12",
+      "title": "Adversarial final audit",
+      "tasks": [
+        "MC-049",
+        "MC-050",
+        "MC-051",
+        "MC-057"
+      ]
+    },
+    {
+      "id": "MG-13",
+      "title": "Decision and conditional handoff",
+      "tasks": [
+        "MC-052",
+        "MC-053"
+      ]
+    }
+  ],
+  "dependency_semantics": {
+    "artifact": "A reviewed, source-bound work product may be consumed provisionally; open assumptions propagate and no capability is implied.",
+    "capability": "The dependency task/gate must be genuinely accepted from evidence before the dependent task may claim the corresponding capability."
+  },
+  "global_locks": [
+    "programme-registry",
+    "domain-contract",
+    "schema-contract",
+    "proof-registry",
+    "fixture-registry",
+    "qualification-profile",
+    "provider-selection",
+    "workflow-config",
+    "expensive-campaign"
+  ],
+  "production_authorized": false,
+  "expensive_execution_authorized": false,
+  "tasks": [
+    {
+      "id": "MC-001",
+      "package": "MG-00",
+      "title": "Authority, evidence and historical-claim reconciliation",
+      "objective": "Reconcile the stronger machining-completeness mandate against Genesis-v2.1 without rewriting historical evidence.",
+      "dependencies": [],
+      "scope": "authority/evidence routing, CI impact safety and no-production/no-paid-execution controls",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Every material inherited claim has a current evidence class and scope.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Run static authority/source/CI-routing checks and inspect current live repository state.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [
+        "programme-registry"
+      ],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-002",
+      "package": "MG-01",
+      "title": "Machining domain grammar and physical-validity contract",
+      "objective": "Define the supported physically realizable lathe/fixed-axis mill domain independently of solver convenience.",
+      "dependencies": [
+        {
+          "task": "MC-001",
+          "type": "artifact"
+        }
+      ],
+      "scope": "process-first domain, physical validity, numeric semantics and candidate-independent qualification requests",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Every ordinary target operation maps to explicit constructors or remains a named domain decision.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Run domain/schema boundary tests and review every admitted/excluded constructor against product semantics.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-003",
+      "package": "MG-01",
+      "title": "Numeric, curve, transform and encoding sufficiency audit",
+      "objective": "Establish exact source semantics and any versioned precision extension needed by MC-1 without changing old journal meaning.",
+      "dependencies": [
+        {
+          "task": "MC-002",
+          "type": "artifact"
+        }
+      ],
+      "scope": "process-first domain, physical validity, numeric semantics and candidate-independent qualification requests",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Existing journal meaning is preserved.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Run domain/schema boundary tests and review every admitted/excluded constructor against product semantics.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [
+        "domain-contract",
+        "schema-contract"
+      ],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-004",
+      "package": "MG-01",
+      "title": "Candidate-independent workload, accuracy and resource contract",
+      "objective": "Preregister intended machining workloads, accuracy vectors, reference hardware and usable resource envelopes without tuning them to a candidate.",
+      "dependencies": [
+        {
+          "task": "MC-002",
+          "type": "artifact"
+        }
+      ],
+      "scope": "process-first domain, physical validity, numeric semantics and candidate-independent qualification requests",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Workload and accuracy profiles are fixed before candidate qualification.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Run domain/schema boundary tests and review every admitted/excluded constructor against product semantics.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [
+        "qualification-profile"
+      ],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-005",
+      "package": "MG-01",
+      "title": "MC-A domain-lock integration review",
+      "objective": "Review MC-002–004 as one domain/precision/workload contract and decide MC-A.",
+      "dependencies": [
+        {
+          "task": "MC-002",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-003",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-004",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-056",
+          "type": "artifact"
+        }
+      ],
+      "scope": "process-first domain, physical validity, numeric semantics and candidate-independent qualification requests",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "PO-01 domain premises are explicit and internally consistent.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Run domain/schema boundary tests and review every admitted/excluded constructor against product semantics.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [
+        "domain-contract",
+        "programme-registry"
+      ],
+      "gate": "MC-A",
+      "kind": "research"
+    },
+    {
+      "id": "MC-006",
+      "package": "MG-02",
+      "title": "Exact algebraic/cell reference route for covered constructors",
+      "objective": "Instantiate a concrete terminating exact/reference calculus for the semialgebraic subset and small topology controls.",
+      "dependencies": [
+        {
+          "task": "MC-002",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-003",
+          "type": "artifact"
+        }
+      ],
+      "scope": "constructive routes, finite progress, proof assumptions, exact/validated arithmetic and PO ownership",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Claims cite the actual theorem/algorithm hypotheses inspected, not an abstract.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Execute small reference/counterexample cases and independently inspect theorem hypotheses, termination and proof DAG edges.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-007",
+      "package": "MG-02",
+      "title": "Timed, trigonometric and phase-sensitive constructive route",
+      "objective": "Establish a finite semantics-preserving route for admitted motion not covered by the algebraic subset.",
+      "dependencies": [
+        {
+          "task": "MC-002",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-003",
+          "type": "artifact"
+        }
+      ],
+      "scope": "constructive routes, finite progress, proof assumptions, exact/validated arithmetic and PO ownership",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Every targeted constructor has a stated finite decision route or remains an explicit proof blocker.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Execute small reference/counterexample cases and independently inspect theorem hypotheses, termination and proof DAG edges.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-008",
+      "package": "MG-02",
+      "title": "Termination, certified arithmetic and proof-obligation DAG",
+      "objective": "Integrate arithmetic escalation, event decisions, finite progress, error composition and the PO-01–12 lemma DAG into checkable research contracts.",
+      "dependencies": [
+        {
+          "task": "MC-003",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-006",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-007",
+          "type": "artifact"
+        }
+      ],
+      "scope": "constructive routes, finite progress, proof assumptions, exact/validated arithmetic and PO ownership",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Every required PO has quantified premises/owner/dependencies and no circular proof dependency.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Execute small reference/counterexample cases and independently inspect theorem hypotheses, termination and proof DAG edges.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [
+        "proof-registry",
+        "schema-contract"
+      ],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-009",
+      "package": "MG-03",
+      "title": "Research schemas, result binding and programme verdict verifier",
+      "objective": "Implement versioned fixture/result/outcome/claim schemas and a programme-owned verifier that rejects stale, mismatched or incomplete evidence.",
+      "dependencies": [
+        {
+          "task": "MC-001",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-003",
+          "type": "artifact"
+        }
+      ],
+      "scope": "independent oracle stack, schemas, F01–F16 corpus, historical imports and certificate attacks",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Verifier rejects mismatched hashes, missing stages, stale profiles, altered accuracy and candidate self-verdicts.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Run oracle-independence, physical-witness, schema and deliberately corrupted-evidence controls.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [
+        "schema-contract",
+        "programme-registry"
+      ],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-010",
+      "package": "MG-03",
+      "title": "Independent exact controls and oracle-independence foundation",
+      "objective": "Create small independent material/sweep/topology controls that do not inherit the historical shared-field decisive mathematics.",
+      "dependencies": [
+        {
+          "task": "MC-002",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-003",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-009",
+          "type": "artifact"
+        }
+      ],
+      "scope": "independent oracle stack, schemas, F01–F16 corpus, historical imports and certificate attacks",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Shared decisive code/math is documented and independently challenged.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Run oracle-independence, physical-witness, schema and deliberately corrupted-evidence controls.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-011",
+      "package": "MG-03",
+      "title": "Physical adversarial corpus F01–F04",
+      "objective": "Construct and validate F01 jittered crossing, F02 thin web, F03 rounded XYZ remachining and F04 reoriented-stock families.",
+      "dependencies": [
+        {
+          "task": "MC-002",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-003",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-010",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-055",
+          "type": "artifact"
+        }
+      ],
+      "scope": "independent oracle stack, schemas, F01–F16 corpus, historical imports and certificate attacks",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "All four families have physically valid witnesses and discriminating oracle paths.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Run oracle-independence, physical-witness, schema and deliberately corrupted-evidence controls.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-012",
+      "package": "MG-03",
+      "title": "Physical adversarial corpus F05–F08",
+      "objective": "Construct F05 internal passage, F06 lathe finish/parting, F07 lathe–mill–lathe and F08 accessible form/undercut families.",
+      "dependencies": [
+        {
+          "task": "MC-002",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-003",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-010",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-055",
+          "type": "artifact"
+        }
+      ],
+      "scope": "independent oracle stack, schemas, F01–F16 corpus, historical imports and certificate attacks",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "All four families have valid workholding/access witnesses and independent validation routes.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Run oracle-independence, physical-witness, schema and deliberately corrupted-evidence controls.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-013",
+      "package": "MG-03",
+      "title": "Physical adversarial corpus F09–F12",
+      "objective": "Construct F09 phase turning, F10 many bodies, F11 singular boundary and F12 scale/precision families.",
+      "dependencies": [
+        {
+          "task": "MC-002",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-003",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-010",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-055",
+          "type": "artifact"
+        }
+      ],
+      "scope": "independent oracle stack, schemas, F01–F16 corpus, historical imports and certificate attacks",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Each family has exact semantics and signed/equality controls.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Run oracle-independence, physical-witness, schema and deliberately corrupted-evidence controls.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-014",
+      "package": "MG-03",
+      "title": "Physical adversarial corpus F13–F16",
+      "objective": "Construct F13 genuine geometric growth, F14 redundant history, F15 boundary-crossing reconstruction and F16 empty/exhausted-body families.",
+      "dependencies": [
+        {
+          "task": "MC-002",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-003",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-010",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-055",
+          "type": "artifact"
+        }
+      ],
+      "scope": "independent oracle stack, schemas, F01–F16 corpus, historical imports and certificate attacks",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "F13 proves real changing work per tier.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Run oracle-independence, physical-witness, schema and deliberately corrupted-evidence controls.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-015",
+      "package": "MG-03",
+      "title": "Independent certificate checker and oracle attack suite",
+      "objective": "Implement/challenge certificate checking independently from candidate implementations and attack the oracle stack for common-mode errors.",
+      "dependencies": [
+        {
+          "task": "MC-009",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-010",
+          "type": "artifact"
+        }
+      ],
+      "scope": "independent oracle stack, schemas, F01–F16 corpus, historical imports and certificate attacks",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Checker rejects all required corruptions and can distinguish materially wrong controls.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Run oracle-independence, physical-witness, schema and deliberately corrupted-evidence controls.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [
+        "schema-contract"
+      ],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-016",
+      "package": "MG-06",
+      "title": "Early machining-generated B-rep/STEP representability screen",
+      "objective": "Determine early whether difficult valid material states have a defensible conventional engineering representation strategy.",
+      "dependencies": [
+        {
+          "task": "MC-002",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-003",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-010",
+          "type": "artifact"
+        }
+      ],
+      "scope": "early conventional-output representability, independent consumer access and explicit profile decisions",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Each obstruction class has a native witness and concrete strategy or explicit blocker.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Exercise machining-generated output witnesses, known-good/bad consumer controls and explicit profile semantics.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": "MC-C",
+      "kind": "research"
+    },
+    {
+      "id": "MC-017",
+      "package": "MG-06",
+      "title": "Independent engineering-consumer access and measurement probe",
+      "objective": "Establish at least one genuinely independent downstream solid-consumer path and a defensible measurement/follow-on-operation method early.",
+      "dependencies": [
+        {
+          "task": "MC-001",
+          "type": "artifact"
+        }
+      ],
+      "scope": "early conventional-output representability, independent consumer access and explicit profile decisions",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "At least one viable independent consumer path is available or a precise external-access blocker is recorded.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Exercise machining-generated output witnesses, known-good/bad consumer controls and explicit profile semantics.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-018",
+      "package": "MG-04",
+      "title": "Actual flat/corner-radius milling sweep construction",
+      "objective": "Implement and qualify actual finite fixed-axis milling sweeps for flat and corner-radius cutter families over admitted 3D trajectories.",
+      "dependencies": [
+        {
+          "task": "MC-005",
+          "type": "capability"
+        },
+        {
+          "task": "MC-010",
+          "type": "artifact"
+        }
+      ],
+      "scope": "real tool-derived sweeps, lathe reductions, timed process semantics and multi-setup composition",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Small exact/independent controls pass including tangency/retrace/varying Z.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Compare actual tool-derived sweeps to independent exact/bounded controls, including equality and signed neighbors.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-019",
+      "package": "MG-04",
+      "title": "Actual rounded/ball simultaneous-XYZ milling sweeps",
+      "objective": "Close the historical constant-Z rounded limitation with actual varying-Z rounded/ball cutter sweeps.",
+      "dependencies": [
+        {
+          "task": "MC-005",
+          "type": "capability"
+        },
+        {
+          "task": "MC-010",
+          "type": "artifact"
+        }
+      ],
+      "scope": "real tool-derived sweeps, lathe reductions, timed process semantics and multi-setup composition",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Varying-Z controls agree with independent sweep/material oracles.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Compare actual tool-derived sweeps to independent exact/bounded controls, including equality and signed neighbors.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-020",
+      "package": "MG-04",
+      "title": "Form, nonconvex and accessible undercut sweep construction",
+      "objective": "Implement/qualify actual sweeps for admitted form/nonconvex/undercut cutters with validated access and cutting-region semantics.",
+      "dependencies": [
+        {
+          "task": "MC-005",
+          "type": "capability"
+        },
+        {
+          "task": "MC-010",
+          "type": "artifact"
+        }
+      ],
+      "scope": "real tool-derived sweeps, lathe reductions, timed process semantics and multi-setup composition",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "At least the domain's required cutter constructors have executable sweep routes or named proof blockers.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Compare actual tool-derived sweeps to independent exact/bounded controls, including equality and signed neighbors.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-021",
+      "package": "MG-04",
+      "title": "Lathe rotational reduction and axisymmetry admission",
+      "objective": "Prove and implement the exact conditions under which conventional turning may reduce to a meridian/rotational material domain.",
+      "dependencies": [
+        {
+          "task": "MC-005",
+          "type": "capability"
+        },
+        {
+          "task": "MC-010",
+          "type": "artifact"
+        }
+      ],
+      "scope": "real tool-derived sweeps, lathe reductions, timed process semantics and multi-setup composition",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Admission predicate is sufficient and independently tested.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Compare actual tool-derived sweeps to independent exact/bounded controls, including equality and signed neighbors.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-022",
+      "package": "MG-04",
+      "title": "Phase-sensitive and synchronized lathe sweep construction",
+      "objective": "Implement/qualify spindle/feed-correlated turning required by the domain without replacing time correlation by independent angle coverage.",
+      "dependencies": [
+        {
+          "task": "MC-005",
+          "type": "capability"
+        },
+        {
+          "task": "MC-010",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-007",
+          "type": "artifact"
+        }
+      ],
+      "scope": "real tool-derived sweeps, lathe reductions, timed process semantics and multi-setup composition",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Required timed constructors have finite validated routes.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Compare actual tool-derived sweeps to independent exact/bounded controls, including equality and signed neighbors.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-023",
+      "package": "MG-04",
+      "title": "Re-clamp, reorientation and multi-setup sweep composition",
+      "objective": "Qualify common-frame transforms and body-target semantics across repeated setups and lathe↔mill transitions.",
+      "dependencies": [
+        {
+          "task": "MC-005",
+          "type": "capability"
+        },
+        {
+          "task": "MC-010",
+          "type": "artifact"
+        }
+      ],
+      "scope": "real tool-derived sweeps, lathe reductions, timed process semantics and multi-setup composition",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Reoriented full-3D controls preserve material/body semantics.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Compare actual tool-derived sweeps to independent exact/bounded controls, including equality and signed neighbors.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-024",
+      "package": "MG-05",
+      "title": "Exact arrangement/cell candidate falsification",
+      "objective": "Determine the useful coverage and decisive obstructions of exact/cell methods as general reference or fallback.",
+      "dependencies": [
+        {
+          "task": "MC-006",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-007",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-010",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-016",
+          "type": "artifact"
+        }
+      ],
+      "scope": "small decisive candidate falsification, total-dispatch design and algorithm-specific implementation selection",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Source/theory hypotheses are instantiated on machining controls.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Run the smallest decisive counterexamples first and compare coverage/output/resource obstructions under pinned configurations.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-025",
+      "package": "MG-05",
+      "title": "Adaptive interval/implicit candidate falsification",
+      "objective": "Test whether certified adaptive material with exact critical events can avoid fixed-pitch floors and infinite equality refinement.",
+      "dependencies": [
+        {
+          "task": "MC-008",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-010",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-016",
+          "type": "artifact"
+        }
+      ],
+      "scope": "small decisive candidate falsification, total-dispatch design and algorithm-specific implementation selection",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Sound cell/error claims are checked.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Run the smallest decisive counterexamples first and compare coverage/output/resource obstructions under pinned configurations.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-026",
+      "package": "MG-05",
+      "title": "Candidate selection and algorithm-specific implementation blueprints",
+      "objective": "Select one primary design and one genuinely independent challenger/control from evidence, then decompose the selected route into reviewable native leaf blueprints.",
+      "dependencies": [
+        {
+          "task": "MC-024",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-025",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-027",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-028",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-029",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-030",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-049",
+          "type": "artifact"
+        }
+      ],
+      "scope": "small decisive candidate falsification, total-dispatch design and algorithm-specific implementation selection",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Selected route accounts for all D via proved/provisional components and flags every open gap.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Run the smallest decisive counterexamples first and compare coverage/output/resource obstructions under pinned configurations.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [
+        "provider-selection",
+        "programme-registry"
+      ],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-027",
+      "package": "MG-05",
+      "title": "Multi-/tri-directional material candidate falsification",
+      "objective": "Extend/test directional material beyond height-field assumptions with multiple intervals, reorientation and certified full-3D relations.",
+      "dependencies": [
+        {
+          "task": "MC-010",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-016",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-019",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-023",
+          "type": "artifact"
+        }
+      ],
+      "scope": "small decisive candidate falsification, total-dispatch design and algorithm-specific implementation selection",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Decisive full-3D controls pass or the exact domain limit is retained.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Run the smallest decisive counterexamples first and compare coverage/output/resource obstructions under pinned configurations.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-028",
+      "package": "MG-05",
+      "title": "Native mesh/Manifold Boolean candidate falsification",
+      "objective": "Evaluate native mesh Boolean material operations using independently constructed actual cutter sweeps, distinct from historical LevelSet sampling.",
+      "dependencies": [
+        {
+          "task": "MC-010",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-016",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-018",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-019",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-020",
+          "type": "artifact"
+        }
+      ],
+      "scope": "small decisive candidate falsification, total-dispatch design and algorithm-specific implementation selection",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Candidate uses independently qualified sweep construction.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Run the smallest decisive counterexamples first and compare coverage/output/resource obstructions under pinned configurations.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-029",
+      "package": "MG-05",
+      "title": "Sparse volume/level-set candidate falsification",
+      "objective": "Evaluate sparse volumetric/level-set methods under explicit resampling, refinement, topology and reconstruction contracts.",
+      "dependencies": [
+        {
+          "task": "MC-010",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-016",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-018",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-019",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-020",
+          "type": "artifact"
+        }
+      ],
+      "scope": "small decisive candidate falsification, total-dispatch design and algorithm-specific implementation selection",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Resolution/refinement and extraction error are explicit.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Run the smallest decisive counterexamples first and compare coverage/output/resource obstructions under pinned configurations.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-030",
+      "package": "MG-05",
+      "title": "Native B-rep/process provider and total-dispatch design",
+      "objective": "Evaluate qualified native B-rep/process specializations and design total noncycling dispatch to the general route.",
+      "dependencies": [
+        {
+          "task": "MC-010",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-016",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-018",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-019",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-020",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-021",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-022",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-023",
+          "type": "artifact"
+        }
+      ],
+      "scope": "small decisive candidate falsification, total-dispatch design and algorithm-specific implementation selection",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Each fast path has a sufficient admission predicate.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Run the smallest decisive counterexamples first and compare coverage/output/resource obstructions under pinned configurations.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-031",
+      "package": "MG-07",
+      "title": "Native sweep-to-material evaluator integration",
+      "objective": "Implement the selected material evaluator over actual qualified sweeps with certified relation to nominal material.",
+      "dependencies": [
+        {
+          "task": "MC-038",
+          "type": "capability"
+        },
+        {
+          "task": "MC-026",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-018",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-019",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-020",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-021",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-022",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-023",
+          "type": "artifact"
+        }
+      ],
+      "scope": "native material evaluation, exact/validated events and durable material-body state",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "All mandatory material constructors enter through actual qualified sweeps.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Run native mandatory material/event/body controls and independent certificate attacks under a bounded permit where required.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-032",
+      "package": "MG-07",
+      "title": "Certified classification and critical-topology event engine",
+      "objective": "Implement finite inside/outside/boundary, equality, root and topology-critical event decisions needed by the selected complete route.",
+      "dependencies": [
+        {
+          "task": "MC-038",
+          "type": "capability"
+        },
+        {
+          "task": "MC-026",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-008",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-015",
+          "type": "artifact"
+        }
+      ],
+      "scope": "native material evaluation, exact/validated events and durable material-body state",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Exact-zero/multiple-root/singular controls terminate correctly.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Run native mandatory material/event/body controls and independent certificate attacks under a bounded permit where required.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-033",
+      "package": "MG-07",
+      "title": "Regularized material bodies, durable lineage and finite-history state",
+      "objective": "Implement programme-owned body transitions and regularized material semantics across split/disappearance/remachining without kernel/private identity leakage.",
+      "dependencies": [
+        {
+          "task": "MC-038",
+          "type": "capability"
+        },
+        {
+          "task": "MC-026",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-015",
+          "type": "artifact"
+        }
+      ],
+      "scope": "native material evaluation, exact/validated events and durable material-body state",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Parting/many-body/empty states preserve explicit body semantics.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Run native mandatory material/event/body controls and independent certificate attacks under a bounded permit where required.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-034",
+      "package": "MG-08",
+      "title": "Analytic boundary recovery from machining provenance",
+      "objective": "Recover qualified planes/cylinders/cones/spheres/tori and other exact analytic surfaces from material/provenance without inventing geometry.",
+      "dependencies": [
+        {
+          "task": "MC-038",
+          "type": "capability"
+        },
+        {
+          "task": "MC-031",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-032",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-033",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-054",
+          "type": "artifact"
+        }
+      ],
+      "scope": "constructive gate integration, analytic/nonanalytic recovery, topology, seams, B-rep assembly and reconstruction certificates",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Required analytic cases recover correct class/parameters and reject perturbed nonanalytic controls.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Validate topology/reconstruction against nominal material, corruption controls and exact/directed error certificates.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-035",
+      "package": "MG-08",
+      "title": "Certified nonanalytic boundary patch extraction",
+      "objective": "Construct bounded nonanalytic/approximate boundary patches for the approved profile with complete relation to nominal material.",
+      "dependencies": [
+        {
+          "task": "MC-038",
+          "type": "capability"
+        },
+        {
+          "task": "MC-031",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-032",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-033",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-054",
+          "type": "artifact"
+        }
+      ],
+      "scope": "constructive gate integration, analytic/nonanalytic recovery, topology, seams, B-rep assembly and reconstruction certificates",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Patch error is checkable and tight enough for frozen requests.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Validate topology/reconstruction against nominal material, corruption controls and exact/directed error certificates.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-036",
+      "package": "MG-08",
+      "title": "Trim, incidence, seam and solid assembly",
+      "objective": "Build correct edge curves, p-curves, incidences, orientations, seams, shells and solids across analytic/approximate/provider boundaries.",
+      "dependencies": [
+        {
+          "task": "MC-038",
+          "type": "capability"
+        },
+        {
+          "task": "MC-032",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-034",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-035",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-054",
+          "type": "artifact"
+        }
+      ],
+      "scope": "constructive gate integration, analytic/nonanalytic recovery, topology, seams, B-rep assembly and reconstruction certificates",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Assembled B-reps are structurally valid and preserve certified material/topology/body mapping.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Validate topology/reconstruction against nominal material, corruption controls and exact/directed error certificates.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-037",
+      "package": "MG-08",
+      "title": "Reconstructed-solid comparison and end-to-end error certificate",
+      "objective": "Independently compare reconstructed engineering solids to nominal material and bind the complete source→reconstruction error budget.",
+      "dependencies": [
+        {
+          "task": "MC-038",
+          "type": "capability"
+        },
+        {
+          "task": "MC-015",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-031",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-032",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-033",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-034",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-035",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-036",
+          "type": "artifact"
+        }
+      ],
+      "scope": "constructive gate integration, analytic/nonanalytic recovery, topology, seams, B-rep assembly and reconstruction certificates",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Each mandatory reconstruction stage yields independent material/topology/error evidence.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Validate topology/reconstruction against nominal material, corruption controls and exact/directed error certificates.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-038",
+      "package": "MG-08",
+      "title": "MC-B constructive-coverage integration decision",
+      "objective": "Integrate domain, proof, sweep, candidate and output-construction arguments into the reviewed constructive coverage gate before full native implementation claims.",
+      "dependencies": [
+        {
+          "task": "MC-005",
+          "type": "capability"
+        },
+        {
+          "task": "MC-006",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-007",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-008",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-016",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-018",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-019",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-020",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-021",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-022",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-023",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-026",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-054",
+          "type": "artifact"
+        }
+      ],
+      "scope": "constructive gate integration, analytic/nonanalytic recovery, topology, seams, B-rep assembly and reconstruction certificates",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "All required constructive branches have reviewed terminating routes; no required lemma is OPEN.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Validate topology/reconstruction against nominal material, corruption controls and exact/directed error certificates.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [
+        "proof-registry",
+        "programme-registry"
+      ],
+      "gate": "MC-B",
+      "kind": "research"
+    },
+    {
+      "id": "MC-039",
+      "package": "MG-09",
+      "title": "Finite-history closure and provider-handoff integration",
+      "objective": "Demonstrate closure over finite compositions, provider transitions and repeated reconcile cycles using real selected implementations.",
+      "dependencies": [
+        {
+          "task": "MC-031",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-032",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-033",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-034",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-035",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-036",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-037",
+          "type": "artifact"
+        }
+      ],
+      "scope": "real finite-history composition and mandatory-suite native engineering closure",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Real transitions preserve material/body/error semantics and terminate without provider cycling.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Run composed real predecessor artifacts, replay/derived-state destruction and no-stand-in checks.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-040",
+      "package": "MG-09",
+      "title": "Composed headless material-to-engineering journey",
+      "objective": "Execute the actual research chain from canonical machining input through sweep/material/topology/reconstruction and STEP preparation.",
+      "dependencies": [
+        {
+          "task": "MC-039",
+          "type": "artifact"
+        }
+      ],
+      "scope": "real finite-history composition and mandatory-suite native engineering closure",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Every stage consumes the specified real predecessor/authority artifact.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Run composed real predecessor artifacts, replay/derived-state destruction and no-stand-in checks.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-041",
+      "package": "MG-09",
+      "title": "MC-D mandatory-suite native engineering closure",
+      "objective": "Qualify the complete native material→topology→reconstruction chain on every mandatory valid MC-1 case at frozen requests.",
+      "dependencies": [
+        {
+          "task": "MC-038",
+          "type": "capability"
+        },
+        {
+          "task": "MC-011",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-012",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-013",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-014",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-015",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-040",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-055",
+          "type": "artifact"
+        }
+      ],
+      "scope": "real finite-history composition and mandatory-suite native engineering closure",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Every required valid case has passing material/topology/reconstruction evidence or MC-D remains NOT_ESTABLISHED.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Run composed real predecessor artifacts, replay/derived-state destruction and no-stand-in checks.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [
+        "programme-registry",
+        "expensive-campaign"
+      ],
+      "gate": "MC-D",
+      "kind": "research"
+    },
+    {
+      "id": "MC-042",
+      "package": "MG-10",
+      "title": "Exact STEP profile implementation and Layers A–C qualification",
+      "objective": "Export the actual reconstructed engineering state under a pinned profile and independently verify file/read-back geometry against nominal authority.",
+      "dependencies": [
+        {
+          "task": "MC-037",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-054",
+          "type": "artifact"
+        }
+      ],
+      "scope": "exact STEP A–D qualification and actual independent downstream engineering use",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "A–C pass for mandatory representative cases with physical-unit error accounting.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Run exact-file A–D identity checks, fresh read-back, negative STEP controls and imported-solid downstream operations.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-043",
+      "package": "MG-10",
+      "title": "Independent STEP consumer measurement and engineering-use continuation",
+      "objective": "Use the independent path from MC-017 to measure/import actual MC-1 STEP files and perform a meaningful downstream operation.",
+      "dependencies": [
+        {
+          "task": "MC-017",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-040",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-042",
+          "type": "artifact"
+        }
+      ],
+      "scope": "exact STEP A–D qualification and actual independent downstream engineering use",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "At least one genuinely independent consumer measures required properties and successfully performs the defined engineering operation within the full error budget.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Run exact-file A–D identity checks, fresh read-back, negative STEP controls and imported-solid downstream operations.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-044",
+      "package": "MG-10",
+      "title": "MC-E independent output qualification",
+      "objective": "Decide exact-profile Layer-D and overall independent engineering output qualification across the mandatory final fixture set.",
+      "dependencies": [
+        {
+          "task": "MC-041",
+          "type": "capability"
+        },
+        {
+          "task": "MC-042",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-043",
+          "type": "artifact"
+        }
+      ],
+      "scope": "exact STEP A–D qualification and actual independent downstream engineering use",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Every mandatory final nonempty output passes exact-profile A–D requirements.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Run exact-file A–D identity checks, fresh read-back, negative STEP controls and imported-solid downstream operations.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [
+        "qualification-profile",
+        "programme-registry",
+        "expensive-campaign"
+      ],
+      "gate": "MC-E",
+      "kind": "research"
+    },
+    {
+      "id": "MC-045",
+      "package": "MG-11",
+      "title": "Native campaign harness, permit and resource-accounting qualification",
+      "objective": "Build the bounded native campaign harness and enforce explicit permits, sequential repeats, nested-parallelism/resource accounting and durable attempt capture.",
+      "dependencies": [
+        {
+          "task": "MC-056",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-009",
+          "type": "artifact"
+        }
+      ],
+      "scope": "bounded native campaigns, genuine-geometry scale, cross-platform recovery and practical gate",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Harness rejects absent/mismatched permits and over-budget plans.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Use an approved permit, sequential repeats, exact resource accounting and injected platform/fault cases.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-046",
+      "package": "MG-11",
+      "title": "Native genuine-geometry scale ladder",
+      "objective": "Measure 10/100/1k/10k genuine geometry-changing sections plus separate redundant-history controls on the accepted native path.",
+      "dependencies": [
+        {
+          "task": "MC-041",
+          "type": "capability"
+        },
+        {
+          "task": "MC-004",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-045",
+          "type": "artifact"
+        }
+      ],
+      "scope": "bounded native campaigns, genuine-geometry scale, cross-platform recovery and practical gate",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Required T2 tiers complete correctly within preregistered envelopes or practical gate remains open.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Use an approved permit, sequential repeats, exact resource accounting and injected platform/fault cases.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [
+        "expensive-campaign"
+      ],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-047",
+      "package": "MG-11",
+      "title": "Windows/Linux fault, replay and derived-cache recovery qualification",
+      "objective": "Qualify the accepted path on pinned Windows/MSVC and Linux with crash/timeout/kill/cache-corruption/interrupted-output recovery.",
+      "dependencies": [
+        {
+          "task": "MC-041",
+          "type": "capability"
+        },
+        {
+          "task": "MC-042",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-045",
+          "type": "artifact"
+        }
+      ],
+      "scope": "bounded native campaigns, genuine-geometry scale, cross-platform recovery and practical gate",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Platform physical/status/body results agree within accepted policy.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Use an approved permit, sequential repeats, exact resource accounting and injected platform/fault cases.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [
+        "expensive-campaign"
+      ],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-048",
+      "package": "MG-11",
+      "title": "MC-F practical native qualification decision",
+      "objective": "Decide practical viability from the preregistered workload, native scale, platform and recovery evidence.",
+      "dependencies": [
+        {
+          "task": "MC-044",
+          "type": "capability"
+        },
+        {
+          "task": "MC-046",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-047",
+          "type": "artifact"
+        }
+      ],
+      "scope": "bounded native campaigns, genuine-geometry scale, cross-platform recovery and practical gate",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "All required scale/platform/recovery cells meet the frozen practical contract.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Use an approved permit, sequential repeats, exact resource accounting and injected platform/fault cases.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [
+        "programme-registry"
+      ],
+      "gate": "MC-F",
+      "kind": "research"
+    },
+    {
+      "id": "MC-049",
+      "package": "MG-12",
+      "title": "Candidate-blind final-challenge generator and custody freeze",
+      "objective": "Freeze final adversarial generators, seeds/commitments and oracle procedures before candidate selection hardens.",
+      "dependencies": [
+        {
+          "task": "MC-005",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-009",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-010",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-011",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-012",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-013",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-014",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-015",
+          "type": "artifact"
+        }
+      ],
+      "scope": "candidate-blind challenges, independent review attribution, adversarial audit and final traceability",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Challenge generation is frozen/versioned before MC-026 selection.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Recompute dependencies/coverage, execute frozen challenges where permitted, minimize counterexamples and audit every skipped/pending case.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [
+        "fixture-registry"
+      ],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-050",
+      "package": "MG-12",
+      "title": "Adversarial proof, implementation and certificate audit",
+      "objective": "Challenge domain coverage, proof assumptions, implementation refinement, oracle independence, certificate trust and all skips/pending/timeouts.",
+      "dependencies": [
+        {
+          "task": "MC-038",
+          "type": "capability"
+        },
+        {
+          "task": "MC-041",
+          "type": "capability"
+        },
+        {
+          "task": "MC-044",
+          "type": "capability"
+        },
+        {
+          "task": "MC-048",
+          "type": "capability"
+        },
+        {
+          "task": "MC-057",
+          "type": "artifact"
+        }
+      ],
+      "scope": "candidate-blind challenges, independent review attribution, adversarial audit and final traceability",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Every required finding is repaired or remains an explicit MC-1 blocker.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Recompute dependencies/coverage, execute frozen challenges where permitted, minimize counterexamples and audit every skipped/pending case.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [
+        "programme-registry"
+      ],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-051",
+      "package": "MG-12",
+      "title": "Final traceability, invalidation and repository consistency audit",
+      "objective": "Verify bidirectional requirement→proof→code→fixture→run→artifact→decision traceability and repository/GitHub consistency before final decision.",
+      "dependencies": [
+        {
+          "task": "MC-050",
+          "type": "artifact"
+        }
+      ],
+      "scope": "candidate-blind challenges, independent review attribution, adversarial audit and final traceability",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Every accepted claim traverses both directions without missing or stale links.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Recompute dependencies/coverage, execute frozen challenges where permitted, minimize counterexamples and audit every skipped/pending case.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [
+        "programme-registry"
+      ],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-052",
+      "package": "MG-13",
+      "title": "Final MC-1 machining-completeness decision",
+      "objective": "Decide whether MC-1 is actually established, using gates and proof obligations rather than issue closure or scores.",
+      "dependencies": [
+        {
+          "task": "MC-005",
+          "type": "capability"
+        },
+        {
+          "task": "MC-038",
+          "type": "capability"
+        },
+        {
+          "task": "MC-041",
+          "type": "capability"
+        },
+        {
+          "task": "MC-044",
+          "type": "capability"
+        },
+        {
+          "task": "MC-048",
+          "type": "capability"
+        },
+        {
+          "task": "MC-050",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-051",
+          "type": "artifact"
+        }
+      ],
+      "scope": "evidence-based final MC-1 decision and only a conditional clean future handoff",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "PASS only if every noncompensating required gate/PO/case/review is genuinely satisfied.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Recompute all noncompensating gate/PO/case states from exact evidence; never infer acceptance from issue closure.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [
+        "programme-registry"
+      ],
+      "gate": "MC-1",
+      "kind": "research"
+    },
+    {
+      "id": "MC-053",
+      "package": "MG-13",
+      "title": "Conditional clean production handoff regeneration",
+      "objective": "Only after an MC-1 PASS, generate fresh versioned OpenSimachinist/MSAC handoff specifications reflecting the accepted machining-completeness evidence.",
+      "dependencies": [
+        {
+          "task": "MC-052",
+          "type": "capability"
+        }
+      ],
+      "scope": "evidence-based final MC-1 decision and only a conditional clean future handoff",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "New handoffs are standalone, versioned and consistent with MC-1 evidence.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Recompute all noncompensating gate/PO/case states from exact evidence; never infer acceptance from issue closure.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [
+        "programme-registry"
+      ],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-054",
+      "package": "MG-06",
+      "title": "Engineering-output profile decision for singular and grouped material",
+      "objective": "Resolve any product/profile change needed to represent valid singular/multi-solid/empty machining states without silently changing material meaning.",
+      "dependencies": [
+        {
+          "task": "MC-005",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-016",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-017",
+          "type": "artifact"
+        }
+      ],
+      "scope": "early conventional-output representability, independent consumer access and explicit profile decisions",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Every changed output rule has explicit material/identity semantics and consumer evidence plan.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Exercise machining-generated output witnesses, known-good/bad consumer controls and explicit profile semantics.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [
+        "qualification-profile",
+        "programme-registry"
+      ],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-055",
+      "package": "MG-03",
+      "title": "Immutable historical corpus import and strengthened-version map",
+      "objective": "Import all inherited RCS-021 and decisive prior controls by exact immutable identity, preserving old parameterizations separately from stronger MC-1 requests.",
+      "dependencies": [
+        {
+          "task": "MC-001",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-009",
+          "type": "artifact"
+        }
+      ],
+      "scope": "independent oracle stack, schemas, F01–F16 corpus, historical imports and certificate attacks",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Every inherited identity is either pinned/imported or explicitly unavailable.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Run oracle-independence, physical-witness, schema and deliberately corrupted-evidence controls.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [
+        "fixture-registry"
+      ],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-056",
+      "package": "MG-00",
+      "title": "Planning/native CI impact routing and campaign safety guard",
+      "objective": "Prevent documentation/planning work from accidentally dispatching the historical native test catalogue while preserving fail-closed native coverage for semantic/code changes.",
+      "dependencies": [
+        {
+          "task": "MC-001",
+          "type": "artifact"
+        }
+      ],
+      "scope": "authority/evidence routing, CI impact safety and no-production/no-paid-execution controls",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Planning-only changes trigger bounded static checks without broad native campaigns.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Run static authority/source/CI-routing checks and inspect current live repository state.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [
+        "workflow-config",
+        "programme-registry"
+      ],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-057",
+      "package": "MG-12",
+      "title": "Independent challenge ownership and final held-out execution",
+      "objective": "Arrange honestly independent review/challenge ownership where available and execute the frozen MC-049 held-out set against the exact accepted candidate/configuration.",
+      "dependencies": [
+        {
+          "task": "MC-041",
+          "type": "capability"
+        },
+        {
+          "task": "MC-044",
+          "type": "capability"
+        },
+        {
+          "task": "MC-048",
+          "type": "capability"
+        },
+        {
+          "task": "MC-049",
+          "type": "artifact"
+        }
+      ],
+      "scope": "candidate-blind challenges, independent review attribution, adversarial audit and final traceability",
+      "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
+      "acceptance": [
+        "Independence/custody level is documented accurately.",
+        "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
+        "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
+      ],
+      "verification": [
+        "Recompute dependencies/coverage, execute frozen challenges where permitted, minimize counterexamples and audit every skipped/pending case.",
+        "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
+      ],
+      "artifacts": [
+        "task report",
+        "machine-readable outcome/evidence record",
+        "deterministic verification entry point when executable work is claimed"
+      ],
+      "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
+      "locks": [
+        "expensive-campaign"
+      ],
+      "gate": null,
+      "kind": "research"
+    }
+  ]
+}

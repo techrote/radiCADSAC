@@ -1,0 +1,47 @@
+{
+  "schema": "radicadsac-mc-evidence-ledger/1.0",
+  "baseline": "e86c15ca0479240a0045ebc80c83973137b58c60",
+  "entries": [
+    {
+      "id": "E-MC-ADOPTION-PLAN",
+      "class": "requirement_source",
+      "identity": "sha256:b7cb369e1fef31bb6a02d02960931b3090424114395af9487babf6c0ecbb609c",
+      "scope": "MC-1 source planning document; not experiment evidence"
+    },
+    {
+      "id": "E-RCS021-SUMMARY",
+      "class": "historical_measured",
+      "path": "research/rcs-021/measured-summary-v1.json",
+      "blob": "b5f0cd8c06fdde15680e4a25da36cf81d762f996",
+      "scope": "14-case bounded campaign with explicit pending/refusal limits"
+    },
+    {
+      "id": "E-RCS021-ORACLE",
+      "class": "historical_source",
+      "path": "research/rcs-021/material_oracle.py",
+      "blob": "18a54212fcab0634c54d7516916267fb2a4cbbac",
+      "scope": "shared-field conservative octree and XY sampled connectivity implementation"
+    },
+    {
+      "id": "E-RCS021-MANIFOLD",
+      "class": "historical_source",
+      "path": "research/rcs-021/manifold_fallback.py",
+      "blob": "f6bc5cd0624f43201ccc46e7124342e669ce310a",
+      "scope": "LevelSet comparator; not native mesh Boolean qualification"
+    },
+    {
+      "id": "E-RCS021-FIELD",
+      "class": "historical_source",
+      "path": "research/rcs-021/field.py",
+      "blob": "43dd9dc361bc960190370ba98fe2bb51938e9b58",
+      "scope": "shared field; rounded path constant-Z restriction"
+    },
+    {
+      "id": "E-GENESIS-V2",
+      "class": "historical_foundation",
+      "path": "handoffs/genesis-release-v2.json",
+      "scope": "accepted Gate 5 foundation, consistency revision 2.1; superseded as production-readiness routing by DR-0026"
+    }
+  ],
+  "new_native_evidence": []
+}

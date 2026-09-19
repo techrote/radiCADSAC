@@ -1,0 +1,90 @@
+{
+  "schema": "radicadsac-mc-proof-obligations/1.0",
+  "status": "NOT_ESTABLISHED",
+  "obligations": [
+    {
+      "id": "PO-01",
+      "title": "Domain fidelity",
+      "integration_owner": "MC-005",
+      "state": "OPEN",
+      "accepted_evidence": []
+    },
+    {
+      "id": "PO-02",
+      "title": "Sweep semantics",
+      "integration_owner": "MC-031",
+      "state": "OPEN",
+      "accepted_evidence": []
+    },
+    {
+      "id": "PO-03",
+      "title": "Closure under finite composition",
+      "integration_owner": "MC-039",
+      "state": "OPEN",
+      "accepted_evidence": []
+    },
+    {
+      "id": "PO-04",
+      "title": "Sound classification",
+      "integration_owner": "MC-032",
+      "state": "OPEN",
+      "accepted_evidence": []
+    },
+    {
+      "id": "PO-05",
+      "title": "Finite progress",
+      "integration_owner": "MC-038",
+      "state": "OPEN",
+      "accepted_evidence": []
+    },
+    {
+      "id": "PO-06",
+      "title": "Checkable error certification",
+      "integration_owner": "MC-037",
+      "state": "OPEN",
+      "accepted_evidence": []
+    },
+    {
+      "id": "PO-07",
+      "title": "Topology/connectivity",
+      "integration_owner": "MC-032",
+      "state": "OPEN",
+      "accepted_evidence": []
+    },
+    {
+      "id": "PO-08",
+      "title": "Complete dispatch",
+      "integration_owner": "MC-030",
+      "state": "OPEN",
+      "accepted_evidence": []
+    },
+    {
+      "id": "PO-09",
+      "title": "Conventional engineering realization",
+      "integration_owner": "MC-037",
+      "state": "OPEN",
+      "accepted_evidence": []
+    },
+    {
+      "id": "PO-10",
+      "title": "STEP preservation",
+      "integration_owner": "MC-044",
+      "state": "OPEN",
+      "accepted_evidence": []
+    },
+    {
+      "id": "PO-11",
+      "title": "Implementation refinement",
+      "integration_owner": "MC-050",
+      "state": "OPEN",
+      "accepted_evidence": []
+    },
+    {
+      "id": "PO-12",
+      "title": "Resource accounting",
+      "integration_owner": "MC-048",
+      "state": "OPEN",
+      "accepted_evidence": []
+    }
+  ]
+}

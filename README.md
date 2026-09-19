@@ -1,5 +1,7 @@
 # radiCADSAC
 
+> **Current execution authority (19 September 2026):** MC-1 — Machining Completeness and Engineering Realization is the stronger pre-production research requirement. Start at [`handoffs/current-authority.json`](handoffs/current-authority.json) and [`docs/machining-completeness/00-PROGRAMME.md`](docs/machining-completeness/00-PROGRAMME.md). Genesis-v2.1 remains historical accepted foundation, but production bootstrap is on hold unless MC-1 passes and separate explicit authorization is later given.
+
 Founding research and planning repository for **Machinist Simulation Aided Creation (MSAC)** and the **OpenSimachinist** manufacturing-geometry/STEP backend.
 
 This repository is intentionally a **genesis/R&D record**, not either production implementation repository. It preserves the original programme intent, competing hypotheses, rejected approaches, experiments, and the eventual clean founding handoffs from which separate MSAC and OpenSimachinist repositories will be created.
@@ -16,11 +18,9 @@ The exported engineering object is the product. A successful workpiece must be e
 
 The planning repository may be messy, speculative, contradictory, and research-heavy. The later production repositories should not inherit that archaeology. Instead, this repo will produce frozen founding handoffs containing fresh, reviewed implementation plans.
 
-## Current production-bootstrap boundary
+## Current programme boundary
 
-**Genesis v2 is the current bootstrap authority.** New production repositories must start from `handoffs/genesis-release-v2.json` at consistency revision `2.1`, the packages under `handoffs/v2/opensimachinist/` and `handoffs/v2/msac/`, and `docs/37-GENESIS-V2-BOOTSTRAP-CONSISTENCY.md`.
-
-The Genesis-v1 packages and launch wrappers remain immutable historical evidence. They are not the current launch instructions.
+**MC-1 is the current execution authority.** Genesis-v2.1 remains the accepted historical foundation/evidence package, not present production-start permission. Read `handoffs/current-authority.json`, DR-0026 and the MC-1 documents. Do not create/populate production repositories from the historical handoff while MC-1 is `NOT_ESTABLISHED`.
 
 ## Current research foundation and accepted contracts
 
@@ -54,7 +54,7 @@ Issue-specific research should additionally consume accepted outputs from its de
 
 The historical initial plan and critique remain under `docs/` for design archaeology; newer accepted decisions and current foundation documents supersede speculative historical material where they conflict.
 
-## Frozen genesis handoffs
+## Historical genesis handoffs
 
 The handoff index is [`handoffs/README.md`](handoffs/README.md). For **new** production bootstrap, the machine-readable authority is [`handoffs/genesis-release-v2.json`](handoffs/genesis-release-v2.json), consistency revision `2.1`, together with [`handoffs/evidence-dependencies-v2.1.json`](handoffs/evidence-dependencies-v2.1.json).
 

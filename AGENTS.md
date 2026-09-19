@@ -9,9 +9,13 @@
 
 This repository is not either production codebase. Preserve failed ideas, negative results, architectural alternatives, and decision history here. Production repositories will be generated later from clean handoff specifications.
 
+## Current MC-1 execution authority
+
+MC-1 — Machining Completeness and Engineering Realization is the current pre-production programme. Before selecting work, read `handoffs/current-authority.json`, `docs/decisions/DR-0026-machining-completeness-programme.md`, `docs/machining-completeness/00-PROGRAMME.md`, `07-EXECUTION-PROTOCOL.md`, `12-ROADMAP.md`, and the selected task record. Genesis-v2.1 remains historical accepted foundation; it no longer authorizes production bootstrap while MC-1 is `NOT_ESTABLISHED`. Production creation and expensive/native campaigns remain separately controlled.
+
 ## Current foundation documents
 
-Research after RCS-001 must treat these as the current foundation unless a later accepted decision explicitly supersedes part of them:
+Preserve these as founding/historical contracts and evidence. MC-1 current routing overlays them through DR-0026; a later accepted decision must identify any specific supersession explicitly:
 
 - `docs/00-FOUNDING-BRIEF.md` — preserved product intent;
 - `docs/01-MSAC-GEOMETRY-CONTRACT.md` — Gate-1 MSAC/backend contract;
@@ -101,8 +105,8 @@ Accepted decisions must distinguish fixed programme requirements from still-open
 
 ## Handoff discipline
 
-The **current** production bootstrap outputs are the consistency-corrected Genesis-v2 packages under `handoffs/v2/opensimachinist/` and `handoffs/v2/msac/`, bound by `handoffs/genesis-release-v2.json` consistency revision `2.1`. Resolve imported conformance/evidence assets only through `handoffs/evidence-dependencies-v2.1.json`.
+The v1/v2 handoff trees, `handoffs/genesis-release-v2.json` and `handoffs/evidence-dependencies-v2.1.json` remain immutable historical foundation/provenance inputs. They are **not current production-bootstrap authorization**.
 
-The v1 packages under `handoffs/opensimachinist/` and `handoffs/msac/` remain historical freezes and must not be used as the current autonomous bootstrap input.
+Current routing is `handoffs/current-authority.json` → MC-1. Only MC-053 may regenerate a clean post-MC-1 handoff, and only after MC-052 genuinely accepts MC-1. Even then, creating or populating production repositories requires separate explicit user authorization.
 
-Do not copy the entire genesis repository into a production repository. Generate fresh implementation plans and requirements from the current handoff so the production histories begin cleanly while this repository preserves the original research record.
+Do not copy the genesis repository history into a production repository. Preserve negative research, exact producing evidence identities, and every unqualified/pending/refusal scope.

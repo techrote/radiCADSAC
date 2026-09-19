@@ -1,0 +1,348 @@
+{
+  "schema": "radicadsac-mc-outcomes/1.0",
+  "programme": "MC-1",
+  "tasks": {
+    "MC-001": {
+      "state": "IN_PROGRESS",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-002": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-003": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-004": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-005": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-006": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-007": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-008": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-009": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-010": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-011": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-012": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-013": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-014": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-015": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-016": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-017": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-018": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-019": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-020": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-021": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-022": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-023": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-024": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-025": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-026": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-027": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-028": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-029": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-030": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-031": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-032": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-033": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-034": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-035": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-036": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-037": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-038": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-039": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-040": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-041": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-042": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-043": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-044": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-045": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-046": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-047": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-048": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-049": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-050": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-051": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-052": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-053": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-054": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-055": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-056": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    },
+    "MC-057": {
+      "state": "NOT_STARTED",
+      "issue": null,
+      "accepted_artifacts": [],
+      "blockers": []
+    }
+  }
+}

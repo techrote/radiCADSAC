@@ -1,6 +1,6 @@
 # radiCADSAC handoff index
 
-**Current bootstrap route (2026-09-19):** use `genesis-release-v2.json` consistency revision `2.1`, `v2/opensimachinist/`, `v2/msac/`, and `evidence-dependencies-v2.1.json`. Read `../docs/37-GENESIS-V2-BOOTSTRAP-CONSISTENCY.md` before autonomous bootstrap.
+**Current execution route (19 September 2026):** read `current-authority.json` in this directory's parent context via `handoffs/current-authority.json` and the MC-1 programme. Genesis-v2 consistency revision 2.1, `v2/opensimachinist/`, `v2/msac/`, and `evidence-dependencies-v2.1.json` remain preserved historical foundation/evidence. They are not current production-start authorization while MC-1 is `NOT_ESTABLISHED`; separate explicit permission is required even after a future MC-1 pass.
 
 The remainder of this document records the immutable **Genesis-v1 historical freeze**. Its package trees and launch wrappers remain archaeology/provenance, not current bootstrap instructions.
 
