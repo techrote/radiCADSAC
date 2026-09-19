@@ -14,7 +14,7 @@ Gate 5 remains accepted for the historical foundation and bounded/refusal polici
 
 The target is the supported physically realizable machining domain, not every arbitrary mathematical surface and not the subset convenient for a solver. An ordinary valid operation cannot be excluded after failure. The domain grammar and output profile require explicit research and review; no representation winner, minimum feature size, geometric epsilon or customer tolerance is selected here.
 
-## Alternatives rejected
+## Alternatives considered
 
 Starting a Godot/application vertical slice would not resolve the geometry question. Treating 5/14 bounded directional results, pooled refinement counts, or 13 LevelSet comparisons as completeness would overstate evidence. Rewriting frozen Gate-5 artifacts would destroy provenance. Requiring all proofs to be accepted before any falsification experiment would create a research deadlock.
 
@@ -28,6 +28,6 @@ Root routing, issue graph, evidence labels, schema checks and CI impact routing 
 
 A later explicit user/product decision may change the domain or output contract. Record the reason, version, impact, affected claims and invalidated evidence; never retroactively alter a failed fixture or saved journal. Algorithm choices are deliberately reversible. The current MC-1 capability status is `NOT_ESTABLISHED`.
 
-## Sources
+## Evidence
 
 [Accepted Gate-5 discussion](https://github.com/techrote/radiCADSAC/issues/46#issuecomment-5739613315), [consistency repair](https://github.com/techrote/radiCADSAC/issues/60#issuecomment-5740726821), `docs/00-FOUNDING-BRIEF.md`, and the source/evidence register in `docs/machining-completeness/08-SOURCES-AND-EVIDENCE.md`.
