@@ -54,6 +54,6 @@ A changed primitive, numeric contract, oracle, output profile or dependency vers
 
 ## Repeatable GitHub reconciliation
 
-`python3 tools/mc_workflow.py sync --check` is read-only drift detection; `sync --apply` is explicit reconciliation of managed blocks for stable task markers and exact milestone titles. Search open and closed issues and all milestones first; duplicate stable IDs are a hard conflict. Preserve notes outside managed blocks, unrelated labels, assignments and closed state. Never reopen or close capability automatically. Re-running an unchanged sync must perform zero writes.
+`python3 tools/mc_workflow.py sync --check` is read-only drift detection; `sync --apply` explicitly reconciles the managed title/body block of already-bound stable task issues. The MG-00–MG-13 package hierarchy is repository-owned because the available GitHub connector does not expose milestone creation in this environment. Search open and closed issues and all milestones first; duplicate stable IDs are a hard conflict. Preserve notes outside managed blocks, unrelated labels, assignments and closed state. Never reopen or close capability automatically. Re-running an unchanged sync must perform zero writes.
 
 An interrupted sync retains its action ledger and actual IDs. Resume missing work rather than recreating existing objects. Serialize updates; verify actual body/milestone/graph parity after writes. Native GitHub sub-issue relationships are navigation; the typed repository graph controls execution.
