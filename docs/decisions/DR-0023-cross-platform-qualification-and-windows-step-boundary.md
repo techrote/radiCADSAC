@@ -17,7 +17,7 @@ Require a warmed 20-epoch/100k-event portable mixed-provider soak to remain with
 
 Repeat the actual RCS-022 Linux exporter/parser/consumer path three times and preserve its measured `interoperability_unqualified` status. Stability of a negative Layer-D result is not interoperability qualification. Until an exact-pinned OCCT 8.0.1 Windows/MSVC STEP worker is built and exercised through the corresponding export/read-back soak, Windows STEP support remains conditional and must be reported as a Gate-5 blocker. The portable Windows programme-level campaign cannot stand in for missing kernel/export evidence.
 
-## Accepted evidence
+## Evidence
 
 The decision is based on workflow run `35409683331` from PR head `fafe9ef74de7d89e690fdc61ee98c879c062b344`; artifact IDs/digests and measured latency/resource/scale values are frozen in `research/rcs-026/measured-result-v1.json`.
 
