@@ -1,0 +1,19 @@
+{
+  "schema": "radicadsac-current-authority/1.0",
+  "programme": "MC-1",
+  "decision": "docs/decisions/DR-0026-machining-completeness-programme.md",
+  "entrypoint": "docs/machining-completeness/00-PROGRAMME.md",
+  "production_authorized": false,
+  "capability_status": "NOT_ESTABLISHED",
+  "historical_foundation": {
+    "gate5_status": "accepted",
+    "consistency_revision": "2.1",
+    "release_manifest": "handoffs/genesis-release-v2.json",
+    "evidence_manifest": "handoffs/evidence-dependencies-v2.1.json",
+    "baseline_commit": "e86c15ca0479240a0045ebc80c83973137b58c60"
+  },
+  "requirements_before_production_consideration": [
+    "MC-1 accepted against all required gates and proof obligations",
+    "Separate explicit authorization to create or populate production repositories"
+  ]
+}
