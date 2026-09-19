@@ -26,12 +26,12 @@
   "packages": {
     "msac": {
       "manifest": "handoffs/v2/msac/handoff-v2.json",
-      "package_tree_sha": "pending_first_commit",
+      "package_tree_sha": "ab256806cda2312bf894bf806256443f60e2498c",
       "path": "handoffs/v2/msac"
     },
     "opensimachinist": {
       "manifest": "handoffs/v2/opensimachinist/handoff-v2.json",
-      "package_tree_sha": "pending_first_commit",
+      "package_tree_sha": "f0e1b2ddf1533ac66d22ea4bc42ef399c0b3a99e",
       "path": "handoffs/v2/opensimachinist"
     }
   },
