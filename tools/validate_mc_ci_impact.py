@@ -6,7 +6,7 @@ ROOT=Path(__file__).resolve().parents[1]
 WF=ROOT/".github"/"workflows"
 BROAD={"bootstrap-consistency.yml","quality.yml","rcs010.yml","rcs011.yml","rcs012.yml","rcs014-handoff.yml","rcs015-handoff.yml","rcs016-freeze.yml","rcs017.yml","rcs020.yml","rcs021.yml","rcs022.yml","rcs023.yml","rcs024.yml","rcs025.yml","rcs026.yml","rcs027.yml"}
 SELECTIVE={"rcs013-architecture.yml","rcs018.yml","rcs019.yml"}
-NEEDED=["# MC-1 planning-only impact routing","paths-ignore:","docs/machining-completeness/**","research/machining-completeness/**",".github/workflows/**"]
+NEEDED=["paths-ignore:","docs/machining-completeness/**","research/machining-completeness/**",".github/workflows/**"]
 def event_block(s,event,next_event):
     start=s.index(f"  {event}:")
     end=s.index(f"  {next_event}:",start) if f"  {next_event}:" in s[start+1:] else s.index("\npermissions:",start)
@@ -45,10 +45,10 @@ def validate():
     for token in ("pull_request:","docs/machining-completeness/**","tools/validate_machining_completeness.py","python3 tools/validate_repo.py"):
         if token not in mc: raise AssertionError(f"mc1-static missing {token}")
 def self_test():
-    s=(WF/"quality.yml").read_text(encoding="utf-8").replace("# MC-1 planning-only impact routing","BROKEN",2)
+    s=(WF/"quality.yml").read_text(encoding="utf-8").replace("      - 'docs/machining-completeness/**'","      - 'docs/other/**'",1)
     try: validate_broad("mutated-quality",s)
     except AssertionError: pass
-    else: raise AssertionError("failed to reject broken broad routing")
+    else: raise AssertionError("failed to reject missing push exclusion")
     s=(WF/"rcs018.yml").read_text(encoding="utf-8").replace("  pull_request:\n    paths:","  pull_request:\n    paths-ignore:\n      - 'docs/machining-completeness/**'\n    paths:",1)
     try: validate_selective("mutated-rcs018",s)
     except AssertionError: pass
