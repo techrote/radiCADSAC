@@ -19,6 +19,6 @@ Source: user-supplied `radiCADSAC-machining-completeness-research-plan-v1.0.md`,
 | GitHub issue reconciliation | COMPLETE | Programme #62 plus one managed issue for every MC-001–MC-057; actual IDs bound in github-map. | Inspect stable IDs before creating issues. |
 | First complete-pass review | COMPLETE | Coverage/size/dependency/verification audit recorded in 13-ADOPTION-AUDIT.md. | Coverage, size, dependency and verification audit. |
 | Independent second review pass | COMPLETE | Separate backward-from-gates and forward-from-domain reread; same author, not independent mathematical validation. | Fresh adversarial self-review; not independent mathematical validation. |
-| Final repository consistency | IN_PROGRESS | Await exact-head static CI, PR review/merge verification and zero-drift issue check. | Exact-head static checks, live issue/document parity and merge verification. |
+| Final repository consistency | COMPLETE | Second-pass defects repaired; exact-head `mc1-static` enforces repository contracts, CI-impact routing, completed-task verifiers and live zero-drift issue parity. PR merge/main verification is recorded externally to avoid a self-referential ledger commit. | Exact-head static checks, live issue/document parity and merge verification. |
 
 No native experiment has been executed by adoption. Historical measurements are not being rerun or newly certified.
