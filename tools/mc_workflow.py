@@ -45,12 +45,12 @@ def all_issues():
         if len(part)<100: return out
         page+=1
 def managed(t):
-    deps="\n".join(f"- \`{d['task']}\` — **{d['type']}** dependency" for d in t["dependencies"]) or "- None."
-    locks=", ".join(f"\`{x}\`" for x in t["locks"]) or "isolated task paths only"
+    deps="\n".join(f"- `{d['task']}` — **{d['type']}** dependency" for d in t["dependencies"]) or "- None."
+    locks=", ".join(f"`{x}`" for x in t["locks"]) or "isolated task paths only"
     acc="\n".join("- [ ] "+x for x in t["acceptance"])
     ver="\n".join("- "+x for x in t["verification"])
     arts="\n".join("- "+x for x in t["artifacts"])
-    gate=(f"\n- [ ] Gate **{t['gate']}** changes only if its full evidence contract is genuinely satisfied; otherwise it remains \`NOT_ESTABLISHED\`." if t.get("gate") else "")
+    gate=(f"\n- [ ] Gate **{t['gate']}** changes only if its full evidence contract is genuinely satisfied; otherwise it remains `NOT_ESTABLISHED`." if t.get("gate") else "")
     return f"""<!-- MC:MANAGED:START {t['id']} -->
 ## Objective
 {t['objective']}
@@ -69,22 +69,22 @@ Coordination/locks: {locks}. Artifact dependencies allow only provisional resear
 Read the [MC-1 programme]({BASE_URL}docs/machining-completeness/00-PROGRAMME.md), [execution protocol]({BASE_URL}docs/machining-completeness/07-EXECUTION-PROTOCOL.md), [roadmap]({BASE_URL}docs/machining-completeness/12-ROADMAP.md), [task graph]({BASE_URL}research/machining-completeness/task-graph-v1.json), the package-relevant MC specification, and every dependency's accepted output. Historical Genesis-v2.1 evidence remains scoped through [DR-0026]({BASE_URL}docs/decisions/DR-0026-machining-completeness-programme.md). Do not depend on chat context.
 
 ## Implementation prompt for the future agent
-Reconcile live \`main\`, every existing branch/PR containing \`{t['id']}\`, and dependency outcomes before changing anything. Resume the existing owner rather than restarting. State the hypothesis/falsification criterion, exact base/head, owned paths, required locks, blockers and next bounded action, then execute only this task. Preserve negative evidence and producing identities. Do not narrow the machining domain, weaken tests, inflate tolerances, drop bodies, guess lineage, promote model evidence to native geometry, use mesh-wrapped STEP as engineering success, or convert timeout/resource refusal into a solved case. Use branch → PR → applicable exact-head checks → verified merge.
+Reconcile live `main`, every existing branch/PR containing `{t['id']}`, and dependency outcomes before changing anything. Resume the existing owner rather than restarting. State the hypothesis/falsification criterion, exact base/head, owned paths, required locks, blockers and next bounded action, then execute only this task. Preserve negative evidence and producing identities. Do not narrow the machining domain, weaken tests, inflate tolerances, drop bodies, guess lineage, promote model evidence to native geometry, use mesh-wrapped STEP as engineering success, or convert timeout/resource refusal into a solved case. Use branch → PR → applicable exact-head checks → verified merge.
 
 ## Acceptance criteria
 {acc}{gate}
 
 ## Verification
 {ver}
-- Run \`python3 tools/validate_machining_completeness.py\`.
-- Run \`python3 tools/mc_workflow.py verify {t['id']}\` when outcome artifacts exist.
+- Run `python3 tools/validate_machining_completeness.py`.
+- Run `python3 tools/mc_workflow.py verify {t['id']}` when outcome artifacts exist.
 - Re-run only native evidence actually invalidated by this task, under an explicit bounded permit.
 
 ## Expected artifacts
 {arts}
-- \`research/machining-completeness/tasks/{t['id']}/report.md\`
-- \`research/machining-completeness/tasks/{t['id']}/outcome.json\`
-- \`research/machining-completeness/tasks/{t['id']}/verify.py\` when executable work is claimed
+- `research/machining-completeness/tasks/{t['id']}/report.md`
+- `research/machining-completeness/tasks/{t['id']}/outcome.json`
+- `research/machining-completeness/tasks/{t['id']}/verify.py` when executable work is claimed
 
 ## Blocking and stopping conditions
 {t['blockers']}
@@ -113,7 +113,7 @@ def sync(apply=False):
     for t in graph["tasks"]:
         n=mapping[t["id"]]["issue"]; issue=next((x for x in issues if x["number"]==n),None)
         if issue is None: drift.append((t["id"],n,"missing bound issue")); continue
-        if not (issue.get("body") or "").find(f"MC:TASK:{t['id']}")>=0: drift.append((t["id"],n,"marker/binding mismatch")); continue
+        if f"MC:TASK:{t['id']}" not in (issue.get("body") or ""): drift.append((t["id"],n,"marker/binding mismatch")); continue
         title=f"[{t['package']}] {t['id']} — {t['title']}"
         try: body=reconcile_body(issue.get("body") or "",t)
         except ValueError as e: drift.append((t["id"],n,str(e))); continue
