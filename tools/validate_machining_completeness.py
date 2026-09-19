@@ -13,8 +13,8 @@ def validate(graph=None,programme=None,outcomes=None,ghmap=None):
         if not p.exists(): fail(f"missing {p.relative_to(ROOT)}")
     graph=graph or load(MC/"task-graph-v1.json"); programme=programme or load(MC/"programme-v1.json"); outcomes=outcomes or load(MC/"outcomes-v1.json"); ghmap=ghmap or load(MC/"github-map-v1.json")
     tasks=graph["tasks"]; ids=[t["id"] for t in tasks]; idset=set(ids)
-    expected={f"MC-{i:03d}" for i in range(1,58)}
-    if len(tasks)!=57 or idset!=expected or len(ids)!=len(idset): fail("MC task ID/count mismatch")
+    expected={f"MC-{i:03d}" for i in range(1,59)}
+    if len(tasks)!=58 or idset!=expected or len(ids)!=len(idset): fail("MC task ID/count mismatch")
     for t in tasks:
         for k in ("package","title","objective","scope","non_goals","acceptance","verification","artifacts","blockers","locks"):
             if k not in t: fail(f"{t['id']} missing {k}")
@@ -30,7 +30,7 @@ def validate(graph=None,programme=None,outcomes=None,ghmap=None):
         for y in rev[x]:
             indeg[y]-=1
             if indeg[y]==0: q.append(y); q.sort()
-    if len(seen)!=57: fail("dependency cycle")
+    if len(seen)!=58: fail("dependency cycle")
     pids=[p["id"] for p in graph["packages"]]
     if pids!=[f"MG-{i:02d}" for i in range(14)]: fail("package hierarchy mismatch")
     members=[x for p in graph["packages"] for x in p["tasks"]]
