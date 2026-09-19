@@ -25,11 +25,18 @@ Each investigation should identify:
 
 Label claims where ambiguity matters:
 
-- **MEASURED** — produced by a reproducible experiment in this repository;
+Architecture-impacting measurements use one of these explicit subtypes:
+
+- **MEASURED_NATIVE_GEOMETRY** — actual geometry/kernel/export/tool execution whose outputs are directly measured;
+- **MEASURED_INDEPENDENT_ORACLE** — an independently constructed physical/mathematical oracle or comparator, with implementation independence stated;
+- **MEASURED_DETERMINISTIC_MODEL** — execution of a synthetic policy/contract/coordinator model; it proves the modelled invariant only and is not native geometry qualification;
+- **MEASURED_PLATFORM_PROCESS** — real platform/process/toolchain/resource/lifecycle observation, separated from any geometry-capability claim;
 - **SOURCE** — directly supported by a cited primary source;
 - **INFERENCE** — reasoned conclusion from evidence;
 - **PROPOSAL** — architecture/design idea not yet validated;
 - **OPEN** — unresolved question.
+
+Legacy documents may use bare **MEASURED** where the subtype is obvious from their scope. New synthesis or handoff material must state the subtype when the distinction can change an architecture or capability claim. A deterministic model result may qualify a transaction/status policy, but it may not be presented as proof that a native geometry reconstruction/export path works.
 
 A proposal must not silently become an accepted constraint because it appears in several documents.
 

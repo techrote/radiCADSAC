@@ -1,7 +1,10 @@
-# radiCADSAC genesis handoff freeze v1
+# radiCADSAC handoff index
 
-Status: frozen genesis handoff index; authoritative when present on `main` after RCS-016 merge  
-Freeze baseline audited: `7f16e4fe310ac3b5e5a4d08547273efaceff0c7f`  
+**Current bootstrap route (2026-09-19):** use `genesis-release-v2.json` consistency revision `2.1`, `v2/opensimachinist/`, `v2/msac/`, and `evidence-dependencies-v2.1.json`. Read `../docs/37-GENESIS-V2-BOOTSTRAP-CONSISTENCY.md` before autonomous bootstrap.
+
+The remainder of this document records the immutable **Genesis-v1 historical freeze**. Its package trees and launch wrappers remain archaeology/provenance, not current bootstrap instructions.
+
+Genesis-v1 freeze baseline audited: `7f16e4fe310ac3b5e5a4d08547273efaceff0c7f`  
 Date: 2026-09-17
 
 ## Purpose

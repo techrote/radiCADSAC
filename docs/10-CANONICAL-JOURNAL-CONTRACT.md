@@ -1,6 +1,6 @@
 # Canonical manufacturing journal and normalization contract
 
-Status: accepted RCS-002 programme contract  
+Status: accepted RCS-002 programme contract; pending-intent durability clarified by DR-0025  
 Date: 2026-09-16  
 Issue: RCS-002 / GitHub #2  
 Logical schema version: `msac-journal/1.0`
@@ -632,6 +632,22 @@ Referenced immutable definitions retain their original schema versions. A journa
 ## Transaction and commit semantics
 
 A manufacturing action is committed atomically at the logical level.
+
+### Durable `accepted_pending` boundary
+
+Genesis-v2 DR-0025 clarifies a boundary that RCS-002 intentionally left for a later deferred-state contract.
+
+An `accepted_pending` manufacturing action is **durably accepted intent but not yet a committed workpiece revision**. Before MSAC acknowledges that status to the user, programme-owned persistence records a pending-intent transaction anchored to the last committed parent revision. The record contains the ordered canonical operation(s), immutable definition/policy references, signed intent, source/audio/provenance references and the error/reconciliation context required to restart the work.
+
+The pending-intent transaction is not provider-private state and is not a provisional B-rep/cache. After save, crash, worker replacement or cache deletion, the application restores the parent committed revision plus the ordered pending transaction chain and recomputes derived provider state.
+
+No `material_body_transition` or new committed revision is created until reconciliation resolves the engineering state required for commit. Connectivity-dependent operations force reconciliation before they can rely on new body IDs. A refusal/cancellation/failure may close the pending transaction explicitly, but it cannot mutate the committed parent revision.
+
+Multiple ordered pending transactions are permitted only while their semantics do not require unresolved body/connectivity facts. A hard connectivity/body-selection/exact-query/STEP boundary forces reconciliation first.
+
+This clarification does not change `msac-journal/1.0` physical meaning: the journal revision graph remains the committed manufacturing history, while pending-intent transactions are programme-owned transaction state around that graph.
+
+
 
 A commit transaction can contain:
 

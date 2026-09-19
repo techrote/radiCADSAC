@@ -16,6 +16,12 @@ The exported engineering object is the product. A successful workpiece must be e
 
 The planning repository may be messy, speculative, contradictory, and research-heavy. The later production repositories should not inherit that archaeology. Instead, this repo will produce frozen founding handoffs containing fresh, reviewed implementation plans.
 
+## Current production-bootstrap boundary
+
+**Genesis v2 is the current bootstrap authority.** New production repositories must start from `handoffs/genesis-release-v2.json` at consistency revision `2.1`, the packages under `handoffs/v2/opensimachinist/` and `handoffs/v2/msac/`, and `docs/37-GENESIS-V2-BOOTSTRAP-CONSISTENCY.md`.
+
+The Genesis-v1 packages and launch wrappers remain immutable historical evidence. They are not the current launch instructions.
+
 ## Current research foundation and accepted contracts
 
 Start with:
@@ -39,7 +45,10 @@ Start with:
 - [Mill cutter-sweep hierarchy research](docs/19-MILL-CUTTER-SWEEP-RESEARCH.md) — accepted RCS-011 fixed-orientation mill strategy hierarchy and measured campaign;
 - [Alternative/hybrid geometry representation research](docs/19-ALTERNATIVE-HYBRID-GEOMETRY-REPRESENTATIONS.md) — accepted RCS-012 bounded hybrid fallback trade study;
 - [OpenSimachinist architecture synthesis](docs/20-OPENSIMACHINIST-ARCHITECTURE-SYNTHESIS.md) — accepted RCS-013 Gate-2 semantic-provider hybrid architecture;
-- `docs/decisions/` — explicit programme decision records.
+- [Genesis-v2 revised roadmap](docs/24-GENESIS-V2-REVISED-ROADMAP.md) — completed RCS-018–RCS-027 qualification tranche;
+- [Genesis-v2 Gate-5 synthesis](docs/35-GENESIS-V2-SYNTHESIS-AND-GATE5.md) — accepted final research synthesis;
+- [Genesis-v2 bootstrap consistency correction](docs/37-GENESIS-V2-BOOTSTRAP-CONSISTENCY.md) — current routing, durability, connectivity and evidence-class clarification;
+- `docs/decisions/` — explicit programme decision records, including DR-0025.
 
 Issue-specific research should additionally consume accepted outputs from its declared dependencies. Machine-readable research assets live under the corresponding `research/rcs-NNN/` directory.
 
@@ -47,6 +56,6 @@ The historical initial plan and critique remain under `docs/` for design archaeo
 
 ## Frozen genesis handoffs
 
-The clean production-repository launch boundary is the [frozen genesis handoff index](handoffs/README.md), with exact package revisions, shared-contract audit, decision/evidence mapping, unresolved-research preservation, release/tag procedure, and separate OpenSimachinist/MSAC launch checklists.
+The handoff index is [`handoffs/README.md`](handoffs/README.md). For **new** production bootstrap, the machine-readable authority is [`handoffs/genesis-release-v2.json`](handoffs/genesis-release-v2.json), consistency revision `2.1`, together with [`handoffs/evidence-dependencies-v2.1.json`](handoffs/evidence-dependencies-v2.1.json).
 
-The machine-readable freeze record is [`handoffs/genesis-release-v1.json`](handoffs/genesis-release-v1.json). Production repositories must start with fresh Git histories and may reference this repository for archaeology; they must not import radiCADSAC history as their production history.
+`handoffs/genesis-release-v1.json` and the v1 package trees remain preserved historical freezes. Production repositories must start with fresh Git histories and may reference this repository for archaeology; they must not import radiCADSAC history as their production history.
