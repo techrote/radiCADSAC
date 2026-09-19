@@ -36,4 +36,22 @@ class ContractTests(unittest.TestCase):
             self.assertEqual(d["negative_controls_passed"],7)
             self.assertEqual(d["live_repetitions"],3)
 
+    def test_windows_bootstrap_failure_is_diagnosable(self):
+        bootstrap=(ROOT/"research/rcs-027/bootstrap_occt_windows.ps1").read_text(encoding="utf-8")
+        workflow=(ROOT/".github/workflows/rcs027.yml").read_text(encoding="utf-8")
+        self.assertIn("Start-Transcript",bootstrap)
+        self.assertIn("bootstrap-occt.log",bootstrap)
+        self.assertIn("finally",bootstrap)
+        self.assertIn("Stop-Transcript",bootstrap)
+        self.assertIn("if: always()",workflow)
+        self.assertIn("if-no-files-found: error",workflow)
+
+    def test_windows_bootstrap_keeps_exact_source_and_toolchain_pins(self):
+        bootstrap=(ROOT/"research/rcs-027/bootstrap_occt_windows.ps1").read_text(encoding="utf-8")
+        workflow=(ROOT/".github/workflows/rcs027.yml").read_text(encoding="utf-8")
+        self.assertIn('b8f597c677811d1f9f4d8a97f5ae2825c0353a42',bootstrap)
+        self.assertIn('$ExpectedVersion = "8.0.1"',bootstrap)
+        self.assertIn('-vcvars_ver=14.51',workflow)
+        self.assertIn('MSVC-19.51',bootstrap)
+
 if __name__=="__main__": unittest.main()
