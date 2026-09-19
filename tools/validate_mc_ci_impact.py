@@ -38,7 +38,7 @@ def self_test():
     try: validate_broad("mutated-quality",s)
     except AssertionError: pass
     else: raise AssertionError("failed to reject broken broad routing")
-    s=(WF/"rcs018.yml").read_text(encoding="utf-8").replace("    paths:","    paths-ignore:\n      - 'docs/machining-completeness/**'\n    paths:",1)
+    s=(WF/"rcs018.yml").read_text(encoding="utf-8").replace("  pull_request:\n    paths:","  pull_request:\n    paths-ignore:\n      - 'docs/machining-completeness/**'\n    paths:",1)
     try: validate_selective("mutated-rcs018",s)
     except AssertionError: pass
     else: raise AssertionError("failed to reject paths + paths-ignore")
