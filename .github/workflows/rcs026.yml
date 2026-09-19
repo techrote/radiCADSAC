@@ -51,6 +51,11 @@ jobs:
         run: cmake --build .build/rcs026-toolchain --parallel 2
       - name: Execute toolchain probe
         run: ctest --test-dir .build/rcs026-toolchain --output-on-failure
+      - name: Re-run accepted RCS-025 geometry/material/body anchor
+        run: >-
+          python research/rcs-025/run_campaign.py
+          --out-dir .results/rcs026/${{ matrix.label }}/rcs025-anchor
+          --compare-reference research/rcs-025/reference-results-v1.json
       - name: Run scale, soak, replay and worker-recovery campaign
         run: python research/rcs-026/run_campaign.py --out-dir .results/rcs026/${{ matrix.label }} --toolchain-json .build/rcs026-toolchain/toolchain.json
       - name: Validate platform evidence
@@ -134,6 +139,29 @@ jobs:
           cmake -S research/rcs-022/harness -B .build/rcs026-exporter -G Ninja \
             -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$RCS006_OCCT_PREFIX"
           cmake --build .build/rcs026-exporter --parallel 2
+      - name: Record STEP soak runtime toolchain
+        run: |
+          mkdir -p .results/rcs026/step
+          python - <<'PY'
+          import json, platform, subprocess
+          def v(cmd):
+              return subprocess.check_output(cmd, text=True, stderr=subprocess.STDOUT).splitlines()[0]
+          data = {
+              "schema": "rcs-026-step-runtime/1.0",
+              "platform": platform.platform(),
+              "python": platform.python_version(),
+              "cmake": v(["cmake", "--version"]),
+              "ninja": v(["ninja", "--version"]),
+              "rustc": v(["rustc", "--version"]),
+              "cargo": v(["cargo", "--version"]),
+              "occt": "8.0.1",
+              "occt_source_commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42",
+              "step_io": "0.2.4",
+              "vcad_kernel_step": "0.10.0",
+              "vcad_kernel_tessellate": "0.10.0"
+          }
+          open(".results/rcs026/step/runtime-versions.json", "w", encoding="utf-8").write(json.dumps(data, indent=2, sort_keys=True) + "\n")
+          PY
       - name: Build independent Layer-D probes from locks
         run: |
           cargo build --locked --release --manifest-path research/rcs-022/parser_probe/Cargo.toml
