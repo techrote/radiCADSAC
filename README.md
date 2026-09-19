@@ -47,7 +47,7 @@ Start with:
 - [OpenSimachinist architecture synthesis](docs/20-OPENSIMACHINIST-ARCHITECTURE-SYNTHESIS.md) — accepted RCS-013 Gate-2 semantic-provider hybrid architecture;
 - [Genesis-v2 revised roadmap](docs/24-GENESIS-V2-REVISED-ROADMAP.md) — completed RCS-018–RCS-027 qualification tranche;
 - [Genesis-v2 Gate-5 synthesis](docs/35-GENESIS-V2-SYNTHESIS-AND-GATE5.md) — accepted final research synthesis;
-- [Genesis-v2 bootstrap consistency correction](docs/37-GENESIS-V2-BOOTSTRAP-CONSISTENCY.md) — current routing, durability, connectivity and evidence-class clarification;
+- [Genesis-v2 bootstrap consistency correction](docs/37-GENESIS-V2-BOOTSTRAP-CONSISTENCY.md) — historical v2.1 routing/durability/connectivity clarification, retained as evidence under MC-1;
 - `docs/decisions/` — explicit programme decision records, including DR-0025.
 
 Issue-specific research should additionally consume accepted outputs from its declared dependencies. Machine-readable research assets live under the corresponding `research/rcs-NNN/` directory.
@@ -56,6 +56,6 @@ The historical initial plan and critique remain under `docs/` for design archaeo
 
 ## Historical genesis handoffs
 
-The handoff index is [`handoffs/README.md`](handoffs/README.md). For **new** production bootstrap, the machine-readable authority is [`handoffs/genesis-release-v2.json`](handoffs/genesis-release-v2.json), consistency revision `2.1`, together with [`handoffs/evidence-dependencies-v2.1.json`](handoffs/evidence-dependencies-v2.1.json).
+The handoff index is [`handoffs/README.md`](handoffs/README.md). `handoffs/genesis-release-v2.json`, consistency revision `2.1`, and [`handoffs/evidence-dependencies-v2.1.json`](handoffs/evidence-dependencies-v2.1.json) remain the exact historical Genesis-v2 foundation/evidence package. They are **not current production-bootstrap authorization**.
 
-`handoffs/genesis-release-v1.json` and the v1 package trees remain preserved historical freezes. Production repositories must start with fresh Git histories and may reference this repository for archaeology; they must not import radiCADSAC history as their production history.
+Current execution authority is [`handoffs/current-authority.json`](handoffs/current-authority.json) → MC-1. Production repository creation requires a genuine MC-1 pass plus separate explicit authorization. Any eventual production repositories must start with fresh Git histories and may reference this repository for archaeology; they must not import radiCADSAC history as their production history.
