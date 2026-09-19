@@ -41,6 +41,41 @@ Model evidence can qualify the policy/model question it executes. It cannot, by 
 
 Production bootstrap consumes the immutable vectors/results listed in `handoffs/evidence-dependencies-v2.1.json`. Each entry records the exact radiCADSAC source commit and Git blob SHA. Production repositories may copy those fixture contents, but must retain provenance and deliberately requalify any changed evidence/profile.
 
+## Alternatives considered
+
+### Leave the RCS-027 package manifests unchanged and rely on prose overlays
+
+Rejected. Autonomous bootstrap must not require an agent to notice that a machine-readable package status contradicts the accepted release status. The original RCS-027 trees remain historical evidence, while consistency revision 2.1 makes the current route explicit.
+
+### Commit `accepted_pending` directly as a workpiece revision before reconciliation
+
+Rejected. That would allocate durable engineering revision/body meaning before connectivity and reconciliation are resolved, contradicting the fail-closed body/reconciliation contracts. Pending intent is durable transaction state anchored to the last committed revision instead.
+
+### Persist provider-private pending geometry as the recovery source
+
+Rejected. This would make save/recovery depend on one provider/kernel generation and violate journal/backend replaceability. Provider-private caches may accelerate recovery but remain disposable.
+
+### Let kernel connectedness or topology identity define durable body identity
+
+Rejected. Lower-dimensional contact and regenerated topology are not sufficient semantic evidence for split/merge identity. Durable body transitions remain explicit programme events.
+
+### Keep a single generic `MEASURED` label in synthesis
+
+Rejected for architecture-impacting claims. Native geometry, independent-oracle, deterministic-model and platform/process evidence answer different questions; flattening them can promote model evidence into an unsupported capability claim.
+
+## Evidence
+
+This decision is a consistency synthesis of already accepted evidence rather than a new geometry experiment.
+
+- **SOURCE:** RCS-018 documents the pre-reconciliation transaction/status model and explicitly states that its executable slice is not a production persistence implementation.
+- **SOURCE:** RCS-002 defines committed journal/revision/body-transition semantics and leaves deferred-state durability for later contracts.
+- **SOURCE:** DR-0011/DR-0022 keep durable body/lineage identity independent of provider-private topology and require explicit reconciliation/body mapping.
+- **SOURCE:** RCS-009 regularized material semantics preserve lower-dimensional contact as evidence without making it material volume.
+- **SOURCE:** RCS-025 is implemented as a deterministic Python coordinator/policy model; its reconciliation work units and synthetic bounds are model evidence.
+- **SOURCE:** RCS-026 separates its portable coordinator/100k history campaign from the live OCCT STEP soak; the 100k event tier is not native geometry-complexity qualification.
+- **SOURCE:** RCS-027 accepted Gate 5 while the two package manifests still retained the pre-closure `candidate_gate5_pending_windows_step` string, creating the machine-readable handoff-status inconsistency corrected here.
+- **MEASURED_DETERMINISTIC_MODEL / validation:** the issue-#60 consistency validator checks current package/release status agreement, historical freeze identities, exact predecessor blob pins, pending-intent/connectivity wording and evidence-class boundaries. Its adversarial controls deliberately reject stale Gate-5 package status and altered evidence blob identity.
+
 ## Consequences
 
 - Current root routing and handoff manifests point to Genesis-v2 consistency revision 2.1.
