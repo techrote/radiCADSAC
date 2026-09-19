@@ -46,3 +46,12 @@ The 10/1/0.1 µm ladder, w/8 stress request and initial three-repeat rule remain
 ## Final planning disposition
 
 The workflow is complete enough for autonomous **research execution**, beginning with the evidence-ready frontier after merge. Geometry completeness itself remains NOT_ESTABLISHED. Production bootstrap remains unauthorized. Any future counterexample reopens the exact owning claim/task and preserves prior evidence instead of restarting or narrowing the programme.
+
+
+## Corrections discovered during the second live workflow pass
+
+The second live pass caught three adoption-tooling defects before PR delivery. First, the initial CI-cost patch combined GitHub `paths` and `paths-ignore` on three already-selective workflows; GitHub rejects that event-filter combination. Those three files were restored exactly to baseline, while the seventeen broad historical PR workflows retain valid MC planning-only `paths-ignore` routing. The impact validator now distinguishes these two classes and mutation-tests the invalid combination.
+
+Second, MC-001/MC-056 task verifiers originally resolved the repository root one parent too shallow. Both were corrected and are now executed by `mc1-static`, so a structurally present but unusable verifier cannot pass adoption.
+
+Third, the execution protocol promised managed issue reconciliation but the first helper implemented marker presence only. `mc_workflow.py sync --check/--apply` now compares deterministic managed title/body blocks, detects duplicate stable markers as a hard conflict, preserves text outside the managed block, and updates only already-bound issue records. All 57 issues were normalized to that template. The final static gate performs a live zero-drift check with read-only issue permission.
