@@ -26,12 +26,12 @@
   "packages": {
     "msac": {
       "manifest": "handoffs/v2/msac/handoff-v2.json",
-      "package_tree_sha": "ab256806cda2312bf894bf806256443f60e2498c",
+      "package_tree_sha": "a38d265aae2fda8e35dcf58e7d127d459e74055a",
       "path": "handoffs/v2/msac"
     },
     "opensimachinist": {
       "manifest": "handoffs/v2/opensimachinist/handoff-v2.json",
-      "package_tree_sha": "f0e1b2ddf1533ac66d22ea4bc42ef399c0b3a99e",
+      "package_tree_sha": "b93e6e7ca28d26753e735f8ffe4acc56c5821676",
       "path": "handoffs/v2/opensimachinist"
     }
   },
