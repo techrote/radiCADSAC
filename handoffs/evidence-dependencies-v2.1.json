@@ -167,6 +167,249 @@
         "OSM-008",
         "MSAC-008"
       ]
+    },
+    {
+      "path": "docs/10-CANONICAL-JOURNAL-CONTRACT.md",
+      "blob_sha": "04bc43833b9264decca167b057206f26af3e5eff",
+      "claim_class": [
+        "SOURCE"
+      ],
+      "role": "historical_contract_source",
+      "required_by": [
+        "OSM-002",
+        "MSAC-003"
+      ]
+    },
+    {
+      "path": "docs/13-STEP-CONFORMANCE-CONTRACT.md",
+      "blob_sha": "ec2ed117dcced4830f5d9836fa9088b1ad1218c0",
+      "claim_class": [
+        "SOURCE"
+      ],
+      "role": "historical_contract_source",
+      "required_by": [
+        "OSM-008",
+        "MSAC-008"
+      ]
+    },
+    {
+      "path": "docs/26-INTEGRATED-SEMANTIC-CONTRACT-VERTICAL-SLICE.md",
+      "blob_sha": "69665a15c2c922a3198b5f9807e47558af30d0b4",
+      "claim_class": [
+        "SOURCE"
+      ],
+      "role": "accepted_predecessor_report",
+      "required_by": [
+        "OSM-001",
+        "MSAC-001"
+      ]
+    },
+    {
+      "path": "docs/27-CANONICALIZER-CONFORMANCE.md",
+      "blob_sha": "20d304e3dc2b6ec94f959937f7299e86b30c9648",
+      "claim_class": [
+        "SOURCE"
+      ],
+      "role": "accepted_predecessor_report",
+      "required_by": [
+        "OSM-002",
+        "MSAC-002"
+      ]
+    },
+    {
+      "path": "docs/28-REALISTIC-LATHE-TOOL-ENVELOPE-RESEARCH.md",
+      "blob_sha": "1575eb28a5b5b035139526845ebbc6672ec9c91c",
+      "claim_class": [
+        "SOURCE"
+      ],
+      "role": "accepted_predecessor_report",
+      "required_by": [
+        "OSM-005",
+        "MSAC-006"
+      ]
+    },
+    {
+      "path": "docs/29-MANUAL-FREEHAND-MILL-ORACLE-FALLBACK-RESEARCH.md",
+      "blob_sha": "82c898ec5fbd0fb77d300e1c1968127a70d1c919",
+      "claim_class": [
+        "SOURCE"
+      ],
+      "role": "accepted_predecessor_report",
+      "required_by": [
+        "OSM-006",
+        "MSAC-007"
+      ]
+    },
+    {
+      "path": "docs/30-STEP-LAYER-D-INTEROPERABILITY-QUALIFICATION.md",
+      "blob_sha": "59e5c3cbbb0f24b6fa9d207dc3de8e08908b7bd0",
+      "claim_class": [
+        "SOURCE"
+      ],
+      "role": "accepted_predecessor_report",
+      "required_by": [
+        "OSM-008",
+        "MSAC-008"
+      ]
+    },
+    {
+      "path": "docs/31-PROPAGATED-UNCERTAINTY-ERROR-BUDGET-ALGEBRA.md",
+      "blob_sha": "f9114fac371576a5e458e6a22b42a68ccd7d8bbb",
+      "claim_class": [
+        "SOURCE"
+      ],
+      "role": "accepted_predecessor_report",
+      "required_by": [
+        "OSM-003",
+        "OSM-007",
+        "MSAC-004",
+        "MSAC-008"
+      ]
+    },
+    {
+      "path": "docs/32-OCCT-CURRENT-DIFFERENTIAL.md",
+      "blob_sha": "90ed4cc31f432ac55891aaee3dc7fad6f26ee828",
+      "claim_class": [
+        "SOURCE"
+      ],
+      "role": "accepted_predecessor_report",
+      "required_by": [
+        "OSM-004"
+      ]
+    },
+    {
+      "path": "docs/33-PROVIDER-HANDOFF-RECONCILIATION-STRESS.md",
+      "blob_sha": "1ac275af7a706304716a4b3aeacfbecad748e1ac",
+      "claim_class": [
+        "SOURCE"
+      ],
+      "role": "accepted_predecessor_report",
+      "required_by": [
+        "OSM-007",
+        "MSAC-004"
+      ]
+    },
+    {
+      "path": "docs/34-WINDOWS-LINUX-SCALE-SOAK-FAULT-RECOVERY.md",
+      "blob_sha": "103666207271b9400cb99c42355a7fea049c151f",
+      "claim_class": [
+        "SOURCE"
+      ],
+      "role": "accepted_predecessor_report",
+      "required_by": [
+        "OSM-010",
+        "MSAC-010"
+      ]
+    },
+    {
+      "path": "docs/35-GENESIS-V2-SYNTHESIS-AND-GATE5.md",
+      "blob_sha": "9ec7880c542084195a47ee2e9375a0c0a05cf5c5",
+      "claim_class": [
+        "SOURCE"
+      ],
+      "role": "historical_gate5_synthesis",
+      "required_by": [
+        "OSM-001",
+        "MSAC-001"
+      ]
+    },
+    {
+      "path": "docs/decisions/DR-0017-realistic-lathe-tool-envelope-capability.md",
+      "blob_sha": "f57d6553f29b84c2b0a73c964ae815197f70a661",
+      "claim_class": [
+        "SOURCE"
+      ],
+      "role": "accepted_decision",
+      "required_by": [
+        "OSM-005",
+        "MSAC-006"
+      ]
+    },
+    {
+      "path": "docs/decisions/DR-0018-manual-freehand-mill-bounded-directional-fallback.md",
+      "blob_sha": "6d6c47a4a5d92d27f1f645e328b1532461b27144",
+      "claim_class": [
+        "SOURCE"
+      ],
+      "role": "accepted_decision",
+      "required_by": [
+        "OSM-006",
+        "MSAC-007"
+      ]
+    },
+    {
+      "path": "docs/decisions/DR-0019-step-layer-d-independent-interoperability.md",
+      "blob_sha": "aeb75f5080fdbca7d88a7f28a481af0f0ff6cd30",
+      "claim_class": [
+        "SOURCE"
+      ],
+      "role": "accepted_decision",
+      "required_by": [
+        "OSM-008",
+        "MSAC-008"
+      ]
+    },
+    {
+      "path": "docs/decisions/DR-0020-conservative-propagated-error-budgets.md",
+      "blob_sha": "bb17cb29656b1c845b68e6ee9b1de0db55196044",
+      "claim_class": [
+        "SOURCE"
+      ],
+      "role": "accepted_decision",
+      "required_by": [
+        "OSM-003",
+        "OSM-007",
+        "MSAC-004",
+        "MSAC-008"
+      ]
+    },
+    {
+      "path": "docs/decisions/DR-0021-retain-occt-8-0-1-after-current-differential.md",
+      "blob_sha": "71089964ffaa60f990483aff6832b3cb1153b95c",
+      "claim_class": [
+        "SOURCE"
+      ],
+      "role": "accepted_decision",
+      "required_by": [
+        "OSM-004"
+      ]
+    },
+    {
+      "path": "docs/decisions/DR-0022-bounded-provider-handoff-and-reconciliation-policy.md",
+      "blob_sha": "93d7f3e7526c9731b806910be4cc8698740bd956",
+      "claim_class": [
+        "SOURCE"
+      ],
+      "role": "accepted_decision",
+      "required_by": [
+        "OSM-007",
+        "MSAC-004"
+      ]
+    },
+    {
+      "path": "docs/decisions/DR-0023-cross-platform-qualification-and-windows-step-boundary.md",
+      "blob_sha": "80bc671e365e1ee7e978e4189e9fddc27e212f05",
+      "claim_class": [
+        "SOURCE"
+      ],
+      "role": "accepted_decision",
+      "required_by": [
+        "OSM-010",
+        "MSAC-010"
+      ]
+    },
+    {
+      "path": "docs/decisions/DR-0024-genesis-v2-gate-5-foundation.md",
+      "blob_sha": "cbce31cf84ec068d750da5abed451c6d0eb8ba00",
+      "claim_class": [
+        "SOURCE"
+      ],
+      "role": "accepted_decision",
+      "required_by": [
+        "OSM-001",
+        "MSAC-001"
+      ]
     }
-  ]
+  ],
+  "interpretation": "Files pinned at source_commit are immutable predecessor evidence. Current bootstrap semantics additionally apply docs/37 and DR-0025 from consistency revision 2.1; do not treat the pinned pre-correction wording as overriding the correction."
 }
