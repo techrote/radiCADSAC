@@ -1,0 +1,12 @@
+cmake_minimum_required(VERSION 3.20)
+project(rcs026_toolchain_probe LANGUAGES CXX)
+
+add_executable(rcs026_toolchain_probe toolchain_probe.cpp)
+target_compile_features(rcs026_toolchain_probe PRIVATE cxx_std_17)
+set_target_properties(rcs026_toolchain_probe PROPERTIES CXX_EXTENSIONS OFF)
+
+enable_testing()
+add_test(
+  NAME rcs026-toolchain-probe
+  COMMAND rcs026_toolchain_probe "${CMAKE_BINARY_DIR}/toolchain.json"
+)
