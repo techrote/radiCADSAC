@@ -18,7 +18,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.12.10'
       - name: Validate static RCS-026 contract
         run: python tools/validate_rcs026.py
       - name: Compile research harnesses
@@ -44,14 +44,14 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.12.10'
       - name: Configure portable C++ toolchain probe
-        run: cmake -S research/rcs-026/toolchain -B .build/rcs026-toolchain -DCMAKE_BUILD_TYPE=Release
+        run: cmake -S research/rcs-026/toolchain -B .build/rcs026-toolchain -G Ninja -DCMAKE_BUILD_TYPE=Release
       - name: Build portable C++ toolchain probe
-        run: cmake --build .build/rcs026-toolchain --config Release --parallel 2
+        run: cmake --build .build/rcs026-toolchain --parallel 2
       - name: Execute toolchain probe
-        run: ctest --test-dir .build/rcs026-toolchain -C Release --output-on-failure
-      - name: Run scale, replay and worker-recovery campaign
+        run: ctest --test-dir .build/rcs026-toolchain --output-on-failure
+      - name: Run scale, soak, replay and worker-recovery campaign
         run: python research/rcs-026/run_campaign.py --out-dir .results/rcs026/${{ matrix.label }} --toolchain-json .build/rcs026-toolchain/toolchain.json
       - name: Validate platform evidence
         run: python tools/validate_rcs026.py --result .results/rcs026/${{ matrix.label }}/result.json
@@ -73,7 +73,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.12.10'
       - name: Download platform evidence
         uses: actions/download-artifact@v4
         with:
@@ -109,7 +109,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.12.10'
       - name: Restore pinned OCCT cache
         id: occt-cache
         uses: actions/cache/restore@v4
