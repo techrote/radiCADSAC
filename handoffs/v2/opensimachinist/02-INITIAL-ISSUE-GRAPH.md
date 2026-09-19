@@ -1,12 +1,12 @@
 # OpenSimachinist v2 clean bootstrap issue graph
 
-Every issue below is an autonomous implementation prompt. For each: read this v2 handoff package and the referenced accepted evidence; inspect current `main`; create a dedicated branch; implement deterministic tests including adversarial/boundary cases; reconcile docs/contracts; open a PR; repair CI; merge only after required automated checks pass; verify the merge landed on `main`; close the issue only when its acceptance criteria are genuinely satisfied. Never weaken journal/body/source/audio/provenance/error/STEP semantics to make a test pass.
+Every issue below is an autonomous implementation prompt. For each: read this v2 handoff package and resolve every imported fixture/result through `handoffs/evidence-dependencies-v2.1.json` (exact source commit + blob SHA), then read the referenced accepted evidence; inspect current `main`; create a dedicated branch; implement deterministic tests including adversarial/boundary cases; reconcile docs/contracts; open a PR; repair CI; merge only after required automated checks pass; verify the merge landed on `main`; close the issue only when its acceptance criteria are genuinely satisfied. Never weaken journal/body/source/audio/provenance/error/STEP semantics to make a test pass.
 
 ## OSM-001 — Repository skeleton and stable contract types
 References: `00-FOUNDING-SPEC.md`, RCS-018, RCS-019. Create build/CI on pinned Windows/Linux profiles and programme-owned journal/revision/body/lineage/status types. No OCCT types in public API. Acceptance: serialization and negative private-ID tests pass.
 
 ## OSM-002 — Canonical journal ingestion and replay
-Depends on OSM-001. References: RCS-019 and `msac-journal/1.0`. Implement validation, immutable revisions, replay/undo navigation, stable-source-order handling and policy-version checks. Acceptance: canonical vectors and cache-destruction replay invariants pass.
+Depends on OSM-001. References: RCS-019 and `msac-journal/1.0`. Implement validation, immutable revisions, replay/undo navigation, stable-source-order handling and policy-version checks. Acceptance: canonical vectors and cache-destruction replay invariants pass; pending-intent transactions survive save/crash/restart without advancing the committed revision before reconciliation.
 
 ## OSM-003 — Propagated error-budget trace
 Depends on OSM-002. References: RCS-023/DR-0020. Implement typed contributions, conservative composition, one-sided contact classification, positive-intent ambiguity and fail-closed exact/export decisions. Acceptance: correlation/max-only/order/breach adversarial controls pass.
@@ -27,7 +27,7 @@ Depends on OSM-003/005/006. References: RCS-025/DR-0022. Implement hard semantic
 Depends on OSM-004/007. References: RCS-022, RCS-026, RCS-027. Implement exact profile, all-body default, Layer A-C validation, independent parser/import probes and explicit `interoperability_unqualified`. Acceptance: metric/inch/analytic/two-body/adversarial cases pass without claiming Layer-D qualification.
 
 ## OSM-009 — Production persistence/transport and recovery
-Depends on OSM-002/007. Persist only programme authority plus versioned derived-cache metadata. Add cancellation, idempotency, cache discard and restart. Acceptance: provider/kernel replacement and cache corruption reproduce the same programme invariant.
+Depends on OSM-002/007. Persist only programme authority plus versioned derived-cache metadata. Add cancellation, idempotency, cache discard and restart. Acceptance: provider/kernel replacement and cache corruption reproduce the same programme invariant; persisted pending-intent transactions recover from the committed parent without provider-private serialization, and cancellation/refusal cannot mutate that parent.
 
 ## OSM-010 — Production scale and release gate
 Depends on OSM-004..009. Repeat RCS-026 style Windows/Linux 100k+ soak using production components, define measured capacity/resource SLAs, verify no orphan workers/handle growth, and publish explicit capability matrix. Do not widen correctness budgets to hit throughput.

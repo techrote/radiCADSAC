@@ -10,6 +10,12 @@ The durable authority consists of `msac-journal/1.0`, immutable revisions, canon
 
 Required request families include capabilities, apply canonical operations, commit/replay revision, query material state, request preview, request reconciliation, inspect reconciled geometry and export STEP. Statuses must distinguish `accepted_pending`, `reconciled`, `success`, `refused_unsupported`, unresolved ambiguity, budget/tolerance breach, invalid/wrong geometry, kernel failure/crash/timeout and `interoperability_unqualified`.
 
+## Pending-intent durability
+
+Before returning `accepted_pending` to MSAC, persist a programme-owned pending-intent transaction anchored to the last committed revision. It carries the ordered canonical operation(s), immutable setup/tool/frame/policy references, signed intent, source/audio/provenance references and error/reconciliation context. It is not a committed revision/body transition and never depends on provider-private geometry.
+
+Save/crash/restart discards provider caches and resumes derived work from the committed parent plus pending transaction chain. Body/connectivity-dependent work must reconcile before allocating a split/merge transition. Cancellation/refusal closes the pending transaction explicitly without advancing the committed parent.
+
 ## Canonicalization, tolerances and error budgets
 
 OpenSimachinist accepts the canonical journal rather than raw controller sampling. Units, frames, transform direction and quantization policy are explicit. Production canonicalizers must pass the RCS-019 policy vectors.
@@ -26,7 +32,7 @@ For mill, use qualified exact fixed-axis strategies first. The RCS-021 independe
 
 ## Deferred state and reconciliation
 
-Deferred/provider-private state is disposable derived state. Exact connectivity/body selection, committed engineering inspection and STEP export are hard reconciliation boundaries. In addition, use a finite observable deferred-state resource guard to prevent unbounded pending growth. The RCS-025 value `2` is a stress fixture, not a production constant.
+Deferred/provider-private state is disposable derived state. For one regularized material set, candidate geometric bodies are closures of connected components of its interior; point/edge-only contact is not a volumetric bridge. Distinct durable body IDs do not merge merely because backend geometry touches/coincides: split/merge identity changes require explicit validated body transitions. Exact connectivity/body selection, committed engineering inspection and STEP export are hard reconciliation boundaries. In addition, use a finite observable deferred-state resource guard to prevent unbounded pending growth. The RCS-025 value `2` is a stress fixture, not a production constant.
 
 Reconciliation replaces and validates derived state from programme authority; it is not error cancellation. Ambiguous lineage returns pending/refusal, never a guessed mapping. Provider handoffs append source+conversion+destination error contributions.
 
@@ -69,3 +75,8 @@ The founding engineering runtime dependency is OCCT 8.0.1 at exact source commit
 Toolchain provenance must record compiler/runtime versions, exact dependency pins, enabled build features/toolkits and generated artefact hashes. Source/audio identity and engineering provenance are a separate programme data contract and are not satisfied merely by software-supply-chain metadata.
 
 No unpinned package version, downloaded binary without source/provenance metadata, or backend-private cache is permitted to become the authority for replaying saved manufacturing intent.
+
+
+## Bootstrap evidence identity
+
+Resolve imported conformance fixtures and frozen research results through `handoffs/evidence-dependencies-v2.1.json`; the source commit and Git blob SHA are part of each evidence identity. RCS-025 is deterministic coordinator-model evidence rather than native fallback→B-rep qualification, and the RCS-026 100k tier is coordinator/platform evidence rather than 100k native geometry operations.

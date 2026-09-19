@@ -8,6 +8,7 @@ These items are explicitly non-blocking at Gate 5 because each has a safe bounde
 | broader lathe tools/holders | bounded RCS-020 subset | capability dispatch to qualified provider or `refused_unsupported` |
 | exact nose-generated analytics | not qualified | preserve material correctness; reconstruct/validate before claiming analytic class |
 | manual mill beyond bounded fixed-axis subset | partly pending | refine directional state, use stronger provider, or remain `accepted_pending`/refused |
+| live fallback→B-rep reconstruction | RCS-025 proves coordinator policy with a deterministic model, not native reconstruction | OSM-007 must execute/measure real reconstruction before broad capability or accuracy claims |
 | five-axis/tool reorientation | unqualified | explicit refusal/provider extension issue |
 | rounded simultaneous-Z | unqualified | explicit refusal/pending until independent evidence |
 | deferred-state threshold | implementation-tunable | finite observable guard required; never remove hard boundaries |

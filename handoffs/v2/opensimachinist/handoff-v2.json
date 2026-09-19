@@ -9,6 +9,9 @@
   ],
   "evidence": [
     "docs/35-GENESIS-V2-SYNTHESIS-AND-GATE5.md",
+    "docs/37-GENESIS-V2-BOOTSTRAP-CONSISTENCY.md",
+    "docs/decisions/DR-0025-genesis-v2-bootstrap-consistency.md",
+    "handoffs/evidence-dependencies-v2.1.json",
     "research/rcs-027/evidence-matrix-v1.json",
     "research/rcs-027/decision-delta-v1.json",
     "docs/36-GENESIS-V1-V2-DELTA.md"
@@ -26,6 +29,14 @@
     "step_layer_d_status": "interoperability_unqualified",
     "step_profile": "rcs-022-occt-ap242dis-layer-d/1.0"
   },
-  "source_base_main": "6a235965c2deb35ad4e657f77849613a79ce4fc3",
-  "status": "candidate_gate5_pending_windows_step"
+  "source_base_main": "a68fa92d1128a163b232e2be69d6f731bd56caa5",
+  "status": "gate5_foundation_qualified_bootstrap_consistent",
+  "consistency_revision": "2.1",
+  "evidence_dependency_manifest": "handoffs/evidence-dependencies-v2.1.json",
+  "correction_of": {
+    "rcs027_merge_commit": "a68fa92d1128a163b232e2be69d6f731bd56caa5",
+    "original_package_tree_sha": "b93e6e7ca28d26753e735f8ffe4acc56c5821676",
+    "original_status": "candidate_gate5_pending_windows_step",
+    "meaning": "historical RCS-027 freeze identity preserved; consistency revision 2.1 is current bootstrap content"
+  }
 }
