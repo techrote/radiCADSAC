@@ -25,8 +25,8 @@ Preserve these as founding/historical contracts and evidence. MC-1 current routi
 - `docs/09-FOUNDATION-AUDIT.md` — reconciled invariants, hypotheses and Gate-1 result;
 - `docs/24-GENESIS-V2-REVISED-ROADMAP.md` — completed Genesis-v2 qualification plan;
 - `docs/35-GENESIS-V2-SYNTHESIS-AND-GATE5.md` — accepted Gate-5 synthesis;
-- `docs/37-GENESIS-V2-BOOTSTRAP-CONSISTENCY.md` and DR-0025 — current bootstrap consistency clarification;
-- `handoffs/genesis-release-v2.json` plus `handoffs/evidence-dependencies-v2.1.json` — current production-bootstrap routing and exact evidence pins;
+- `docs/37-GENESIS-V2-BOOTSTRAP-CONSISTENCY.md` and DR-0025 — historical Genesis-v2.1 consistency clarification retained as evidence;
+- `handoffs/genesis-release-v2.json` plus `handoffs/evidence-dependencies-v2.1.json` — historical Genesis-v2.1 package/evidence pins, not current production-start authorization;
 - `docs/decisions/` — accepted/proposed/superseded programme decisions.
 
 Historical/superseded material remains useful evidence of how the programme evolved but must not override a newer accepted decision silently.
