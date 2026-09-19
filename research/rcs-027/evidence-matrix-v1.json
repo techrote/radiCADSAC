@@ -1,0 +1,100 @@
+{
+  "gate5_status": "pending_windows_step_evidence",
+  "items": [
+    {
+      "classification": "accepted",
+      "gate5": [
+        "composition"
+      ],
+      "id": "RCS-018",
+      "issue": 37,
+      "source": "docs/26-INTEGRATED-SEMANTIC-CONTRACT-VERTICAL-SLICE.md"
+    },
+    {
+      "classification": "accepted",
+      "gate5": [
+        "canonicalization",
+        "cross_platform"
+      ],
+      "id": "RCS-019",
+      "issue": 38,
+      "source": "docs/27-CANONICALIZER-CONFORMANCE.md"
+    },
+    {
+      "classification": "accepted",
+      "gate5": [
+        "lathe"
+      ],
+      "id": "RCS-020",
+      "issue": 39,
+      "source": "docs/28-REALISTIC-LATHE-TOOL-ENVELOPE-RESEARCH.md"
+    },
+    {
+      "classification": "accepted_bounded",
+      "gate5": [
+        "mill"
+      ],
+      "id": "RCS-021",
+      "issue": 40,
+      "source": "docs/29-MANUAL-FREEHAND-MILL-ORACLE-FALLBACK-RESEARCH.md"
+    },
+    {
+      "classification": "accepted_negative",
+      "gate5": [
+        "step"
+      ],
+      "id": "RCS-022",
+      "issue": 41,
+      "qualification_status": "interoperability_unqualified",
+      "source": "docs/30-STEP-LAYER-D-INTEROPERABILITY-QUALIFICATION.md"
+    },
+    {
+      "classification": "accepted",
+      "gate5": [
+        "uncertainty"
+      ],
+      "id": "RCS-023",
+      "issue": 42,
+      "source": "docs/31-PROPAGATED-UNCERTAINTY-ERROR-BUDGET-ALGEBRA.md"
+    },
+    {
+      "classification": "accepted",
+      "gate5": [
+        "occt"
+      ],
+      "id": "RCS-024",
+      "issue": 43,
+      "source": "docs/32-OCCT-CURRENT-DIFFERENTIAL.md"
+    },
+    {
+      "classification": "accepted",
+      "gate5": [
+        "handoff",
+        "reconciliation"
+      ],
+      "id": "RCS-025",
+      "issue": 44,
+      "source": "docs/33-PROVIDER-HANDOFF-RECONCILIATION-STRESS.md"
+    },
+    {
+      "blocker": "exact Windows/MSVC OCCT 8.0.1 STEP soak not run",
+      "classification": "accepted_with_gate5_blocker",
+      "gate5": [
+        "platform",
+        "recovery"
+      ],
+      "id": "RCS-026",
+      "issue": 45,
+      "source": "docs/34-WINDOWS-LINUX-SCALE-SOAK-FAULT-RECOVERY.md"
+    }
+  ],
+  "rcs027_closure_probe": {
+    "occt_commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42",
+    "occt_version": "8.0.1",
+    "required_layer_d_status": "interoperability_unqualified",
+    "required_repetitions": 3,
+    "status": "pending_ci"
+  },
+  "schema": "rcs-027-evidence-matrix/1.0",
+  "source_base_main": "6a235965c2deb35ad4e657f77849613a79ce4fc3"
+}

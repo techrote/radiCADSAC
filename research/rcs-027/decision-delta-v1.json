@@ -1,0 +1,131 @@
+{
+  "decisions": [
+    {
+      "classification": "retained",
+      "decision": "DR-0001",
+      "rationale": "STEP remains mandatory primary engineering output."
+    },
+    {
+      "classification": "retained",
+      "decision": "DR-0002",
+      "rationale": "Canonical journal remains durable manufacturing intent."
+    },
+    {
+      "classification": "retained",
+      "decision": "DR-0003",
+      "rationale": "Founding scope remains lathe and mill."
+    },
+    {
+      "classification": "retained",
+      "decision": "DR-0004",
+      "rationale": "Stable backend boundary remains kernel-private."
+    },
+    {
+      "classification": "retained",
+      "decision": "DR-0005",
+      "rationale": "Pathological manufacturing geometry remains normal input."
+    },
+    {
+      "classification": "retained",
+      "decision": "DR-0006",
+      "rationale": "Canonical numeric/frame semantics retained."
+    },
+    {
+      "classification": "refined",
+      "decision": "DR-0007",
+      "rationale": "RCS-019 adds executable conformance and versioned threshold discipline without journal schema change."
+    },
+    {
+      "classification": "retained",
+      "decision": "DR-0008",
+      "rationale": "Immutable revisions and explicit body transitions retained."
+    },
+    {
+      "classification": "refined",
+      "decision": "DR-0009",
+      "rationale": "RCS-022 fixes a concrete AP242DIS profile and preserves interoperability_unqualified Layer-D truth."
+    },
+    {
+      "classification": "refined",
+      "decision": "DR-0010",
+      "rationale": "RCS-023 adds conservative propagated error algebra while keeping tolerance channels separate."
+    },
+    {
+      "classification": "strengthened",
+      "decision": "DR-0011",
+      "rationale": "RCS-024/RCS-025 provide direct counterexamples to durable backend graph/topology identity."
+    },
+    {
+      "classification": "refined",
+      "decision": "DR-0012",
+      "rationale": "RCS-021/RCS-025 add bounded directional state, hard reconciliation boundaries and finite deferred-state resource guard."
+    },
+    {
+      "classification": "refined",
+      "decision": "DR-0013",
+      "rationale": "RCS-020 adds realistic tool-envelope/reachability admission predicate."
+    },
+    {
+      "classification": "refined",
+      "decision": "DR-0014",
+      "rationale": "RCS-021 qualifies a bounded fixed-axis directional fallback subset and explicit pending/refusal boundary."
+    },
+    {
+      "classification": "refined",
+      "decision": "DR-0015",
+      "rationale": "Semantic-provider hybrid retained with explicit provider handoff, reconciliation and error-budget coordinator rules."
+    },
+    {
+      "classification": "retained",
+      "decision": "DR-0016",
+      "rationale": "OCCT process isolation remains founding default; RCS-024 found no upgrade justification."
+    },
+    {
+      "classification": "accepted_v2",
+      "decision": "DR-0017",
+      "rationale": "Realistic lathe tool-envelope capability decision."
+    },
+    {
+      "classification": "accepted_v2",
+      "decision": "DR-0018",
+      "rationale": "Manual/freehand mill bounded directional fallback decision."
+    },
+    {
+      "classification": "accepted_v2",
+      "decision": "DR-0019",
+      "rationale": "Independent STEP Layer-D result remains interoperability_unqualified."
+    },
+    {
+      "classification": "accepted_v2",
+      "decision": "DR-0020",
+      "rationale": "Conservative propagated error-budget decision."
+    },
+    {
+      "classification": "accepted_v2",
+      "decision": "DR-0021",
+      "rationale": "Retain OCCT 8.0.1 after current differential."
+    },
+    {
+      "classification": "accepted_v2",
+      "decision": "DR-0022",
+      "rationale": "Bounded provider-handoff and reconciliation policy."
+    },
+    {
+      "classification": "accepted_v2_with_rcs027_closure",
+      "decision": "DR-0023",
+      "rationale": "Cross-platform qualification retained; its historical Windows STEP Gate-5 blocker must be closed by RCS-027 exact Windows evidence."
+    }
+  ],
+  "genesis_v1_freeze": "handoffs/genesis-release-v1.json",
+  "protected_semantics": [
+    "canonical journal physical meaning",
+    "immutable revisions",
+    "durable material-body identity and explicit transitions",
+    "semantic lineage",
+    "source/audio identity",
+    "provenance",
+    "manufacturing tolerance separation",
+    "STEP primary output"
+  ],
+  "schema": "rcs-027-v1-v2-decision-delta/1.0"
+}

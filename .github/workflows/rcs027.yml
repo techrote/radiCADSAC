@@ -1,0 +1,120 @@
+name: rcs027-genesis-v2-gate5
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  static-contract:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.10'
+      - name: Validate synthesis and handoff contracts
+        run: python tools/validate_rcs027.py
+      - name: Compile RCS-027 tools
+        run: python -m py_compile research/rcs-027/*.py tools/validate_rcs027.py
+      - name: Run adversarial and boundary tests
+        run: python -m unittest discover -v -s research/rcs-027 -p 'test_*.py'
+
+  windows-live-step-closure:
+    runs-on: windows-2025
+    timeout-minutes: 65
+    env:
+      RCS027_OCCT_PREFIX: ${{ github.workspace }}\.deps\rcs027\occt-8.0.1-win
+      RCS027_BUILD_JOBS: 2
+      CARGO_TARGET_DIR: ${{ github.workspace }}\.build\rcs027-rust
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.10'
+      - name: Restore exact Windows OCCT cache
+        id: occt-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .deps/rcs027/occt-8.0.1-win
+          key: rcs027-occt-8.0.1-windows-msvc1951-${{ hashFiles('research/rcs-027/bootstrap_occt_windows.ps1') }}
+      - name: Bootstrap exact OCCT 8.0.1 with MSVC 19.51
+        shell: cmd
+        run: |
+          call "C:\Program Files\Microsoft Visual Studio\18\Enterprise\Common7\Tools\VsDevCmd.bat" -arch=amd64 -host_arch=amd64 -vcvars_ver=14.51
+          if errorlevel 1 exit /b %errorlevel%
+          pwsh -NoProfile -File research\rcs-027\bootstrap_occt_windows.ps1
+      - name: Save exact Windows OCCT cache
+        if: success() && steps.occt-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: .deps/rcs027/occt-8.0.1-win
+          key: rcs027-occt-8.0.1-windows-msvc1951-${{ hashFiles('research/rcs-027/bootstrap_occt_windows.ps1') }}
+      - name: Configure, build and run pinned MSVC toolchain probe
+        shell: cmd
+        run: |
+          call "C:\Program Files\Microsoft Visual Studio\18\Enterprise\Common7\Tools\VsDevCmd.bat" -arch=amd64 -host_arch=amd64 -vcvars_ver=14.51
+          if errorlevel 1 exit /b %errorlevel%
+          cmake -S research\rcs-026\toolchain -B .build\rcs027-toolchain -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=cl.exe
+          if errorlevel 1 exit /b %errorlevel%
+          cmake --build .build\rcs027-toolchain --parallel 2
+          if errorlevel 1 exit /b %errorlevel%
+          ctest --test-dir .build\rcs027-toolchain --output-on-failure
+      - name: Configure and build exact Windows STEP exporter
+        shell: cmd
+        run: |
+          call "C:\Program Files\Microsoft Visual Studio\18\Enterprise\Common7\Tools\VsDevCmd.bat" -arch=amd64 -host_arch=amd64 -vcvars_ver=14.51
+          if errorlevel 1 exit /b %errorlevel%
+          cmake -S research\rcs-022\harness -B .build\rcs027-exporter -G Ninja -DCMAKE_BUILD_TYPE=Release -DRCS022_OCCT_ROOT="%RCS027_OCCT_PREFIX%" -DCMAKE_CXX_COMPILER=cl.exe
+          if errorlevel 1 exit /b %errorlevel%
+          cmake --build .build\rcs027-exporter --parallel 2
+      - name: Build independent Layer-D probes from committed locks
+        shell: pwsh
+        run: |
+          cargo build --locked --release --manifest-path research/rcs-022/parser_probe/Cargo.toml
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          cargo build --locked --release --manifest-path research/rcs-022/consumer_probe/Cargo.toml
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Run three exact Windows export/read-back repetitions
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $env:PATH = "$env:RCS027_OCCT_PREFIX\bin;$env:PATH"
+          1..3 | ForEach-Object {
+            $rep=$_
+            $dir=".results/rcs027/windows-step/rep-$rep"
+            New-Item -ItemType Directory -Force -Path $dir | Out-Null
+            python research/rcs-022/run_campaign.py `
+              --exporter .build/rcs027-exporter/rcs022_step_exporter.exe `
+              --parser-probe .build/rcs027-rust/release/rcs022-stepio-probe.exe `
+              --consumer-probe .build/rcs027-rust/release/rcs022-vcad-probe.exe `
+              --out-dir "$dir/files" `
+              --output "$dir/measured-summary-v1.json"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+            python tools/validate_rcs022.py --summary "$dir/measured-summary-v1.json"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
+      - name: Summarize and validate exact Windows closure evidence
+        shell: pwsh
+        run: |
+          python research/rcs-027/summarize_windows_step.py `
+            --input .results/rcs027/windows-step/rep-1/measured-summary-v1.json `
+            --input .results/rcs027/windows-step/rep-2/measured-summary-v1.json `
+            --input .results/rcs027/windows-step/rep-3/measured-summary-v1.json `
+            --toolchain .build/rcs027-toolchain/toolchain.json `
+            --output .results/rcs027/windows-step/windows-step-live.json
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/validate_rcs027.py --windows-live .results/rcs027/windows-step/windows-step-live.json
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Get-Content .results/rcs027/windows-step/windows-step-live.json
+      - name: Upload Windows STEP closure evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rcs027-windows-step-closure
+          path: .results/rcs027/windows-step
+          if-no-files-found: error

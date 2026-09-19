@@ -1,0 +1,18 @@
+{
+  "expected": {
+    "compiler_family": "MSVC",
+    "compiler_version_numeric": 1951,
+    "negative_controls": 7,
+    "occt_commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42",
+    "occt_version": "8.0.1",
+    "positive_fixtures": 11,
+    "python": "3.12.10",
+    "qualification_status": "interoperability_unqualified",
+    "repetitions": 3,
+    "runner": "windows-2025"
+  },
+  "gate5_closure": false,
+  "note": "Replaced with frozen workflow/artifact evidence only after the live Windows campaign passes.",
+  "schema": "rcs-027-windows-step-qualification/1.0",
+  "status": "pending_ci"
+}
