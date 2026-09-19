@@ -69,7 +69,8 @@
         "MC-020",
         "MC-021",
         "MC-022",
-        "MC-023"
+        "MC-023",
+        "MC-058"
       ]
     },
     {
@@ -849,6 +850,10 @@
         {
           "task": "MC-010",
           "type": "artifact"
+        },
+        {
+          "task": "MC-058",
+          "type": "artifact"
         }
       ],
       "scope": "real tool-derived sweeps, lathe reductions, timed process semantics and multi-setup composition",
@@ -884,6 +889,10 @@
         },
         {
           "task": "MC-010",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-058",
           "type": "artifact"
         }
       ],
@@ -921,6 +930,10 @@
         {
           "task": "MC-010",
           "type": "artifact"
+        },
+        {
+          "task": "MC-058",
+          "type": "artifact"
         }
       ],
       "scope": "real tool-derived sweeps, lathe reductions, timed process semantics and multi-setup composition",
@@ -956,6 +969,10 @@
         },
         {
           "task": "MC-010",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-058",
           "type": "artifact"
         }
       ],
@@ -997,6 +1014,10 @@
         {
           "task": "MC-007",
           "type": "artifact"
+        },
+        {
+          "task": "MC-058",
+          "type": "artifact"
         }
       ],
       "scope": "real tool-derived sweeps, lathe reductions, timed process semantics and multi-setup composition",
@@ -1032,6 +1053,10 @@
         },
         {
           "task": "MC-010",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-058",
           "type": "artifact"
         }
       ],
@@ -1803,6 +1828,10 @@
         },
         {
           "task": "MC-054",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-058",
           "type": "artifact"
         }
       ],
@@ -2659,6 +2688,50 @@
       "blockers": "Record the precise blocker, affected descendants and unaffected work. Stop on semantic mismatch, invalid evidence/certificate, uncontrolled resource growth or exhausted permit; continue independent work.",
       "locks": [
         "expensive-campaign"
+      ],
+      "gate": null,
+      "kind": "research"
+    },
+    {
+      "id": "MC-058",
+      "package": "MG-04",
+      "title": "Certified curve, transform and swept-volume approximation contract",
+      "objective": "Qualify admitted line, arc, polyline and spline trajectories and rigid transforms without replacing actual cutter sweeps by centreline fitting or silently changing saved nominal intent.",
+      "dependencies": [
+        {
+          "task": "MC-003",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-008",
+          "type": "artifact"
+        },
+        {
+          "task": "MC-010",
+          "type": "artifact"
+        }
+      ],
+      "scope": "curve/transform constructor semantics, exact or certified evaluator mappings, endpoint/engagement treatment and cutter-aware swept-volume approximation bounds",
+      "non_goals": "Do not narrow machining to polylines or constant-Z rounded cuts, treat centreline error as a full material/topology certificate, reinterpret old journal geometry, or authorize native campaigns implicitly.",
+      "acceptance": [
+        "Every admitted curve/transform class has explicit semantics, applicability and a checked actual-sweep bound or a named open obligation.",
+        "No approximation silently alters a saved operation, resets inherited error or assumes algebraic trigonometric constants.",
+        "Exact controls and corrupted enclosure/endpoint/unit controls discriminate the required defects."
+      ],
+      "verification": [
+        "Run exact/subdivision/covariance/signed-neighbour controls for each admitted curve/transform class.",
+        "Independently challenge swept-volume enclosures including finite cutter radius/length, endpoints, trimming and transforms."
+      ],
+      "artifacts": [
+        "task report",
+        "curve/sweep contract",
+        "derivation and assumption register",
+        "machine-readable controls and outcome"
+      ],
+      "blockers": "A missing exact/analytic route is an open PO-01/02/05 branch, not an out-of-domain operation. Stop on semantic mismatch, invalid enclosure/certificate, hidden source reinterpretation or unpermitted native execution.",
+      "locks": [
+        "curve-transform-contract",
+        "sweep-interface"
       ],
       "gate": null,
       "kind": "research"
