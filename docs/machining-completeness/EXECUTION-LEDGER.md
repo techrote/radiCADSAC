@@ -8,17 +8,17 @@ Source: user-supplied `radiCADSAC-machining-completeness-research-plan-v1.0.md`,
 
 | Stage | Status | Evidence / next action |
 |---|---|---|
-| Conversation reconciliation | IN_PROGRESS | Uploaded plan and latest explicit 100% physically machinable-domain mandate; inspect repository discussions. |
-| Readiness assessment | IN_PROGRESS | Ready for research decomposition, not production or capability acceptance. |
-| Omissions and contradictions | IN_PROGRESS | Existing unfiltered native CI must not execute for planning-only changes. |
-| Supporting specifications and research | PENDING | Preserve primary-source reading limits and open proof obligations. |
-| Milestone/dependency hierarchy | PENDING | Split MG packages into bounded leaf work. |
-| Concurrency design | PENDING | Distinguish provisional artifacts from accepted capabilities; serialize shared writers and costly campaigns. |
-| Repository/GitHub inspection | IN_PROGRESS | Main verified; no open issues/PRs; read-only exact-baseline inventory initiated. |
-| Canonical documentation adoption | PENDING | Explicit new decision; historical freezes unchanged. |
-| GitHub issue reconciliation | PENDING | Inspect stable IDs before creating issues. |
-| First complete-pass review | PENDING | Coverage, size, dependency and verification audit. |
-| Independent second review pass | PENDING | Fresh adversarial self-review; not independent mathematical validation. |
-| Final repository consistency | PENDING | Exact-head static checks, live issue/document parity and merge verification. |
+| Conversation reconciliation | COMPLETE | Source plan, relevant conversation mandate and repository discussion reconciled; DR-0026 records authority. | Uploaded plan and latest explicit 100% physically machinable-domain mandate; inspect repository discussions. |
+| Readiness assessment | COMPLETE | Ready for bounded research decomposition; not production/capability acceptance. | Ready for research decomposition, not production or capability acceptance. |
+| Omissions and contradictions | COMPLETE | Repaired authority, proof/experiment, output-profile, oracle-independence, CI-cost and idempotency gaps. | Existing unfiltered native CI must not execute for planning-only changes. |
+| Supporting specifications and research | COMPLETE | Canonical MC-1 documents, registries and source/evidence limits created. | Preserve primary-source reading limits and open proof obligations. |
+| Milestone/dependency hierarchy | COMPLETE | MG-00–MG-13 / MC-001–MC-057 graph is acyclic with typed edges. | Split MG packages into bounded leaf work. |
+| Concurrency design | COMPLETE | Shared locks plus global expensive-campaign mutex and sequential repeats. | Distinguish provisional artifacts from accepted capabilities; serialize shared writers and costly campaigns. |
+| Repository/GitHub inspection | COMPLETE | Exact baseline inventory retained; live issue state reconciled before creation. | Main verified; no open issues/PRs; read-only exact-baseline inventory initiated. |
+| Canonical documentation adoption | COMPLETE | DR-0026/current-authority and MC RAG/specification tree route current work. | Explicit new decision; historical freezes unchanged. |
+| GitHub issue reconciliation | COMPLETE | Programme #62 plus one managed issue for every MC-001–MC-057; actual IDs bound in github-map. | Inspect stable IDs before creating issues. |
+| First complete-pass review | COMPLETE | Coverage/size/dependency/verification audit recorded in 13-ADOPTION-AUDIT.md. | Coverage, size, dependency and verification audit. |
+| Independent second review pass | COMPLETE | Separate backward-from-gates and forward-from-domain reread; same author, not independent mathematical validation. | Fresh adversarial self-review; not independent mathematical validation. |
+| Final repository consistency | IN_PROGRESS | Await exact-head static CI, PR review/merge verification and zero-drift issue check. | Exact-head static checks, live issue/document parity and merge verification. |
 
 No native experiment has been executed by adoption. Historical measurements are not being rerun or newly certified.

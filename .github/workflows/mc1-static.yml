@@ -11,6 +11,7 @@ on:
       - 'AGENTS.md'
       - 'handoffs/README.md'
       - 'tools/validate_machining_completeness.py'
+      - 'tools/validate_mc_ci_impact.py'
       - 'tools/mc_workflow.py'
       - '.github/workflows/mc1-static.yml'
   pull_request:
@@ -38,7 +39,9 @@ jobs:
           python-version: '3.12'
       - name: Validate MC-1 contracts and adversarial self-tests
         run: python3 tools/validate_machining_completeness.py --self-test
+      - name: Validate planning/native CI impact routing
+        run: python3 tools/validate_mc_ci_impact.py --self-test
       - name: Compile MC tooling
-        run: python3 -m py_compile tools/validate_machining_completeness.py tools/mc_workflow.py
+        run: python3 -m py_compile tools/validate_machining_completeness.py tools/validate_mc_ci_impact.py tools/mc_workflow.py
       - name: Show current evidence-ready frontier
         run: python3 tools/mc_workflow.py ready

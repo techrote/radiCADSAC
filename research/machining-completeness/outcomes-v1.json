@@ -3,9 +3,13 @@
   "programme": "MC-1",
   "tasks": {
     "MC-001": {
-      "state": "IN_PROGRESS",
+      "state": "COMPLETED_RESEARCH",
       "issue": 63,
-      "accepted_artifacts": [],
+      "accepted_artifacts": [
+        "docs/decisions/DR-0026-machining-completeness-programme.md",
+        "docs/machining-completeness/08-SOURCES-AND-EVIDENCE.md",
+        "handoffs/current-authority.json"
+      ],
       "blockers": []
     },
     "MC-002": {
@@ -333,9 +337,13 @@
       "blockers": []
     },
     "MC-056": {
-      "state": "NOT_STARTED",
+      "state": "COMPLETED_RESEARCH",
       "issue": 118,
-      "accepted_artifacts": [],
+      "accepted_artifacts": [
+        ".github/workflows/mc1-static.yml",
+        "tools/validate_mc_ci_impact.py",
+        "legacy workflow paths-ignore routing"
+      ],
       "blockers": []
     },
     "MC-057": {

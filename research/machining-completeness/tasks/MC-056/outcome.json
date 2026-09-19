@@ -1,0 +1,26 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-056",
+  "result_kind": "COMPLETED_RESEARCH",
+  "evidence_class": [
+    "PLATFORM_PROCESS",
+    "WORKFLOW_POLICY"
+  ],
+  "issue": 118,
+  "accepted_claims": [
+    "MC planning-only changes do not require historical native RCS campaigns",
+    "static MC validation remains mandatory",
+    "native campaign permit remains separate"
+  ],
+  "open_claims": [],
+  "native_execution": false,
+  "artifacts": [
+    ".github/workflows/mc1-static.yml",
+    "tools/validate_mc_ci_impact.py",
+    "legacy workflow path routing"
+  ],
+  "verification": [
+    "python3 tools/validate_mc_ci_impact.py --self-test",
+    "python3 tools/validate_machining_completeness.py --self-test"
+  ]
+}
