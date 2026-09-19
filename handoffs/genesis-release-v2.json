@@ -33,19 +33,19 @@
   "packages": {
     "msac": {
       "manifest": "handoffs/v2/msac/handoff-v2.json",
-      "package_tree_sha": "a38d265aae2fda8e35dcf58e7d127d459e74055a",
+      "package_tree_sha": "faf4f6eaad3a8b8ccef66d9f207a9c5e676f3538",
       "path": "handoffs/v2/msac"
     },
     "opensimachinist": {
       "manifest": "handoffs/v2/opensimachinist/handoff-v2.json",
-      "package_tree_sha": "b93e6e7ca28d26753e735f8ffe4acc56c5821676",
+      "package_tree_sha": "d39266d486cc4646dcc31d7e6af4e47ca846ab42",
       "path": "handoffs/v2/opensimachinist"
     }
   },
   "production_repository_creation_authorized": false,
   "repository": "techrote/radiCADSAC",
   "schema": "radicadsac-genesis-freeze/2.0",
-  "self_contained": true,
+  "self_contained": false,
   "shared_contracts": {
     "backend_architecture": "semantic-provider-hybrid-v2",
     "default_step_body_selection": "all committed material bodies",
@@ -59,7 +59,7 @@
     "step_primary_engineering_output": true,
     "step_profile": "rcs-022-occt-ap242dis-layer-d/1.0"
   },
-  "source_base_main": "6a235965c2deb35ad4e657f77849613a79ce4fc3",
+  "source_base_main": "a68fa92d1128a163b232e2be69d6f731bd56caa5",
   "status": "gate5_foundation_qualified",
   "tag_plan": {
     "commands": "documented in docs/35-GENESIS-V2-SYNTHESIS-AND-GATE5.md",
@@ -70,5 +70,20 @@
       "msac-handoff-v2"
     ],
     "target": "verified RCS-027 merge commit on main"
+  },
+  "consistency_revision": "2.1",
+  "evidence_dependency_manifest": "handoffs/evidence-dependencies-v2.1.json",
+  "bootstrap_dependency_resolution": "handoff packages plus exact evidence dependency manifest; do not resolve research names by mutable branch state",
+  "consistency_correction": {
+    "issue": 60,
+    "decision": "docs/decisions/DR-0025-genesis-v2-bootstrap-consistency.md",
+    "record": "docs/37-GENESIS-V2-BOOTSTRAP-CONSISTENCY.md",
+    "original_rcs027_merge_commit": "a68fa92d1128a163b232e2be69d6f731bd56caa5",
+    "original_release_manifest_blob_sha": "c47beb993a3cd64f28fd35c1d47f1a3630cef92c",
+    "original_package_tree_shas": {
+      "opensimachinist": "b93e6e7ca28d26753e735f8ffe4acc56c5821676",
+      "msac": "a38d265aae2fda8e35dcf58e7d127d459e74055a"
+    },
+    "meaning": "post-Gate5 bootstrap consistency correction only; original freeze identities remain historical evidence"
   }
 }
