@@ -4,7 +4,7 @@ Status: second-pass repository/workflow review of the planning adoption. Date: 1
 
 ## First complete-pass review
 
-The adoption was checked against every stage in the user request and every section of the source plan. The result is a 14-package / 57-task graph, stable task IDs MC-001–MC-057, typed artifact-versus-capability dependencies, PO-01–PO-12 integration owners, F01–F16 family owners, explicit write/compute locks, current authority routing and a GitHub issue binding for every task.
+The adoption was checked against every stage in the user request and every section of the source plan. The result is a 14-package / 58-task graph, stable task IDs MC-001–MC-058, typed artifact-versus-capability dependencies, PO-01–PO-12 integration owners, F01–F16 family owners, explicit write/compute locks, current authority routing and a GitHub issue binding for every task.
 
 Repairs applied before this audit include: explicit DR-0026 authority instead of silently rewriting Gate 5; candidate-independent domain/workload decisions; early output representability and consumer-access tracks; immutable historical corpus import; independent checker/oracle attacks; actual varying-Z rounded sweeps; phase-sensitive lathe ownership; singular/grouped output profile ownership; algorithm-specific split/blueprint requirement before native implementation; global expensive-campaign mutex; final held-out ownership; and a conditional handoff only after MC-1 pass.
 
@@ -33,7 +33,7 @@ The historical native RCS workflows now ignore MC-1 planning-only paths and work
 
 ## Issue-set review
 
-The live repository contains exactly one issue marker for each MC-001–MC-057 plus programme tracker #62. Every managed task issue includes objective, scope/non-goals, typed dependencies/concurrency, canonical-document links, an autonomous implementation prompt, acceptance criteria, verification, expected artifacts and blocking/stopping conditions. Stable IDs, not issue numbers, are the execution authority.
+The live repository contains exactly one issue marker for each MC-001–MC-058 plus programme tracker #62. Every managed task issue includes objective, scope/non-goals, typed dependencies/concurrency, canonical-document links, an autonomous implementation prompt, acceptance criteria, verification, expected artifacts and blocking/stopping conditions. Stable IDs, not issue numbers, are the execution authority.
 
 The native GitHub connector used here does not expose milestone creation, so the milestone hierarchy is represented canonically by MG-00–MG-13 in the repository graph and as grouped checklists in tracker #62. This does not affect dependency execution because typed repository edges, not GitHub milestone status, are authoritative.
 
