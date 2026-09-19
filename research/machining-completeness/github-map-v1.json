@@ -287,6 +287,11 @@
       "issue": 119,
       "url": "https://github.com/techrote/radiCADSAC/issues/119",
       "package": "MG-12"
+    },
+    "MC-058": {
+      "issue": 120,
+      "url": "https://github.com/techrote/radiCADSAC/issues/120",
+      "package": "MG-04"
     }
   }
 }
