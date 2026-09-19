@@ -14,9 +14,20 @@ static std::string compiler_id() {
 #endif
 }
 
+static std::string json_escape(const std::string& value) {
+    std::string out;
+    for (char ch : value) {
+        if (ch == '\\' || ch == '"') {
+            out.push_back('\\');
+        }
+        out.push_back(ch);
+    }
+    return out;
+}
+
 int main(int argc, char** argv) {
-    if (argc != 2) {
-        std::cerr << "usage: rcs026_toolchain_probe <output.json>\n";
+    if (argc != 3) {
+        std::cerr << "usage: rcs026_toolchain_probe <output.json> <cmake-generator>\n";
         return 2;
     }
     long long compiler_version = 0;
@@ -33,10 +44,11 @@ int main(int argc, char** argv) {
         return 3;
     }
     out << "{\n"
-        << "  \"schema\": \"rcs-026-toolchain-probe/1.0\",\n"
+        << "  \"schema\": \"rcs-026-toolchain-probe/1.1\",\n"
         << "  \"compiler_id\": \"" << compiler_id() << "\",\n"
         << "  \"compiler_version_numeric\": " << compiler_version << ",\n"
         << "  \"cplusplus\": " << static_cast<long long>(__cplusplus) << ",\n"
+        << "  \"cmake_generator\": \"" << json_escape(argv[2]) << "\",\n"
         << "  \"probe_value\": 26026\n"
         << "}\n";
     return 0;
