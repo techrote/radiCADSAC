@@ -1,16 +1,16 @@
 # DR-0024 — Genesis v2 Gate-5 foundation
 
-Status: proposed by RCS-027; acceptance is conditional on the frozen exact Windows/MSVC OCCT 8.0.1 STEP closure evidence.
+Status: **accepted by RCS-027** after exact Windows/MSVC OCCT 8.0.1 STEP closure evidence was produced and frozen.
 
 ## Context
 
 Genesis v2 was created to qualify architecture-driving choices that Genesis v1 supported only with narrower experiments. RCS-018 through RCS-026 now cover contract composition, deterministic canonicalization, realistic lathe tool envelopes, independent manual-mill material truth and bounded fallback, independent STEP parsing/import, propagated uncertainty, current-OCCT differential behavior, repeated provider handoff/reconciliation, and Windows/Linux scale/fault recovery.
 
-RCS-026 deliberately left one Gate-5 blocker: it did not execute the exact pinned OCCT 8.0.1 STEP worker under Windows/MSVC. RCS-027 owns that bounded closure test and the final synthesis.
+RCS-026 deliberately left one Gate-5 blocker: it did not execute the exact pinned OCCT 8.0.1 STEP worker under Windows/MSVC. RCS-027 owned that bounded closure test and the final synthesis. The exact Windows campaign completed successfully as an execution/closure test while preserving the pre-existing Layer-D result `interoperability_unqualified`.
 
 ## Decision
 
-When and only when the RCS-027 Windows closure record is accepted, declare Genesis v2 **Gate-5 foundation-qualified** with these boundaries:
+Declare Genesis v2 **Gate-5 foundation-qualified** with these boundaries:
 
 1. retain `msac-journal/1.0` and the programme-owned immutable revision/material-body/semantic-lineage/source/audio/provenance model;
 2. retain semantic-provider hybrid architecture;
@@ -29,7 +29,7 @@ No production repository is created by this decision.
 
 **Delay Gate 5 until Layer D becomes positive.** Rejected. The Gate-5 roadmap explicitly permits an exact profile to remain independently unqualified when the blocker is recorded and product/API semantics expose it truthfully. This is safer than replacing the consumer, widening its metric gate or misrepresenting another OCCT wrapper as independent evidence.
 
-**Infer Windows STEP support from Linux STEP plus portable Windows semantic tests.** Rejected by DR-0023. RCS-027 must execute the pinned Windows kernel/export path.
+**Infer Windows STEP support from Linux STEP plus portable Windows semantic tests.** Rejected by DR-0023. RCS-027 executed the pinned Windows kernel/export path instead.
 
 **Upgrade to OCCT 8.1.0.dev1 before production.** Rejected by RCS-024 because every decisive defect reproduced and no measured safety/correctness benefit justified leaving the stable 8.0.1 baseline.
 
@@ -39,7 +39,9 @@ No production repository is created by this decision.
 
 The complete predecessor matrix is `research/rcs-027/evidence-matrix-v1.json`; the decision audit is `research/rcs-027/decision-delta-v1.json`; the synthesis is `docs/35-GENESIS-V2-SYNTHESIS-AND-GATE5.md`.
 
-The final acceptance evidence must additionally bind the exact successful RCS-027 Windows workflow head/run/artifact digest in `research/rcs-027/windows-step-qualification-v1.json`. Until that record exists, this decision remains proposed.
+The accepted Windows closure record is `research/rcs-027/windows-step-qualification-v1.json`. It binds workflow `rcs027-genesis-v2-gate5` run `35417316840`, source head `2a79aa17600e86d2ec2678e9522781b32fbae930`, artifact id `10577237158`, artifact digest `sha256:8132c933649644c675781b610deb0c002189da8974ea7f3850e1f14c4055272a`, and live-summary SHA-256 `7266e6d6d9095532abc8d0f4531b0bd9ef99c8fcb2a25b8422c4a97e8b118121`. The campaign ran three repetitions under MSVC 19.51, passed all seven negative controls, and retained `interoperability_unqualified` across the 11 positive fixtures.
+
+The frozen evidence run and final-head CI are deliberately non-self-referential: the repository binds the immutable evidence-producing run, while merge requires the same Gate-5 workflow plus all inherited required workflows to pass on the final PR head. A final-head run ID cannot be embedded into that same head without changing it.
 
 ## Consequences
 

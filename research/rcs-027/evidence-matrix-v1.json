@@ -1,5 +1,5 @@
 {
-  "gate5_status": "pending_windows_step_evidence",
+  "gate5_status": "accepted",
   "items": [
     {
       "classification": "accepted",
@@ -78,6 +78,12 @@
     },
     {
       "blocker": "exact Windows/MSVC OCCT 8.0.1 STEP soak not run",
+      "blocker_resolution": {
+        "evidence": "research/rcs-027/windows-step-qualification-v1.json",
+        "resolution": "exact Windows/MSVC OCCT 8.0.1 three-repetition STEP campaign executed successfully; Layer-D remains interoperability_unqualified",
+        "status": "cleared_by_rcs027",
+        "workflow_run_id": 35417316840
+      },
       "classification": "accepted_with_gate5_blocker",
       "gate5": [
         "platform",
@@ -89,11 +95,19 @@
     }
   ],
   "rcs027_closure_probe": {
+    "artifact_digest": "sha256:8132c933649644c675781b610deb0c002189da8974ea7f3850e1f14c4055272a",
+    "artifact_id": 10577237158,
+    "live_summary_sha256": "7266e6d6d9095532abc8d0f4531b0bd9ef99c8fcb2a25b8422c4a97e8b118121",
+    "negative_controls_passed": 7,
     "occt_commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42",
     "occt_version": "8.0.1",
+    "positive_case_count": 11,
+    "qualification_status": "interoperability_unqualified",
     "required_layer_d_status": "interoperability_unqualified",
     "required_repetitions": 3,
-    "status": "pending_ci"
+    "source_head_sha": "2a79aa17600e86d2ec2678e9522781b32fbae930",
+    "status": "accepted",
+    "workflow_run_id": 35417316840
   },
   "schema": "rcs-027-evidence-matrix/1.0",
   "source_base_main": "6a235965c2deb35ad4e657f77849613a79ce4fc3"

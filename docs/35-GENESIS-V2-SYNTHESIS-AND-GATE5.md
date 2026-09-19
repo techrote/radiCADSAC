@@ -1,6 +1,6 @@
 # Genesis v2 synthesis and Gate-5 decision
 
-Status: RCS-027 synthesis candidate; Gate 5 remains pending until the exact Windows/MSVC OCCT STEP qualification job is frozen on the final PR head.  
+Status: **Gate 5 accepted by RCS-027**, subject to the normal merge rule that all required workflows pass on the final PR head. The exact Windows/MSVC OCCT 8.0.1 closure evidence is frozen in `research/rcs-027/windows-step-qualification-v1.json`.  
 Issue: RCS-027 / #46  
 Genesis-v2 evidence range: RCS-018 through RCS-026 plus the RCS-027 Windows STEP closure probe.
 
@@ -22,7 +22,7 @@ The research programme stops here only if every remaining limitation has a truth
 | RCS-023 uncertainty | conservative interval algebra, strict one-sided decisions and fail-closed export-budget rules | end-to-end error semantics |
 | RCS-024 OCCT differential | 8.1.0.dev1 reproduces decisive defects; retain OCCT 8.0.1 and process isolation; BRepGraph IDs stay private | backend/version/concurrency choice |
 | RCS-025 handoff stress | durable identity survives provider replacement; hard semantic boundaries plus finite observable deferred-state guard required | coordinator/reconciliation contract |
-| RCS-026 platform/soak | Windows/Linux programme semantics agree through 100k events and worker faults; Linux STEP negative state stable | cross-platform/recovery qualification |
+| RCS-026 platform/soak | Windows/Linux programme semantics agree through 100k events and worker faults; Linux STEP negative state stable; exact Windows STEP intentionally deferred to RCS-027 | cross-platform/recovery qualification |
 
 The machine-readable counterpart is `research/rcs-027/evidence-matrix-v1.json`.
 
@@ -80,15 +80,17 @@ STEP success requires reconciled conventional B-rep, valid/material/body-preserv
 
 ### Platform and recovery boundary
 
-Programme semantics are qualified on hosted Linux/GCC and Windows/MSVC through the 100,000-event research tier, including worker timeout/crash/kill containment and cache regeneration from journal authority. Runtime/RSS figures are research observations, not product SLAs. Exact Windows OCCT STEP execution is the sole RCS-026 Gate-5 blocker being closed by the RCS-027 Windows qualification workflow.
+Programme semantics are qualified on hosted Linux/GCC and Windows/MSVC through the 100,000-event research tier, including worker timeout/crash/kill containment and cache regeneration from journal authority. Runtime/RSS figures are research observations, not product SLAs. RCS-027 additionally executed the exact pinned OCCT 8.0.1 STEP path on `windows-2025` with MSVC 19.51, closing the sole RCS-026 Gate-5 platform blocker without changing the Layer-D qualification state.
 
-## Gate-5 decision rule
+## Gate-5 decision
 
-Gate 5 is accepted only after `research/rcs-027/windows-step-qualification-v1.json` records a successful exact-pinned OCCT 8.0.1/MSVC three-repetition export/read-back campaign on the final PR head, with all RCS-022 adversarial controls passing and the Layer-D status remaining truthfully `interoperability_unqualified`.
+Gate 5 is **accepted**. Workflow run `35417316840` (`rcs027-genesis-v2-gate5`, run 8) executed exact OCCT 8.0.1 commit `b8f597c677811d1f9f4d8a97f5ae2825c0353a42` under MSVC 19.51 on `windows-2025`. Three independent export/read-back repetitions completed. Each repetition retained the RCS-022 programme classification `interoperability_unqualified`; all seven adversarial negative controls passed, while none of the 11 positive fixtures became fully Layer-D qualified because the independent consumer metric gate still fails for the recorded consumer-volume and, for most fixtures, bbox/diagnostic checks.
 
-That Windows execution does **not** need to turn Layer D positive. Gate-5 item 5 explicitly permits a concrete profile to remain unqualified when the exact blocker is preserved. What is forbidden is inferring Windows exporter support without executing it or reporting Layer-D success that the independent metric evidence does not support.
+The frozen evidence record binds source head `2a79aa17600e86d2ec2678e9522781b32fbae930`, artifact `rcs027-windows-step-closure` / id `10577237158`, artifact digest `sha256:8132c933649644c675781b610deb0c002189da8974ea7f3850e1f14c4055272a`, and live-summary SHA-256 `7266e6d6d9095532abc8d0f4531b0bd9ef99c8fcb2a25b8422c4a97e8b118121`.
 
-Until that frozen record exists, `gate5_status` is `pending_windows_step_evidence`.
+Evidence freezing and final-head merge validation are intentionally two distinct checks. A repository file cannot embed the run ID of a workflow on its own final commit without changing that commit and creating a new run. Therefore the manifest freezes the immutable first successful exact-pinned evidence artifact, while merge readiness separately requires the unchanged RCS-027 workflow and all inherited required workflows to pass on the final PR head. This avoids self-referential evidence while preserving both provenance and final-head CI discipline.
+
+The Windows execution does **not** turn Layer D positive. Gate-5 item 5 explicitly permits a concrete profile to remain unqualified when that limitation is preserved and exposed. The accepted release therefore keeps `step_layer_d_status: interoperability_unqualified` and forbids inference of broader independent-consumer support.
 
 ## Production-owned research after Gate 5
 
@@ -106,7 +108,7 @@ These are implementation/capability extensions, not permission to reinterpret ex
 
 ## Handoff and freeze structure
 
-Fresh v2 packages live under `handoffs/v2/opensimachinist/` and `handoffs/v2/msac/`. They are standalone implementation inputs. `handoffs/genesis-release-v2.json` binds their exact package tree hashes after the package trees are committed, the accepted evidence set, v1→v2 delta, and tag plan.
+Fresh v2 packages live under `handoffs/v2/opensimachinist/` and `handoffs/v2/msac/`. They are standalone implementation inputs. `handoffs/genesis-release-v2.json` binds their exact package tree hashes, the accepted evidence set, v1→v2 delta, Gate-5 evidence binding and tag plan.
 
 The v1 trees under `handoffs/opensimachinist/` and `handoffs/msac/` are untouched.
 

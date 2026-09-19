@@ -1,4 +1,20 @@
 {
+  "completed_at_utc": "2026-09-19T04:06:02Z",
+  "evidence_binding": {
+    "artifact_digest": "sha256:8132c933649644c675781b610deb0c002189da8974ea7f3850e1f14c4055272a",
+    "artifact_id": 10577237158,
+    "artifact_name": "rcs027-windows-step-closure",
+    "live_summary_sha256": "7266e6d6d9095532abc8d0f4531b0bd9ef99c8fcb2a25b8422c4a97e8b118121",
+    "repetition_summary_sha256": [
+      "4e3824b7fdeaf4b39149b901f4284edd7bc333a8fe7d808c3946ce80fdb7215a",
+      "8a9efd9cf70f96a8117cd779c1a38d88fc91981955ed6a3b60e76a371ec86c84",
+      "315a0033116e5f92c3644dd6867e3069add8d7e552f0ec7b063aa1c455a400ac"
+    ],
+    "source_head_sha": "2a79aa17600e86d2ec2678e9522781b32fbae930",
+    "workflow": "rcs027-genesis-v2-gate5",
+    "workflow_run_id": 35417316840,
+    "workflow_run_number": 8
+  },
   "expected": {
     "compiler_family": "MSVC",
     "compiler_version_numeric": 1951,
@@ -11,8 +27,24 @@
     "repetitions": 3,
     "runner": "windows-2025"
   },
-  "gate5_closure": false,
-  "note": "Replaced with frozen workflow/artifact evidence only after the live Windows campaign passes.",
+  "gate5_closure": true,
+  "live_repetitions": 3,
+  "negative_case_count": 7,
+  "negative_controls_passed": 7,
+  "note": "Frozen from the first successful exact-pinned Windows closure run. Merge readiness separately requires the same RCS-027 workflow to pass on the final PR head; this avoids a self-referential commit/run-id freeze while keeping the measured evidence immutable and attributable.",
+  "occt_commit": "b8f597c677811d1f9f4d8a97f5ae2825c0353a42",
+  "occt_version": "8.0.1",
+  "positive_case_count": 11,
+  "profile_id": "rcs-022-occt-ap242dis-layer-d/1.0",
+  "protected_semantics": "unchanged",
+  "qualification_status": "interoperability_unqualified",
+  "runner": "windows-2025",
   "schema": "rcs-027-windows-step-qualification/1.0",
-  "status": "pending_ci"
+  "status": "accepted",
+  "toolchain": {
+    "cmake_generator": "Ninja",
+    "compiler_family": "MSVC",
+    "compiler_version_numeric": 1951,
+    "cplusplus": 201703
+  }
 }

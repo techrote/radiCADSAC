@@ -4,12 +4,12 @@ RCS-027 is the final Genesis-v2 synthesis issue. It consumes RCS-018 through RCS
 
 ## Files
 
-- `evidence-matrix-v1.json` — one entry for every Genesis-v2 predecessor.
+- `evidence-matrix-v1.json` — one entry for every Genesis-v2 predecessor plus RCS-027 closure binding.
 - `decision-delta-v1.json` — Genesis-v1/v2 decision audit.
-- `windows-step-qualification-v1.json` — frozen exact-head Windows STEP closure evidence after hosted CI.
+- `windows-step-qualification-v1.json` — frozen successful Windows STEP closure evidence and immutable workflow/artifact identity.
 - `bootstrap_occt_windows.ps1` — exact OCCT 8.0.1 worker-only Windows bootstrap.
 - `summarize_windows_step.py` — deterministic three-run programme-level STEP projection and closure record.
-- `test_contract.py` — adversarial/boundary checks.
+- `test_contract.py` / `test_gate5_freeze.py` — adversarial/boundary checks.
 
 ## Windows OCCT install-layout contract
 
@@ -21,8 +21,10 @@ The post-install guard deliberately verifies the same `include/opencascade` and 
 
 The campaign may not rewrite canonical journal meaning, discard disconnected bodies, promote backend topology identity, reset propagated error, relax manufacturing tolerance, erase positive-removal intent, mutate source/audio identity or provenance, or report Layer-D interoperability qualification not supported by RCS-022 evidence.
 
-## Gate-5 rule
+## Gate-5 result
 
-The branch starts with `pending_windows_step_evidence`. Only a successful exact-pinned three-repetition Windows/MSVC export/read-back campaign may change that to `accepted`. The campaign must preserve `interoperability_unqualified` at Layer D; its job is to establish the missing Windows kernel/export execution, not to manufacture independent-consumer success.
+Gate 5 is accepted. Workflow run `35417316840` completed the exact pinned Windows/MSVC campaign for three repetitions, passed all seven negative controls and preserved the required Layer-D state `interoperability_unqualified`. The frozen record includes the source head, workflow/run identity, artifact id/digest and live-summary digest.
+
+Freeze provenance and merge readiness are separate by design: the evidence file binds the immutable successful evidence-producing run, while the final PR head must independently pass the same RCS-027 workflow and all inherited checks. Embedding a final-head run ID into its own commit would be self-referential.
 
 After final-head validation and merge, the verified merge commit is the target of the documented Genesis-v2 tags.
