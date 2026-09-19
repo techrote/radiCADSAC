@@ -13,6 +13,7 @@ on:
       - 'handoffs/README.md'
       - 'tools/validate_machining_completeness.py'
       - 'tools/validate_mc_ci_impact.py'
+      - 'tools/validate_bootstrap_consistency.py'
       - 'tools/mc_workflow.py'
       - '.github/workflows/mc1-static.yml'
   pull_request:
@@ -46,8 +47,12 @@ jobs:
         run: python3 tools/validate_machining_completeness.py --self-test
       - name: Validate planning/native CI impact routing
         run: python3 tools/validate_mc_ci_impact.py --self-test
+      - name: Validate preserved Genesis-v2.1 consistency under MC-1 routing
+        run: |
+          python3 tools/validate_bootstrap_consistency.py
+          python3 tools/validate_bootstrap_consistency.py --adversarial-self-test
       - name: Compile MC tooling
-        run: python3 -m py_compile tools/validate_machining_completeness.py tools/validate_mc_ci_impact.py tools/mc_workflow.py
+        run: python3 -m py_compile tools/validate_machining_completeness.py tools/validate_mc_ci_impact.py tools/validate_bootstrap_consistency.py tools/mc_workflow.py
       - name: Verify completed planning tasks
         run: |
           python3 tools/mc_workflow.py verify MC-001
