@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from __future__ import annotations
-import argparse, json, re, sys
+import argparse, json, re, subprocess, sys
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 errors=[]
@@ -18,7 +18,7 @@ REQUIRED_DOCS=[f"docs/{n}" for n in [
 "30-STEP-LAYER-D-INTEROPERABILITY-QUALIFICATION.md",
 "31-PROPAGATED-UNCERTAINTY-ERROR-BUDGET-ALGEBRA.md",
 "32-OCCT-CURRENT-DIFFERENTIAL.md","33-PROVIDER-HANDOFF-RECONCILIATION-STRESS.md",
-"34-WINDOWS-LINUX-SCALE-SOAK-FAULT-RECOVERY.md","35-GENESIS-V2-SYNTHESIS-AND-GATE5.md"]]
+"34-WINDOWS-LINUX-SCALE-SOAK-FAULT-RECOVERY.md","35-GENESIS-V2-SYNTHESIS-AND-GATE5.md","36-GENESIS-V1-V2-DELTA.md"]]
 OM_FILES=["README.md","00-FOUNDING-SPEC.md","01-IMPLEMENTATION-ROADMAP.md","02-INITIAL-ISSUE-GRAPH.md",
 "03-UNRESOLVED-RESEARCH-REGISTER.md","04-CLEAN-REPO-BOOTSTRAP-CHECKLIST.md","handoff-v2.json"]
 MS_FILES=["README.md","00-FOUNDING-SPEC.md","01-IMPLEMENTATION-ROADMAP.md","02-INITIAL-ISSUE-GRAPH.md",
@@ -66,6 +66,15 @@ def static():
     if rel.get("shared_contracts",{}).get("occt_version")!="8.0.1": fail("OCCT baseline drift")
     tags=rel.get("tag_plan",{}).get("names",[])
     if tags!=["radiCADSAC-genesis-v2","opensimachinist-handoff-v2","msac-handoff-v2"]: fail("tag plan drift")
+    # Freeze manifest binds the exact committed package trees, including package manifests.
+    for name,path in [("opensimachinist","handoffs/v2/opensimachinist"),("msac","handoffs/v2/msac")]:
+        try:
+            actual=subprocess.check_output(["git","rev-parse",f"HEAD:{path}"],cwd=ROOT,text=True).strip()
+        except Exception as exc:
+            fail(f"cannot resolve package tree {path}: {exc}")
+            continue
+        if rel.get("packages",{}).get(name,{}).get("package_tree_sha") != actual:
+            fail(f"{name} package_tree_sha does not match committed tree: {actual}")
 
     # Both handoffs must agree on critical shared contract values.
     om=load("handoffs/v2/opensimachinist/handoff-v2.json")

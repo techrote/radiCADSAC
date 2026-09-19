@@ -59,3 +59,13 @@ Persist schema/profile/provider-policy versions alongside durable intent. Old jo
 ## Founding non-capabilities
 
 Do not pretend universal five-axis, live-tool turning, arbitrary form-tool reachability, universally exact topology naming, Layer-D-qualified STEP interoperability or production-tuned capacity. Each has an explicit handoff/pending/refusal/requalification path.
+
+## Founding dependencies, licences and provenance
+
+The founding engineering runtime dependency is OCCT 8.0.1 at exact source commit `b8f597c677811d1f9f4d8a97f5ae2825c0353a42`, built as the worker-only shared-library profile. Upstream at that commit carries `LICENSE_LGPL_21.txt` and `OCCT_LGPL_EXCEPTION.txt`; production packaging must preserve those upstream notices and audit any optional third-party components actually enabled.
+
+`step-io 0.2.4` and `vcad-kernel-step`/`vcad-kernel-tessellate 0.10.0` are Genesis qualification dependencies, not automatically founding runtime dependencies. If production adopts them, preserve their committed package/lock provenance and perform the production repository's dependency/license review rather than copying a research assumption.
+
+Toolchain provenance must record compiler/runtime versions, exact dependency pins, enabled build features/toolkits and generated artefact hashes. Source/audio identity and engineering provenance are a separate programme data contract and are not satisfied merely by software-supply-chain metadata.
+
+No unpinned package version, downloaded binary without source/provenance metadata, or backend-private cache is permitted to become the authority for replaying saved manufacturing intent.

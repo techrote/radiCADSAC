@@ -10,7 +10,8 @@
   "evidence": [
     "docs/35-GENESIS-V2-SYNTHESIS-AND-GATE5.md",
     "research/rcs-027/evidence-matrix-v1.json",
-    "research/rcs-027/decision-delta-v1.json"
+    "research/rcs-027/decision-delta-v1.json",
+    "docs/36-GENESIS-V1-V2-DELTA.md"
   ],
   "production_repo_creation_authorized": false,
   "production_repository": "techrote/OpenSimachinist",
