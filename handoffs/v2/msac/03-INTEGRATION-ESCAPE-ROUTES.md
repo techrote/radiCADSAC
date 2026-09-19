@@ -3,7 +3,7 @@
 Use these routes instead of weakening engineering truth.
 
 - Backend unavailable/crashed: keep last committed revision authoritative; reconnect/replay; mark derived preview stale.
-- Operation accepted but unresolved: show `accepted_pending`; allow safe continued interaction only within coordinator capability; reconcile at hard query/body/export boundary.
+- Operation accepted but unresolved: persist a programme-owned pending-intent transaction anchored to the last committed revision, show `accepted_pending`, and allow safe continued interaction only within coordinator capability; save/crash/restart must recover from that transaction without provider-private state; reconcile at hard query/body/export boundary.
 - Lathe tool/process outside qualified predicate: request another provider if capability advertises one; otherwise `refused_unsupported`.
 - Manual mill uncertainty/fallback budget open: request refinement/reconciliation or remain pending; do not claim a finished solid from preview.
 - Ambiguous body/lineage mapping: stop body-dependent command and surface ambiguity; never guess from nearest/largest topology.

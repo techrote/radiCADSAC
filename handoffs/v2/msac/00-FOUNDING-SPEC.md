@@ -16,9 +16,9 @@ Units, coordinate frames, transforms, orientation, timestamps and fit bounds are
 
 MSAC sends canonical operations and programme identity, never OCCT objects. The stable request/status model includes capabilities, apply, commit/replay, material query, preview request, reconciliation, inspection and STEP export.
 
-`accepted_pending` means intent is retained but engineering state still requires bounded provider work/reconciliation; it is not success and cannot authorize STEP. Failure/crash/timeout leaves the last committed revision authoritative.
+`accepted_pending` means canonical intent has been durably accepted into a programme-owned **pending-intent transaction** anchored to the last committed revision, while engineering state still requires bounded provider work/reconciliation. It is not a committed revision, is not success and cannot authorize STEP. The transaction carries canonical operation/order, immutable setup/tool/frame/policy references, signed intent, source/audio/provenance references and recovery/error context; provider-private state is not authoritative. Failure/crash/timeout leaves the last committed revision authoritative and recovery resumes from that parent plus the pending transaction chain.
 
-Durable material-body IDs and semantic lineage are programme-owned. Split/cut-through can create multiple legitimate bodies. Default STEP body selection is **all committed material bodies**.
+Durable material-body IDs and semantic lineage are programme-owned. Candidate components of one regularized material set come from connected components of its interior; point/edge-only contact does not create a volumetric bridge. Already-distinct durable bodies never merge merely because backend geometry touches/coincides. Split/merge requires an explicit validated body transition. Default STEP body selection is **all committed material bodies**.
 
 ## Preview versus authority
 
@@ -68,3 +68,8 @@ The UI must remain usable during backend work: async statuses, cancellation wher
 ## Protected provenance
 
 Source/audio identity and provenance are programme-owned immutable metadata. Playback/audio/visual assets may be derived, but a provider rebuild or geometry coincidence cannot replace their identity or history.
+
+
+## Bootstrap evidence identity
+
+Production conformance imports use `handoffs/evidence-dependencies-v2.1.json` and retain each exact source commit/blob identity. UI/product claims must preserve evidence class: coordinator/model or platform soak evidence is not native geometry capability evidence.

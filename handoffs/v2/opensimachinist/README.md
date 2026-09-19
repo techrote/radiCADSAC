@@ -1,5 +1,7 @@
 # OpenSimachinist Genesis v2 handoff
 
+Consistency revision: **2.1** (issue #60 / DR-0025). Exact imported fixture/result identities are listed in `handoffs/evidence-dependencies-v2.1.json`. The original RCS-027 package tree remains preserved as correction provenance.
+
 This is a clean production-repository input generated from accepted radiCADSAC Genesis-v2 evidence. It is not a copy of the research repository and does not import genesis commit history.
 
 Read `00-FOUNDING-SPEC.md` first, then the implementation roadmap, issue graph, unresolved register and bootstrap checklist. The stable programme boundary is canonical `msac-journal/1.0` manufacturing intent, immutable revisions, durable material-body/lineage identity, versioned status/error semantics and mandatory STEP engineering output. Provider and OCCT state are replaceable implementation detail.

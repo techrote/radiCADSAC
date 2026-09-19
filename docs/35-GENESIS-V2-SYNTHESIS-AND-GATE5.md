@@ -26,6 +26,23 @@ The research programme stops here only if every remaining limitation has a truth
 
 The machine-readable counterpart is `research/rcs-027/evidence-matrix-v1.json`.
 
+### Evidence-class interpretation
+
+The matrix intentionally combines different evidence types. Do not flatten them into one generic "measured" capability claim:
+
+- RCS-018 — **MEASURED_DETERMINISTIC_MODEL** for semantic transaction/status composition;
+- RCS-019 — deterministic conformance model plus **MEASURED_PLATFORM_PROCESS** cross-platform logical equality;
+- RCS-020 — **MEASURED_NATIVE_GEOMETRY** plus **MEASURED_INDEPENDENT_ORACLE** for the bounded lathe subset;
+- RCS-021 — native OCCT comparator evidence plus an independent material oracle and bounded directional candidate;
+- RCS-022 — **MEASURED_NATIVE_GEOMETRY** exporter/read-back plus genuinely independent parser/B-rep-consumer evidence; Layer D remains unqualified;
+- RCS-023 — **MEASURED_DETERMINISTIC_MODEL** of conservative error algebra; fixture bounds are not production-provider calibration;
+- RCS-024 — **MEASURED_NATIVE_GEOMETRY** / native OCCT concurrency-history differential;
+- RCS-025 — **MEASURED_DETERMINISTIC_MODEL** of provider-handoff/reconciliation policy, not a live fallback→B-rep reconstruction qualification;
+- RCS-026 — mixed **MEASURED_PLATFORM_PROCESS** coordinator/lifecycle evidence plus a separate native Linux STEP soak; the 100k tier is not 100k native geometry operations;
+- RCS-027 — native exact Windows STEP closure plus synthesis of the predecessor evidence.
+
+Gate 5 accepts the **foundation and bounded/refusal policies**. It does not promote model evidence into unmeasured native geometry capability.
+
 ## Genesis-v1 decision audit
 
 The machine-readable audit is `research/rcs-027/decision-delta-v1.json`. The material classifications are:
@@ -62,7 +79,7 @@ Use qualified exact fixed-axis strategies first. For the measured manual/freehan
 
 ### Hybrid/deferred representation
 
-Deferred or directional state may preserve work and avoid pathological Boolean escalation, but it is not successful engineering output. Exact connectivity/body-selection/inspection/STEP requests are hard reconciliation boundaries. A separate finite observable resource guard bounds deferred accumulation; RCS-025's threshold `2` is a stress fixture, not a production constant.
+Deferred or directional state may preserve work and avoid pathological Boolean escalation, but it is not successful engineering output. `accepted_pending` intent is persisted as a programme-owned pending-intent transaction anchored to the last committed revision; it does not create a new committed revision/body transition until reconciliation succeeds. Provider-private pending geometry is disposable and must be rebuildable from that durable transaction after save/crash/restart. Exact connectivity/body-selection/inspection/STEP requests are hard reconciliation boundaries. A separate finite observable resource guard bounds deferred accumulation; RCS-025's threshold `2` is a stress fixture, not a production constant.
 
 ### Uncertainty and error budgets
 
@@ -80,7 +97,7 @@ STEP success requires reconciled conventional B-rep, valid/material/body-preserv
 
 ### Platform and recovery boundary
 
-Programme semantics are qualified on hosted Linux/GCC and Windows/MSVC through the 100,000-event research tier, including worker timeout/crash/kill containment and cache regeneration from journal authority. Runtime/RSS figures are research observations, not product SLAs. RCS-027 additionally executed the exact pinned OCCT 8.0.1 STEP path on `windows-2025` with MSVC 19.51, closing the sole RCS-026 Gate-5 platform blocker without changing the Layer-D qualification state.
+Programme-level journal/coordinator semantics are qualified on hosted Linux/GCC and Windows/MSVC through the 100,000-event **synthetic coordinator** research tier, including worker timeout/crash/kill containment and cache regeneration from programme authority. This is not qualification of 100,000 native geometry-changing operations. Runtime/RSS figures are component-specific research observations, not product SLAs. RCS-027 additionally executed the exact pinned OCCT 8.0.1 STEP path on `windows-2025` with MSVC 19.51, closing the sole RCS-026 Gate-5 platform blocker without changing the Layer-D qualification state.
 
 ## Gate-5 decision
 
@@ -124,3 +141,8 @@ git push origin radiCADSAC-genesis-v2 opensimachinist-handoff-v2 msac-handoff-v2
 ```
 
 No production repository is created by RCS-027.
+
+
+## Bootstrap consistency revision 2.1
+
+Issue #60 / DR-0025 performs a bounded post-Gate-5 consistency correction before production bootstrap. It adds no new geometry result and does not change Gate-5 acceptance. It reconciles current-document routing, stale package status, exact immutable evidence dependencies, pending-intent durability, material-body connectivity terminology and evidence-class wording. The original RCS-027 release/package tree identities remain recorded in the corrected manifest as historical freeze provenance.

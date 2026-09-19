@@ -1,6 +1,6 @@
 # RCS-019 — canonicalizer conformance and deterministic normalization qualification
 
-Status: accepted research result pending PR merge  
+Status: accepted research result; merged via PR #50; status line reconciled by bootstrap consistency issue #60  
 Date: 2026-09-17  
 Issue: RCS-019 / GitHub #38  
 Journal contract under test: `msac-journal/1.0`  

@@ -19,6 +19,10 @@ Research after RCS-001 must treat these as the current foundation unless a later
 - `docs/06-RESEARCH-METHOD.md` — evidence/reproducibility rules;
 - `docs/08-TERMINOLOGY.md` — accepted research vocabulary;
 - `docs/09-FOUNDATION-AUDIT.md` — reconciled invariants, hypotheses and Gate-1 result;
+- `docs/24-GENESIS-V2-REVISED-ROADMAP.md` — completed Genesis-v2 qualification plan;
+- `docs/35-GENESIS-V2-SYNTHESIS-AND-GATE5.md` — accepted Gate-5 synthesis;
+- `docs/37-GENESIS-V2-BOOTSTRAP-CONSISTENCY.md` and DR-0025 — current bootstrap consistency clarification;
+- `handoffs/genesis-release-v2.json` plus `handoffs/evidence-dependencies-v2.1.json` — current production-bootstrap routing and exact evidence pins;
 - `docs/decisions/` — accepted/proposed/superseded programme decisions.
 
 Historical/superseded material remains useful evidence of how the programme evolved but must not override a newer accepted decision silently.
@@ -51,7 +55,7 @@ For each issue:
 2. Inspect current `main` before work; newer accepted decisions supersede older speculative material unless the issue explicitly asks to challenge them.
 3. State hypotheses and falsification criteria before drawing conclusions.
 4. Prefer primary sources: source code, standards documentation, upstream technical docs, papers, and reproducible experiments.
-5. Distinguish measured fact, sourced fact, inference, proposal, and unresolved question.
+5. Distinguish source fact, inference, proposal and unresolved question, and subtype architecture-impacting measurements as native geometry/kernel, independent oracle, deterministic model, or platform/process evidence under `docs/06-RESEARCH-METHOD.md`. A deterministic model result may not be promoted to native geometry capability.
 6. Record negative results. Do not hide failed approaches.
 7. Add or update RAG-friendly Markdown: small standalone sections, explicit terminology, stable headings, source links, and concrete conclusions.
 8. If code/fixtures are required, make them deterministic and runnable from documented commands.
@@ -97,6 +101,8 @@ Accepted decisions must distinguish fixed programme requirements from still-open
 
 ## Handoff discipline
 
-The final outputs of this repository are clean handoff packages under `handoffs/opensimachinist/` and `handoffs/msac/`.
+The **current** production bootstrap outputs are the consistency-corrected Genesis-v2 packages under `handoffs/v2/opensimachinist/` and `handoffs/v2/msac/`, bound by `handoffs/genesis-release-v2.json` consistency revision `2.1`. Resolve imported conformance/evidence assets only through `handoffs/evidence-dependencies-v2.1.json`.
 
-Do not copy the entire genesis repository into a production repository. Generate fresh implementation plans and requirements from accepted conclusions so the production histories begin cleanly while this repository preserves the original research record.
+The v1 packages under `handoffs/opensimachinist/` and `handoffs/msac/` remain historical freezes and must not be used as the current autonomous bootstrap input.
+
+Do not copy the entire genesis repository into a production repository. Generate fresh implementation plans and requirements from the current handoff so the production histories begin cleanly while this repository preserves the original research record.

@@ -60,6 +60,7 @@ Gate 2 explicitly does not require every pathological case to be solved. The rem
 The following survive backend replacement, replay and project persistence:
 
 - canonical manufacturing journal and canonicalization profile;
+- programme-owned pending-intent transactions anchored to a committed revision while `accepted_pending`;
 - immutable workpiece revisions and material-body split/merge transitions;
 - setup, machine and tool revisions;
 - explicit coordinate frames/transforms/units;
@@ -226,7 +227,7 @@ Internal deferred/hybrid states end at the export boundary. The reconciler must 
 
 Preview geometry exists for responsiveness and visualization and may be tessellated/approximate. It is never the committed authority.
 
-An accepted operation can produce `accepted_pending` when manufacturing intent is durably committed but topology remains safely deferred. Exact material/body queries report whether reconciliation is required. A `reconciled` revision has conventional validated B-rep available for exact topology queries/export.
+An operation can produce `accepted_pending` after its canonical intent is durably stored in a **programme-owned pending-intent transaction** anchored to the last committed revision. That status does not itself create a new committed workpiece revision or body transition. Provider/deferred state remains disposable and can be regenerated after save/crash/restart from the committed parent plus the ordered pending transaction chain. Exact material/body/connectivity queries report whether reconciliation is required. Only successful reconciliation/commit creates the next immutable revision/body transition; a `reconciled` revision has conventional validated B-rep available for exact topology queries/export.
 
 Replay starts from programme-owned journal/revision/lineage state. Provider-private caches may be discarded after backend upgrades. Diagnostic provenance records the implementation, version, build profile and dispatch policy used to materialize derived geometry, allowing regression comparison without making the backend part of project meaning.
 

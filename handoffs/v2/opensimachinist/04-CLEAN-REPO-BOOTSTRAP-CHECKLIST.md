@@ -6,11 +6,13 @@
 - Pin language/build dependencies and OCCT 8.0.1 exact source commit; retain license notices.
 - Define programme-owned journal/revision/body/lineage/source/audio/provenance types before OCCT integration.
 - Make OCCT/private provider types impossible in stable serialized/API contracts.
-- Import canonicalizer, error-budget, material-oracle and STEP fixtures as conformance tests with their evidence references.
+- Import canonicalizer, error-budget, material-oracle and STEP fixtures only from `handoffs/evidence-dependencies-v2.1.json`; retain exact source commit + blob SHA provenance.
 - Add adversarial tests for private-ID persistence, body loss, positive-removal erasure, error reset, lineage guessing and false STEP qualification.
 - Implement worker process isolation before parallel job scheduling.
 - Keep preview/mesh state derived and non-authoritative.
 - Treat all committed material bodies as default STEP selection.
 - Expose `accepted_pending`, refusals, budget breaches and `interoperability_unqualified` as normal engineering statuses.
+- Persist programme-owned pending-intent transactions; test save/crash/restart with all provider-private state deleted before reconciliation.
+- Test point/edge contact, face-coincident geometry and already-distinct durable bodies so connectivity cannot silently invent split/merge identity.
 - Record any deliberate change to founding profile/capability in a production decision record and rerun its qualification gate.
 - Do not create MSAC-specific UI/game dependencies inside the backend.

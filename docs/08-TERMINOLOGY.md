@@ -1,6 +1,6 @@
 # Programme terminology
 
-Status: accepted Gate-1 vocabulary, reconciled through RCS-009  
+Status: accepted programme vocabulary, reconciled through Genesis-v2 consistency revision 2.1  
 Date: 2026-09-17  
 Issue: RCS-001; terminology refinement: DR-0012 / RCS-009
 
@@ -55,9 +55,13 @@ A workpiece may contain more than one disconnected **material body** after a cut
 
 ## Material body
 
-A **material body** is a connected volumetric component of the regularized material state associated with a workpiece revision.
+A **material body** is a durable programme identity for one volumetric component of a workpiece revision.
 
-This term exists so the programme can discuss parting/cut-through events without overloading `workpiece` or assuming every manufacturing state is one connected solid. Point-, edge-, or face-only contact does not by itself create a volumetric bridge between material bodies.
+For one regularized material set `M`, candidate geometric components are the **closures of connected components of the material interior** `int(M)`. Point- or edge-only contact cannot connect two material interiors, and a zero-thickness contact fact is not itself a material bridge. A face-coincident boundary may belong to one geometric component when the regularized union contains an interior neighbourhood across that boundary.
+
+Geometric contact is nevertheless not permission to rewrite durable identity. Two already-distinct durable `body_id` values do **not** silently merge because reconstructed/backend geometry touches, overlaps within tolerance, or happens to become one kernel solid. A durable merge requires explicit programme/process semantics, a validated volumetric result, and a recorded `material_body_transition`. Likewise, a split is committed only when volumetric connectivity has been resolved.
+
+This term exists so the programme can discuss parting/cut-through events without overloading `workpiece` or assuming every manufacturing state is one connected solid.
 
 Whether multiple bodies are retained, classified as workpiece/scrap, or selected for export is process and product policy. RCS-005 requires preserve-all or explicit recorded selection at the export boundary.
 
@@ -181,9 +185,19 @@ It must have explicit:
 
 A canonical trajectory may contain lines, arcs, splines, sampled segments, or another versioned representation. The term does not preselect one curve type.
 
+## Pending-intent transaction
+
+A **pending-intent transaction** is programme-owned durable state for canonical manufacturing intent that has been accepted as `accepted_pending` but has **not yet created a committed workpiece revision or material-body transition**.
+
+It is anchored to the last committed parent revision and stores the ordered canonical operation(s), required immutable setup/tool/frame/policy references, signed manufacturing intent, source/audio/provenance references, and the error/reconciliation context needed to restart derived work. Provider-private topology, worker identity, mesh/dexel cells and caches are forbidden from this durable record.
+
+Save/crash/restart recovery reloads the committed parent revision plus the ordered pending-intent transactions, discards provider-private state, and reruns/refines/reconciles derived work. Connectivity-dependent commands remain blocked until the pending transaction can commit an explicit body transition. Cancellation/refusal changes the transaction status explicitly; it never rewrites the committed parent revision.
+
+The pending-intent transaction is a project transaction/persistence concept around `msac-journal/1.0`; it does not change the physical meaning of a committed journal operation or silently add a new journal-schema major version.
+
 ## Operation journal
 
-The **operation journal** is the versioned durable record of canonical manufacturing intent for a workpiece/project.
+The **operation journal** is the versioned durable record of **committed** canonical manufacturing intent for a workpiece/project.
 
 The journal is the programme's durable source of manufacturing intent. It must be sufficient, subject to versioned compatibility rules, to regenerate engineering geometry using a later or alternate backend.
 

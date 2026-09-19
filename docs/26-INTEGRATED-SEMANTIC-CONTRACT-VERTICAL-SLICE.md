@@ -118,11 +118,14 @@ No accepted Genesis-v1 contract needs to be superseded by this result.
 
 The integration clarification is:
 
-1. `accepted_pending` is observable before durable commit for a transaction that still requires reconciliation;
-2. pending provider/deferred topology remains replaceable derived state;
-3. a successful reconciliation may then produce the immutable committed revision/body transition;
-4. failure before commit leaves journal authority unchanged;
-5. STEP remains a hard reconciliation boundary.
+1. `accepted_pending` is observable before **workpiece-revision commit**, but production durability requires a programme-owned pending-intent transaction anchored to the last committed revision;
+2. that pending transaction persists canonical intent/source/audio/provenance/error context, while pending provider/deferred topology remains replaceable derived state;
+3. save/crash/restart may discard provider-private state and resume from the committed parent plus the ordered pending transaction chain;
+4. a successful reconciliation may then atomically create the immutable committed revision/body transition;
+5. failure/refusal/cancellation does not advance or rewrite the committed parent revision, and unresolved connectivity cannot allocate/guess durable body transitions;
+6. STEP remains a hard reconciliation boundary.
+
+The RCS-018 executable slice measured the **transaction/status model**, not a production persistence database. DR-0025 supplies the durability clarification required before implementation; this does not convert the RCS-018 model into a native geometry/persistence qualification.
 
 This is consistent with RCS-002 transaction semantics, DR-0012 and RCS-013's engineering-status model. It should be carried into RCS-025 and RCS-026 as a testable coordinator invariant.
 
