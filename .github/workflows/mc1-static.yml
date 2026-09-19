@@ -29,6 +29,7 @@ on:
       - '.github/workflows/mc1-static.yml'
 permissions:
   contents: read
+  issues: read
 jobs:
   validate:
     runs-on: ubuntu-24.04
@@ -50,5 +51,9 @@ jobs:
         run: |
           python3 tools/mc_workflow.py verify MC-001
           python3 tools/mc_workflow.py verify MC-056
+      - name: Check live managed GitHub task issues for zero drift
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 tools/mc_workflow.py sync --check
       - name: Show current evidence-ready frontier
         run: python3 tools/mc_workflow.py ready
