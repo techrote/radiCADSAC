@@ -18,6 +18,12 @@ The coordinator repeatedly creates isolated workers for success, timeout, delibe
 
 Cache recovery separately deletes and corrupts derived cache data, then reconstructs programme authority from journal/body/lineage data alone. Derived cache content is never accepted as durable authority.
 
+## Evidence-class boundary
+
+The 10k/100k history and long-soak streams are **MEASURED_PLATFORM_PROCESS** observations of the deterministic coordinator/journal/reconciliation model. They do not execute 100,000 native OCCT material-changing geometry operations and must not be cited as geometry-complexity or native-kernel capacity qualification.
+
+Worker crash/timeout/kill/reap measurements are real process-lifecycle evidence. The separate Linux STEP soak is native exporter/read-back/independent-probe evidence. Runtime/RSS values must therefore be attributed to the component actually measured.
+
 ## Scale and long-running soak
 
 Lathe, mill and mixed-provider histories run at both 10,000 and 100,000 journal events, and each history is repeated to detect deterministic disagreement. Material-operation count is reported separately from journal-event count. Reconciliation must finish with no pending decision state and must never exceed the preregistered threshold-2 stress guard.

@@ -12,9 +12,11 @@ RCS-025 asks whether the accepted semantic-provider hybrid composes safely when 
 ## Evidence vocabulary
 
 - **SOURCE** — an accepted predecessor contract or measurement reused without re-measuring it here.
-- **MEASURED** — a deterministic result produced by the RCS-025 campaign.
-- **INFERENCE** — an architecture conclusion derived from SOURCE and MEASURED evidence.
-- **OPEN** — intentionally deferred evidence, principally platform/soak resource qualification owned by RCS-026.
+- **MEASURED_DETERMINISTIC_MODEL** — a deterministic result produced by the RCS-025 Python handoff/coordinator stress model.
+- **INFERENCE** — an architecture conclusion derived from SOURCE and model evidence.
+- **OPEN** — intentionally deferred evidence, principally native fallback→B-rep reconstruction qualification and platform/soak resource qualification.
+
+RCS-025 does **not** execute a new native geometry reconstruction for its provider handoffs. Values such as the carried retrace-jitter material volume come from accepted predecessor measurements; reconciliation work units, pending-state growth, replay signatures and synthetic reconciliation bounds are model evidence. Therefore RCS-025 qualifies the coordinator/policy semantics it models, but it does not by itself qualify a production fallback→conventional-B-rep reconstruction path or its claimed geometric accuracy.
 
 ## Accepted inputs
 
