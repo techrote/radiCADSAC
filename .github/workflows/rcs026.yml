@@ -1,0 +1,171 @@
+name: rcs026-cross-platform-scale-soak-recovery
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  static-contract:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate static RCS-026 contract
+        run: python tools/validate_rcs026.py
+      - name: Compile research harnesses
+        run: python -m py_compile research/rcs-026/*.py tools/validate_rcs026.py
+      - name: Run adversarial and boundary tests
+        run: python -m unittest discover -v -s research/rcs-026 -p 'test_*.py'
+
+  platform-campaign:
+    name: platform-${{ matrix.label }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-24.04
+            label: Linux
+          - os: windows-2025
+            label: Windows
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Configure portable C++ toolchain probe
+        run: cmake -S research/rcs-026/toolchain -B .build/rcs026-toolchain -DCMAKE_BUILD_TYPE=Release
+      - name: Build portable C++ toolchain probe
+        run: cmake --build .build/rcs026-toolchain --config Release --parallel 2
+      - name: Execute toolchain probe
+        run: ctest --test-dir .build/rcs026-toolchain -C Release --output-on-failure
+      - name: Run scale, replay and worker-recovery campaign
+        run: python research/rcs-026/run_campaign.py --out-dir .results/rcs026/${{ matrix.label }} --toolchain-json .build/rcs026-toolchain/toolchain.json
+      - name: Validate platform evidence
+        run: python tools/validate_rcs026.py --result .results/rcs026/${{ matrix.label }}/result.json
+      - name: Upload platform evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rcs026-platform-${{ matrix.label }}
+          path: .results/rcs026/${{ matrix.label }}
+          if-no-files-found: error
+
+  cross-platform-compare:
+    needs: [platform-campaign]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download platform evidence
+        uses: actions/download-artifact@v4
+        with:
+          pattern: rcs026-platform-*
+          path: .results/platforms
+          merge-multiple: false
+      - name: Compare programme-level invariants
+        run: >-
+          python research/rcs-026/compare_platform_results.py
+          --linux .results/platforms/rcs026-platform-Linux/result.json
+          --windows .results/platforms/rcs026-platform-Windows/result.json
+          --output .results/rcs026/cross-platform-summary.json
+      - name: Validate cross-platform evidence
+        run: python tools/validate_rcs026.py --cross-summary .results/rcs026/cross-platform-summary.json
+      - name: Upload cross-platform evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rcs026-cross-platform-evidence
+          path: .results/rcs026/cross-platform-summary.json
+          if-no-files-found: error
+
+  linux-live-step-soak:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    env:
+      RCS006_OCCT_PREFIX: ${{ github.workspace }}/.deps/rcs006/occt-8.0.1
+      RCS006_BUILD_JOBS: 2
+      CARGO_TARGET_DIR: ${{ github.workspace }}/.build/rcs026-rust
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Restore pinned OCCT cache
+        id: occt-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .deps/rcs006/occt-8.0.1
+          key: rcs006-occt-8.0.1-${{ runner.os }}-${{ hashFiles('research/rcs-006/harness/bootstrap_occt.sh') }}
+      - name: Install bootstrap prerequisites on cache miss
+        if: steps.occt-cache.outputs.cache-hit != 'true'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build
+      - name: Ensure Ninja exists on cache hit
+        if: steps.occt-cache.outputs.cache-hit == 'true'
+        run: |
+          if ! command -v ninja >/dev/null 2>&1; then sudo apt-get update && sudo apt-get install -y ninja-build; fi
+      - name: Bootstrap and verify exact OCCT 8.0.1
+        run: |
+          bash research/rcs-006/harness/bootstrap_occt.sh
+          bash research/rcs-006/harness/verify_occt_install.sh
+      - name: Configure and build OCCT STEP exporter
+        run: |
+          cmake -S research/rcs-022/harness -B .build/rcs026-exporter -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$RCS006_OCCT_PREFIX"
+          cmake --build .build/rcs026-exporter --parallel 2
+      - name: Build independent Layer-D probes from locks
+        run: |
+          cargo build --locked --release --manifest-path research/rcs-022/parser_probe/Cargo.toml
+          cargo build --locked --release --manifest-path research/rcs-022/consumer_probe/Cargo.toml
+      - name: Run three live STEP export/read-back repetitions
+        shell: bash
+        run: |
+          set -euo pipefail
+          export LD_LIBRARY_PATH="$RCS006_OCCT_PREFIX/lib:$RCS006_OCCT_PREFIX/lib64:${LD_LIBRARY_PATH:-}"
+          for rep in 1 2 3; do
+            mkdir -p ".results/rcs026/step/rep-${rep}"
+            python research/rcs-022/run_campaign.py \
+              --exporter .build/rcs026-exporter/rcs022_step_exporter \
+              --parser-probe .build/rcs026-rust/release/rcs022-stepio-probe \
+              --consumer-probe .build/rcs026-rust/release/rcs022-vcad-probe \
+              --out-dir ".results/rcs026/step/rep-${rep}/files" \
+              --output ".results/rcs026/step/rep-${rep}/measured-summary-v1.json"
+            python tools/validate_rcs022.py --summary ".results/rcs026/step/rep-${rep}/measured-summary-v1.json"
+          done
+      - name: Aggregate STEP soak without requiring private or byte identity
+        run: >-
+          python research/rcs-026/summarize_step_soak.py
+          --input .results/rcs026/step/rep-1/measured-summary-v1.json
+          --input .results/rcs026/step/rep-2/measured-summary-v1.json
+          --input .results/rcs026/step/rep-3/measured-summary-v1.json
+          --output .results/rcs026/step/step-soak-summary.json
+      - name: Validate STEP soak evidence
+        run: python tools/validate_rcs026.py --step-summary .results/rcs026/step/step-soak-summary.json
+      - name: Upload STEP soak evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rcs026-linux-step-soak-evidence
+          path: .results/rcs026/step
+          if-no-files-found: error
