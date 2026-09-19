@@ -28,5 +28,6 @@ jobs:
         with:
           name: mc-adoption-baseline
           path: .mc-inventory/
+          include-hidden-files: true
           retention-days: 14
           if-no-files-found: error
