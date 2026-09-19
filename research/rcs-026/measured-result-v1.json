@@ -1,0 +1,76 @@
+{
+  "artifacts": {
+    "cross_platform": {"digest": "sha256:1096ecd68fbccd3a19dcf8886aecac92c07b3dfddee26c6316735c39e19914bf", "id": 10574580344},
+    "linux": {"digest": "sha256:0aa382dff9970f6b17ca6ec60532a91b033783f3dc1ccd836fe9b4cb5732f3c2", "id": 10574610255},
+    "linux_step_soak": {"digest": "sha256:457c4488b43c865b48aa13586adf1fdd3413393ef907795883e25d74f85831fb", "id": 10574475694},
+    "windows": {"digest": "sha256:3559f0f010d77006b28fd7a5a64c9f4a6a8de0ffd755a29fb0a2f6e251d24f64", "id": 10573860532}
+  },
+  "cross_platform": {
+    "highest_completed_journal_tier": 100000,
+    "linux_toolchain": {"cmake_generator": "Ninja", "compiler_id": "GCC", "compiler_version_numeric": 130300, "cplusplus": 201703, "probe_value": 26026, "schema": "rcs-026-toolchain-probe/1.1"},
+    "logical_signature_sha256": "f346cbf442b664c93987ea704b215d7e4efee051b5e62cae585e5b9f936ff98b",
+    "mismatches": [],
+    "status": "pass",
+    "windows_toolchain": {"cmake_generator": "Ninja", "compiler_id": "MSVC", "compiler_version_numeric": 1951, "cplusplus": 201703, "probe_value": 26026, "schema": "rcs-026-toolchain-probe/1.1"}
+  },
+  "decision": {
+    "coordinator_scale_soak_fault_recovery_qualification": "pass",
+    "linux_step_soak": "stable_negative_layer_d",
+    "occt_baseline": "8.0.1",
+    "programme_level_cross_platform_qualification": "pass",
+    "protected_semantics": "unchanged",
+    "windows_step_support": "gate5_blocked_missing_exact_occt_8_0_1_msvc_step_soak"
+  },
+  "platforms": {
+    "linux": {
+      "build_tools": {"cmake": "cmake version 3.31.6", "ninja": "1.13.2"},
+      "canonicalizer_latency_ns": {"count": 5, "max_ns": 58727523, "min_ns": 56026887, "p50_ns": 56340153, "p95_ns": 58727523},
+      "logical_signature_sha256": "f346cbf442b664c93987ea704b215d7e4efee051b5e62cae585e5b9f936ff98b",
+      "long_soak": {"epoch_latency_ns": {"count": 20, "max_ns": 53828039, "min_ns": 31256903, "p50_ns": 31584437, "p95_ns": 53712644}, "epochs": 20, "events_per_epoch": 5000, "journal_event_count": 100000, "material_operation_count": 75000, "peak_pending_units": 2, "query_boundaries": 20, "resource_trend": {"peak_observed_working_set_bytes": 23474176, "resource_count_delta": 0, "resource_count_leak_allowance": 4, "rss_growth_guard_bytes": 67108864, "working_set_delta_bytes": 0}, "throughput_events_per_second": 139294.388, "worker_recycle_successes": 4},
+      "python": "3.12.10",
+      "scale": [
+        {"elapsed_ns": 469626562, "journal_event_count": 10000, "kind": "lathe", "material_operation_count": 7500, "peak_pending_units": 2, "throughput_events_per_second": 21293.514},
+        {"elapsed_ns": 465243963, "journal_event_count": 10000, "kind": "mill", "material_operation_count": 7500, "peak_pending_units": 2, "throughput_events_per_second": 21494.099},
+        {"elapsed_ns": 469535823, "journal_event_count": 10000, "kind": "mixed", "material_operation_count": 7500, "peak_pending_units": 2, "throughput_events_per_second": 21297.63},
+        {"elapsed_ns": 4591634743, "journal_event_count": 100000, "kind": "lathe", "material_operation_count": 75000, "peak_pending_units": 2, "throughput_events_per_second": 21778.736},
+        {"elapsed_ns": 4582607216, "journal_event_count": 100000, "kind": "mill", "material_operation_count": 75000, "peak_pending_units": 2, "throughput_events_per_second": 21821.639},
+        {"elapsed_ns": 4656413175, "journal_event_count": 100000, "kind": "mixed", "material_operation_count": 75000, "peak_pending_units": 2, "throughput_events_per_second": 21475.757}
+      ],
+      "toolchain": {"compiler_id": "GCC", "compiler_version_numeric": 130300, "cplusplus": 201703},
+      "worker_recovery": {"clean_successes": 24, "crashes_contained": 3, "forced_kills_contained": 2, "latency": {"count": 33, "max_ns": 101556834, "min_ns": 17813084, "p50_ns": 21266685, "p95_ns": 101320554}, "timeouts_contained": 4, "tracked_orphan_processes": 0},
+      "worker_resource_count_delta": 0
+    },
+    "windows": {
+      "build_tools": {"cmake": "cmake version 4.4.3", "ninja": "1.13.2"},
+      "canonicalizer_latency_ns": {"count": 5, "max_ns": 53607500, "min_ns": 48575400, "p50_ns": 48721900, "p95_ns": 53607500},
+      "logical_signature_sha256": "f346cbf442b664c93987ea704b215d7e4efee051b5e62cae585e5b9f936ff98b",
+      "long_soak": {"epoch_latency_ns": {"count": 20, "max_ns": 67047700, "min_ns": 26840200, "p50_ns": 27277700, "p95_ns": 65491800}, "epochs": 20, "events_per_epoch": 5000, "journal_event_count": 100000, "material_operation_count": 75000, "peak_pending_units": 2, "query_boundaries": 20, "resource_trend": {"peak_observed_working_set_bytes": 28184576, "resource_count_delta": 0, "resource_count_leak_allowance": 4, "rss_growth_guard_bytes": 67108864, "working_set_delta_bytes": 36864}, "throughput_events_per_second": 143839.96, "worker_recycle_successes": 4},
+      "python": "3.12.10",
+      "scale": [
+        {"elapsed_ns": 449313700, "journal_event_count": 10000, "kind": "lathe", "material_operation_count": 7500, "peak_pending_units": 2, "throughput_events_per_second": 22256.165},
+        {"elapsed_ns": 463203900, "journal_event_count": 10000, "kind": "mill", "material_operation_count": 7500, "peak_pending_units": 2, "throughput_events_per_second": 21588.765},
+        {"elapsed_ns": 463920700, "journal_event_count": 10000, "kind": "mixed", "material_operation_count": 7500, "peak_pending_units": 2, "throughput_events_per_second": 21555.408},
+        {"elapsed_ns": 4525720000, "journal_event_count": 100000, "kind": "lathe", "material_operation_count": 75000, "peak_pending_units": 2, "throughput_events_per_second": 22095.932},
+        {"elapsed_ns": 4508241600, "journal_event_count": 100000, "kind": "mill", "material_operation_count": 75000, "peak_pending_units": 2, "throughput_events_per_second": 22181.597},
+        {"elapsed_ns": 4592254400, "journal_event_count": 100000, "kind": "mixed", "material_operation_count": 75000, "peak_pending_units": 2, "throughput_events_per_second": 21775.797}
+      ],
+      "toolchain": {"compiler_id": "MSVC", "compiler_version_numeric": 1951, "cplusplus": 201703},
+      "worker_recovery": {"clean_successes": 24, "crashes_contained": 3, "forced_kills_contained": 2, "latency": {"count": 33, "max_ns": 113605900, "min_ns": 34234900, "p50_ns": 38387200, "p95_ns": 110202500}, "timeouts_contained": 4, "tracked_orphan_processes": 0},
+      "worker_resource_count_delta": 0
+    }
+  },
+  "schema": "rcs-026-measured-result/1.0",
+  "source_pr_head": "fafe9ef74de7d89e690fdc61ee98c879c062b344",
+  "source_workflow_run_id": 35409683331,
+  "step_soak": {
+    "blocker_count": 29,
+    "live_repetitions": 3,
+    "negative_case_count": 7,
+    "negative_controls_passed": 7,
+    "positive_case_count": 11,
+    "positive_qualified_count": 0,
+    "qualification_status": "interoperability_unqualified",
+    "status": "pass",
+    "windows_step_soak": {"gate5_blocker": "No exact-pinned OCCT 8.0.1 Windows/MSVC STEP worker soak is established by this campaign; founding Windows STEP support remains conditional on that evidence.", "status": "not_run"}
+  }
+}
