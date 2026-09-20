@@ -128,6 +128,7 @@ def validate(obj: dict, *, check_shared: bool = True) -> None:
         "unknown_error_component_forbids_final_numeric_certificate",
         "numeric_tolerance_cannot_delete_positive_volume_or_change_topology",
         "open_proof_blocker_cannot_be_relabelled_out_of_domain",
+        "open_proof_blocker_never_satisfies_required_po",
     }
     if set(guards) != required_guards or any(guards[k] is not True for k in required_guards):
         fail("arithmetic fail-closed guards weakened")
@@ -189,6 +190,13 @@ def validate(obj: dict, *, check_shared: bool = True) -> None:
             fail(f"{pid} lost quantified statement")
         if not p.get("premises"):
             fail(f"{pid} premises missing")
+    by_po = {p["id"]: p for p in pos}
+    if "keeps PO-05 OPEN" not in by_po["PO-05"]["quantified_statement"] or "certified result" not in by_po["PO-05"]["quantified_statement"]:
+        fail("PO-05 acceptance semantics were weakened by treating blockers as success")
+    if "keeps PO-08 OPEN" not in by_po["PO-08"]["quantified_statement"] or "terminating successful route" not in by_po["PO-08"]["quantified_statement"]:
+        fail("PO-08 total-dispatch acceptance semantics were weakened")
+    if "keeps PO-09 OPEN" not in by_po["PO-09"]["quantified_statement"] or "yields finite conventional usable engineering geometry" not in by_po["PO-09"]["quantified_statement"]:
+        fail("PO-09 realization acceptance semantics were weakened")
 
     blockers = {b.get("id"): b for b in obj.get("proof_blockers", [])}
     if set(blockers) != EXPECTED_BLOCKERS:
@@ -256,12 +264,7 @@ def interval_scale_nonnegative(a: tuple[Fraction, Fraction], factor: Fraction) -
         fail("invalid nonnegative interval scale")
     return factor * a[0], factor * a[1]
 
-def compose_error(
-    inherited: tuple[Fraction, Fraction] | None,
-    local: tuple[Fraction, Fraction] | None,
-    *,
-    transfer: Fraction = Fraction(1),
-) -> tuple[Fraction, Fraction] | None:
+def compose_error(inherited: tuple[Fraction, Fraction] | None, local: tuple[Fraction, Fraction] | None, *, transfer: Fraction = Fraction(1)) -> tuple[Fraction, Fraction] | None:
     if inherited is None or local is None:
         return None
     return interval_add(interval_scale_nonnegative(inherited, transfer), local)
@@ -285,10 +288,8 @@ def boundary_controls() -> None:
         fail("zero error composition boundary failed")
     if compose_error((F(1, 10), F(1, 5)), (F(1, 100), F(1, 50)), transfer=F(2)) != (F(21, 100), F(21, 50)):
         fail("exact rational error composition failed")
-    if compose_error(None, (F(0), F(1, 10))) is not None:
-        fail("unknown inherited error was silently certified")
-    if compose_error((F(0), F(1, 10)), None) is not None:
-        fail("unknown local error was silently certified")
+    if compose_error(None, (F(0), F(1, 10))) is not None or compose_error((F(0), F(1, 10)), None) is not None:
+        fail("unknown error component was silently certified")
     if bounded_refinement(certified_depth=0, completed_steps=0, semantic_success=True) != "CERTIFIED":
         fail("zero-depth certified boundary failed")
     if bounded_refinement(certified_depth=5, completed_steps=4, semantic_success=False) != "REFINE":
@@ -318,6 +319,9 @@ def adversarial_controls() -> None:
     expect_reject(lambda o: next(x for x in o["proof_obligation_dag"] if x["id"] == "PO-05").__setitem__("state", "ACCEPTED"))
     expect_reject(lambda o: next(x for x in o["proof_obligation_dag"] if x["id"] == "PO-04").__setitem__("integration_owner", "MC-008"))
     expect_reject(lambda o: next(x for x in o["proof_obligation_dag"] if x["id"] == "PO-03").__setitem__("quantified_statement", "Finite composition works."))
+    expect_reject(lambda o: next(x for x in o["proof_obligation_dag"] if x["id"] == "PO-05").__setitem__("quantified_statement", "For every query, return a result or blocker."))
+    expect_reject(lambda o: next(x for x in o["proof_obligation_dag"] if x["id"] == "PO-08").__setitem__("quantified_statement", "For every query, dispatch or block."))
+    expect_reject(lambda o: next(x for x in o["proof_obligation_dag"] if x["id"] == "PO-09").__setitem__("quantified_statement", "For every state, return geometry or an open obligation."))
     expect_reject(lambda o: next(x for x in o["proof_obligation_dag"] if x["id"] == "PO-01").__setitem__("depends_on", ["PO-11"]))
     expect_reject(lambda o: next(x for x in o["proof_obligation_dag"] if x["id"] == "PO-11").__setitem__("depends_on", ["PO-11"]))
     expect_reject(lambda o: o.__setitem__("native_geometry_claimed", True))
