@@ -73,7 +73,23 @@
       ],
       "blockers": []
     },
-    "MC-007": {"state": "NOT_STARTED", "issue": 69, "accepted_artifacts": [], "blockers": []},
+    "MC-007": {
+      "state": "NEGATIVE_RESULT",
+      "issue": 69,
+      "accepted_artifacts": [
+        "research/machining-completeness/tasks/MC-007/transcendental-route-v1.json",
+        "research/machining-completeness/tasks/MC-007/report.md",
+        "research/machining-completeness/tasks/MC-007/outcome.json",
+        "research/machining-completeness/tasks/MC-007/verify.py",
+        "docs/machining-completeness/02-COMPLETENESS-ARGUMENT.md"
+      ],
+      "blockers": [
+        {"id": "PB-007-01", "status": "OPEN", "affected_descendants": ["MC-008", "MC-022", "MC-024", "MC-038"]},
+        {"id": "PB-007-02", "status": "OPEN", "affected_descendants": ["MC-008", "MC-022", "MC-024", "MC-038"]},
+        {"id": "PB-007-03", "status": "PROPAGATED_FROM_MC-006", "affected_descendants": ["MC-008", "MC-020", "MC-024", "MC-038"]},
+        {"id": "PB-007-04", "status": "PROPAGATED_TO_DOWNSTREAM", "affected_descendants": ["MC-008", "MC-032", "MC-038"]}
+      ]
+    },
     "MC-008": {"state": "NOT_STARTED", "issue": 70, "accepted_artifacts": [], "blockers": []},
     "MC-009": {"state": "NOT_STARTED", "issue": 71, "accepted_artifacts": [], "blockers": []},
     "MC-010": {"state": "NOT_STARTED", "issue": 72, "accepted_artifacts": [], "blockers": []},
