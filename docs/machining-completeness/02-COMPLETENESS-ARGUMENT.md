@@ -37,6 +37,14 @@ x in S iff there exist t,y: t in E and y in T and x = K(t)(y)
 
 Real-algebraic quantifier elimination and topological computation are a concrete reference-calculus research direction [T02 in the source register]. Inspect the full relevant theorems, algorithms, hypotheses and complexity before claiming applicability. Instantiate exact small examples, equality and composition, rather than citing a survey abstract as the proof.
 
+### MC-006 reviewed result
+
+MC-006 instantiates this direction as a **conditional exact reference route** in `research/machining-completeness/tasks/MC-006/algebraic-reference-route-v1.json`. The inspected T02 material includes the real-closed/finite-polynomial setting, Tarski-Seidenberg quantifier elimination, Definitions 2.2–2.3 and Theorem 2.4 for computable finite sign-invariant CAD, Definitions 2.11–2.12 for exact algebraic-point representations, and the stated roadmap results/hypotheses. The task-local verifier also instantiates exact Sturm/root and regularized material boundary controls.
+
+The result is intentionally narrower than D. It covers only operation instances whose stock, cutter, setup and engaged pose relation have an actual finite semialgebraic representation over rational/real-algebraic constants. General nonzero-pitch helices, timed phase motion, phase synchronization and generic coupled spindle/feed sweeps remain for MC-007. Imported stock or arbitrary tool source geometry is not declared polynomial merely because its physical constructor class is admitted. The frozen 26-operation denominator is unchanged.
+
+This closes the MC-006 research task, **not** PO-02/03/04/05/07 or MC-B. Universal topology/connectivity, all-constructor source representation, full non-algebraic motion and practical resource viability remain explicit downstream obligations. A CAD/QE timeout or impractical cost cannot be converted into semantic success, and durable body identity remains separate from cell/provider topology identity.
+
 ## Non-algebraic and event track
 
 A geometric arc image is not the same object as a timed coupled trajectory. Helices and spindle-synchronized feed can retain correlated trigonometric/time variables. Integer nanoradian tokens do not make their sine/cosine algebraic. Audit exact constants, time domains, bounded pieces and all required transform/motion classes. Investigate certified analytic/root-isolation extensions or a semantics-preserving certified representation, and retain uncovered branches as OPEN. Do not reduce the domain to make one calculus succeed.
