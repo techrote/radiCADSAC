@@ -37,9 +37,15 @@
       "blockers": []
     },
     "MC-004": {
-      "state": "NOT_STARTED",
+      "state": "COMPLETED_RESEARCH",
       "issue": 66,
-      "accepted_artifacts": [],
+      "accepted_artifacts": [
+        "research/machining-completeness/tasks/MC-004/qualification-contract-v1.json",
+        "research/machining-completeness/tasks/MC-004/report.md",
+        "research/machining-completeness/tasks/MC-004/outcome.json",
+        "research/machining-completeness/tasks/MC-004/verify.py",
+        "docs/machining-completeness/05-QUALIFICATION.md"
+      ],
       "blockers": []
     },
     "MC-005": {
