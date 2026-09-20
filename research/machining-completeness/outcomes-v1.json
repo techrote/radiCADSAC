@@ -61,7 +61,18 @@
       ],
       "blockers": []
     },
-    "MC-006": {"state": "NOT_STARTED", "issue": 68, "accepted_artifacts": [], "blockers": []},
+    "MC-006": {
+      "state": "COMPLETED_RESEARCH",
+      "issue": 68,
+      "accepted_artifacts": [
+        "research/machining-completeness/tasks/MC-006/algebraic-reference-route-v1.json",
+        "research/machining-completeness/tasks/MC-006/report.md",
+        "research/machining-completeness/tasks/MC-006/outcome.json",
+        "research/machining-completeness/tasks/MC-006/verify.py",
+        "docs/machining-completeness/02-COMPLETENESS-ARGUMENT.md"
+      ],
+      "blockers": []
+    },
     "MC-007": {"state": "NOT_STARTED", "issue": 69, "accepted_artifacts": [], "blockers": []},
     "MC-008": {"state": "NOT_STARTED", "issue": 70, "accepted_artifacts": [], "blockers": []},
     "MC-009": {"state": "NOT_STARTED", "issue": 71, "accepted_artifacts": [], "blockers": []},

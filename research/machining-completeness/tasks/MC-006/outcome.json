@@ -1,0 +1,68 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-006",
+  "result_kind": "COMPLETED_RESEARCH",
+  "evidence_class": ["SOURCE_INSPECTION", "REVIEWED_ARGUMENT", "DETERMINISTIC_MODEL"],
+  "source_baseline": "5b5db0e5b112e37111b42b4933af8469606337a0",
+  "issue": 68,
+  "dependency_artifacts": [
+    {"task": "MC-002", "path": "research/machining-completeness/tasks/MC-002/outcome.json", "blob_sha": "930db704e9dd29955e7af99ba793c74e0cfda325", "result_kind": "COMPLETED_RESEARCH"},
+    {"task": "MC-003", "path": "research/machining-completeness/tasks/MC-003/outcome.json", "blob_sha": "8f335f59f36c8761844806f9059af4a4f1671044", "result_kind": "COMPLETED_RESEARCH"}
+  ],
+  "accepted_claims": [
+    "finite semialgebraic machining steps over rational/real-algebraic constants have a concrete terminating exact reference route through first-order real quantifier elimination and finite sign-invariant cell decomposition under the inspected hypotheses",
+    "regularized removal for that covered slice can remain in exact first-order real semantics without tolerance-based deletion of positive-volume material",
+    "exact algebraic samples/root identity can be represented without binary-floating predicate authority using isolating/Thom/univariate representations",
+    "the task-local exact controls decide irrational/repeated roots, tangency, body split, empty material, positive-volume sliver and disjoint no-op cases without epsilon heuristics",
+    "the full MC-002 operation denominator remains 26; helix/timed-phase/generic coupled spindle-feed cases are propagated rather than excluded"
+  ],
+  "open_claims": [
+    "not every admitted stock/cutter instance yet has a finite exact semialgebraic constructive encoding",
+    "general helical, timed-phase and spindle/feed-correlated motion requires MC-007",
+    "universal exact topology/connectivity certification remains open for MC-008/MC-032/MC-038",
+    "PO-02, PO-03, PO-04, PO-05 and PO-07 remain open",
+    "MC-B and MC-1 remain NOT_ESTABLISHED",
+    "practical CAD/QE resource viability is not established",
+    "native material realization and STEP/B-rep qualification remain unqualified"
+  ],
+  "native_execution": false,
+  "artifacts": [
+    "research/machining-completeness/tasks/MC-006/algebraic-reference-route-v1.json",
+    "research/machining-completeness/tasks/MC-006/report.md",
+    "research/machining-completeness/tasks/MC-006/outcome.json",
+    "research/machining-completeness/tasks/MC-006/verify.py",
+    "docs/machining-completeness/02-COMPLETENESS-ARGUMENT.md",
+    "research/machining-completeness/outcomes-v1.json",
+    ".github/workflows/mc1-static.yml"
+  ],
+  "verification": [
+    "python3 research/machining-completeness/tasks/MC-006/verify.py --contract",
+    "python3 tools/mc_workflow.py verify MC-006",
+    "python3 tools/validate_machining_completeness.py --self-test",
+    "python3 tools/mc_workflow.py sync --check"
+  ],
+  "adversarial_controls": [
+    "reject promotion of deterministic reference controls to native geometry evidence",
+    "reject global epsilon as exact predicate authority",
+    "reject helical operation smuggled into direct semialgebraic coverage",
+    "reject operation-denominator shrinkage",
+    "reject hidden MC-007 handoff for uncovered analytic constructors",
+    "reject premature universal-topology lemma acceptance",
+    "reject premature MC-B acceptance",
+    "reject weakened journal/provenance/body semantics",
+    "reject removal of inspected theorem/algorithm hypotheses"
+  ],
+  "resources": {"native_permit_required": false, "native_or_paid_campaign_run": false},
+  "review": {
+    "disposition": "completed conditional exact-reference research; no capability gate changed",
+    "gate_changed": false,
+    "programme_capability_changed": false,
+    "downstream_release": "MC-008 still requires MC-007 as well as MC-006; MC-006 alone does not release MC-B"
+  },
+  "blockers": [],
+  "downstream_invalidations": [
+    "a change to MC-002 domain constructor semantics invalidates affected coverage classifications",
+    "a change to MC-003 exact source/curve/transform semantics invalidates affected algebraic source reductions",
+    "a change to regularized-removal semantics invalidates L006-03 and dependent controls"
+  ]
+}
