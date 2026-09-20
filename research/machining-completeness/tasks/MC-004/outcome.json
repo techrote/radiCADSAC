@@ -1,0 +1,104 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-004",
+  "result_kind": "COMPLETED_RESEARCH",
+  "evidence_class": [
+    "REQUIREMENT",
+    "DESIGN_DECISION",
+    "DOCUMENTATION_RECONCILIATION"
+  ],
+  "source_baseline": "047e43f07cf94eda70292679c78f38c4f661dd81",
+  "issue": 66,
+  "dependency_artifacts": [
+    {
+      "task": "MC-002",
+      "path": "research/machining-completeness/tasks/MC-002/outcome.json",
+      "blob_sha": "930db704e9dd29955e7af99ba793c74e0cfda325",
+      "result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "reviewed_auxiliary_artifacts": [
+    {
+      "task": "MC-003",
+      "path": "research/machining-completeness/tasks/MC-003/outcome.json",
+      "blob_sha": "8f335f59f36c8761844806f9059af4a4f1671044",
+      "result_kind": "COMPLETED_RESEARCH",
+      "note": "consumed for compatibility with exact numeric/source semantics without changing the task graph dependency set"
+    }
+  ],
+  "accepted_claims": [
+    "candidate-independent workload identities and deterministic generation seed are frozen prospectively before candidate qualification",
+    "the MC-002 admitted operation denominator is preserved and T1 requires at least one valid fixture per admitted operation",
+    "T2 requires separate 10/100/1000/10000 genuine geometry-changing and redundant-history scale cells",
+    "semantic, engineering and precision-boundary accuracy vectors are fixed without converting tolerances into topology or feature-deletion rules",
+    "named primary and secondary reference hardware plus wall-time, memory and timeout envelopes are fixed before candidate execution",
+    "final required repeats are three completed sequential repetitions and all crash/timeout/incomplete attempts remain visible",
+    "timeout, resource exhaustion, pending/refusal, crash, invalid certificate and material mismatch are non-pass outcomes"
+  ],
+  "open_claims": [
+    "MC-A remains NOT_ESTABLISHED until MC-005 integrates MC-002 through MC-004",
+    "no candidate has been shown to satisfy any preregistered accuracy or resource envelope",
+    "T3 100k+ native stress remains conditional on measured need and separate explicit authorization",
+    "provider tariff and monetary budget must be verified at campaign time rather than guessed from historical prices",
+    "DD-002-04 live/driven-tool compound-operation product semantics remain open",
+    "DD-002-05 multi-spindle/transfer-machine product semantics remain open",
+    "no native realization, constructive completeness, STEP qualification, scale capability or production readiness is established by this task"
+  ],
+  "native_execution": false,
+  "artifacts": [
+    "research/machining-completeness/tasks/MC-004/qualification-contract-v1.json",
+    "research/machining-completeness/tasks/MC-004/report.md",
+    "research/machining-completeness/tasks/MC-004/verify.py",
+    "docs/machining-completeness/05-QUALIFICATION.md"
+  ],
+  "artifact_bindings": [
+    {
+      "path": "research/machining-completeness/tasks/MC-004/qualification-contract-v1.json",
+      "git_blob_sha1": "22d5f976718edac9a8ccce3cb46f799b76e85ab4"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-004/report.md",
+      "git_blob_sha1": "a73badb8baa8600d4f154e3a4dceabe3ee69cb37"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-004/verify.py",
+      "git_blob_sha1": "6080d7e8885620ad3e59aac715e0ee7a815fb635"
+    },
+    {
+      "path": "docs/machining-completeness/05-QUALIFICATION.md",
+      "git_blob_sha1": "24980f4450e2227c1d93ddaa4faea8d1a94e7a6f"
+    }
+  ],
+  "verification": [
+    "python3 research/machining-completeness/tasks/MC-004/verify.py --contract",
+    "python3 tools/mc_workflow.py verify MC-004",
+    "python3 tools/validate_machining_completeness.py"
+  ],
+  "adversarial_controls": [
+    "reject candidate-specific qualification profiles",
+    "reject candidate-specific overrides of frozen criteria",
+    "reject dropped MC-002 admitted operations",
+    "reject candidate-feedback-tuned fixture generation",
+    "reject shrinking the required 10000-section tier",
+    "reject inflated engineering accuracy limits",
+    "reject tolerance as a topology/feature-deletion rule",
+    "reject candidate-selected reference hardware",
+    "reject parallel final repeats",
+    "reject expansion of the 10000-section memory envelope",
+    "reject timeout as pass",
+    "reject guessed provider tariff",
+    "reject promotion of qualification design evidence to native geometry"
+  ],
+  "resources": {
+    "native_permit_required": false,
+    "native_or_paid_campaign_run": false,
+    "primary_reference_hardware": "MC-RH-Q1",
+    "largest_required_t2_profile": "T2-G10000"
+  },
+  "review": {
+    "disposition": "reviewed artifact dependency only",
+    "gate_changed": false
+  },
+  "blockers": [],
+  "downstream_invalidations": []
+}
