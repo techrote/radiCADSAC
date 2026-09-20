@@ -1,0 +1,521 @@
+{
+  "schema": "radicadsac-mc008-termination-proof-dag/1.0",
+  "task": "MC-008",
+  "status": "reviewed-integration-contract-with-open-proof-blockers",
+  "source_baseline": "cd42f951191489284d3ab2aaba2cdc05c035cda9",
+  "native_geometry_claimed": false,
+  "native_or_paid_execution": false,
+  "dependencies": [
+    {
+      "task": "MC-003",
+      "path": "research/machining-completeness/tasks/MC-003/outcome.json",
+      "git_blob_sha1": "8f335f59f36c8761844806f9059af4a4f1671044",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-006",
+      "path": "research/machining-completeness/tasks/MC-006/outcome.json",
+      "git_blob_sha1": "0319e00b492c57e4a11e3e78ef9a2e15ff67e52e",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-007",
+      "path": "research/machining-completeness/tasks/MC-007/outcome.json",
+      "git_blob_sha1": "8d54872292dfd9f632c79c76994a467d26eaaf9c",
+      "result_kind": "NEGATIVE_RESULT"
+    }
+  ],
+  "scope_guard": {
+    "operation_denominator_preserved": 26,
+    "domain_narrowed": false,
+    "universal_constructive_capability_claimed": false,
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED"
+  },
+  "arithmetic_escalation": [
+    {
+      "tier": "A0",
+      "name": "exact-source",
+      "admission": "MC-003 exact integer/rational/algebraic/symbolic-turn source semantics apply",
+      "success": "retain exact source values and exact finite piece boundaries",
+      "failure": "advance only to a semantics-preserving stronger decision route; never decimalize or infer lost precision"
+    },
+    {
+      "tier": "A1",
+      "name": "exact-algebraic",
+      "admission": "the current event/material predicate is reducible to the MC-006 semialgebraic calculus with all theorem hypotheses verified",
+      "success": "use finite exact QE/CAD/root decisions and exact algebraic representations",
+      "failure": "do not approximate the predicate sign; dispatch to a proved analytic route or a proof blocker"
+    },
+    {
+      "tier": "A2",
+      "name": "validated-directed-enclosure",
+      "admission": "MC-007 proves separation or transversality and supplies an input-derived finite stopping/isolation bound",
+      "success": "use outward directed enclosures plus justified derivative bounds until the certified stopping witness is reached",
+      "failure": "if separation/transversality/stopping proof is absent, terminate as A3"
+    },
+    {
+      "tier": "A3",
+      "name": "fail-closed-proof-blocker",
+      "admission": "a required equality/topology/source event is not covered by A0-A2 with proved preconditions",
+      "success": "emit a typed unresolved proof blocker and preserve the case in the denominator",
+      "failure": "not applicable; A3 is the finite truthful terminal state"
+    }
+  ],
+  "arithmetic_guards": {
+    "binary_float_as_predicate_authority_forbidden": true,
+    "global_untyped_epsilon_forbidden": true,
+    "tolerance_as_predicate_sign_forbidden": true,
+    "silent_overflow_or_saturation_forbidden": true,
+    "timeout_or_iteration_cap_is_not_semantic_success": true,
+    "finite_sampling_alone_cannot_certify_no_event": true,
+    "provider_retry_cycles_forbidden": true,
+    "unknown_error_component_forbids_final_numeric_certificate": true,
+    "numeric_tolerance_cannot_delete_positive_volume_or_change_topology": true,
+    "open_proof_blocker_cannot_be_relabelled_out_of_domain": true
+  },
+  "event_decision_cases": [
+    {
+      "case": "exact-source-or-algebraically-reducible",
+      "route": "A0->A1",
+      "terminal": "CERTIFIED_DECISION"
+    },
+    {
+      "case": "analytic-proved-separated",
+      "route": "A0->A2",
+      "terminal": "CERTIFIED_NO_EVENT"
+    },
+    {
+      "case": "analytic-proved-transversal-with-finite-isolation-bound",
+      "route": "A0->A2",
+      "terminal": "CERTIFIED_SIMPLE_EVENT"
+    },
+    {
+      "case": "analytic-tangential-multiple-singular-or-no-stopping-proof",
+      "route": "A0->A3",
+      "terminal": "TRANSCENDENTAL_EVENT_BLOCKER",
+      "blockers": [
+        "PB-007-01",
+        "PB-007-02"
+      ]
+    },
+    {
+      "case": "missing-exact-source-or-universal-topology-route",
+      "route": "A0->A3",
+      "terminal": "PROOF_BLOCKER",
+      "blockers": [
+        "PB-007-03",
+        "PB-007-04"
+      ]
+    }
+  ],
+  "finite_progress": [
+    {
+      "id": "FP-008-01",
+      "subject": "finite-journal composition",
+      "domain": "every finite admitted history H=(h0,...,h[n-1])",
+      "measure": "n-i, a natural number",
+      "strict_progress": "a successful composition step consumes exactly one next journal operation without dropping or reordering it",
+      "terminal": "i=n or an explicit proof blocker/refusal",
+      "owner_po": "PO-03"
+    },
+    {
+      "id": "FP-008-02",
+      "subject": "MC-006 exact algebraic decision",
+      "domain": "every event admitted by the checked MC-006 semialgebraic hypotheses",
+      "measure": "the finite algorithmic decomposition/quantifier-elimination work prescribed by the inspected terminating exact procedure",
+      "strict_progress": "progress is supplied by the referenced exact algorithm, not by a timeout counter",
+      "terminal": "certified exact decision; resource refusal remains unsolved",
+      "owner_po": "PO-04"
+    },
+    {
+      "id": "FP-008-03",
+      "subject": "MC-007 separated/transversal analytic refinement",
+      "domain": "every analytic event with a proved input-derived finite enclosure/isolation depth N",
+      "measure": "N-k, a natural number after k certified refinement steps",
+      "strict_progress": "each certified refinement increments k and preserves outward enclosure",
+      "terminal": "k<=N with certified separation/simple event",
+      "owner_po": "PO-05"
+    },
+    {
+      "id": "FP-008-04",
+      "subject": "uncovered required event",
+      "domain": "every required case lacking the preconditions of FP-008-02/03 or another proved finite route",
+      "measure": "zero refinement steps after the missing premise is identified",
+      "strict_progress": "fail closed immediately rather than retry, jitter or subdivide indefinitely",
+      "terminal": "typed PROOF_BLOCKER retained in the denominator",
+      "owner_po": "PO-05"
+    }
+  ],
+  "forbidden_progress_substitutes": [
+    "jitter-until-success",
+    "provider-cycle-until-one-accepts",
+    "refine-until-timeout-then-pass",
+    "fixed-depth-subdivision-used-as-proof-without-derived-bound",
+    "drop-operation-or-body-after-refusal"
+  ],
+  "error_composition": {
+    "certifying_scalar_language": "exact nonnegative rational/real-algebraic values or outward directed rational intervals; no binary-float predicate authority",
+    "stage_order": [
+      "source_decode",
+      "transform",
+      "sweep_material",
+      "classification_topology",
+      "reconstruction",
+      "step_export"
+    ],
+    "rule": "For certified numeric stages, compose outward error enclosures monotonically from inherited bound plus a proved local contribution/transfer. If any required component is unknown, final numeric certification is UNCERTIFIED rather than zero, guessed or tolerance-clipped.",
+    "topology_is_noncompensating": true,
+    "positive_volume_is_noncompensating": true,
+    "body_identity_and_lineage_are_noncompensating": true,
+    "unknown_component_terminal": "UNCERTIFIED"
+  },
+  "internal_lemma_dag": [
+    {
+      "id": "L008-01",
+      "claim": "exact source decoding preserves MC-003 numeric meaning",
+      "depends_on": [],
+      "owner": "MC-008",
+      "status": "REVIEWED_CONTRACT"
+    },
+    {
+      "id": "L008-02",
+      "claim": "semialgebraic-admitted events dispatch to the terminating MC-006 exact route",
+      "depends_on": [
+        "L008-01"
+      ],
+      "owner": "MC-008",
+      "status": "REVIEWED_CONTRACT"
+    },
+    {
+      "id": "L008-03",
+      "claim": "proved separated/transversal analytic events have finite MC-007 bounded refinement",
+      "depends_on": [
+        "L008-01"
+      ],
+      "owner": "MC-008",
+      "status": "REVIEWED_CONTRACT"
+    },
+    {
+      "id": "L008-04",
+      "claim": "uncovered event branches terminate fail-closed with typed blockers",
+      "depends_on": [
+        "L008-02",
+        "L008-03"
+      ],
+      "owner": "MC-008",
+      "status": "REVIEWED_CONTRACT"
+    },
+    {
+      "id": "L008-05",
+      "claim": "finite journal composition has an explicit natural-number progress measure",
+      "depends_on": [
+        "L008-01",
+        "L008-04"
+      ],
+      "owner": "MC-008",
+      "status": "REVIEWED_CONTRACT"
+    },
+    {
+      "id": "L008-06",
+      "claim": "numeric error transfer is monotone and refuses unknown components",
+      "depends_on": [
+        "L008-01",
+        "L008-04"
+      ],
+      "owner": "MC-008",
+      "status": "REVIEWED_CONTRACT"
+    },
+    {
+      "id": "L008-07",
+      "claim": "topology/material/body correctness cannot be compensated by numeric tolerance",
+      "depends_on": [
+        "L008-05",
+        "L008-06"
+      ],
+      "owner": "MC-008",
+      "status": "REVIEWED_CONTRACT"
+    },
+    {
+      "id": "L008-08",
+      "claim": "PO-01 through PO-12 form an acyclic ownership/dependency contract with open proof states preserved",
+      "depends_on": [
+        "L008-04",
+        "L008-07"
+      ],
+      "owner": "MC-008",
+      "status": "REVIEWED_CONTRACT"
+    }
+  ],
+  "proof_obligation_dag": [
+    {
+      "id": "PO-01",
+      "title": "Domain fidelity",
+      "integration_owner": "MC-005",
+      "state": "ACCEPTED",
+      "depends_on": [],
+      "quantified_statement": "For every admitted current-tranche operation/history constructor, the canonical source maps to the frozen physical domain without unapproved semantic loss.",
+      "premises": [
+        "MC-A current-tranche domain lock is accepted",
+        "the MC-002/003 constructor and exact-source contracts are unchanged"
+      ]
+    },
+    {
+      "id": "PO-02",
+      "title": "Sweep semantics",
+      "integration_owner": "MC-031",
+      "state": "OPEN",
+      "depends_on": [
+        "PO-01"
+      ],
+      "quantified_statement": "For every admitted cutter/setup/motion instance, actual engaged tool sweep semantics equal the material-removal operation defined by the canonical source.",
+      "premises": [
+        "PO-01",
+        "all relevant motion correlation and engagement/end-point semantics are preserved"
+      ]
+    },
+    {
+      "id": "PO-03",
+      "title": "Closure under finite composition",
+      "integration_owner": "MC-039",
+      "state": "OPEN",
+      "depends_on": [
+        "PO-01",
+        "PO-02"
+      ],
+      "quantified_statement": "For every finite physically valid admitted history, applying its operations and setup transitions in journal order yields a defined material/body state with no dropped operation or body.",
+      "premises": [
+        "PO-01",
+        "PO-02",
+        "finite history length",
+        "setup transitions preserve declared frames/body identity"
+      ]
+    },
+    {
+      "id": "PO-04",
+      "title": "Sound classification",
+      "integration_owner": "MC-032",
+      "state": "OPEN",
+      "depends_on": [
+        "PO-01",
+        "PO-02",
+        "PO-03"
+      ],
+      "quantified_statement": "For every required material/event query generated by an admitted finite history, inside/outside/boundary and equality/root decisions are sound, including exact-zero, multiple-root and singular cases.",
+      "premises": [
+        "PO-01",
+        "PO-02",
+        "PO-03",
+        "the arithmetic/event branch used has a proved decision precondition"
+      ]
+    },
+    {
+      "id": "PO-05",
+      "title": "Finite progress",
+      "integration_owner": "MC-038",
+      "state": "OPEN",
+      "depends_on": [
+        "PO-02",
+        "PO-03",
+        "PO-04"
+      ],
+      "quantified_statement": "For every required query and realization step, the selected constructive route either terminates with a certified result or terminates with an explicit unresolved proof blocker; timeout, iteration caps and provider cycling are not semantic success.",
+      "premises": [
+        "PO-02",
+        "PO-03",
+        "PO-04",
+        "each successful refinement branch has an input-derived finite stopping witness"
+      ]
+    },
+    {
+      "id": "PO-06",
+      "title": "Checkable error certification",
+      "integration_owner": "MC-037",
+      "state": "OPEN",
+      "depends_on": [
+        "PO-04",
+        "PO-05",
+        "PO-07",
+        "PO-09"
+      ],
+      "quantified_statement": "For every nonempty realized result at an admitted accuracy request, a checker can verify the composed geometric error bound from source decoding through reconstruction without compensating for topology/material/body errors.",
+      "premises": [
+        "PO-04",
+        "PO-05",
+        "PO-07",
+        "PO-09",
+        "every numeric-error transfer is monotone and source-bound"
+      ]
+    },
+    {
+      "id": "PO-07",
+      "title": "Topology/connectivity",
+      "integration_owner": "MC-032",
+      "state": "OPEN",
+      "depends_on": [
+        "PO-01",
+        "PO-02",
+        "PO-03",
+        "PO-04"
+      ],
+      "quantified_statement": "For every material state produced by an admitted finite history, connectivity, components, protected positive-volume features and durable body/lineage semantics are correct.",
+      "premises": [
+        "PO-01",
+        "PO-02",
+        "PO-03",
+        "PO-04",
+        "topology is decided independently of numeric tolerance"
+      ]
+    },
+    {
+      "id": "PO-08",
+      "title": "Complete dispatch",
+      "integration_owner": "MC-030",
+      "state": "OPEN",
+      "depends_on": [
+        "PO-01",
+        "PO-02",
+        "PO-03",
+        "PO-04",
+        "PO-05"
+      ],
+      "quantified_statement": "For every admitted required query, provider dispatch selects a semantics-preserving terminating route or a named unresolved proof blocker without retry cycling, denominator shrinkage or operation substitution.",
+      "premises": [
+        "PO-01",
+        "PO-02",
+        "PO-03",
+        "PO-04",
+        "PO-05",
+        "provider admission conditions are checkable sufficient conditions"
+      ]
+    },
+    {
+      "id": "PO-09",
+      "title": "Conventional engineering realization",
+      "integration_owner": "MC-037",
+      "state": "OPEN",
+      "depends_on": [
+        "PO-05",
+        "PO-07",
+        "PO-08"
+      ],
+      "quantified_statement": "For every required nominal material/body state, including singular and grouped cases, the construction yields finite conventional usable engineering geometry or leaves an explicit open realization obligation.",
+      "premises": [
+        "PO-05",
+        "PO-07",
+        "PO-08",
+        "output profile and body mapping are fixed prospectively"
+      ]
+    },
+    {
+      "id": "PO-10",
+      "title": "STEP preservation",
+      "integration_owner": "MC-044",
+      "state": "OPEN",
+      "depends_on": [
+        "PO-06",
+        "PO-07",
+        "PO-09"
+      ],
+      "quantified_statement": "For every qualified engineering result, exact-profile STEP write/read and independent engineering use preserve certified geometry, topology and body mapping within the frozen request.",
+      "premises": [
+        "PO-06",
+        "PO-07",
+        "PO-09",
+        "the qualified consumer path is independent of candidate self-verdicts"
+      ]
+    },
+    {
+      "id": "PO-11",
+      "title": "Implementation refinement",
+      "integration_owner": "MC-050",
+      "state": "OPEN",
+      "depends_on": [
+        "PO-02",
+        "PO-03",
+        "PO-04",
+        "PO-05",
+        "PO-06",
+        "PO-07",
+        "PO-08",
+        "PO-09",
+        "PO-10",
+        "PO-12"
+      ],
+      "quantified_statement": "For every implemented authority-path function used by MC-1, observable behavior refines its reviewed construction/certificate contract on all admitted inputs.",
+      "premises": [
+        "all depended-on POs",
+        "implementation-to-lemma mappings are complete",
+        "adversarial audit remains independent"
+      ]
+    },
+    {
+      "id": "PO-12",
+      "title": "Resource accounting",
+      "integration_owner": "MC-048",
+      "state": "OPEN",
+      "depends_on": [
+        "PO-05",
+        "PO-08"
+      ],
+      "quantified_statement": "For every preregistered qualification workload and completed final repeat, elapsed time, peak memory, threads/workers, refusals and failures are truthfully accounted against the frozen resource envelope.",
+      "premises": [
+        "PO-05",
+        "PO-08",
+        "MC-004 qualification contract remains frozen",
+        "timeouts/resource exhaustion remain unsolved"
+      ]
+    }
+  ],
+  "proof_blockers": [
+    {
+      "id": "PB-007-01",
+      "status": "OPEN",
+      "claim": "unconditional finite exact decision for required tangential/multiple/singular transcendental events is not established",
+      "affected_descendants": [
+        "MC-022",
+        "MC-024",
+        "MC-032",
+        "MC-038"
+      ]
+    },
+    {
+      "id": "PB-007-02",
+      "status": "OPEN",
+      "claim": "unconditional full constructive route for general coupled helical/spindle-feed/eccentric sweep membership is not established",
+      "affected_descendants": [
+        "MC-022",
+        "MC-024",
+        "MC-038"
+      ]
+    },
+    {
+      "id": "PB-007-03",
+      "status": "PROPAGATED_FROM_MC-006",
+      "claim": "exact constructive source representation for every admitted imported-stock and arbitrary form/undercut cutter instance remains open",
+      "affected_descendants": [
+        "MC-020",
+        "MC-024",
+        "MC-038"
+      ]
+    },
+    {
+      "id": "PB-007-04",
+      "status": "PROPAGATED_TO_DOWNSTREAM",
+      "claim": "universal exact topology/connectivity certification remains open",
+      "affected_descendants": [
+        "MC-032",
+        "MC-038"
+      ]
+    }
+  ],
+  "protected_semantics": {
+    "source_audio_provenance_preserved": true,
+    "canonical_journal_meaning_preserved": true,
+    "durable_body_and_lineage_preserved": true,
+    "positive_volume_material_preserved": true,
+    "historical_negative_evidence_preserved": true,
+    "legacy_genesis_evidence_not_promoted_or_rewritten": true
+  },
+  "downstream_rule": "Artifact consumers may use this DAG to design/falsify routes while every OPEN PO and PB-007 blocker remains open. MC-B cannot pass until MC-038 has a reviewed terminating route for every required branch and no required lemma remains OPEN."
+}

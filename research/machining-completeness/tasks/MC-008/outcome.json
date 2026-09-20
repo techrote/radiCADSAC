@@ -1,0 +1,135 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-008",
+  "result_kind": "COMPLETED_RESEARCH",
+  "evidence_class": [
+    "REVIEWED_ARGUMENT",
+    "DESIGN_DECISION",
+    "DETERMINISTIC_MODEL",
+    "DOCUMENTATION_RECONCILIATION"
+  ],
+  "source_baseline": "cd42f951191489284d3ab2aaba2cdc05c035cda9",
+  "issue": 70,
+  "dependency_artifacts": [
+    {
+      "task": "MC-003",
+      "path": "research/machining-completeness/tasks/MC-003/outcome.json",
+      "blob_sha": "8f335f59f36c8761844806f9059af4a4f1671044",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-006",
+      "path": "research/machining-completeness/tasks/MC-006/outcome.json",
+      "blob_sha": "0319e00b492c57e4a11e3e78ef9a2e15ff67e52e",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-007",
+      "path": "research/machining-completeness/tasks/MC-007/outcome.json",
+      "blob_sha": "8d54872292dfd9f632c79c76994a467d26eaaf9c",
+      "result_kind": "NEGATIVE_RESULT"
+    }
+  ],
+  "accepted_claims": [
+    "MC-003, MC-006 and MC-007 can be integrated into a finite A0-A3 arithmetic/event escalation that preserves exact source semantics and fails closed on uncovered required cases",
+    "every required PO-01 through PO-12 has an explicit quantified statement, premise list, stable integration owner and acyclic direct dependency set",
+    "finite journal composition, admitted MC-006 exact decisions and MC-007 proved separated/transversal refinement have explicit finite-progress witnesses",
+    "unknown numeric error remains UNCERTIFIED and numeric tolerances cannot compensate for topology, positive-volume material, body identity or lineage",
+    "PB-007-01 through PB-007-04 remain explicit downstream blockers and the 26-operation denominator is unchanged"
+  ],
+  "open_claims": [
+    "PO-02 through PO-12 remain OPEN; MC-008 specifies their contracts but does not supply their downstream capability evidence",
+    "PB-007-01 and PB-007-02 remain open exact transcendental/event and coupled-sweep proof blockers",
+    "PB-007-03 exact source representation and PB-007-04 universal topology/connectivity remain open",
+    "MC-B and MC-1 remain NOT_ESTABLISHED",
+    "native material, topology, reconstruction, STEP qualification and practical scale remain unqualified"
+  ],
+  "native_execution": false,
+  "artifacts": [
+    "research/machining-completeness/tasks/MC-008/termination-proof-dag-v1.json",
+    "research/machining-completeness/tasks/MC-008/report.md",
+    "research/machining-completeness/tasks/MC-008/outcome.json",
+    "research/machining-completeness/tasks/MC-008/verify.py",
+    "research/machining-completeness/proof-obligations-v1.json",
+    "docs/machining-completeness/02-COMPLETENESS-ARGUMENT.md",
+    "research/machining-completeness/outcomes-v1.json",
+    ".github/workflows/mc1-static.yml"
+  ],
+  "verification": [
+    "python3 research/machining-completeness/tasks/MC-008/verify.py --contract",
+    "python3 tools/mc_workflow.py verify MC-008",
+    "python3 tools/validate_machining_completeness.py --self-test",
+    "python3 tools/mc_workflow.py sync --check"
+  ],
+  "adversarial_controls": [
+    "reject operation-denominator shrinkage",
+    "reject universal constructive-capability promotion",
+    "reject global epsilon or timeout/iteration-cap predicate authority",
+    "reject deletion of inherited proof blockers",
+    "reject numeric compensation for topology/material/body correctness",
+    "reject unknown numeric error being replaced by zero",
+    "reject premature PO acceptance or PO-owner drift",
+    "reject unquantified PO claims and cyclic PO dependencies",
+    "reject promotion of reviewed/model evidence to native geometry",
+    "reject weakening durable body/lineage and protected provenance semantics"
+  ],
+  "resources": {
+    "native_permit_required": false,
+    "native_or_paid_campaign_run": false
+  },
+  "review": {
+    "disposition": "completed integration research: finite fail-closed arithmetic/termination contract plus acyclic quantified PO-01..12 DAG; no capability gate changed",
+    "gate_changed": false,
+    "programme_capability_changed": false,
+    "downstream_release": "artifact-dependent tasks may consume the integrated contract while all open POs and PB-007 blockers propagate; MC-B is not released"
+  },
+  "blockers": [
+    {
+      "id": "PB-007-01",
+      "status": "OPEN",
+      "claim": "unconditional finite exact decision for required tangential/multiple/singular transcendental events is not established",
+      "affected_descendants": [
+        "MC-022",
+        "MC-024",
+        "MC-032",
+        "MC-038"
+      ]
+    },
+    {
+      "id": "PB-007-02",
+      "status": "OPEN",
+      "claim": "unconditional full constructive route for general coupled helical/spindle-feed/eccentric sweep membership is not established",
+      "affected_descendants": [
+        "MC-022",
+        "MC-024",
+        "MC-038"
+      ]
+    },
+    {
+      "id": "PB-007-03",
+      "status": "PROPAGATED_FROM_MC-006",
+      "claim": "exact constructive source representation for every admitted imported-stock and arbitrary form/undercut cutter instance remains open",
+      "affected_descendants": [
+        "MC-020",
+        "MC-024",
+        "MC-038"
+      ]
+    },
+    {
+      "id": "PB-007-04",
+      "status": "PROPAGATED_TO_DOWNSTREAM",
+      "claim": "universal exact topology/connectivity certification remains open",
+      "affected_descendants": [
+        "MC-032",
+        "MC-038"
+      ]
+    }
+  ],
+  "downstream_invalidations": [
+    "changing MC-003 exact source/numeric semantics invalidates A0 and dependent arithmetic/error contracts",
+    "changing MC-006 exact semialgebraic hypotheses or route invalidates A1 and dependent progress claims",
+    "changing MC-007 analytic route or blockers invalidates A2/A3 and blocker propagation",
+    "changing a PO owner, quantified target or dependency requires revalidation of both the shared proof register and downstream claim maps",
+    "any future discharge of a PB-007 blocker must preserve this historical negative/integration evidence rather than rewriting it"
+  ]
+}
