@@ -1,22 +1,22 @@
 # Domain, material semantics and numerical contract
 
-Status: adopted requirements and an explicit research specification, not a completed domain lock. Owners: MC-002–005, sweep tasks MC-018–023 and profile decision MC-054. Read [programme](00-PROGRAMME.md) and [proof specification](02-COMPLETENESS-ARGUMENT.md).
+Status: **MC-A domain lock accepted by MC-005 for the current MC-1 tranche**. Owners: MC-002–005, sweep tasks MC-018–023 and profile decision MC-054. Read [programme](00-PROGRAMME.md) and [proof specification](02-COMPLETENESS-ARGUMENT.md). MC-A acceptance fixes the requirements boundary; it is not a constructive-completeness, native-geometry, STEP or scale claim.
 
 ## Process-first domain
 
 Define admissibility from physical/product semantics before testing a solver. Inventory bounded volumetric stock, subsequently machined states, multiple bodies, cavities, thin webs and imported-stock validity; finite effective cutting solids including flat, ball/rounded, corner-radius, drill, form and accessible undercut families; engaged finite continuous piecewise motion including lines, arcs, polylines, splines, stationarity, reversals, self-crossings and arbitrarily dense finite segmentation; conventional lathe spindle/feed relations; rigid setups, re-clamping/re-chucking and lathe → mill → lathe histories. Fixed tool axis during an individual three-axis milling operation does not forbid a later reoriented setup.
 
-Classify threads, synchronized/phase-dependent turning, tapered/formed/internal cuts, finite cutter length, nonconvex cutting regions, eccentric setups and accessible undercuts explicitly. Do not relabel an ordinary operation as five-axis or unsupported because a height field or axisymmetric provider cannot represent it. Disputed boundaries remain open with product/machine justification. Continuous five-axis reorientation, additive processes, deformation and force simulation are not silently added.
+Classify threads, synchronized/phase-dependent turning, tapered/formed/internal cuts, finite cutter length, nonconvex cutting regions, eccentric setups and accessible undercuts explicitly. Do not relabel an ordinary operation as five-axis or unsupported because a height field or axisymmetric provider cannot represent it. Disputed boundaries remain open with product/machine justification until their integration owner resolves them. Continuous five-axis reorientation, additive processes, deformation and force simulation are not silently added.
 
 A finite source description is necessary but does not itself prove decidability. State an effective deterministic constructor language, parameter/coefficient domains and source-to-language mapping. Do not admit arbitrary unanalysed executable predicates and assume a terminating solver follows. Equally, do not define the language merely as the current solver's successful subset. An uncovered ordinary machining constructor is a PO-01/02/05 gap.
 
 ### MC-002 reviewed constructor/physical-validity artifact
 
-MC-002 records the reviewed candidate-independent constructor and witness map at `research/machining-completeness/tasks/MC-002/domain-contract-v1.json`. It is a requirement/design artifact, not native geometry evidence and not an MC-A acceptance. The map explicitly covers ordinary lathe, fixed-axis three-axis mill, re-clamp/reorientation, cross-machine, parting/multi-body and complete-removal histories; it also binds boundary/pathology policy and physical witnesses without using provider success as an admissibility oracle.
+MC-002 records the reviewed candidate-independent constructor and witness map at `research/machining-completeness/tasks/MC-002/domain-contract-v1.json`. It is a requirement/design artifact, not native geometry evidence and did not by itself accept MC-A. The map explicitly covers ordinary lathe, fixed-axis three-axis mill, re-clamp/reorientation, cross-machine, parting/multi-body and complete-removal histories; it also binds boundary/pathology policy and physical witnesses without using provider success as an admissibility oracle.
 
 For MC-1, a mill tool axis is fixed during one admitted cutting operation. Indexed/reoriented work is represented by an explicit non-cutting setup transition and a later operation; continuous cutting-time five-axis reorientation is outside the current MC-1 tranche. A drill cutting solid is machine-neutral and may be used in a witnessed lathe or mill setup. Fixed-axis helical motion is represented explicitly rather than inferred from a planar arc.
 
-The unresolved product boundaries remain named rather than silently narrowed: `DD-002-04` covers compound lathe live/driven-tool semantics, and `DD-002-05` covers simultaneously controlled multi-spindle/transfer-machine semantics. Provider limitations cannot resolve either decision. MC-003 now supplies the reviewed exact numeric/curve/phase/transform encoding artifact, MC-004 owns workload/accuracy/resource requests, and MC-A remains `NOT_ESTABLISHED` until MC-005 reviews the combined domain lock.
+MC-002 intentionally left two product boundaries for its integration owner rather than deciding them from provider convenience: `DD-002-04` covers compound lathe live/driven-tool semantics, and `DD-002-05` covers simultaneously controlled multi-spindle/transfer-machine semantics. Their historical MC-002 records remain unchanged. MC-005 resolves both for the current tranche in the integration section below without removing any of the 26 admitted operations.
 
 ### MC-003 reviewed numeric/encoding artifact
 
@@ -24,7 +24,22 @@ MC-003 records the reviewed exact-source and compatibility contract at `research
 
 For stronger MC-1 source semantics, `mc-exact-source/1.0` is an additive required extension/profile rather than a redefinition of v1. It uses canonical arbitrary-precision rationals, exact rational fractions of a full revolution and directed interval endpoints with explicit dimensions. It gives exact finite semantics to line/arc/helix/polyline/B-spline/piecewise/timed-phase motion, including spindle/path phase correlation, without decimalizing π or using an untyped epsilon as geometry truth. Unsupported readers reject an extension-bearing revision rather than downcasting it, and any migration creates a new revision with source identity; information absent from an old quantized journal is never reconstructed by fiat.
 
-The legacy one-nanometre source quantum is not a derived feature-size floor. Exact predicates do not imply exact constructions; nominal arithmetic and source/tool/machine/metrology uncertainty remain separate channels. Production persistence for the exact-source tokens and practical coefficient/event limits remain open implementation/resource questions for later owners. `DD-002-04` and `DD-002-05` remain propagated open product-domain decisions. MC-A remains `NOT_ESTABLISHED` until MC-005 integrates MC-002–004.
+The legacy one-nanometre source quantum is not a derived feature-size floor. Exact predicates do not imply exact constructions; nominal arithmetic and source/tool/machine/metrology uncertainty remain separate channels. Production persistence for the exact-source tokens remains an open implementation choice rather than a semantic-domain gap. Practical coefficient/event limits are bounded by the frozen qualification/resource contract and later scale work. The historical MC-003 artifact propagates `DD-002-04` and `DD-002-05` exactly as inherited from MC-002; MC-005 subsequently resolves their current-tranche status without rewriting MC-003.
+
+### MC-005 integrated domain lock
+
+The canonical integration record is `research/machining-completeness/tasks/MC-005/domain-lock-review-v1.json`. MC-005 cross-checks MC-002, MC-003, MC-004 and MC-056 and accepts PO-01 plus MC-A for the current MC-1 tranche.
+
+The machine/process boundary is **conventional lathe plus fixed-axis three-axis mill**, composed through finite explicit setup histories. The frozen denominator remains exactly the same 26 admitted operation/composition classes in MC-002 and MC-004. Provider refusal, implementation weakness or later candidate performance cannot remove a case from that denominator.
+
+The two previously open product decisions are resolved prospectively from programme scope:
+
+- `DD-002-04` — simultaneously controlled compound turn-mill/live-tool kinematics are **outside the current MC-1 tranche**. A workpiece achievable through the admitted lathe, mill, re-clamp and machine-transition history remains in scope; this decision does not permit rejection of any admitted operation merely because a commercial machine could combine the actions in one setup.
+- `DD-002-05` — simultaneously coordinated multi-spindle/transfer-machine process semantics are **outside the current MC-1 tranche**. Conventional lathe/mill work with explicit re-chuck/re-clamp, body retention and cross-machine transitions remains in scope.
+
+Neither decision is based on a solver/provider limitation, and neither shrinks the current operation denominator. Future addition of compound turn-mill/live tooling, coordinated multi-spindle transfer, continuous five-axis cutting, additive processes or another process class requires a new reviewed domain/profile version before candidate testing. Such a revision cannot retroactively pass a candidate failure or rewrite this MC-A evidence.
+
+MC-A acceptance states what the programme must solve and the exact request against which it will be judged. It does **not** establish a terminating constructive route, native material/topology correctness, engineering B-rep/STEP realization, independent consumer usability, practical scale or MC-1 acceptance. Those remain owned by later gates and proof obligations.
 
 ## Physical witness
 
@@ -69,4 +84,4 @@ The initial research ladder is 10, 1 and 0.1 micrometres plus local requests bel
 
 ## Domain-lock outputs
 
-MC-002 supplies the constructor/process/physical-witness map; MC-003 supplies exact numeric/curve/transform semantics and compatibility decisions; MC-004 supplies candidate-independent intended-session workloads, accuracy, reference hardware and usable time/memory envelopes; MC-005 reviews the combined domain and records MC-A. Missing actual product values remain named unresolved decisions. They must not be filled with a candidate's conveniently achieved performance.
+MC-002 supplies the constructor/process/physical-witness map; MC-003 supplies exact numeric/curve/transform semantics and compatibility decisions; MC-004 supplies candidate-independent intended-session workloads, accuracy, reference hardware and usable time/memory envelopes; MC-005 integrates those artifacts, resolves the remaining current-tranche product boundaries, accepts PO-01 and records **MC-A = ACCEPTED**. Later scope additions must be prospective reviewed versions and must not weaken the frozen current-tranche target.
