@@ -1,0 +1,171 @@
+{
+  "schema": "radicadsac-mc007-transcendental-route/1.0",
+  "task": "MC-007",
+  "status": "reviewed-negative-result-with-fail-closed-conditional-route",
+  "source_baseline": "66eb051dbd0f7ec030fbf005710582ee9d6ab36d",
+  "evidence_class": [
+    "SOURCE_INSPECTION",
+    "REVIEWED_ARGUMENT",
+    "DETERMINISTIC_MODEL"
+  ],
+  "native_geometry_claimed": false,
+  "native_or_paid_execution": false,
+  "dependencies": [
+    {
+      "task": "MC-002",
+      "path": "research/machining-completeness/tasks/MC-002/outcome.json",
+      "git_blob_sha1": "930db704e9dd29955e7af99ba793c74e0cfda325",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-003",
+      "path": "research/machining-completeness/tasks/MC-003/outcome.json",
+      "git_blob_sha1": "8f335f59f36c8761844806f9059af4a4f1671044",
+      "result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "hypothesis": "Finite exact MC-003 time knots and a single shared time/path/spindle-phase parameter permit a semantics-preserving constructive decomposition. Certified interval/derivative reasoning terminates for separated or transversal events. Exact tangential, multiple-root or singular transcendental events require an additional finite exact decision procedure and must remain proof blockers when that procedure is not established.",
+  "decisive_falsification": "Any claimed unconditional full route that decides a required trigonometric/analytic equality only by epsilon, finite sampling, subdivision cap, timeout, independent angle coverage or an unproved no-tangency assumption is rejected.",
+  "targeted_constructors": [
+    "helical_arc",
+    "timed_phase_motion",
+    "phase_synchronization",
+    "spindle_rotation+turning_feed_correlation",
+    "eccentric_setup+spindle_rotation_correlation"
+  ],
+  "inspected_sources": [
+    {
+      "id": "COW-2015-BOUND-CSP",
+      "citation": "V. Chonev, J. Ouaknine, J. Worrell, On the Skolem Problem for Continuous Linear Dynamical Systems, arXiv:1506.00695v2 / ICALP 2016",
+      "url": "https://arxiv.org/abs/1506.00695v2",
+      "results": [
+        {
+          "id": "bounded-open",
+          "finding": "The bounded Continuous Skolem problem is reported open unconditionally even for exponential-polynomial trajectories arising from linear ODEs over algebraic data."
+        },
+        {
+          "id": "conditional-schanuel",
+          "finding": "The bounded problem is shown decidable subject to Schanuel's conjecture; this conditional theorem is not promoted to an unconditional MC-1 result."
+        },
+        {
+          "id": "section-2.1-zero-finding",
+          "finding": "The finite-precision zero-finding procedure terminates under a no-tangential-zero assumption using computable function values and derivative bounds; tangential zeros require separate handling."
+        }
+      ]
+    }
+  ],
+  "exact_source_guards": {
+    "finite_exact_time_knots_required": true,
+    "unwrapped_phase_retained": true,
+    "path_phase_time_share_one_parameter": true,
+    "independent_phase_coverage_forbidden": true,
+    "binary_float_as_predicate_authority_forbidden": true,
+    "global_untyped_epsilon_forbidden": true,
+    "tolerance_as_predicate_sign_forbidden": true,
+    "timeout_or_iteration_cap_is_not_a_mathematical_result": true,
+    "finite_sampling_alone_cannot_certify_no_zero": true,
+    "schanuel_conjecture_not_assumed_as_unconditional_authority": true
+  },
+  "reference_route": [
+    {
+      "step": "TR-1",
+      "action": "Decode the finite MC-003 exact source while preserving units, exact timestamps, unwrapped spindle phase, setup/body identity, engagement boundaries and immutable source identity."
+    },
+    {
+      "step": "TR-2",
+      "action": "Split only at exact source time knots, engagement boundaries and setup/context transitions. Each resulting piece has a compact exact parameter interval and a named analytic law."
+    },
+    {
+      "step": "TR-3",
+      "action": "Retain one shared exact parameter/time variable across tool path, axial feed, spindle rotation and eccentric transform. Never replace correlated motion by the Cartesian product of path progress and independent angular coverage."
+    },
+    {
+      "step": "TR-4",
+      "action": "For a required analytic sign/equality query, use outward-certified rational enclosures plus a proved derivative/transversality bound. Separation or a simple crossing may be certified only when the enclosures prove it."
+    },
+    {
+      "step": "TR-5",
+      "action": "If exact symbolic simplification reduces the event without semantic change to the MC-006 algebraic language, dispatch that subproblem to the MC-006 exact route and preserve the producing identity and proof edge."
+    },
+    {
+      "step": "TR-6",
+      "action": "If zero remains possible and tangency, multiplicity or singularity cannot be excluded or decided by an established finite exact procedure, emit TRANSCENDENTAL_EVENT_BLOCKER. Do not refine forever, jitter, invent an epsilon sign, time out as success or silently drop the operation."
+    },
+    {
+      "step": "TR-7",
+      "action": "For certified events, apply the existing regularized-removal and durable-body semantics unchanged. Positive-volume material, split bodies and empty material remain programme-owned facts rather than numeric-policy choices."
+    },
+    {
+      "step": "TR-8",
+      "action": "Propagate unresolved analytic-event blockers to MC-008, MC-022, MC-024 and MC-038 while preserving the full 26-operation denominator. The blocker is research evidence, not an exclusion from the product domain."
+    }
+  ],
+  "operation_classification": {
+    "requires_mc007_general_case": [
+      "lathe_threading_synchronized",
+      "lathe_eccentric_turning",
+      "mill_thread_helix_fixed_axis"
+    ],
+    "denominator_count_preserved": 26,
+    "domain_narrowed": false
+  },
+  "decision_status": {
+    "unconditional_full_route_established": false,
+    "finite_exact_source_decomposition": "ESTABLISHED_FROM_MC-003",
+    "separated_or_transversal_analytic_events": "CONDITIONAL_ROUTE",
+    "exact_symbolically_reducible_events": "DISPATCH_TO_MC-006",
+    "tangential_multiple_or_singular_transcendental_events": "PROOF_BLOCKER"
+  },
+  "proof_blockers": [
+    {
+      "id": "PB-007-01",
+      "topic": "finite exact decision for tangential, multiple-root or singular events in the required bounded trigonometric/analytic predicate grammar",
+      "status": "OPEN",
+      "affected_descendants": ["MC-008", "MC-022", "MC-024", "MC-038"]
+    },
+    {
+      "id": "PB-007-02",
+      "topic": "unconditional semantics-preserving decision route for general coupled helical/spindle-feed/eccentric sweep membership beyond the algebraically reducible and proved-transversal slices",
+      "status": "OPEN",
+      "affected_descendants": ["MC-008", "MC-022", "MC-024", "MC-038"]
+    },
+    {
+      "id": "PB-007-03",
+      "topic": "finite exact constructive source representation for every admitted imported-stock and arbitrary form/undercut cutter instance",
+      "status": "PROPAGATED_FROM_MC-006",
+      "affected_descendants": ["MC-008", "MC-020", "MC-024", "MC-038"]
+    },
+    {
+      "id": "PB-007-04",
+      "topic": "universal exact topology/connectivity certification across the integrated route",
+      "status": "PROPAGATED_TO_DOWNSTREAM",
+      "affected_descendants": ["MC-008", "MC-032", "MC-038"]
+    }
+  ],
+  "proof_obligation_effect": {
+    "PO-02": "OPEN — three required motion classes still contain general analytic-event blockers",
+    "PO-03": "OPEN — finite composition cannot be closed universally while a required motion piece can block",
+    "PO-04": "OPEN — exact equality/multiple-root classification is not established for the full analytic grammar",
+    "PO-05": "OPEN — fail-closed termination is established, but successful finite realization for every admitted request is not",
+    "PO-07": "OPEN — universal topology/connectivity remains downstream",
+    "MC-B": "NOT_ESTABLISHED"
+  },
+  "protected_semantics": {
+    "source_audio_provenance_preserved": true,
+    "legacy_journal_meaning_preserved": true,
+    "exact_time_path_phase_correlation_preserved": true,
+    "positive_volume_material_preserved": true,
+    "durable_body_and_lineage_preserved": true,
+    "historical_negative_evidence_preserved": true,
+    "model_evidence_not_promoted_to_native_geometry": true,
+    "provider_failure_or_timeout_not_converted_to_success": true
+  },
+  "claims_not_made": [
+    "no unconditional decision theorem for all required analytic events",
+    "no native sweep or material correctness",
+    "no practical performance or resource acceptance",
+    "no topology-completeness acceptance",
+    "no STEP or B-rep qualification",
+    "no MC-B or MC-1 acceptance"
+  ]
+}
