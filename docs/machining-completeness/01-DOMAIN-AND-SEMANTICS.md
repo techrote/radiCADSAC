@@ -18,6 +18,14 @@ For MC-1, a mill tool axis is fixed during one admitted cutting operation. Index
 
 The unresolved product boundaries remain named rather than silently narrowed: `DD-002-04` covers compound lathe live/driven-tool semantics, and `DD-002-05` covers simultaneously controlled multi-spindle/transfer-machine semantics. Provider limitations cannot resolve either decision. MC-003 still owns exact numeric/curve/phase/transform encoding, MC-004 owns workload/accuracy/resource requests, and MC-A remains `NOT_ESTABLISHED` until MC-005 reviews the combined domain lock.
 
+### MC-003 reviewed numeric/encoding artifact
+
+MC-003 records the reviewed exact-source and compatibility contract at `research/machining-completeness/tasks/MC-003/numeric-encoding-contract-v1.json`. Existing `msac-journal/1.0` documents are not migrated in place: their signed 64-bit nm/nrad/ns/rate tokens and q15 quaternion tokens retain exactly the meaning frozen by RCS-002, including reject-on-overflow, ties-to-even source canonicalization, the right-handed column-vector transform convention and mathematical normalization of exact q15 rationals. The historical RCS-002 fixtures remain extension-free and pinned as compatibility controls.
+
+For stronger MC-1 source semantics, `mc-exact-source/1.0` is an additive required extension/profile rather than a redefinition of v1. It uses canonical arbitrary-precision rationals, exact rational fractions of a full revolution and directed interval endpoints with explicit dimensions. It gives exact finite semantics to line/arc/helix/polyline/B-spline/piecewise/timed-phase motion, including spindle/path phase correlation, without decimalizing π or using an untyped epsilon as geometry truth. Unsupported readers reject an extension-bearing revision rather than downcasting it, and any migration creates a new revision with source identity; information absent from an old quantized journal is never reconstructed by fiat.
+
+The legacy one-nanometre source quantum is not a derived feature-size floor. Exact predicates do not imply exact constructions; nominal arithmetic and source/tool/machine/metrology uncertainty remain separate channels. Production persistence for the exact-source tokens and practical coefficient/event limits remain open implementation/resource questions for later owners. `DD-002-04` and `DD-002-05` remain propagated open product-domain decisions. MC-A remains `NOT_ESTABLISHED` until MC-005 integrates MC-002–004.
+
 ## Physical witness
 
 Each mandatory fixture records stock/tool definitions, cutting versus non-cutting regions, engagement intervals, machine travel/kinematics, access, holder/fixture clearance where relevant, support assumptions, setup transforms and post-separation handling. A body machined after parting must remain held or be explicitly re-clamped; a free detached remnant cannot remain magically fixed. This does not require chip dynamics.
@@ -30,7 +38,7 @@ Use a common workpiece frame. For body b, effective cutting solid T, engaged int
 
 ```text
 S = closure(union over t in E of K(t)(T))
-M_next,b = closure(interior(M_b \ S))
+M_next,b = closure(interior(M_b \\ S))
 ```
 
 Specify endpoints, engagement boundaries, finite cutter shoulders and tool/setup revisions. Engaged teleportation is invalid motion, not an optimization. Regularization removes lower-dimensional artifacts, not positive-volume slivers.
