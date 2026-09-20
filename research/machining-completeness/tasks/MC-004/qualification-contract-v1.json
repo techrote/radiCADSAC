@@ -1,0 +1,261 @@
+{
+  "schema": "radicadsac-mc-qualification-contract/1.0",
+  "task": "MC-004",
+  "status": "reviewed-qualification-artifact",
+  "source_baseline": "047e43f07cf94eda70292679c78f38c4f661dd81",
+  "evidence_class": [
+    "REQUIREMENT",
+    "DESIGN_DECISION",
+    "DOCUMENTATION_RECONCILIATION"
+  ],
+  "native_geometry_claimed": false,
+  "candidate_independent": true,
+  "retroactive_tuning_forbidden": true,
+  "dependency_inputs": [
+    {
+      "task": "MC-002",
+      "path": "research/machining-completeness/tasks/MC-002/outcome.json",
+      "blob_sha": "930db704e9dd29955e7af99ba793c74e0cfda325",
+      "required_result_kinds": ["COMPLETED_RESEARCH", "CAPABILITY_ACCEPTED"]
+    }
+  ],
+  "reviewed_auxiliary_inputs": [
+    {
+      "task": "MC-003",
+      "path": "research/machining-completeness/tasks/MC-003/outcome.json",
+      "purpose": "use the reviewed exact-source/numeric semantics when materializing precision-bound fixtures; MC-003 is not added as a graph dependency"
+    }
+  ],
+  "freeze_policy": {
+    "frozen_before_candidate_qualification": [
+      "required operation denominator",
+      "workload profile identities and deterministic generation seed",
+      "accuracy vectors",
+      "reference hardware",
+      "repeat protocol",
+      "latency and memory envelopes",
+      "timeout/resource verdict policy"
+    ],
+    "allowed_prospective_change": "new reviewed version only, with old profile retained and no use of the revision to retroactively pass an already observed failure",
+    "candidate_specific_override_forbidden": true,
+    "provider_or_solver_refusal_does_not_remove_case": true,
+    "unresolved_product_domain_decisions_remain_open": ["DD-002-04", "DD-002-05"]
+  },
+  "required_operation_coverage": [
+    "lathe_od_turning",
+    "lathe_facing",
+    "lathe_shoulder",
+    "lathe_taper_chamfer_profile",
+    "lathe_id_boring_internal",
+    "lathe_axial_drilling",
+    "lathe_grooving",
+    "lathe_parting_cutthrough",
+    "lathe_form_turning",
+    "lathe_threading_synchronized",
+    "lathe_eccentric_turning",
+    "lathe_exact_retrace_finish",
+    "mill_face",
+    "mill_slot_pocket_freehand",
+    "mill_drill_plunge",
+    "mill_ball_rounded_xyz",
+    "mill_form_chamfer_countersink",
+    "mill_accessible_undercut",
+    "mill_thread_helix_fixed_axis",
+    "mill_simultaneous_xyz",
+    "mill_retrace_self_cross_stationary",
+    "mill_cutthrough_multibody",
+    "reclamp_reorient_continue",
+    "lathe_mill_lathe_history",
+    "machine_separated_retained_body",
+    "complete_body_removal"
+  ],
+  "workload_generation": {
+    "algorithm_id": "mc004-candidate-blind-workload-v1",
+    "seed_sha256": "7b5197a80c458cad264f135ef943339097285a68a201dc88250c943ac7586e74",
+    "source_order_is_semantically_preserved": true,
+    "candidate_feedback_may_change_generated_cases": false,
+    "material_change_count_definition": "count an independently established positive-volume nominal material-set change; journal events, source samples, canonical segments and adapter counters are reported separately and cannot substitute",
+    "redundant_history_definition": "valid retained source history that produces zero additional nominal removed volume after prior state; kept separate from geometry-changing counts",
+    "fixture_materialization_rule": "materialized fixture bytes, generator revision and source hashes are frozen before candidate execution; later regeneration requires a new profile version"
+  },
+  "workload_profiles": [
+    {
+      "id": "T0-DECISIVE",
+      "required": true,
+      "purpose": "tiny correctness and boundary controls before any broad run",
+      "minimum_valid_cases": 12,
+      "requirements": [
+        "actual material removal",
+        "exact equality/coincidence",
+        "tangent/point-edge-face contact",
+        "sub-tolerance positive cut",
+        "positive-volume sliver retention",
+        "exact retrace/no-new-removal",
+        "whole-body removal",
+        "parting to multiple bodies",
+        "phase-sensitive threading",
+        "eccentric turning",
+        "fixed-axis helical milling",
+        "re-clamp/cross-machine continuation"
+      ]
+    },
+    {
+      "id": "T1-DOMAIN",
+      "required": true,
+      "purpose": "complete admitted-domain and precision/topology boundary qualification",
+      "minimum_valid_cases": 26,
+      "coverage": "at least one valid fixture for every ID in required_operation_coverage, plus invalid physical controls that do not contribute to valid-case pass rates"
+    },
+    {
+      "id": "T2-G10",
+      "required": true,
+      "genuine_geometry_changing_sections": 10,
+      "redundant_history_control_sections": 10
+    },
+    {
+      "id": "T2-G100",
+      "required": true,
+      "genuine_geometry_changing_sections": 100,
+      "redundant_history_control_sections": 100
+    },
+    {
+      "id": "T2-G1000",
+      "required": true,
+      "genuine_geometry_changing_sections": 1000,
+      "redundant_history_control_sections": 1000
+    },
+    {
+      "id": "T2-G10000",
+      "required": true,
+      "genuine_geometry_changing_sections": 10000,
+      "redundant_history_control_sections": 10000
+    }
+  ],
+  "accuracy_profiles": [
+    {
+      "id": "A-SEMANTIC",
+      "required_for": ["T0-DECISIVE", "T1-DOMAIN", "T2-G10", "T2-G100", "T2-G1000", "T2-G10000"],
+      "requirements": {
+        "material_state": "no known positive-volume material may be deleted, invented or silently dropped",
+        "body_identity_and_count": "exact under the durable-body/regularized-material contract, including explicit empty state",
+        "topology_events": "required connectivity/split/disappearance events must agree with the independent certificate/oracle contract",
+        "invalid_case_handling": "invalid physical controls must be rejected for the stated reason and cannot count as solved valid cases"
+      }
+    },
+    {
+      "id": "A-ENGINEERING",
+      "required_for": ["T1-DOMAIN", "T2-G10", "T2-G100", "T2-G1000", "T2-G10000"],
+      "requirements": {
+        "boundary_two_sided_hausdorff_um_max": 5.0,
+        "reported_dimension_error_um_max": 5.0,
+        "reported_angular_error_urad_max": 5.0,
+        "volume_relative_error_max": 0.000001,
+        "small_feature_rule": "the absolute spatial limit does not authorize deleting or merging a positive-volume feature; topology/material semantics remain governed by A-SEMANTIC",
+        "uncertainty_rule": "nominal algorithmic error and source/measurement uncertainty are reported separately and may not be combined to hide a known nominal failure"
+      }
+    },
+    {
+      "id": "A-PRECISION-BOUNDARY",
+      "required_for": ["T0-DECISIVE", "T1-DOMAIN"],
+      "requirements": {
+        "boundary_two_sided_hausdorff_um_max": 0.5,
+        "reported_dimension_error_um_max": 0.5,
+        "reported_angular_error_urad_max": 0.5,
+        "purpose": "candidate-blind precision stress on selected representable fixtures; failure remains visible and cannot be converted into a domain exclusion"
+      }
+    }
+  ],
+  "reference_hardware": {
+    "primary": {
+      "id": "MC-RH-Q1",
+      "cpu": "AMD Ryzen 5 5600X",
+      "physical_cores": 6,
+      "hardware_threads": 12,
+      "memory_gib": 64,
+      "memory_type": "DDR4-3200",
+      "storage": "local NVMe SSD",
+      "gpu_required": false,
+      "qualification_cpu_thread_cap": 12,
+      "notes": "exact motherboard, firmware, OS, compiler and dependency manifest must be recorded at execution time; a faster substitute may be reported additionally but may not replace this reference without a prospective contract revision"
+    },
+    "secondary_baseline": {
+      "id": "MC-RH-B1",
+      "cpu": "AMD Ryzen 5 2600X",
+      "physical_cores": 6,
+      "hardware_threads": 12,
+      "memory_gib": 32,
+      "memory_type": "DDR4-3000",
+      "storage": "local SSD",
+      "gpu_required": false,
+      "role": "non-gating practical baseline and regression comparison"
+    }
+  },
+  "execution_protocol": {
+    "final_required_completed_repeats": 3,
+    "repeats_are_sequential": true,
+    "compile_once_reuse_exact_build_when_valid": true,
+    "nested_parallelism_must_be_bounded_and_reported": true,
+    "actual_allocated_cpus_threads_peak_rss_wall_cpu_time_output_size_must_be_recorded": true,
+    "all_attempts_retained_including_crash_timeout_and_incomplete": true,
+    "paid_or_native_execution_authorized_by_this_contract": false
+  },
+  "resource_envelopes_primary_reference": [
+    {"profile": "T0-DECISIVE", "per_case_wall_seconds_max": 5, "peak_rss_gib_max": 2, "timeout_seconds": 10},
+    {"profile": "T1-DOMAIN", "per_case_wall_seconds_max": 30, "peak_rss_gib_max": 4, "timeout_seconds": 60},
+    {"profile": "T2-G10", "session_wall_seconds_max": 10, "peak_rss_gib_max": 4, "timeout_seconds": 20},
+    {"profile": "T2-G100", "session_wall_seconds_max": 60, "peak_rss_gib_max": 6, "timeout_seconds": 120},
+    {"profile": "T2-G1000", "session_wall_seconds_max": 300, "peak_rss_gib_max": 12, "timeout_seconds": 600},
+    {"profile": "T2-G10000", "session_wall_seconds_max": 1200, "peak_rss_gib_max": 24, "timeout_seconds": 1800}
+  ],
+  "verdict_policy": {
+    "required_valid_case_pass_rule": "all applicable semantic, geometry, reconstruction/output and resource requirements for the current gate must pass; finite pass percentage cannot compensate for one unresolved required valid case",
+    "allowed_nonpass_statuses": ["NOT_EXECUTED", "UNKNOWN", "PENDING", "TIMEOUT", "RESOURCE_EXHAUSTED", "INVALID_CERTIFICATE", "MATERIAL_MISMATCH", "CRASH"],
+    "timeout_is_pass": false,
+    "resource_exhaustion_is_pass": false,
+    "pending_or_refusal_is_pass": false,
+    "smaller_scale_substitution_for_required_tier_forbidden": true,
+    "candidate_success_is_not_oracle": true
+  },
+  "measurements": [
+    "source samples",
+    "canonical segments",
+    "journal events",
+    "unique effective cutting regions",
+    "independently established material-changing sections",
+    "redundant-history sections",
+    "components",
+    "voids/events",
+    "expression nodes/cells/mesh elements/B-rep faces/edges as applicable",
+    "certificate bytes",
+    "output bytes",
+    "stock and feature scales",
+    "coefficient bit length",
+    "requested precision",
+    "wall time",
+    "CPU time",
+    "allocated CPUs/threads",
+    "peak RSS"
+  ],
+  "open_questions": [
+    {
+      "id": "OQ-004-01",
+      "topic": "future T3 100k+ native stress",
+      "status": "requires measured need and separate explicit authorization; not a prerequisite for MC-004 artifact completion"
+    },
+    {
+      "id": "OQ-004-02",
+      "topic": "provider tariff and monetary budget",
+      "status": "must be verified at campaign time; no old or guessed price is frozen into this contract"
+    },
+    {
+      "id": "OQ-004-03",
+      "topic": "DD-002-04 live/driven-tool compound semantics",
+      "status": "propagated_from_MC-002"
+    },
+    {
+      "id": "OQ-004-04",
+      "topic": "DD-002-05 multi-spindle/transfer-machine semantics",
+      "status": "propagated_from_MC-002"
+    }
+  ]
+}

@@ -54,12 +54,13 @@ jobs:
           python3 tools/validate_bootstrap_consistency.py
           python3 tools/validate_bootstrap_consistency.py --adversarial-self-test
       - name: Compile MC tooling
-        run: python3 -m py_compile tools/validate_machining_completeness.py tools/validate_mc_ci_impact.py tools/validate_bootstrap_consistency.py tools/mc_workflow.py
+        run: python3 -m py_compile tools/validate_machining_completeness.py tools/validate_mc_ci_impact.py tools/validate_bootstrap_consistency.py tools/mc_workflow.py research/machining-completeness/tasks/MC-004/verify.py
       - name: Verify completed planning/research tasks
         run: |
           python3 tools/mc_workflow.py verify MC-001
           python3 tools/mc_workflow.py verify MC-002
           python3 tools/mc_workflow.py verify MC-003
+          python3 tools/mc_workflow.py verify MC-004
           python3 tools/mc_workflow.py verify MC-056
       - name: Check live managed GitHub task issues for zero drift
         env:

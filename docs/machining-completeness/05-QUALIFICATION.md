@@ -22,6 +22,20 @@ Test mm and inches against the same physical error requirements. The inherited n
 
 MC-004 preregisters intended machining sessions, named reference hardware, requested accuracy and usable latency/memory envelopes independently of candidate outcomes. Pilots may inform a reviewed revision prospectively, never retrospectively pass a failure. The T2 tiers are required; unavailable budget delays them, not turns a smaller tier into a pass.
 
+### MC-004 preregistered qualification profile
+
+The canonical machine-readable profile is `research/machining-completeness/tasks/MC-004/qualification-contract-v1.json`. It is a requirements/design artifact only: it does not authorize native or paid execution and it does not claim that any implementation meets the limits.
+
+The candidate-independent workload generator is `mc004-candidate-blind-workload-v1`, with the fixed seed SHA-256 `7b5197a80c458cad264f135ef943339097285a68a201dc88250c943ac7586e74`. Materialized fixture bytes, generator revision and source hashes must be frozen before candidate execution. Candidate feedback may not change the generated cases. T1 includes at least one valid fixture for every admitted MC-002 operation. T2 remains exactly 10/100/1,000/10,000 independently established positive-volume material-changing sections, with a distinct redundant-history control at each size.
+
+Three accuracy vectors are fixed. `A-SEMANTIC` is non-compensating: positive-volume material, durable body identity/count, explicit empty state and required topology transitions cannot be traded for a numerical tolerance. `A-ENGINEERING` requests at most 5 µm two-sided boundary Hausdorff error, 5 µm dimensional error, 5 µrad angular error and `1e-6` relative volume error on applicable engineering cells. `A-PRECISION-BOUNDARY` requests 0.5 µm / 0.5 µm / 0.5 µrad on selected T0/T1 stress fixtures. These tolerances never authorize deletion or merging of a positive-volume feature, and source/measurement uncertainty remains separate from nominal algorithmic error.
+
+The primary reference hardware is `MC-RH-Q1`: AMD Ryzen 5 5600X, 6 physical cores / 12 hardware threads, 64 GiB DDR4-3200, local NVMe SSD, with a 12-thread CPU cap and no mandatory GPU. Exact board/firmware/OS/compiler/dependency pins are recorded at execution. The non-gating secondary baseline is `MC-RH-B1`: AMD Ryzen 5 2600X, 6 physical cores / 12 hardware threads, 32 GiB DDR4-3000 and local SSD. Faster hardware may be reported additionally but cannot silently replace the primary reference.
+
+On `MC-RH-Q1`, the frozen maximums are 5 s/case and 2 GiB RSS for T0, 30 s/case and 4 GiB for T1, then session limits of 10 s/4 GiB, 60 s/6 GiB, 300 s/12 GiB and 1,200 s/24 GiB for T2-G10/G100/G1000/G10000 respectively. Hard timeouts are 10, 60, 20, 120, 600 and 1,800 seconds respectively. A correct candidate outside these limits remains outside the practical gate; the profile is not relaxed after observing it.
+
+Final required cells use three completed sequential repeats. Parallel copies cannot be used to inflate sample count or disguise cost. Timeout, resource exhaustion, pending/refusal, crash, material mismatch and invalid certificate are non-pass states. A smaller required tier cannot substitute for a larger one. Any profile revision is prospective, versioned and reviewed; an already observed failure cannot be retroactively converted into success.
+
 Count source samples, canonical segments, journal events, unique effective cutting regions and independently established material-changing sections separately. Also report components, voids/events, expression nodes/cells/mesh elements/B-rep faces/edges, certificate size, stock/feature scale, coefficient bit length and requested precision. An adapter counter is not independent evidence of new geometry.
 
 ## Measurements and repeat protocol
