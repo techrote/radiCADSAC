@@ -1,13 +1,16 @@
 {
   "schema": "radicadsac-mc-proof-obligations/1.0",
-  "status": "NOT_ESTABLISHED",
+  "status": "PARTIALLY_ESTABLISHED",
   "obligations": [
     {
       "id": "PO-01",
       "title": "Domain fidelity",
       "integration_owner": "MC-005",
-      "state": "OPEN",
-      "accepted_evidence": []
+      "state": "ACCEPTED",
+      "accepted_evidence": [
+        "research/machining-completeness/tasks/MC-005/domain-lock-review-v1.json",
+        "research/machining-completeness/tasks/MC-005/report.md"
+      ]
     },
     {
       "id": "PO-02",
