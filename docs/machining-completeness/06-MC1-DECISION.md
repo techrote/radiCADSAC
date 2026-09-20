@@ -1,16 +1,16 @@
 # MC-1 capability decision
 
-Status: **NOT_ESTABLISHED** at workflow adoption, 19 September 2026. This is the current honest capability state, not a completed MC-052 final investigation.
+Status: **NOT_ESTABLISHED**. MC-A was accepted by MC-005 for the current lathe/fixed-axis-three-axis-mill domain lock; every later non-compensating gate remains unresolved. This is the current honest capability state, not a completed MC-052 final investigation.
 
 | Dimension | Current disposition |
 |---|---|
-| Domain completeness | Open domain/precision mapping and constructive proof obligations |
+| Domain completeness | **MC-A ACCEPTED**: current-tranche domain, precision and candidate-independent request are locked; constructive/sweep/termination obligations beyond PO-01 remain open |
 | Engineering realization | General topology/reconstruction and singular output representation unqualified |
 | Independent STEP usability | Inherited Layer D remains `interoperability_unqualified` |
 | Practical native viability | Required genuine-geometry scale/platform/recovery qualification not executed for MC-1 |
 | Production bootstrap | Not authorized; MC-1 pass plus separate explicit permission required |
 
-Gate 5 remains historically accepted for foundation/bounded/refusal policies. Nothing in this decision downgrades those measured results or promotes them to a stronger claim.
+Gate 5 remains historically accepted for foundation/bounded/refusal policies. Nothing in this decision downgrades those measured results or promotes them to a stronger claim. MC-A likewise does not promote a requirements/domain lock into native geometry evidence.
 
 ## Final decision procedure owned by MC-052
 
