@@ -1,0 +1,118 @@
+{
+  "schema": "radicadsac-mc006-algebraic-reference-route/1.0",
+  "task": "MC-006",
+  "status": "reviewed-conditional-reference-route",
+  "source_baseline": "5b5db0e5b112e37111b42b4933af8469606337a0",
+  "evidence_class": ["SOURCE_INSPECTION", "REVIEWED_ARGUMENT", "DETERMINISTIC_MODEL"],
+  "native_geometry_claimed": false,
+  "native_or_paid_execution": false,
+  "dependencies": [
+    {"task": "MC-002", "path": "research/machining-completeness/tasks/MC-002/outcome.json", "git_blob_sha1": "930db704e9dd29955e7af99ba793c74e0cfda325", "result_kind": "COMPLETED_RESEARCH"},
+    {"task": "MC-003", "path": "research/machining-completeness/tasks/MC-003/outcome.json", "git_blob_sha1": "8f335f59f36c8761844806f9059af4a4f1671044", "result_kind": "COMPLETED_RESEARCH"}
+  ],
+  "hypothesis": "Every operation step whose stock, cutter, setup and engaged pose relation have a finite semialgebraic description over rational/real-algebraic constants has a terminating exact reference route for nominal material membership; finite histories consisting only of such steps preserve that property. Small exact topology controls can be decided without tolerance heuristics.",
+  "falsification_criteria": [
+    "a claimed covered source constructor requires a transcendental relation that cannot be eliminated into the stated semialgebraic language",
+    "a claimed reference step requires approximate predicate signs, an untyped epsilon, a subdivision cap, or timeout-as-success",
+    "the cited algorithm theorem does not apply to finite polynomial input over the stated real-closed/ordered-domain setting",
+    "a positive-volume remnant, exact equality, tangency, body split or empty result is changed by policy rather than exact set semantics",
+    "an uncovered MC-002 constructor is silently removed from the domain instead of propagated to MC-007 or later work"
+  ],
+  "inspected_sources": [
+    {
+      "id": "T02-BASU-2014",
+      "url": "https://arxiv.org/abs/1409.1534v1",
+      "inspected_copy": "https://www.math.purdue.edu/~sbasu/raag_survey2011_final.pdf",
+      "sections": ["1.1 Notation", "2.1 The Tarski-Seidenberg theorem and effective quantifier elimination", "2.1.2 Cylindrical Algebraic Decomposition", "2.2.2 Representation of points", "3.1 Roadmaps"],
+      "results": [
+        {"id": "Theorem 2.1", "hypotheses": "first-order formula over finitely many polynomial sign atoms in a real closed field", "use": "quantifier elimination for existential sweep and regularization formulas"},
+        {"id": "Definitions 2.2-2.3 + Theorem 2.4", "hypotheses": "finite P subset R[X1,...,Xk], R real closed; cells are sign-invariant for P", "conclusion": "a P-adapted cylindrical algebraic decomposition exists and is computable with finite doubly-exponential arithmetic complexity", "use": "finite exact cell/sign reference decomposition; not a practical-performance claim"},
+        {"id": "Definitions 2.11-2.12", "hypotheses": "univariate polynomial over the ordered coefficient setting with a distinguished real root", "conclusion": "Thom encodings and real univariate representations provide exact algebraic point representations", "use": "cell sample and algebraic-constant identity without binary floating authority"},
+        {"id": "Definition 3.4, Proposition 3.5 and Theorem 3.6", "hypotheses": "the stated algebraic/semi-algebraic set and finite polynomial/degree/ring assumptions of the roadmap construction", "conclusion": "roadmaps meet and preserve semi-algebraically connected components and the general algorithm has finite arithmetic complexity under its stated setting", "use": "reference endpoint for later universal connectivity work; MC-006 does not promote this citation alone to PO-07"}
+      ],
+      "limits": ["the survey is not an implementation specification", "CAD/topology complexity is potentially enormous", "generic coordinate-change/topology details cannot be assumed away", "later tasks must instantiate any production algorithm and checker"]
+    },
+    {
+      "id": "STURM-EOM",
+      "url": "https://encyclopediaofmath.org/wiki/Sturm_sequence",
+      "result": "Sturm theorem",
+      "hypotheses": "a Sturm series on [a,b] with non-root endpoints and the stated sign/interlacing properties",
+      "conclusion": "the number of distinct roots is the endpoint sign-variation difference",
+      "use": "deterministic exact rational root-count/isolation controls after square-free reduction; not used as an authority for multivariate CAD"
+    }
+  ],
+  "effective_language": {
+    "ground": "ordered rational domain extended by explicitly represented real algebraic constants",
+    "algebraic_number_representation": "square-free defining polynomial plus rational isolating interval or Thom encoding; multivariate sample points may use real univariate representations",
+    "set_formula": "finite Boolean combinations of polynomial =0, >0 and <0 atoms; rational relations are cleared only with proved nonzero denominator/sign conditions",
+    "bounded_material": true,
+    "exact_signs_required": true,
+    "floating_predicate_authority_forbidden": true,
+    "global_epsilon_forbidden": true,
+    "timeout_or_iteration_cap_is_not_a_mathematical_result": true
+  },
+  "reference_route": [
+    {"step": "AR-1", "name": "decode exact source", "input": "MC-003 exact source tokens", "output": "rational/algebraic constants with dimensions, exact transforms and semantic boundaries", "termination": "finite source document", "failure": "unsupported required extension rejects; never downcasts"},
+    {"step": "AR-2", "name": "instantiate semialgebraic primitive", "input": "stock/cutter/setup/motion slice", "output": "finite polynomial sign formula and all denominator side conditions", "termination": "finite constructor expansion", "failure": "constructor remains outside MC-006 coverage"},
+    {"step": "AR-3", "name": "form exact swept-set formula", "input": "tool formula T(y), engaged parameter formula E(t), semialgebraic pose relation K(t,y,x)", "output": "S(x) := exists t,y: E(t) and T(y) and K(t,y,x)", "termination": "finite first-order formula", "failure": "transcendental/time-phase relation routes to MC-007 rather than approximation"},
+    {"step": "AR-4", "name": "eliminate quantified sweep variables", "input": "finite first-order polynomial formula", "output": "equivalent quantifier-free semialgebraic membership formula", "termination": "Tarski-Seidenberg effective QE/CAD theorem for finite polynomial input", "failure": "resource explosion is a practical failure, not semantic success; MC-004/scale tasks own practical envelopes"},
+    {"step": "AR-5", "name": "regularized removal", "input": "current material M and sweep S", "output": "closure(interior(M \\ S)) encoded through first-order real formulas and reduced by QE", "termination": "finite formula + terminating QE route", "failure": "no tolerance may delete positive-volume material or create a bridge"},
+    {"step": "AR-6", "name": "exact cell/sign query", "input": "finite boundary polynomial set", "output": "sign-invariant CAD and exact algebraic sample representations", "termination": "Theorem 2.4 finite computability", "failure": "no uncertain sign is converted to zero/nonzero by epsilon"},
+    {"step": "AR-7", "name": "topology/body control", "input": "exact material formula/cells", "output": "exact small-control connectivity/empty/split decisions; roadmap/cell-complex route is a later universal topology proof input", "termination": "task-local controls terminate by finite exact arithmetic", "failure": "unproved general cell adjacency/roadmap applicability remains open for MC-008/MC-032/MC-038"},
+    {"step": "AR-8", "name": "finite-history composition", "input": "finite ordered history of MC-006-covered steps", "output": "next exact semialgebraic material formula plus separate durable body/lineage transition", "termination": "history length decreases by one operation per application", "failure": "discrete source/body identity never inferred from provider topology handles"}
+  ],
+  "constructor_coverage": {
+    "covered": [
+      "stationary",
+      "line",
+      "polyline",
+      "spline (piecewise polynomial spans from finite exact rational knots/control points)",
+      "piecewise_motion when every piece is covered",
+      "circular_arc as a bounded algebraic circle-arc relation with exact algebraic endpoints/orientation",
+      "rigid_setup_transform with rational/algebraic matrix entries",
+      "reclamp and machine_transition as discrete exact setup/body transitions around covered geometry",
+      "regularized_removal",
+      "body_disappearance",
+      "body_split for the task-local exact controls"
+    ],
+    "conditional": [
+      "bounded_stock and imported_stock only when the actual source solid has a finite exact semialgebraic representation",
+      "all cutter classes only when the actual cutting solid has a finite exact semialgebraic representation",
+      "spindle_rotation only when the required pose/sweep image is represented as a semialgebraic circle/arc relation without lost time/feed correlation",
+      "turning_feed only when a proved semialgebraic reduction preserves the actual coupled sweep",
+      "eccentric_setup is algebraic as a rigid transform, but eccentric rotating sweep is not thereby covered"
+    ],
+    "not_covered_general_case": [
+      {"constructor": "helical_arc", "owner": "MC-007", "reason": "nonzero-pitch helix couples angle linearly to axial position while transverse coordinates are trigonometric; do not relabel it polynomial"},
+      {"constructor": "timed_phase_motion", "owner": "MC-007", "reason": "time/path/spindle correlation may require trigonometric analytic relations"},
+      {"constructor": "phase_synchronization", "owner": "MC-007", "reason": "independent full-angle coverage would change material semantics"},
+      {"constructor": "generic spindle/feed coupled sweep", "owner": "MC-007", "reason": "rotation plus feed can generate a helical/analytic relation unless a case-specific algebraic reduction is proved"}
+    ]
+  },
+  "operation_classification": {
+    "mc006_direct_semialgebraic_slice": ["mill_face", "mill_slot_pocket_freehand", "mill_drill_plunge", "mill_ball_rounded_xyz", "mill_form_chamfer_countersink", "mill_accessible_undercut", "mill_simultaneous_xyz", "mill_retrace_self_cross_stationary", "mill_cutthrough_multibody", "reclamp_reorient_continue", "lathe_mill_lathe_history", "machine_separated_retained_body", "complete_body_removal"],
+    "conditional_on_semialgebraic_reduction_or_tool_stock_representation": ["lathe_od_turning", "lathe_facing", "lathe_shoulder", "lathe_taper_chamfer_profile", "lathe_id_boring_internal", "lathe_axial_drilling", "lathe_grooving", "lathe_parting_cutthrough", "lathe_form_turning", "lathe_exact_retrace_finish"],
+    "mc007_required_general_case": ["lathe_threading_synchronized", "lathe_eccentric_turning", "mill_thread_helix_fixed_axis"],
+    "denominator_count_preserved": 26,
+    "domain_narrowed": false
+  },
+  "local_lemma_dag": [
+    {"id": "L006-01", "claim": "exact covered-source constructors expand to finite semialgebraic formulas", "depends_on": ["MC-002", "MC-003"], "status": "CONDITIONAL_REVIEWED"},
+    {"id": "L006-02", "claim": "a sweep with semialgebraic tool, engagement and pose relation has semialgebraic membership after existential quantifier elimination", "depends_on": ["L006-01", "T02-BASU-2014:Theorem 2.1"], "status": "REVIEWED_REFERENCE_ROUTE"},
+    {"id": "L006-03", "claim": "regularized removal remains first-order definable and therefore semialgebraic for the covered slice", "depends_on": ["L006-02", "T02-BASU-2014:Theorem 2.1"], "status": "REVIEWED_REFERENCE_ROUTE"},
+    {"id": "L006-04", "claim": "finite sign-invariant cell decomposition terminates for the finite polynomial set", "depends_on": ["L006-03", "T02-BASU-2014:Theorem 2.4"], "status": "REVIEWED_REFERENCE_ROUTE"},
+    {"id": "L006-05", "claim": "algebraic sample/root identity can be represented without binary-floating predicate authority", "depends_on": ["T02-BASU-2014:Definitions 2.11-2.12", "STURM-EOM"], "status": "REVIEWED_REFERENCE_ROUTE"},
+    {"id": "L006-06", "claim": "task-local tangency/split/empty/sliver controls are decided exactly", "depends_on": ["L006-03", "L006-05"], "status": "DETERMINISTIC_MODEL_VERIFIED"},
+    {"id": "L006-07", "claim": "arbitrary required topology/body connectivity is fully certified for all covered material formulas", "depends_on": ["L006-04", "T02-BASU-2014:Theorem 3.6"], "status": "OPEN_FOR_INTEGRATION"}
+  ],
+  "boundary_controls": ["exact irrational root isolation x^2-2 with rational intervals", "repeated algebraic root after square-free reduction", "tangent cutter produces zero volumetric removal", "full-width cut produces two retained positive-volume components", "complete removal produces explicit empty material", "one-micrometre positive-volume sliver is retained exactly", "disjoint cutter is an exact no-op"],
+  "open_obligations": [
+    {"id": "OQ-006-01", "topic": "finite exact semialgebraic encoding for every admitted stock/cutter instance, especially imported stock and arbitrary form/undercut tool source geometry", "affects": ["PO-02", "PO-03", "PO-05", "MC-B"]},
+    {"id": "OQ-006-02", "topic": "general helix, timed phase and spindle/feed constructive route", "owner": "MC-007", "affects": ["PO-02", "PO-05", "MC-B"]},
+    {"id": "OQ-006-03", "topic": "universal exact topology/connectivity construction and checker over all required material states", "owners": ["MC-008", "MC-032", "MC-038"], "affects": ["PO-04", "PO-05", "PO-07", "MC-B"]},
+    {"id": "OQ-006-04", "topic": "practical complexity/resource viability of CAD/QE reference route", "owners": ["MC-004", "MC-046", "MC-048"], "affects": ["PO-12"], "note": "practical failure does not invalidate its role as a terminating reference calculus"}
+  ],
+  "proof_obligation_effect": {"PO-02": "OPEN; MC-006 supplies a reference route only for the semialgebraic slice", "PO-03": "OPEN; finite covered composition is closed, but full-domain composition awaits MC-007 and integration", "PO-04": "OPEN; exact sign/equality machinery is identified and small controls pass, but integration owner MC-032 remains responsible", "PO-05": "OPEN; finite progress is established for the covered slice only", "PO-07": "OPEN; small topology controls pass but universal topology certification is not claimed", "MC-B": "NOT_ESTABLISHED"},
+  "protected_semantics": {"source_audio_provenance_preserved": true, "historical_negative_evidence_preserved": true, "journal_saved_meaning_preserved": true, "durable_body_lineage_separate_from_geometry_cells": true, "positive_volume_material_preserved": true, "no_provider_domain_narrowing": true},
+  "claims_not_made": ["no native kernel/geometry correctness claim", "no full MC-1 constructive completeness claim", "no practical performance claim for CAD/QE", "no STEP or conventional B-rep qualification", "no production bootstrap or native/paid execution authorization"]
+}
