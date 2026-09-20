@@ -51,6 +51,16 @@ A geometric arc image is not the same object as a timed coupled trajectory. Heli
 
 Finite refinement requires a computable stopping argument. At exact equality, use a finite exact/validated event decision rather than perpetual sign refinement. For separated cases, establish applicable root/separation bounds from the input, not an unverified fixture hint. Approximation bands can converge in volume without deciding a disappearing bridge. Regularity theorems assuming nonzero gradient cannot be applied at singular boundaries. Symbolic perturbation requires a proved mapping back to unperturbed material; jitter-until-success is not admissible.
 
+### MC-007 reviewed result
+
+MC-007 completes its bounded investigation as a **NEGATIVE_RESULT**, not capability acceptance. `research/machining-completeness/tasks/MC-007/transcendental-route-v1.json` records a finite fail-closed protocol: exact MC-003 time knots provide finite source decomposition; one shared parameter preserves path/feed/spindle/eccentric correlation; algebraically reducible events dispatch to MC-006; and proved separated/transversal analytic events may be certified with outward enclosures plus justified derivative bounds.
+
+The inspected Chonev–Ouaknine–Worrell Continuous Skolem work (`arXiv:1506.00695v2`) reports the bounded exponential-polynomial zero problem open unconditionally in its stated setting, with a conditional bounded decidability result under Schanuel's conjecture. Its finite-precision zero-finding argument terminates under a no-tangential-zero assumption. MC-007 therefore does not pretend that repeated interval refinement supplies a generic exact tangent/multiple-root decision procedure. This is a proof boundary, not a claim that the narrower MC-007 grammar is undecidable.
+
+`PB-007-01` keeps exact finite decision of tangential/multiple/singular transcendental events open. `PB-007-02` keeps the corresponding general coupled helical/spindle-feed/eccentric sweep route open. The inherited exact-source and topology obligations remain `PB-007-03` and `PB-007-04`. A required case reaching one of these branches terminates truthfully with `TRANSCENDENTAL_EVENT_BLOCKER`; timeout, sampling density, epsilon signs, jitter, independent angular coverage or denominator shrinkage cannot turn it into success.
+
+The three affected admitted operations remain `lathe_threading_synchronized`, `lathe_eccentric_turning` and `mill_thread_helix_fixed_axis`; the frozen denominator remains 26. PO-02/03/04/05/07 remain **OPEN**, MC-B remains `NOT_ESTABLISHED`, and no native/paid execution or engineering-output qualification follows. MC-008 may consume the negative artifact only by retaining these blockers in its integrated arithmetic/termination/proof-obligation DAG.
+
 ## Error and trust track
 
 Trace exact predicates and constructions through decoding, transforms, sweep, classification, topology, reconstruction and export. State the arithmetic and certificate trusted computing base. A certificate checker can be machine-executed while its claim is inadequate; review both checker and statement. A Lipschitz constant, numeric-error parameter or library marketing guarantee must be derived/validated for the actual operation, not accepted as an input assertion.
