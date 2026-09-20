@@ -1,0 +1,90 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-003",
+  "result_kind": "COMPLETED_RESEARCH",
+  "evidence_class": [
+    "REQUIREMENT",
+    "DESIGN_DECISION",
+    "DOCUMENTATION_RECONCILIATION"
+  ],
+  "source_baseline": "71516b60aa2f9cf536fe7937ef2fc544da3e4dd8",
+  "issue": 65,
+  "dependency_artifacts": [
+    {
+      "task": "MC-002",
+      "path": "research/machining-completeness/tasks/MC-002/outcome.json",
+      "blob_sha": "930db704e9dd29955e7af99ba793c74e0cfda325",
+      "result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "accepted_claims": [
+    "every saved msac-journal/1.0 numeric token retains its frozen exact scaled-integer/q15 meaning and transform convention",
+    "legacy one-nanometre source quantization is not a derived feature-size or topology floor",
+    "the MC-002 trajectory/setup/lathe-kinematic constructor sets have finite exact source semantics including helix and timed phase correlation",
+    "mc-exact-source/1.0 supplies an additive exact-rational/symbolic-turn/directed-interval profile without redefining base v1 tokens",
+    "extension use is fail-closed and new-revision-only; unsupported readers reject rather than downcast and lost old-source precision is never fabricated",
+    "authority-path numeric rules reject untyped global epsilon, tolerance-as-sign, nonfinite values, silent overflow/saturation and unqualified flush-to-zero"
+  ],
+  "open_claims": [
+    "production persistence/codec representation for arbitrary-precision rational and symbolic-turn tokens remains open",
+    "practical coefficient bit-length, knot-count and event-count resource caps remain MC-004/scale work",
+    "DD-002-04 live/driven-tool compound-operation product semantics remain open",
+    "DD-002-05 multi-spindle/transfer-machine product semantics remain open",
+    "no candidate native arithmetic/geometry implementation is established by MC-003",
+    "MC-A remains NOT_ESTABLISHED until MC-005 integrates MC-002 through MC-004"
+  ],
+  "native_execution": false,
+  "artifacts": [
+    "research/machining-completeness/tasks/MC-003/numeric-encoding-contract-v1.json",
+    "research/machining-completeness/tasks/MC-003/report.md",
+    "research/machining-completeness/tasks/MC-003/verify.py",
+    "docs/machining-completeness/01-DOMAIN-AND-SEMANTICS.md"
+  ],
+  "artifact_bindings": [
+    {
+      "path": "research/machining-completeness/tasks/MC-003/numeric-encoding-contract-v1.json",
+      "git_blob_sha1": "a5538cab698c806fdedcef7cf563b650638348e0"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-003/report.md",
+      "git_blob_sha1": "289183f5fa4e2aaa8fc030fac056e6b1d466f620"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-003/verify.py",
+      "git_blob_sha1": "de72f94148f3bd2bb4a4bf5a80737ef2953c51ad"
+    },
+    {
+      "path": "docs/machining-completeness/01-DOMAIN-AND-SEMANTICS.md",
+      "git_blob_sha1": "b0b529b94f66e3abfc06dc138e9c8b680feed110"
+    }
+  ],
+  "verification": [
+    "python3 research/machining-completeness/tasks/MC-003/verify.py --contract",
+    "python3 tools/mc_workflow.py verify MC-003",
+    "python3 tools/validate_machining_completeness.py"
+  ],
+  "adversarial_controls": [
+    "reject reinterpretation of legacy journal meaning",
+    "reject signed-integer wraparound",
+    "reject fake recovery of lost sub-quantum source information",
+    "reject binary-floating certifying quantities",
+    "reject a dimensionally untyped global epsilon",
+    "reject dropped exact helical semantics",
+    "reject epsilon-defined spline knots",
+    "reject phase decimalization/loss of phase correlation",
+    "reject legacy source quantum as a derived feature floor",
+    "reject in-place extension migration",
+    "reject silently resolved inherited domain decisions",
+    "reject promotion of design-contract evidence to native geometry"
+  ],
+  "resources": {
+    "native_permit_required": false,
+    "native_or_paid_campaign_run": false
+  },
+  "review": {
+    "disposition": "reviewed artifact dependency only",
+    "gate_changed": false
+  },
+  "blockers": [],
+  "downstream_invalidations": []
+}
