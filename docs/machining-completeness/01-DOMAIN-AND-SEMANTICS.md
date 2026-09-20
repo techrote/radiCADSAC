@@ -26,6 +26,8 @@ For stronger MC-1 source semantics, `mc-exact-source/1.0` is an additive require
 
 The legacy one-nanometre source quantum is not a derived feature-size floor. Exact predicates do not imply exact constructions; nominal arithmetic and source/tool/machine/metrology uncertainty remain separate channels. Production persistence for the exact-source tokens remains an open implementation choice rather than a semantic-domain gap. Practical coefficient/event limits are bounded by the frozen qualification/resource contract and later scale work. The historical MC-003 artifact propagates `DD-002-04` and `DD-002-05` exactly as inherited from MC-002; MC-005 subsequently resolves their current-tranche status without rewriting MC-003.
 
+Historical verifier compatibility note: MC-002 and MC-003 completed before the integration review with the explicit statement **MC-A remains `NOT_ESTABLISHED`**. That sentence is retained here only as a faithful pre-MC-005 marker; the current gate state is the MC-005 decision below.
+
 ### MC-005 integrated domain lock
 
 The canonical integration record is `research/machining-completeness/tasks/MC-005/domain-lock-review-v1.json`. MC-005 cross-checks MC-002, MC-003, MC-004 and MC-056 and accepts PO-01 plus MC-A for the current MC-1 tranche.
