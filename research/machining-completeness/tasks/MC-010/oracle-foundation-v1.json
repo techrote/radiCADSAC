@@ -1,0 +1,253 @@
+{
+  "schema": "radicadsac-mc-oracle-foundation/1.0",
+  "task": "MC-010",
+  "version": 1,
+  "source_baseline": "91b91f6d343b19b28c72c2465ef54dd9d0b0c169",
+  "purpose": "Small exact controls that independently challenge decisive material/sweep/topology mathematics without becoming a universal machining oracle.",
+  "historical_shared_decisive_graph": {
+    "finding": "The RCS-021 material oracle, tri-dexel candidate and Manifold LevelSet adapter all consume decisive geometry functions from field.py, so agreement among those paths is not an independent derivation of the shared field/sweep mathematics.",
+    "files": [
+      {
+        "path": "research/rcs-021/field.py",
+        "blob_sha": "43dd9dc361bc960190370ba98fe2bb51938e9b58",
+        "role": "shared path expansion, sweep/removal field, column-height and closed-form helper mathematics"
+      },
+      {
+        "path": "research/rcs-021/material_oracle.py",
+        "blob_sha": "18a54212fcab0634c54d7516916267fb2a4cbbac",
+        "role": "adaptive material oracle importing field primitives"
+      },
+      {
+        "path": "research/rcs-021/tridexel.py",
+        "blob_sha": "2e90118592f1b12c983468ab2811ce329d33d5bd",
+        "role": "directional candidate importing shared field/column/sweep primitives"
+      },
+      {
+        "path": "research/rcs-021/manifold_fallback.py",
+        "blob_sha": "f6bc5cd0624f43201ccc46e7124342e669ce310a",
+        "role": "external LevelSet comparator whose callback imports final_field"
+      }
+    ],
+    "preservation": "These historical files and their accepted/negative evidence are immutable inputs to this task and are not corrected or reclassified by MC-010."
+  },
+  "independent_control": {
+    "implementation": "research/machining-completeness/tasks/MC-010/independent_exact_oracle.py",
+    "source_sha256": "f9ce8c8f7a071f70091366eeabcb430ccbcfd4e7acc8aa10e2d40c81e832306b",
+    "allowed_import_roots": [
+      "__future__",
+      "dataclasses",
+      "fractions",
+      "typing"
+    ],
+    "decisive_shared_geometry_imports": [],
+    "candidate_output_used_for_expected_truth": false,
+    "expected_truth_origin": "task contract exact rational literals reviewed independently of candidate output",
+    "mathematical_basis": [
+      "finite disjoint unions of positive-volume axis-aligned boxes over exact rational coordinates",
+      "exact box intersection and set difference by disjoint slab partition",
+      "exact monotone axis-parallel translational sweep of a box as the coordinate interval hull",
+      "3D connectivity only through positive-area shared faces; edge and point contact do not connect volumetric cells"
+    ],
+    "covered_domain": [
+      "axis-aligned rational stock/cutters",
+      "finite sequential subtraction",
+      "monotone translation along exactly one coordinate axis",
+      "exact volume and face-connectivity of the resulting cell union"
+    ],
+    "excluded_domain": [
+      "general curved, rotated, helical, timed or phase-sensitive sweeps",
+      "general B-rep/imported-stock geometry",
+      "arbitrary topology beyond this cell complex",
+      "STEP reconstruction or engineering qualification",
+      "candidate geometry correctness outside these controls"
+    ]
+  },
+  "controls": [
+    {
+      "id": "C010-01-ZERO-CONTACT",
+      "kind": "subtract",
+      "stock": ["0", "10", "0", "10", "0", "10"],
+      "cutters": [["10", "12", "2", "8", "2", "8"]],
+      "expected": {
+        "volume": "1000",
+        "components": 1,
+        "cells": [["0", "10", "0", "10", "0", "10"]]
+      },
+      "purpose": "exact tangency has zero positive-volume removal"
+    },
+    {
+      "id": "C010-02-SIGNED-NEIGHBOURS",
+      "kind": "signed_boundary",
+      "stock": ["0", "10", "0", "10", "0", "10"],
+      "gap_cutter": ["10000001/1000000", "12", "2", "8", "2", "8"],
+      "contact_cutter": ["10", "12", "2", "8", "2", "8"],
+      "penetrating_cutter": ["9999999/1000000", "12", "2", "8", "2", "8"],
+      "expected": {
+        "gap_volume": "1000",
+        "contact_volume": "1000",
+        "penetrating_volume": "249999991/250000"
+      },
+      "purpose": "zero is distinct from exact positive and negative signed neighbours without epsilon authority"
+    },
+    {
+      "id": "C010-03-CUT-THROUGH-SPLIT",
+      "kind": "subtract",
+      "stock": ["0", "10", "0", "10", "0", "10"],
+      "cutters": [["4", "6", "-1", "11", "-1", "11"]],
+      "expected": {
+        "volume": "800",
+        "components": 2,
+        "cells": [
+          ["0", "4", "0", "10", "0", "10"],
+          ["6", "10", "0", "10", "0", "10"]
+        ]
+      },
+      "purpose": "full cut-through retains both disconnected positive-volume bodies"
+    },
+    {
+      "id": "C010-04-MICRO-WEB",
+      "kind": "subtract",
+      "stock": ["0", "1", "0", "1", "0", "1"],
+      "cutters": [
+        ["0", "1/2", "0", "1", "0", "1"],
+        ["500001/1000000", "1", "0", "1", "0", "1"]
+      ],
+      "expected": {
+        "volume": "1/1000000",
+        "components": 1,
+        "cells": [["1/2", "500001/1000000", "0", "1", "0", "1"]]
+      },
+      "purpose": "a positive-volume one-millionth-unit web is preserved rather than rounded away"
+    },
+    {
+      "id": "C010-05-AXIS-SWEEP",
+      "kind": "sweep_subtract",
+      "stock": ["0", "10", "0", "10", "0", "10"],
+      "cutter": ["1", "2", "4", "6", "-1", "11"],
+      "sweep": {
+        "axis": "x",
+        "start": "0",
+        "end": "7",
+        "expected_swept_box": ["1", "9", "4", "6", "-1", "11"]
+      },
+      "expected": {"volume": "840", "components": 1},
+      "purpose": "independently derive an exact nonstationary translational sweep"
+    },
+    {
+      "id": "C010-06-SWEPT-SPLIT",
+      "kind": "sweep_subtract",
+      "stock": ["0", "10", "0", "10", "0", "10"],
+      "cutter": ["4", "6", "-1", "0", "-1", "11"],
+      "sweep": {
+        "axis": "y",
+        "start": "0",
+        "end": "11",
+        "expected_swept_box": ["4", "6", "-1", "11", "-1", "11"]
+      },
+      "expected": {
+        "volume": "800",
+        "components": 2,
+        "cells": [
+          ["0", "4", "0", "10", "0", "10"],
+          ["6", "10", "0", "10", "0", "10"]
+        ]
+      },
+      "purpose": "nonstationary sweep can create a genuine body split"
+    },
+    {
+      "id": "C010-07-COMPLETE-REMOVAL",
+      "kind": "subtract",
+      "stock": ["0", "10", "0", "10", "0", "10"],
+      "cutters": [["-1", "11", "-1", "11", "-1", "11"]],
+      "expected": {"volume": "0", "components": 0, "cells": []},
+      "purpose": "explicit empty material is a valid exact result"
+    },
+    {
+      "id": "C010-08-CONTACT-TOPOLOGY",
+      "kind": "connectivity",
+      "cases": [
+        {
+          "name": "face",
+          "cells": [
+            ["0", "1", "0", "1", "0", "1"],
+            ["1", "2", "0", "1", "0", "1"]
+          ],
+          "components": 1
+        },
+        {
+          "name": "edge",
+          "cells": [
+            ["0", "1", "0", "1", "0", "1"],
+            ["1", "2", "1", "2", "0", "1"]
+          ],
+          "components": 2
+        },
+        {
+          "name": "point",
+          "cells": [
+            ["0", "1", "0", "1", "0", "1"],
+            ["1", "2", "1", "2", "1", "2"]
+          ],
+          "components": 2
+        }
+      ],
+      "purpose": "point/edge contact cannot masquerade as a volumetric bridge"
+    },
+    {
+      "id": "C010-09-RETRACE-IDEMPOTENCE",
+      "kind": "idempotence",
+      "stock": ["0", "10", "0", "10", "0", "10"],
+      "cutter": ["4", "6", "-1", "11", "-1", "11"],
+      "expected": {"volume": "800", "components": 2},
+      "purpose": "an exact repeated removal is a no-op on already removed material"
+    }
+  ],
+  "evidence_attacks": [
+    "reject any binary float as an authority-path coordinate",
+    "reject zero/negative-volume cells",
+    "reject historical shared geometry modules imported by the independent control",
+    "reject source-digest drift of the independent control",
+    "reject mutation of the pinned historical RCS-021 source blobs",
+    "reject candidate output as expected-truth origin",
+    "reject a false independence declaration with nonempty decisive shared imports",
+    "reject edge or point contact promoted to connected volumetric material",
+    "reject deletion of the exact positive-volume micro-web",
+    "reject timeout/resource refusal or schema success as geometry PASS"
+  ],
+  "corpus_state": {
+    "F01-F16": "UNBUILT",
+    "owners": {
+      "F01-F04": "MC-011",
+      "F05-F08": "MC-012",
+      "F09-F12": "MC-013",
+      "F13-F16": "MC-014"
+    },
+    "historical_import_owner": "MC-055",
+    "note": "MC-010 provides controls/foundation only and does not fabricate mandatory corpus fixtures."
+  },
+  "programme_state": {
+    "MC-A": "ACCEPTED",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-C": "NOT_ESTABLISHED",
+    "MC-D": "NOT_ESTABLISHED",
+    "MC-E": "NOT_ESTABLISHED",
+    "MC-F": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "native_or_paid_campaign_run": false,
+    "production_authorized": false
+  },
+  "protected_semantics": [
+    "canonical source/journal meaning is unchanged",
+    "audio/source/provenance evidence is unchanged",
+    "positive-volume material may not be erased by tolerance",
+    "disconnected bodies are retained",
+    "durable body/lineage identities are not inferred from cell indices",
+    "historical negative and incomplete evidence remains preserved"
+  ],
+  "downstream_open_obligations": [
+    "MC-011 through MC-014 must build F01-F16 physical fixtures and qualifying independent oracle paths",
+    "MC-015 must challenge certificate/checker mathematics and real oracle independence beyond these small controls",
+    "general curved/timed/phase-sensitive and imported-geometry controls remain outside this foundation",
+    "native candidate capability and STEP engineering qualification remain unestablished"
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-010",
+  "result_kind": "COMPLETED_RESEARCH",
+  "evidence_class": [
+    "MEASURED_DETERMINISTIC_MODEL",
+    "DESIGN_DECISION",
+    "DOCUMENTATION_RECONCILIATION"
+  ],
+  "source_baseline": "91b91f6d343b19b28c72c2465ef54dd9d0b0c169",
+  "issue": 72,
+  "dependency_artifacts": [
+    {
+      "task": "MC-002",
+      "path": "research/machining-completeness/tasks/MC-002/outcome.json",
+      "blob_sha": "930db704e9dd29955e7af99ba793c74e0cfda325",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-003",
+      "path": "research/machining-completeness/tasks/MC-003/outcome.json",
+      "blob_sha": "8f335f59f36c8761844806f9059af4a4f1671044",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-009",
+      "path": "research/machining-completeness/tasks/MC-009/outcome.json",
+      "blob_sha": "3a2c52997ace526add72b0f2051e6b5120c0a44d",
+      "result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "accepted_claims": [
+    "RCS-021 material_oracle.py, tridexel.py and manifold_fallback.py share decisive cutter/material mathematics from field.py, so their agreement does not independently derive that shared field/sweep",
+    "MC-010 provides a structurally separate exact rational cell-set control for axis-aligned subtraction, monotone one-axis box sweeps, exact material volume and positive-area-face connectivity",
+    "the control distinguishes exact gap/contact/penetration boundaries without epsilon authority, preserves a positive-volume 1/1000000 web, retains both bodies after cut-through, represents valid empty material and makes exact retrace idempotent",
+    "the verifier binds independent source identity, pins protected historical source blobs and rejects binary floats, shared decisive imports, candidate-defined expected truth, false independence metadata, edge/point bridges and micro-feature deletion",
+    "F01-F16 remain mandatory and UNBUILT; this foundation does not promote model evidence to native geometry capability"
+  ],
+  "open_claims": [
+    "fixture-specific independent oracles and physical witnesses for F01-F16 remain for MC-011 through MC-014",
+    "general curved, rotated, helical, timed and phase-sensitive sweep controls are not established by MC-010",
+    "general imported/B-rep stock and universal topology are not established by MC-010",
+    "certificate/checker mathematics and deeper oracle-independence review remain for MC-015 and downstream owners",
+    "native material/topology/reconstruction correctness, STEP qualification, MC-B through MC-F and MC-1 remain NOT_ESTABLISHED"
+  ],
+  "native_execution": false,
+  "artifacts": [
+    "research/machining-completeness/tasks/MC-010/oracle-foundation-v1.json",
+    "research/machining-completeness/tasks/MC-010/independent_exact_oracle.py",
+    "research/machining-completeness/tasks/MC-010/report.md",
+    "research/machining-completeness/tasks/MC-010/outcome.json",
+    "research/machining-completeness/tasks/MC-010/verify.py",
+    "docs/machining-completeness/03-ORACLE-AND-CORPUS.md",
+    "research/machining-completeness/outcomes-v1.json",
+    ".github/workflows/mc1-static.yml"
+  ],
+  "verification": [
+    "python3 research/machining-completeness/tasks/MC-010/verify.py --contract",
+    "python3 tools/mc_evidence_verifier.py --self-test",
+    "python3 tools/mc_workflow.py verify MC-010",
+    "python3 tools/validate_machining_completeness.py --self-test",
+    "python3 tools/mc_workflow.py sync --check"
+  ],
+  "adversarial_controls": [
+    "exact tangency and signed one-millionth gap/penetration neighbours",
+    "stock-spanning cut-through retaining two positive-volume bodies",
+    "exact positive-volume 1/1000000 micro-web retention",
+    "nonstationary one-axis sweep and swept body split",
+    "explicit complete-removal empty state",
+    "face versus edge versus point connectivity",
+    "exact retrace idempotence",
+    "binary-float and degenerate-cell rejection",
+    "shared decisive import and source-digest rejection",
+    "candidate-defined expected-truth and false-independence rejection",
+    "MC-009 deliberately corrupted evidence controls"
+  ],
+  "resources": {
+    "native_permit_required": false,
+    "native_or_paid_campaign_run": false
+  },
+  "review": {
+    "disposition": "completed independent-control foundation only; no native geometry or programme capability promotion",
+    "gate_changed": false,
+    "programme_capability_changed": false,
+    "downstream_release": "MC-011 through MC-014 may consume the bounded exact controls as artifact input while retaining all fixture-specific physical/oracle obligations; MC-015 remains the deeper independence/certificate owner"
+  },
+  "blockers": [],
+  "downstream_invalidations": [
+    "changing independent_exact_oracle.py or its exact-rational semantics requires a new reviewed control revision",
+    "changing the historical RCS-021 source lineage inventory requires review of the independence conclusion without rewriting historical evidence",
+    "changing face-connectivity semantics invalidates topology controls that depend on MC-010",
+    "any later defect in the expected rational controls supersedes affected dependent evidence but may not rewrite producing records"
+  ]
+}

@@ -1,12 +1,14 @@
 # Independent oracles and the physical adversarial corpus
 
-Status: required construction/verification work, not a claim that fixtures or qualified oracles already exist. Owners: MC-009–015, MC-049 and MC-055. [Domain](01-DOMAIN-AND-SEMANTICS.md), [formats](11-FORMAT-CONTRACTS.md).
+Status: MC-010 independent-control foundation complete; F01–F16 construction and qualified fixture/oracle verification remain required. Owners: MC-009–015, MC-049 and MC-055. [Domain](01-DOMAIN-AND-SEMANTICS.md), [formats](11-FORMAT-CONTRACTS.md).
 
 ## Independence is a graph
 
 Record shared decoding, transforms, tool interpretation, sweep mathematics, field evaluation, predicates, topology, reconstruction and metric computation for every candidate/control pair. Shared immutable input and serialization are acceptable; shared unverified decisive geometry must be challenged independently. Existing RCS-021 oracle and Manifold LevelSet paths share `field.py`, so their agreement does not independently derive the cutter sweep. Its XY occupancy connectivity is not a general certified 3D oracle.
 
 Use independently derived analytic controls, a small exact algebraic/cell reference, an independent actual-sweep evaluator, certified spatial enclosures, qualified metamorphic relations and an independent engineering consumer. Each has an explicit domain and limitation. No universal oracle is presumed. MC-010 supplies early small controls so proof and output screens do not wait for the entire corpus.
+
+MC-010 now provides that bounded foundation in `research/machining-completeness/tasks/MC-010/`: an exact rational cell-set control independently derives axis-aligned subtraction, monotone single-axis box sweeps, material volume and positive-area-face connectivity. Its verifier pins the historical RCS-021 shared-code graph and rejects shared decisive imports, candidate-defined expected truth, binary-float authority, point/edge bridges and positive-volume micro-feature deletion. This is deterministic control evidence only. It does not qualify curved/timed/phase-sensitive sweeps, general imported solids, F01–F16, a native geometry candidate, STEP output or MC-B.
 
 ## Material comparison
 
