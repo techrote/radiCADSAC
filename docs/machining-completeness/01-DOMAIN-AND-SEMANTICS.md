@@ -10,6 +10,14 @@ Classify threads, synchronized/phase-dependent turning, tapered/formed/internal 
 
 A finite source description is necessary but does not itself prove decidability. State an effective deterministic constructor language, parameter/coefficient domains and source-to-language mapping. Do not admit arbitrary unanalysed executable predicates and assume a terminating solver follows. Equally, do not define the language merely as the current solver's successful subset. An uncovered ordinary machining constructor is a PO-01/02/05 gap.
 
+### MC-002 reviewed constructor/physical-validity artifact
+
+MC-002 records the reviewed candidate-independent constructor and witness map at `research/machining-completeness/tasks/MC-002/domain-contract-v1.json`. It is a requirement/design artifact, not native geometry evidence and not an MC-A acceptance. The map explicitly covers ordinary lathe, fixed-axis three-axis mill, re-clamp/reorientation, cross-machine, parting/multi-body and complete-removal histories; it also binds boundary/pathology policy and physical witnesses without using provider success as an admissibility oracle.
+
+For MC-1, a mill tool axis is fixed during one admitted cutting operation. Indexed/reoriented work is represented by an explicit non-cutting setup transition and a later operation; continuous cutting-time five-axis reorientation is outside the current MC-1 tranche. A drill cutting solid is machine-neutral and may be used in a witnessed lathe or mill setup. Fixed-axis helical motion is represented explicitly rather than inferred from a planar arc.
+
+The unresolved product boundaries remain named rather than silently narrowed: `DD-002-04` covers compound lathe live/driven-tool semantics, and `DD-002-05` covers simultaneously controlled multi-spindle/transfer-machine semantics. Provider limitations cannot resolve either decision. MC-003 still owns exact numeric/curve/phase/transform encoding, MC-004 owns workload/accuracy/resource requests, and MC-A remains `NOT_ESTABLISHED` until MC-005 reviews the combined domain lock.
+
 ## Physical witness
 
 Each mandatory fixture records stock/tool definitions, cutting versus non-cutting regions, engagement intervals, machine travel/kinematics, access, holder/fixture clearance where relevant, support assumptions, setup transforms and post-separation handling. A body machined after parting must remain held or be explicitly re-clamped; a free detached remnant cannot remain magically fixed. This does not require chip dynamics.
