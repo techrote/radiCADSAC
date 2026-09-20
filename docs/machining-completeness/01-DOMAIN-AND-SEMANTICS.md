@@ -16,7 +16,7 @@ MC-002 records the reviewed candidate-independent constructor and witness map at
 
 For MC-1, a mill tool axis is fixed during one admitted cutting operation. Indexed/reoriented work is represented by an explicit non-cutting setup transition and a later operation; continuous cutting-time five-axis reorientation is outside the current MC-1 tranche. A drill cutting solid is machine-neutral and may be used in a witnessed lathe or mill setup. Fixed-axis helical motion is represented explicitly rather than inferred from a planar arc.
 
-The unresolved product boundaries remain named rather than silently narrowed: `DD-002-04` covers compound lathe live/driven-tool semantics, and `DD-002-05` covers simultaneously controlled multi-spindle/transfer-machine semantics. Provider limitations cannot resolve either decision. MC-003 still owns exact numeric/curve/phase/transform encoding, MC-004 owns workload/accuracy/resource requests, and MC-A remains `NOT_ESTABLISHED` until MC-005 reviews the combined domain lock.
+The unresolved product boundaries remain named rather than silently narrowed: `DD-002-04` covers compound lathe live/driven-tool semantics, and `DD-002-05` covers simultaneously controlled multi-spindle/transfer-machine semantics. Provider limitations cannot resolve either decision. MC-003 now supplies the reviewed exact numeric/curve/phase/transform encoding artifact, MC-004 owns workload/accuracy/resource requests, and MC-A remains `NOT_ESTABLISHED` until MC-005 reviews the combined domain lock.
 
 ### MC-003 reviewed numeric/encoding artifact
 
@@ -38,7 +38,7 @@ Use a common workpiece frame. For body b, effective cutting solid T, engaged int
 
 ```text
 S = closure(union over t in E of K(t)(T))
-M_next,b = closure(interior(M_b \\ S))
+M_next,b = closure(interior(M_b \ S))
 ```
 
 Specify endpoints, engagement boundaries, finite cutter shoulders and tool/setup revisions. Engaged teleportation is invalid motion, not an optimization. Regularization removes lower-dimensional artifacts, not positive-volume slivers.
