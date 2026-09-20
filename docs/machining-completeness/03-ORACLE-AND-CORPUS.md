@@ -39,6 +39,8 @@ Record outward rounding, precision, evaluator bounds, local hypotheses and aggre
 
 MC-055 imports all fourteen RCS-021 identities/old parameterizations plus inherited lathe/retrace/contact/sub-tolerance/separation controls by exact source identity. Strengthened accuracy versions are new records, not edits to historic truth. Missing historical artifacts are recorded unavailable; reproduce only affected claims under a permit.
 
+MC-055's reviewed import is `research/machining-completeness/tasks/MC-055/historical-corpus-import-v1.json`. It pins the complete RCS-021 source/evidence lineage, the entire RCS-003 adversarial corpus by source blob plus source-local `(id, revision)`, the canonical RCS-002 journal controls, and decisive RCS-011/RCS-012 negative/boundary evidence. The strengthened-version map keeps F01–F16 `UNBUILT`: historical seeds are provenance inputs only and never inherit current MC-1 accuracy, oracle, topology or PASS status. Historical pending/refusal/timeout/resource-bound/out-of-budget results remain non-passes.
+
 Each fixture binds source stock/tool/setup/history, physical-validity witness, domain version, exact parameters, constructor/interaction coverage, oracle identity/independence, accuracy vector, topology/analytic requirements, required stages, generator version/seed and digests. Expected results cannot come from candidate output.
 
 ## Coverage and metamorphic relations

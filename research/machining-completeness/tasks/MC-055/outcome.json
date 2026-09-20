@@ -1,0 +1,83 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-055",
+  "result_kind": "COMPLETED_RESEARCH",
+  "evidence_class": [
+    "SOURCE_FACT",
+    "DESIGN_DECISION",
+    "DOCUMENTATION_RECONCILIATION"
+  ],
+  "source_baseline": "2881b90bd790ea53cefe5b14e4734590883b991d",
+  "issue": 117,
+  "dependency_artifacts": [
+    {
+      "task": "MC-001",
+      "path": "research/machining-completeness/tasks/MC-001/outcome.json",
+      "blob_sha": "2efd52cf39102d5722c6bbf281828361e943d6a4",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-009",
+      "path": "research/machining-completeness/tasks/MC-009/outcome.json",
+      "blob_sha": "3a2c52997ace526add72b0f2051e6b5120c0a44d",
+      "result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "accepted_claims": [
+    "all fourteen RCS-021 fixture identities and their original parameterizations are imported through the exact pinned experiment-plan blob and explicit case-order denominator",
+    "the complete inherited RCS-003 adversarial manufacturing corpus is imported by exact source blob with source-local id/revision identities, including deterministic lathe, retrace, contact, sub-tolerance and separation views",
+    "canonical RCS-002 lathe finishing and mill cut-through journal controls and decisive RCS-011/RCS-012 measured controls are pinned by exact source identity",
+    "historical pending, refusal, timeout, resource-bound, valid-but-materially-wrong and out-of-budget evidence remains non-pass evidence",
+    "F01-F16 strengthened requests are separate prospective records; none is built or accepted by MC-055"
+  ],
+  "open_claims": [
+    "F01-F16 physical witnesses and fixture-specific independent oracle paths remain for MC-011 through MC-014",
+    "historical seeds do not establish current MC-1 accuracy, topology, reconstruction or engineering-output qualification",
+    "native material/topology/reconstruction correctness, MC-B through MC-F and MC-1 remain NOT_ESTABLISHED"
+  ],
+  "native_execution": false,
+  "artifacts": [
+    "research/machining-completeness/tasks/MC-055/historical-corpus-import-v1.json",
+    "research/machining-completeness/tasks/MC-055/report.md",
+    "research/machining-completeness/tasks/MC-055/outcome.json",
+    "research/machining-completeness/tasks/MC-055/verify.py",
+    "docs/machining-completeness/03-ORACLE-AND-CORPUS.md",
+    "research/machining-completeness/outcomes-v1.json",
+    ".github/workflows/mc1-static.yml"
+  ],
+  "verification": [
+    "python3 research/machining-completeness/tasks/MC-055/verify.py --contract",
+    "python3 tools/mc_workflow.py verify MC-055",
+    "python3 tools/validate_machining_completeness.py --self-test",
+    "python3 tools/mc_workflow.py sync --check"
+  ],
+  "adversarial_controls": [
+    "reject missing or duplicate RCS-021 identities",
+    "reject historical Git-blob drift or edits to any research/rcs-* source on the MC-055 branch",
+    "reject erasure of accepted-pending, resolution-refused or resource-bound RCS-021 cells",
+    "reject drift of retrace-jitter, exact tangent/penetrating neighbour, positive 1 um, two-body cut-through and 160-segment witnesses",
+    "reject missing lathe/retrace/contact/sub-tolerance/separation views from the complete pinned RCS-003 corpus",
+    "reject nonexistent RCS-003/RCS-021 seed references",
+    "reject reclassification of RCS-011 valid-but-wrong or timeout evidence",
+    "reject deletion of RCS-012 positive-volume/body-existence and cut-through controls",
+    "reject in-place historical-to-Fxx promotion or any fabricated F01-F16/MC-B/MC-1 acceptance"
+  ],
+  "resources": {
+    "native_permit_required": false,
+    "native_or_paid_campaign_run": false,
+    "hosted_historical_artifacts_redownloaded": false
+  },
+  "review": {
+    "disposition": "completed immutable historical import and strengthening map only; no fixture or geometry capability promotion",
+    "gate_changed": false,
+    "programme_capability_changed": false,
+    "downstream_release": "MC-011 receives its final required artifact input; downstream corpus builders may consume the source-bound seeds while retaining all of their own physical/oracle obligations"
+  },
+  "blockers": [],
+  "downstream_invalidations": [
+    "changing a pinned historical source identity requires a new reviewed import revision rather than editing this producing record",
+    "changing the strengthened-version map invalidates dependent fixture provenance that consumed the changed mapping",
+    "discovering an omitted inherited identity requires MC-055 correction before dependent corpus evidence may claim complete historical custody",
+    "a later defect in historical evidence remains an append-only superseding result and may not rewrite the original producing artifact"
+  ]
+}

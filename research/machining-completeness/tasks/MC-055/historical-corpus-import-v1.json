@@ -1,0 +1,174 @@
+{
+  "schema": "radicadsac-mc-historical-corpus-import/1.0",
+  "task": "MC-055",
+  "version": 1,
+  "source_baseline": "2881b90bd790ea53cefe5b14e4734590883b991d",
+  "purpose": "Import inherited machining controls by immutable producing identity while keeping every strengthened MC-1 fixture as a separate prospective record.",
+  "identity_policy": {
+    "repository_identity": "path plus exact Git blob SHA; record identities additionally include source-local id/revision where present",
+    "hosted_artifact_identity": "workflow/artifact id plus producing head and recorded archive SHA-256",
+    "historical_parameter_policy": "the pinned source record is authoritative for the old parameterization; MC-055 never rewrites it in place",
+    "strengthening_policy": "every stronger MC-1 request is a new record under its current family owner and may cite historical seeds without inheriting PASS status",
+    "missing_policy": "an inherited identity that cannot be pinned must be listed explicitly as UNAVAILABLE; omission is not allowed"
+  },
+  "historical_sources": [
+    {"path": "research/rcs-021/README.md", "blob_sha": "1fc417de9778aa415c006a027c9cfca4d1fce533", "role": "RCS-021 accepted research narrative and frozen hosted-artifact identity"},
+    {"path": "research/rcs-021/experiment-plan-v1.json", "blob_sha": "a3f934e170fb39365c39e959816cda9f671222f2", "role": "all fourteen RCS-021 fixture identities and old parameterizations"},
+    {"path": "research/rcs-021/measured-summary-v1.json", "blob_sha": "b5f0cd8c06fdde15680e4a25da36cf81d762f996", "role": "accepted, pending, refusal, resource-bound and negative measured dispositions"},
+    {"path": "research/rcs-021/field.py", "blob_sha": "43dd9dc361bc960190370ba98fe2bb51938e9b58", "role": "historical shared cutter/material field implementation"},
+    {"path": "research/rcs-021/material_oracle.py", "blob_sha": "18a54212fcab0634c54d7516916267fb2a4cbbac", "role": "historical adaptive material oracle"},
+    {"path": "research/rcs-021/tridexel.py", "blob_sha": "2e90118592f1b12c983468ab2811ce329d33d5bd", "role": "historical directional material candidate"},
+    {"path": "research/rcs-021/manifold_fallback.py", "blob_sha": "f6bc5cd0624f43201ccc46e7124342e669ce310a", "role": "historical Manifold LevelSet comparator"},
+    {"path": "research/rcs-021/run_campaign.py", "blob_sha": "8b7a24445f24d737e399971b88274a718e17e91e", "role": "historical RCS-021 campaign driver"},
+    {"path": "research/rcs-003/corpus-v1.json", "blob_sha": "da56bfa89653dd8c7886d48e4c29f9653e2872f4", "role": "entire inherited adversarial manufacturing corpus, including lathe/retrace/contact/sub-tolerance/separation controls"},
+    {"path": "research/rcs-003/corpus.schema.json", "blob_sha": "f2ad779366ebbc1c38a3ca29b06c8b361be7453e", "role": "historical corpus schema"},
+    {"path": "research/rcs-002/fixtures/lathe-finishing-pass-v1.json", "blob_sha": "f87b160d4d78d8a608969d183b6b165a9e57a0d4", "role": "canonical repeated lathe finishing journal intent"},
+    {"path": "research/rcs-002/fixtures/mill-cut-through-v1.json", "blob_sha": "cb93d31e3e0c018c0e971ec1a8144be085f6e5fd", "role": "canonical mill split/body-retention journal intent"},
+    {"path": "research/rcs-011/experiment-plan-v1.json", "blob_sha": "c6e0f9c78f94d227ada0b584df95dbfe94bf2c26", "role": "historical retrace/fallback campaign request"},
+    {"path": "research/rcs-011/measured-summary-v1.json", "blob_sha": "56be7de5a5b848007053597a437aaccbae4ed434", "role": "valid-but-materially-wrong retrace and timeout negative evidence"},
+    {"path": "research/rcs-012/experiment-plan-v1.json", "blob_sha": "9c4377c21392f81795aaa5ab8f663f44a64cd0dd", "role": "historical alternative-geometry request"},
+    {"path": "research/rcs-012/measured-summary-v1.json", "blob_sha": "45ce54d553a711e7249998fc18cca586e36569fd", "role": "sub-tolerance and separation controls"}
+  ],
+  "rcs021_import": {
+    "plan_path": "research/rcs-021/experiment-plan-v1.json",
+    "plan_blob_sha": "a3f934e170fb39365c39e959816cda9f671222f2",
+    "required_case_count": 14,
+    "case_ids_in_profile_order": [
+      "closed-form-stationary-flat",
+      "closed-form-horizontal-slot",
+      "self-cross",
+      "retrace-exact",
+      "retrace-jitter",
+      "simultaneous-xyz",
+      "ball-rounded",
+      "tangent-zero",
+      "tangent-overlap",
+      "plunge-1um",
+      "overlapping-paths",
+      "cut-through",
+      "high-segment-freehand",
+      "stationary-near"
+    ],
+    "high_risk_parameter_witnesses": {
+      "retrace-jitter": {"second_path_y_mm": "15.001", "rcs011_revisit": ["segment_sweep", "freehand_batch"]},
+      "tangent-zero": {"path_y_mm": "-2.5", "expected_positive_volume_removal": false},
+      "tangent-overlap": {"path_y_mm": "-2.499", "expected_distinct_from_tangent_zero": true},
+      "plunge-1um": {"minimum_positive_feature_mm": "0.000001", "must_remain_positive": true},
+      "cut-through": {"expected_body_count": 2, "both_bodies_retained": true},
+      "high-segment-freehand": {"segments": 160, "resource_bound_is_not_pass": true}
+    },
+    "frozen_measured_identity": {
+      "head_sha": "70bf1851652f855714fe30ba412f6d4d42c22d44",
+      "workflow_run_id": 35280105714,
+      "artifact_id": 10522213307,
+      "artifact_zip_sha256": "bbdf14b8474753393d98d42babb94fee7c7309fed9a6a38c93962b289db391ba",
+      "representation_artifact_id": 10522641465,
+      "representation_artifact_zip_sha256": "bbb4f6308764473a9d210927ed6040680a2a90a82d5b3684763f53d89d912e36",
+      "availability": "IDENTITY_PINNED_NOT_REDOWLOADED_BY_MC-055"
+    },
+    "historical_dispositions": {
+      "bounded_candidate_pass_at_0_5mm_count": 5,
+      "accepted_pending_refinement_at_0_5mm_count": 9,
+      "external_executed_count": 13,
+      "external_resource_bound_not_executed_count": 1,
+      "external_resolution_refusal_count": 1,
+      "still_outside_150mm3_budget_at_0_25mm": ["simultaneous-xyz", "cut-through"],
+      "meaning": "pending, refusal, resource-bound and out-of-budget cells remain historical non-passes"
+    }
+  },
+  "inherited_control_corpus": {
+    "path": "research/rcs-003/corpus-v1.json",
+    "blob_sha": "da56bfa89653dd8c7886d48e4c29f9653e2872f4",
+    "selection": "ALL fixture_families records in the pinned source are imported by source-local id and revision; category indexes below are views, not copies",
+    "required_category_indexes": {
+      "lathe": {"match": "domain == lathe"},
+      "retrace": {"match": "tag retrace"},
+      "contact": {"match": "any of tags tangency, lower-dimensional-contact, point-contact, edge-contact, face-contact, coincidence, coplanarity"},
+      "sub_tolerance": {"match": "any of tags sub-tolerance, sliver, small-removal, small-feature, tiny-cusp"},
+      "separation": {"match": "any of tags separation, cut-through, multi-body, connectivity-transition"}
+    },
+    "record_identity_fields": ["id", "revision"],
+    "parameterization_source": "the pinned RCS-003 record itself; no MC-055 numeric substitution"
+  },
+  "decisive_prior_measured_controls": [
+    {
+      "id": "RCS-011-RETRACE-JITTER-VALID-BUT-WRONG",
+      "path": "research/rcs-011/measured-summary-v1.json",
+      "blob_sha": "56be7de5a5b848007053597a437aaccbae4ed434",
+      "expected": {"classification": "geometric tolerance breach", "reference_volume_mm3": "11490.990138", "candidate_volume_mm3": "12000.0", "candidate_valid_brep": true},
+      "preservation": "valid B-rep is explicitly not material correctness"
+    },
+    {
+      "id": "RCS-011-SAMPLED-POSE-TIMEOUT",
+      "path": "research/rcs-011/measured-summary-v1.json",
+      "blob_sha": "56be7de5a5b848007053597a437aaccbae4ed434",
+      "expected": {"attempt_count": 10, "timeout_count": 10, "timeout_s": "30.0"},
+      "preservation": "timeout remains negative evidence and cannot become a solved case"
+    },
+    {
+      "id": "RCS-012-TINY-PLUNGE-1UM",
+      "path": "research/rcs-012/measured-summary-v1.json",
+      "blob_sha": "45ce54d553a711e7249998fc18cca586e36569fd",
+      "expected": {"exact_cell_material_volume_mm3": "3999.9", "voxel_0p5_material_volume_mm3": "4000", "voxel_erases_real_removal": true},
+      "preservation": "coarse representation cannot redefine positive physical removal"
+    },
+    {
+      "id": "RCS-012-TINY-CUSP-1UM",
+      "path": "research/rcs-012/measured-summary-v1.json",
+      "blob_sha": "45ce54d553a711e7249998fc18cca586e36569fd",
+      "expected": {"exact_cell_material_volume_mm3": "0.2", "exact_cell_body_count": 1, "voxel_0p5_material_volume_mm3": "0", "voxel_0p5_body_count": 0},
+      "preservation": "positive-volume body existence cannot be erased by coarse occupancy"
+    },
+    {
+      "id": "RCS-012-CUT-THROUGH-TWO-BODIES",
+      "path": "research/rcs-012/measured-summary-v1.json",
+      "blob_sha": "45ce54d553a711e7249998fc18cca586e36569fd",
+      "expected": {"material_volume_mm3": "5600", "body_count": 2},
+      "preservation": "both disconnected bodies remain represented"
+    }
+  ],
+  "canonical_journal_controls": [
+    {"id": "RCS-002-LATHE-FINISHING-PASS", "path": "research/rcs-002/fixtures/lathe-finishing-pass-v1.json", "blob_sha": "f87b160d4d78d8a608969d183b6b165a9e57a0d4", "meaning": "repeated finishing operation remains journal-visible even if derived geometry removes no additional material"},
+    {"id": "RCS-002-MILL-CUT-THROUGH", "path": "research/rcs-002/fixtures/mill-cut-through-v1.json", "blob_sha": "cb93d31e3e0c018c0e971ec1a8144be085f6e5fd", "meaning": "split retains both durable material bodies and retained/detached classification"}
+  ],
+  "strengthened_version_map": [
+    {"family": "F01", "owner": "MC-011", "historical_seeds": ["rcs021:self-cross", "rcs021:retrace-jitter", "rcs021:tangent-zero", "rcs021:tangent-overlap", "rcs003:mill-self-crossing-freehand", "rcs003:mill-retraced-jittery-path", "rcs003:mill-tangent-corner-entry-exit"], "status": "NEW_RECORD_REQUIRED"},
+    {"family": "F02", "owner": "MC-011", "historical_seeds": ["rcs021:plunge-1um", "rcs003:mill-tiny-cusp", "rcs003:mill-sub-tolerance-plunge", "rcs003:generic-sliver-family", "rcs003:generic-connected-disconnected-transition", "rcs012:tiny-cusp-1um"], "status": "NEW_RECORD_REQUIRED"},
+    {"family": "F03", "owner": "MC-011", "historical_seeds": ["rcs021:simultaneous-xyz", "rcs021:ball-rounded"], "status": "NEW_RECORD_REQUIRED"},
+    {"family": "F04", "owner": "MC-011", "historical_seeds": ["rcs002:frame-transform-semantics"], "status": "NO_EQUIVALENT_HISTORICAL_GEOMETRY_RECORD_NEW_RECORD_REQUIRED"},
+    {"family": "F05", "owner": "MC-012", "historical_seeds": ["rcs003:lathe-bore-shoulder-meeting"], "status": "NEW_RECORD_REQUIRED"},
+    {"family": "F06", "owner": "MC-012", "historical_seeds": ["rcs002:lathe-finishing-pass-v1", "rcs003:lathe-repeated-finishing-pass", "rcs003:lathe-tangent-shoulder-contact", "rcs003:lathe-parting-cut-through"], "status": "NEW_RECORD_REQUIRED"},
+    {"family": "F07", "owner": "MC-012", "historical_seeds": [], "status": "NO_EQUIVALENT_HISTORICAL_GEOMETRY_RECORD_NEW_RECORD_REQUIRED"},
+    {"family": "F08", "owner": "MC-012", "historical_seeds": [], "status": "NO_EQUIVALENT_HISTORICAL_GEOMETRY_RECORD_NEW_RECORD_REQUIRED"},
+    {"family": "F09", "owner": "MC-013", "historical_seeds": [], "status": "NO_EQUIVALENT_PHASE_SENSITIVE_RECORD_NEW_RECORD_REQUIRED"},
+    {"family": "F10", "owner": "MC-013", "historical_seeds": ["rcs003:lathe-parting-cut-through", "rcs003:mill-cut-through-separation", "rcs003:generic-connected-disconnected-transition"], "status": "NEW_RECORD_REQUIRED"},
+    {"family": "F11", "owner": "MC-013", "historical_seeds": ["rcs003:generic-point-edge-face-contact", "rcs003:generic-connected-disconnected-transition"], "status": "NEW_RECORD_REQUIRED"},
+    {"family": "F12", "owner": "MC-013", "historical_seeds": ["rcs003:lathe-sub-tolerance-skim", "rcs003:mill-sub-tolerance-plunge", "rcs003:generic-barely-overlapping-solids", "rcs003:generic-sliver-family"], "status": "NEW_RECORD_REQUIRED"},
+    {"family": "F13", "owner": "MC-014", "historical_seeds": ["rcs003:mill-very-high-segment-count", "rcs003:generic-topology-explosion-sequence"], "status": "NEW_RECORD_REQUIRED_GENUINE_GEOMETRIC_GROWTH"},
+    {"family": "F14", "owner": "MC-014", "historical_seeds": ["rcs003:lathe-long-redundant-sequence", "rcs003:mill-repeated-identical-slot", "rcs003:mill-retraced-jittery-path"], "status": "NEW_RECORD_REQUIRED"},
+    {"family": "F15", "owner": "MC-014", "historical_seeds": ["rcs003:generic-tolerance-accumulation-chain"], "status": "NEW_RECORD_REQUIRED"},
+    {"family": "F16", "owner": "MC-014", "historical_seeds": ["rcs002:mill-cut-through-v1", "rcs021:cut-through", "rcs003:mill-cut-through-separation", "rcs003:lathe-parting-cut-through"], "status": "NEW_RECORD_REQUIRED_COMPLETE_REMOVAL_NOT_HISTORICALLY_ESTABLISHED"}
+  ],
+  "unavailable_inherited_identities": [],
+  "programme_state": {
+    "F01-F16": "UNBUILT",
+    "MC-A": "ACCEPTED",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-C": "NOT_ESTABLISHED",
+    "MC-D": "NOT_ESTABLISHED",
+    "MC-E": "NOT_ESTABLISHED",
+    "MC-F": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "native_or_paid_campaign_run": false,
+    "production_authorized": false
+  },
+  "protected_semantics": [
+    "historical source files are immutable evidence and are not edited by MC-055",
+    "old parameterizations and old qualification budgets remain old records rather than being silently upgraded",
+    "pending, refusal, timeout, resource-bound and out-of-budget historical cells remain non-passes",
+    "valid geometry representation does not imply correct material removal",
+    "positive-volume material cannot be deleted by tolerance or resolution convenience",
+    "disconnected bodies remain represented until an explicit later product policy acts",
+    "canonical journal operations, source/audio/provenance and durable body/lineage meaning are unchanged"
+  ]
+}
