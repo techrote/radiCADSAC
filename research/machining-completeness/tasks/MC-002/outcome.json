@@ -1,0 +1,88 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-002",
+  "result_kind": "COMPLETED_RESEARCH",
+  "evidence_class": [
+    "REQUIREMENT",
+    "DESIGN_DECISION",
+    "DOCUMENTATION_RECONCILIATION"
+  ],
+  "source_baseline": "b4184c3a65123df0f54f93c50fab223cc9e4de4d",
+  "issue": 64,
+  "dependency_artifacts": [
+    {
+      "task": "MC-001",
+      "path": "research/machining-completeness/tasks/MC-001/outcome.json",
+      "blob_sha": "2efd52cf39102d5722c6bbf281828361e943d6a4",
+      "result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "accepted_claims": [
+    "candidate-independent finite machining-domain constructor grammar recorded for current MC-1 lathe/fixed-axis-mill scope",
+    "every currently required ordinary operation/composition class maps to explicit constructors and physical witnesses",
+    "physical validity is independent of solver success and requires continuous engaged motion plus explicit workholding/access/clearance witnesses",
+    "parting/multi-body/contact/sliver/empty-state boundary semantics are explicit without weakening durable body identity",
+    "current exclusions and unresolved live-tool/multi-spindle questions are explicit named domain decisions rather than provider-driven omissions"
+  ],
+  "open_claims": [
+    "DD-002-04 live/driven-tool compound-operation product semantics remain open",
+    "DD-002-05 multi-spindle/transfer-machine product semantics remain open",
+    "MC-003 exact numeric/curve/phase/transform encoding is not established by MC-002",
+    "MC-004 workload/accuracy/resource qualification request is not established by MC-002",
+    "MC-A remains NOT_ESTABLISHED until MC-005 reviews MC-002 through MC-004",
+    "no constructive completeness, native realization, STEP qualification or scale capability is established by this contract task"
+  ],
+  "native_execution": false,
+  "artifacts": [
+    "research/machining-completeness/tasks/MC-002/domain-contract-v1.json",
+    "research/machining-completeness/tasks/MC-002/report.md",
+    "research/machining-completeness/tasks/MC-002/verify.py",
+    "docs/machining-completeness/01-DOMAIN-AND-SEMANTICS.md"
+  ],
+  "artifact_bindings": [
+    {
+      "path": "research/machining-completeness/tasks/MC-002/domain-contract-v1.json",
+      "git_blob_sha1": "23de82f5240a72509f7afe4acd5948b65bc4ff13"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-002/report.md",
+      "git_blob_sha1": "37a07958ffcc918df482214231a1703ec9b02008"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-002/verify.py",
+      "git_blob_sha1": "b58f13c5236d851ea829f4b747b0bb3ce0fb127c"
+    },
+    {
+      "path": "docs/machining-completeness/01-DOMAIN-AND-SEMANTICS.md",
+      "git_blob_sha1": "7e60cfdc042d1d34d29887b0b484d6b60128747a"
+    }
+  ],
+  "verification": [
+    "python3 research/machining-completeness/tasks/MC-002/verify.py --contract",
+    "python3 tools/mc_workflow.py verify MC-002",
+    "python3 tools/validate_machining_completeness.py"
+  ],
+  "adversarial_controls": [
+    "reject solver-defined domain",
+    "reject engaged teleportation",
+    "reject machining a detached body without workholding/re-clamp",
+    "reject zero-volume point/edge contact as volumetric bridge",
+    "reject positive-volume sliver deletion",
+    "reject dropped required operation coverage",
+    "reject undeclared/provider-private constructor",
+    "reject parting without post-separation handling",
+    "reject helical thread mapping without helical motion",
+    "reject silently dropped named domain decision",
+    "reject promotion of contract evidence to native geometry"
+  ],
+  "resources": {
+    "native_permit_required": false,
+    "native_or_paid_campaign_run": false
+  },
+  "review": {
+    "disposition": "reviewed artifact dependency only",
+    "gate_changed": false
+  },
+  "blockers": [],
+  "downstream_invalidations": []
+}

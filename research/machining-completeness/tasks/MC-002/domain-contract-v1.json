@@ -1,0 +1,502 @@
+{
+  "schema": "radicadsac-mc-domain-contract/1.1",
+  "task": "MC-002",
+  "status": "reviewed-domain-artifact",
+  "source_baseline": "b4184c3a65123df0f54f93c50fab223cc9e4de4d",
+  "evidence_class": [
+    "REQUIREMENT",
+    "DESIGN_DECISION",
+    "DOCUMENTATION_RECONCILIATION"
+  ],
+  "native_geometry_claimed": false,
+  "authority": [
+    "docs/00-FOUNDING-BRIEF.md",
+    "docs/01-MSAC-GEOMETRY-CONTRACT.md",
+    "docs/machining-completeness/00-PROGRAMME.md",
+    "docs/machining-completeness/01-DOMAIN-AND-SEMANTICS.md",
+    "docs/decisions/DR-0026-machining-completeness-programme.md"
+  ],
+  "dependency_inputs": [
+    {
+      "task": "MC-001",
+      "outcome": "research/machining-completeness/tasks/MC-001/outcome.json",
+      "blob_sha": "2efd52cf39102d5722c6bbf281828361e943d6a4",
+      "required_result_kinds": [
+        "COMPLETED_RESEARCH",
+        "CAPABILITY_ACCEPTED"
+      ]
+    }
+  ],
+  "domain_rule": {
+    "candidate_independent": true,
+    "finite_source_description_required": true,
+    "solver_success_is_not_validity_or_admissibility": true,
+    "missing_constructor_is_gap_not_automatic_exclusion": true,
+    "initial_machine_families": [
+      "lathe",
+      "mill"
+    ],
+    "milling_axis_policy": "tool axis is fixed within one admitted three-axis milling operation; reorientation is an explicit non-cutting setup transition before a later operation",
+    "history": "finite ordered manufacturing history with immutable source intent and explicit durable body/setup targets"
+  },
+  "constructors": {
+    "stock": [
+      {
+        "id": "bounded_stock",
+        "semantics": "bounded regular volumetric material with explicit units, common workpiece frame and durable body identity"
+      },
+      {
+        "id": "imported_stock",
+        "semantics": "bounded closed/oriented imported material with explicit units, representation, durable body identity and source-uncertainty contract; import success alone is not validity"
+      }
+    ],
+    "cutting_solid": [
+      {
+        "id": "lathe_external_insert",
+        "semantics": "finite external turning cutting region, including declared nose/profile geometry and a separately modelled non-cutting holder region"
+      },
+      {
+        "id": "lathe_internal_tool",
+        "semantics": "finite internal boring/turning cutting region with access and holder-clearance witness"
+      },
+      {
+        "id": "lathe_groove_part_tool",
+        "semantics": "finite grooving/parting cutting region capable of complete separation"
+      },
+      {
+        "id": "lathe_form_tool",
+        "semantics": "finite formed cutting region; nonconvexity is permitted when physical access is witnessed"
+      },
+      {
+        "id": "drill_cutting_solid",
+        "semantics": "finite drill cutting solid usable in an admitted lathe or mill setup; machine family is a setup/kinematics fact, not encoded into the cutter identity"
+      },
+      {
+        "id": "mill_flat_end",
+        "semantics": "finite fixed-axis flat-end cutting solid"
+      },
+      {
+        "id": "mill_corner_radius",
+        "semantics": "finite fixed-axis corner-radius cutting solid"
+      },
+      {
+        "id": "mill_ball_round",
+        "semantics": "finite fixed-axis ball/rounded cutting solid"
+      },
+      {
+        "id": "mill_form",
+        "semantics": "finite fixed-axis form/countersink/chamfer-style cutting solid"
+      },
+      {
+        "id": "mill_accessible_undercut",
+        "semantics": "finite fixed-axis undercut/nonconvex cutting region with explicit access and non-cutting-body clearance witness"
+      }
+    ],
+    "trajectory": [
+      {
+        "id": "stationary",
+        "semantics": "finite-duration constant pose; an engaged stationary interval remains semantically present even when it causes no new removal"
+      },
+      {
+        "id": "line",
+        "semantics": "continuous finite line segment with explicit endpoints"
+      },
+      {
+        "id": "circular_arc",
+        "semantics": "continuous finite oriented planar arc with explicit endpoints, plane and sweep sense"
+      },
+      {
+        "id": "helical_arc",
+        "semantics": "continuous finite fixed-axis helical motion with explicit angular/axial progression; exact numeric encoding is owned by MC-003"
+      },
+      {
+        "id": "polyline",
+        "semantics": "finite ordered continuous composition of line segments"
+      },
+      {
+        "id": "spline",
+        "semantics": "finite explicitly defined continuous curve; exact numeric representation is owned by MC-003"
+      },
+      {
+        "id": "piecewise_motion",
+        "semantics": "finite continuous composition of admitted trajectory pieces preserving semantic boundaries"
+      },
+      {
+        "id": "timed_phase_motion",
+        "semantics": "finite motion retaining time/spindle-angle correlation where material sweep depends on phase"
+      }
+    ],
+    "engagement": [
+      {
+        "id": "engagement_interval",
+        "semantics": "explicit finite interval with endpoint policy; only engaged intervals contribute cutting sweep"
+      },
+      {
+        "id": "engagement_boundary",
+        "semantics": "entry/exit is preserved as a semantic boundary even when geometrically tangent or redundant"
+      }
+    ],
+    "lathe_kinematics": [
+      {
+        "id": "spindle_rotation",
+        "semantics": "explicit workpiece rotation about a declared spindle axis with finite angle/time law"
+      },
+      {
+        "id": "turning_feed",
+        "semantics": "tool motion relative to the rotating target in the common workpiece frame"
+      },
+      {
+        "id": "phase_synchronization",
+        "semantics": "spindle/feed correlation retained rather than replaced by independent full-angle coverage"
+      },
+      {
+        "id": "eccentric_setup",
+        "semantics": "explicit noncoaxial workholding transform; full phase-sensitive sweep is required where rotational reduction is invalid"
+      }
+    ],
+    "setup": [
+      {
+        "id": "rigid_setup_transform",
+        "semantics": "explicit rigid transform between machine/setup and common workpiece frame"
+      },
+      {
+        "id": "reclamp",
+        "semantics": "explicitly select a durable material body, establish new workholding and transform, then continue machining"
+      },
+      {
+        "id": "machine_transition",
+        "semantics": "explicit lathe↔mill transition preserving common-frame/body identities and immutable history"
+      }
+    ],
+    "material": [
+      {
+        "id": "regularized_removal",
+        "semantics": "M_next = closure(interior(M \\ S)); lower-dimensional debris may vanish, but positive-volume material may not be erased by policy"
+      },
+      {
+        "id": "body_split",
+        "semantics": "connectivity-changing removal creates an explicit durable body transition; no largest/primary-body discard rule"
+      },
+      {
+        "id": "body_disappearance",
+        "semantics": "complete removal yields explicit empty material/body disappearance, not an invented residual"
+      },
+      {
+        "id": "body_target",
+        "semantics": "every machining operation names the durable target body/body set valid for that setup"
+      }
+    ]
+  },
+  "witness_catalog": [
+    {
+      "id": "workholding",
+      "semantics": "target body is supported/held by the current setup for the operation"
+    },
+    {
+      "id": "travel",
+      "semantics": "commanded finite trajectory lies inside admitted machine travel/kinematic limits"
+    },
+    {
+      "id": "access",
+      "semantics": "cutting region can reach the target without relying on unmodelled impossible approach"
+    },
+    {
+      "id": "holder_clearance",
+      "semantics": "declared non-cutting holder region does not pass through forbidden retained material/fixture on the witnessed route"
+    },
+    {
+      "id": "internal_access",
+      "semantics": "internal tool/cutter has a physically admissible entry and clearance path"
+    },
+    {
+      "id": "axial_access",
+      "semantics": "drill has an admissible axial approach for the selected setup"
+    },
+    {
+      "id": "separation",
+      "semantics": "the operation's nominal material set changes volumetric connectivity as claimed"
+    },
+    {
+      "id": "post_separation_handling",
+      "semantics": "every subsequently machined separated body is retained by the current setup or explicitly re-clamped"
+    },
+    {
+      "id": "phase_law",
+      "semantics": "finite spindle/tool correlation is explicitly specified where phase changes swept material"
+    },
+    {
+      "id": "eccentric_transform",
+      "semantics": "noncoaxial workholding transform is explicit in the common workpiece frame"
+    },
+    {
+      "id": "clearance",
+      "semantics": "non-cutting tool/holder and fixture clearance is explicitly witnessed"
+    },
+    {
+      "id": "selected_body",
+      "semantics": "a durable material-body identity is selected without inferring identity from backend topology handles"
+    },
+    {
+      "id": "new_workholding",
+      "semantics": "new support/workholding is explicitly established after a re-clamp/re-chuck"
+    },
+    {
+      "id": "rigid_transform",
+      "semantics": "setup-to-common-workpiece transform is explicit and rigid"
+    },
+    {
+      "id": "workholding_each_setup",
+      "semantics": "each setup in a cross-machine history explicitly holds its target body"
+    },
+    {
+      "id": "common_frame",
+      "semantics": "cross-machine/setup composition resolves into the versioned common workpiece frame"
+    },
+    {
+      "id": "retention_or_reclamp",
+      "semantics": "separated retained body is demonstrably held or explicitly re-clamped before further machining"
+    },
+    {
+      "id": "target_body",
+      "semantics": "operation or terminal transition identifies the affected durable body/body set"
+    }
+  ],
+  "physical_validity": {
+    "stock_is_bounded_volumetric_material": true,
+    "tool_cutting_and_noncutting_regions_are_distinguished": true,
+    "finite_cutter_extent_is_required": true,
+    "engaged_motion_is_continuous": true,
+    "engaged_teleportation_is_invalid": true,
+    "stationary_engaged_motion_is_valid": true,
+    "machine_travel_and_kinematic_feasibility_are_witnessed": true,
+    "access_and_holder_fixture_clearance_are_witnessed_where_relevant": true,
+    "machining_requires_target_body_held_by_current_setup": true,
+    "detached_body_requires_workholding_or_explicit_reclamp_before_further_machining": true,
+    "parted_body_is_not_magically_fixed": true,
+    "candidate_success_is_not_a_physical_validity_oracle": true,
+    "point_or_edge_contact_creates_volumetric_connection": false,
+    "face_contact_requires_local_interior_analysis": true,
+    "durable_bodies_do_not_merge_only_because_boundaries_touch": true,
+    "positive_volume_slivers_are_material": true,
+    "empty_material_state_is_valid": true,
+    "units_frames_tool_revision_setup_revision_and_target_body_are_explicit": true
+  },
+  "operation_map": [
+    {
+      "id": "lathe_od_turning",
+      "machine": "lathe",
+      "status": "admitted",
+      "constructors": ["lathe_external_insert", "spindle_rotation", "turning_feed", "engagement_interval", "regularized_removal"],
+      "witnesses": ["workholding", "travel", "access"]
+    },
+    {
+      "id": "lathe_facing",
+      "machine": "lathe",
+      "status": "admitted",
+      "constructors": ["lathe_external_insert", "spindle_rotation", "turning_feed", "engagement_interval", "regularized_removal"],
+      "witnesses": ["workholding", "travel", "access"]
+    },
+    {
+      "id": "lathe_shoulder",
+      "machine": "lathe",
+      "status": "admitted",
+      "constructors": ["lathe_external_insert", "spindle_rotation", "piecewise_motion", "engagement_interval", "regularized_removal"],
+      "witnesses": ["workholding", "travel", "access"]
+    },
+    {
+      "id": "lathe_taper_chamfer_profile",
+      "machine": "lathe",
+      "status": "admitted",
+      "constructors": ["lathe_external_insert", "lathe_form_tool", "spindle_rotation", "line", "spline", "engagement_interval", "regularized_removal"],
+      "witnesses": ["workholding", "travel", "access"]
+    },
+    {
+      "id": "lathe_id_boring_internal",
+      "machine": "lathe",
+      "status": "admitted",
+      "constructors": ["lathe_internal_tool", "spindle_rotation", "turning_feed", "engagement_interval", "regularized_removal"],
+      "witnesses": ["workholding", "travel", "internal_access", "holder_clearance"]
+    },
+    {
+      "id": "lathe_axial_drilling",
+      "machine": "lathe",
+      "status": "admitted",
+      "constructors": ["drill_cutting_solid", "spindle_rotation", "line", "engagement_interval", "regularized_removal"],
+      "witnesses": ["workholding", "travel", "axial_access"]
+    },
+    {
+      "id": "lathe_grooving",
+      "machine": "lathe",
+      "status": "admitted",
+      "constructors": ["lathe_groove_part_tool", "spindle_rotation", "turning_feed", "engagement_interval", "regularized_removal"],
+      "witnesses": ["workholding", "travel", "access"]
+    },
+    {
+      "id": "lathe_parting_cutthrough",
+      "machine": "lathe",
+      "status": "admitted",
+      "constructors": ["lathe_groove_part_tool", "spindle_rotation", "turning_feed", "engagement_interval", "regularized_removal", "body_split"],
+      "witnesses": ["workholding", "travel", "separation", "post_separation_handling"]
+    },
+    {
+      "id": "lathe_form_turning",
+      "machine": "lathe",
+      "status": "admitted",
+      "constructors": ["lathe_form_tool", "spindle_rotation", "piecewise_motion", "engagement_interval", "regularized_removal"],
+      "witnesses": ["workholding", "travel", "access", "holder_clearance"]
+    },
+    {
+      "id": "lathe_threading_synchronized",
+      "machine": "lathe",
+      "status": "admitted",
+      "constructors": ["lathe_form_tool", "spindle_rotation", "phase_synchronization", "timed_phase_motion", "engagement_interval", "regularized_removal"],
+      "witnesses": ["workholding", "travel", "phase_law", "access"]
+    },
+    {
+      "id": "lathe_eccentric_turning",
+      "machine": "lathe",
+      "status": "admitted",
+      "constructors": ["lathe_external_insert", "eccentric_setup", "spindle_rotation", "timed_phase_motion", "engagement_interval", "regularized_removal"],
+      "witnesses": ["workholding", "eccentric_transform", "travel", "clearance"]
+    },
+    {
+      "id": "lathe_exact_retrace_finish",
+      "machine": "lathe",
+      "status": "admitted",
+      "constructors": ["lathe_external_insert", "spindle_rotation", "piecewise_motion", "engagement_interval", "regularized_removal"],
+      "witnesses": ["workholding", "travel"],
+      "boundary_semantics": "may be exact no-new-removal; the canonical journal event remains"
+    },
+    {
+      "id": "mill_face",
+      "machine": "mill",
+      "status": "admitted",
+      "constructors": ["mill_flat_end", "piecewise_motion", "engagement_interval", "regularized_removal"],
+      "witnesses": ["workholding", "travel", "access"]
+    },
+    {
+      "id": "mill_slot_pocket_freehand",
+      "machine": "mill",
+      "status": "admitted",
+      "constructors": ["mill_flat_end", "mill_corner_radius", "piecewise_motion", "engagement_interval", "regularized_removal"],
+      "witnesses": ["workholding", "travel", "access"]
+    },
+    {
+      "id": "mill_drill_plunge",
+      "machine": "mill",
+      "status": "admitted",
+      "constructors": ["drill_cutting_solid", "line", "stationary", "engagement_interval", "regularized_removal"],
+      "witnesses": ["workholding", "travel", "access"]
+    },
+    {
+      "id": "mill_ball_rounded_xyz",
+      "machine": "mill",
+      "status": "admitted",
+      "constructors": ["mill_ball_round", "piecewise_motion", "engagement_interval", "regularized_removal"],
+      "witnesses": ["workholding", "travel", "access"]
+    },
+    {
+      "id": "mill_form_chamfer_countersink",
+      "machine": "mill",
+      "status": "admitted",
+      "constructors": ["mill_form", "piecewise_motion", "engagement_interval", "regularized_removal"],
+      "witnesses": ["workholding", "travel", "access"]
+    },
+    {
+      "id": "mill_accessible_undercut",
+      "machine": "mill",
+      "status": "admitted",
+      "constructors": ["mill_accessible_undercut", "piecewise_motion", "engagement_interval", "regularized_removal"],
+      "witnesses": ["workholding", "travel", "access", "holder_clearance"]
+    },
+    {
+      "id": "mill_thread_helix_fixed_axis",
+      "machine": "mill",
+      "status": "admitted",
+      "constructors": ["mill_form", "helical_arc", "piecewise_motion", "engagement_interval", "regularized_removal"],
+      "witnesses": ["workholding", "travel", "access"]
+    },
+    {
+      "id": "mill_simultaneous_xyz",
+      "machine": "mill",
+      "status": "admitted",
+      "constructors": ["mill_flat_end", "mill_corner_radius", "mill_ball_round", "piecewise_motion", "engagement_interval", "regularized_removal"],
+      "witnesses": ["workholding", "travel", "access"]
+    },
+    {
+      "id": "mill_retrace_self_cross_stationary",
+      "machine": "mill",
+      "status": "admitted",
+      "constructors": ["mill_flat_end", "piecewise_motion", "stationary", "engagement_interval", "regularized_removal"],
+      "witnesses": ["workholding", "travel"],
+      "boundary_semantics": "retrace/self-crossing/reversal/stationary segments remain ordinary finite inputs"
+    },
+    {
+      "id": "mill_cutthrough_multibody",
+      "machine": "mill",
+      "status": "admitted",
+      "constructors": ["mill_flat_end", "piecewise_motion", "engagement_interval", "regularized_removal", "body_split"],
+      "witnesses": ["workholding", "travel", "separation", "post_separation_handling"]
+    },
+    {
+      "id": "reclamp_reorient_continue",
+      "machine": "cross_machine",
+      "status": "admitted",
+      "constructors": ["reclamp", "rigid_setup_transform", "body_target", "piecewise_motion"],
+      "witnesses": ["selected_body", "new_workholding", "rigid_transform"]
+    },
+    {
+      "id": "lathe_mill_lathe_history",
+      "machine": "cross_machine",
+      "status": "admitted",
+      "constructors": ["machine_transition", "reclamp", "rigid_setup_transform", "body_target", "piecewise_motion"],
+      "witnesses": ["selected_body", "workholding_each_setup", "common_frame"]
+    },
+    {
+      "id": "machine_separated_retained_body",
+      "machine": "cross_machine",
+      "status": "admitted",
+      "constructors": ["body_split", "reclamp", "body_target", "piecewise_motion"],
+      "witnesses": ["retention_or_reclamp", "selected_body"]
+    },
+    {
+      "id": "complete_body_removal",
+      "machine": "cross_machine",
+      "status": "admitted",
+      "constructors": ["regularized_removal", "body_disappearance"],
+      "witnesses": ["target_body"],
+      "boundary_semantics": "empty material is a valid explicit terminal state"
+    }
+  ],
+  "boundary_and_pathology_policy": [
+    {"case": "coincidence_or_coplanarity", "policy": "ordinary valid workload; exact/equality event handling remains a constructive obligation"},
+    {"case": "tangent_or_point_edge_face_contact", "policy": "ordinary valid workload; zero-volume contact cannot be promoted to a volumetric bridge and face contact requires local-interior analysis"},
+    {"case": "sub_tolerance_positive_cut", "policy": "ordinary nominal input; may not be collapsed to no-op solely by a tolerance threshold"},
+    {"case": "positive_volume_sliver", "policy": "ordinary material; regularization does not erase positive-volume remnants"},
+    {"case": "self_crossing_retrace_reversal_stationary", "policy": "ordinary finite trajectory semantics; immutable source intent is preserved even if no new material is removed"},
+    {"case": "large_finite_segment_count", "policy": "ordinary finite history; resource qualification belongs to MC-004/MC-046 and is not a domain exclusion"},
+    {"case": "whole_body_removal", "policy": "valid explicit empty/disappearance transition"},
+    {"case": "no_new_removal", "policy": "valid outcome when set reasoning/certificate establishes no new removed volume; commanded penetration into already-empty space does not become positive removal"}
+  ],
+  "named_domain_decisions": [
+    {"id": "DD-002-01", "topic": "continuous_five_axis_tool_reorientation", "status": "excluded_by_current_mc1_scope", "basis": "MC-1 is lathe plus fixed-axis three-axis milling; explicit non-cutting setup reorientation is admitted, continuous cutting-time tool-axis reorientation is future scope rather than a provider refusal"},
+    {"id": "DD-002-02", "topic": "additive_material_processes", "status": "excluded_by_current_mc1_scope", "basis": "current MC-1 is removal-focused lathe and mill; additive remains long-term product scope without being added to this tranche"},
+    {"id": "DD-002-03", "topic": "deformation_force_chip_dynamics", "status": "excluded_by_current_mc1_scope", "basis": "geometry-critical nominal material is authoritative for MC-1; deformation, force and chip dynamics are not required for current engineering geometry"},
+    {"id": "DD-002-04", "topic": "lathe_live_or_driven_tooling_as_one_compound_operation", "status": "open_product_domain_decision", "basis": "lathe and mill families are both in scope, but current contracts do not decide whether synchronized live-tool/driven-tool compound kinematics are one mandatory operation or an explicit machine/setup transition; provider limitations cannot decide this"},
+    {"id": "DD-002-05", "topic": "multiple_simultaneously_controlled_spindles_or_transfer_machine_semantics", "status": "open_product_domain_decision", "basis": "single-spindle lathe plus explicit re-clamp/re-chuck histories are defined; multi-spindle transfer-machine semantics require explicit product intent before becoming mandatory constructors"}
+  ],
+  "coverage_rule": {
+    "required_operation_ids": ["lathe_od_turning", "lathe_facing", "lathe_shoulder", "lathe_taper_chamfer_profile", "lathe_id_boring_internal", "lathe_axial_drilling", "lathe_grooving", "lathe_parting_cutthrough", "lathe_form_turning", "lathe_threading_synchronized", "lathe_eccentric_turning", "lathe_exact_retrace_finish", "mill_face", "mill_slot_pocket_freehand", "mill_drill_plunge", "mill_ball_rounded_xyz", "mill_form_chamfer_countersink", "mill_accessible_undercut", "mill_thread_helix_fixed_axis", "mill_simultaneous_xyz", "mill_retrace_self_cross_stationary", "mill_cutthrough_multibody", "reclamp_reorient_continue", "lathe_mill_lathe_history", "machine_separated_retained_body", "complete_body_removal"],
+    "ordinary_operation_coverage": "every currently required ordinary operation is admitted through explicit constructors; anything not yet fixed by product scope is represented by a named domain decision and may not be silently removed from the denominator",
+    "no_provider_narrowing": true,
+    "open_decisions_are_not_solver_refusals": true
+  },
+  "downstream_obligations": {
+    "MC-003": ["exact parameter/coefficient domains", "curve/arc/spline/helical semantics", "timing/phase numeric representation", "rigid-transform encoding", "legacy journal compatibility"],
+    "MC-004": ["intended-session workloads", "accuracy vectors", "reference hardware", "time/memory envelopes"],
+    "MC-005": ["integrate MC-002/003/004 and decide MC-A; MC-002 alone does not accept MC-A"],
+    "MC-006_to_MC-008": ["constructive and finite-termination routes for every admitted constructor"],
+    "MC-018_to_MC-023": ["actual cutter/tool sweep realization and setup composition"],
+    "MC-054": ["engineering-output profile for singular/grouped material states"]
+  }
+}

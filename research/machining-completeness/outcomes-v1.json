@@ -13,9 +13,15 @@
       "blockers": []
     },
     "MC-002": {
-      "state": "NOT_STARTED",
+      "state": "COMPLETED_RESEARCH",
       "issue": 64,
-      "accepted_artifacts": [],
+      "accepted_artifacts": [
+        "research/machining-completeness/tasks/MC-002/domain-contract-v1.json",
+        "research/machining-completeness/tasks/MC-002/report.md",
+        "research/machining-completeness/tasks/MC-002/outcome.json",
+        "research/machining-completeness/tasks/MC-002/verify.py",
+        "docs/machining-completeness/01-DOMAIN-AND-SEMANTICS.md"
+      ],
       "blockers": []
     },
     "MC-003": {
