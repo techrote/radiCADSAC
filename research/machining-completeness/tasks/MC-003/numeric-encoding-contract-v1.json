@@ -1,0 +1,296 @@
+{
+  "schema": "radicadsac-mc-numeric-encoding-contract/1.0",
+  "task": "MC-003",
+  "status": "reviewed-numeric-artifact",
+  "source_baseline": "71516b60aa2f9cf536fe7937ef2fc544da3e4dd8",
+  "evidence_class": [
+    "REQUIREMENT",
+    "DESIGN_DECISION",
+    "DOCUMENTATION_RECONCILIATION"
+  ],
+  "native_geometry_claimed": false,
+  "dependency_inputs": [
+    {
+      "task": "MC-002",
+      "outcome": "research/machining-completeness/tasks/MC-002/outcome.json",
+      "blob_sha": "930db704e9dd29955e7af99ba793c74e0cfda325",
+      "result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "authority": [
+    "docs/10-CANONICAL-JOURNAL-CONTRACT.md",
+    "research/rcs-002/fixtures/lathe-finishing-pass-v1.json",
+    "research/rcs-002/fixtures/mill-cut-through-v1.json",
+    "research/machining-completeness/tasks/MC-002/domain-contract-v1.json",
+    "docs/machining-completeness/01-DOMAIN-AND-SEMANTICS.md",
+    "docs/machining-completeness/11-FORMAT-CONTRACTS.md"
+  ],
+  "legacy_msac_journal_1_0": {
+    "preserve_saved_meaning": true,
+    "schema_id": "msac-journal/1.0",
+    "numeric_convention": "nm-nrad-ns-q15-v1",
+    "signed_integer_bits": 64,
+    "overflow_policy": "reject-never-wrap",
+    "source_rounding_when_canonicalizing": "round-to-nearest-ties-to-even",
+    "quantization_is_part_of_normalization_error": true,
+    "tokens": {
+      "length_nm": {
+        "mathematical_value": "integer * 10^-9 metre",
+        "exact": true
+      },
+      "angle_nrad": {
+        "mathematical_value": "integer * 10^-9 radian",
+        "exact": true
+      },
+      "time_ns": {
+        "mathematical_value": "integer * 10^-9 second",
+        "exact": true
+      },
+      "rate_nm_s": {
+        "mathematical_value": "integer * 10^-9 metre/second",
+        "exact": true
+      },
+      "angular_rate_nrad_s": {
+        "mathematical_value": "integer * 10^-9 radian/second",
+        "exact": true
+      },
+      "q15": {
+        "mathematical_value": "integer / 10^15 before mathematical quaternion normalization",
+        "exact": true
+      }
+    },
+    "quaternion": {
+      "zero_rejected": true,
+      "canonical_sign": "first nonzero component in w,x,y,z is positive",
+      "semantic_rotation": "normalize the four exact q15 rationals mathematically, then use that unit quaternion as the rotation",
+      "floating_backend_does_not_change_durable_meaning": true
+    },
+    "transform": {
+      "frames": "right-handed Cartesian",
+      "point_convention": "column vector",
+      "mapping": "p_parent = R(q) * p_child + t",
+      "composition": "T_A_from_C = T_A_from_B o T_B_from_C; apply C->B then B->A",
+      "reclamp_rule": "new immutable setup/frame definition; never mutate a historical transform"
+    },
+    "compatibility": {
+      "existing_v1_document_never_reinterpreted_under_mc_extension": true,
+      "lost_subquantum_information_is_not_recoverable": true,
+      "unknown_required_extension_must_be_rejected_not_downcast": true,
+      "migration_requires_new_revision_and_source_identity": true
+    }
+  },
+  "mc1_exact_source_profile": {
+    "id": "mc-exact-source/1.0",
+    "kind": "additive required extension/profile; does not redefine base msac-journal/1.0 tokens",
+    "finite_source_only": true,
+    "json_number_for_certifying_quantity_forbidden": true,
+    "scalar_encodings": {
+      "rational": {
+        "shape": {
+          "numerator": "canonical signed decimal integer string",
+          "denominator": "canonical positive decimal integer string"
+        },
+        "canonicalization": [
+          "denominator > 0",
+          "gcd(abs(numerator), denominator) = 1",
+          "zero is 0/1",
+          "no leading plus or redundant leading zeroes"
+        ],
+        "meaning": "exact numerator/denominator in the field's declared SI-derived unit"
+      },
+      "turn_fraction": {
+        "shape": "canonical rational",
+        "meaning": "exact rational multiple of one full revolution; retains 2*pi symbolically rather than decimalizing pi"
+      },
+      "directed_interval": {
+        "shape": {
+          "lower": "canonical rational or exact symbolic endpoint",
+          "upper": "canonical rational or exact symbolic endpoint"
+        },
+        "meaning": "closed outward enclosure with lower <= upper; endpoint unit/dimension required"
+      }
+    },
+    "dimensions": [
+      "dimensionless",
+      "length",
+      "angle",
+      "time",
+      "linear_rate",
+      "angular_rate",
+      "squared_length",
+      "volume"
+    ],
+    "rules": {
+      "units_are_explicit": true,
+      "dimension_mismatch_is_error": true,
+      "nonfinite_tokens_forbidden": true,
+      "global_untyped_epsilon_forbidden": true,
+      "tolerance_as_predicate_sign_forbidden": true,
+      "flush_to_zero_in_authority_path_forbidden": true,
+      "integer_overflow_or_silent_saturation_forbidden": true,
+      "nominal_geometry_and_source_measurement_uncertainty_are_separate": true
+    }
+  },
+  "constructor_semantics": {
+    "parameter_domain": "u is exact real parameter in closed [0,1] unless a piece explicitly declares an exact finite time interval",
+    "stationary": {
+      "encoding": [
+        "exact pose",
+        "positive or zero finite duration"
+      ],
+      "meaning": "constant pose over its interval; engagement is preserved"
+    },
+    "line": {
+      "encoding": [
+        "exact start point",
+        "exact end point"
+      ],
+      "meaning": "P(u)=(1-u)P0+uP1"
+    },
+    "circular_arc": {
+      "encoding": [
+        "exact center",
+        "exact start radial vector",
+        "exact axis vector",
+        "exact sweep as turn_fraction"
+      ],
+      "meaning": "oriented planar rigid rotation of the start radial vector about the normalized axis through the exact symbolic sweep; endpoint is semantic, not reconstructed by an epsilon"
+    },
+    "helical_arc": {
+      "encoding": [
+        "circular_arc data",
+        "exact axial_delta along the same axis"
+      ],
+      "meaning": "circular_arc rotation plus u*axial_delta; fixed axis throughout the piece"
+    },
+    "polyline": {
+      "encoding": [
+        "finite ordered exact points"
+      ],
+      "meaning": "finite ordered line composition; zero-length pieces remain explicit when semantic boundaries require them"
+    },
+    "spline": {
+      "encoding": [
+        "degree integer >= 1",
+        "finite exact rational knot vector",
+        "finite exact control points"
+      ],
+      "meaning": "non-rational B-spline evaluated from the exact Cox-de Boor definition; multiplicities are semantic; no knot epsilon"
+    },
+    "piecewise_motion": {
+      "encoding": [
+        "finite ordered admitted pieces",
+        "explicit shared-boundary policy"
+      ],
+      "meaning": "pieces compose in order; engaged discontinuity is invalid unless separated by a non-cutting setup/context transition"
+    },
+    "timed_phase_motion": {
+      "encoding": [
+        "finite exact time knots",
+        "exact pose/path progress at knots or admitted exact curve law",
+        "exact spindle phase in turn_fraction at knots"
+      ],
+      "meaning": "time/path/spindle correlation is retained; piecewise-linear time/phase interpolation is exact unless another versioned law is explicitly named"
+    }
+  },
+  "phase_and_time": {
+    "legacy_constant_rates": "legacy integer rates retain exact scaled-SI meaning",
+    "mc1_phase": "represent phase as exact turn_fraction at semantic knots; do not infer independent full-angle coverage",
+    "time_order": "finite exact timestamps are monotone inside a section; equal-time event ordering requires explicit stable policy",
+    "phase_wrap": "phase equivalence modulo whole turns is geometric only; unwrapped phase/history remains available where chronology or synchronization matters",
+    "threading_and_eccentric_turning": "must bind tool/path progress to the same exact time/phase law"
+  },
+  "curve_and_transform_boundary_rules": {
+    "endpoints_are_authoritative": true,
+    "engagement_boundaries_are_not_fitted_across": true,
+    "setup_tool_target_policy_boundaries_are_not_fitted_across": true,
+    "exact_retrace_not_deleted_from_journal": true,
+    "subquantum_derived_features_are_not_clamped_to_input_quantum": true,
+    "exact_predicates_do_not_imply_exact_constructions": true,
+    "certified_filter_fallback_must_preserve_exact_source_semantics": true,
+    "transform_composition_checks_units_order_and_handedness": true
+  },
+  "serialization": {
+    "canonical_research_json": "UTF-8 JSON for research artifacts only; production persistence remains undecided",
+    "certifying_values": "use canonical decimal strings/rationals or directed endpoints, never binary floating JSON numbers",
+    "hashing": "hash a separately specified canonical byte representation; pretty-printed JSON bytes are not implicitly canonical",
+    "roundtrip": "parse -> semantic object -> canonical research encoding must preserve exact token values, dimensions, required extension IDs, curve topology, phase/time association and transform order"
+  },
+  "migration_and_extension": {
+    "base_v1_is_frozen": true,
+    "extension_declaration_location": "journal project header required_extensions",
+    "extension_reader_rule": "a reader that does not implement a required extension must reject that revision as unsupported",
+    "new_revision_only": true,
+    "no_in_place_reinterpretation": true,
+    "no_fake_precision_recovery": true,
+    "legacy_fixture_expectations": [
+      {
+        "path": "research/rcs-002/fixtures/lathe-finishing-pass-v1.json",
+        "blob_sha": "f87b160d4d78d8a608969d183b6b165a9e57a0d4",
+        "required_extensions": []
+      },
+      {
+        "path": "research/rcs-002/fixtures/mill-cut-through-v1.json",
+        "blob_sha": "cb93d31e3e0c018c0e971ec1a8144be085f6e5fd",
+        "required_extensions": []
+      }
+    ]
+  },
+  "mc002_constructor_coverage": {
+    "required_trajectory_ids": [
+      "stationary",
+      "line",
+      "circular_arc",
+      "helical_arc",
+      "polyline",
+      "spline",
+      "piecewise_motion",
+      "timed_phase_motion"
+    ],
+    "required_lathe_kinematic_ids": [
+      "spindle_rotation",
+      "turning_feed",
+      "phase_synchronization",
+      "eccentric_setup"
+    ],
+    "required_setup_ids": [
+      "rigid_setup_transform",
+      "reclamp",
+      "machine_transition"
+    ],
+    "coverage_rule": "each listed MC-002 semantic constructor has an exact finite source/transform/time interpretation here; physical validity remains owned by MC-002"
+  },
+  "open_questions": [
+    {
+      "id": "OQ-003-01",
+      "topic": "production persistence/codec representation for arbitrary-precision rational and symbolic-turn tokens",
+      "status": "open_implementation_choice",
+      "blocks": "production codec only; not semantic research contract"
+    },
+    {
+      "id": "OQ-003-02",
+      "topic": "resource caps for coefficient bit-length, knot count and event count",
+      "status": "owned_by_MC-004_and_scale_tasks",
+      "blocks": "practical envelope, not nominal source meaning"
+    },
+    {
+      "id": "OQ-003-03",
+      "topic": "DD-002-04 live/driven-tool compound-operation product semantics",
+      "status": "propagated_from_MC-002",
+      "blocks": "that product-domain decision"
+    },
+    {
+      "id": "OQ-003-04",
+      "topic": "DD-002-05 multi-spindle/transfer-machine product semantics",
+      "status": "propagated_from_MC-002",
+      "blocks": "that product-domain decision"
+    }
+  ],
+  "claims_not_made": [
+    "no native geometry/kernel correctness",
+    "no termination/completeness theorem for downstream geometry algorithms",
+    "no practical scale/resource acceptance",
+    "no STEP qualification",
+    "no MC-A acceptance"
+  ]
+}
