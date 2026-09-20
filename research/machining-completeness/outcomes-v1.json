@@ -25,9 +25,15 @@
       "blockers": []
     },
     "MC-003": {
-      "state": "NOT_STARTED",
+      "state": "COMPLETED_RESEARCH",
       "issue": 65,
-      "accepted_artifacts": [],
+      "accepted_artifacts": [
+        "research/machining-completeness/tasks/MC-003/numeric-encoding-contract-v1.json",
+        "research/machining-completeness/tasks/MC-003/report.md",
+        "research/machining-completeness/tasks/MC-003/outcome.json",
+        "research/machining-completeness/tasks/MC-003/verify.py",
+        "docs/machining-completeness/01-DOMAIN-AND-SEMANTICS.md"
+      ],
       "blockers": []
     },
     "MC-004": {
