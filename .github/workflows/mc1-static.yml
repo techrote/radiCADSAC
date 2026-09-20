@@ -59,6 +59,7 @@ jobs:
         run: |
           python3 tools/mc_workflow.py verify MC-001
           python3 tools/mc_workflow.py verify MC-002
+          python3 tools/mc_workflow.py verify MC-003
           python3 tools/mc_workflow.py verify MC-056
       - name: Check live managed GitHub task issues for zero drift
         env:
