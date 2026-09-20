@@ -90,7 +90,24 @@
         {"id": "PB-007-04", "status": "PROPAGATED_TO_DOWNSTREAM", "affected_descendants": ["MC-008", "MC-032", "MC-038"]}
       ]
     },
-    "MC-008": {"state": "NOT_STARTED", "issue": 70, "accepted_artifacts": [], "blockers": []},
+    "MC-008": {
+      "state": "COMPLETED_RESEARCH",
+      "issue": 70,
+      "accepted_artifacts": [
+        "research/machining-completeness/tasks/MC-008/termination-proof-dag-v1.json",
+        "research/machining-completeness/tasks/MC-008/report.md",
+        "research/machining-completeness/tasks/MC-008/outcome.json",
+        "research/machining-completeness/tasks/MC-008/verify.py",
+        "research/machining-completeness/proof-obligations-v1.json",
+        "docs/machining-completeness/02-COMPLETENESS-ARGUMENT.md"
+      ],
+      "blockers": [
+        {"id": "PB-007-01", "status": "OPEN", "affected_descendants": ["MC-022", "MC-024", "MC-032", "MC-038"]},
+        {"id": "PB-007-02", "status": "OPEN", "affected_descendants": ["MC-022", "MC-024", "MC-038"]},
+        {"id": "PB-007-03", "status": "PROPAGATED_FROM_MC-006", "affected_descendants": ["MC-020", "MC-024", "MC-038"]},
+        {"id": "PB-007-04", "status": "PROPAGATED_TO_DOWNSTREAM", "affected_descendants": ["MC-032", "MC-038"]}
+      ]
+    },
     "MC-009": {"state": "NOT_STARTED", "issue": 71, "accepted_artifacts": [], "blockers": []},
     "MC-010": {"state": "NOT_STARTED", "issue": 72, "accepted_artifacts": [], "blockers": []},
     "MC-011": {"state": "NOT_STARTED", "issue": 73, "accepted_artifacts": [], "blockers": []},
@@ -99,7 +116,7 @@
     "MC-014": {"state": "NOT_STARTED", "issue": 76, "accepted_artifacts": [], "blockers": []},
     "MC-015": {"state": "NOT_STARTED", "issue": 77, "accepted_artifacts": [], "blockers": []},
     "MC-016": {"state": "NOT_STARTED", "issue": 78, "accepted_artifacts": [], "blockers": []},
-    "MC-017": {"state": "NOT_STARTED", "issue": 79, "accepted_artifacts": [], "blockers": []},
+    "MC-017": {"state": "NOT_STARTED", "issue": 79, "accepted_artifacts": [],"blockers": []},
     "MC-018": {"state": "NOT_STARTED", "issue": 80, "accepted_artifacts": [], "blockers": []},
     "MC-019": {"state": "NOT_STARTED", "issue": 81, "accepted_artifacts": [], "blockers": []},
     "MC-020": {"state": "NOT_STARTED", "issue": 82, "accepted_artifacts": [], "blockers": []},

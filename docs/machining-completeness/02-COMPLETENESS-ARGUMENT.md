@@ -61,6 +61,16 @@ The inspected Chonev–Ouaknine–Worrell Continuous Skolem work (`arXiv:1506.00
 
 The three affected admitted operations remain `lathe_threading_synchronized`, `lathe_eccentric_turning` and `mill_thread_helix_fixed_axis`; the frozen denominator remains 26. PO-02/03/04/05/07 remain **OPEN**, MC-B remains `NOT_ESTABLISHED`, and no native/paid execution or engineering-output qualification follows. MC-008 may consume the negative artifact only by retaining these blockers in its integrated arithmetic/termination/proof-obligation DAG.
 
+### MC-008 reviewed integration contract
+
+MC-008 integrates MC-003, MC-006 and the MC-007 negative result into `research/machining-completeness/tasks/MC-008/termination-proof-dag-v1.json`. The arithmetic route is explicit: A0 retains exact source semantics; A1 uses the MC-006 exact semialgebraic route only under its checked hypotheses; A2 uses MC-007 directed-enclosure reasoning only for proved separated/transversal events with an input-derived finite stopping witness; and A3 terminates every uncovered required branch as a typed proof blocker. Timeout, arbitrary refinement depth, jitter, sampling density and provider cycling remain non-results.
+
+Finite progress is likewise explicit. Finite journal composition decreases a natural-number remaining-operation measure; the MC-006 exact branch relies on its actual terminating algorithm rather than a timeout; the admitted MC-007 analytic branch decreases a proved finite `N-k` isolation/refinement measure; and a case lacking those premises stops immediately as a blocker instead of refining indefinitely. The 26-operation denominator is unchanged.
+
+The shared PO register now gives PO-01 through PO-12 quantified statements, premise lists, stable integration owners and an acyclic dependency DAG. Only PO-01 remains `ACCEPTED`; PO-02 through PO-12 remain **OPEN**. Numeric error composition is monotone and outward through source decode, transform, sweep/material, classification/topology, reconstruction and STEP/export, but an unknown component makes the numeric certificate `UNCERTIFIED`. Numeric tolerances cannot compensate for topology/connectivity, positive-volume material, durable body identity or lineage.
+
+`PB-007-01` through `PB-007-04` remain open/propagated to their remaining descendants, including MC-038 where applicable. MC-008 therefore completes its integration contract without discharging the underlying analytic/source/topology obligations: MC-B and MC-1 remain `NOT_ESTABLISHED`, and no native or paid execution is authorized.
+
 ## Error and trust track
 
 Trace exact predicates and constructions through decoding, transforms, sweep, classification, topology, reconstruction and export. State the arithmetic and certificate trusted computing base. A certificate checker can be machine-executed while its claim is inadequate; review both checker and statement. A Lipschitz constant, numeric-error parameter or library marketing guarantee must be derived/validated for the actual operation, not accepted as an input assertion.
