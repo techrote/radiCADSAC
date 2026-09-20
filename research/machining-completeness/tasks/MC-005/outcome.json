@@ -1,0 +1,100 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-005",
+  "result_kind": "CAPABILITY_ACCEPTED",
+  "evidence_class": [
+    "REQUIREMENT",
+    "DESIGN_DECISION",
+    "REVIEWED_ARGUMENT",
+    "DOCUMENTATION_RECONCILIATION"
+  ],
+  "source_baseline": "0ef8235ed9bd7e807a04f7ad048dae2929c131c3",
+  "issue": 67,
+  "dependency_artifacts": [
+    {
+      "task": "MC-002",
+      "path": "research/machining-completeness/tasks/MC-002/outcome.json",
+      "blob_sha": "930db704e9dd29955e7af99ba793c74e0cfda325",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-003",
+      "path": "research/machining-completeness/tasks/MC-003/outcome.json",
+      "blob_sha": "8f335f59f36c8761844806f9059af4a4f1671044",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-004",
+      "path": "research/machining-completeness/tasks/MC-004/outcome.json",
+      "blob_sha": "4f032ac5ff2584c48084fac3282c137a00731d40",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-056",
+      "path": "research/machining-completeness/tasks/MC-056/outcome.json",
+      "blob_sha": "e9b971c593ca1a90baf17f9ae9a5a568dd313ac3",
+      "result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "accepted_claims": [
+    "the current MC-1 machine/process boundary is conventional lathe plus fixed-axis three-axis mill with explicit finite re-clamp/reorientation and cross-machine histories",
+    "the frozen current-tranche operation denominator is exactly the same 26 admitted operations in MC-002 and MC-004",
+    "DD-002-04 compound simultaneous turn-mill/live-tool kinematics are outside the current tranche without removing any admitted lathe/mill history or allowing provider-driven narrowing",
+    "DD-002-05 coordinated multi-spindle/transfer-machine semantics are outside the current tranche without removing any admitted finite lathe/mill history",
+    "MC-003 provides finite exact source/numeric/curve/transform/phase semantics needed by the current domain while preserving legacy journal meaning",
+    "MC-004 freezes candidate-independent workloads, accuracy profiles, reference hardware, resource envelopes, repeats and non-pass states before candidate execution",
+    "PO-01 Domain fidelity is accepted for the current MC-1 tranche",
+    "MC-A is accepted as the faithful domain/precision/request lock for the current MC-1 tranche"
+  ],
+  "open_claims": [
+    "constructive completeness and termination remain open; MC-B is NOT_ESTABLISHED",
+    "native material/topology realization remains unqualified",
+    "conventional B-rep/STEP representability and independent consumer qualification remain unqualified",
+    "practical native scale/platform/recovery remains unqualified",
+    "MC-1 remains NOT_ESTABLISHED",
+    "future compound simultaneous turn-mill/live-tool or coordinated multi-spindle/transfer semantics require prospective domain/workload revision before candidate testing",
+    "MC-003 production codec representation remains a later implementation choice",
+    "MC-004 T3 100k+ and provider tariff/budget remain later execution decisions"
+  ],
+  "native_execution": false,
+  "artifacts": [
+    "research/machining-completeness/tasks/MC-005/domain-lock-review-v1.json",
+    "research/machining-completeness/tasks/MC-005/report.md",
+    "research/machining-completeness/tasks/MC-005/verify.py",
+    "docs/machining-completeness/01-DOMAIN-AND-SEMANTICS.md",
+    "docs/machining-completeness/06-MC1-DECISION.md",
+    "research/machining-completeness/programme-v1.json",
+    "research/machining-completeness/proof-obligations-v1.json",
+    "research/machining-completeness/outcomes-v1.json"
+  ],
+  "verification": [
+    "python3 research/machining-completeness/tasks/MC-005/verify.py --contract",
+    "python3 tools/mc_workflow.py verify MC-005",
+    "python3 tools/validate_machining_completeness.py --self-test"
+  ],
+  "adversarial_controls": [
+    "reject dropped admitted operation",
+    "reject provider-driven scope decision",
+    "reject current-denominator shrinkage through product-boundary resolution",
+    "reject unresolved inherited product boundary",
+    "reject promotion of planning evidence to native geometry",
+    "reject candidate-specific qualification",
+    "reject changed candidate-blind workload seed",
+    "reject weakened exact-source profile",
+    "reject weakened protected journal/provenance/body semantics",
+    "reject gate/PO registry drift"
+  ],
+  "resources": {
+    "native_permit_required": false,
+    "native_or_paid_campaign_run": false
+  },
+  "review": {
+    "disposition": "capability accepted for MC-A only",
+    "gate_changed": true,
+    "gate": "MC-A",
+    "po_changed": "PO-01",
+    "programme_capability_changed": false
+  },
+  "blockers": [],
+  "downstream_invalidations": []
+}

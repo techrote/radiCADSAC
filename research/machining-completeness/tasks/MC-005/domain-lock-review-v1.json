@@ -1,0 +1,190 @@
+{
+  "schema": "radicadsac-mc-domain-lock-review/1.0",
+  "task": "MC-005",
+  "status": "accepted-domain-lock",
+  "source_baseline": "0ef8235ed9bd7e807a04f7ad048dae2929c131c3",
+  "hypothesis": "MC-002, MC-003, MC-004 and MC-056 jointly define a faithful, internally consistent and candidate-independent current MC-1 domain/precision/workload contract without narrowing the supported lathe/fixed-axis-three-axis-mill tranche or weakening inherited semantics.",
+  "falsification_criteria": [
+    "an admitted MC-002 operation is absent from the frozen MC-004 denominator",
+    "an admitted constructor lacks finite exact source semantics required by MC-003",
+    "a provider or candidate can redefine physical validity, the denominator, the accuracy request or the resource envelope",
+    "a current-scope product boundary remains ambiguous after this integration review",
+    "legacy journal/body/provenance meaning is reinterpreted in place",
+    "the review claims native geometry, constructive completeness, STEP qualification or practical scale evidence that was not executed"
+  ],
+  "evidence_class": [
+    "REQUIREMENT",
+    "DESIGN_DECISION",
+    "REVIEWED_ARGUMENT",
+    "DOCUMENTATION_RECONCILIATION"
+  ],
+  "native_geometry_claimed": false,
+  "native_or_paid_execution": false,
+  "dependencies": [
+    {
+      "task": "MC-002",
+      "path": "research/machining-completeness/tasks/MC-002/outcome.json",
+      "git_blob_sha1": "930db704e9dd29955e7af99ba793c74e0cfda325",
+      "required_result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-003",
+      "path": "research/machining-completeness/tasks/MC-003/outcome.json",
+      "git_blob_sha1": "8f335f59f36c8761844806f9059af4a4f1671044",
+      "required_result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-004",
+      "path": "research/machining-completeness/tasks/MC-004/outcome.json",
+      "git_blob_sha1": "4f032ac5ff2584c48084fac3282c137a00731d40",
+      "required_result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-056",
+      "path": "research/machining-completeness/tasks/MC-056/outcome.json",
+      "git_blob_sha1": "e9b971c593ca1a90baf17f9ae9a5a568dd313ac3",
+      "required_result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "authority_basis": [
+    "docs/00-FOUNDING-BRIEF.md",
+    "docs/01-MSAC-GEOMETRY-CONTRACT.md",
+    "docs/machining-completeness/00-PROGRAMME.md",
+    "docs/machining-completeness/01-DOMAIN-AND-SEMANTICS.md",
+    "docs/machining-completeness/05-QUALIFICATION.md",
+    "docs/decisions/DR-0026-machining-completeness-programme.md"
+  ],
+  "domain_lock": {
+    "machine_families": [
+      "conventional lathe",
+      "fixed-axis three-axis mill"
+    ],
+    "history_model": "finite ordered histories may include explicit re-clamp/re-chuck, non-cutting reorientation and lathe-to-mill-to-lathe transitions while preserving durable body identity and a common workpiece frame",
+    "operation_denominator": [
+      "lathe_od_turning",
+      "lathe_facing",
+      "lathe_shoulder",
+      "lathe_taper_chamfer_profile",
+      "lathe_id_boring_internal",
+      "lathe_axial_drilling",
+      "lathe_grooving",
+      "lathe_parting_cutthrough",
+      "lathe_form_turning",
+      "lathe_threading_synchronized",
+      "lathe_eccentric_turning",
+      "lathe_exact_retrace_finish",
+      "mill_face",
+      "mill_slot_pocket_freehand",
+      "mill_drill_plunge",
+      "mill_ball_rounded_xyz",
+      "mill_form_chamfer_countersink",
+      "mill_accessible_undercut",
+      "mill_thread_helix_fixed_axis",
+      "mill_simultaneous_xyz",
+      "mill_retrace_self_cross_stationary",
+      "mill_cutthrough_multibody",
+      "reclamp_reorient_continue",
+      "lathe_mill_lathe_history",
+      "machine_separated_retained_body",
+      "complete_body_removal"
+    ],
+    "operation_count": 26,
+    "physical_validity_is_candidate_independent": true,
+    "provider_or_solver_refusal_does_not_remove_case": true,
+    "positive_volume_material_may_not_be_deleted_by_tolerance_policy": true,
+    "durable_body_identity_is_not_backend_topology_identity": true,
+    "engaged_motion_must_be_continuous": true,
+    "detached_material_requires_retention_or_explicit_reclamp_before_further_machining": true,
+    "whole_body_removal_and_empty_material_are_valid": true
+  },
+  "product_boundary_resolutions": [
+    {
+      "id": "DD-002-04",
+      "topic": "lathe_live_or_driven_tooling_as_one_compound_operation",
+      "historical_mc002_status": "open_product_domain_decision",
+      "mc005_status": "excluded_by_current_mc1_scope",
+      "basis": "The current MC-1 tranche is explicitly conventional lathe plus fixed-axis three-axis mill. Simultaneously controlled compound turn-mill/live-tool kinematics are not added as a third compound-machine process class. A workpiece achievable through the admitted lathe, mill, re-clamp and machine-transition history remains in scope; this decision does not permit a provider to reject any of the 26 frozen operations or equivalent admitted histories.",
+      "provider_or_solver_based": false,
+      "changes_current_denominator": false,
+      "future_scope_requires_contract_revision": true
+    },
+    {
+      "id": "DD-002-05",
+      "topic": "multiple_simultaneously_controlled_spindles_or_transfer_machine_semantics",
+      "historical_mc002_status": "open_product_domain_decision",
+      "mc005_status": "excluded_by_current_mc1_scope",
+      "basis": "The current MC-1 tranche defines conventional single-workpiece lathe/mill process semantics with explicit re-clamp/re-chuck and cross-machine histories. Simultaneously coordinated multi-spindle/transfer-machine process semantics are future machine-module scope. A workpiece achievable through the admitted finite history remains in scope; throughput-oriented machine coordination is not silently promoted into a new mandatory constructor family.",
+      "provider_or_solver_based": false,
+      "changes_current_denominator": false,
+      "future_scope_requires_contract_revision": true
+    }
+  ],
+  "numeric_lock": {
+    "legacy_schema": "msac-journal/1.0",
+    "legacy_saved_meaning_preserved": true,
+    "mc1_required_exact_source_profile": "mc-exact-source/1.0",
+    "finite_exact_semantics_required_for_admitted_trajectory_setup_and_phase_constructors": true,
+    "unsupported_required_extension_rejects_instead_of_downcasts": true,
+    "new_revision_only_migration": true,
+    "lost_precision_is_not_fabricated": true,
+    "dimensionally_untyped_global_epsilon_forbidden": true,
+    "tolerance_as_predicate_sign_forbidden": true,
+    "silent_integer_wrap_or_saturation_forbidden": true,
+    "nonfinite_authority_values_forbidden": true
+  },
+  "qualification_lock": {
+    "candidate_independent": true,
+    "candidate_specific_override_forbidden": true,
+    "workload_generator": "mc004-candidate-blind-workload-v1",
+    "seed_sha256": "7b5197a80c458cad264f135ef943339097285a68a201dc88250c943ac7586e74",
+    "required_t2_genuine_geometry_sections": [10, 100, 1000, 10000],
+    "separate_redundant_history_controls": true,
+    "accuracy_profiles": [
+      "A-SEMANTIC",
+      "A-ENGINEERING",
+      "A-PRECISION-BOUNDARY"
+    ],
+    "primary_reference_hardware": "MC-RH-Q1",
+    "final_completed_repeats": 3,
+    "repeats_are_sequential": true,
+    "timeout_resource_pending_refusal_crash_invalid_certificate_material_mismatch_are_nonpass": true,
+    "paid_or_native_execution_authorized": false
+  },
+  "protected_semantics": {
+    "historical_genesis_evidence_preserved": true,
+    "source_audio_provenance_semantics_preserved": true,
+    "journal_saved_meaning_preserved": true,
+    "durable_body_lineage_semantics_preserved": true,
+    "negative_evidence_preserved": true,
+    "provider_private_topology_never_becomes_durable_identity": true
+  },
+  "po01": {
+    "id": "PO-01",
+    "title": "Domain fidelity",
+    "decision": "ACCEPTED",
+    "reason": "The current MC-1 machine/process boundary, operation denominator, physical-validity rules, exact source semantics and candidate-independent request profile are explicit, mutually consistent and protected against solver/provider narrowing. Product boundaries that were intentionally left open by MC-002 are resolved here from programme authority without removing any previously admitted operation.",
+    "scope_limit": "PO-01 accepts the current MC-1 domain contract only; it does not prove a terminating constructive geometry route or implementation correctness."
+  },
+  "gate": {
+    "id": "MC-A",
+    "owner": "MC-005",
+    "decision": "ACCEPTED",
+    "basis": [
+      "faithful process-first domain and physical-validity contract from MC-002",
+      "exact/versioned numeric, curve, transform and phase source semantics from MC-003",
+      "candidate-independent frozen workload, accuracy, hardware and resource request from MC-004",
+      "planning/native CI separation from MC-056",
+      "MC-005 product-boundary resolution and cross-contract consistency review"
+    ],
+    "non_compensating": true
+  },
+  "claims_not_made": [
+    "no constructive completeness or termination proof (MC-B remains NOT_ESTABLISHED)",
+    "no native material/topology implementation correctness",
+    "no conventional B-rep/STEP representability or independent-consumer qualification",
+    "no practical native scale/platform/recovery qualification",
+    "no MC-1 programme acceptance",
+    "no production bootstrap or paid/native execution authorization"
+  ],
+  "future_scope_rule": "Adding continuous five-axis cutting, compound simultaneous turn-mill/live-tool kinematics, coordinated multi-spindle transfer semantics, additive processes or other new process classes requires a prospective reviewed domain-contract revision and corresponding workload/profile revision before candidate testing. It may not retroactively alter this MC-A evidence or convert a candidate failure into an exclusion."
+}
