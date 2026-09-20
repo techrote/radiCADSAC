@@ -1,0 +1,112 @@
+{
+  "schema": "radicadsac-mc009-verifier-contract/1.0",
+  "task": "MC-009",
+  "status": "reviewed-binding-contract",
+  "source_baseline": "fa93162caa6e4e16c188674b19bac7a501c5f415",
+  "dependencies": [
+    {
+      "task": "MC-001",
+      "path": "research/machining-completeness/tasks/MC-001/outcome.json",
+      "git_blob_sha1": "2efd52cf39102d5722c6bbf281828361e943d6a4",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-003",
+      "path": "research/machining-completeness/tasks/MC-003/outcome.json",
+      "git_blob_sha1": "8f335f59f36c8761844806f9059af4a4f1671044",
+      "result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "schema_catalog": {
+    "path": "research/machining-completeness/schema-catalog-v1.json",
+    "sha256": "c40cde17b4a9edc64d1ec08324c93fd174b8257eb1e9a03b074e8fe228dc94cd",
+    "schemas": [
+      "radicadsac-mc-fixture/1.0",
+      "radicadsac-mc-result/1.0",
+      "radicadsac-mc-task-outcome/1.0",
+      "radicadsac-mc-claim/1.0",
+      "radicadsac-mc-programme-verdict/1.0"
+    ]
+  },
+  "programme_verifier": {
+    "path": "tools/mc_evidence_verifier.py",
+    "sha256": "fc8d449ff80a1cfe897e701d01cb3cc137ace4bbbac3c56e2c15055187fb9a2c",
+    "authority": "MC-1-programme",
+    "scope": "schema and identity binding only; not a native geometry, oracle-mathematics, topology, STEP-consumer or capability checker"
+  },
+  "fixture_registry_guard": {
+    "registry": "research/machining-completeness/fixture-families-v1.json",
+    "families": [
+      "F01",
+      "F02",
+      "F03",
+      "F04",
+      "F05",
+      "F06",
+      "F07",
+      "F08",
+      "F09",
+      "F10",
+      "F11",
+      "F12",
+      "F13",
+      "F14",
+      "F15",
+      "F16"
+    ],
+    "required_state": "UNBUILT",
+    "reason": "MC-009 specifies records and attacks; it does not pre-empt the MC-011..014 fixture owners by fabricating physical fixtures."
+  },
+  "binding_requirements": [
+    "fixture records bind domain plus stock/tool/setup/history identities, physical witness, exact parameters, request/profile/accuracy, oracle independence, generator and expected authority",
+    "result records bind the exact fixture, domain, profile, accuracy, inputs, candidate source/configuration, programme checker and every explicit stage",
+    "programme verdicts bind exact fixture/result identities plus candidate source/configuration, checker, request/profile/accuracy and exported file when applicable",
+    "accepted claims require programme authority and evidence references",
+    "task outcomes remain distinct from programme/gate verdicts",
+    "binary floating values are forbidden in canonical binding objects; owning exact numeric contracts provide exact strings/integers"
+  ],
+  "required_corruptions": [
+    "fixture hash mismatch",
+    "input/history hash mismatch",
+    "stale profile",
+    "altered accuracy",
+    "missing stage",
+    "candidate self-verdict",
+    "candidate verdict authority",
+    "candidate source/configuration mismatch",
+    "checker mismatch",
+    "exported-file mismatch",
+    "candidate-defined physical witness",
+    "non-independent oracle",
+    "candidate-defined expected result",
+    "binary float in binding object",
+    "accepted claim without evidence",
+    "candidate-accepted claim"
+  ],
+  "boundary_controls": [
+    "timeout remains INCOMPLETE even when prior stage records say PASS",
+    "explicit physically valid empty material may PASS only when every required binding/stage passes",
+    "independent control fixtures may omit an F01-F16 family mapping without changing the mandatory F01-F16 denominator"
+  ],
+  "protected_semantics": {
+    "machining_domain_denominator_unchanged": true,
+    "historical_genesis_evidence_unchanged": true,
+    "canonical_journal_meaning_unchanged": true,
+    "source_audio_provenance_semantics_unchanged": true,
+    "durable_body_and_lineage_semantics_unchanged": true,
+    "negative_and_incomplete_results_preserved": true,
+    "candidate_output_never_expected_truth": true,
+    "timeout_or_resource_refusal_never_success": true
+  },
+  "capability_guard": {
+    "MC-A": "ACCEPTED",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-C": "NOT_ESTABLISHED",
+    "MC-D": "NOT_ESTABLISHED",
+    "MC-E": "NOT_ESTABLISHED",
+    "MC-F": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "native_or_paid_execution": false,
+    "production_authorized": false
+  }
+}
