@@ -1,0 +1,217 @@
+{
+  "schema": "radicadsac-mc-schema-catalog/1.0",
+  "programme": "MC-1",
+  "binding_encoding": {
+    "id": "radicadsac-json-bind/1.0",
+    "serialization": "UTF-8 JSON; object keys sorted by Unicode code point; no insignificant whitespace; ensure_ascii=false; separators ',' and ':'; null/boolean/integer/string/array/object only",
+    "binary_float_forbidden": true,
+    "digest": "sha256:<lower-case-hex> over the canonical bytes",
+    "reason": "Binding objects must be reproducible without binary-floating formatting ambiguity. Exact numeric quantities remain strings/integers under the owning numeric contract."
+  },
+  "schemas": {
+    "fixture": {
+      "id": "radicadsac-mc-fixture/1.0",
+      "required": [
+        "schema",
+        "fixture_id",
+        "fixture_version",
+        "fixture_scope",
+        "family",
+        "domain",
+        "inputs",
+        "physical_witness",
+        "exact_parameters",
+        "coverage",
+        "request",
+        "topology_requirements",
+        "analytic_requirements",
+        "required_stages",
+        "oracle",
+        "generator",
+        "expected"
+      ],
+      "families": [
+        "F01",
+        "F02",
+        "F03",
+        "F04",
+        "F05",
+        "F06",
+        "F07",
+        "F08",
+        "F09",
+        "F10",
+        "F11",
+        "F12",
+        "F13",
+        "F14",
+        "F15",
+        "F16"
+      ],
+      "required_input_digests": [
+        "stock",
+        "tool",
+        "setup",
+        "history"
+      ],
+      "stage_names": [
+        "material",
+        "topology",
+        "reconstruction",
+        "step_a",
+        "step_b",
+        "step_c",
+        "step_d"
+      ],
+      "expected_classes": [
+        "VALID_NONEMPTY",
+        "VALID_EMPTY",
+        "INVALID_CONTROL"
+      ],
+      "semantic_guards": [
+        "physical-validity authority is not candidate output",
+        "expected result authority is not candidate output",
+        "oracle is explicitly independent from candidate decisive implementation",
+        "generator is candidate-blind",
+        "accuracy_digest binds the exact declared accuracy vector",
+        "required stages are explicit rather than inferred from candidate success text",
+        "independent controls and historical imports do not have to impersonate an F01-F16 mandatory family"
+      ],
+      "fixture_scopes": [
+        "MANDATORY_FAMILY",
+        "INDEPENDENT_CONTROL",
+        "HISTORICAL_IMPORT"
+      ],
+      "family_rule": "MANDATORY_FAMILY requires F01..F16; controls/imports may use null or an explicit F01..F16 mapping without changing the mandatory family registry"
+    },
+    "result": {
+      "id": "radicadsac-mc-result/1.0",
+      "required": [
+        "schema",
+        "attempt_id",
+        "fixture",
+        "domain_digest",
+        "profile",
+        "accuracy_digest",
+        "input_digests",
+        "candidate",
+        "checker",
+        "terminal_reason",
+        "stages",
+        "bounds_validated"
+      ],
+      "terminal_reasons": [
+        "SUCCEEDED",
+        "TIMEOUT",
+        "RESOURCE_EXHAUSTED",
+        "REJECTED",
+        "ERROR",
+        "CRASH",
+        "NOT_EXECUTED"
+      ],
+      "stage_states": [
+        "PASS",
+        "FAIL",
+        "INCONCLUSIVE",
+        "NOT_EXECUTED"
+      ],
+      "semantic_guards": [
+        "all seven material/topology/reconstruction/STEP A-D stage keys are always present",
+        "missing work is NOT_EXECUTED rather than omission",
+        "candidate source/configuration and programme checker identities are hashed",
+        "candidate self-verdict/final/gate/capability verdict fields are forbidden",
+        "timeout/resource refusal/error/crash are terminal observations, not success"
+      ]
+    },
+    "outcome": {
+      "id": "radicadsac-mc-task-outcome/1.0",
+      "required": [
+        "schema",
+        "task",
+        "result_kind",
+        "evidence_class",
+        "source_baseline",
+        "issue",
+        "accepted_claims",
+        "open_claims",
+        "native_execution",
+        "artifacts",
+        "verification"
+      ],
+      "result_kinds": [
+        "COMPLETED_RESEARCH",
+        "NEGATIVE_RESULT",
+        "BLOCKED",
+        "CAPABILITY_ACCEPTED"
+      ],
+      "semantic_guards": [
+        "research completion does not imply a capability gate",
+        "negative and blocked findings remain explicit",
+        "native_execution is recorded separately from static/model evidence"
+      ]
+    },
+    "claim": {
+      "id": "radicadsac-mc-claim/1.0",
+      "required": [
+        "schema",
+        "claim_id",
+        "claim_version",
+        "owner_task",
+        "statement",
+        "state",
+        "authority",
+        "evidence_refs"
+      ],
+      "states": [
+        "OPEN",
+        "REFUTED",
+        "REVIEWED",
+        "ACCEPTED"
+      ],
+      "semantic_guards": [
+        "ACCEPTED requires at least one bound evidence reference",
+        "ACCEPTED authority is MC-1-programme rather than a candidate",
+        "OPEN/REFUTED/REVIEWED are not silently promoted by issue closure"
+      ]
+    },
+    "programme_verdict": {
+      "id": "radicadsac-mc-programme-verdict/1.0",
+      "authority": "MC-1-programme",
+      "required": [
+        "schema",
+        "verdict_id",
+        "authority",
+        "fixture_digest",
+        "result_digest",
+        "expected",
+        "decision",
+        "reason_codes"
+      ],
+      "decisions": [
+        "PASS",
+        "FAIL",
+        "INCOMPLETE",
+        "INVALID"
+      ],
+      "expected_bindings": [
+        "domain_digest",
+        "profile_id",
+        "profile_digest",
+        "accuracy_digest",
+        "candidate_identity",
+        "candidate_source_digest",
+        "candidate_config_digest",
+        "checker_identity",
+        "checker_digest"
+      ],
+      "semantic_guards": [
+        "programme verdict binds exact fixture and result digests",
+        "source/profile/accuracy/checker mismatches fail closed",
+        "required stages must pass and terminal_reason must be SUCCEEDED for PASS",
+        "candidate-provided SOLVED/PASS strings never constitute programme authority"
+      ]
+    }
+  },
+  "verifier": "tools/mc_evidence_verifier.py",
+  "scope_limit": "This contract verifies schema/version/source/profile/stage/authority binding only. It does not establish geometric correctness, oracle correctness, certificate mathematics, engineering interoperability or any MC capability gate by itself."
+}

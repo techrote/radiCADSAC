@@ -108,7 +108,20 @@
         {"id": "PB-007-04", "status": "PROPAGATED_TO_DOWNSTREAM", "affected_descendants": ["MC-032", "MC-038"]}
       ]
     },
-    "MC-009": {"state": "NOT_STARTED", "issue": 71, "accepted_artifacts": [], "blockers": []},
+    "MC-009": {
+      "state": "COMPLETED_RESEARCH",
+      "issue": 71,
+      "accepted_artifacts": [
+        "research/machining-completeness/schema-catalog-v1.json",
+        "tools/mc_evidence_verifier.py",
+        "research/machining-completeness/tasks/MC-009/verifier-contract-v1.json",
+        "research/machining-completeness/tasks/MC-009/report.md",
+        "research/machining-completeness/tasks/MC-009/outcome.json",
+        "research/machining-completeness/tasks/MC-009/verify.py",
+        "docs/machining-completeness/11-FORMAT-CONTRACTS.md"
+      ],
+      "blockers": []
+    },
     "MC-010": {"state": "NOT_STARTED", "issue": 72, "accepted_artifacts": [], "blockers": []},
     "MC-011": {"state": "NOT_STARTED", "issue": 73, "accepted_artifacts": [], "blockers": []},
     "MC-012": {"state": "NOT_STARTED", "issue": 74, "accepted_artifacts": [], "blockers": []},

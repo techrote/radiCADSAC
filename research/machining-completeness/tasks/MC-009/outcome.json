@@ -1,0 +1,89 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-009",
+  "result_kind": "COMPLETED_RESEARCH",
+  "evidence_class": [
+    "DESIGN_DECISION",
+    "MEASURED_DETERMINISTIC_MODEL",
+    "DOCUMENTATION_RECONCILIATION"
+  ],
+  "source_baseline": "fa93162caa6e4e16c188674b19bac7a501c5f415",
+  "issue": 71,
+  "dependency_artifacts": [
+    {
+      "task": "MC-001",
+      "path": "research/machining-completeness/tasks/MC-001/outcome.json",
+      "blob_sha": "2efd52cf39102d5722c6bbf281828361e943d6a4",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-003",
+      "path": "research/machining-completeness/tasks/MC-003/outcome.json",
+      "blob_sha": "8f335f59f36c8761844806f9059af4a4f1671044",
+      "result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "accepted_claims": [
+    "MC-1 has versioned fixture, result, task-outcome, claim and programme-verdict binding contracts with deterministic canonical SHA-256 identities",
+    "the programme-owned binding verifier rejects mismatched fixture/input/profile/accuracy/candidate/checker/export identities, missing stages and candidate self-verdict authority",
+    "timeout/resource/non-success terminal reasons cannot become binding-level PASS and explicit valid-empty material remains representable without fake failure",
+    "F01-F16 remain mandatory and UNBUILT under their existing owners; MC-009 supplies record contracts without fabricating physical fixtures",
+    "historical evidence and protected domain/journal/source/provenance/body-lineage semantics remain unchanged"
+  ],
+  "open_claims": [
+    "physical witness correctness and real oracle independence remain for MC-010 through MC-015",
+    "actual certificate mathematics/checker correctness remains open for MC-015 and downstream native owners",
+    "F01-F16 physical fixtures and discriminating oracle paths remain unbuilt",
+    "native material/topology/reconstruction and STEP engineering qualification remain unestablished",
+    "MC-B, MC-C, MC-D, MC-E, MC-F and MC-1 remain NOT_ESTABLISHED"
+  ],
+  "native_execution": false,
+  "artifacts": [
+    "research/machining-completeness/schema-catalog-v1.json",
+    "tools/mc_evidence_verifier.py",
+    "research/machining-completeness/tasks/MC-009/verifier-contract-v1.json",
+    "research/machining-completeness/tasks/MC-009/report.md",
+    "research/machining-completeness/tasks/MC-009/outcome.json",
+    "research/machining-completeness/tasks/MC-009/verify.py",
+    "docs/machining-completeness/11-FORMAT-CONTRACTS.md",
+    "research/machining-completeness/outcomes-v1.json",
+    ".github/workflows/mc1-static.yml"
+  ],
+  "verification": [
+    "python3 tools/mc_evidence_verifier.py --self-test",
+    "python3 research/machining-completeness/tasks/MC-009/verify.py --contract",
+    "python3 tools/mc_workflow.py verify MC-009",
+    "python3 tools/validate_machining_completeness.py --self-test",
+    "python3 tools/mc_workflow.py sync --check"
+  ],
+  "adversarial_controls": [
+    "reject fixture and input/history hash mismatches",
+    "reject stale profile and altered accuracy",
+    "reject missing stages",
+    "reject candidate self-verdict and candidate-owned accepted claim/programme verdict",
+    "reject candidate source/configuration and checker mismatches",
+    "reject exported-file mismatch",
+    "reject candidate-defined physical witness or expected truth",
+    "reject non-independent oracle declaration",
+    "reject binary floating values in canonical binding objects",
+    "reject accepted claims without bound evidence",
+    "keep timeout incomplete and permit explicit valid-empty only through the normal required-stage contract"
+  ],
+  "resources": {
+    "native_permit_required": false,
+    "native_or_paid_campaign_run": false
+  },
+  "review": {
+    "disposition": "completed schema/binding research only; no geometry or capability promotion",
+    "gate_changed": false,
+    "programme_capability_changed": false,
+    "downstream_release": "MC-010 and other artifact dependents may consume the versioned binding contract; all physical/oracle/certificate/native claims remain with their owners"
+  },
+  "blockers": [],
+  "downstream_invalidations": [
+    "changing canonical binding serialization or digest semantics requires a new schema revision and invalidates records that claim the old binding semantics",
+    "changing required fixture/result/verdict identities, stage inventory or programme authority invalidates dependent evidence records",
+    "changing MC-003 exact-source semantics requires review of fixture exact-parameter and accuracy bindings",
+    "a later oracle/certificate defect supersedes affected evidence but may not rewrite historical producing records"
+  ]
+}
