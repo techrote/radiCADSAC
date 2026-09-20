@@ -1,0 +1,103 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-007",
+  "result_kind": "NEGATIVE_RESULT",
+  "evidence_class": ["SOURCE_INSPECTION", "REVIEWED_ARGUMENT", "DETERMINISTIC_MODEL"],
+  "source_baseline": "66eb051dbd0f7ec030fbf005710582ee9d6ab36d",
+  "issue": 69,
+  "dependency_artifacts": [
+    {
+      "task": "MC-002",
+      "path": "research/machining-completeness/tasks/MC-002/outcome.json",
+      "blob_sha": "930db704e9dd29955e7af99ba793c74e0cfda325",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-003",
+      "path": "research/machining-completeness/tasks/MC-003/outcome.json",
+      "blob_sha": "8f335f59f36c8761844806f9059af4a4f1671044",
+      "result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "accepted_claims": [
+    "the finite MC-003 exact source language permits finite piece decomposition while preserving one shared time/path/spindle-phase parameter and unwrapped phase history",
+    "algebraically reducible analytic-event subproblems can dispatch to MC-006 without replacing correlated motion by independent phase coverage",
+    "certified interval and derivative reasoning gives a finite route for events whose separation or transversality is actually proved",
+    "unresolved tangential, multiple-root or singular transcendental equality must fail closed as a typed proof blocker rather than be decided by epsilon, sampling density, subdivision cap or timeout",
+    "the full MC-002 operation denominator remains 26 and the three MC-007 motion classes remain admitted"
+  ],
+  "open_claims": [
+    "PB-007-01: an unconditional finite exact decision procedure for tangential, multiple-root or singular events in the required bounded trigonometric/analytic grammar is not established",
+    "PB-007-02: an unconditional full constructive route for general coupled helical/spindle-feed/eccentric sweep membership is not established",
+    "PB-007-03: exact constructive source representation for every admitted imported-stock and arbitrary form/undercut cutter instance remains open from MC-006",
+    "PB-007-04: universal exact topology/connectivity certification remains downstream",
+    "PO-02, PO-03, PO-04, PO-05 and PO-07 remain OPEN",
+    "MC-B and MC-1 remain NOT_ESTABLISHED",
+    "native sweep/material realization, practical resource viability and STEP/B-rep qualification remain unqualified"
+  ],
+  "native_execution": false,
+  "artifacts": [
+    "research/machining-completeness/tasks/MC-007/transcendental-route-v1.json",
+    "research/machining-completeness/tasks/MC-007/report.md",
+    "research/machining-completeness/tasks/MC-007/outcome.json",
+    "research/machining-completeness/tasks/MC-007/verify.py",
+    "docs/machining-completeness/02-COMPLETENESS-ARGUMENT.md",
+    "research/machining-completeness/outcomes-v1.json",
+    ".github/workflows/mc1-static.yml"
+  ],
+  "verification": [
+    "python3 research/machining-completeness/tasks/MC-007/verify.py --contract",
+    "python3 tools/mc_workflow.py verify MC-007",
+    "python3 tools/validate_machining_completeness.py --self-test",
+    "python3 tools/mc_workflow.py sync --check"
+  ],
+  "adversarial_controls": [
+    "reject independent path-phase Cartesian coverage for synchronized motion",
+    "reject unconditional-full-route promotion",
+    "reject removal or masking of the analytic proof blockers",
+    "reject global epsilon as predicate authority",
+    "reject treating Schanuel's conjecture as an unconditional MC-1 premise",
+    "reject operation-denominator shrinkage",
+    "reject premature MC-B acceptance",
+    "reject weakening protected journal/provenance/body semantics",
+    "reject promotion of deterministic model controls to native geometry evidence"
+  ],
+  "resources": {
+    "native_permit_required": false,
+    "native_or_paid_campaign_run": false
+  },
+  "review": {
+    "disposition": "negative research result: finite fail-closed conditional analytic route plus explicit transcendental equality blockers; no capability gate changed",
+    "gate_changed": false,
+    "programme_capability_changed": false,
+    "downstream_release": "MC-008 may consume MC-007 as a negative artifact dependency and must retain its blockers; MC-B is not released"
+  },
+  "blockers": [
+    {
+      "id": "PB-007-01",
+      "status": "OPEN",
+      "affected_descendants": ["MC-008", "MC-022", "MC-024", "MC-038"]
+    },
+    {
+      "id": "PB-007-02",
+      "status": "OPEN",
+      "affected_descendants": ["MC-008", "MC-022", "MC-024", "MC-038"]
+    },
+    {
+      "id": "PB-007-03",
+      "status": "PROPAGATED_FROM_MC-006",
+      "affected_descendants": ["MC-008", "MC-020", "MC-024", "MC-038"]
+    },
+    {
+      "id": "PB-007-04",
+      "status": "PROPAGATED_TO_DOWNSTREAM",
+      "affected_descendants": ["MC-008", "MC-032", "MC-038"]
+    }
+  ],
+  "downstream_invalidations": [
+    "a change to MC-002 motion/domain semantics invalidates the affected operation and blocker classifications",
+    "a change to MC-003 time/phase/curve semantics invalidates the finite source-decomposition and correlation arguments",
+    "a future exact analytic theorem or construction may discharge PB-007-01/PB-007-02, but must preserve this negative artifact as historical evidence rather than rewriting it",
+    "any downstream design that replaces correlation by independent angular coverage invalidates its sweep/material claim"
+  ]
+}
