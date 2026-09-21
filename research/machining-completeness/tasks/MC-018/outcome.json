@@ -1,0 +1,95 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-018",
+  "result_kind": "COMPLETED_RESEARCH",
+  "evidence_class": [
+    "DETERMINISTIC_MODEL",
+    "REVIEWED_ARGUMENT",
+    "DESIGN_DECISION",
+    "DOCUMENTATION_RECONCILIATION"
+  ],
+  "source_baseline": "b85b8081dd83ca35f81e6e1a9495bd5f88589ee0",
+  "issue": 80,
+  "dependency_artifacts": [
+    {
+      "task": "MC-005",
+      "path": "research/machining-completeness/tasks/MC-005/outcome.json",
+      "blob_sha": "adec886597a06345fdfdf65ee018596cd396d249",
+      "result_kind": "CAPABILITY_ACCEPTED"
+    },
+    {
+      "task": "MC-010",
+      "path": "research/machining-completeness/tasks/MC-010/outcome.json",
+      "blob_sha": "4960730316f89dbb3fbf958d054127fa4fc0d789",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-058",
+      "path": "research/machining-completeness/tasks/MC-058/outcome.json",
+      "blob_sha": "038fccda9142650ee7e29c626aeb8e4602420278",
+      "result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "accepted_claims": [
+    "Finite fixed-axis flat-end milling over stationary, line and polyline translation now has an executable exact-rational sweep-membership construction using the complete finite cutting region, including simultaneous XYZ motion.",
+    "Finite fixed-axis corner-radius milling over stationary, line and polyline translation now has an executable exact-rational sweep construction whose lower fillet is decided as an exact univariate semialgebraic predicate rather than replaced by an outer flat cylinder or sampled epsilon test.",
+    "Reversals and exact retraces remain explicit source leaves while swept-set union is idempotent; engaged teleportation and missing engagement binding are rejected.",
+    "MC-058-certified nonlinear fixed-axis path leaves are consumed with a conservative source-bound inner/outer sweep sandwich and explicit INSIDE/OUTSIDE/UNCERTIFIED outcomes; an unresolved shell is never promoted to exact membership or topology truth.",
+    "Exact tangency, signed-neighbour, retrace, corner-profile, simultaneous-XYZ and bounded-leaf controls are deterministic and candidate-independent."
+  ],
+  "open_claims": [
+    "PO-02 remains OPEN: MC-018 supplies only the flat/corner-radius fixed-axis milling slice; the remaining admitted sweep/process constructors and integration are still required.",
+    "PO-04 remains OPEN: this task does not establish universal exact/validated classification for all downstream material/event queries.",
+    "PO-05 remains OPEN: inherited transcendental equality and universal finite-progress obligations are not discharged by this constructor.",
+    "PO-06 remains OPEN: the source-bound sweep sandwich is one error-transfer component, not the complete source-to-engineering-output certificate chain.",
+    "MC-B, MC-C, MC-D, MC-E, MC-F and MC-1 remain NOT_ESTABLISHED."
+  ],
+  "native_execution": false,
+  "artifacts": [
+    "research/machining-completeness/tasks/MC-018/fixed-axis-sweep-contract-v1.json",
+    "research/machining-completeness/tasks/MC-018/fixed_axis_sweep.py",
+    "research/machining-completeness/tasks/MC-018/report.md",
+    "research/machining-completeness/tasks/MC-018/outcome.json",
+    "research/machining-completeness/tasks/MC-018/verify.py",
+    "docs/machining-completeness/02-COMPLETENESS-ARGUMENT.md",
+    "research/machining-completeness/outcomes-v1.json",
+    ".github/workflows/mc1-static.yml"
+  ],
+  "verification": [
+    "python3 research/machining-completeness/tasks/MC-018/verify.py --contract",
+    "python3 research/machining-completeness/tasks/MC-018/verify.py --self-test",
+    "python3 tools/mc_workflow.py verify MC-018",
+    "python3 tools/validate_machining_completeness.py --self-test",
+    "python3 tools/mc_workflow.py sync --check"
+  ],
+  "adversarial_controls": [
+    "reject binary-floating correctness authority and global epsilon equality",
+    "reject centreline-only or infinite/zero-length cutter substitution",
+    "reject replacing the corner-radius lower fillet with its enclosing flat cylinder",
+    "reject dropping simultaneous varying-Z motion",
+    "reject deleting retraces from source history or accepting engaged teleportation",
+    "reject unbound MC-058 nonlinear leaves or treating their translation enclosure as zero",
+    "reject promotion of UNCERTIFIED shell points into exact membership/topology truth",
+    "reject promotion of deterministic-model evidence into native geometry evidence",
+    "reject dependency drift and premature MC-B acceptance"
+  ],
+  "resources": {
+    "native_permit_required": false,
+    "native_or_paid_campaign_run": false
+  },
+  "review": {
+    "disposition": "completed bounded fixed-axis flat/corner-radius sweep construction with exact line/polyline controls and a fail-closed MC-058 nonlinear-leaf interface",
+    "gate_changed": false,
+    "gate": "MC-B",
+    "gate_status": "NOT_ESTABLISHED",
+    "programme_capability_changed": false,
+    "downstream_release": "MC-019 through MC-023 and later sweep integration may consume the source-binding/fail-closed interface; no universal sweep, native geometry, topology or engineering-output capability is accepted by MC-018 alone"
+  },
+  "blockers": [],
+  "downstream_invalidations": [
+    "Any semantic change to the MC-A fixed-axis milling domain or MC-058 source/enclosure contract invalidates the corresponding MC-018 source-binding claim and requires prospective review.",
+    "Any downstream implementation that deletes retraces, fits across engagement/source boundaries, permits engaged teleportation or drops finite cutter extent invalidates the affected sweep claim.",
+    "Any promotion of UNCERTIFIED bounded-leaf regions to exact membership/topology truth, or any substitution of a flat cylinder for the corner-radius fillet, invalidates the claimed construction.",
+    "Future native-kernel evidence may supplement this deterministic construction but must not rewrite its recorded evidence class."
+  ]
+}
