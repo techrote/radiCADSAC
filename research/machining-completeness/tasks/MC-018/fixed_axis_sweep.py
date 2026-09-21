@@ -77,6 +77,10 @@ class CornerRadiusEndMill:
 
 Tool = FlatEndMill | CornerRadiusEndMill
 
+EXACT_SOURCE_CLASSES = {"stationary", "line", "polyline"}
+BOUNDED_SOURCE_CLASSES = {"circular_arc", "helical_arc", "spline", "piecewise_motion", "timed_phase_motion"}
+ALLOWED_SOURCE_CLASSES = EXACT_SOURCE_CLASSES | BOUNDED_SOURCE_CLASSES
+
 
 @dataclass(frozen=True)
 class Leaf:
@@ -106,8 +110,8 @@ class Leaf:
         iv = (q(source_interval[0]), q(source_interval[1]))
         if iv[0] > iv[1]:
             raise ValueError("source interval must be ordered")
-        if not source_class:
-            raise ValueError("source class is required")
+        if source_class not in ALLOWED_SOURCE_CLASSES:
+            raise ValueError("source class is not admitted by MC-018/MC-058")
         return cls(v3(p0), v3(p1), e, source_class, iv, bool(engagement_bound))
 
 
@@ -385,6 +389,8 @@ def exact_sweep_contains(point, tool: Tool, leaves: Iterable[Leaf]) -> bool:
     for leaf in leaves:
         if leaf.translation_error != 0:
             raise ValueError("exact sweep requires zero-error leaves")
+        if leaf.source_class not in EXACT_SOURCE_CLASSES:
+            raise ValueError("exact sweep only accepts stationary/line/polyline source leaves")
         if not leaf.engagement_bound:
             raise ValueError("leaf must be bound to an engaged source interval")
         if isinstance(tool, FlatEndMill):
@@ -404,7 +410,9 @@ def certified_classify(point, tool: Tool, leaves: Iterable[Leaf]) -> str:
     for leaf in leaves:
         if not leaf.engagement_bound:
             raise ValueError("unbound engagement leaf")
-        if leaf.translation_error == 0:
+        if leaf.source_class not in ALLOWED_SOURCE_CLASSES:
+            raise ValueError("unrecognized source class")
+        if leaf.translation_error == 0 and leaf.source_class in EXACT_SOURCE_CLASSES:
             hit = flat_segment_contains(point, tool, leaf.p0, leaf.p1) if isinstance(tool, FlatEndMill) else corner_segment_contains(point, tool, leaf.p0, leaf.p1)
             exact_hits.append(hit)
             if hit: return "INSIDE"
@@ -412,7 +420,8 @@ def certified_classify(point, tool: Tool, leaves: Iterable[Leaf]) -> str:
     inner_hit = False
     for leaf in leaves:
         e = leaf.translation_error
-        if e == 0: continue
+        if e == 0 and leaf.source_class in EXACT_SOURCE_CLASSES:
+            continue
         outer = Cylinder(tool.radius + e, -e, tool.length + e)
         if cylinder_segment_contains(point, outer, leaf.p0, leaf.p1):
             outer_hit = True
