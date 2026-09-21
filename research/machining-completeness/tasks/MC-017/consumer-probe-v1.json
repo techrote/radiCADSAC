@@ -1,0 +1,220 @@
+{
+  "schema": "radicadsac-mc017-independent-consumer-probe/1.0",
+  "task": "MC-017",
+  "issue": 79,
+  "source_baseline": "57689b7128d5c8f9531a1efe398ea6a12daa9804",
+  "result": "COMPLETED_RESEARCH_WITH_EXECUTION_ACCESS_BLOCKER",
+  "native_execution": false,
+  "formal_dependencies": [
+    {
+      "task": "MC-001",
+      "path": "research/machining-completeness/tasks/MC-001/outcome.json",
+      "blob_sha": "2efd52cf39102d5722c6bbf281828361e943d6a4",
+      "result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "contextual_inputs": [
+    {
+      "task": "MC-016",
+      "path": "research/machining-completeness/tasks/MC-016/outcome.json",
+      "blob_sha": "606a7d0b8be61131b2272f2eb161d6a4dbba703a",
+      "relationship": "non-task-graph contextual input; MC-016 routes independent-consumer blockers to MC-017",
+      "required_open_blockers": [
+        "RB-016-01",
+        "RB-016-02",
+        "RB-016-03",
+        "RB-016-04",
+        "RB-016-05"
+      ]
+    }
+  ],
+  "hypothesis": "A downstream STEP path is a credible independent consumer candidate only when it consumes the exact exported STEP bytes, uses a decisive import/solid-analysis stack outside the known OCCT/Manifold producer families, reports bounded observables under explicit error controls, and can perform a follow-on operation on the imported geometry itself.",
+  "falsification": [
+    "the path shares decisive OCCT/Open CASCADE or Manifold geometry with the producer-side candidate",
+    "the path measures the producer's in-memory B-rep instead of the exported STEP file",
+    "repaired, inferred, partial or invalid-preserved import is counted as success",
+    "positive-volume material, durable bodies or lineage are dropped or fused for consumer convenience",
+    "an exact-zero contact is healed or an empty state is replaced by invented residual material",
+    "ray-grid or other approximate measurement is labelled exact or used outside its demonstrated error budget",
+    "the claimed follow-on engineering operation does not consume the independently imported geometry"
+  ],
+  "source_level_candidate": {
+    "id": "BRLCAD-STEP-G-20260918",
+    "name": "BRL-CAD step-g + BRL-CAD database/analysis stack",
+    "repository": "https://github.com/BRL-CAD/brlcad",
+    "commit": "0d745fca358e6b4655552186da4221206f4b7483",
+    "status": "SOURCE_VIABLE_EXECUTION_UNQUALIFIED",
+    "source_pins": [
+      {
+        "role": "import-architecture",
+        "path": "src/conv/step/STEPImportArchitecture.md",
+        "blob_sha": "f998e4c9b1d0ea5e2a4b9f95e4140f429ca48669"
+      },
+      {
+        "role": "direct-import-target-dependencies",
+        "path": "src/conv/step/step-g/CMakeLists.txt",
+        "blob_sha": "99bd08eeb8dca8c54e89ebb68d33ab882a1824d2"
+      },
+      {
+        "role": "import-cli-and-policy",
+        "path": "doc/asciidoc/system/man1/step-g.adoc",
+        "blob_sha": "a6f8b7bb2fcd4bbc83a3bc968f4d31a4167d833e"
+      },
+      {
+        "role": "independent-measurement-cli",
+        "path": "doc/asciidoc/system/man1/gqa.adoc",
+        "blob_sha": "e6bea44d2eab03fb3a4a1ad2735f21705bc84399"
+      },
+      {
+        "role": "follow-on-boolean-semantics",
+        "path": "doc/asciidoc/lessons/mged05_learning_boolean_expressions.adoc",
+        "blob_sha": "37508ac5902a4475e7332976e4fb63c0a9f9c8e7"
+      }
+    ],
+    "observed_source_facts": {
+      "step_importer_selects_schema_plugin_from_part21_header": true,
+      "documented_ap242_editions": [1, 2, 3, 4],
+      "strict_exact_repair_none_mode_available": true,
+      "machine_readable_import_report_available": true,
+      "report_outcomes": ["complete", "partial", "empty", "failed"],
+      "direct_import_target_dependencies": [
+        "BRL-CAD libwdb",
+        "BRL-CAD librt",
+        "BRL-CAD libbu",
+        "BRL-CAD libbrep",
+        "STEPcode schema bindings",
+        "STEPcode utils/editor/dai/core",
+        "OpenNURBS"
+      ],
+      "direct_import_target_names_occt_or_manifold": false,
+      "gqa_measurements": ["volume", "bounding_box", "overlaps", "gaps"],
+      "gqa_method": "progressively refined ray grids with a configured lower spacing limit",
+      "boolean_operations_documented": ["union", "difference", "intersection"]
+    },
+    "independence_scope": "Source inspection establishes a credible direct-stack alternative to the known OCCT/Manifold producer families. It is not a complete transitive dependency audit and is not measured native interoperability evidence.",
+    "forbidden_shared_decisive_stacks": [
+      "Open CASCADE",
+      "OCCT",
+      "Manifold"
+    ]
+  },
+  "probe_protocol": {
+    "input_binding": {
+      "consume_exact_step_file_bytes": true,
+      "required_digest": "sha256",
+      "record_file_schema_header": true,
+      "record_producer_profile_and_accuracy_contract": true,
+      "producer_in_memory_geometry_may_substitute": false
+    },
+    "import": {
+      "command_template": "step-g --strict --exact --repair none --reject-invalid-objs --report IMPORT.json --summary SUMMARY.csv -o OUTPUT.g INPUT.step",
+      "required_exit_code": 0,
+      "required_report_outcome": "complete",
+      "allow_partial": false,
+      "allow_repair": false,
+      "allow_inference": false,
+      "allow_invalid_preserved": false,
+      "all_expected_product_bound_items_accounted": true
+    },
+    "controls_required_before_native_qualification": [
+      {
+        "id": "CTRL-017-GOOD",
+        "kind": "known-good-independent-step",
+        "requirement": "A separately sourced conventional solid with independently known body count, coarse dimensions and volume must import completely under the same strict policy."
+      },
+      {
+        "id": "CTRL-017-BAD",
+        "kind": "known-bad-step",
+        "requirement": "A malformed, unsupported or deliberately incomplete control must fail or report non-complete under the same strict policy; repair/partial publication may not rescue it."
+      },
+      {
+        "id": "CTRL-017-MATERIAL-WRONG",
+        "kind": "valid-but-materially-wrong-negative-control",
+        "requirement": "When a source-bound STEP instance exists for the preserved RCS-011 valid-but-materially-wrong case, consumer validity alone must not convert it into material correctness."
+      }
+    ],
+    "measurement": {
+      "engine": "BRL-CAD gqa/librt",
+      "consume_imported_database": true,
+      "observables": [
+        "body/object inventory from import report and database",
+        "axis-aligned bounding box",
+        "volume convergence",
+        "overlap and gap diagnostics"
+      ],
+      "approximate_method": true,
+      "may_claim_exact_geometry": false,
+      "minimum_refinement_runs": 3,
+      "require_explicit_grid_spacing_and_limit": true,
+      "require_cross_view_convergence_within_declared_error_budget": true,
+      "micro_feature_rule": "No positive micro-feature or exact-zero boundary is qualified by gqa unless the complete MC-1 error budget and sampling/discrimination argument explicitly covers that feature."
+    },
+    "follow_on_operation": {
+      "consumer": "BRL-CAD",
+      "operation": "Create a new BRL-CAD-native probe cutter and evaluate a Boolean difference whose retained operand is the independently imported STEP object; re-run inventory/measurement on the result.",
+      "must_consume_imported_geometry": true,
+      "may_replay_nominal_machining_history_instead": false,
+      "acceptance": "The operation must complete without replacing the imported object by producer authority, and the measured coarse material change must match an independently derived control within the declared measurement error budget."
+    }
+  },
+  "profile_semantics": [
+    {
+      "class": "regular-nonempty-manifold",
+      "status": "SOURCE_PATH_IDENTIFIED_NATIVE_EXECUTION_UNQUALIFIED",
+      "consumer_rule": "strict complete import; no repair/inference; body inventory and measurement required"
+    },
+    {
+      "class": "enclosed-disjoint-cavity",
+      "status": "OPEN",
+      "consumer_rule": "must preserve void topology and pass independent measurement; RB-016-01 remains open"
+    },
+    {
+      "class": "multiple-disconnected-positive-volume-components",
+      "status": "OPEN",
+      "consumer_rule": "all durable bodies must survive as distinct material objects with source-bound mapping; RB-016-02 remains open"
+    },
+    {
+      "class": "positive-micro-feature",
+      "status": "OPEN",
+      "consumer_rule": "approximate ray-grid measurement is insufficient by itself; RB-016-03 remains open"
+    },
+    {
+      "class": "exact-zero-contact-touching-cavity-singular-pinch",
+      "status": "PROFILE_DECISION_REQUIRED",
+      "consumer_rule": "no healing/fusion; consume the versioned MC-054 profile decision before qualification; RB-016-04 remains open"
+    },
+    {
+      "class": "empty-material",
+      "status": "PROFILE_DECISION_REQUIRED",
+      "consumer_rule": "explicit empty outcome only; no fake epsilon solid or nonempty placeholder; RB-016-05 remains open"
+    }
+  ],
+  "blockers": [
+    {
+      "id": "XB-017-01",
+      "status": "OPEN",
+      "summary": "The BRL-CAD path is source-viable, but no explicit native-execution permit/expensive-campaign lock or pre-existing source-bound MC-1 STEP-through-BRL-CAD result is available in this task, so import, measurement and follow-on engineering use cannot be claimed as observed evidence.",
+      "why_not_solved_here": "The MC-1 execution protocol explicitly separates cheap contract verification from native execution and states that readiness does not authorize expenditure or native campaigns. MC-017 therefore records the executable protocol and defers measured qualification rather than fabricating access.",
+      "existing_downstream_owner": "MC-043",
+      "affected_descendants": [
+        "MC-043",
+        "MC-044",
+        "MC-052"
+      ],
+      "unaffected_work": [
+        "MC-054 output-profile decision can consume this source-level path and explicit limits as an artifact dependency",
+        "candidate and reconstruction research may continue while preserving MC-016 blockers",
+        "MC-045 may independently establish the native campaign harness/permit mechanism"
+      ]
+    }
+  ],
+  "capability_guard": {
+    "MC-A": "ACCEPTED",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-C": "NOT_ESTABLISHED",
+    "MC-D": "NOT_ESTABLISHED",
+    "MC-E": "NOT_ESTABLISHED",
+    "MC-F": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED"
+  }
+}
