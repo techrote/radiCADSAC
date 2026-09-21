@@ -10,7 +10,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from fractions import Fraction
-from typing import Iterable, Sequence
 
 Q = Fraction
 
@@ -118,16 +117,21 @@ class TimedProgram:
 
 
 def alignment_times(segment: TimedSegment, body_theta_turns: int | str | Fraction) -> tuple[Fraction, ...]:
-    """Exact times where a body-fixed azimuth meets machine angle zero.
+    """Exact isolated times where a body-fixed azimuth meets machine angle zero.
 
     Alignment requires phase(t) + body_theta to be an integer number of turns.
-    The unwrapped phase interval is retained, so multiple-turn histories yield a
-    finite ordered set of exact times rather than modulo-phase chronology loss.
+    The unwrapped phase interval is retained, so a nonzero affine phase advance
+    yields a finite ordered set of exact times rather than modulo-phase chronology
+    loss. A continuously aligned zero-advance interval is rejected here instead
+    of being misrepresented by its endpoints; downstream interval handling must
+    preserve the whole source interval.
     """
     theta = q(body_theta_turns)
     dp = segment.phase1 - segment.phase0
     if dp == 0:
-        return () if normalize_turn(segment.phase0 + theta) != 0 else (segment.t0, segment.t1)
+        if normalize_turn(segment.phase0 + theta) != 0:
+            return ()
+        raise ValueError("stationary aligned phase is an interval, not isolated alignment times")
     lo, hi = sorted((segment.phase0, segment.phase1))
     n0 = ceil_q(lo + theta)
     n1 = floor_q(hi + theta)
