@@ -117,6 +117,14 @@ def exact_controls() -> None:
     assert multi.sample(Fraction(1)).phase_turns_unwrapped == 2 and m.normalize_turn(multi.sample(Fraction(1)).phase_turns_unwrapped) == 0
     reverse = m.TimedSegment(Fraction(0), Fraction(1), Fraction(5), Fraction(5), Fraction(0), Fraction(1), Fraction(1), Fraction(0))
     assert m.alignment_times(reverse, Fraction(3,4)) == (Fraction(3,4),)
+    constant = m.TimedSegment(Fraction(0),Fraction(1),Fraction(5),Fraction(5),Fraction(0),Fraction(2),Fraction(1,4),Fraction(1,4))
+    assert m.alignment_times(constant, Fraction(1,2)) == ()
+    try:
+        m.alignment_times(constant, Fraction(3,4))
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("continuously aligned stationary phase was reduced to endpoint samples")
     a = m.TimedSegment(Fraction(0),Fraction(1),Fraction(5),Fraction(5),Fraction(0),Fraction(2),Fraction(0),Fraction(1,4))
     b = m.TimedSegment(Fraction(1),Fraction(2),Fraction(5),Fraction(4),Fraction(2),Fraction(3),Fraction(1,4),Fraction(1,2))
     s = m.TimedProgram((a,b)).sample(1)
