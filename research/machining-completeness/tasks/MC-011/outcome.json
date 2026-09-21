@@ -1,0 +1,101 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-011",
+  "result_kind": "COMPLETED_RESEARCH",
+  "evidence_class": [
+    "MEASURED_DETERMINISTIC_MODEL",
+    "DESIGN_DECISION",
+    "DOCUMENTATION_RECONCILIATION"
+  ],
+  "source_baseline": "4dc3213b230d88ea662f16a19e14384dc6727979",
+  "issue": 73,
+  "dependency_artifacts": [
+    {
+      "task": "MC-002",
+      "path": "research/machining-completeness/tasks/MC-002/outcome.json",
+      "blob_sha": "930db704e9dd29955e7af99ba793c74e0cfda325",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-003",
+      "path": "research/machining-completeness/tasks/MC-003/outcome.json",
+      "blob_sha": "8f335f59f36c8761844806f9059af4a4f1671044",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-010",
+      "path": "research/machining-completeness/tasks/MC-010/outcome.json",
+      "blob_sha": "4960730316f89dbb3fbf958d054127fa4fc0d789",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-055",
+      "path": "research/machining-completeness/tasks/MC-055/outcome.json",
+      "blob_sha": "4f473c83a2639d601530a5331ac7ca941b062951",
+      "result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "accepted_claims": [
+    "F01-F04 are new strengthened prospective records with exact source parameters and explicit physical-validity witnesses; historical seeds remain provenance inputs rather than inherited PASS evidence",
+    "F01 exactly distinguishes self-crossing/overlap, a 1/1000 mm jittered reverse pass, and zero versus penetrating tangent neighbours without epsilon authority",
+    "F02 has an exact +1/1000000 mm positive web, exact zero connectivity transition and negative neighbour; the positive web remains one component while zero retains two disconnected bodies",
+    "F03 preserves simultaneous XYZ rounded motion plus exact reversal/remachining and has rational tangent/signed-neighbour witnesses that reject flattened-Z corruption",
+    "F04 preserves durable body identity across an explicit re-clamp and exact proper rigid transform mapping machine +Z to common +X; top-only, side-only, crossing and survivor witnesses distinguish the setups",
+    "fixture-specific analytic controls contain no decisive RCS/candidate geometry imports; F02 additionally uses the independently reviewed MC-010 exact-cell control",
+    "BUILT means fixture/oracle construction only and does not promote native candidate correctness, proof obligations, MC-B or MC-1"
+  ],
+  "open_claims": [
+    "F05-F16 remain UNBUILT under MC-012 through MC-014",
+    "MC-015 still owns deeper certificate/checker mathematics and oracle-independence review",
+    "full exact material reconstruction for F01/F03/F04 is not claimed by these discriminating witness oracles",
+    "native material/topology/reconstruction correctness, STEP qualification, MC-B through MC-F and MC-1 remain NOT_ESTABLISHED"
+  ],
+  "native_execution": false,
+  "artifacts": [
+    "research/machining-completeness/tasks/MC-011/physical-corpus-f01-f04-v1.json",
+    "research/machining-completeness/tasks/MC-011/fixture_oracle.py",
+    "research/machining-completeness/tasks/MC-011/report.md",
+    "research/machining-completeness/tasks/MC-011/outcome.json",
+    "research/machining-completeness/tasks/MC-011/verify.py",
+    "research/machining-completeness/fixture-families-v1.json",
+    "docs/machining-completeness/03-ORACLE-AND-CORPUS.md",
+    "research/machining-completeness/outcomes-v1.json",
+    "tools/validate_machining_completeness.py",
+    "research/machining-completeness/tasks/MC-055/verify.py",
+    ".github/workflows/mc1-static.yml"
+  ],
+  "verification": [
+    "python3 research/machining-completeness/tasks/MC-011/verify.py --contract",
+    "python3 tools/mc_workflow.py verify MC-011",
+    "python3 tools/validate_machining_completeness.py --self-test",
+    "python3 tools/mc_workflow.py sync --check"
+  ],
+  "adversarial_controls": [
+    "exact F01 tangent versus 1/1000 mm penetrating neighbour and exact jitter amplitude",
+    "F02 +1/1000000/zero/-1/1000000 mm connectivity boundary with exact cell volumes",
+    "F02 positive-web probe that becomes removed at exact zero",
+    "F03 exact spherical tangent plus +/-1/1000000 signed neighbours",
+    "F03 flattened-Z corruption and exact reverse-segment-set relation",
+    "F04 proper-rigid-transform check plus top-only/side-only/both/survivor points",
+    "identity-transform corruption rejection",
+    "binary-float, candidate-defined expected truth and shared decisive geometry rejection",
+    "dependency blob and protected historical source identity checks"
+  ],
+  "resources": {
+    "native_permit_required": false,
+    "native_or_paid_campaign_run": false
+  },
+  "review": {
+    "disposition": "completed F01-F04 fixture/oracle construction only; no native geometry or programme capability promotion",
+    "gate_changed": false,
+    "programme_capability_changed": false,
+    "downstream_release": "MC-012 may proceed with F05-F08; later oracle/candidate work may consume F01-F04 but must retain the recorded oracle limits and all open native-capability obligations"
+  },
+  "blockers": [],
+  "downstream_invalidations": [
+    "changing any F01-F04 exact source parameter requires a new reviewed fixture revision and invalidates dependent candidate evidence",
+    "changing fixture_oracle.py or the MC-010 cell oracle requires re-review of affected independence and expected-truth claims",
+    "changing F04 setup/body identity semantics invalidates downstream re-clamp evidence",
+    "a defect in a fixture/oracle must append a superseding result; it may not rewrite historical RCS evidence or silently shrink the mandatory denominator"
+  ]
+}
