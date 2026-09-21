@@ -1,0 +1,215 @@
+{
+  "schema": "radicadsac-mc025-adaptive-implicit-falsification/1.0",
+  "task": "MC-025",
+  "issue": 87,
+  "source_baseline": "9668fa058a97219880897a483ac25c530ccfc67b",
+  "result": "NEGATIVE_RESULT_AS_GENERAL_FALLBACK",
+  "native_execution": false,
+  "formal_dependencies": [
+    {
+      "task": "MC-008",
+      "path": "research/machining-completeness/tasks/MC-008/outcome.json",
+      "blob_sha": "a4b3f3451abedd06f2467a8e11741cdc63826e2b",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-010",
+      "path": "research/machining-completeness/tasks/MC-010/outcome.json",
+      "blob_sha": "4960730316f89dbb3fbf958d054127fa4fc0d789",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-016",
+      "path": "research/machining-completeness/tasks/MC-016/outcome.json",
+      "blob_sha": "606a7d0b8be61131b2272f2eb161d6a4dbba703a",
+      "result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "candidate": {
+    "id": "CERTIFIED-ADAPTIVE-IMPLICIT",
+    "role": "BOUNDED_CERTIFIED_MATERIAL_REPRESENTATION_AFTER_EVENT_CERTIFICATE",
+    "general_fallback_qualified": false,
+    "core_claim": "Adaptive subdivision can remove fixed-pitch discretization floors for certified cells, but exact equality/topology termination still requires separately proved critical-event or stopping certificates.",
+    "admission_predicate": {
+      "requirements": [
+        "source_semantics_preserved",
+        "sound_outward_cell_enclosures",
+        "exact_or_validated_critical_event_certificate",
+        "input_derived_finite_progress_witness",
+        "shared_time_feed_phase_correlation_preserved",
+        "regularized_removal_semantics_preserved"
+      ],
+      "binary_float_predicates_allowed": false,
+      "global_epsilon_predicates_allowed": false,
+      "fixed_pitch_is_correctness_authority": false,
+      "max_depth_is_semantic_success": false,
+      "unknown_cell_may_be_forced_material_or_removed": false,
+      "on_failure": "dispatch once to another reviewed owner or return the inherited typed blocker; do not cycle or weaken the request"
+    }
+  },
+  "soundness_contract": {
+    "material_sandwich_required": "L_subseteq_M_subseteq_U",
+    "lower_bound_only_from_proved_material": true,
+    "upper_bound_may_include_unresolved_cells": true,
+    "unresolved_cells_are_success": false,
+    "numeric_error_may_compensate_topology": false,
+    "numeric_error_may_delete_positive_volume": false,
+    "topology_requires_discrete_certificate": true,
+    "durable_body_identity_is_cell_identity": false,
+    "lineage_is_component_label": false
+  },
+  "critical_event_contract": {
+    "event_source_must_be_independent_of_refinement_tolerance": true,
+    "exact_equality_may_stop_on_cell_width_threshold": false,
+    "separated_transversal_case_requires_input_derived_bound": true,
+    "tangent_multiple_singular_case_requires_exact_or_separately_proved_event_decision": true,
+    "shared_time_feed_phase_parameter_must_be_preserved": true,
+    "missing_event_certificate_terminal": "PROOF_BLOCKER"
+  },
+  "coverage_matrix": [
+    {
+      "id": "AI-025-01",
+      "class": "piecewise rational axis-aligned controls with exact event locations",
+      "status": "MODEL_REFERENCE_ELIGIBLE",
+      "basis": "task-local exact Fraction controls",
+      "guard": "not native geometry evidence and not a total-route claim"
+    },
+    {
+      "id": "AI-025-02",
+      "class": "proved separated/transversal analytic events",
+      "status": "CONDITIONAL_REFERENCE_ELIGIBLE",
+      "basis": "MC-008 A2 finite validated-enclosure contract",
+      "guard": "requires an input-derived finite stopping/isolation witness"
+    },
+    {
+      "id": "AI-025-03",
+      "class": "tangential, multiple or singular transcendental equality events",
+      "status": "BLOCKED",
+      "basis": "PB-007-01 propagated through MC-008",
+      "guard": "adaptive refinement alone may not turn shrinking uncertainty into exact equality"
+    },
+    {
+      "id": "AI-025-04",
+      "class": "general coupled helical/spindle-feed/eccentric event geometry",
+      "status": "BLOCKED",
+      "basis": "PB-007-02 propagated through MC-008",
+      "guard": "shared time/feed/spindle-phase correlation may not be replaced by independent coverage"
+    },
+    {
+      "id": "AI-025-05",
+      "class": "positive micro-feature engineering realization",
+      "status": "MATERIAL_MODEL_ONLY_OUTPUT_BLOCKED",
+      "basis": "RB-016-03 from MC-016",
+      "guard": "adaptive material retention does not qualify native STEP preservation"
+    },
+    {
+      "id": "AI-025-06",
+      "class": "exact-zero contact/touching-cavity/singular engineering output",
+      "status": "MATERIAL_MODEL_ONLY_OUTPUT_PROFILE_BLOCKED",
+      "basis": "RB-016-04 from MC-016",
+      "guard": "no healing, tolerance fusion or invented bridge"
+    }
+  ],
+  "machining_controls": [
+    {
+      "id": "CTRL-025-EVENT-SPLIT",
+      "stock": ["0", "3"],
+      "removals": [["1", "2"]],
+      "certified_events": ["1", "2"],
+      "expected_material_measure": "2",
+      "expected_components": 2
+    },
+    {
+      "id": "CTRL-025-MICROWEB",
+      "stock": ["0", "3"],
+      "removals": [["0", "1"], ["1000001/1000000", "3"]],
+      "certified_events": ["1", "1000001/1000000"],
+      "expected_material_measure": "1/1000000",
+      "expected_components": 1
+    },
+    {
+      "id": "CTRL-025-TANGENT",
+      "stock": ["0", "1"],
+      "removals": [["1", "2"]],
+      "certified_events": ["1"],
+      "expected_material_measure": "1",
+      "expected_components": 1
+    },
+    {
+      "id": "CTRL-025-EMPTY",
+      "stock": ["0", "1"],
+      "removals": [["0", "1"]],
+      "certified_events": [],
+      "expected_material_measure": "0",
+      "expected_components": 0
+    },
+    {
+      "id": "CTRL-025-RETRACE",
+      "stock": ["0", "3"],
+      "removals": [["1", "2"], ["1", "2"]],
+      "certified_events": ["1", "2"],
+      "expected_material_measure": "2",
+      "expected_components": 2,
+      "expected_same_as_single_removal": true
+    }
+  ],
+  "equality_refinement_obstruction": {
+    "event": "1/3",
+    "stock": ["0", "1"],
+    "refinement": "dyadic_bisection",
+    "checked_depths": [0, 1, 2, 4, 8, 16],
+    "claim": "For event 1/3, no finite dyadic boundary equals the event; the containing cell stays positive-width at every finite depth. Shrinking width is not an equality decision.",
+    "exact_event_injection_required_for_zero_uncertainty": true,
+    "timeout_or_depth_cap_may_be_success": false
+  },
+  "resource_obstruction": {
+    "practical_status": "NOT_QUALIFIED_AS_DEFAULT_OR_GENERAL_PRODUCTION_ROUTE",
+    "reason": "adaptive refinement removes a fixed-pitch floor only when sound enclosures and event certificates exist; cell growth and unresolved event refinement remain resource obligations",
+    "fixed_depth_may_be_correctness_proof": false,
+    "timeout_may_be_reported_as_success": false
+  },
+  "total_dispatch_conclusion": {
+    "candidate_can_be_general_fallback": false,
+    "candidate_can_be_bounded_reference": true,
+    "candidate_can_be_optional_provider_after_admission": true,
+    "candidate_avoids_fixed_pitch_floor_when_certified_events_are_available": true,
+    "candidate_solves_generic_exact_equality_by_refinement": false,
+    "unresolved_required_case_is_success": false,
+    "noncycling_requirement": "failure may dispatch once to another reviewed owner or return a typed blocker; providers may not cycle"
+  },
+  "retained_blockers": [
+    {
+      "id": "PB-007-01",
+      "status": "OPEN",
+      "source_task": "MC-008",
+      "affected_descendants": ["MC-026", "MC-032", "MC-038"]
+    },
+    {
+      "id": "PB-007-02",
+      "status": "OPEN",
+      "source_task": "MC-008",
+      "affected_descendants": ["MC-026", "MC-038"]
+    },
+    {
+      "id": "RB-016-03",
+      "status": "OPEN",
+      "source_task": "MC-016",
+      "affected_descendants": ["MC-026", "MC-028", "MC-029", "MC-038", "MC-041", "MC-044", "MC-052"]
+    },
+    {
+      "id": "RB-016-04",
+      "status": "OPEN",
+      "source_task": "MC-016",
+      "affected_descendants": ["MC-026", "MC-027", "MC-028", "MC-029", "MC-030", "MC-038", "MC-041", "MC-042", "MC-043", "MC-044", "MC-052"]
+    }
+  ],
+  "capability_guard": {
+    "MC-A": "ACCEPTED",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-C": "NOT_ESTABLISHED",
+    "MC-D": "NOT_ESTABLISHED",
+    "MC-E": "NOT_ESTABLISHED",
+    "MC-F": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED"
+  }
+}
