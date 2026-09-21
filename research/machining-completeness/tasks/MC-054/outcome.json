@@ -1,0 +1,131 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-054",
+  "result_kind": "COMPLETED_RESEARCH",
+  "evidence_class": [
+    "SOURCE_FACT",
+    "DESIGN_DECISION",
+    "REVIEWED_ARGUMENT",
+    "DOCUMENTATION_RECONCILIATION"
+  ],
+  "source_baseline": "1b86aff77958dd1f0330f0a5aac9631a8ebef1b3",
+  "issue": 116,
+  "dependency_artifacts": [
+    {
+      "task": "MC-005",
+      "path": "research/machining-completeness/tasks/MC-005/outcome.json",
+      "blob_sha": "adec886597a06345fdfdf65ee018596cd396d249",
+      "result_kind": "CAPABILITY_ACCEPTED"
+    },
+    {
+      "task": "MC-016",
+      "path": "research/machining-completeness/tasks/MC-016/outcome.json",
+      "blob_sha": "606a7d0b8be61131b2272f2eb161d6a4dbba703a",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-017",
+      "path": "research/machining-completeness/tasks/MC-017/outcome.json",
+      "blob_sha": "e7dbfce169febd81de5e0025df204ebd7f8cc53f",
+      "result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "accepted_claims": [
+    "MC-ENG-OUTPUT/1.0 is the versioned current-tranche engineering-output profile for faithful nonempty, grouped, exact-zero-contact, singular/touching and empty machining states.",
+    "Canonical nominal material/certificate state and programme durable-body/lineage state remain authoritative; STEP geometry and kernel topology are derived outputs and may not define body identity.",
+    "Multiple disconnected bodies and exact-zero-contact bodies remain separate output solids/items with explicit manifest bindings; largest-body selection, tolerance fusion and positive bridge insertion are forbidden.",
+    "A singular or touching non-manifold durable body may use a certified finite grouped decomposition only when every piece is a certified subset, sibling interiors are disjoint, the certified union equals canonical material, and auxiliary seams are NON_MATERIAL_PARTITION rather than physical material boundaries.",
+    "EMPTY_MATERIAL is an explicit successful manifest-only output state with zero STEP artifacts/representation pieces while exhausted/disappeared durable-body lineage remains recorded; epsilon solids and placeholder nonempty STEP are forbidden.",
+    "MC-054 resolves the profile-decision portion of RB-016-04 and RB-016-05 while leaving those blockers open for their outstanding native/downstream evidence obligations."
+  ],
+  "open_claims": [
+    "RB-016-01 through RB-016-05 remain open evidence obligations and are not closed by this profile decision.",
+    "XB-017-01 remains open because no source-bound BRL-CAD independent-consumer native execution has yet been run.",
+    "Grouped singular STEP, exact-zero-contact multi-body STEP, positive micro-feature preservation and manifest-only empty handling still require native and independent-consumer qualification under their existing downstream owners.",
+    "MC-B, MC-C, MC-D, MC-E, MC-F and MC-1 remain NOT_ESTABLISHED."
+  ],
+  "native_execution": false,
+  "artifacts": [
+    "research/machining-completeness/tasks/MC-054/engineering-output-profile-v1.json",
+    "research/machining-completeness/tasks/MC-054/report.md",
+    "research/machining-completeness/tasks/MC-054/outcome.json",
+    "research/machining-completeness/tasks/MC-054/verify.py",
+    "docs/machining-completeness/04-REPRESENTATION-AND-RECONSTRUCTION.md",
+    "research/machining-completeness/outcomes-v1.json",
+    ".github/workflows/mc1-static.yml"
+  ],
+  "verification": [
+    "python3 research/machining-completeness/tasks/MC-054/verify.py --contract",
+    "python3 research/machining-completeness/tasks/MC-054/verify.py --self-test",
+    "python3 tools/mc_workflow.py verify MC-054",
+    "python3 tools/validate_machining_completeness.py --self-test",
+    "python3 tools/mc_workflow.py sync --check"
+  ],
+  "adversarial_controls": [
+    "reject STEP/kernel topology promoted to canonical body identity authority",
+    "reject omission of the mandatory output manifest",
+    "reject largest-body-only output or fused exact-zero-contact bodies",
+    "reject inserted positive bridges or tolerance healing at exact zero",
+    "reject grouped-decomposition pieces outside canonical material or overlapping in positive-volume interiors",
+    "reject auxiliary decomposition seams promoted to physical material boundaries",
+    "reject deletion of certified positive micro-material",
+    "reject EMPTY_MATERIAL represented by placeholder STEP, epsilon material or dropped exhausted lineage",
+    "reject closure of inherited blockers without the recorded native/consumer evidence",
+    "reject premature MC-C or programme capability promotion"
+  ],
+  "resources": {
+    "native_permit_required": false,
+    "native_or_paid_campaign_run": false
+  },
+  "review": {
+    "disposition": "completed versioned engineering-output profile decision; artifact dependents may consume the explicit material/body/empty semantics, while native and independent-consumer qualification remains open",
+    "gate_changed": false,
+    "gate": "MC-C",
+    "gate_status": "NOT_ESTABLISHED",
+    "programme_capability_changed": false,
+    "downstream_release": "MC-038/041/042/043/044 may consume MC-ENG-OUTPUT/1.0; MC-043 owns independent-consumer qualification and MC-045 owns the native campaign harness"
+  },
+  "blockers": [
+    {
+      "id": "RB-016-01",
+      "status": "OPEN",
+      "summary": "Native BREP_WITH_VOIDS write/read plus independent-consumer evidence remains outstanding.",
+      "affected_descendants": ["MC-038", "MC-041", "MC-042", "MC-043", "MC-044", "MC-052"]
+    },
+    {
+      "id": "RB-016-02",
+      "status": "OPEN",
+      "summary": "MC-ENG-OUTPUT/1.0 specifies multi-body binding semantics, but native STEP and independent-consumer preservation of every durable-body/lineage binding remain unqualified.",
+      "affected_descendants": ["MC-024", "MC-027", "MC-028", "MC-029", "MC-030", "MC-038", "MC-041", "MC-044", "MC-052"]
+    },
+    {
+      "id": "RB-016-03",
+      "status": "OPEN",
+      "summary": "Positive micro-feature preservation remains unqualified at the native STEP and independent-consumer boundary.",
+      "affected_descendants": ["MC-025", "MC-028", "MC-029", "MC-038", "MC-041", "MC-044", "MC-052"]
+    },
+    {
+      "id": "RB-016-04",
+      "status": "OPEN",
+      "summary": "The profile-decision portion is resolved by MC-ENG-OUTPUT/1.0, but grouped/singular and exact-zero-contact native STEP plus independent-consumer evidence remains outstanding.",
+      "affected_descendants": ["MC-024", "MC-025", "MC-027", "MC-028", "MC-029", "MC-030", "MC-038", "MC-041", "MC-042", "MC-043", "MC-044", "MC-052"]
+    },
+    {
+      "id": "RB-016-05",
+      "status": "OPEN",
+      "summary": "The profile-decision portion is resolved by explicit manifest-only EMPTY_MATERIAL semantics, but downstream empty-handling qualification remains outstanding.",
+      "affected_descendants": ["MC-038", "MC-041", "MC-042", "MC-043", "MC-044", "MC-052"]
+    },
+    {
+      "id": "XB-017-01",
+      "status": "OPEN",
+      "summary": "Actual source-bound independent-consumer execution remains owned by MC-043 under an authorized native campaign.",
+      "affected_descendants": ["MC-043", "MC-044", "MC-052"]
+    }
+  ],
+  "downstream_invalidations": [
+    "Any semantic change to MC-ENG-OUTPUT/1.0 requires a prospective versioned profile revision rather than silent reinterpretation.",
+    "Future native/consumer evidence may close only the matching open obligation and does not rewrite this task's non-execution record.",
+    "Any downstream repair, fusion, dropped component, tolerance-erased positive material, invented residual material or auxiliary-seam materialization fails the affected output claim rather than weakening the MC-1 denominator."
+  ]
+}
