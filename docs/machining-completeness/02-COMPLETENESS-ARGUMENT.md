@@ -81,6 +81,18 @@ A fast-path admission is a checkable sufficient condition, not a heuristic. The 
 
 Use an explicit lemma DAG and map each implementation function to its claim and tests. Open lemmas may feed falsification experiments as reviewed provisional products. They cannot pass MC-B or silently authorize a capability claim. MC-026 must turn the chosen construction into bounded algorithm-specific implementation blueprints; speculative method boxes are not implementation instructions.
 
+### MC-024 exact/cell candidate falsification
+
+MC-024 completes as a **NEGATIVE_RESULT** for exact arrangement/cell methods as the programme's total general fallback, while retaining them as a bounded reference/control provider. The machine contract is `research/machining-completeness/tasks/MC-024/exact-cell-falsification-v1.json`; its verifier instantiates exact-rational machining controls for tangency, a positive `1/1000000` web, complete cut-through with two retained material components, explicit empty material and exact retrace idempotence.
+
+The retained admission is deliberately instance-local: stock, cutter, setup and engaged motion must have a proved finite semialgebraic encoding over rational/real-algebraic constants; denominator/sign side conditions must be proved; shared time/feed/spindle-phase correlation must remain intact; and regularized removal semantics must be preserved. A failed admission may dispatch once to another reviewed owner or return the inherited typed blocker. It may not cycle providers, introduce global epsilon/binary-float predicate authority, reinterpret the source, or drop a required operation.
+
+Three existing proof/source blockers are decisive and are preserved rather than duplicated. `PB-007-01` leaves required tangential/multiple/singular transcendental equality without an unconditional exact finite decision route. `PB-007-02` leaves general coupled helical/spindle-feed/eccentric sweeps without a full exact constructive route; independent angular coverage is not a semantics-preserving substitute. `PB-007-03` leaves admitted imported-stock and arbitrary form/undercut instances without a universal finite exact source codec. These cases falsify exact/cell as a total fallback without shrinking the 26-operation denominator.
+
+Exact material cells also do not establish engineering identity/output. `RB-016-02` remains open for durable mapping and independent preservation of multiple disconnected positive-volume bodies; cell/component identity is not durable body identity or lineage. `RB-016-04` remains open for exact-zero contacts, touching cavities and singular pinches; healing, tolerance fusion or an invented bridge is forbidden. Mathematical termination under MC-006 hypotheses also remains distinct from practical production viability, including the reviewed doubly-exponential CAD complexity warning.
+
+MC-026 may consume MC-024 as negative candidate evidence and may retain exact/cell as a bounded semialgebraic reference/control. PO-08 remains OPEN. No native or paid campaign ran, and MC-B remains `NOT_ESTABLISHED`; MC-1 remains `NOT_ESTABLISHED`.
+
 ## Review requirements
 
 MC-038 checks the whole constructive route backwards from required queries/output to domain constructors and forwards from every constructor through composition. MC-050 supplies the later adversarial review and honest independent attribution. Self-review in this adoption is not independent mathematical validation. New counterexamples invalidate affected claims/certificates explicitly; repair the exact owner task without restarting or duplicating the programme.
