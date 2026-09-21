@@ -142,6 +142,23 @@ def run_controls() -> None:
     else:
         raise AssertionError("unbound nonlinear leaf accepted")
 
+    zero_spline = m.Leaf.make((0,0,0),(2,0,0), translation_error=0, source_class="spline")
+    try:
+        m.exact_sweep_contains((1,0,1), flat, [zero_spline])
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("nonlinear source accepted by exact-line path")
+    assert m.certified_classify((1,0,1), corner, [zero_spline]) == "INSIDE"
+    assert m.certified_classify((1,"3/2","1/10"), corner, [zero_spline]) == "UNCERTIFIED"
+
+    try:
+        m.Leaf.make((0,0,0),(1,0,0), source_class="invented_curve")
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("unknown source class accepted")
+
     leaf = m.Leaf.make((0,0,0),(2,0,0), translation_error="1/10", source_class="circular_arc")
     assert m.certified_classify((1,0,1), flat, [leaf]) == "INSIDE"
     assert m.certified_classify((1,2,1), flat, [leaf]) == "OUTSIDE"
