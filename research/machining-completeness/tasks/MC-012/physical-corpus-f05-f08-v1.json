@@ -1,0 +1,157 @@
+{
+  "schema": "radicadsac-mc-physical-corpus/1.0",
+  "task": "MC-012",
+  "version": 1,
+  "source_baseline": "fd39d24319072492f95eab9cf523b306ce623c41",
+  "purpose": "Build strengthened, candidate-independent F05-F08 machining fixtures with exact physical-access, material/body and discriminating oracle witnesses; do not claim native candidate correctness.",
+  "dependencies": [
+    {"task": "MC-002", "path": "research/machining-completeness/tasks/MC-002/outcome.json", "blob_sha": "930db704e9dd29955e7af99ba793c74e0cfda325", "result_kind": "COMPLETED_RESEARCH"},
+    {"task": "MC-003", "path": "research/machining-completeness/tasks/MC-003/outcome.json", "blob_sha": "8f335f59f36c8761844806f9059af4a4f1671044", "result_kind": "COMPLETED_RESEARCH"},
+    {"task": "MC-010", "path": "research/machining-completeness/tasks/MC-010/outcome.json", "blob_sha": "4960730316f89dbb3fbf958d054127fa4fc0d789", "result_kind": "COMPLETED_RESEARCH"},
+    {"task": "MC-055", "path": "research/machining-completeness/tasks/MC-055/outcome.json", "blob_sha": "4f473c83a2639d601530a5331ac7ca941b062951", "result_kind": "COMPLETED_RESEARCH"}
+  ],
+  "numeric_policy": {
+    "authority_values": "exact rational strings only",
+    "binary_float_authority": false,
+    "epsilon_as_semantic_predicate": false,
+    "positive_volume_may_be_rounded_away": false
+  },
+  "oracle_independence": {
+    "fixture_specific_path": {
+      "implementation": "research/machining-completeness/tasks/MC-012/fixture_oracle.py",
+      "source_sha256": "cfe3f1b547b08b87442f26bf22cdf07b8016f78aa389543b6dc6a746c62f7d07",
+      "allowed_import_roots": ["__future__", "fractions", "typing"],
+      "decisive_shared_geometry_imports": [],
+      "candidate_output_used_for_expected_truth": false,
+      "expected_truth_origin": "preregistered exact MC-012 fixture literals and analytic rational geometry"
+    },
+    "historical_seed_role": "provenance and adversarial motivation only; historical output never supplies current expected truth",
+    "future_candidate_relation": "a candidate may consume the same immutable fixture input but may not import this oracle as its geometry implementation"
+  },
+  "families": [
+    {
+      "id": "F05",
+      "title": "Internal passage network",
+      "state": "BUILT",
+      "machine": "mill",
+      "historical_seeds": ["rcs003:lathe-bore-shoulder-meeting"],
+      "stock": {"body_id": "B-F05", "box": [["0", "24"], ["0", "20"], ["0", "12"]], "units": "mm"},
+      "setup": {"id": "S-F05", "workholding": "bottom and y-extreme clamps remain outside all three cutter approach corridors", "travel_box": [["-4", "28"], ["-4", "24"], ["0", "16"]]},
+      "operations": [
+        {"id": "F05-P", "kind": "access_pocket", "box": [["5", "16"], ["7", "13"], ["10", "14"]], "purpose": "open top access pocket; its portion above z=12 is approach clearance"},
+        {"id": "F05-V1", "kind": "drill_or_bore", "axis": "z", "center": ["8", "10"], "axial_interval": ["4", "14"], "radius": "5/2", "approach": "from z>12"},
+        {"id": "F05-V2", "kind": "drill_or_bore", "axis": "z", "center": ["13001/1000", "10"], "axial_interval": ["4", "14"], "radius": "5/2", "approach": "from z>12"},
+        {"id": "F05-X1", "kind": "cross_bore", "axis": "x", "center": ["10", "6"], "axial_interval": ["-2", "16"], "radius": "2", "approach": "from x<0"}
+      ],
+      "physical_validity": [
+        "both vertical bores enter from the open top/access pocket and the cross-bore enters from the exterior x<0 face; no cutter is teleported into a sealed cavity",
+        "F05-X1 intersects both vertical bores below the thin-wall witness elevation, creating an accessible internal passage network",
+        "the vertical bore centre spacing is exactly 5001/1000 mm for two 5/2 mm radii, leaving a positive 1/1000 mm wall at z=9",
+        "all clamps are outside the cutter approach corridors and durable body B-F05 remains selected"
+      ],
+      "oracle_assertions": {
+        "junction_v1": {"point": ["8", "10", "6"], "members": ["F05-V1", "F05-X1"], "removed": true},
+        "junction_v2": {"point": ["13001/1000", "10", "6"], "members": ["F05-V2", "F05-X1"], "removed": true},
+        "thin_wall": {"thickness": "1/1000", "probe": ["21001/2000", "10", "9"], "actual_second_center_x": "13001/1000", "zero_wall_second_center_x": "13", "actual_removed": false, "zero_wall_removed": true},
+        "access_pocket_probe": {"point": ["10", "10", "11"], "removed": true}
+      }
+    },
+    {
+      "id": "F06",
+      "title": "Lathe finish and parting",
+      "state": "BUILT",
+      "machine": "lathe",
+      "historical_seeds": ["rcs002:lathe-finishing-pass-v1", "rcs003:lathe-repeated-finishing-pass", "rcs003:lathe-tangent-shoulder-contact", "rcs003:lathe-parting-cut-through"],
+      "stock": {"body_id": "B-F06", "kind": "cylinder", "axis": "+Z", "radius": "20", "z_interval": ["0", "80"], "units": "mm"},
+      "setup": {"id": "S-F06", "workpiece_spindle_axis": "+Z", "workholding": "headstock grip occupies z>72; finish/parting witnesses remain clear of jaws"},
+      "operations": [
+        {"id": "F06-FINISH-1", "kind": "od_turning", "nose_radius": "2/5", "nose_center_radius": "99/5", "z_interval": ["70", "30"], "purpose": "finite-nose-radius finishing pass"},
+        {"id": "F06-FINISH-2", "kind": "od_turning", "nose_radius": "2/5", "nose_center_radius": "99/5", "z_interval": ["45", "5"], "purpose": "overlapping second finishing pass retained as journal-visible intent"},
+        {"id": "F06-PART", "kind": "parting", "z_center": "12", "tool_width": "2", "radial_approach": ["22", "0"], "purpose": "complete radial cut-through"}
+      ],
+      "body_transition": {"at_complete_parting": {"from": "B-F06", "to": ["B-F06-HEAD", "B-F06-CUTOFF"], "retain_all_positive_volume_bodies": true}},
+      "physical_validity": [
+        "the 2/5 mm insert nose radius is part of the physical cutter envelope rather than a sharp-point approximation",
+        "the two finishing passes overlap over z=[30,45] and the second operation remains journal-visible even where geometry is already finished",
+        "the parting tool approaches radially from outside radius 20 and reaches the spindle axis with finite 2 mm axial width",
+        "complete parting yields two positive-volume bodies before any later scrap policy; neither may be silently discarded"
+      ],
+      "oracle_assertions": {
+        "nose_overlap": {"radius": "97/5", "z": "35", "pass1_removed": true, "pass2_removed": true, "sharp_point_removed": false},
+        "parting_boundary": {"complete_remaining_core_radius": "0", "complete_components": 2, "short_remaining_core_radius": "1/1000", "short_components": 1},
+        "head_body_ids": ["B-F06-HEAD", "B-F06-CUTOFF"]
+      }
+    },
+    {
+      "id": "F07",
+      "title": "Lathe–mill–lathe",
+      "state": "BUILT",
+      "machine": "lathe+mill",
+      "historical_seeds": [],
+      "stock": {"body_id": "B-F07", "kind": "cylinder", "axis": "+Z", "radius": "20", "z_interval": ["0", "60"], "units": "mm"},
+      "setups": [
+        {"id": "S-F07-L1", "process": "lathe", "common_from_machine": {"matrix": [["1", "0", "0"], ["0", "1", "0"], ["0", "0", "1"]]}, "selected_body_id": "B-F07"},
+        {"id": "S-F07-M", "process": "mill", "transition": "non-cutting reclamp of durable body B-F07", "common_from_machine": {"matrix": [["0", "0", "1"], ["0", "1", "0"], ["-1", "0", "0"]]}, "machine_plus_z_maps_common": "+X", "selected_body_id": "B-F07"},
+        {"id": "S-F07-L2", "process": "lathe", "transition": "non-cutting return of same durable body B-F07", "common_from_machine": {"matrix": [["1", "0", "0"], ["0", "1", "0"], ["0", "0", "1"]]}, "selected_body_id": "B-F07"}
+      ],
+      "operations": [
+        {"id": "F07-T1", "setup": "S-F07-L1", "kind": "od_turning", "final_radius": "18", "z_interval": ["0", "60"]},
+        {"id": "F07-M1", "setup": "S-F07-M", "kind": "side_mill", "axis_common": "x", "center_common_yz": ["0", "30"], "axial_interval_common": ["14", "22"], "radius": "3", "approach": "from common +X exterior"},
+        {"id": "F07-T2", "setup": "S-F07-L2", "kind": "od_turning", "final_radius": "35/2", "z_interval": ["5", "20"]}
+      ],
+      "physical_validity": [
+        "both setup changes are non-cutting and preserve/select durable body B-F07 rather than rebuilding stock from a cylindrical approximation",
+        "the mill setup uses an exact proper rotation mapping machine +Z to common +X and approaches from outside the turned radius",
+        "F07-M1 breaks axial symmetry locally at z=30; the second lathe pass is deliberately confined to z=[5,20] so that broken symmetry must survive the handoff back",
+        "the final lathe pass performs real additional removal in its own axial band"
+      ],
+      "oracle_assertions": {
+        "mill_rotation_axis": ["1", "0", "0"],
+        "broken_symmetry": {"removed_point": ["17", "0", "30"], "same_radius_survivor": ["0", "17", "30"], "removed_final": true, "survivor_final": false},
+        "return_lathe_active": {"point": ["71/4", "0", "10"], "after_first_lathe_removed": false, "after_mill_removed": false, "after_second_lathe_removed": true},
+        "durable_body_id": "B-F07"
+      }
+    },
+    {
+      "id": "F08",
+      "title": "Accessible form/undercut",
+      "state": "BUILT",
+      "machine": "mill",
+      "historical_seeds": [],
+      "stock": {"body_id": "B-F08", "box": [["0", "30"], ["0", "20"], ["0", "12"]], "units": "mm"},
+      "setup": {"id": "S-F08", "workholding": "bottom/extreme-x clamps remain clear of starter pocket, neck slot and undercut sweep"},
+      "operations": [
+        {"id": "F08-ACCESS", "kind": "starter_pocket", "axis": "z", "center": ["5", "10"], "axial_interval": ["3", "14"], "radius": "7/2", "purpose": "admit the full T-slot head from above"},
+        {"id": "F08-TSLOT", "kind": "t_slot_form_sweep", "path_xy": [["5", "10"], ["25", "10"]], "head_radius": "3", "head_z": ["4", "6"], "neck_radius": "1", "neck_z": ["6", "14"], "purpose": "translate a wider cutting head beneath a narrow neck slot without teleportation"}
+      ],
+      "physical_validity": [
+        "the 7/2 mm starter pocket is wider than the 3 mm cutting head, giving an exact 1/2 mm radial insertion clearance before lateral motion",
+        "the cutting head radius is strictly larger than the 1 mm neck radius, producing a genuine nonconvex/T-form cutter envelope and undercut",
+        "the head enters from above through F08-ACCESS and then follows a continuous XY translation while the neck maintains the surface slot; no sealed-cavity insertion is allowed",
+        "holder/clamp regions remain outside the stated travel corridor and durable body B-F08 remains selected"
+      ],
+      "oracle_assertions": {
+        "access": {"radius": "7/2", "head_radius": "3", "neck_radius": "1", "margin": "1/2", "accessible": true, "too_small_access_radius": "2999/1000", "too_small_accessible": false},
+        "undercut_shadow": {"point": ["15", "25/2", "5"], "full_tslot_removed": true, "neck_only_removed": false},
+        "roof_survivor": {"point": ["15", "25/2", "8"], "full_tslot_removed": false},
+        "neck_slot": {"point": ["15", "10", "10"], "full_tslot_removed": true}
+      }
+    }
+  ],
+  "programme_state": {
+    "MC-A": "ACCEPTED",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-C": "NOT_ESTABLISHED",
+    "MC-D": "NOT_ESTABLISHED",
+    "MC-E": "NOT_ESTABLISHED",
+    "MC-F": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "native_or_paid_campaign_run": false
+  },
+  "construction_scope": {
+    "built_by_this_task": ["F05", "F06", "F07", "F08"],
+    "still_unbuilt": ["F09", "F10", "F11", "F12", "F13", "F14", "F15", "F16"],
+    "built_is_not_candidate_pass": true,
+    "built_is_not_capability_acceptance": true
+  }
+}
