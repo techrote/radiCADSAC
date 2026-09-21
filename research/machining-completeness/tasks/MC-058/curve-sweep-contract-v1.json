@@ -1,0 +1,254 @@
+{
+  "schema": "radicadsac-mc058-curve-sweep-contract/1.0",
+  "task": "MC-058",
+  "issue": 120,
+  "source_baseline": "54a75e34e93f21964e93ba05a0391033d4081f3d",
+  "result": "COMPLETED_RESEARCH_CONTRACT_ESTABLISHED_OPEN_EVENTS",
+  "native_execution": false,
+  "formal_dependencies": [
+    {
+      "task": "MC-003",
+      "path": "research/machining-completeness/tasks/MC-003/outcome.json",
+      "blob_sha": "8f335f59f36c8761844806f9059af4a4f1671044",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-008",
+      "path": "research/machining-completeness/tasks/MC-008/outcome.json",
+      "blob_sha": "a4b3f3451abedd06f2467a8e11741cdc63826e2b",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-010",
+      "path": "research/machining-completeness/tasks/MC-010/outcome.json",
+      "blob_sha": "4960730316f89dbb3fbf958d054127fa4fc0d789",
+      "result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "pinned_authority": [
+    {
+      "path": "research/machining-completeness/tasks/MC-003/numeric-encoding-contract-v1.json",
+      "blob_sha": "a5538cab698c806fdedcef7cf563b650638348e0"
+    },
+    {
+      "path": "research/machining-completeness/proof-obligations-v1.json",
+      "blob_sha": "97b023c5ea550f598b16ba9a1aeaabbf95ecba6f"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-010/oracle-foundation-v1.json",
+      "blob_sha": "b55ac69f007c405f67eb15c664ff75e64a83c659"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-010/independent_exact_oracle.py",
+      "blob_sha": "cfb5a8def57e8f4bb5109982da456621766a2b22"
+    }
+  ],
+  "hypothesis": "The admitted finite curve and rigid-transform source language can be evaluated exactly where its algebra permits and otherwise enclosed conservatively without changing saved nominal intent; a pose enclosure becomes an actual finite-cutter sweep enclosure only when translation, rotation and full cutter support extent are all accounted for.",
+  "falsification": "Reject this contract if an admitted curve/transform class has neither a checked finite enclosure rule nor a named open obligation; if centreline error is accepted as a cutter-sweep certificate while finite cutter extent or rotation is omitted; or if subdivision changes endpoints, engagement, units, transform order, source identity or inherited error.",
+  "source_semantics": {
+    "profile": "mc-exact-source/1.0",
+    "saved_operation_is_immutable": true,
+    "approximation_is_derived_only": true,
+    "certifying_json_binary_float_forbidden": true,
+    "global_untyped_epsilon_forbidden": true,
+    "endpoints_are_authoritative": true,
+    "engagement_boundaries_are_authoritative": true,
+    "setup_tool_target_boundaries_are_not_fitted_across": true,
+    "exact_retrace_is_not_deleted_from_journal": true,
+    "inherited_error_may_not_reset_at_handoff": true,
+    "unknown_error_is_uncertified_not_zero": true
+  },
+  "numeric_enclosure": {
+    "certifying_scalar": "canonical exact rational or directed interval endpoint with explicit dimension",
+    "angle_source": "exact rational turn_fraction; radians are derived symbolically/enclosed rather than decimalizing pi",
+    "pi_upper_rational": {"numerator": "22", "denominator": "7"},
+    "pi_upper_role": "conservative upper bound only; it is not an exact value of pi and is not predicate authority",
+    "trigonometric_algebraicity_assumed": false,
+    "rotation_evaluation": "exact algebraic form where available, otherwise outward enclosure that contains the semantic rigid rotation",
+    "distance_norm_rule": "a componentwise L1 bound may conservatively bound Euclidean displacement; no square root is required to certify that upper bound"
+  },
+  "curve_classes": [
+    {
+      "id": "stationary",
+      "semantic_mapping": "constant exact pose over the declared finite interval",
+      "applicability": "admitted stationary engaged or non-engaged interval",
+      "subdivision_rule": "no source change; any partition is derived and must preserve both interval endpoints and engagement",
+      "checked_bound": "exact pose evaluator has zero curve error; actual-sweep error is still computed by the common finite-cutter bound",
+      "open_obligations": []
+    },
+    {
+      "id": "line",
+      "semantic_mapping": "P(u)=(1-u)P0+uP1 for exact u in closed [0,1]",
+      "applicability": "admitted exact line piece",
+      "subdivision_rule": "exact affine subdivision; source endpoints and semantic interior split point are retained",
+      "checked_bound": "exact rational evaluation has zero curve error; a directed approximate evaluator must report its translation enclosure explicitly",
+      "open_obligations": []
+    },
+    {
+      "id": "circular_arc",
+      "semantic_mapping": "oriented rigid rotation of the exact start radial vector about the normalized exact axis through the exact turn_fraction sweep",
+      "applicability": "admitted circular arc with nonzero valid axis and source-semantic endpoint",
+      "subdivision_rule": "split the exact turn_fraction; for N positive equal pieces, theta_bar = 2*(22/7)*abs(turn_fraction)/N is a rational upper bound on subarc radians and radial chord sag is <= radius*theta_bar^2/8",
+      "checked_bound": "the rational sag inequality encloses positional chord error without treating pi as rational equality; exact source endpoint is restored at the semantic boundary",
+      "open_obligations": ["PB-007-01 for exact tangential/multiple/singular transcendental event decisions"]
+    },
+    {
+      "id": "helical_arc",
+      "semantic_mapping": "circular-arc rotation plus exact u*axial_delta along the same fixed axis",
+      "applicability": "admitted fixed-axis helix",
+      "subdivision_rule": "arc and axial parameter are split by the same exact u interval; the circular transverse bound applies and exact linear axial interpolation adds zero source-level error",
+      "checked_bound": "translation enclosure is the conservative sum of transverse arc enclosure and any explicitly certified axial evaluator error; parameter correlation may not be separated",
+      "open_obligations": ["PB-007-01 for singular transcendental event equality", "PB-007-02 for the general coupled helical/spindle-feed/eccentric sweep-membership route"]
+    },
+    {
+      "id": "polyline",
+      "semantic_mapping": "finite ordered composition of exact line pieces; semantic zero-length pieces remain when they mark a boundary",
+      "applicability": "admitted finite polyline",
+      "subdivision_rule": "subdivide only inside an existing line piece or at its exact vertex; never fit across a vertex, engagement boundary or source-semantic zero-length piece",
+      "checked_bound": "each exact segment has zero curve error and the whole path bound is the maximum of segment bounds over the exact ordered union, not a cross-vertex shortcut",
+      "open_obligations": []
+    },
+    {
+      "id": "spline",
+      "semantic_mapping": "non-rational B-spline from exact degree, rational knots and exact control points under the Cox-de Boor definition",
+      "applicability": "admitted finite non-rational B-spline; knot multiplicity is semantic",
+      "subdivision_rule": "use exact knot insertion/span subdivision; each leaf keeps exact parameter endpoints and may use the exact control-hull enclosure or an exact derivative bound; no knot epsilon",
+      "checked_bound": "on a leaf of parameter width h, an exact componentwise derivative L1 upper bound L gives displacement <= L*h; the exact local control hull is also a valid curve enclosure",
+      "open_obligations": []
+    },
+    {
+      "id": "piecewise_motion",
+      "semantic_mapping": "finite ordered admitted pieces with explicit shared-boundary policy",
+      "applicability": "admitted piecewise motion",
+      "subdivision_rule": "piece boundaries are hard semantic boundaries; no fit may cross an engaged discontinuity or setup/tool/target/engagement transition",
+      "checked_bound": "union the per-piece pose/sweep enclosures and preserve all shared semantic endpoints; error budgets compose monotonically rather than restarting per piece",
+      "open_obligations": []
+    },
+    {
+      "id": "timed_phase_motion",
+      "semantic_mapping": "exact finite time knots bind path progress and spindle phase to the same chronology; whole-turn geometric equivalence does not erase unwrapped phase/history",
+      "applicability": "admitted synchronized/phase-sensitive motion",
+      "subdivision_rule": "time, path and phase subdivide together from the same exact interval; independent full-angle coverage is forbidden",
+      "checked_bound": "certified path and phase/rotation enclosures feed the common finite-cutter pose bound while preserving the shared time parameter",
+      "open_obligations": ["PB-007-01 for exact tangential/multiple/singular transcendental event decisions", "PB-007-02 for the general coupled helical/spindle-feed/eccentric sweep-membership route"]
+    }
+  ],
+  "transform_classes": [
+    {
+      "id": "rigid_setup_transform",
+      "semantic_mapping": "p_parent = R(q)*p_child+t using the exact source quaternion semantics, right-handed Cartesian frames and column vectors",
+      "applicability": "admitted immutable setup/frame transform",
+      "checked_bound": "a proper exact rigid transform preserves Euclidean distance bounds; an approximate evaluator must separately enclose translation and rotation-angle error before applying the finite-cutter bound",
+      "forbidden": ["LEFT_RIGHT_HANDEDNESS_SWAP", "TRANSFORM_ORDER_SWAP", "UNNORMALIZED_Q15_SEMANTICS", "UNIT_ERASURE"]
+    },
+    {
+      "id": "reclamp",
+      "semantic_mapping": "new immutable setup/frame definition composed in declared order; historical transform is not mutated",
+      "applicability": "admitted non-cutting setup transition",
+      "checked_bound": "the post-transition pose is certified in the common workpiece frame and inherits prior source/numerical error without reset",
+      "forbidden": ["IN_PLACE_HISTORICAL_REINTERPRETATION", "ERROR_RESET_AT_RECLAMP"]
+    },
+    {
+      "id": "machine_transition",
+      "semantic_mapping": "explicit non-cutting transition to a new declared machine/setup frame while preserving body target and lineage bindings",
+      "applicability": "admitted cross-machine/setup history",
+      "checked_bound": "composition uses the same rigid-transform covariance rule and retains units, order and body-target semantics",
+      "forbidden": ["IMPLICIT_FRAME_CHANGE", "BODY_TARGET_GUESS", "ERROR_RESET_AT_MACHINE_TRANSITION"]
+    }
+  ],
+  "actual_sweep_bound": {
+    "cutter_requirement": "The effective cutting solid must have a certified finite support radius rho from the declared cutter-frame origin covering the complete cutting region, including finite radial extent, axial length, shoulders and any admitted nonconvex/undercut extent.",
+    "same_parameter_requirement": "Exact and approximate poses cover the same closed engaged source parameter/time set, including semantic endpoints; trimming may not delete or extend engagement.",
+    "pose_bound": "If translation displacement is <= e_translation and orientation angular displacement is <= e_rotation radians for every source parameter, every transformed cutter point moves by <= e_translation + rho*e_rotation because chord displacement is <= rho*angle.",
+    "tool_bound": "If the derived cutter representation itself has certified Hausdorff error e_tool, add it conservatively.",
+    "inherited_bound": "If upstream nominal-to-current error e_inherited is still part of the chain, add it conservatively unless a source-bound recomputation explicitly proves that channel removed.",
+    "total_bound": "e_total = e_inherited + e_translation + rho*e_rotation + e_tool",
+    "centreline_only_is_sufficient": false,
+    "topology_certificate_implied": false,
+    "material_membership_certificate_implied": false,
+    "exact_zero_event_decision_implied": false
+  },
+  "error_composition": {
+    "unknown_dependence": "sum conservative nonnegative upper bounds",
+    "source_uncertainty_separate_from_nominal_numerical_error": true,
+    "recomputation_may_remove_prior_derived_error_only_with_proof": true,
+    "topology_material_body_identity_not_compensable_by_numeric_error": true,
+    "approximation_request_never_changes_saved_source": true
+  },
+  "exact_controls": {
+    "line_midpoint": {
+      "p0": ["0", "0", "0"],
+      "p1": ["2", "4", "6"],
+      "u": {"numerator": "1", "denominator": "2"},
+      "expected": ["1", "2", "3"]
+    },
+    "quarter_arc": {
+      "radius": {"numerator": "3", "denominator": "1"},
+      "turn_fraction": {"numerator": "1", "denominator": "4"},
+      "equal_subarcs": 4,
+      "theta_upper_each": {"numerator": "11", "denominator": "28"},
+      "sag_upper_each": {"numerator": "363", "denominator": "6272"},
+      "semantic_unit_endpoint": ["0", "1", "0"]
+    },
+    "helical_quarter_endpoint": {
+      "start_radial": ["1", "0", "0"],
+      "turn_fraction": {"numerator": "1", "denominator": "4"},
+      "axial_delta": {"numerator": "2", "denominator": "1"},
+      "expected": ["0", "1", "2"]
+    },
+    "quadratic_spline": {
+      "control_points": [["0", "0"], ["1", "2"], ["2", "0"]],
+      "u": {"numerator": "1", "denominator": "2"},
+      "expected": ["1", "1"],
+      "derivative_l1_upper": {"numerator": "6", "denominator": "1"},
+      "leaf_width": {"numerator": "1", "denominator": "16"},
+      "leaf_displacement_upper": {"numerator": "3", "denominator": "8"}
+    },
+    "rigid_transform": {
+      "raw_q15_ratio": ["1", "0", "0", "1"],
+      "translation": ["10", "20", "30"],
+      "point": ["1", "0", "0"],
+      "expected": ["10", "21", "30"]
+    },
+    "finite_cutter": {
+      "radial_extent": {"numerator": "3", "denominator": "1"},
+      "axial_extent": {"numerator": "4", "denominator": "1"},
+      "support_radius": {"numerator": "5", "denominator": "1"},
+      "e_translation": {"numerator": "1", "denominator": "1000"},
+      "e_rotation": {"numerator": "1", "denominator": "10000"},
+      "pose_sweep_upper": {"numerator": "3", "denominator": "2000"},
+      "e_inherited": {"numerator": "1", "denominator": "4000"},
+      "e_tool": {"numerator": "1", "denominator": "2000"},
+      "total_upper": {"numerator": "9", "denominator": "4000"}
+    }
+  },
+  "proof_boundary": {
+    "PO-02": "OPEN: this contract specifies source-faithful sweep approximation/enclosure interfaces but does not implement every actual cutter sweep or prove all event membership.",
+    "PO-05": "OPEN: exact transcendental/singular and general coupled sweep blockers remain; a finite approximation budget is not a universal event-decision proof.",
+    "PO-06": "OPEN: this contract supplies one compositional error-transfer rule but not the complete source-to-reconstruction certificate chain.",
+    "MC-B": "NOT_ESTABLISHED"
+  },
+  "blockers": [
+    {
+      "id": "PB-007-01",
+      "status": "OPEN",
+      "remaining_obligation": "unconditional finite exact decision for required tangential/multiple/singular transcendental events remains unestablished; MC-058 enclosures do not turn uncertainty into an equality verdict",
+      "affected_descendants": ["MC-022", "MC-024", "MC-032", "MC-038"]
+    },
+    {
+      "id": "PB-007-02",
+      "status": "OPEN",
+      "remaining_obligation": "the unconditional full constructive route for general coupled helical/spindle-feed/eccentric sweep membership remains unestablished; shared time/phase correlation must be preserved",
+      "affected_descendants": ["MC-022", "MC-024", "MC-038"]
+    }
+  ],
+  "capability_guard": {
+    "MC-A": "ACCEPTED",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-C": "NOT_ESTABLISHED",
+    "MC-D": "NOT_ESTABLISHED",
+    "MC-E": "NOT_ESTABLISHED",
+    "MC-F": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED"
+  }
+}
