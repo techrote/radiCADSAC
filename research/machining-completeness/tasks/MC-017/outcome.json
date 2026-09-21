@@ -1,0 +1,106 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-017",
+  "result_kind": "COMPLETED_RESEARCH",
+  "evidence_class": [
+    "SOURCE_FACT",
+    "REVIEWED_ARGUMENT",
+    "DOCUMENTATION_RECONCILIATION"
+  ],
+  "source_baseline": "57689b7128d5c8f9531a1efe398ea6a12daa9804",
+  "issue": 79,
+  "dependency_artifacts": [
+    {
+      "task": "MC-001",
+      "path": "research/machining-completeness/tasks/MC-001/outcome.json",
+      "blob_sha": "2efd52cf39102d5722c6bbf281828361e943d6a4",
+      "result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "contextual_inputs": [
+    {
+      "task": "MC-016",
+      "path": "research/machining-completeness/tasks/MC-016/outcome.json",
+      "blob_sha": "606a7d0b8be61131b2272f2eb161d6a4dbba703a",
+      "relationship": "non-task-graph contextual input preserving RB-016-01 through RB-016-05 as open independent-consumer obligations"
+    }
+  ],
+  "accepted_claims": [
+    "BRL-CAD at pinned commit 0d745fca358e6b4655552186da4221206f4b7483 provides a source-level independent STEP consumer candidate whose direct step-g target uses BRL-CAD libbrep/librt, STEPcode and OpenNURBS rather than naming OCCT/Open CASCADE or Manifold.",
+    "The source-bound step-g interface supports a fail-closed probe policy using strict, exact, no-repair, reject-invalid import plus machine-readable report/summary outputs.",
+    "BRL-CAD gqa provides downstream approximate volume/bounding-box/overlap/gap measurement with explicit ray-grid refinement controls, while BRL-CAD Boolean difference provides a concrete follow-on operation that can consume the independently imported geometry.",
+    "Known-good, known-bad and valid-but-materially-wrong controls are required before any native qualification result can count.",
+    "The lack of an authorized native execution/expensive-campaign permit and source-bound MC-1 STEP-through-BRL-CAD result is recorded as XB-017-01 rather than converted into a pass."
+  ],
+  "open_claims": [
+    "No BRL-CAD binary was executed under MC-017; actual STEP import, measurement and follow-on engineering use remain unmeasured.",
+    "Direct-target source inspection is not a complete transitive runtime dependency audit; full implementation independence remains to be demonstrated in the native continuation.",
+    "RB-016-01 through RB-016-05 remain open and retain their recorded cavity, multi-solid, micro-feature, singular/contact and empty-material semantics.",
+    "Approximate gqa evidence cannot by itself certify exact-zero topology or protected positive micro-features.",
+    "MC-B, MC-C, MC-D, MC-E, MC-F and MC-1 remain NOT_ESTABLISHED."
+  ],
+  "native_execution": false,
+  "artifacts": [
+    "research/machining-completeness/tasks/MC-017/consumer-probe-v1.json",
+    "research/machining-completeness/tasks/MC-017/report.md",
+    "research/machining-completeness/tasks/MC-017/outcome.json",
+    "research/machining-completeness/tasks/MC-017/verify.py",
+    "docs/machining-completeness/04-REPRESENTATION-AND-RECONSTRUCTION.md",
+    "research/machining-completeness/outcomes-v1.json",
+    ".github/workflows/mc1-static.yml"
+  ],
+  "verification": [
+    "python3 research/machining-completeness/tasks/MC-017/verify.py --contract",
+    "python3 research/machining-completeness/tasks/MC-017/verify.py --self-test",
+    "python3 tools/mc_workflow.py verify MC-017",
+    "python3 tools/validate_machining_completeness.py --self-test",
+    "python3 tools/mc_workflow.py sync --check"
+  ],
+  "adversarial_controls": [
+    "reject a consumer path whose decisive direct stack names OCCT/Open CASCADE or Manifold",
+    "reject producer in-memory geometry as a substitute for exact exported STEP bytes",
+    "reject repair, inference, partial output or invalid-preserved import as success",
+    "reject approximate ray-grid measurements promoted to exact geometry authority",
+    "reject insufficient measurement refinement or missing explicit error controls",
+    "reject a follow-on engineering operation that bypasses the independently imported geometry",
+    "reject gqa-only certification of protected positive micro-features or exact-zero boundaries",
+    "reject fake epsilon material for an empty outcome",
+    "reject closure of XB-017-01 without observed native evidence",
+    "reject premature MC-C or programme capability promotion",
+    "reject loss of any MC-016 independent-consumer blocker"
+  ],
+  "resources": {
+    "native_permit_required": true,
+    "native_or_paid_campaign_run": false
+  },
+  "review": {
+    "disposition": "completed source-level consumer-access research with an explicit execution blocker; artifact dependents may consume the path, controls and profile constraints but no output/interoperability capability gate is promoted",
+    "gate_changed": false,
+    "programme_capability_changed": false,
+    "downstream_release": "MC-054 may consume the source-level consumer route and limits for its output-profile decision; MC-043 remains the existing owner of actual independent STEP measurement and engineering-use continuation; MC-045 may establish the campaign harness/permit mechanism"
+  },
+  "blockers": [
+    {
+      "id": "XB-017-01",
+      "status": "OPEN",
+      "summary": "The BRL-CAD path is source-viable, but no explicit native-execution permit/expensive-campaign lock or pre-existing source-bound MC-1 STEP-through-BRL-CAD result is available, so import, measurement and follow-on engineering use cannot be claimed as observed evidence.",
+      "existing_downstream_owner": "MC-043",
+      "affected_descendants": [
+        "MC-043",
+        "MC-044",
+        "MC-052"
+      ],
+      "unaffected_work": [
+        "MC-054 output-profile decision",
+        "candidate and reconstruction research that preserves MC-016 blockers",
+        "MC-045 native campaign harness/permit qualification"
+      ]
+    }
+  ],
+  "downstream_invalidations": [
+    "A change to the pinned BRL-CAD importer/analysis sources or their decisive runtime dependency graph invalidates the source-level independence conclusion until re-reviewed.",
+    "A changed STEP/output profile or producer accuracy contract invalidates affected probe assumptions and must be versioned rather than silently reused.",
+    "Future native evidence supersedes only the corresponding source-level open claim; it does not rewrite this task's non-execution record.",
+    "Any consumer path that repairs, fuses, drops or invents material/body semantics fails the affected claim instead of weakening the MC-1 denominator."
+  ]
+}
