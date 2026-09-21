@@ -46,7 +46,7 @@
     "MC-042": {"state": "NOT_STARTED", "issue": 104, "accepted_artifacts": [], "blockers": []},
     "MC-043": {"state": "NOT_STARTED", "issue": 105, "accepted_artifacts": [], "blockers": []},
     "MC-044": {"state": "NOT_STARTED", "issue": 106, "accepted_artifacts": [], "blockers": []},
-    "MC-045": {"state": "NOT_STARTED", "issue": 107, "accepted_artifacts": [], "blockers": []},
+    "MC-045": {"state": "COMPLETED_RESEARCH", "issue": 107, "accepted_artifacts": ["research/machining-completeness/tasks/MC-045/campaign-harness-contract-v1.json", "research/machining-completeness/tasks/MC-045/campaign_harness.py", "research/machining-completeness/tasks/MC-045/report.md", "research/machining-completeness/tasks/MC-045/outcome.json", "research/machining-completeness/tasks/MC-045/verify.py", "docs/machining-completeness/05-QUALIFICATION.md"], "blockers": []},
     "MC-046": {"state": "NOT_STARTED", "issue": 108, "accepted_artifacts": [], "blockers": []},
     "MC-047": {"state": "NOT_STARTED", "issue": 109, "accepted_artifacts": [], "blockers": []},
     "MC-048": {"state": "NOT_STARTED", "issue": 110, "accepted_artifacts": [], "blockers": []},
