@@ -267,13 +267,18 @@ def verify_registry(contract):
     families = load(FAMILIES_PATH)["families"]
     if [f["id"] for f in families] != [f"F{i:02d}" for i in range(1, 17)]:
         fail("fixture-family denominator drift")
+    outcomes = load(OUTCOMES_PATH)["tasks"]
     for row in families:
-        expected = "BUILT" if row["id"] in {"F01", "F02", "F03", "F04"} else "UNBUILT"
-        if row.get("state") != expected:
-            fail(f"{row['id']} registry state mismatch: {row.get('state')} != {expected}")
         if row.get("mandatory") is not True:
             fail(f"{row['id']} stopped being mandatory")
-    outcomes = load(OUTCOMES_PATH)["tasks"]
+        if row["id"] in {"F01", "F02", "F03", "F04"}:
+            if row.get("state") != "BUILT":
+                fail(f"{row['id']} regressed from MC-011 BUILT state")
+            continue
+        if row.get("state") not in {"UNBUILT", "BUILT"}:
+            fail(f"{row['id']} has unknown later-owner state {row.get('state')}")
+        if row.get("state") == "BUILT" and outcomes.get(row.get("owner"), {}).get("state") not in {"COMPLETED_RESEARCH", "CAPABILITY_ACCEPTED"}:
+            fail(f"{row['id']} advanced to BUILT without completed owner {row.get('owner')}")
     if outcomes["MC-011"].get("state") != "COMPLETED_RESEARCH":
         fail("MC-011 outcome registry was not reconciled")
     if contract["programme_state"]["MC-B"] != "NOT_ESTABLISHED" or contract["programme_state"]["MC-1"] != "NOT_ESTABLISHED":
