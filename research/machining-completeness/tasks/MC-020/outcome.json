@@ -1,0 +1,76 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-020",
+  "result_kind": "COMPLETED_RESEARCH",
+  "evidence_class": ["DETERMINISTIC_MODEL","REVIEWED_ARGUMENT","DESIGN_DECISION","DOCUMENTATION_RECONCILIATION"],
+  "source_baseline": "a5b6905bb212afed21a7747cd80a0bf87ee34cca",
+  "issue": 82,
+  "dependency_artifacts": [
+    {"task":"MC-005","path":"research/machining-completeness/tasks/MC-005/outcome.json","blob_sha":"adec886597a06345fdfdf65ee018596cd396d249","result_kind":"CAPABILITY_ACCEPTED"},
+    {"task":"MC-010","path":"research/machining-completeness/tasks/MC-010/outcome.json","blob_sha":"4960730316f89dbb3fbf958d054127fa4fc0d789","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-058","path":"research/machining-completeness/tasks/MC-058/outcome.json","blob_sha":"038fccda9142650ee7e29c626aeb8e4602420278","result_kind":"COMPLETED_RESEARCH"}
+  ],
+  "accepted_claims": [
+    "A finite exact-rational positive-volume box-union cutter subtype now has an executable exact fixed-axis stationary/line/polyline sweep route using one shared source parameter across XYZ; nonconvex/reentrant regions are preserved as a union rather than replaced by a hull or AABB.",
+    "The bounded route applies to mill_form and mill_accessible_undercut instances representable by the reviewed codec and to local lathe_form_tool cutting/holder geometry without claiming the later lathe spindle/timed process sweep.",
+    "Accessible-undercut physical validity has an explicit deterministic witness that checks the complete cutting plus non-cutting holder body against retained-material/fixture obstacles along an unengaged approach path; candidate success is not the access oracle.",
+    "The exact axis-parallel slice agrees with the independently pinned MC-010 rational box-sweep oracle, while simultaneous-XYZ, reentrant-void, signed-neighbour and holder-only collision controls reject common simplifying corruptions.",
+    "MC-058-derived nonlinear leaves are consumed through conservative per-box inner/outer translation sandwiches and explicit INSIDE/OUTSIDE/UNCERTIFIED outcomes; an unresolved shell is never promoted to exact membership or topology truth."
+  ],
+  "open_claims": [
+    "PB-007-03 remains OPEN: the admitted domain still lacks a universal finite exact source codec for arbitrary form/undercut cutting-region instances; the bounded box-union subtype does not narrow the frozen denominator.",
+    "Lathe rotational reduction and spindle/feed/timed process semantics for lathe_form_tool remain owned by MC-021 and MC-022; MC-020 does not claim them from the local cutter codec.",
+    "PO-02 remains OPEN: MC-020 contributes only a bounded form/undercut cutter/access slice rather than every admitted actual tool sweep.",
+    "PO-04, PO-05 and PO-06 remain OPEN: universal classification, finite progress and the complete source-to-engineering-output certificate chain are not established here.",
+    "MC-B, MC-C, MC-D, MC-E, MC-F and MC-1 remain NOT_ESTABLISHED."
+  ],
+  "native_execution": false,
+  "artifacts": [
+    "research/machining-completeness/tasks/MC-020/form-undercut-sweep-contract-v1.json",
+    "research/machining-completeness/tasks/MC-020/form_undercut_sweep.py",
+    "research/machining-completeness/tasks/MC-020/report.md",
+    "research/machining-completeness/tasks/MC-020/outcome.json",
+    "research/machining-completeness/tasks/MC-020/verify.py",
+    "docs/machining-completeness/15-MC020-FORM-UNDERCUT-SWEEPS.md",
+    "research/machining-completeness/outcomes-v1.json",
+    ".github/workflows/mc1-static.yml"
+  ],
+  "verification": [
+    "python3 research/machining-completeness/tasks/MC-020/verify.py --contract",
+    "python3 research/machining-completeness/tasks/MC-020/verify.py --self-test",
+    "python3 tools/mc_workflow.py verify MC-020",
+    "python3 tools/validate_machining_completeness.py --self-test",
+    "python3 tools/mc_workflow.py sync --check"
+  ],
+  "adversarial_controls": [
+    "reject binary-floating correctness authority and global epsilon equality",
+    "reject enclosing AABB/convex-hull substitution and filling of reentrant cutter voids",
+    "reject loss of the shared XYZ source parameter on simultaneous translation",
+    "reject cutting-region-only access checks and holder omission",
+    "reject candidate success as an access/physical-validity oracle",
+    "reject unbound MC-058 nonlinear leaves, zeroing their enclosure, or promoting UNCERTIFIED shell points",
+    "reject deletion of retraces or engaged teleportation",
+    "reject promotion of the bounded box-union subtype into a universal arbitrary-form source codec",
+    "reject promotion of local lathe_form_tool geometry into completed rotational/timed lathe sweep semantics",
+    "reject dependency/oracle drift, closure of PB-007-03, model-to-native promotion and premature MC-B acceptance"
+  ],
+  "resources":{"native_permit_required":false,"native_or_paid_campaign_run":false},
+  "review": {
+    "disposition":"completed bounded form/nonconvex/accessible-undercut construction for an exact-rational box-union cutter subtype, with independent axis-parallel control and explicit complete-body access witness",
+    "gate_changed":false,
+    "gate":"MC-B",
+    "gate_status":"NOT_ESTABLISHED",
+    "programme_capability_changed":false,
+    "downstream_release":"MC-028/MC-029/MC-030 and later integration work may consume the bounded construction while retaining PB-007-03; MC-021/MC-022 remain responsible for lathe process semantics"
+  },
+  "blockers": [
+    {"id":"PB-007-03","status":"OPEN_PROPAGATED","affected_descendants":["MC-026","MC-028","MC-029","MC-030","MC-031","MC-038"]}
+  ],
+  "downstream_invalidations": [
+    "Any semantic change to the MC-A form/undercut cutter families or MC-058 source/enclosure contract invalidates the corresponding MC-020 source-binding claim and requires prospective review.",
+    "Any downstream implementation that replaces the cutter union by an AABB/hull, fills a reentrant void, drops holder/non-cutting geometry from required access checks, loses shared XYZ source correlation, deletes retraces or permits engaged teleportation invalidates the affected sweep/access claim.",
+    "Any claim that exact_rational_box_union_v1 covers every admitted arbitrary form/undercut source instance, or any closure of PB-007-03 without a separate universal codec argument, invalidates this bounded disposition.",
+    "Any promotion of UNCERTIFIED bounded-leaf regions to exact membership/topology truth, or any reuse of candidate geometry as the independent MC-010 control, invalidates the claimed construction.",
+    "Future native-kernel evidence may supplement this deterministic construction but must not rewrite its recorded evidence class."
+  ]
+}
