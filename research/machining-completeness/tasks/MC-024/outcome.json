@@ -1,0 +1,161 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-024",
+  "result_kind": "NEGATIVE_RESULT",
+  "evidence_class": [
+    "SOURCE_INSPECTION",
+    "REVIEWED_ARGUMENT",
+    "DETERMINISTIC_MODEL",
+    "DOCUMENTATION_RECONCILIATION"
+  ],
+  "source_baseline": "07ea9c6c07b2836473162fa1f9dda18695b9a549",
+  "issue": 86,
+  "dependency_artifacts": [
+    {
+      "task": "MC-006",
+      "path": "research/machining-completeness/tasks/MC-006/outcome.json",
+      "blob_sha": "0319e00b492c57e4a11e3e78ef9a2e15ff67e52e",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-007",
+      "path": "research/machining-completeness/tasks/MC-007/outcome.json",
+      "blob_sha": "8d54872292dfd9f632c79c76994a467d26eaaf9c",
+      "result_kind": "NEGATIVE_RESULT"
+    },
+    {
+      "task": "MC-010",
+      "path": "research/machining-completeness/tasks/MC-010/outcome.json",
+      "blob_sha": "4960730316f89dbb3fbf958d054127fa4fc0d789",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-016",
+      "path": "research/machining-completeness/tasks/MC-016/outcome.json",
+      "blob_sha": "606a7d0b8be61131b2272f2eb161d6a4dbba703a",
+      "result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "accepted_claims": [
+    "exact arrangement/cell methods remain a defensible bounded reference/control route for concrete instances whose stock, cutter, setup and engaged motion have a proved finite semialgebraic encoding over rational/real-algebraic constants",
+    "the task-local exact-rational controls preserve exact tangency, a positive 1/1000000 material web, two retained bodies after cut-through, explicit empty material and exact retrace idempotence without epsilon or binary-floating predicate authority",
+    "exact/cell is falsified as the programme's total general fallback because PB-007-01, PB-007-02 and PB-007-03 remain required-domain blockers and may not be hidden by productized phase coverage, sampling, timeout or domain shrinkage",
+    "cell/component identities are not durable body identity or lineage, and RB-016-02/RB-016-04 remain output-side blockers even when material cells are exact",
+    "mathematical termination under MC-006 hypotheses does not establish practical production viability; MC-006's doubly-exponential CAD complexity warning remains active"
+  ],
+  "open_claims": [
+    "PB-007-01: unconditional finite exact decisions for required tangential/multiple/singular transcendental equality events remain open",
+    "PB-007-02: a full exact constructive route for general coupled helical/spindle-feed/eccentric sweeps remains open",
+    "PB-007-03: finite exact constructive source representation for all admitted imported-stock and arbitrary form/undercut instances remains open",
+    "RB-016-02: durable multi-body mapping and independent engineering-output preservation remain unqualified",
+    "RB-016-04: exact-zero contact/touching-cavity/singular-pinch output profile and consumer behaviour remain unqualified",
+    "practical CAD/QE resource viability as a default or general production route remains unqualified",
+    "PO-08, MC-B and MC-1 remain NOT_ESTABLISHED"
+  ],
+  "native_execution": false,
+  "artifacts": [
+    "research/machining-completeness/tasks/MC-024/exact-cell-falsification-v1.json",
+    "research/machining-completeness/tasks/MC-024/report.md",
+    "research/machining-completeness/tasks/MC-024/outcome.json",
+    "research/machining-completeness/tasks/MC-024/verify.py",
+    "docs/machining-completeness/02-COMPLETENESS-ARGUMENT.md",
+    "research/machining-completeness/outcomes-v1.json",
+    ".github/workflows/mc1-static.yml"
+  ],
+  "verification": [
+    "python3 research/machining-completeness/tasks/MC-024/verify.py --contract",
+    "python3 research/machining-completeness/tasks/MC-024/verify.py --self-test",
+    "python3 tools/mc_workflow.py verify MC-024",
+    "python3 tools/validate_machining_completeness.py --self-test",
+    "python3 tools/mc_workflow.py sync --check"
+  ],
+  "adversarial_controls": [
+    "reject promotion of exact/cell to total general fallback",
+    "reject removal of shared time/feed/spindle-phase correlation",
+    "reject global epsilon or binary-float predicate authority",
+    "reject promotion of PB-007 blocked motion/equality classes into exact/cell coverage",
+    "reject independent angular coverage for correlated spindle/feed motion",
+    "reject cell/component identity as durable body identity or lineage",
+    "reject promotion to practical-resource qualification",
+    "reject tolerance deletion of positive-volume material",
+    "reject healing or bridging of exact-zero contact",
+    "reject removal or closure of inherited blockers without new owner evidence",
+    "reject dependency blob drift",
+    "reject premature MC-B acceptance",
+    "reject corruption of exact control volumes/components and retrace idempotence"
+  ],
+  "resources": {
+    "native_permit_required": false,
+    "native_or_paid_campaign_run": false
+  },
+  "review": {
+    "disposition": "negative candidate result: retain exact/cell as bounded semialgebraic reference/control provider, reject it as the total general fallback",
+    "gate_changed": false,
+    "programme_capability_changed": false,
+    "downstream_release": "MC-026 may consume this negative candidate evidence while preserving all inherited blockers; MC-024 does not release MC-B or authorize native implementation"
+  },
+  "blockers": [
+    {
+      "id": "PB-007-01",
+      "status": "OPEN",
+      "source_task": "MC-007",
+      "affected_descendants": [
+        "MC-026",
+        "MC-038"
+      ]
+    },
+    {
+      "id": "PB-007-02",
+      "status": "OPEN",
+      "source_task": "MC-007",
+      "affected_descendants": [
+        "MC-026",
+        "MC-038"
+      ]
+    },
+    {
+      "id": "PB-007-03",
+      "status": "PROPAGATED_FROM_MC-006",
+      "source_task": "MC-007",
+      "affected_descendants": [
+        "MC-020",
+        "MC-026",
+        "MC-038"
+      ]
+    },
+    {
+      "id": "RB-016-02",
+      "status": "OPEN",
+      "source_task": "MC-016",
+      "affected_descendants": [
+        "MC-026",
+        "MC-030",
+        "MC-038",
+        "MC-041",
+        "MC-044",
+        "MC-052"
+      ]
+    },
+    {
+      "id": "RB-016-04",
+      "status": "OPEN",
+      "source_task": "MC-016",
+      "affected_descendants": [
+        "MC-026",
+        "MC-030",
+        "MC-038",
+        "MC-041",
+        "MC-042",
+        "MC-043",
+        "MC-044",
+        "MC-052"
+      ]
+    }
+  ],
+  "downstream_invalidations": [
+    "a change to MC-006 semialgebraic admission hypotheses invalidates the bounded exact/cell coverage classification",
+    "a future reviewed resolution of PB-007-01, PB-007-02 or PB-007-03 may change the general-fallback assessment but must preserve this negative result as historical evidence",
+    "a changed MC-016 output/profile conclusion invalidates only the affected output-side classification and may not promote material cells into body/STEP authority",
+    "any downstream dispatcher that cycles providers, productizes correlated phase, deletes positive material, heals exact-zero contact or converts timeout into success invalidates its MC-024 use"
+  ]
+}
