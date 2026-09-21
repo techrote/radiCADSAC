@@ -1,0 +1,100 @@
+{
+  "schema": "radicadsac-mc015-certificate-attack-contract/1.0",
+  "task": "MC-015",
+  "issue": 77,
+  "source_baseline": "045a6a85972ad381cfcc0ccfc014e4dca8c5a970",
+  "hypothesis": "A small programme-owned exact checker can reject corrupt certificate/binding/common-mode inputs and materially wrong boundary/topology/body controls without importing candidate geometry or treating candidate output as expected truth.",
+  "falsification": "Any required corruption, wrong thin-feature/channel/tangent/topology/body result, stale or candidate-owned authority, invalid material sandwich, non-success terminal, or protected-source drift is accepted as PASS.",
+  "dependencies": [
+    {
+      "task": "MC-009",
+      "path": "research/machining-completeness/tasks/MC-009/outcome.json",
+      "blob_sha": "3a2c52997ace526add72b0f2051e6b5120c0a44d",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-010",
+      "path": "research/machining-completeness/tasks/MC-010/outcome.json",
+      "blob_sha": "4960730316f89dbb3fbf958d054127fa4fc0d789",
+      "result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "reviewed_auxiliary_inputs": [
+    {"task": "MC-011", "path": "research/machining-completeness/tasks/MC-011/outcome.json", "blob_sha": "939f8a6ce8bf4fa8cb5c08d854cc0d3c30aea32f"},
+    {"task": "MC-012", "path": "research/machining-completeness/tasks/MC-012/outcome.json", "blob_sha": "378700980c686566eeffa0b21981480fa9bbf700"},
+    {"task": "MC-013", "path": "research/machining-completeness/tasks/MC-013/outcome.json", "blob_sha": "6f0becdec6d1041c869b45a3da348fd191997496"},
+    {"task": "MC-014", "path": "research/machining-completeness/tasks/MC-014/outcome.json", "blob_sha": "9a70377c92c37272331fb5a76fc3ec25c23f4d8a"},
+    {"task": "MC-055", "path": "research/machining-completeness/tasks/MC-055/outcome.json", "blob_sha": "4f473c83a2639d601530a5331ac7ca941b062951"}
+  ],
+  "source_pins": [
+    {"role": "programme-binding-verifier", "path": "tools/mc_evidence_verifier.py", "blob_sha": "024115a0a6007a192e12e32de9a9ecfe17e91de2"},
+    {"role": "bounded-exact-cell-oracle", "path": "research/machining-completeness/tasks/MC-010/independent_exact_oracle.py", "blob_sha": "cfb5a8def57e8f4bb5109982da456621766a2b22"},
+    {"role": "F01-F04-witness-oracle", "path": "research/machining-completeness/tasks/MC-011/fixture_oracle.py", "blob_sha": "6e1092976ec7c4379193c0ee6897578c3f0cddb7"},
+    {"role": "F05-F08-witness-oracle", "path": "research/machining-completeness/tasks/MC-012/fixture_oracle.py", "blob_sha": "2f0c7f5ff91ce9f82b591267d3ba1b3070c34e54"},
+    {"role": "F09-F12-witness-oracle", "path": "research/machining-completeness/tasks/MC-013/fixture_oracle.py", "blob_sha": "f0e64a7ced8e57de21a24fffa55609e2dff04aca"},
+    {"role": "F13-F16-witness-oracle", "path": "research/machining-completeness/tasks/MC-014/fixture_oracle.py", "blob_sha": "4bf04b4520995ba20e14f337549f1f667776b1ef"},
+    {"role": "historical-import-contract", "path": "research/machining-completeness/tasks/MC-055/historical-corpus-import-v1.json", "blob_sha": "c6c94b7903ea8fd4b55b2ee1d70a99cd934be657"},
+    {"role": "fixture-family-registry", "path": "research/machining-completeness/fixture-families-v1.json", "blob_sha": "d38b1bff84166b1d0fe2c91b94006ccfdce0f287"},
+    {"role": "MC-015-independent-checker", "path": "research/machining-completeness/tasks/MC-015/certificate_checker.py", "blob_sha": "4af2c87db665e357d66727ee64257f8dfbc55f88"}
+  ],
+  "checker_contract": {
+    "schema": "radicadsac-mc015-certificate/1.0",
+    "canonical_numeric_authority": "integers and exact rational strings only; binary float authority forbidden",
+    "material_certificate": "independently evidenced L subset nominal M subset U and L subset candidate B subset U; exact band volume equals volume(U)-volume(L) and may not exceed the preregistered symmetric-difference allowance",
+    "non_compensating_obligations": [
+      "required material/void/boundary probes match exactly",
+      "component count matches exactly",
+      "all required durable body identities survive, including exhausted identities",
+      "durable lineage is preserved",
+      "non-success terminals remain incomplete",
+      "candidate, checker and independent oracle authorities remain distinct"
+    ],
+    "scope_limit": "The checker validates the recorded certificate mathematics, authorities and discriminating witnesses. It does not prove that the witness set is complete, implement native geometry, qualify STEP, or establish MC-B/MC-1."
+  },
+  "required_corruptions": [
+    "binary floating authority",
+    "timeout or resource exhaustion promoted to success",
+    "candidate-owned checker or expected truth",
+    "non-independent oracle declaration",
+    "shared decisive candidate/oracle geometry",
+    "candidate-owned inclusion proof",
+    "inverted or inconsistent material sandwich",
+    "nominal or candidate material outside the sandwich",
+    "incorrect or over-broad uncertainty band",
+    "unproved sandwich relation",
+    "lost positive thin material",
+    "filled required void/channel",
+    "tangent/boundary collapse",
+    "wrong component count or added bridge",
+    "lost durable body identity",
+    "lost durable lineage",
+    "positive residual rounded to empty",
+    "duplicate witness identity",
+    "protected dependency/oracle/historical-import source drift"
+  ],
+  "boundary_controls": [
+    "exact 1/1000000 positive material remains positive",
+    "exact boundary/tangent state remains distinct from material and void",
+    "valid exact-empty material can PASS while durable exhausted body identity remains recorded",
+    "F01-F16 remain mandatory BUILT fixtures rather than becoming candidate PASS records"
+  ],
+  "protected_semantics": {
+    "historical_genesis_and_rcs_evidence_unchanged": true,
+    "canonical_journal_meaning_unchanged": true,
+    "source_audio_provenance_semantics_unchanged": true,
+    "positive_volume_material_not_discarded": true,
+    "durable_body_and_lineage_semantics_unchanged": true,
+    "negative_and_incomplete_results_preserved": true,
+    "candidate_output_never_expected_truth": true,
+    "native_or_paid_execution": false
+  },
+  "capability_guard": {
+    "MC-A": "ACCEPTED",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-C": "NOT_ESTABLISHED",
+    "MC-D": "NOT_ESTABLISHED",
+    "MC-E": "NOT_ESTABLISHED",
+    "MC-F": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED"
+  }
+}
