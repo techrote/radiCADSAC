@@ -64,7 +64,13 @@ def validate(graph=None,programme=None,outcomes=None,ghmap=None,posdoc=None):
     if any(p.get("accepted_evidence") for p in pos[1:]): fail("unaccepted PO has accepted evidence")
 
     fam=load(MC/"fixture-families-v1.json")["families"]
-    if [f["id"] for f in fam]!=[f"F{i:02d}" for i in range(1,17)] or any(f["state"]!="UNBUILT" for f in fam): fail("fixture register mismatch")
+    if [f["id"] for f in fam]!=[f"F{i:02d}" for i in range(1,17)]: fail("fixture register mismatch")
+    allowed_fixture_states={"UNBUILT","BUILT"}
+    for f in fam:
+        state=f.get("state"); owner=f.get("owner")
+        if state not in allowed_fixture_states or f.get("mandatory") is not True: fail(f"fixture state/mandatory mismatch for {f.get('id')}")
+        if owner not in outcomes["tasks"]: fail(f"fixture owner mismatch for {f.get('id')}")
+        if state=="BUILT" and outcomes["tasks"][owner].get("state")=="NOT_STARTED": fail(f"built fixture has no completed producing owner: {f.get('id')}")
     auth=load(ROOT/"handoffs/current-authority.json")
     if auth.get("programme")!="MC-1" or auth.get("production_authorized") is not False: fail("current authority mismatch")
     for p in (ROOT/"README.md",ROOT/"AGENTS.md",ROOT/"handoffs/README.md"):
