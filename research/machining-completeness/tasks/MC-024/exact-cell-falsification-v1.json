@@ -1,0 +1,342 @@
+{
+  "schema": "radicadsac-mc024-exact-cell-falsification/1.0",
+  "task": "MC-024",
+  "issue": 86,
+  "source_baseline": "07ea9c6c07b2836473162fa1f9dda18695b9a549",
+  "result": "NEGATIVE_RESULT_AS_GENERAL_FALLBACK",
+  "native_execution": false,
+  "formal_dependencies": [
+    {
+      "task": "MC-006",
+      "path": "research/machining-completeness/tasks/MC-006/outcome.json",
+      "blob_sha": "0319e00b492c57e4a11e3e78ef9a2e15ff67e52e",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-007",
+      "path": "research/machining-completeness/tasks/MC-007/outcome.json",
+      "blob_sha": "8d54872292dfd9f632c79c76994a467d26eaaf9c",
+      "result_kind": "NEGATIVE_RESULT"
+    },
+    {
+      "task": "MC-010",
+      "path": "research/machining-completeness/tasks/MC-010/outcome.json",
+      "blob_sha": "4960730316f89dbb3fbf958d054127fa4fc0d789",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-016",
+      "path": "research/machining-completeness/tasks/MC-016/outcome.json",
+      "blob_sha": "606a7d0b8be61131b2272f2eb161d6a4dbba703a",
+      "result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "candidate": {
+    "id": "EXACT-ARRANGEMENT-CELL",
+    "role": "BOUNDED_REFERENCE_OR_OPTIONAL_PROVIDER",
+    "general_fallback_qualified": false,
+    "hypothesis": "A finite machining step with an actually proved finite semialgebraic encoding over rational/real-algebraic constants can be evaluated exactly by quantifier elimination plus a finite sign-invariant arrangement/cell decomposition, preserving exact equality and regularized material semantics.",
+    "decisive_falsification": "The candidate is not a total MC-1 fallback because admitted correlated helical/timed-phase motion and some admitted source geometry still lack the required unconditional finite exact encoding/decision route; no dispatch rule may silently productize phase, approximate equality, or drop those operations.",
+    "admission_predicate": {
+      "requirements": [
+        "finite_semialgebraic_encoding_proved",
+        "rational_or_real_algebraic_coefficients",
+        "all_denominator_and_sign_side_conditions_proved",
+        "shared_time_feed_phase_correlation_preserved",
+        "finite_history",
+        "regularized_removal_semantics_preserved"
+      ],
+      "on_failure": "RETURN_TYPED_BLOCKER_OR_DISPATCH_TO_ANOTHER_REVIEWED_ROUTE",
+      "binary_float_predicates_allowed": false,
+      "global_epsilon_predicates_allowed": false,
+      "may_drop_required_operation": false
+    },
+    "theory_binding": {
+      "reviewed_source_owner": "MC-006",
+      "reference_route": "first-order real quantifier elimination plus finite sign-invariant cylindrical algebraic decomposition for finite polynomial sign conditions over a real closed field",
+      "exact_sample_representation": "real-algebraic isolating/Thom/univariate representations",
+      "complexity_guard": "MC-006 records the inspected CAD arithmetic-complexity bound as doubly exponential; this task makes no practical-performance qualification."
+    }
+  },
+  "coverage_matrix": [
+    {
+      "id": "EC-024-01",
+      "class": "finite semialgebraic stock/tool/setup/motion instances",
+      "status": "REFERENCE_ELIGIBLE",
+      "basis": [
+        "MC-006"
+      ],
+      "guard": "eligibility is per instance and requires the admission predicate; constructor labels alone are insufficient"
+    },
+    {
+      "id": "EC-024-02",
+      "class": "general timed-phase, tangential/multiple-root transcendental equality",
+      "status": "BLOCKED",
+      "basis": [
+        "PB-007-01"
+      ],
+      "guard": "no epsilon, subdivision cap, timeout, or sampled sign may stand in for the missing exact decision"
+    },
+    {
+      "id": "EC-024-03",
+      "class": "general coupled helical/spindle-feed/eccentric sweeps",
+      "status": "BLOCKED",
+      "basis": [
+        "PB-007-02"
+      ],
+      "guard": "feed/path/spindle phase must remain correlated; independent angular coverage is forbidden"
+    },
+    {
+      "id": "EC-024-04",
+      "class": "imported stock and arbitrary form/undercut source instances without finite exact constructive encoding",
+      "status": "BLOCKED",
+      "basis": [
+        "PB-007-03"
+      ],
+      "guard": "admitted physical source classes are not presumed polynomial"
+    },
+    {
+      "id": "EC-024-05",
+      "class": "multiple disconnected positive-volume bodies through engineering output",
+      "status": "MATERIAL_REFERENCE_ONLY_OUTPUT_UNQUALIFIED",
+      "basis": [
+        "RB-016-02"
+      ],
+      "guard": "cell/component identity may not replace durable body identity or lineage"
+    },
+    {
+      "id": "EC-024-06",
+      "class": "exact-zero contact/touching-cavity/singular-pinch engineering output",
+      "status": "MATERIAL_REFERENCE_ONLY_OUTPUT_PROFILE_BLOCKED",
+      "basis": [
+        "RB-016-04"
+      ],
+      "guard": "no healing, tolerance fusion, or invented positive bridge"
+    }
+  ],
+  "machining_controls": [
+    {
+      "id": "CTRL-024-TANGENT",
+      "kind": "exact_axis_aligned_box_subtraction",
+      "stock": [
+        "0",
+        "1",
+        "0",
+        "1",
+        "0",
+        "1"
+      ],
+      "cutters": [
+        [
+          "1",
+          "2",
+          "0",
+          "1",
+          "0",
+          "1"
+        ]
+      ],
+      "expected_material_volume": "1",
+      "expected_components": 1
+    },
+    {
+      "id": "CTRL-024-MICROWEB",
+      "kind": "exact_axis_aligned_box_subtraction",
+      "stock": [
+        "0",
+        "3",
+        "0",
+        "1",
+        "0",
+        "1"
+      ],
+      "cutters": [
+        [
+          "0",
+          "1",
+          "0",
+          "1",
+          "0",
+          "1"
+        ],
+        [
+          "1000001/1000000",
+          "3",
+          "0",
+          "1",
+          "0",
+          "1"
+        ]
+      ],
+      "expected_material_volume": "1/1000000",
+      "expected_components": 1
+    },
+    {
+      "id": "CTRL-024-SPLIT",
+      "kind": "exact_axis_aligned_box_subtraction",
+      "stock": [
+        "0",
+        "3",
+        "0",
+        "1",
+        "0",
+        "1"
+      ],
+      "cutters": [
+        [
+          "1",
+          "2",
+          "0",
+          "1",
+          "0",
+          "1"
+        ]
+      ],
+      "expected_material_volume": "2",
+      "expected_components": 2
+    },
+    {
+      "id": "CTRL-024-EMPTY",
+      "kind": "exact_axis_aligned_box_subtraction",
+      "stock": [
+        "0",
+        "1",
+        "0",
+        "1",
+        "0",
+        "1"
+      ],
+      "cutters": [
+        [
+          "0",
+          "1",
+          "0",
+          "1",
+          "0",
+          "1"
+        ]
+      ],
+      "expected_material_volume": "0",
+      "expected_components": 0
+    },
+    {
+      "id": "CTRL-024-RETRACE",
+      "kind": "exact_axis_aligned_box_subtraction",
+      "stock": [
+        "0",
+        "3",
+        "0",
+        "1",
+        "0",
+        "1"
+      ],
+      "cutters": [
+        [
+          "1",
+          "2",
+          "0",
+          "1",
+          "0",
+          "1"
+        ],
+        [
+          "1",
+          "2",
+          "0",
+          "1",
+          "0",
+          "1"
+        ]
+      ],
+      "expected_material_volume": "2",
+      "expected_components": 2,
+      "expected_same_as_single_cut": true
+    }
+  ],
+  "resource_obstruction": {
+    "practical_status": "NOT_QUALIFIED_AS_DEFAULT_OR_GENERAL_PRODUCTION_ROUTE",
+    "reason": "The exact reference route is terminating only under its mathematical hypotheses; MC-006 explicitly retains practical CAD/QE resource viability as open and records a doubly-exponential CAD complexity bound.",
+    "timeout_may_be_reported_as_success": false
+  },
+  "identity_and_output_guards": {
+    "cell_identity_is_body_identity": false,
+    "component_identity_is_durable_lineage": false,
+    "tolerance_may_delete_positive_volume": false,
+    "healing_may_bridge_exact_zero_contact": false,
+    "largest_body_only_output_allowed": false
+  },
+  "total_dispatch_conclusion": {
+    "candidate_can_be_general_fallback": false,
+    "candidate_can_be_bounded_reference": true,
+    "candidate_can_be_optional_provider_after_admission": true,
+    "noncycling_requirement": "A failed exact/cell admission must dispatch once to another reviewed owner or return the inherited typed blocker; it may not cycle providers or reinterpret the request.",
+    "unresolved_required_case_is_success": false
+  },
+  "retained_blockers": [
+    {
+      "id": "PB-007-01",
+      "status": "OPEN",
+      "source_task": "MC-007",
+      "affected_descendants": [
+        "MC-026",
+        "MC-038"
+      ]
+    },
+    {
+      "id": "PB-007-02",
+      "status": "OPEN",
+      "source_task": "MC-007",
+      "affected_descendants": [
+        "MC-026",
+        "MC-038"
+      ]
+    },
+    {
+      "id": "PB-007-03",
+      "status": "PROPAGATED_FROM_MC-006",
+      "source_task": "MC-007",
+      "affected_descendants": [
+        "MC-020",
+        "MC-026",
+        "MC-038"
+      ]
+    },
+    {
+      "id": "RB-016-02",
+      "status": "OPEN",
+      "source_task": "MC-016",
+      "affected_descendants": [
+        "MC-026",
+        "MC-030",
+        "MC-038",
+        "MC-041",
+        "MC-044",
+        "MC-052"
+      ]
+    },
+    {
+      "id": "RB-016-04",
+      "status": "OPEN",
+      "source_task": "MC-016",
+      "affected_descendants": [
+        "MC-026",
+        "MC-030",
+        "MC-038",
+        "MC-041",
+        "MC-042",
+        "MC-043",
+        "MC-044",
+        "MC-052"
+      ]
+    }
+  ],
+  "capability_guard": {
+    "MC-A": "ACCEPTED",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-C": "NOT_ESTABLISHED",
+    "MC-D": "NOT_ESTABLISHED",
+    "MC-E": "NOT_ESTABLISHED",
+    "MC-F": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED"
+  }
+}
