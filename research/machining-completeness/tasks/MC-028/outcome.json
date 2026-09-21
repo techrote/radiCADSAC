@@ -1,0 +1,80 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-028",
+  "result_kind": "NEGATIVE_RESULT",
+  "evidence_class": ["SOURCE_INSPECTION","DETERMINISTIC_MODEL","REVIEWED_ARGUMENT","BOUNDARY_AND_ADVERSARIAL_CONTROLS","DOCUMENTATION_RECONCILIATION"],
+  "source_baseline": "e21aa9fa45959ebc3a6f3a3a56fca26a4cb6af1f",
+  "issue": 90,
+  "dependency_artifacts": [
+    {"task":"MC-010","path":"research/machining-completeness/tasks/MC-010/outcome.json","blob_sha":"4960730316f89dbb3fbf958d054127fa4fc0d789","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-016","path":"research/machining-completeness/tasks/MC-016/outcome.json","blob_sha":"606a7d0b8be61131b2272f2eb161d6a4dbba703a","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-018","path":"research/machining-completeness/tasks/MC-018/outcome.json","blob_sha":"085f864b4bd58b38f154b6c9d58d9e68b60ee7ec","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-019","path":"research/machining-completeness/tasks/MC-019/outcome.json","blob_sha":"4456c964315c10b46ce61a5a8d4a45e8025730b7","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-020","path":"research/machining-completeness/tasks/MC-020/outcome.json","blob_sha":"19504a35f47bca710bb6369abb723de83d1afede","result_kind":"COMPLETED_RESEARCH"}
+  ],
+  "accepted_claims": [
+    "The candidate is evaluated from independently qualified MC-018/MC-019/MC-020 actual cutter sweeps; historical LevelSet sampling is not reused as the operand source.",
+    "Pinned Manifold v3.5.3 source establishes a finite floating 2-manifold triangle-mesh representation with explicit tolerance semantics, including possible collapse of edges shorter than tolerance and tolerance growth with floating-point error.",
+    "The exact MC-019 rational ball-nose witness proves a finite planar faceting cannot be identical to the admitted curved source boundary; mesh refinement may bound approximation error but cannot by itself become exact canonical material authority.",
+    "Exact one-millionth positive material and exact-zero/signed-neighbour controls remain non-compensating semantics outside mesh tolerance authority.",
+    "Native mesh Boolean remains eligible only as a bounded derived/challenger provider behind independently certified source sweep and material/error authority; mesh success/manifoldness does not establish primary STEP, durable body identity or MC-1 material correctness."
+  ],
+  "open_claims": [
+    "PB-007-03 remains OPEN_PROPAGATED for a universal exact source codec covering arbitrary admitted form/undercut cutters.",
+    "RB-016-02 remains OPEN for durable multi-body mapping and independent engineering-output preservation.",
+    "RB-016-03 remains OPEN for native STEP preservation of certified positive micro-material.",
+    "RB-016-04 remains OPEN for exact-zero/touching/singular engineering output without healing or tolerance fusion.",
+    "Native Manifold Boolean robustness, performance and bounded-provider qualification have not been measured in this task because no native campaign was authorized or required for the structural falsification.",
+    "MC-B, MC-C, MC-D, MC-E, MC-F and MC-1 remain NOT_ESTABLISHED."
+  ],
+  "native_execution": false,
+  "artifacts": [
+    "research/machining-completeness/tasks/MC-028/native-mesh-boolean-falsification-v1.json",
+    "research/machining-completeness/tasks/MC-028/report.md",
+    "research/machining-completeness/tasks/MC-028/outcome.json",
+    "research/machining-completeness/tasks/MC-028/verify.py",
+    "docs/machining-completeness/20-MC028-NATIVE-MESH-BOOLEAN.md",
+    "research/machining-completeness/outcomes-v1.json",
+    ".github/workflows/mc1-static.yml"
+  ],
+  "verification": [
+    "python3 research/machining-completeness/tasks/MC-028/verify.py --contract",
+    "python3 research/machining-completeness/tasks/MC-028/verify.py --self-test",
+    "python3 tools/mc_workflow.py verify MC-028",
+    "python3 tools/validate_machining_completeness.py --self-test",
+    "python3 tools/mc_workflow.py sync --check"
+  ],
+  "adversarial_controls": [
+    "reject historical LevelSet sampling or candidate-derived geometry as the independently qualified sweep source",
+    "reject dependency/source-pin drift",
+    "reject finite planar ball-nose faceting as exact curved material authority",
+    "reject mesh manifoldness or Boolean success as proof of canonical material correctness",
+    "reject tolerance/epsilon deletion of exact 1/1000000 positive material",
+    "reject tolerance fusion of tangent, penetrating and separated material events",
+    "reject AABB/hull filling of MC-020 nonconvex cutter gaps",
+    "reject mesh components, OriginalIDs or enumeration as durable body identity/lineage",
+    "reject mesh/tessellated output as primary STEP success",
+    "reject closure of PB-007-03 or RB-016-02/03/04 without producing-owner evidence",
+    "reject native-capability or MC-B promotion from source inspection/deterministic evidence",
+    "reject timeout/resource refusal/uncertainty as solved material"
+  ],
+  "resources": {"native_permit_required":false,"native_or_paid_campaign_run":false},
+  "review": {
+    "disposition": "negative candidate result: reject finite floating native mesh/Manifold Boolean as sole total material and engineering-output authority; retain only a bounded future derived/challenger role behind independently qualified actual sweeps and external exact/certified material-error authority",
+    "gate_changed": false,
+    "programme_capability_changed": false,
+    "downstream_release": "MC-026 may consume MC-028 as negative candidate evidence and may retain mesh Boolean only as a bounded challenger/derived provider; MC-028 does not release MC-B or authorize a native campaign"
+  },
+  "blockers": [
+    {"id":"PB-007-03","status":"OPEN_PROPAGATED","source_task":"MC-020","affected_descendants":["MC-026","MC-029","MC-030","MC-031","MC-038"]},
+    {"id":"RB-016-02","status":"OPEN","source_task":"MC-016","affected_descendants":["MC-026","MC-029","MC-030","MC-038","MC-041","MC-044","MC-052"]},
+    {"id":"RB-016-03","status":"OPEN","source_task":"MC-016","affected_descendants":["MC-026","MC-029","MC-038","MC-041","MC-044","MC-052"]},
+    {"id":"RB-016-04","status":"OPEN","source_task":"MC-016","affected_descendants":["MC-026","MC-029","MC-030","MC-038","MC-041","MC-042","MC-043","MC-044","MC-052"]}
+  ],
+  "downstream_invalidations": [
+    "Any downstream use of historical LevelSet samples, centreline-only geometry, hull/AABB substitution or candidate-reconstructed motion as the MC-028 source sweep invalidates the reviewed candidate comparison.",
+    "Any use of mesh tolerance, simplification, epsilon or manifoldness as authority to erase positive material or decide exact-zero events invalidates the retained bounded role.",
+    "Any promotion of mesh component identity to durable body/lineage, or mesh/tessellated output to primary engineering STEP success, invalidates the MC-028 boundary.",
+    "A future native Manifold campaign may qualify bounded robustness/performance, but cannot rewrite this source-level representational negative result; changed upstream representation semantics require a prospective new review."
+  ]
+}
