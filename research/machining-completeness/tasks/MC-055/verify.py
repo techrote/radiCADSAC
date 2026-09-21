@@ -214,12 +214,18 @@ def verify_measured_negative_controls(contract) -> None:
         fail("decisive measured-control import is incomplete")
 
 
-def verify_current_families_unbuilt() -> None:
+def verify_current_families_progression(contract) -> None:
     families = load(FAMILIES).get("families", [])
     if {x.get("id") for x in families} != {f"F{i:02d}" for i in range(1, 17)}:
         fail("current fixture-family denominator drift")
-    if any(x.get("state") != "UNBUILT" for x in families):
-        fail("MC-055 must not mark a strengthened fixture family built")
+    owners = {x["family"]: x["owner"] for x in contract["strengthened_version_map"]}
+    for row in families:
+        if row.get("owner") != owners.get(row.get("id")):
+            fail(f"current fixture owner drift for {row.get('id')}")
+        if row.get("state") not in {"UNBUILT", "BUILT"}:
+            fail(f"unrecognized future fixture state for {row.get('id')}: {row.get('state')}")
+        if row.get("mandatory") is not True:
+            fail(f"historically mandatory fixture became optional: {row.get('id')}")
 
 
 def verify_no_historical_source_edits(contract) -> None:
@@ -263,7 +269,7 @@ def verify_contract() -> None:
     verify_rcs021(contract)
     verify_inherited_corpus(contract)
     verify_measured_negative_controls(contract)
-    verify_current_families_unbuilt()
+    verify_current_families_progression(contract)
     verify_no_historical_source_edits(contract)
     adversarial_controls(contract)
     print("MC-055 immutable historical corpus import passed")
