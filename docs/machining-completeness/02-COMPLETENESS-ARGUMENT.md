@@ -93,6 +93,16 @@ Exact material cells also do not establish engineering identity/output. `RB-016-
 
 MC-026 may consume MC-024 as negative candidate evidence and may retain exact/cell as a bounded semialgebraic reference/control. PO-08 remains OPEN. No native or paid campaign ran, and MC-B remains `NOT_ESTABLISHED`; MC-1 remains `NOT_ESTABLISHED`.
 
+### MC-025 adaptive interval/implicit candidate falsification
+
+MC-025 completes as a **NEGATIVE_RESULT** for certified adaptive interval/implicit material as the programme's total general fallback, while retaining it as a bounded certified material representation/accelerator behind a checked event/progress admission predicate. The machine contract is `research/machining-completeness/tasks/MC-025/adaptive-implicit-falsification-v1.json`.
+
+Adaptive cells can remove a global fixed-pitch floor only when they maintain sound outward bounds and decisive critical events are supplied by a separately justified exact/validated mechanism. The exact-rational controls retain tangency, explicit empty material, retrace idempotence and a positive `1/1000000` material web without binary-float, epsilon, fixed-pitch or maximum-depth predicate authority. Unresolved cells stay unresolved; numeric band width cannot compensate for topology, positive material, body identity or lineage.
+
+A decisive exact `1/3` control shows why subdivision is not itself an equality oracle: every depth-`n` dyadic boundary is `k/2^n`, so `1/3` lies strictly inside a positive-width cell at every finite depth. Shrinking the cell or hitting a depth/timeout cap does not prove equality. `PB-007-01` therefore remains open for tangential/multiple/singular transcendental events, and `PB-007-02` remains open for general coupled helical/spindle-feed/eccentric event geometry with shared time/feed/spindle-phase correlation.
+
+`RB-016-03` and `RB-016-04` remain open on engineering output: exact adaptive preservation of a micro-feature in the model does not qualify native STEP preservation, and exact-zero/touching/singular output may not be healed or fused. MC-026 may consume MC-025 as negative candidate evidence and retain adaptive implicit material only as a bounded provider/accelerator after event and finite-progress certification. PO-08 remains OPEN. No native or paid campaign ran, and MC-B remains `NOT_ESTABLISHED`; MC-1 remains `NOT_ESTABLISHED`.
+
 ## Review requirements
 
 MC-038 checks the whole constructive route backwards from required queries/output to domain constructors and forwards from every constructor through composition. MC-050 supplies the later adversarial review and honest independent attribution. Self-review in this adoption is not independent mathematical validation. New counterexamples invalidate affected claims/certificates explicitly; repair the exact owner task without restarting or duplicating the programme.
