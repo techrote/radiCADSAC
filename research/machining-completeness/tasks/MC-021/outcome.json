@@ -1,0 +1,91 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-021",
+  "result_kind": "COMPLETED_RESEARCH",
+  "evidence_class": [
+    "REVIEWED_ARGUMENT",
+    "DETERMINISTIC_MODEL",
+    "DOCUMENTATION_RECONCILIATION"
+  ],
+  "source_baseline": "11e7023edff0469b4b9f72193e8096512075afae",
+  "issue": 83,
+  "dependency_artifacts": [
+    {
+      "task": "MC-005",
+      "path": "research/machining-completeness/tasks/MC-005/outcome.json",
+      "blob_sha": "adec886597a06345fdfdf65ee018596cd396d249",
+      "result_kind": "CAPABILITY_ACCEPTED"
+    },
+    {
+      "task": "MC-010",
+      "path": "research/machining-completeness/tasks/MC-010/outcome.json",
+      "blob_sha": "4960730316f89dbb3fbf958d054127fa4fc0d789",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-058",
+      "path": "research/machining-completeness/tasks/MC-058/outcome.json",
+      "blob_sha": "038fccda9142650ee7e29c626aeb8e4602420278",
+      "result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "accepted_claims": [
+    "A sufficient exact rotational-reduction admission predicate is established when the exact durable target material is axisymmetric about the declared spindle axis, the setup is exactly coaxial, and engaged cutter placement factors as K(q,theta)=R_theta A(q) over Q x S1 with phase-independent A(q) and full phase coverage for every q.",
+    "Under that predicate the cutter sweep and regularized post-cut material are rotationally invariant, so the operation may be represented in the exact meridian quotient without rewriting the source journal.",
+    "Operation labels such as OD turning or facing are not admission evidence; nonaxisymmetric targets, eccentric setups, synchronized/timed-phase geometry, partial phase coverage and finite angle sampling reject the quotient path.",
+    "The bounded exact-rational meridian-rectangle implementation preserves equality, signed neighbours, simultaneous radial/axial source correlation, exact zero-contact semantics, symbolic solid-of-revolution volume and disconnected parting remnants.",
+    "Rejected phase-sensitive/eccentric cases route to MC-022 rather than being approximated into axisymmetry; re-clamp/reorientation composition remains MC-023."
+  ],
+  "open_claims": [
+    "PB-007-01 remains OPEN for required tangential/multiple/singular transcendental phase events outside the full-orbit factorization.",
+    "PB-007-02 remains OPEN for the general coupled helical/spindle-feed/eccentric sweep route.",
+    "PB-007-03 remains propagated from the arbitrary form/undercut cutter source-codec gap.",
+    "The general phase-sensitive lathe sweep remains owned by MC-022; MC-021 does not claim all conventional turning is reducible.",
+    "PO-02, PO-04, PO-05 and PO-06 remain OPEN.",
+    "MC-B, MC-C, MC-D, MC-E, MC-F and MC-1 remain NOT_ESTABLISHED."
+  ],
+  "native_execution": false,
+  "artifacts": [
+    "research/machining-completeness/tasks/MC-021/lathe-rotational-reduction-contract-v1.json",
+    "research/machining-completeness/tasks/MC-021/rotational_reduction.py",
+    "research/machining-completeness/tasks/MC-021/report.md",
+    "research/machining-completeness/tasks/MC-021/outcome.json",
+    "research/machining-completeness/tasks/MC-021/verify.py",
+    "docs/machining-completeness/16-MC021-LATHE-ROTATIONAL-REDUCTION.md"
+  ],
+  "verification": [
+    "python3 research/machining-completeness/tasks/MC-021/verify.py --contract",
+    "python3 research/machining-completeness/tasks/MC-021/verify.py --self-test",
+    "python3 tools/mc_workflow.py verify MC-021",
+    "python3 tools/validate_machining_completeness.py --self-test",
+    "python3 tools/mc_workflow.py sync --check"
+  ],
+  "adversarial_controls": [
+    "reject nonaxisymmetric target material even when the cutter orbit is rotationally invariant",
+    "reject eccentric/noncoaxial setup",
+    "reject synchronized or timed-phase geometry",
+    "reject partial phase coverage and finite sampled-angle substitution",
+    "reject decoupled radial/axial source parameters",
+    "reject epsilon or binary-float exact-contact authority",
+    "reject loss of either parting remnant or quotient-component promotion to durable identity authority",
+    "reject removal of access/holder witnesses",
+    "reject source-journal rewriting",
+    "reject inherited-blocker closure or premature MC-B promotion"
+  ],
+  "resources": {
+    "native_permit_required": false,
+    "native_or_paid_campaign_run": false
+  },
+  "review": {
+    "disposition": "completed bounded deterministic admission research",
+    "gate_changed": false,
+    "programme_capability_changed": false
+  },
+  "blockers": [],
+  "retained_external_blockers": [
+    "PB-007-01",
+    "PB-007-02",
+    "PB-007-03"
+  ],
+  "downstream_invalidations": []
+}
