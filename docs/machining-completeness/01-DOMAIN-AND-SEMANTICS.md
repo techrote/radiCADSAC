@@ -55,7 +55,7 @@ Use a common workpiece frame. For body b, effective cutting solid T, engaged int
 
 ```text
 S = closure(union over t in E of K(t)(T))
-M_next,b = closure(interior(M_b \\ S))
+M_next,b = closure(interior(M_b \ S))
 ```
 
 Specify endpoints, engagement boundaries, finite cutter shoulders and tool/setup revisions. Engaged teleportation is invalid motion, not an optimization. Regularization removes lower-dimensional artifacts, not positive-volume slivers.
