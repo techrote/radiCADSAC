@@ -72,7 +72,12 @@
       "accepted_artifacts": ["research/machining-completeness/tasks/MC-010/oracle-foundation-v1.json", "research/machining-completeness/tasks/MC-010/independent_exact_oracle.py", "research/machining-completeness/tasks/MC-010/report.md", "research/machining-completeness/tasks/MC-010/outcome.json", "research/machining-completeness/tasks/MC-010/verify.py", "docs/machining-completeness/03-ORACLE-AND-CORPUS.md"],
       "blockers": []
     },
-    "MC-011": {"state": "NOT_STARTED", "issue": 73, "accepted_artifacts": [], "blockers": []},
+    "MC-011": {
+      "state": "COMPLETED_RESEARCH",
+      "issue": 73,
+      "accepted_artifacts": ["research/machining-completeness/tasks/MC-011/physical-corpus-f01-f04-v1.json", "research/machining-completeness/tasks/MC-011/fixture_oracle.py", "research/machining-completeness/tasks/MC-011/report.md", "research/machining-completeness/tasks/MC-011/outcome.json", "research/machining-completeness/tasks/MC-011/verify.py", "research/machining-completeness/fixture-families-v1.json", "docs/machining-completeness/03-ORACLE-AND-CORPUS.md"],
+      "blockers": []
+    },
     "MC-012": {"state": "NOT_STARTED", "issue": 74, "accepted_artifacts": [], "blockers": []},
     "MC-013": {"state": "NOT_STARTED", "issue": 75, "accepted_artifacts": [], "blockers": []},
     "MC-014": {"state": "NOT_STARTED", "issue": 76, "accepted_artifacts": [], "blockers": []},
