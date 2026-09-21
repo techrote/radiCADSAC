@@ -5,28 +5,28 @@
       "id": "F01",
       "title": "Jittered crossing pocket",
       "owner": "MC-011",
-      "state": "UNBUILT",
+      "state": "BUILT",
       "mandatory": true
     },
     {
       "id": "F02",
       "title": "Final thin web",
       "owner": "MC-011",
-      "state": "UNBUILT",
+      "state": "BUILT",
       "mandatory": true
     },
     {
       "id": "F03",
       "title": "Rounded XYZ remachining",
       "owner": "MC-011",
-      "state": "UNBUILT",
+      "state": "BUILT",
       "mandatory": true
     },
     {
       "id": "F04",
       "title": "Reoriented stock",
       "owner": "MC-011",
-      "state": "UNBUILT",
+      "state": "BUILT",
       "mandatory": true
     },
     {
