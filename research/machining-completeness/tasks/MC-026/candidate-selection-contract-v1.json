@@ -1,0 +1,72 @@
+{
+  "schema": "radicadsac-mc026-candidate-selection/1.0",
+  "task": "MC-026",
+  "issue": 88,
+  "source_baseline": "b4739cb1941918e6d26d32800b622d631adfad99",
+  "result": "COMPLETED_RESEARCH_SELECTION_WITH_OPEN_GAPS",
+  "native_execution": false,
+  "native_or_paid_campaign_run": false,
+  "domain_authority": {
+    "path": "research/machining-completeness/tasks/MC-002/domain-contract-v1.json",
+    "blob_sha": "23de82f5240a72509f7afe4acd5948b65bc4ff13"
+  },
+  "formal_dependencies": [
+    {"task":"MC-024","path":"research/machining-completeness/tasks/MC-024/outcome.json","blob_sha":"81802ee3f50e22f35166818c7883dc6e47668fbc","result_kind":"NEGATIVE_RESULT"},
+    {"task":"MC-025","path":"research/machining-completeness/tasks/MC-025/outcome.json","blob_sha":"b45cbabc7fa5f958491f8b02b1027b0efe9bd39a","result_kind":"NEGATIVE_RESULT"},
+    {"task":"MC-027","path":"research/machining-completeness/tasks/MC-027/outcome.json","blob_sha":"b1f015af98fa973b91b67beb14d10a140da8884f","result_kind":"NEGATIVE_RESULT"},
+    {"task":"MC-028","path":"research/machining-completeness/tasks/MC-028/outcome.json","blob_sha":"b4c1c39ec60baea748b117804f8bcc3400c03c2a","result_kind":"NEGATIVE_RESULT"},
+    {"task":"MC-029","path":"research/machining-completeness/tasks/MC-029/outcome.json","blob_sha":"6bfc3449d2a0273971a3e8714043b620a46c6aa9","result_kind":"NEGATIVE_RESULT"},
+    {"task":"MC-030","path":"research/machining-completeness/tasks/MC-030/outcome.json","blob_sha":"4c763731ea71ec5e2291e340636ecfa6a84062db","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-049","path":"research/machining-completeness/tasks/MC-049/outcome.json","blob_sha":"ecf9e2fad37adcf4f71c8fc4e1399d57ce1fc93f","result_kind":"COMPLETED_RESEARCH"}
+  ],
+  "selection": {
+    "primary": {
+      "id": "PRIMARY_CERTIFIED_ADAPTIVE_IMPLICIT",
+      "basis_task": "MC-025",
+      "may_claim_total_success": false,
+      "requirements": ["actual MC-018..023 source sweeps","independent certified critical-event service","immutable source/common-frame/revision/body/engagement binding","explicit inherited MC-058 error"],
+      "terminal_fail_closed": ["PB-007-01","PB-007-02","PB-007-03","UNCERTIFIED","RESOURCE_REFUSAL","SEMANTIC_BLOCKER"]
+    },
+    "challenger": {
+      "id": "EXACT_CELL_SEMIALGEBRAIC_CONTROL",
+      "basis_task": "MC-024",
+      "scope": "proved finite semialgebraic encoding only",
+      "independence_requirements": ["separate material representation","separate classification implementation","separate certificate/result namespace","no shared adaptive-cell classification code"],
+      "may_become_primary_by_agreement": false,
+      "may_claim_total_domain": false
+    },
+    "derived_accelerators": [
+      {"id":"DIRECTIONAL_INTERVAL_INDEX","basis_task":"MC-027","canonical_authority":false},
+      {"id":"NATIVE_MESH_BOOLEAN","basis_task":"MC-028","canonical_authority":false},
+      {"id":"SPARSE_LEVELSET","basis_task":"MC-029","canonical_authority":false}
+    ],
+    "fast_path_dispatch": {"basis_task":"MC-030","unique_general_route":"PRIMARY_CERTIFIED_ADAPTIVE_IMPLICIT","cycles_allowed":false,"fast_success_requires_independent_material_certificate":true,"max_fast_invocations":1,"max_general_invocations":1}
+  },
+  "challenge_freeze": {"basis_task":"MC-049","custody":"PUBLIC_PRESELECTION_PREREGISTRATION","generated_challenge_count":64,"executed_by_mc026":false,"candidate_identity_is_generator_input":false,"later_independent_execution_owner":"MC-057"},
+  "routing_classes": [
+    {"id":"LATHE_AXISYMMETRIC_OR_GENERAL","operations":["lathe_od_turning","lathe_facing","lathe_shoulder","lathe_taper_chamfer_profile","lathe_id_boring_internal","lathe_axial_drilling","lathe_grooving","lathe_parting_cutthrough","lathe_form_turning","lathe_exact_retrace_finish"],"fast_path":"FP-LATHE-AXISYMMETRIC","primary":"PRIMARY_CERTIFIED_ADAPTIVE_IMPLICIT","open_gaps":["PB-007-03"],"gap_applies_only_when":["arbitrary admitted form-tool source codec required"]},
+    {"id":"LATHE_PHASE_OR_GENERAL","operations":["lathe_threading_synchronized","lathe_eccentric_turning"],"fast_path":"FP-LATHE-PHASE-BOUNDED","primary":"PRIMARY_CERTIFIED_ADAPTIVE_IMPLICIT","open_gaps":["PB-007-01","PB-007-02"]},
+    {"id":"MILL_ANALYTIC_OR_GENERAL","operations":["mill_face","mill_slot_pocket_freehand","mill_drill_plunge","mill_ball_rounded_xyz","mill_simultaneous_xyz","mill_retrace_self_cross_stationary","mill_cutthrough_multibody"],"fast_path":"FP-MILL-ANALYTIC-TRANSLATION","primary":"PRIMARY_CERTIFIED_ADAPTIVE_IMPLICIT","open_gaps":[]},
+    {"id":"MILL_FORM_OR_GENERAL","operations":["mill_form_chamfer_countersink","mill_accessible_undercut","mill_thread_helix_fixed_axis"],"fast_path":"FP-FORM-BOX-UNION","primary":"PRIMARY_CERTIFIED_ADAPTIVE_IMPLICIT","open_gaps":["PB-007-03"]},
+    {"id":"COMPOSITION_AND_GENERAL","operations":["reclamp_reorient_continue","lathe_mill_lathe_history","machine_separated_retained_body","complete_body_removal"],"fast_path":null,"primary":"PRIMARY_CERTIFIED_ADAPTIVE_IMPLICIT","open_gaps":["RB-016-02"]}
+  ],
+  "global_output_gaps": ["RB-016-02","RB-016-03","RB-016-04"],
+  "leaf_blueprints": [
+    {"id":"MC031-A","owner_task":"MC-031","name":"source-bound evaluator ingress and dispatch adapter","acceptance":["consume actual qualified sweeps without reconstructing source intent","preserve common-frame revision body_id engagement and MC-058 error","at most one fast then one general invocation"]},
+    {"id":"MC031-B","owner_task":"MC-031","name":"certified adaptive implicit general evaluator","acceptance":["sound outward material bounds","unresolved cells remain UNCERTIFIED","no pitch/depth/epsilon/timeout material authority"]},
+    {"id":"MC031-C","owner_task":"MC-031","name":"non-authoritative accelerator adapters","acceptance":["directional mesh sparse results remain caches/challengers","cache identity is not durable body/lineage"]},
+    {"id":"MC032-A","owner_task":"MC-032","name":"exact algebraic critical-event kernel","acceptance":["exact-zero/multiplicity/sign controls for admitted algebraic subset","binary float/global epsilon never decisive"]},
+    {"id":"MC032-B","owner_task":"MC-032","name":"certified transcendental/phase event service","acceptance":["retain shared time/feed/spindle correlation","PB-007-01/02 remain typed blockers until owner evidence"]},
+    {"id":"MC032-C","owner_task":"MC-032","name":"finite-progress blocker terminalization","acceptance":["resource exhaustion is refusal/uncertified","no provider cycle or heuristic blocker erasure"]},
+    {"id":"MC033-A","owner_task":"MC-033","name":"regularized durable body state machine","acceptance":["split disappearance empty state explicit","kernel topology is not body identity"]},
+    {"id":"MC033-B","owner_task":"MC-033","name":"lineage transition certificates","acceptance":["programme-owned durable transition records","touching boundaries do not merge without volumetric evidence"]},
+    {"id":"CTRL-026-A","owner_task":"MC-031","name":"exact-cell differential challenger harness","acceptance":["proved semialgebraic instances only","independent MC-010/015 comparison","agreement cannot prove totality"]},
+    {"id":"CERT-026-A","owner_task":"MC-032","name":"frozen challenge and certificate binding","acceptance":["preserve MC-049 64-record freeze","public preregistration not called held-out","candidate/version/config/result identity bound"]}
+  ],
+  "open_gaps": [
+    {"id":"PB-007-01","owner":"MC-007/MC-022","status":"OPEN"},{"id":"PB-007-02","owner":"MC-007/MC-022","status":"OPEN"},{"id":"PB-007-03","owner":"MC-020","status":"OPEN_PROPAGATED"},{"id":"RB-016-02","owner":"MC-016","status":"OPEN"},{"id":"RB-016-03","owner":"MC-016","status":"OPEN"},{"id":"RB-016-04","owner":"MC-016","status":"OPEN"}
+  ],
+  "capability_state": {"MC-A":"ACCEPTED","MC-B":"NOT_ESTABLISHED","MC-C":"NOT_ESTABLISHED","MC-D":"NOT_ESTABLISHED","MC-E":"NOT_ESTABLISHED","MC-F":"NOT_ESTABLISHED","MC-1":"NOT_ESTABLISHED"},
+  "protected_semantics": ["historical source/audio/provenance remains immutable","canonical journal source intent is immutable","positive-volume material cannot be dropped by tolerance/refinement policy","durable body identity and lineage are programme-owned rather than backend topology","conventional STEP remains mandatory downstream engineering output"],
+  "selection_invalidations": ["drop any required MC-002 operation","fixed depth/pitch/epsilon/timeout as truth","operation-label fast admission","uncertified native success","accelerator as canonical authority","challenger agreement closes blockers","MC-049 freeze drift","premature MC-B or MC-1 promotion"]
+}
