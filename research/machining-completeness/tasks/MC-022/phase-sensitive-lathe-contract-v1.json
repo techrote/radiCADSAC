@@ -1,0 +1,81 @@
+{
+  "schema": "radicadsac-mc022-phase-sensitive-lathe/1.0",
+  "task": "MC-022",
+  "issue": 84,
+  "source_baseline": "b01a2665ef8e5b83200260dcd0815b990544ef31",
+  "result": "COMPLETED_RESEARCH_FINITE_TIMED_CONSTRUCTORS_WITH_OPEN_GENERAL_EVENT_BLOCKERS",
+  "native_execution": false,
+  "formal_dependencies": [
+    {"task": "MC-005", "path": "research/machining-completeness/tasks/MC-005/outcome.json", "blob_sha": "adec886597a06345fdfdf65ee018596cd396d249", "result_kind": "CAPABILITY_ACCEPTED"},
+    {"task": "MC-010", "path": "research/machining-completeness/tasks/MC-010/outcome.json", "blob_sha": "4960730316f89dbb3fbf958d054127fa4fc0d789", "result_kind": "COMPLETED_RESEARCH"},
+    {"task": "MC-007", "path": "research/machining-completeness/tasks/MC-007/outcome.json", "blob_sha": "8d54872292dfd9f632c79c76994a467d26eaaf9c", "result_kind": "NEGATIVE_RESULT"},
+    {"task": "MC-058", "path": "research/machining-completeness/tasks/MC-058/outcome.json", "blob_sha": "038fccda9142650ee7e29c626aeb8e4602420278", "result_kind": "COMPLETED_RESEARCH"}
+  ],
+  "supplementary_independent_control": {
+    "task": "MC-013",
+    "family": "F09",
+    "path": "research/machining-completeness/tasks/MC-013/physical-corpus-f09-f12-v1.json",
+    "blob_sha": "cc02473bc7afc47dface7812f9fbbbc3f41b9fa4",
+    "oracle_path": "research/machining-completeness/tasks/MC-013/fixture_oracle.py",
+    "oracle_blob_sha": "f0e64a7ced8e57de21a24fffa55609e2dff04aca",
+    "candidate_output_used_for_expected_truth": false
+  },
+  "source_semantics": {
+    "required_operations": ["lathe_threading_synchronized", "lathe_eccentric_turning"],
+    "shared_time_parameter": true,
+    "unwrapped_phase_preserved": true,
+    "phase_feed_correlation_authoritative": true,
+    "independent_phase_product_allowed": false,
+    "saved_operation_immutable": true,
+    "exact_engagement_boundaries": true,
+    "semantic_knots_preserved": true,
+    "global_epsilon_predicate_authority": false,
+    "binary_float_certifying_authority": false
+  },
+  "constructors": {
+    "lathe_threading_synchronized": {
+      "route": "FINITE_EXACT_RATIONAL_TIMED_SEGMENTS",
+      "placement": "single shared exact t drives radial/feed state and unwrapped spindle phase",
+      "bounded_exact_membership": "phase-alignment times over affine rational phase are enumerated finitely and feed is evaluated at the same exact time",
+      "full_angle_substitution": "FORBIDDEN"
+    },
+    "lathe_eccentric_turning": {
+      "route": "FINITE_SYMBOLIC_TIMED_ECCENTRIC_PLACEMENT",
+      "placement": "base + R(2*pi*phase(t))*offset with exact rational unwrapped phase and common source time",
+      "exact_controls": "cardinal quarter-turn placements are exact rational controls; general analytic events use MC-007 certified/fail-closed route",
+      "full_angle_substitution": "FORBIDDEN"
+    }
+  },
+  "event_route": {
+    "finite_source_decomposition": true,
+    "separated": "CERTIFIED_ENCLOSURE",
+    "transversal": "CERTIFIED_DERIVATIVE_SEPARATION",
+    "tangent_multiple_singular": "TRANSCENDENTAL_EVENT_BLOCKER",
+    "blocker_is_success": false,
+    "blocker_is_empty_sweep": false,
+    "unbounded_refinement_required": false
+  },
+  "mc058_transfer": {
+    "formula": "e_total = e_inherited + e_translation + rho*e_rotation + e_tool",
+    "complete_cutter_support_radius_required": true,
+    "centreline_only_certificate_allowed": false,
+    "error_reset_at_piece_boundary": false
+  },
+  "protected_semantics": {
+    "historical_source_audio_provenance_unchanged": true,
+    "canonical_journal_unchanged": true,
+    "positive_volume_preserved": true,
+    "durable_body_lineage_separate_from_sweep_parameterization": true,
+    "native_geometry_claim": false
+  },
+  "blockers": [
+    {"id": "PB-007-01", "status": "OPEN", "summary": "general tangential/multiple/singular transcendental event decision remains unestablished", "affected_descendants": ["MC-030", "MC-032", "MC-038"]},
+    {"id": "PB-007-02", "status": "OPEN", "summary": "unconditional general coupled helical/spindle-feed/eccentric sweep membership remains unestablished", "affected_descendants": ["MC-030", "MC-031", "MC-038"]}
+  ],
+  "programme_state": {"MC-A": "ACCEPTED", "MC-B": "NOT_ESTABLISHED", "MC-C": "NOT_ESTABLISHED", "MC-D": "NOT_ESTABLISHED", "MC-E": "NOT_ESTABLISHED", "MC-F": "NOT_ESTABLISHED", "MC-1": "NOT_ESTABLISHED"},
+  "acceptance": {
+    "required_timed_constructors_have_finite_validated_routes": true,
+    "task_specific_artifacts_self_contained": true,
+    "negative_results_and_unresolved_claims_preserved": true
+  }
+}

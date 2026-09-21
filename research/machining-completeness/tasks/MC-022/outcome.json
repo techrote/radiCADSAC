@@ -1,0 +1,87 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-022",
+  "result_kind": "COMPLETED_RESEARCH",
+  "evidence_class": [
+    "DETERMINISTIC_MODEL",
+    "REVIEWED_ARGUMENT",
+    "INDEPENDENT_CONTROL_COMPARISON",
+    "DOCUMENTATION_RECONCILIATION"
+  ],
+  "source_baseline": "b01a2665ef8e5b83200260dcd0815b990544ef31",
+  "issue": 84,
+  "dependency_artifacts": [
+    {"task": "MC-005", "path": "research/machining-completeness/tasks/MC-005/outcome.json", "blob_sha": "adec886597a06345fdfdf65ee018596cd396d249", "result_kind": "CAPABILITY_ACCEPTED"},
+    {"task": "MC-010", "path": "research/machining-completeness/tasks/MC-010/outcome.json", "blob_sha": "4960730316f89dbb3fbf958d054127fa4fc0d789", "result_kind": "COMPLETED_RESEARCH"},
+    {"task": "MC-007", "path": "research/machining-completeness/tasks/MC-007/outcome.json", "blob_sha": "8d54872292dfd9f632c79c76994a467d26eaaf9c", "result_kind": "NEGATIVE_RESULT"},
+    {"task": "MC-058", "path": "research/machining-completeness/tasks/MC-058/outcome.json", "blob_sha": "038fccda9142650ee7e29c626aeb8e4602420278", "result_kind": "COMPLETED_RESEARCH"}
+  ],
+  "accepted_claims": [
+    "lathe_threading_synchronized now has a finite exact-rational source-faithful timed constructor whose cutter/feed state and unwrapped spindle phase share one exact time parameter rather than independent phase coverage",
+    "lathe_eccentric_turning now has a finite symbolic timed placement constructor base + R(2*pi*phase(t))*offset with exact rational unwrapped phase and exact cardinal controls without decimal trigonometric predicate authority",
+    "the bounded synchronized phase/feed subtype enumerates exact rational alignment times finitely for nonzero affine spindle advance and evaluates feed at those same times; a continuously aligned stationary-phase interval fails closed instead of being reduced to endpoint samples",
+    "the bounded implementation agrees with the separately produced candidate-independent MC-013 F09 oracle on midpoint, same-phase/wrong-feed, exact endpoint and signed-neighbour controls",
+    "general non-cardinal analytic events consume the MC-007 separated/transversal/fail-closed event route and do not convert unresolved tangency, multiplicity or singularity into success",
+    "MC-058 finite-cutter error transfer is retained with complete cutter support radius and monotone inherited error across timed pieces"
+  ],
+  "open_claims": [
+    "PB-007-01 remains OPEN: an unconditional finite exact decision procedure for required tangential, multiple-root and singular transcendental events is not established",
+    "PB-007-02 remains OPEN: unconditional general coupled spindle/feed/eccentric sweep membership beyond algebraically reducible or certified separated/transversal slices is not established",
+    "native material/topology realization, reconstruction, STEP qualification and practical scale are not established by MC-022",
+    "PO-02, PO-04, PO-05 and PO-06 remain OPEN",
+    "MC-B, MC-C, MC-D, MC-E, MC-F and MC-1 remain NOT_ESTABLISHED"
+  ],
+  "native_execution": false,
+  "artifacts": [
+    "research/machining-completeness/tasks/MC-022/phase-sensitive-lathe-contract-v1.json",
+    "research/machining-completeness/tasks/MC-022/phase_sensitive_lathe.py",
+    "research/machining-completeness/tasks/MC-022/report.md",
+    "research/machining-completeness/tasks/MC-022/outcome.json",
+    "research/machining-completeness/tasks/MC-022/verify.py",
+    "docs/machining-completeness/17-MC022-PHASE-SENSITIVE-LATHE.md",
+    "research/machining-completeness/outcomes-v1.json",
+    ".github/workflows/mc1-static.yml"
+  ],
+  "verification": [
+    "python3 research/machining-completeness/tasks/MC-022/verify.py --contract",
+    "python3 research/machining-completeness/tasks/MC-022/verify.py --self-test",
+    "python3 tools/mc_workflow.py verify MC-022",
+    "python3 tools/validate_machining_completeness.py --self-test",
+    "python3 tools/mc_workflow.py sync --check"
+  ],
+  "adversarial_controls": [
+    "reject independent spindle-phase and feed coverage",
+    "reject loss of unwrapped multi-turn chronology",
+    "reject mutable saved operations or trimmed engagement boundaries",
+    "reject dropping either required MC-022 operation family",
+    "reject finite-angle/full-orbit substitution for synchronized or eccentric semantics",
+    "reject endpoint sampling of a continuously aligned stationary-phase interval",
+    "reject epsilon/binary-float exact predicate authority",
+    "reject converting TRANSCENDENTAL_EVENT_BLOCKER into no-event, empty sweep or success",
+    "reject centreline-only actual-sweep certificates and piece-boundary error reset",
+    "reject deletion of positive material, native-evidence overclaim, inherited-blocker closure or premature MC-B promotion",
+    "reject candidate-defined expected truth for the independent MC-013 F09 comparison"
+  ],
+  "resources": {
+    "native_permit_required": false,
+    "native_or_paid_campaign_run": false
+  },
+  "review": {
+    "disposition": "completed finite phase-sensitive lathe constructor research with bounded exact controls; inherited general analytic blockers preserved",
+    "gate_changed": false,
+    "gate": "MC-B",
+    "gate_status": "NOT_ESTABLISHED",
+    "programme_capability_changed": false,
+    "downstream_release": "MC-023 and later MC-030/MC-031/MC-038 may consume the finite constructor artifact while retaining PB-007-01/PB-007-02 and all native/material/output obligations"
+  },
+  "blockers": [
+    {"id": "PB-007-01", "status": "OPEN", "summary": "general tangential/multiple/singular transcendental event decision remains unestablished", "affected_descendants": ["MC-030", "MC-032", "MC-038"]},
+    {"id": "PB-007-02", "status": "OPEN", "summary": "unconditional general coupled spindle/feed/eccentric sweep membership remains unestablished", "affected_descendants": ["MC-030", "MC-031", "MC-038"]}
+  ],
+  "downstream_invalidations": [
+    "Any change to MC-003/MC-A timed phase, transform, operation or exact-source semantics requires prospective reconciliation of the matching MC-022 constructor claims.",
+    "Any change to the pinned MC-013 F09 corpus/oracle identities requires re-running and reviewing the independent comparison rather than retaining the old result by name.",
+    "Any downstream provider that factors path and phase independently, trims semantic endpoints, resets inherited error or converts a typed analytic blocker into success invalidates the affected MC-022 evidence.",
+    "Future discharge of PB-007-01 or PB-007-02 supplements this producing record; it does not rewrite the historical open-obligation state or fabricate native evidence."
+  ]
+}
