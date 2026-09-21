@@ -1,6 +1,6 @@
 # Actual sweeps, material candidates and conventional reconstruction
 
-Status: architecture under investigation. No candidate or complete reconstruction route is qualified by this document. Owners: MC-016–044 and MC-054. [Proof](02-COMPLETENESS-ARGUMENT.md), [oracles](03-ORACLE-AND-CORPUS.md), [qualification](05-QUALIFICATION.md).
+Status: MC-016 early representability screen completed with explicit open blockers and MC-C still not established; candidate/native reconstruction remains under investigation. Owners: MC-016–044 and MC-054. [Proof](02-COMPLETENESS-ARGUMENT.md), [oracles](03-ORACLE-AND-CORPUS.md), [qualification](05-QUALIFICATION.md).
 
 ## Sweep contract
 
@@ -30,6 +30,24 @@ Keep representation-neutral nominal expressions and certificates. Compare domain
 MC-016 starts alongside proof/oracle development from early independently known machining witnesses, not after the complete material engine. Regular-closed material need not have a closed manifold boundary. Test singular pinches, touching shells/cavities, exact-zero/positive bridges, multiple components and empty states. An arbitrary CSG pathology without a physically plausible machining construction is not a product-domain obstruction.
 
 Explore analytic recovery, certified trimmed boundaries, validated parametric/spline patches and qualified decompositions/grouped-solid alternatives. Any changed mapping from durable bodies to output solids, contacts or downstream meaning requires an explicit versioned MC-054 profile decision and appropriate product approval. An unresolved genuine product choice blocks only affected output tasks; it cannot be silently resolved by dropping material, adding internal faces or narrowing D. If no acceptable mapping is demonstrated, MC-1 remains blocked.
+
+### MC-016 representability screen
+
+The completed MC-016 screen is recorded in `research/machining-completeness/tasks/MC-016/representability-screen-v1.json`. It separates schema-level structural feasibility from native output and consumer qualification.
+
+Historical RCS-011 provides a bounded native positive witness for regular nonempty material: 32 successful STEP-required exact-strategy attempts wrote and freshly re-read AP242DIS millimetre B-rep within that campaign's budgets. The same source is a mandatory negative control because its retrace-jitter freehand batch produced a **valid-but-materially-wrong** B-rep. B-rep validity therefore cannot stand in for material correctness.
+
+The public STEP schema/resource definitions provide structural routes for ordinary `MANIFOLD_SOLID_BREP`, `BREP_WITH_VOIDS` for enclosed disjoint cavities, and multiple manifold-solid representation items. Structural expressibility is not interoperability proof. The screen leaves five blockers open:
+
+- **RB-016-01** — no source-bound machining-generated native `BREP_WITH_VOIDS` write/read plus independent-consumer witness;
+- **RB-016-02** — disconnected multi-solid representation lacks qualified durable-body/lineage mapping and independent-consumer preservation;
+- **RB-016-03** — no qualifying native STEP witness preserves the certified positive micro-feature boundary; the historical 1 µm external comparison refused resolution-qualified authority;
+- **RB-016-04** — exact-zero point/edge contact, touching cavities and singular pinches require an MC-054 profile decision plus MC-017 independent-consumer evidence; tolerance healing/fusion is forbidden;
+- **RB-016-05** — empty-material output semantics and downstream handling remain unqualified; no epsilon residual solid or fake nonempty STEP may be invented.
+
+A positive bridge/sliver remains material even when it is below a convenient writer/sewing tolerance; exact zero remains distinct from a positive bridge or gap. Multiple durable bodies may not be reduced to the largest component or fused merely because shells touch. Faceted or tessellated wrapping may be diagnostic/derived evidence where separately allowed, but it is **not** primary engineering reconstruction success.
+
+MC-C remains **NOT_ESTABLISHED**. MC-016 is a completed bounded research artifact, not a gate pass. Its blockers propagate to candidate/output/reconstruction work until the recorded native, profile and independent-consumer evidence genuinely exists.
 
 ## Reconstruction chain
 
