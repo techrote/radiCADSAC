@@ -1,117 +1,21 @@
 {
   "schema": "radicadsac-mc-fixture-families/1.0",
   "families": [
-    {
-      "id": "F01",
-      "title": "Jittered crossing pocket",
-      "owner": "MC-011",
-      "state": "BUILT",
-      "mandatory": true
-    },
-    {
-      "id": "F02",
-      "title": "Final thin web",
-      "owner": "MC-011",
-      "state": "BUILT",
-      "mandatory": true
-    },
-    {
-      "id": "F03",
-      "title": "Rounded XYZ remachining",
-      "owner": "MC-011",
-      "state": "BUILT",
-      "mandatory": true
-    },
-    {
-      "id": "F04",
-      "title": "Reoriented stock",
-      "owner": "MC-011",
-      "state": "BUILT",
-      "mandatory": true
-    },
-    {
-      "id": "F05",
-      "title": "Internal passage network",
-      "owner": "MC-012",
-      "state": "UNBUILT",
-      "mandatory": true
-    },
-    {
-      "id": "F06",
-      "title": "Lathe finish and parting",
-      "owner": "MC-012",
-      "state": "UNBUILT",
-      "mandatory": true
-    },
-    {
-      "id": "F07",
-      "title": "Lathe–mill–lathe",
-      "owner": "MC-012",
-      "state": "UNBUILT",
-      "mandatory": true
-    },
-    {
-      "id": "F08",
-      "title": "Accessible form/undercut",
-      "owner": "MC-012",
-      "state": "UNBUILT",
-      "mandatory": true
-    },
-    {
-      "id": "F09",
-      "title": "Phase-dependent turning",
-      "owner": "MC-013",
-      "state": "UNBUILT",
-      "mandatory": true
-    },
-    {
-      "id": "F10",
-      "title": "Many surviving components",
-      "owner": "MC-013",
-      "state": "UNBUILT",
-      "mandatory": true
-    },
-    {
-      "id": "F11",
-      "title": "Singular boundary limit",
-      "owner": "MC-013",
-      "state": "UNBUILT",
-      "mandatory": true
-    },
-    {
-      "id": "F12",
-      "title": "Scale and precision separation",
-      "owner": "MC-013",
-      "state": "UNBUILT",
-      "mandatory": true
-    },
-    {
-      "id": "F13",
-      "title": "Genuine geometric growth",
-      "owner": "MC-014",
-      "state": "UNBUILT",
-      "mandatory": true
-    },
-    {
-      "id": "F14",
-      "title": "Redundant long history",
-      "owner": "MC-014",
-      "state": "UNBUILT",
-      "mandatory": true
-    },
-    {
-      "id": "F15",
-      "title": "Boundary-crossing reconstruction",
-      "owner": "MC-014",
-      "state": "UNBUILT",
-      "mandatory": true
-    },
-    {
-      "id": "F16",
-      "title": "Empty and exhausted bodies",
-      "owner": "MC-014",
-      "state": "UNBUILT",
-      "mandatory": true
-    }
+    {"id": "F01", "title": "Jittered crossing pocket", "owner": "MC-011", "state": "BUILT", "mandatory": true},
+    {"id": "F02", "title": "Final thin web", "owner": "MC-011", "state": "BUILT", "mandatory": true},
+    {"id": "F03", "title": "Rounded XYZ remachining", "owner": "MC-011", "state": "BUILT", "mandatory": true},
+    {"id": "F04", "title": "Reoriented stock", "owner": "MC-011", "state": "BUILT", "mandatory": true},
+    {"id": "F05", "title": "Internal passage network", "owner": "MC-012", "state": "BUILT", "mandatory": true},
+    {"id": "F06", "title": "Lathe finish and parting", "owner": "MC-012", "state": "BUILT", "mandatory": true},
+    {"id": "F07", "title": "Lathe–mill–lathe", "owner": "MC-012", "state": "BUILT", "mandatory": true},
+    {"id": "F08", "title": "Accessible form/undercut", "owner": "MC-012", "state": "BUILT", "mandatory": true},
+    {"id": "F09", "title": "Phase-dependent turning", "owner": "MC-013", "state": "UNBUILT", "mandatory": true},
+    {"id": "F10", "title": "Many surviving components", "owner": "MC-013", "state": "UNBUILT", "mandatory": true},
+    {"id": "F11", "title": "Singular boundary limit", "owner": "MC-013", "state": "UNBUILT", "mandatory": true},
+    {"id": "F12", "title": "Scale and precision separation", "owner": "MC-013", "state": "UNBUILT", "mandatory": true},
+    {"id": "F13", "title": "Genuine geometric growth", "owner": "MC-014", "state": "UNBUILT", "mandatory": true},
+    {"id": "F14", "title": "Redundant long history", "owner": "MC-014", "state": "UNBUILT", "mandatory": true},
+    {"id": "F15", "title": "Boundary-crossing reconstruction", "owner": "MC-014", "state": "UNBUILT", "mandatory": true},
+    {"id": "F16", "title": "Empty and exhausted bodies", "owner": "MC-014", "state": "UNBUILT", "mandatory": true}
   ]
 }

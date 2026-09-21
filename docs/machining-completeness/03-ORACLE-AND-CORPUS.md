@@ -1,6 +1,6 @@
 # Independent oracles and the physical adversarial corpus
 
-Status: MC-010 independent-control foundation complete; MC-011 F01–F04 fixture/oracle construction complete; F05–F16 construction and qualified fixture/oracle verification remain required. Owners: MC-009–015, MC-049 and MC-055. [Domain](01-DOMAIN-AND-SEMANTICS.md), [formats](11-FORMAT-CONTRACTS.md).
+Status: MC-010 independent-control foundation complete; MC-011 F01–F04 and MC-012 F05–F08 fixture/oracle construction complete; F09–F16 construction and qualified fixture/oracle verification remain required. Owners: MC-009–015, MC-049 and MC-055. [Domain](01-DOMAIN-AND-SEMANTICS.md), [formats](11-FORMAT-CONTRACTS.md).
 
 ## Independence is a graph
 
@@ -11,6 +11,8 @@ Use independently derived analytic controls, a small exact algebraic/cell refere
 MC-010 now provides that bounded foundation in `research/machining-completeness/tasks/MC-010/`: an exact rational cell-set control independently derives axis-aligned subtraction, monotone single-axis box sweeps, material volume and positive-area-face connectivity. Its verifier pins the historical RCS-021 shared-code graph and rejects shared decisive imports, candidate-defined expected truth, binary-float authority, point/edge bridges and positive-volume micro-feature deletion. This is deterministic control evidence only. It does not qualify curved/timed/phase-sensitive sweeps, general imported solids, a native geometry candidate, STEP output or MC-B.
 
 MC-011 now builds F01–F04 as new strengthened records in `research/machining-completeness/tasks/MC-011/`. Their authority values are exact rationals and their expected truth comes from a task-local analytic witness oracle rather than historical/candidate output. F02 additionally uses the structurally separate MC-010 exact-cell oracle for the `+1/1000000`, zero and negative web threshold. F01 retains self-crossing, exact jitter and tangent/penetrating controls; F03 retains simultaneous-XYZ rounded motion and exact remachining reversal; F04 retains an explicit durable-body re-clamp and proper rigid transform from top to side access. `BUILT` means that the prospective fixture and discriminating control path exist; it is not a candidate PASS, native-geometry claim, proof-obligation acceptance or MC-B promotion.
+
+MC-012 now builds F05–F08 as separate prospective records in `research/machining-completeness/tasks/MC-012/`, again with exact-rational expected truth independent of candidate and historical geometry output. F05 combines explicit top/side tool access, intersecting internal passages and a positive `1/1000` mm thin-wall witness with a zero-wall neighbour. F06 retains a physical `2/5` mm lathe nose radius, overlapping finishing intent and the complete-versus-positive-core parting boundary while retaining both separated positive-volume bodies. F07 preserves one durable body through an exact proper lathe→mill→lathe setup handoff and uses same-radius asymmetric probes to catch stock reset. F08 admits a wider T-slot head through an explicitly larger starter pocket, then distinguishes undercut-head removal from a neck-only approximation while retaining the roof above the undercut. These are fixture/oracle construction results only: no native candidate was run and `BUILT` still does not imply candidate PASS, topology proof, MC-B or MC-1 acceptance.
 
 ## Material comparison
 

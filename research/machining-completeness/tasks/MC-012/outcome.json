@@ -1,0 +1,60 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-012",
+  "result_kind": "COMPLETED_RESEARCH",
+  "evidence_class": "PROSPECTIVE_FIXTURE_CONSTRUCTION_AND_INDEPENDENT_EXACT_CONTROLS",
+  "source_baseline": "fd39d24319072492f95eab9cf523b306ce623c41",
+  "issue": 74,
+  "dependency_artifacts": [
+    {"task": "MC-002", "path": "research/machining-completeness/tasks/MC-002/outcome.json", "blob_sha": "930db704e9dd29955e7af99ba793c74e0cfda325", "result_kind": "COMPLETED_RESEARCH"},
+    {"task": "MC-003", "path": "research/machining-completeness/tasks/MC-003/outcome.json", "blob_sha": "8f335f59f36c8761844806f9059af4a4f1671044", "result_kind": "COMPLETED_RESEARCH"},
+    {"task": "MC-010", "path": "research/machining-completeness/tasks/MC-010/outcome.json", "blob_sha": "4960730316f89dbb3fbf958d054127fa4fc0d789", "result_kind": "COMPLETED_RESEARCH"},
+    {"task": "MC-055", "path": "research/machining-completeness/tasks/MC-055/outcome.json", "blob_sha": "4f473c83a2639d601530a5331ac7ca941b062951", "result_kind": "COMPLETED_RESEARCH"}
+  ],
+  "accepted_claims": [
+    "F05 is a new prospective accessible internal-passage fixture with top/side access, intersecting channels and an exact positive 1/1000 mm thin-wall boundary witness.",
+    "F06 is a new prospective lathe fixture with finite 2/5 mm nose radius, overlapping finish passes retained as journal intent, and a complete-vs-positive-core parting separation boundary retaining both positive-volume output bodies.",
+    "F07 is a new prospective lathe-to-mill-to-lathe fixture whose exact setup transform and asymmetric material witnesses detect stock reset or lost handoff semantics while preserving durable body identity.",
+    "F08 is a new prospective physically accessible T-slot/form/undercut fixture with exact head/neck/access clearances and witnesses distinguishing genuine undercut removal from a neck-only approximation.",
+    "Task-local expected truth is derived with exact rational predicates independent of candidate and historical RCS geometry implementations.",
+    "F05-F08 may progress from UNBUILT to BUILT; BUILT does not mean native candidate PASS, proof-obligation acceptance, MC-B acceptance or MC-1 acceptance."
+  ],
+  "open_claims": [
+    "No native geometry candidate has been executed or qualified on F05-F08.",
+    "F09-F16 remain UNBUILT and mandatory.",
+    "MC-B through MC-F and MC-1 remain NOT_ESTABLISHED.",
+    "General curved/timed/phase-sensitive exact sweeps, arbitrary imported solids, universal topology, reconstruction and STEP engineering qualification remain under downstream owners.",
+    "MC-007 PB-007 blockers and all other inherited unresolved required claims remain open."
+  ],
+  "native_execution": {"run": false, "paid_run": false, "permit": null},
+  "artifacts": [
+    "research/machining-completeness/tasks/MC-012/physical-corpus-f05-f08-v1.json",
+    "research/machining-completeness/tasks/MC-012/fixture_oracle.py",
+    "research/machining-completeness/tasks/MC-012/report.md",
+    "research/machining-completeness/tasks/MC-012/outcome.json",
+    "research/machining-completeness/tasks/MC-012/verify.py",
+    "research/machining-completeness/fixture-families-v1.json",
+    "docs/machining-completeness/03-ORACLE-AND-CORPUS.md",
+    ".github/workflows/mc1-static.yml"
+  ],
+  "verification": [
+    "python3 research/machining-completeness/tasks/MC-012/verify.py --contract",
+    "python3 research/machining-completeness/tasks/MC-012/verify.py --self-test",
+    "python3 tools/validate_machining_completeness.py --self-test",
+    "python3 tools/mc_workflow.py verify MC-012",
+    "python3 tools/mc_workflow.py sync --check"
+  ],
+  "adversarial_controls": [
+    "reject binary-float authority and epsilon-defined material truth",
+    "reject candidate-defined expected truth or shared decisive RCS/candidate geometry imports",
+    "detect F05 zero/negative thin-wall collapse and sealed-cavity/access regressions",
+    "detect F06 sharp-point substitution for finite nose radius and any positive parting core rounded into a split",
+    "detect F07 improper setup rotation, durable-body identity drift and axisymmetry reset on the return to lathe",
+    "detect F08 undersized starter access, neck-only cutter substitution and loss of roof/undercut discrimination",
+    "reject protected historical-source edits, fixture denominator shrinkage, optionalization and premature capability promotion"
+  ],
+  "resources": {"native_minutes": 0, "paid_compute": 0, "network_research": "none required beyond repository authority"},
+  "review": {"status": "READY_FOR_EXACT_HEAD_CI", "notes": "Acceptance is limited to prospective fixture/oracle construction; no native geometry or MC-B claim is made."},
+  "blockers": [],
+  "downstream_invalidations": []
+}
