@@ -1,0 +1,67 @@
+{
+  "schema": "radicadsac-mc019-ball-round-sweep/1.0",
+  "task": "MC-019",
+  "issue": 81,
+  "source_baseline": "dfda6423da5ae5d779b143e07c0ffe18c0925cd0",
+  "result": "COMPLETED_RESEARCH_BALL_ROUND_XYZ_SWEEP_CONSTRUCTION",
+  "native_execution": false,
+  "formal_dependencies": [
+    {"task":"MC-005","path":"research/machining-completeness/tasks/MC-005/outcome.json","blob_sha":"adec886597a06345fdfdf65ee018596cd396d249","result_kind":"CAPABILITY_ACCEPTED"},
+    {"task":"MC-010","path":"research/machining-completeness/tasks/MC-010/outcome.json","blob_sha":"4960730316f89dbb3fbf958d054127fa4fc0d789","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-058","path":"research/machining-completeness/tasks/MC-058/outcome.json","blob_sha":"038fccda9142650ee7e29c626aeb8e4602420278","result_kind":"COMPLETED_RESEARCH"}
+  ],
+  "independent_control": {"task":"MC-011","path":"research/machining-completeness/tasks/MC-011/fixture_oracle.py","blob_sha":"6e1092976ec7c4379193c0ee6897578c3f0cddb7","role":"F03 exact rational spherical-sweep witness only; it is not imported by the MC-019 implementation"},
+  "authority": {
+    "domain_profile":"MC-A accepted current tranche: conventional lathe plus fixed-axis three-axis mill with explicit setup transitions",
+    "source_profile":"mc-exact-source/1.0",
+    "sweep_semantics":"S = closure(union over engaged source parameter/time of translated finite effective cutting solid)",
+    "fixed_axis":true,
+    "orientation_error_in_this_task":"exactly zero inside one milling operation; reorientation belongs to an explicit later setup transition",
+    "saved_operation_is_immutable":true,
+    "engagement_boundaries_are_authoritative":true,
+    "retrace_is_not_deleted_from_journal":true,
+    "binary_float_authority_forbidden":true,
+    "global_epsilon_predicate_forbidden":true
+  },
+  "cutter": {
+    "id":"mill_ball_round",
+    "parameters":["radius R > 0","finite axial length L >= R"],
+    "local_set":"for 0<=z<=R use rho^2+(z-R)^2<=R^2; for R<=z<=L use rho^2<=R^2",
+    "complete_finite_cutting_region":true,
+    "relation_to_mc018":"this is the c=R ball/round limit that MC-018 explicitly excluded; MC-019 implements it directly rather than extrapolating the MC-018 c<R formula",
+    "constant_z_projection_forbidden":true
+  },
+  "exact_construction": {
+    "source_classes":["stationary","line","polyline"],
+    "representation":"finite ordered exact-rational line leaves bound to closed engaged source intervals",
+    "lower_nose_algorithm":"intersect source parameter with local 0<=z<=R, then minimize exact quadratic 3-D squared distance to the translated sphere-centre line p(t)+(0,0,R)",
+    "upper_algorithm":"intersect source parameter with local R<=z<=L, then minimize exact quadratic XY distance to the translated axis line",
+    "varying_z_supported":true,
+    "simultaneous_xyz_supported":true,
+    "stationary_supported":true,
+    "reversal_and_retrace_supported":true,
+    "continuity_required":true,
+    "engaged_teleportation_rejected":true,
+    "equality_is_not_epsilonized":true
+  },
+  "mc058_leaf_construction": {
+    "source_classes":["circular_arc","helical_arc","spline","piecewise_motion","timed_phase_motion"],
+    "input_requirement":"each finite derived line leaf remains bound to its exact source interval and carries a certified Euclidean translation enclosure e from MC-058; time/path/phase correlation and semantic boundaries remain bound",
+    "fixed_axis_requirement":"orientation is unchanged within MC-019, so the MC-058 rho*e_rotation term is zero here rather than silently discarded for a rotating cutter",
+    "outer_rule":"the complete ball/round cutter is contained in radius R, axial [0,L]; with translation error e the true sweep is contained in union of segment cylinders radius R+e and axial [-e,L+e]",
+    "inner_rule":"the exact cutter contains the central cylinder radius R/2 on axial [R/2,L]; eroding that cylinder by e yields radius R/2-e and axial [R/2+e,L-e], when nonempty, as a certified subset of the true sweep",
+    "classification":["INSIDE","OUTSIDE","UNCERTIFIED"],
+    "uncertified_is_not_failure_or_pass":true,
+    "missing_or_unbound_leaf_certificate_is_rejected":true,
+    "topology_or_exact_zero_claim_implied":false
+  },
+  "boundary_controls": {
+    "stationary_nose_tangent":{"tool":{"R":"1","L":"3"},"point":["3/5","0","1/5"],"inside_neighbor":["59/100","0","1/5"],"outside_neighbor":["61/100","0","1/5"],"identity":"(3/5)^2 + (1/5-1)^2 = 1"},
+    "simultaneous_xyz_f03_style":{"tool":{"R":"1","L":"3"},"tip_path":[["0","0","0"],["2","0","-2"]],"sphere_centre_path":[["0","0","1"],["2","0","-1"]],"point":["1/3","1/3","-2/3"],"inside_neighbor":["1/3","3/10","-2/3"],"outside_neighbor":["1/3","2/5","-2/3"],"flattened_z_corruption_tip_path":[["0","0","0"],["2","0","0"]],"independent_oracle":"MC-011 F03 ball_polyline_sweep_removes","witness_parameter":"1/2","local_point":["-2/3","1/3","1/3"],"identity":"at t=1/2 the sphere-centre residual (-2/3,1/3,-2/3) has squared norm 1 and is perpendicular to motion (2,0,-2), so this is a true lower-nose tangent rather than a seam endpoint"},
+    "finite_tip_and_top":{"tool":{"R":"1","L":"3"},"tip":["0","0","0"],"below_tip":["0","0","-1/100"],"top":["0","0","3"],"above_top":["0","0","301/100"]},
+    "retrace":{"tool":{"R":"1","L":"3"},"forward":[["0","0","0"],["2","0","-2"]],"forward_reverse":[["0","0","0"],["2","0","-2"],["0","0","0"]],"require_same_union_semantics":true,"require_journal_retrace_preserved":true},
+    "bounded_leaf":{"tool":{"R":"1","L":"3"},"derived_path":[["0","0","0"],["2","0","0"]],"translation_error":"1/10","definite_inside":["1","0","1"],"definite_outside":["1","2","1"],"uncertified_shell":["1","21/20","1"]}
+  },
+  "forbidden":["CENTRELINE_ONLY_SWEEP","BALL_NOSE_REPLACED_BY_FLAT_CYLINDER","INFINITE_OR_ZERO_LENGTH_CUTTER_SUBSTITUTION","DROP_VARYING_Z","CONSTANT_Z_PROJECTION","DELETE_RETRACE_FROM_SOURCE_JOURNAL","FIT_ACROSS_ENGAGEMENT_OR_PIECE_BOUNDARY","ENGAGED_TELEPORTATION","BINARY_FLOAT_OR_GLOBAL_EPSILON_EQUALITY","TREAT_MC058_TRANSLATION_ERROR_AS_ZERO","UNBOUND_NONLINEAR_LEAF","PROMOTE_UNCERTIFIED_TO_INSIDE_OR_OUTSIDE","REUSE_CANDIDATE_GEOMETRY_AS_INDEPENDENT_ORACLE","PROMOTE_MODEL_EVIDENCE_TO_NATIVE_GEOMETRY","PREMATURE_MC_B_ACCEPTANCE"],
+  "proof_boundary":{"PO-02":"OPEN; MC-019 contributes the fixed-axis ball/round milling slice only","PO-04":"OPEN; exact/validated global material-event classification remains downstream","PO-05":"OPEN; inherited transcendental equality/termination blockers are not discharged by this constructor","PO-06":"OPEN; MC-019 exposes a source-bound sweep sandwich but not the complete source-to-engineering-output error chain","MC-B":"NOT_ESTABLISHED","MC-1":"NOT_ESTABLISHED"}
+}
