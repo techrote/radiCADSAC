@@ -42,6 +42,7 @@
     "F03 preserves simultaneous XYZ rounded motion plus exact reversal/remachining and has rational tangent/signed-neighbour witnesses that reject flattened-Z corruption",
     "F04 preserves durable body identity across an explicit re-clamp and exact proper rigid transform mapping machine +Z to common +X; top-only, side-only, crossing and survivor witnesses distinguish the setups",
     "fixture-specific analytic controls contain no decisive RCS/candidate geometry imports; F02 additionally uses the independently reviewed MC-010 exact-cell control",
+    "MC-009 and MC-055 production-time UNBUILT guards remain frozen in their own contracts while their live verifiers now permit only reviewed UNBUILT-to-BUILT future registry progression instead of blocking legitimate descendants",
     "BUILT means fixture/oracle construction only and does not promote native candidate correctness, proof obligations, MC-B or MC-1"
   ],
   "open_claims": [
@@ -61,6 +62,7 @@
     "docs/machining-completeness/03-ORACLE-AND-CORPUS.md",
     "research/machining-completeness/outcomes-v1.json",
     "tools/validate_machining_completeness.py",
+    "research/machining-completeness/tasks/MC-009/verify.py",
     "research/machining-completeness/tasks/MC-055/verify.py",
     ".github/workflows/mc1-static.yml"
   ],
