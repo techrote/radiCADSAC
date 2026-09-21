@@ -25,7 +25,7 @@
     "MC-021": {"state": "NOT_STARTED", "issue": 83, "accepted_artifacts": [], "blockers": []},
     "MC-022": {"state": "NOT_STARTED", "issue": 84, "accepted_artifacts": [], "blockers": []},
     "MC-023": {"state": "NOT_STARTED", "issue": 85, "accepted_artifacts": [], "blockers": []},
-    "MC-024": {"state": "NOT_STARTED", "issue": 86, "accepted_artifacts": [], "blockers": []},
+    "MC-024": {"state": "NEGATIVE_RESULT", "issue": 86, "accepted_artifacts": ["research/machining-completeness/tasks/MC-024/exact-cell-falsification-v1.json", "research/machining-completeness/tasks/MC-024/report.md", "research/machining-completeness/tasks/MC-024/outcome.json", "research/machining-completeness/tasks/MC-024/verify.py", "docs/machining-completeness/02-COMPLETENESS-ARGUMENT.md"], "blockers": [{"id": "PB-007-01", "status": "OPEN", "affected_descendants": ["MC-026", "MC-038"]}, {"id": "PB-007-02", "status": "OPEN", "affected_descendants": ["MC-026", "MC-038"]}, {"id": "PB-007-03", "status": "PROPAGATED_FROM_MC-006", "affected_descendants": ["MC-020", "MC-026", "MC-038"]}, {"id": "RB-016-02", "status": "OPEN", "affected_descendants": ["MC-026", "MC-030", "MC-038", "MC-041", "MC-044", "MC-052"]}, {"id": "RB-016-04", "status": "OPEN", "affected_descendants": ["MC-026", "MC-030", "MC-038", "MC-041", "MC-042", "MC-043", "MC-044", "MC-052"]}]},
     "MC-025": {"state": "NOT_STARTED", "issue": 87, "accepted_artifacts": [], "blockers": []},
     "MC-026": {"state": "NOT_STARTED", "issue": 88, "accepted_artifacts": [], "blockers": []},
     "MC-027": {"state": "NOT_STARTED", "issue": 89, "accepted_artifacts": [], "blockers": []},
