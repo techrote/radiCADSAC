@@ -1,0 +1,197 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-016",
+  "result_kind": "COMPLETED_RESEARCH",
+  "evidence_class": [
+    "MEASURED_NATIVE_GEOMETRY",
+    "SOURCE_FACT",
+    "REVIEWED_ARGUMENT",
+    "DOCUMENTATION_RECONCILIATION"
+  ],
+  "source_baseline": "b2fac16b2285b4cb517e3e01c58a9900152327b5",
+  "issue": 78,
+  "dependency_artifacts": [
+    {
+      "task": "MC-002",
+      "path": "research/machining-completeness/tasks/MC-002/outcome.json",
+      "blob_sha": "930db704e9dd29955e7af99ba793c74e0cfda325",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-003",
+      "path": "research/machining-completeness/tasks/MC-003/outcome.json",
+      "blob_sha": "8f335f59f36c8761844806f9059af4a4f1671044",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-010",
+      "path": "research/machining-completeness/tasks/MC-010/outcome.json",
+      "blob_sha": "4960730316f89dbb3fbf958d054127fa4fc0d789",
+      "result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "accepted_claims": [
+    "The existing RCS-011 native evidence demonstrates bounded conventional advanced-B-rep/STEP write-and-fresh-read feasibility for 32 successful exact-strategy attempts, while its valid-but-materially-wrong counterexample proves B-rep validity alone is not material correctness.",
+    "Public STEP schema/resource definitions provide structural conventional routes for regular manifold solids, enclosed disjoint void shells and multiple manifold-solid representation items; these are structural source facts, not consumer qualification.",
+    "Eight required early obstruction classes are frozen and each has either a qualifying bounded native witness plus strategy or an explicit representability blocker.",
+    "Exact-zero contact, positive micro-material, disconnected durable bodies and empty material are non-compensating semantics; tolerance healing, largest-body selection and fake residual solids are forbidden.",
+    "The MC-016 verifier pins reviewed dependency/historical evidence sources and rejects missing blockers, premature MC-C promotion, faceted/tessellated primary-output substitution, zero/positive collapse and evidence-class promotion."
+  ],
+  "open_claims": [
+    "No qualifying machining-generated native STEP plus independent-consumer witness has yet established BREP_WITH_VOIDS cavity output.",
+    "Disconnected multi-solid output is structurally expressible but durable-body/lineage mapping and independent-consumer preservation remain unqualified.",
+    "No qualifying native STEP witness demonstrates preservation of the certified positive micro-feature boundary; the historical 1 um external comparator refused resolution-qualified authority.",
+    "Exact-zero contacts, touching cavities and singular pinches require an MC-054 profile decision and MC-017 consumer evidence without healing or fusing material.",
+    "Empty-material engineering-output semantics and downstream handling remain unqualified.",
+    "MC-C, MC-B, MC-D, MC-E, MC-F and MC-1 remain NOT_ESTABLISHED."
+  ],
+  "native_execution": false,
+  "artifacts": [
+    "research/machining-completeness/tasks/MC-016/representability-screen-v1.json",
+    "research/machining-completeness/tasks/MC-016/report.md",
+    "research/machining-completeness/tasks/MC-016/outcome.json",
+    "research/machining-completeness/tasks/MC-016/verify.py",
+    "docs/machining-completeness/04-REPRESENTATION-AND-RECONSTRUCTION.md",
+    "research/machining-completeness/outcomes-v1.json",
+    ".github/workflows/mc1-static.yml"
+  ],
+  "verification": [
+    "python3 research/machining-completeness/tasks/MC-016/verify.py --contract",
+    "python3 research/machining-completeness/tasks/MC-016/verify.py --self-test",
+    "python3 tools/mc_workflow.py verify MC-016",
+    "python3 tools/validate_machining_completeness.py --self-test",
+    "python3 tools/mc_workflow.py sync --check"
+  ],
+  "adversarial_controls": [
+    "reject any unwitnessed obstruction class with no explicit blocker",
+    "reject premature MC-C acceptance",
+    "reject largest-body-only or fused multi-solid output",
+    "reject faceted/tessellated wrapping as primary engineering success",
+    "reject positive micro-material erased by tolerance or sewing",
+    "reject exact-zero contact healed into a positive bridge",
+    "reject empty material represented by a fake epsilon solid or nonempty placeholder",
+    "reject deterministic-model evidence promoted to native geometry",
+    "reject drift of pinned dependency and historical evidence blobs"
+  ],
+  "resources": {
+    "native_permit_required": false,
+    "native_or_paid_campaign_run": false
+  },
+  "review": {
+    "disposition": "completed early representability research with explicit open blockers; artifact dependents may consume the strategy matrix but no output capability gate is promoted",
+    "gate_changed": false,
+    "gate": "MC-C",
+    "gate_status": "NOT_ESTABLISHED",
+    "programme_capability_changed": false,
+    "downstream_release": "MC-024/025/027/028/029/030 and MC-038 may consume the bounded structural strategies and blockers; MC-017/MC-054 own consumer/profile closure for affected singular/grouped/empty semantics"
+  },
+  "blockers": [
+    {
+      "id": "RB-016-01",
+      "status": "OPEN",
+      "summary": "No source-bound machining-generated native STEP witness plus independent consumer evidence for BREP_WITH_VOIDS cavity output.",
+      "owners": [
+        "MC-016",
+        "MC-017",
+        "MC-042",
+        "MC-043"
+      ],
+      "affected_descendants": [
+        "MC-038",
+        "MC-041",
+        "MC-042",
+        "MC-043",
+        "MC-044",
+        "MC-052"
+      ]
+    },
+    {
+      "id": "RB-016-02",
+      "status": "OPEN",
+      "summary": "Multi-solid STEP is structurally expressible but durable-body mapping and independent consumer preservation are not natively qualified.",
+      "owners": [
+        "MC-016",
+        "MC-017",
+        "MC-054",
+        "MC-042",
+        "MC-043"
+      ],
+      "affected_descendants": [
+        "MC-024",
+        "MC-027",
+        "MC-028",
+        "MC-029",
+        "MC-030",
+        "MC-038",
+        "MC-041",
+        "MC-044",
+        "MC-052"
+      ]
+    },
+    {
+      "id": "RB-016-03",
+      "status": "OPEN",
+      "summary": "No qualifying native STEP write/read witness demonstrates preservation of a certified positive micro-feature at the MC-1 boundary; historical external comparison refused the 1 um case.",
+      "owners": [
+        "MC-016",
+        "MC-042",
+        "MC-043"
+      ],
+      "affected_descendants": [
+        "MC-025",
+        "MC-028",
+        "MC-029",
+        "MC-038",
+        "MC-041",
+        "MC-044",
+        "MC-052"
+      ]
+    },
+    {
+      "id": "RB-016-04",
+      "status": "OPEN",
+      "summary": "Exact-zero contacts, touching cavities and singular pinches require an explicit MC-054 output-profile decision plus independent-consumer evidence; healing or tolerance fusion is forbidden.",
+      "owners": [
+        "MC-054",
+        "MC-017"
+      ],
+      "affected_descendants": [
+        "MC-024",
+        "MC-025",
+        "MC-027",
+        "MC-028",
+        "MC-029",
+        "MC-030",
+        "MC-038",
+        "MC-041",
+        "MC-042",
+        "MC-043",
+        "MC-044",
+        "MC-052"
+      ]
+    },
+    {
+      "id": "RB-016-05",
+      "status": "OPEN",
+      "summary": "Empty-material engineering-output semantics are not yet qualified; a fake residual solid or placeholder STEP is not acceptable.",
+      "owners": [
+        "MC-054",
+        "MC-017"
+      ],
+      "affected_descendants": [
+        "MC-038",
+        "MC-041",
+        "MC-042",
+        "MC-043",
+        "MC-044",
+        "MC-052"
+      ]
+    }
+  ],
+  "downstream_invalidations": [
+    "a changed STEP/output profile invalidates affected MC-016 route conclusions and requires reviewed MC-054-compatible revision",
+    "a defect or semantic change in the pinned historical sources invalidates only conclusions that consumed that source and does not rewrite producing evidence",
+    "closing a representability blocker requires source-bound native output and, where recorded, independent-consumer/profile evidence rather than issue closure alone",
+    "any later attempt to erase/fuse positive material, bodies, contacts or lineage supersedes the affected output claim rather than weakening the MC-1 denominator"
+  ]
+}
