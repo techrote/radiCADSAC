@@ -55,7 +55,7 @@ Use a common workpiece frame. For body b, effective cutting solid T, engaged int
 
 ```text
 S = closure(union over t in E of K(t)(T))
-M_next,b = closure(interior(M_b \ S))
+M_next,b = closure(interior(M_b \\ S))
 ```
 
 Specify endpoints, engagement boundaries, finite cutter shoulders and tool/setup revisions. Engaged teleportation is invalid motion, not an optimization. Regularization removes lower-dimensional artifacts, not positive-volume slivers.
@@ -83,6 +83,22 @@ Freeze dimensional/surface-distance limits; smooth-patch angular limits with cor
 Track source, canonicalization, transform, cutter, sweep, representation, reconstruction, sewing and serialization channels. Unknown dependence composes conservatively; do not assume RSS independence, charge the same source uncertainty repeatedly or reset error at handoffs. Recomputing from exact nominal authority can remove prior derived error only when the actual recomputation proves that removal.
 
 The initial research ladder is 10, 1 and 0.1 micrometres plus local requests below w/8 for certified positive feature width/gap w. Exact-zero neighbours use event/topology decisions. These are experiments, not a feature-size floor or theorem that distance preserves topology. Preserve the historical RCS-021 150 mm³ interval criterion for reproduction only.
+
+### MC-058 certified curve/transform and sweep-bound contract
+
+MC-058 records the source-faithful curve, transform and finite-cutter enclosure contract at `research/machining-completeness/tasks/MC-058/curve-sweep-contract-v1.json`. It does not replace MC-003 source semantics: line/arc/helix/polyline/B-spline/piecewise/timed-phase definitions, exact endpoints, engagement boundaries, transform order and immutable saved operations remain authoritative. Approximation is a derived representation only.
+
+Circular arcs retain exact rational `turn_fraction`; subdivision uses a conservative rational upper bound on π only to enclose chord sag, never as an equality value or predicate authority. Non-rational B-splines retain exact Cox-de Boor and knot-multiplicity semantics and may be enclosed through exact knot insertion/control hulls or exact rational derivative bounds. Piecewise and timed/phase motion cannot be fitted across semantic boundaries or factored into independent path/angle coverage.
+
+For an effective cutter with certified support radius `rho` covering the complete cutting region, including finite radius/length/shoulders, and an approximate pose over the same closed engaged source parameter set, the conservative actual-sweep transfer is:
+
+```text
+e_total = e_inherited + e_translation + rho*e_rotation + e_tool
+```
+
+where rotation error is a certified angular upper bound in radians. A centreline-only error is therefore insufficient whenever finite cutter extent or orientation error contributes. The formula is a geometric enclosure, not a topology, material-membership or exact-zero event certificate. Exact rigid transforms preserve distance bounds; reclamps and machine transitions inherit rather than reset upstream error.
+
+`PB-007-01` and `PB-007-02` remain open. MC-058 does not decide all tangential/multiple/singular transcendental equalities and does not establish the unconditional general coupled helical/spindle-feed/eccentric sweep-membership route. PO-02, PO-05 and PO-06 remain open under their existing owners. No native or paid campaign ran, and **MC-B remains NOT_ESTABLISHED**.
 
 ## Domain-lock outputs
 
