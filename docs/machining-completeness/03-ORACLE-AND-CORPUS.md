@@ -16,7 +16,7 @@ MC-012 now builds F05–F08 as separate prospective records in `research/machini
 
 ## Material comparison
 
-Certificates must relate the candidate geometry B to nominal material M, not only compare scalar volumes. A checked common sandwich `L ⊆ M ⊆ U` and `L ⊆ B ⊆ U` bounds their symmetric difference inside `U \\ L`; a certified volume of that band can bound missing/extra material. It does not establish distance or topology. Use stronger directional enclosures or exact comparison where needed. A broad interval containing both correct and materially wrong answers is inconclusive.
+Certificates must relate the candidate geometry B to nominal material M, not only compare scalar volumes. A checked common sandwich `L ⊆ M ⊆ U` and `L ⊆ B ⊆ U` bounds their symmetric difference inside `U \ L`; a certified volume of that band can bound missing/extra material. It does not establish distance or topology. Use stronger directional enclosures or exact comparison where needed. A broad interval containing both correct and materially wrong answers is inconclusive.
 
 Record outward rounding, precision, evaluator bounds, local hypotheses and aggregation. Omitted unresolved cells, unproved numeric error and candidate-supplied `SOLVED` strings cannot pass. Prefer a small independently reviewed checker when its certificate statement actually covers the claim.
 
