@@ -1,0 +1,116 @@
+{
+  "schema": "radicadsac-mc023-multi-setup-composition/1.0",
+  "task": "MC-023",
+  "issue": 85,
+  "source_baseline": "318f9173466c20116236167183d8524e076e34c0",
+  "result": "COMPLETED_RESEARCH_BOUNDED_COMPOSITION_ESTABLISHED",
+  "native_execution": false,
+  "formal_dependencies": [
+    {"task":"MC-005","path":"research/machining-completeness/tasks/MC-005/outcome.json","blob_sha":"adec886597a06345fdfdf65ee018596cd396d249","result_kind":"CAPABILITY_ACCEPTED"},
+    {"task":"MC-010","path":"research/machining-completeness/tasks/MC-010/outcome.json","blob_sha":"4960730316f89dbb3fbf958d054127fa4fc0d789","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-058","path":"research/machining-completeness/tasks/MC-058/outcome.json","blob_sha":"038fccda9142650ee7e29c626aeb8e4602420278","result_kind":"COMPLETED_RESEARCH"}
+  ],
+  "hypothesis": "Certified cutter sweeps from different immutable setups can be composed without reinterpretation by mapping each setup-local sweep into one durable common workpiece frame, binding every cut to an exact input revision and durable target body, and carrying MC-058 error monotonically across re-clamps and machine transitions.",
+  "falsification": "Reject the route if transform direction/order/handedness changes material membership; if a re-clamp mutates historical geometry or resets error; if body targeting is guessed from topology or current size; if stale revisions are accepted; if one body's cut affects another body; or if lathe-to-mill composition requires rewriting the producing source operation.",
+  "source_semantics": {
+    "saved_operations_immutable": true,
+    "single_parent_revisions": true,
+    "reclamp_is_non_cutting_journal_event": true,
+    "machine_transition_is_non_cutting_journal_event": true,
+    "common_frame_is_durable_workpiece_semantics": true,
+    "setup_local_coordinates_are_not_durable_body_identity": true,
+    "exact_input_revision_binding_required": true,
+    "exact_target_body_id_binding_required": true,
+    "backend_topology_identity_as_durable_authority": false,
+    "largest_body_or_only_body_guess_allowed": false,
+    "historical_transform_mutation_allowed": false,
+    "binary_float_certifying_authority": false,
+    "global_epsilon_identity_authority": false
+  },
+  "transform_contract": {
+    "mapping": "p_common = R_setup * p_local + t_setup",
+    "vectors": "column",
+    "handedness": "right-handed",
+    "composition_order": "parent_from_child = parent_from_mid o mid_from_child",
+    "inverse_may_not_replace_forward_mapping": true,
+    "bounded_exact_control_rotation": "proper signed-permutation SO(3) with exact-rational translation",
+    "generic_source_transform_route": "consume MC-058 exact/algebraic or outward-certified rigid transform enclosure; otherwise UNCERTIFIED",
+    "reflection_as_rotation_allowed": false
+  },
+  "material_body_contract": {
+    "journal_body_id_backend_independent": true,
+    "semantic_lineage_backend_independent": true,
+    "cuts_mutate_only_bound_target_body": true,
+    "unrelated_bodies_preserved": true,
+    "connectivity_change_requires_explicit_material_body_transition": true,
+    "connectivity_may_not_be_guessed_by_this_bounded_control": true,
+    "ambiguous_lineage_must_remain_explicit": true,
+    "detached_material_may_not_be_silently_discarded": true,
+    "kernel_shape_order_as_target_selector": false
+  },
+  "provider_composition": {
+    "provider_output_requirement": "source-bound certified sweep in the active setup-local frame plus target body/revision binding",
+    "lathe_to_mill_transition_supported": true,
+    "mill_to_lathe_transition_supported": true,
+    "provider_specific_source_history_preserved": true,
+    "provider_geometry_reinterpreted_in_place": false,
+    "MC-021_or_MC-022_capability_claim_implied": false,
+    "open_provider_blockers_propagate": true
+  },
+  "mc058_transfer": {
+    "formula": "e_total = e_inherited + e_translation + rho*e_rotation + e_tool",
+    "error_reset_at_reclamp": false,
+    "error_reset_at_machine_transition": false,
+    "complete_cutter_support_radius_required": true,
+    "unknown_error_becomes_zero": false,
+    "common_frame_rigid_covariance_preserves_distance_bound": true
+  },
+  "exact_controls": {
+    "stock_A": {"body_id":"A","lineage_id":"L-A","box":{"lo":["0","0","0"],"hi":["4","4","4"]}},
+    "stock_B": {"body_id":"B","lineage_id":"L-B","box":{"lo":["10","0","0"],"hi":["12","2","2"]}},
+    "setup_lathe": {"machine":"LATHE","R":[[1,0,0],[0,1,0],[0,0,1]],"t":["0","0","0"]},
+    "lathe_control_sweep": {"target":"A","box_local":{"lo":["0","0","0"],"hi":["1","4","4"]}},
+    "setup_mill_reclamp": {"machine":"MILL","R":[[0,-1,0],[1,0,0],[0,0,1]],"t":["4","0","0"]},
+    "mill_control_sweep": {"target":"A","box_local":{"lo":["0","0","0"],"hi":["4","1","4"]},"expected_common":{"lo":["3","0","0"],"hi":["4","4","4"]}},
+    "boundary_delta": {"numerator":"1","denominator":"1000000"},
+    "retained_probe": ["2","2","2"],
+    "lathe_removed_probe": ["1/2","2","2"],
+    "mill_removed_probe": ["7/2","2","2"],
+    "unrelated_body_probe": ["11","1","1"]
+  },
+  "adversarial_requirements": [
+    "reject inverse transform substituted for declared forward transform",
+    "reject transform composition-order swap",
+    "reject left-handed reflection admitted as rotation",
+    "reject stale input revision",
+    "reject missing/ambiguous durable target body",
+    "reject re-clamp material mutation",
+    "reject cross-body removal",
+    "reject error reset at re-clamp or machine transition",
+    "reject backend topology or largest-body target selection",
+    "reject source-journal rewriting or provider-history collapse",
+    "reject binary-float/global-epsilon certifying authority",
+    "reject premature MC-B promotion"
+  ],
+  "protected_semantics": {
+    "historical_source_audio_provenance_unchanged": true,
+    "canonical_journal_immutable": true,
+    "positive_volume_preserved": true,
+    "durable_body_lineage_preserved": true,
+    "negative_results_preserved": true,
+    "native_geometry_claim": false
+  },
+  "open_scope": {
+    "native_boolean_material_realization": "OPEN_DOWNSTREAM",
+    "automatic_connectivity_split_detection": "OPEN_DOWNSTREAM",
+    "STEP_and_independent_consumer_qualification": "OPEN_DOWNSTREAM",
+    "general_transcendental_event_blockers": "PROPAGATE_FROM_PROVIDERS",
+    "practical_scale": "OPEN_DOWNSTREAM"
+  },
+  "programme_state": {"MC-A":"ACCEPTED","MC-B":"NOT_ESTABLISHED","MC-C":"NOT_ESTABLISHED","MC-D":"NOT_ESTABLISHED","MC-E":"NOT_ESTABLISHED","MC-F":"NOT_ESTABLISHED","MC-1":"NOT_ESTABLISHED"},
+  "acceptance": {
+    "reoriented_full_3d_controls_preserve_material_body_semantics": true,
+    "task_specific_artifacts_validate_without_chat": true,
+    "negative_results_and_unresolved_claims_preserved": true
+  }
+}
