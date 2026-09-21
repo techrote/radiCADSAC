@@ -1,0 +1,90 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-026",
+  "result_kind": "COMPLETED_RESEARCH",
+  "evidence_class": ["SOURCE_INSPECTION","DEPENDENCY_SYNTHESIS","DESIGN_DECISION","DETERMINISTIC_MODEL","BOUNDARY_AND_ADVERSARIAL_CONTROLS","DOCUMENTATION_RECONCILIATION"],
+  "source_baseline": "b4739cb1941918e6d26d32800b622d631adfad99",
+  "issue": 88,
+  "dependency_artifacts": [
+    {"task":"MC-024","path":"research/machining-completeness/tasks/MC-024/outcome.json","blob_sha":"81802ee3f50e22f35166818c7883dc6e47668fbc","result_kind":"NEGATIVE_RESULT"},
+    {"task":"MC-025","path":"research/machining-completeness/tasks/MC-025/outcome.json","blob_sha":"b45cbabc7fa5f958491f8b02b1027b0efe9bd39a","result_kind":"NEGATIVE_RESULT"},
+    {"task":"MC-027","path":"research/machining-completeness/tasks/MC-027/outcome.json","blob_sha":"b1f015af98fa973b91b67beb14d10a140da8884f","result_kind":"NEGATIVE_RESULT"},
+    {"task":"MC-028","path":"research/machining-completeness/tasks/MC-028/outcome.json","blob_sha":"b4c1c39ec60baea748b117804f8bcc3400c03c2a","result_kind":"NEGATIVE_RESULT"},
+    {"task":"MC-029","path":"research/machining-completeness/tasks/MC-029/outcome.json","blob_sha":"6bfc3449d2a0273971a3e8714043b620a46c6aa9","result_kind":"NEGATIVE_RESULT"},
+    {"task":"MC-030","path":"research/machining-completeness/tasks/MC-030/outcome.json","blob_sha":"4c763731ea71ec5e2291e340636ecfa6a84062db","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-049","path":"research/machining-completeness/tasks/MC-049/outcome.json","blob_sha":"ecf9e2fad37adcf4f71c8fc4e1399d57ce1fc93f","result_kind":"COMPLETED_RESEARCH"}
+  ],
+  "accepted_claims": [
+    "PRIMARY_CERTIFIED_ADAPTIVE_IMPLICIT is selected as the general material-evaluation design behind MC-030 bounded fast paths, using actual source-bound sweeps, sound outward bounds and independently certified critical-event evidence rather than refinement depth, pitch, epsilon or timeout as truth.",
+    "EXACT_CELL_SEMIALGEBRAIC_CONTROL is selected as the genuinely independent challenger/control for proved finite semialgebraic instances, with separate representation, classifier and result/certificate namespace and no shared adaptive-cell classification code.",
+    "All 26 current MC-002 required operation IDs are explicitly partitioned exactly once into fast-when-admitted plus general-primary routing classes; none is removed from the domain denominator.",
+    "MC-027 directional intervals, MC-028 native mesh Boolean and MC-029 sparse level-set state remain non-authoritative derived accelerators/challengers rather than canonical material, body, lineage or engineering-output truth.",
+    "The selected route is decomposed into ten reviewable leaf blueprints under existing MC-031, MC-032 and MC-033 owners, including exact-cell differential control and frozen challenge/certificate binding; no duplicate task family is created.",
+    "The MC-049 64-record PUBLIC_PRESELECTION_PREREGISTRATION freeze remains unchanged and unexecuted by MC-026; later independent custody/execution remains owned by MC-057."
+  ],
+  "open_claims": [
+    "PB-007-01 remains OPEN for unconditional finite exact tangential/multiple/singular transcendental event decisions.",
+    "PB-007-02 remains OPEN for the unconditional general coupled spindle/feed/eccentric constructive event/membership route.",
+    "PB-007-03 remains OPEN_PROPAGATED for a universal finite exact source codec covering arbitrary admitted form/undercut cutters.",
+    "RB-016-02 remains OPEN for durable multi-body mapping and independent engineering-output preservation.",
+    "RB-016-03 remains OPEN for native engineering output preserving certified positive micro-material.",
+    "RB-016-04 remains OPEN for exact-zero/touching/singular engineering output without healing or tolerance fusion.",
+    "Native evaluator/classifier/body-state implementation, topology reconstruction, independent STEP qualification and practical-scale qualification remain downstream work.",
+    "MC-B, MC-C, MC-D, MC-E, MC-F and MC-1 remain NOT_ESTABLISHED."
+  ],
+  "native_execution": false,
+  "artifacts": [
+    "research/machining-completeness/tasks/MC-026/candidate-selection-contract-v1.json",
+    "research/machining-completeness/tasks/MC-026/selection_model.py",
+    "research/machining-completeness/tasks/MC-026/report.md",
+    "research/machining-completeness/tasks/MC-026/outcome.json",
+    "research/machining-completeness/tasks/MC-026/verify.py",
+    "docs/machining-completeness/23-MC026-CANDIDATE-SELECTION.md",
+    "research/machining-completeness/outcomes-v1.json",
+    ".github/workflows/mc1-static.yml"
+  ],
+  "verification": [
+    "python3 research/machining-completeness/tasks/MC-026/verify.py --contract",
+    "python3 research/machining-completeness/tasks/MC-026/verify.py --self-test",
+    "python3 tools/mc_workflow.py verify MC-026",
+    "python3 tools/validate_machining_completeness.py --self-test",
+    "python3 tools/mc_workflow.py sync --check"
+  ],
+  "adversarial_controls": [
+    "reject removal or duplication of any current MC-002 required operation from the routing denominator",
+    "reject promotion of the adaptive primary to unconditional total-success authority",
+    "reject promotion of exact-cell challenger agreement to total-domain authority or blocker closure",
+    "reject shared adaptive classifier code as an independent challenger",
+    "reject fixed pitch/depth/global epsilon/binary float/timeout as material or event correctness authority",
+    "reject operation-label fast admission, provider cycles or more than one general invocation",
+    "reject fast SUCCESS without independent material certificate",
+    "reject directional/mesh/sparse accelerators as canonical material/body/lineage/STEP authority",
+    "reject MC-049 challenge-count, candidate-blindness or custody drift",
+    "reject closure of inherited PB/RB blockers without producing-owner evidence",
+    "reject blueprint reassignment outside MC-031/032/033 or duplicate task proliferation",
+    "reject premature MC-B or MC-1 promotion"
+  ],
+  "resources": {"native_permit_required": false, "native_or_paid_campaign_run": false, "required_domain_operation_count": 26, "leaf_blueprint_count": 10},
+  "review": {
+    "disposition": "completed bounded candidate selection and algorithm-specific implementation blueprint; selected architecture accounts for the full current domain denominator while preserving all unresolved proof/output gaps",
+    "gate_changed": false,
+    "programme_capability_changed": false,
+    "downstream_release": "MC-038 may consume MC-026 as the selected-route artifact; MC-031/MC-032/MC-033 remain gated by MC-038 capability and MC-026 does not authorize native or paid execution"
+  },
+  "blockers": [
+    {"id":"PB-007-01","status":"OPEN","source_task":"MC-007/MC-022","affected_descendants":["MC-032","MC-038"]},
+    {"id":"PB-007-02","status":"OPEN","source_task":"MC-007/MC-022","affected_descendants":["MC-031","MC-038"]},
+    {"id":"PB-007-03","status":"OPEN_PROPAGATED","source_task":"MC-020","affected_descendants":["MC-031","MC-038"]},
+    {"id":"RB-016-02","status":"OPEN","source_task":"MC-016","affected_descendants":["MC-038","MC-041","MC-044","MC-052"]},
+    {"id":"RB-016-03","status":"OPEN","source_task":"MC-016","affected_descendants":["MC-038","MC-041","MC-044","MC-052"]},
+    {"id":"RB-016-04","status":"OPEN","source_task":"MC-016","affected_descendants":["MC-038","MC-041","MC-042","MC-043","MC-044","MC-052"]}
+  ],
+  "downstream_invalidations": [
+    "Any narrowing of the current MC-002 required-operation denominator invalidates MC-026 domain accounting and requires prospective re-selection review.",
+    "Any downstream adaptive implementation that treats pitch, depth, epsilon, timeout or unresolved cells as truth invalidates the primary selection boundary.",
+    "Any exact-cell control sharing the primary classifier/material representation or being used outside proved semialgebraic admission invalidates challenger independence.",
+    "Any promotion of directional, mesh or sparse representations to canonical authority, or backend component identity to durable body/lineage, invalidates the selected architecture.",
+    "Any change to the MC-049 frozen generator/record denominator requires a new reviewed freeze identity; failures may not be removed by editing the historical selection evidence.",
+    "Future blocker resolution or native qualification may strengthen the route prospectively but must preserve all negative candidate evidence and producing identities."
+  ]
+}
