@@ -20,7 +20,7 @@ MC-014 now builds F13–F16 as the final prospective corpus tranche in `research
 
 ## Material comparison
 
-Certificates must relate the candidate geometry B to nominal material M, not only compare scalar volumes. A checked common sandwich `L ⊆ M ⊆ U` and `L ⊆ B ⊆ U` bounds their symmetric difference inside `U \\ L`; a certified volume of that band can bound missing/extra material. It does not establish distance or topology. Use stronger directional enclosures or exact comparison where needed. A broad interval containing both correct and materially wrong answers is inconclusive.
+Certificates must relate the candidate geometry B to nominal material M, not only compare scalar volumes. A checked common sandwich `L ⊆ M ⊆ U` and `L ⊆ B ⊆ U` bounds their symmetric difference inside `U \ L`; a certified volume of that band can bound missing/extra material. It does not establish distance or topology. Use stronger directional enclosures or exact comparison where needed. A broad interval containing both correct and materially wrong answers is inconclusive.
 
 Record outward rounding, precision, evaluator bounds, local hypotheses and aggregation. Omitted unresolved cells, unproved numeric error and candidate-supplied `SOLVED` strings cannot pass. Prefer a small independently reviewed checker when its certificate statement actually covers the claim.
 
