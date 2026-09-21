@@ -1,0 +1,73 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-023",
+  "result_kind": "COMPLETED_RESEARCH",
+  "evidence_class": ["DETERMINISTIC_MODEL", "REVIEWED_ARGUMENT", "BOUNDARY_AND_ADVERSARIAL_CONTROLS", "DOCUMENTATION_RECONCILIATION"],
+  "source_baseline": "318f9173466c20116236167183d8524e076e34c0",
+  "issue": 85,
+  "dependency_artifacts": [
+    {"task":"MC-005","path":"research/machining-completeness/tasks/MC-005/outcome.json","blob_sha":"adec886597a06345fdfdf65ee018596cd396d249","result_kind":"CAPABILITY_ACCEPTED"},
+    {"task":"MC-010","path":"research/machining-completeness/tasks/MC-010/outcome.json","blob_sha":"4960730316f89dbb3fbf958d054127fa4fc0d789","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-058","path":"research/machining-completeness/tasks/MC-058/outcome.json","blob_sha":"038fccda9142650ee7e29c626aeb8e4602420278","result_kind":"COMPLETED_RESEARCH"}
+  ],
+  "accepted_claims": [
+    "setup-local certified sweeps can be composed in a durable common workpiece frame under explicit right-handed parent-from-child rigid-transform semantics",
+    "re-clamp and cross-machine setup transitions are non-cutting immutable journal events and cannot reinterpret historical geometry or reset inherited MC-058 uncertainty",
+    "every material-changing operation must bind the exact input revision and durable journal body_id; backend topology order, size, proximity or only-body guessing are not target authority",
+    "bounded exact-rational full-3D controls preserve an unrelated body and the intended target material across an identity lathe setup followed by a 90-degree reoriented mill setup",
+    "exact equality and signed-neighbour controls distinguish the transformed sweep boundary without binary-float or global-epsilon authority",
+    "connectivity changes remain explicit material_body_transition obligations rather than being guessed by this bounded composition control"
+  ],
+  "open_claims": [
+    "native Boolean/material realization and automatic split/merge connectivity detection remain downstream work",
+    "provider-specific unresolved exact transcendental/coupled-event blockers remain propagated and are not discharged by frame composition",
+    "reconstruction, STEP and independent-consumer qualification remain downstream work",
+    "practical scale remains unqualified",
+    "MC-B, MC-C, MC-D, MC-E, MC-F and MC-1 remain NOT_ESTABLISHED"
+  ],
+  "native_execution": false,
+  "artifacts": [
+    "research/machining-completeness/tasks/MC-023/multi-setup-composition-contract-v1.json",
+    "research/machining-completeness/tasks/MC-023/multi_setup.py",
+    "research/machining-completeness/tasks/MC-023/report.md",
+    "research/machining-completeness/tasks/MC-023/outcome.json",
+    "research/machining-completeness/tasks/MC-023/verify.py",
+    "docs/machining-completeness/18-MC023-MULTI-SETUP-COMPOSITION.md",
+    "research/machining-completeness/outcomes-v1.json",
+    ".github/workflows/mc1-static.yml"
+  ],
+  "verification": [
+    "python3 research/machining-completeness/tasks/MC-023/verify.py --contract",
+    "python3 research/machining-completeness/tasks/MC-023/verify.py --self-test",
+    "python3 tools/mc_workflow.py verify MC-023",
+    "python3 tools/validate_machining_completeness.py --self-test",
+    "python3 tools/mc_workflow.py sync --check"
+  ],
+  "adversarial_controls": [
+    "reject inverse transform substituted for declared forward setup mapping",
+    "reject transform composition-order swap and left-handed reflection",
+    "reject stale input revision and missing/ambiguous target body",
+    "reject cross-body material removal and re-clamp material mutation",
+    "reject backend topology, largest-body or only-body target authority",
+    "reject error reset at re-clamp/machine transition",
+    "reject source-journal rewrite/provider-history collapse",
+    "reject binary-float/global-epsilon certifying authority",
+    "reject premature MC-B promotion"
+  ],
+  "resources": {"native_permit_required": false, "native_or_paid_campaign_run": false},
+  "review": {
+    "disposition": "bounded common-frame multi-setup composition established with exact reorientation/body-target controls; native material/topology and provider analytic blockers remain open",
+    "gate_changed": false,
+    "gate": "MC-B",
+    "gate_status": "NOT_ESTABLISHED",
+    "programme_capability_changed": false,
+    "downstream_release": "MC-026 and later native/material tasks may consume the MC-023 composition contract while retaining all provider, topology, output and qualification obligations"
+  },
+  "blockers": [],
+  "downstream_invalidations": [
+    "Any change to canonical transform direction/order/units/handedness or setup semantics requires prospective reconciliation of MC-023.",
+    "Any implementation that selects a target from kernel topology identity/order/size/proximity instead of the bound durable body invalidates MC-023 body-target evidence.",
+    "Any transition that mutates historical source records, silently discards detached material, guesses a split/merge lineage, or resets inherited error invalidates the affected evidence.",
+    "Future native material or provider-event results supplement this record; they do not rewrite its bounded research evidence."
+  ]
+}
