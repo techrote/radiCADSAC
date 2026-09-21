@@ -1,0 +1,340 @@
+{
+  "schema": "radicadsac-mc016-representability-screen/1.0",
+  "task": "MC-016",
+  "issue": 78,
+  "source_baseline": "b2fac16b2285b4cb517e3e01c58a9900152327b5",
+  "hypothesis": "Difficult valid machining-generated material states can be separated into conventional advanced-B-rep strategies where STEP semantics are structurally adequate, while cases whose faithful output would require changed body/contact/empty semantics can be isolated as explicit blockers without healing, fusing, dropping, triangulating or tolerance-collapsing material.",
+  "falsification": "The screen fails if any required obstruction class has neither a qualifying native witness nor an explicit blocker; if a proposed route changes nominal material, durable body identity or lineage; if mesh/faceted wrapping is treated as engineering success; if exact-zero and positive-volume neighbours are collapsed by tolerance; or if MC-C is promoted without complete native output and downstream-consumer evidence.",
+  "dependencies": [
+    {
+      "task": "MC-002",
+      "path": "research/machining-completeness/tasks/MC-002/outcome.json",
+      "blob_sha": "930db704e9dd29955e7af99ba793c74e0cfda325",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-003",
+      "path": "research/machining-completeness/tasks/MC-003/outcome.json",
+      "blob_sha": "8f335f59f36c8761844806f9059af4a4f1671044",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-010",
+      "path": "research/machining-completeness/tasks/MC-010/outcome.json",
+      "blob_sha": "4960730316f89dbb3fbf958d054127fa4fc0d789",
+      "result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "historical_source_pins": [
+    {
+      "role": "native-occt-step-roundtrip-and-negative-controls",
+      "path": "research/rcs-011/measured-summary-v1.json",
+      "blob_sha": "56be7de5a5b848007053597a437aaccbae4ed434",
+      "evidence_class": "MEASURED_NATIVE_GEOMETRY"
+    },
+    {
+      "role": "independent-material-and-external-comparator-controls",
+      "path": "research/rcs-021/measured-summary-v1.json",
+      "blob_sha": "b5f0cd8c06fdde15680e4a25da36cf81d762f996",
+      "evidence_class": "MIXED_MEASURED_ORACLE_EXTERNAL_GEOMETRY"
+    },
+    {
+      "role": "exact-small-material-boundary-controls",
+      "path": "research/rcs-012/measured-summary-v1.json",
+      "blob_sha": "45ce54d553a711e7249998fc18cca586e36569fd",
+      "evidence_class": "MEASURED_DETERMINISTIC_MODEL"
+    }
+  ],
+  "standards_sources": [
+    {
+      "id": "STEP-ABSR",
+      "kind": "SOURCE_FACT",
+      "url": "https://www.steptools.com/stds/stp_aim/html/t_advanced_brep_shape_representation.html",
+      "claim": "advanced_brep_shape_representation restricts representation items to advanced B-rep-compatible items and requires at least one MANIFOLD_SOLID_BREP or MAPPED_ITEM; the item set is not restricted to one solid."
+    },
+    {
+      "id": "STEP-MSB",
+      "kind": "SOURCE_FACT",
+      "url": "https://www.steptools.com/docs/stp_aim/html/t_manifold_solid_brep.html",
+      "claim": "manifold_solid_brep represents its outer boundary as one CLOSED_SHELL."
+    },
+    {
+      "id": "STEP-BWV",
+      "kind": "SOURCE_FACT",
+      "url": "https://www.steptools.com/stds/smrl/data/resource_docs/geometric_and_topological_representation/sys/6_schema.htm",
+      "claim": "brep_with_voids is a manifold_solid_brep with one or more oriented closed-shell voids; its informal propositions require void shells to be disjoint from the outer shell and each other and enclosed by the outer shell."
+    }
+  ],
+  "programme_rules": {
+    "primary_output": "STEP",
+    "faceted_or_tessellated_as_primary_engineering_success": false,
+    "may_drop_positive_volume_material": false,
+    "may_fuse_durable_bodies_at_contact": false,
+    "may_invent_residual_solid_for_empty_material": false,
+    "exact_zero_and_positive_neighbours_must_remain_distinct": true,
+    "changed_output_semantics_owner": "MC-054",
+    "independent_consumer_owner": "MC-017"
+  },
+  "obstruction_classes": [
+    {
+      "id": "OC-016-01",
+      "name": "regular-manifold-nonempty",
+      "boundary_kind": "regular closed manifold boundary",
+      "native_witness": {
+        "qualifying": true,
+        "source": "research/rcs-011/measured-summary-v1.json",
+        "fact": "32 successful STEP-required exact-strategy attempts wrote and freshly re-read AP242DIS millimetre B-rep within the historical campaign budgets.",
+        "scope": "bounded historical RCS-011 exact-strategy cases only; not universal material correctness"
+      },
+      "strategy": {
+        "status": "WITNESSED_BOUNDED",
+        "step_form": "ADVANCED_BREP_SHAPE_REPRESENTATION containing MANIFOLD_SOLID_BREP",
+        "requirements": [
+          "closed shell",
+          "advanced faces/trim structure as required by selected AP profile",
+          "fresh readback",
+          "independent comparison to nominal material"
+        ],
+        "forbidden": [
+          "FACETED_BREP_AS_PRIMARY_SUCCESS",
+          "TESSELLATED_BREP_AS_PRIMARY_SUCCESS"
+        ]
+      },
+      "blocker_id": null
+    },
+    {
+      "id": "OC-016-02",
+      "name": "enclosed-disjoint-cavity",
+      "boundary_kind": "one outer closed shell with one or more disjoint enclosed void shells",
+      "native_witness": {
+        "qualifying": false,
+        "source": null,
+        "fact": "No source-bound machining-generated native STEP witness satisfying this class was identified in the accepted dependencies/historical evidence.",
+        "scope": "none"
+      },
+      "strategy": {
+        "status": "STRUCTURALLY_AVAILABLE_UNWITNESSED",
+        "step_form": "BREP_WITH_VOIDS",
+        "requirements": [
+          "each void shell closed",
+          "each void shell disjoint from outer shell and other void shells",
+          "each void shell enclosed within outer shell",
+          "native write/read and consumer validation"
+        ],
+        "forbidden": [
+          "HEAL_VOID_TO_OUTER",
+          "DROP_VOID"
+        ]
+      },
+      "blocker_id": "RB-016-01"
+    },
+    {
+      "id": "OC-016-03",
+      "name": "multiple-disconnected-positive-volume-components",
+      "boundary_kind": "two or more disconnected regular positive-volume material components",
+      "native_witness": {
+        "qualifying": false,
+        "source": "research/rcs-021/measured-summary-v1.json",
+        "fact": "The historical cut-through control preserved body_count=2 in the independent oracle, directional candidate and external comparator, but did not establish native STEP representation plus independent engineering use.",
+        "scope": "material/body witness only, not qualifying STEP output witness"
+      },
+      "strategy": {
+        "status": "STRUCTURALLY_AVAILABLE_UNWITNESSED",
+        "step_form": "multiple MANIFOLD_SOLID_BREP items in one ADVANCED_BREP_SHAPE_REPRESENTATION",
+        "requirements": [
+          "one faithful solid item per retained durable material body unless a reviewed profile specifies otherwise",
+          "no fusion at zero-volume contact",
+          "body/lineage binding survives write/read",
+          "independent consumer preserves component meaning"
+        ],
+        "forbidden": [
+          "KEEP_LARGEST_ONLY",
+          "FUSE_COMPONENTS",
+          "DROP_SMALL_COMPONENT"
+        ]
+      },
+      "blocker_id": "RB-016-02"
+    },
+    {
+      "id": "OC-016-04",
+      "name": "positive-micro-bridge-or-sliver",
+      "boundary_kind": "positive-volume connection or remnant arbitrarily close to the requested resolution boundary",
+      "native_witness": {
+        "qualifying": false,
+        "source": "research/rcs-021/measured-summary-v1.json",
+        "fact": "The 1 um plunge retained positive physical removal while the historical external comparator explicitly refused resolution-qualified authority; RCS-012 also records a positive 1 um cusp erased by coarse occupancy.",
+        "scope": "boundary/material witness; no qualifying native STEP witness"
+      },
+      "strategy": {
+        "status": "CONDITIONAL_MANIFOLD_ROUTE_UNWITNESSED",
+        "step_form": "ordinary analytic/certified MANIFOLD_SOLID_BREP when topology is regular",
+        "requirements": [
+          "positive material cannot be rounded to zero",
+          "writer/sewing tolerances must be bounded below the certified feature separation for that case",
+          "fresh read preserves component/connectivity/material witnesses"
+        ],
+        "forbidden": [
+          "TOLERANCE_ERASE_POSITIVE_MATERIAL",
+          "SEW_ACROSS_GAP",
+          "DROP_SLIVER"
+        ]
+      },
+      "blocker_id": "RB-016-03"
+    },
+    {
+      "id": "OC-016-05",
+      "name": "exact-zero-point-or-edge-contact",
+      "boundary_kind": "distinct regular material regions touching only at point or edge with zero volumetric bridge",
+      "native_witness": {
+        "qualifying": false,
+        "source": null,
+        "fact": "No qualifying machining-generated native STEP/consumer witness was found for the exact-zero contact semantics required by MC-1.",
+        "scope": "none"
+      },
+      "strategy": {
+        "status": "PROFILE_DECISION_REQUIRED",
+        "step_form": "candidate decomposition into multiple MANIFOLD_SOLID_BREP items only if MC-054 approves contact/body semantics",
+        "requirements": [
+          "do not add a positive bridge",
+          "do not fuse durable bodies merely because shells touch",
+          "preserve exact-zero contact as distinct from positive bridge and positive gap",
+          "consumer path must preserve the approved interpretation"
+        ],
+        "forbidden": [
+          "HEAL_CONTACT",
+          "ADD_BRIDGE",
+          "TOLERANCE_FUSE"
+        ]
+      },
+      "blocker_id": "RB-016-04"
+    },
+    {
+      "id": "OC-016-06",
+      "name": "touching-cavity-or-cavity-to-exterior",
+      "boundary_kind": "void boundary touches another void or the exterior at a singular set",
+      "native_witness": {
+        "qualifying": false,
+        "source": null,
+        "fact": "No qualifying machining-generated native STEP/consumer witness was found; BREP_WITH_VOIDS informal propositions require disjoint enclosed void shells.",
+        "scope": "none"
+      },
+      "strategy": {
+        "status": "PROFILE_DECISION_REQUIRED",
+        "step_form": "no accepted single BREP_WITH_VOIDS route for the touching state; decomposition/grouped-solid alternative requires MC-054",
+        "requirements": [
+          "preserve nominal void/material set",
+          "no artificial internal face or positive wall unless physically present",
+          "consumer interpretation must be explicit"
+        ],
+        "forbidden": [
+          "SEPARATE_WITH_FAKE_WALL",
+          "MERGE_VOID_WITH_EXTERIOR_BY_TOLERANCE",
+          "DROP_CAVITY"
+        ]
+      },
+      "blocker_id": "RB-016-04"
+    },
+    {
+      "id": "OC-016-07",
+      "name": "singular-pinch-or-self-contact",
+      "boundary_kind": "non-manifold boundary singularity such as pinch/self-contact generated by a physically valid machining history",
+      "native_witness": {
+        "qualifying": false,
+        "source": null,
+        "fact": "No qualifying machining-generated native STEP/consumer witness was found for a faithful conventional engineering mapping of this singular class.",
+        "scope": "none"
+      },
+      "strategy": {
+        "status": "PROFILE_DECISION_REQUIRED",
+        "step_form": "decomposition/grouped-solid or other conventional profile only after MC-054 defines semantics",
+        "requirements": [
+          "material set unchanged",
+          "durable body/lineage semantics explicit",
+          "no singularity healing by arbitrary tolerance",
+          "independent consumer evidence"
+        ],
+        "forbidden": [
+          "HEAL_PINCH",
+          "DELETE_BRANCH",
+          "TRIANGULATE_AND_COUNT_AS_ENGINEERING_SUCCESS"
+        ]
+      },
+      "blocker_id": "RB-016-04"
+    },
+    {
+      "id": "OC-016-08",
+      "name": "empty-material",
+      "boundary_kind": "valid history leaves no positive-volume workpiece material",
+      "native_witness": {
+        "qualifying": false,
+        "source": null,
+        "fact": "No qualifying native STEP/consumer witness exists for the explicit MC-1 empty-output contract.",
+        "scope": "none"
+      },
+      "strategy": {
+        "status": "PROFILE_DECISION_REQUIRED",
+        "step_form": "explicit empty engineering-output outcome outside nonempty MANIFOLD_SOLID_BREP success semantics",
+        "requirements": [
+          "retain durable exhausted-body/lineage record in programme authority",
+          "do not fabricate a residual solid",
+          "do not count an empty placeholder STEP as successful nonempty export",
+          "MC-054/MC-017 define and test downstream empty handling"
+        ],
+        "forbidden": [
+          "FAKE_EPSILON_SOLID",
+          "EMPTY_PLACEHOLDER_COUNTED_AS_NONEMPTY_PASS",
+          "DROP_LINEAGE"
+        ]
+      },
+      "blocker_id": "RB-016-05"
+    }
+  ],
+  "blockers": [
+    {
+      "id": "RB-016-01",
+      "status": "OPEN",
+      "summary": "No source-bound machining-generated native STEP witness plus independent consumer evidence for BREP_WITH_VOIDS cavity output.",
+      "owners": ["MC-016", "MC-017", "MC-042", "MC-043"],
+      "affected_descendants": ["MC-038", "MC-041", "MC-042", "MC-043", "MC-044", "MC-052"]
+    },
+    {
+      "id": "RB-016-02",
+      "status": "OPEN",
+      "summary": "Multi-solid STEP is structurally expressible but durable-body mapping and independent consumer preservation are not natively qualified.",
+      "owners": ["MC-016", "MC-017", "MC-054", "MC-042", "MC-043"],
+      "affected_descendants": ["MC-024", "MC-027", "MC-028", "MC-029", "MC-030", "MC-038", "MC-041", "MC-044", "MC-052"]
+    },
+    {
+      "id": "RB-016-03",
+      "status": "OPEN",
+      "summary": "No qualifying native STEP write/read witness demonstrates preservation of a certified positive micro-feature at the MC-1 boundary; historical external comparison refused the 1 um case.",
+      "owners": ["MC-016", "MC-042", "MC-043"],
+      "affected_descendants": ["MC-025", "MC-028", "MC-029", "MC-038", "MC-041", "MC-044", "MC-052"]
+    },
+    {
+      "id": "RB-016-04",
+      "status": "OPEN",
+      "summary": "Exact-zero contacts, touching cavities and singular pinches require an explicit MC-054 output-profile decision plus independent-consumer evidence; healing or tolerance fusion is forbidden.",
+      "owners": ["MC-054", "MC-017"],
+      "affected_descendants": ["MC-024", "MC-025", "MC-027", "MC-028", "MC-029", "MC-030", "MC-038", "MC-041", "MC-042", "MC-043", "MC-044", "MC-052"]
+    },
+    {
+      "id": "RB-016-05",
+      "status": "OPEN",
+      "summary": "Empty-material engineering-output semantics are not yet qualified; a fake residual solid or placeholder STEP is not acceptable.",
+      "owners": ["MC-054", "MC-017"],
+      "affected_descendants": ["MC-038", "MC-041", "MC-042", "MC-043", "MC-044", "MC-052"]
+    }
+  ],
+  "capability_guard": {
+    "MC-A": "ACCEPTED",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-C": "NOT_ESTABLISHED",
+    "MC-D": "NOT_ESTABLISHED",
+    "MC-E": "NOT_ESTABLISHED",
+    "MC-F": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED"
+  },
+  "native_execution": false,
+  "result": "COMPLETED_RESEARCH_WITH_OPEN_REPRESENTABILITY_BLOCKERS"
+}
