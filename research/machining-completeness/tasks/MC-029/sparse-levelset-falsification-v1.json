@@ -1,0 +1,104 @@
+{
+  "schema": "radicadsac-mc029-sparse-volume-levelset-falsification/1.0",
+  "task": "MC-029",
+  "issue": 91,
+  "source_baseline": "4f99c99b524049a9e288416f6329e2b14badaded",
+  "result": "NEGATIVE_RESULT_AS_TOTAL_MATERIAL_AUTHORITY",
+  "native_execution": false,
+  "native_or_paid_campaign_run": false,
+  "formal_dependencies": [
+    {"task":"MC-010","path":"research/machining-completeness/tasks/MC-010/outcome.json","blob_sha":"4960730316f89dbb3fbf958d054127fa4fc0d789","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-016","path":"research/machining-completeness/tasks/MC-016/outcome.json","blob_sha":"606a7d0b8be61131b2272f2eb161d6a4dbba703a","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-018","path":"research/machining-completeness/tasks/MC-018/outcome.json","blob_sha":"085f864b4bd58b38f154b6c9d58d9e68b60ee7ec","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-019","path":"research/machining-completeness/tasks/MC-019/outcome.json","blob_sha":"4456c964315c10b46ce61a5a8d4a45e8025730b7","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-020","path":"research/machining-completeness/tasks/MC-020/outcome.json","blob_sha":"19504a35f47bca710bb6369abb723de83d1afede","result_kind":"COMPLETED_RESEARCH"}
+  ],
+  "candidate": {
+    "class": "FINITE_SPARSE_SAMPLED_OR_NARROW_BAND_LEVEL_SET",
+    "sole_material_authority": false,
+    "primary_engineering_output_authority": false,
+    "allowed_retained_role": "BOUNDED_DERIVED_ACCELERATOR_OR_CHALLENGER_BEHIND_CERTIFIED_SOURCE_RELATION",
+    "sampling_resolution_is_authority": false,
+    "refinement_convergence_is_exact_equality": false,
+    "extracted_surface_is_canonical_material": false,
+    "voxel_components_are_durable_body_identity": false
+  },
+  "falsification": {
+    "hypothesis": "A finite sparse sampled or narrow-band level-set pipeline can be the sole authoritative MC-1 material and engineering-output representation for the admitted domain.",
+    "criterion": "Reject the total-authority role if finite sampling, resampling, interpolation or extraction can leave positive material, exact-zero contact, topology or source-faithful boundary location unresolved without an independent exact or outward-certified relation.",
+    "decisive_observations": [
+      "Finite sign samples do not determine sub-cell material topology: a positive-volume feature may lie wholly between sampled nodes with identical corner signs.",
+      "A scalar geometric error bound does not certify discrete topology, durable body identity, lineage or exact-zero contact.",
+      "Resampling and surface extraction add independent approximation terms that cannot be silently folded into the source sweep error.",
+      "Refinement can reduce certified uncertainty but finite resolution alone cannot promote an approximation to exact canonical material truth."
+    ]
+  },
+  "error_contract": {
+    "formula": "e_total = e_source + e_sampling + e_resampling + e_extraction",
+    "terms": {
+      "e_source": "inherited source-sweep enclosure/error; never reset by voxelization",
+      "e_sampling": "certified bound from sampling/reconstruction inside each represented cell",
+      "e_resampling": "additional bound for grid transforms/interpolation/regridding",
+      "e_extraction": "additional bound for isosurface/mesh extraction or downstream conversion"
+    },
+    "all_terms_nonnegative": true,
+    "unknown_term_result": "UNCERTIFIED",
+    "error_scalar_may_decide_topology": false,
+    "error_scalar_may_delete_positive_material": false,
+    "error_scalar_may_fuse_exact_zero_contacts": false
+  },
+  "topology_contract": {
+    "same_corner_sign_implies_uniform_cell": false,
+    "surface_extraction_success_implies_topology_correctness": false,
+    "component_label_is_durable_identity": false,
+    "required_for_discrete_claims": "independent exact/certified topology and body-lineage witness"
+  },
+  "exact_controls": {
+    "hidden_microfeature": {
+      "cell": ["0","1/1000"],
+      "sample_nodes": ["0","1/1000"],
+      "positive_feature": ["499/1000000","501/1000000"],
+      "feature_width": "1/500000",
+      "sample_node_membership_without_feature": [false,false],
+      "sample_node_membership_with_feature": [false,false],
+      "expected": "FINITE_NODE_SIGNS_ARE_INSUFFICIENT_FOR_SUBCELL_POSITIVE_MATERIAL"
+    },
+    "zero_contact": {
+      "stock_interval": ["0","1"],
+      "tangent_sweep_interval": ["1","2"],
+      "penetrating_sweep_interval": ["999999/1000000","2"],
+      "separated_sweep_interval": ["1000001/1000000","2"],
+      "tangent_positive_overlap": "0",
+      "penetrating_positive_overlap": "1/1000000",
+      "separated_positive_overlap": "0"
+    },
+    "error_budget": {"e_source":"1/1000000","e_sampling":"1/2000000","e_resampling":"1/4000000","e_extraction":"1/4000000","e_total":"2/1000000"},
+    "refinement": {"initial_pitch":"1/8","refined_pitch":"1/1024","positive_feature_width":"1/500000","claim":"smaller pitch is not an exactness certificate and does not establish topology unless the feature/event is independently witnessed"}
+  },
+  "required_fail_closed_states": ["UNCERTIFIED_SAMPLING","UNCERTIFIED_RESAMPLING","UNCERTIFIED_EXTRACTION","TOPOLOGY_UNCERTIFIED","SOURCE_RELATION_UNAVAILABLE"],
+  "blockers": [
+    {"id":"PB-007-03","status":"OPEN_PROPAGATED","source_task":"MC-020","affected_descendants":["MC-026","MC-030","MC-031","MC-038"]},
+    {"id":"RB-016-02","status":"OPEN","source_task":"MC-016","affected_descendants":["MC-026","MC-030","MC-038","MC-041","MC-044","MC-052"]},
+    {"id":"RB-016-03","status":"OPEN","source_task":"MC-016","affected_descendants":["MC-026","MC-038","MC-041","MC-044","MC-052"]},
+    {"id":"RB-016-04","status":"OPEN","source_task":"MC-016","affected_descendants":["MC-026","MC-030","MC-038","MC-041","MC-042","MC-043","MC-044","MC-052"]}
+  ],
+  "capability_state": {"MC-A":"ACCEPTED","MC-B":"NOT_ESTABLISHED","MC-C":"NOT_ESTABLISHED","MC-D":"NOT_ESTABLISHED","MC-E":"NOT_ESTABLISHED","MC-F":"NOT_ESTABLISHED","MC-1":"NOT_ESTABLISHED"},
+  "protected_semantics": [
+    "source/audio/provenance semantics remain unchanged",
+    "canonical operation journal remains authoritative and immutable",
+    "positive-volume material may not be deleted by pitch, band width, tolerance or extraction",
+    "durable body identity and lineage remain journal/certificate owned rather than voxel-component owned",
+    "STEP remains mandatory primary engineering output; extracted mesh/isosurface is not a substitute"
+  ],
+  "retained_role": {
+    "status": "ELIGIBLE_ONLY_AS_BOUNDED_DERIVED_ACCELERATOR_OR_CHALLENGER",
+    "requirements": [
+      "independently qualified source-faithful sweep/material relation",
+      "explicit e_source, e_sampling, e_resampling and e_extraction certificate",
+      "fail closed on unresolved positive-volume or exact-zero distinctions",
+      "independent topology/body-lineage witness for discrete claims",
+      "primary STEP qualification remains external",
+      "failure dispatch is non-cycling and preserves the original request"
+    ]
+  }
+}
