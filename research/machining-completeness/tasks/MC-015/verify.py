@@ -114,7 +114,7 @@ def verify_contract() -> None:
 
     doc = (ROOT / "docs/machining-completeness/03-ORACLE-AND-CORPUS.md").read_text(encoding="utf-8")
     assert "MC-015 now" in doc
-    assert "certificate" in doc.lower() and "NOT_ESTABLISHED" in doc
+    assert "certificate" in doc.lower() and "does not" in doc.lower() and "establish MC-B" in doc
 
     workflow = (ROOT / ".github/workflows/mc1-static.yml").read_text(encoding="utf-8")
     assert "tasks/MC-015/certificate_checker.py" in workflow
