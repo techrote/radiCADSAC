@@ -1,0 +1,153 @@
+{
+  "schema": "radicadsac-mc021-lathe-rotational-reduction/1.0",
+  "task": "MC-021",
+  "issue": 83,
+  "source_baseline": "11e7023edff0469b4b9f72193e8096512075afae",
+  "result": "COMPLETED_RESEARCH_SUFFICIENT_ROTATIONAL_REDUCTION_ADMISSION",
+  "native_execution": false,
+  "formal_dependencies": [
+    {
+      "task": "MC-005",
+      "path": "research/machining-completeness/tasks/MC-005/outcome.json",
+      "blob_sha": "adec886597a06345fdfdf65ee018596cd396d249",
+      "result_kind": "CAPABILITY_ACCEPTED"
+    },
+    {
+      "task": "MC-010",
+      "path": "research/machining-completeness/tasks/MC-010/outcome.json",
+      "blob_sha": "4960730316f89dbb3fbf958d054127fa4fc0d789",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-058",
+      "path": "research/machining-completeness/tasks/MC-058/outcome.json",
+      "blob_sha": "038fccda9142650ee7e29c626aeb8e4602420278",
+      "result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "authority": {
+    "domain_profile": "MC-A accepted current tranche: conventional lathe plus fixed-axis three-axis mill with explicit finite setup histories",
+    "source_profile": "mc-exact-source/1.0",
+    "material_semantics": "M_next = closure(interior(M \\ S))",
+    "saved_operation_is_immutable": true,
+    "engagement_boundaries_are_authoritative": true,
+    "positive_volume_material_may_not_be_erased_by_tolerance": true,
+    "durable_body_identity_is_not_backend_topology": true,
+    "native_geometry_claimed": false
+  },
+  "theorem": {
+    "name": "full-orbit quotient sufficiency",
+    "statement": "If the selected target material is invariant under the declared spindle SO(2) action, the setup maps that material axis exactly and coaxially to the spindle axis, and engaged cutter placement factors as K(q,theta)=R_theta A(q) over the product domain Q x S1 with phase-independent A(q), then the cutter sweep and regularized post-cut material are SO(2)-invariant and may be represented in the exact (r,z) meridian quotient for that operation.",
+    "scope": "sufficient admission predicate, not a necessary characterization of every reducible lathe history",
+    "proof_obligations": [
+      "target material invariance is certified for the exact durable target body and setup revision",
+      "spindle/material axes are exactly coaxial under the source setup transform",
+      "for every admitted meridian state q the full phase orbit S1 is engaged; finite sampled angles are not equivalent",
+      "meridian placement A(q) does not depend on spindle phase",
+      "cutter cutting and non-cutting regions plus physical access/clearance remain separately witnessed",
+      "regularized subtraction and durable-body transitions preserve source identity semantics"
+    ]
+  },
+  "admission_predicate": {
+    "required_true": [
+      "target_axisymmetry_certificate",
+      "certificate_bound_to_target_body",
+      "certificate_bound_to_setup_revision",
+      "coaxial_spindle_and_material_axis",
+      "rigid_setup_transform_exact",
+      "phase_independent_meridian_placement",
+      "engagement_factors_as_meridian_times_full_turn",
+      "full_phase_orbit_for_every_meridian_state",
+      "saved_operation_immutable",
+      "engagement_boundaries_authoritative",
+      "cutting_and_noncutting_regions_distinct",
+      "physical_access_witness_present",
+      "holder_clearance_witness_present",
+      "durable_body_identity_preserved"
+    ],
+    "required_false": [
+      "eccentric_setup",
+      "phase_synchronization",
+      "timed_phase_motion_required_for_geometry",
+      "partial_phase_engagement",
+      "compound_live_tool_kinematics",
+      "sampled_angle_authority",
+      "global_epsilon_authority"
+    ],
+    "phase_domain": "FULL_S1_FOR_EACH_MERIDIAN_STATE",
+    "material_representation": "EXACT_AXISYMMETRIC_MERIDIAN",
+    "fallback_owner": "MC-022",
+    "operation_name_is_not_admission_evidence": true,
+    "ordinary_od_or_facing_label_alone_is_insufficient": true,
+    "nonaxisymmetric_target_material_rejects_material_domain_reduction": true
+  },
+  "bounded_executable_subtype": {
+    "name": "exact_rational_meridian_rectangles_v1",
+    "material": "finite disjoint union of strictly positive-area [r0,r1]x[z0,z1] rectangles with exact rational bounds and r0>=0",
+    "cutter": "finite positive-volume cutter source whose full spindle orbit has an exact rational meridian-rectangle image; a finite cylindrical wedge is the canonical control",
+    "motion": "stationary or exact rational line translation in the meridian quotient under an already-proved Q x S1 engagement factorization",
+    "membership": "one shared exact source parameter must satisfy radial and axial bands",
+    "cartesian_control": "squared-radius comparisons and exact rational-radius 3-4-5 controls avoid trigonometric or binary-float predicate authority",
+    "volume": "solid-of-revolution volume is retained symbolically as an exact rational coefficient times pi"
+  },
+  "independent_controls": [
+    "stationary full-orbit cutter equality and signed radial neighbours",
+    "off-axis 3-4-5 Cartesian points with the same exact radius classify identically",
+    "simultaneous radial/axial line motion requires one shared source parameter and rejects a decoupled endpoint-bounding-box false positive",
+    "exact tangent contact removes zero positive volume while a rational signed penetration removes positive volume",
+    "axisymmetric parting cut through r=0..R yields two positive-volume meridian components without discarding either",
+    "a nonaxisymmetric target certificate failure rejects the reduction even when the cutter orbit itself is rotationally invariant",
+    "eccentric, synchronized, timed-phase, partial-orbit and sampled-angle cases reject to MC-022"
+  ],
+  "forbidden_shortcuts": [
+    "assuming axisymmetry from an operation label such as OD turning or facing",
+    "replacing full S1 phase coverage by N sampled spindle angles",
+    "dropping spindle/feed chronology when geometry depends on phase",
+    "treating an eccentric or tilted setup as coaxial",
+    "reducing a nonaxisymmetric durable target body to a meridian material domain",
+    "using a global epsilon or binary float as exact contact authority",
+    "merging durable bodies because their revolved boundaries touch",
+    "discarding holder/access witnesses because the quotient cutter sweep is valid",
+    "rewriting the canonical operation journal to the reduced representation",
+    "promoting deterministic model evidence to native geometry evidence"
+  ],
+  "routing": {
+    "rejected_phase_sensitive_cases": "MC-022",
+    "reclamp_reorientation_and_multi_setup_composition": "MC-023",
+    "form_tool_local_geometry": "MC-020",
+    "general_curve_transform_enclosures": "MC-058"
+  },
+  "retained_open_obligations": [
+    {
+      "id": "PB-007-01",
+      "status": "OPEN",
+      "owner": "MC-022/MC-032/MC-038",
+      "reason": "the quotient predicate does not decide required tangential/multiple/singular transcendental phase events outside its admitted full-orbit factorization"
+    },
+    {
+      "id": "PB-007-02",
+      "status": "OPEN",
+      "owner": "MC-022/MC-038",
+      "reason": "general coupled helical/spindle-feed/eccentric sweep membership remains outside the rotational-reduction fast path"
+    },
+    {
+      "id": "PB-007-03",
+      "status": "OPEN_PROPAGATED",
+      "owner": "MC-020/MC-026/MC-038",
+      "reason": "arbitrary admitted form/undercut cutter source codec remains broader than the bounded MC-020 subtype"
+    }
+  ],
+  "programme_boundary": {
+    "PO-02": "OPEN",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-06": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-C": "NOT_ESTABLISHED",
+    "MC-D": "NOT_ESTABLISHED",
+    "MC-E": "NOT_ESTABLISHED",
+    "MC-F": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "native_or_paid_campaign_run": false
+  }
+}
