@@ -1,0 +1,502 @@
+{
+  "schema": "radicadsac-mc049-final-challenge-contract/1.0",
+  "task": "MC-049",
+  "issue": 111,
+  "source_baseline": "3f8e695838b41913b5a05a0b235e7b3ff118e04f",
+  "status": "FROZEN_PRESELECTION",
+  "evidence_class": [
+    "DESIGN_DECISION",
+    "MEASURED_DETERMINISTIC_MODEL",
+    "DOCUMENTATION_RECONCILIATION"
+  ],
+  "freeze": {
+    "must_precede": "MC-026",
+    "candidate_selection_observed_at_freeze": false,
+    "candidate_identity_is_generator_input": false,
+    "candidate_feedback_may_change_cases": false,
+    "post_freeze_change_rule": "Any generator, seed, family, oracle/checker or challenge-procedure change creates a new reviewed version; it may not retroactively replace a challenge after candidate selection or execution."
+  },
+  "custody": {
+    "classification": "PUBLIC_PRESELECTION_PREREGISTRATION",
+    "independent_custodian": false,
+    "held_out": false,
+    "secret_seed": false,
+    "later_independent_execution_owner": "MC-057",
+    "claim": "This freeze is candidate-blind and public before selection. It is not labelled independent or held-out; MC-057 must record any later independent custody/execution honestly."
+  },
+  "generator": {
+    "algorithm_id": "mc049-candidate-blind-final-challenge-v1",
+    "implementation": "research/machining-completeness/tasks/MC-049/challenge_generator.py",
+    "seed_utf8": "radiCADSAC-MC-049-public-preselection-v1",
+    "seed_sha256": "45b24a9f9bdf2127bba65a0b5f30842c74a64000ce3292ad0017fbe56e473cae",
+    "canonicalization": "UTF-8 JSON, sort_keys=true, separators=comma-colon, no binary floating-point values",
+    "challenge_id": "SHA-256(seed || NUL || family || NUL || class || NUL || procedure), first 16 hex",
+    "ordering": "ascending full SHA-256 of the same tuple",
+    "challenges_per_family": 4
+  },
+  "dependency_artifacts": [
+    {
+      "task": "MC-005",
+      "path": "research/machining-completeness/tasks/MC-005/outcome.json",
+      "blob_sha": "adec886597a06345fdfdf65ee018596cd396d249",
+      "result_kind": "CAPABILITY_ACCEPTED"
+    },
+    {
+      "task": "MC-009",
+      "path": "research/machining-completeness/tasks/MC-009/outcome.json",
+      "blob_sha": "3a2c52997ace526add72b0f2051e6b5120c0a44d",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-010",
+      "path": "research/machining-completeness/tasks/MC-010/outcome.json",
+      "blob_sha": "4960730316f89dbb3fbf958d054127fa4fc0d789",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-011",
+      "path": "research/machining-completeness/tasks/MC-011/outcome.json",
+      "blob_sha": "939f8a6ce8bf4fa8cb5c08d854cc0d3c30aea32f",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-012",
+      "path": "research/machining-completeness/tasks/MC-012/outcome.json",
+      "blob_sha": "378700980c686566eeffa0b21981480fa9bbf700",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-013",
+      "path": "research/machining-completeness/tasks/MC-013/outcome.json",
+      "blob_sha": "6f0becdec6d1041c869b45a3da348fd191997496",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-014",
+      "path": "research/machining-completeness/tasks/MC-014/outcome.json",
+      "blob_sha": "9a70377c92c37272331fb5a76fc3ec25c23f4d8a",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-015",
+      "path": "research/machining-completeness/tasks/MC-015/outcome.json",
+      "blob_sha": "c334e7d9ed9aea5541338e0c0397f6b0e98ff3e6",
+      "result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "reviewed_auxiliary_inputs": [
+    {
+      "task": "MC-004",
+      "path": "research/machining-completeness/tasks/MC-004/qualification-contract-v1.json",
+      "blob_sha": "22d5f976718edac9a8ccce3cb46f799b76e85ab4",
+      "purpose": "accepted MC-A workload/accuracy request source; not an added graph dependency",
+      "candidate_blind_workload_seed_sha256": "7b5197a80c458cad264f135ef943339097285a68a201dc88250c943ac7586e74"
+    }
+  ],
+  "source_pins": [
+    {
+      "role": "fixture-registry",
+      "path": "research/machining-completeness/fixture-families-v1.json",
+      "blob_sha": "d38b1bff84166b1d0fe2c91b94006ccfdce0f287"
+    },
+    {
+      "role": "qualification-contract",
+      "path": "research/machining-completeness/tasks/MC-004/qualification-contract-v1.json",
+      "blob_sha": "22d5f976718edac9a8ccce3cb46f799b76e85ab4"
+    },
+    {
+      "role": "binding-contract",
+      "path": "research/machining-completeness/tasks/MC-009/verifier-contract-v1.json",
+      "blob_sha": "e41af83f7f82cabf59e66b8e36647b53f99a5c88"
+    },
+    {
+      "role": "exact-oracle",
+      "path": "research/machining-completeness/tasks/MC-010/independent_exact_oracle.py",
+      "blob_sha": "cfb5a8def57e8f4bb5109982da456621766a2b22"
+    },
+    {
+      "role": "F01-F04-corpus",
+      "path": "research/machining-completeness/tasks/MC-011/physical-corpus-f01-f04-v1.json",
+      "blob_sha": "e094a21a401f28c776d5065c36f629b75b2a82b7"
+    },
+    {
+      "role": "F01-F04-oracle",
+      "path": "research/machining-completeness/tasks/MC-011/fixture_oracle.py",
+      "blob_sha": "6e1092976ec7c4379193c0ee6897578c3f0cddb7"
+    },
+    {
+      "role": "F05-F08-corpus",
+      "path": "research/machining-completeness/tasks/MC-012/physical-corpus-f05-f08-v1.json",
+      "blob_sha": "8bb04fd5c643d02c42d2b58e49192ddb346b5b3f"
+    },
+    {
+      "role": "F05-F08-oracle",
+      "path": "research/machining-completeness/tasks/MC-012/fixture_oracle.py",
+      "blob_sha": "2f0c7f5ff91ce9f82b591267d3ba1b3070c34e54"
+    },
+    {
+      "role": "F09-F12-corpus",
+      "path": "research/machining-completeness/tasks/MC-013/physical-corpus-f09-f12-v1.json",
+      "blob_sha": "cc02473bc7afc47dface7812f9fbbbc3f41b9fa4"
+    },
+    {
+      "role": "F09-F12-oracle",
+      "path": "research/machining-completeness/tasks/MC-013/fixture_oracle.py",
+      "blob_sha": "f0e64a7ced8e57de21a24fffa55609e2dff04aca"
+    },
+    {
+      "role": "F13-F16-corpus",
+      "path": "research/machining-completeness/tasks/MC-014/physical-corpus-f13-f16-v1.json",
+      "blob_sha": "391ca8723046284c7f8a54ce2c93b29f39cec566"
+    },
+    {
+      "role": "F13-F16-oracle",
+      "path": "research/machining-completeness/tasks/MC-014/fixture_oracle.py",
+      "blob_sha": "4bf04b4520995ba20e14f337549f1f667776b1ef"
+    },
+    {
+      "role": "certificate-attack-contract",
+      "path": "research/machining-completeness/tasks/MC-015/certificate-attack-contract-v1.json",
+      "blob_sha": "f9b7324644db9af125baf14b37c06bae16a24ff3"
+    },
+    {
+      "role": "certificate-checker",
+      "path": "research/machining-completeness/tasks/MC-015/certificate_checker.py",
+      "blob_sha": "4af2c87db665e357d66727ee64257f8dfbc55f88"
+    }
+  ],
+  "protected_semantics": {
+    "historical_rcs_sources_immutable": true,
+    "source_audio_provenance_preserved": true,
+    "canonical_journal_preserved": true,
+    "positive_volume_material_noncompensating": true,
+    "durable_body_identity_and_lineage_noncompensating": true,
+    "native_or_paid_execution_authorized": false
+  },
+  "verdict_policy": {
+    "timeout_is_pass": false,
+    "resource_exhaustion_is_pass": false,
+    "pending_or_refusal_is_pass": false,
+    "candidate_success_is_oracle": false,
+    "missing_mandatory_family_is_pass": false,
+    "candidate_may_rewrite_expected_truth": false
+  },
+  "required_families": [
+    "F01",
+    "F02",
+    "F03",
+    "F04",
+    "F05",
+    "F06",
+    "F07",
+    "F08",
+    "F09",
+    "F10",
+    "F11",
+    "F12",
+    "F13",
+    "F14",
+    "F15",
+    "F16"
+  ],
+  "required_challenge_classes": [
+    "baseline",
+    "boundary",
+    "metamorphic",
+    "corruption"
+  ],
+  "families": [
+    {
+      "id": "F01",
+      "mandatory": true,
+      "owner": "MC-011",
+      "corpus_path": "research/machining-completeness/tasks/MC-011/physical-corpus-f01-f04-v1.json",
+      "corpus_blob_sha": "e094a21a401f28c776d5065c36f629b75b2a82b7",
+      "oracle_path": "research/machining-completeness/tasks/MC-011/fixture_oracle.py",
+      "oracle_blob_sha": "6e1092976ec7c4379193c0ee6897578c3f0cddb7",
+      "challenge_slots": [
+        {"class": "baseline", "procedure": "self_crossing_jitter_overlap"},
+        {"class": "boundary", "procedure": "tangent_vs_penetrating_entry_exit"},
+        {"class": "metamorphic", "procedure": "exact_retrace_idempotence"},
+        {"class": "corruption", "procedure": "collapse_jitter_or_contact_sign"}
+      ],
+      "accuracy_profiles": ["A-SEMANTIC", "A-ENGINEERING", "A-PRECISION-BOUNDARY"],
+      "required_stages": ["material", "topology_or_identity", "certificate", "engineering_output_when_applicable"]
+    },
+    {
+      "id": "F02",
+      "mandatory": true,
+      "owner": "MC-011",
+      "corpus_path": "research/machining-completeness/tasks/MC-011/physical-corpus-f01-f04-v1.json",
+      "corpus_blob_sha": "e094a21a401f28c776d5065c36f629b75b2a82b7",
+      "oracle_path": "research/machining-completeness/tasks/MC-011/fixture_oracle.py",
+      "oracle_blob_sha": "6e1092976ec7c4379193c0ee6897578c3f0cddb7",
+      "challenge_slots": [
+        {"class": "baseline", "procedure": "positive_thin_web"},
+        {"class": "boundary", "procedure": "positive_zero_negative_web_transition"},
+        {"class": "metamorphic", "procedure": "rigid_transform_covariance"},
+        {"class": "corruption", "procedure": "delete_positive_web_or_bridge_zero"}
+      ],
+      "accuracy_profiles": ["A-SEMANTIC", "A-ENGINEERING", "A-PRECISION-BOUNDARY"],
+      "required_stages": ["material", "topology_or_identity", "certificate", "engineering_output_when_applicable"]
+    },
+    {
+      "id": "F03",
+      "mandatory": true,
+      "owner": "MC-011",
+      "corpus_path": "research/machining-completeness/tasks/MC-011/physical-corpus-f01-f04-v1.json",
+      "corpus_blob_sha": "e094a21a401f28c776d5065c36f629b75b2a82b7",
+      "oracle_path": "research/machining-completeness/tasks/MC-011/fixture_oracle.py",
+      "oracle_blob_sha": "6e1092976ec7c4379193c0ee6897578c3f0cddb7",
+      "challenge_slots": [
+        {"class": "baseline", "procedure": "rounded_simultaneous_xyz_remachining"},
+        {"class": "boundary", "procedure": "tangent_and_signed_spherical_neighbours"},
+        {"class": "metamorphic", "procedure": "subdivision_equivalence"},
+        {"class": "corruption", "procedure": "flatten_z_or_drop_reversal"}
+      ],
+      "accuracy_profiles": ["A-SEMANTIC", "A-ENGINEERING", "A-PRECISION-BOUNDARY"],
+      "required_stages": ["material", "topology_or_identity", "certificate", "engineering_output_when_applicable"]
+    },
+    {
+      "id": "F04",
+      "mandatory": true,
+      "owner": "MC-011",
+      "corpus_path": "research/machining-completeness/tasks/MC-011/physical-corpus-f01-f04-v1.json",
+      "corpus_blob_sha": "e094a21a401f28c776d5065c36f629b75b2a82b7",
+      "oracle_path": "research/machining-completeness/tasks/MC-011/fixture_oracle.py",
+      "oracle_blob_sha": "6e1092976ec7c4379193c0ee6897578c3f0cddb7",
+      "challenge_slots": [
+        {"class": "baseline", "procedure": "reclamped_side_access_crossing"},
+        {"class": "boundary", "procedure": "top_side_survivor_body_witnesses"},
+        {"class": "metamorphic", "procedure": "qualified_rigid_transform_covariance"},
+        {"class": "corruption", "procedure": "identity_transform_or_reset_body"}
+      ],
+      "accuracy_profiles": ["A-SEMANTIC", "A-ENGINEERING", "A-PRECISION-BOUNDARY"],
+      "required_stages": ["material", "topology_or_identity", "certificate", "engineering_output_when_applicable"]
+    },
+    {
+      "id": "F05",
+      "mandatory": true,
+      "owner": "MC-012",
+      "corpus_path": "research/machining-completeness/tasks/MC-012/physical-corpus-f05-f08-v1.json",
+      "corpus_blob_sha": "8bb04fd5c643d02c42d2b58e49192ddb346b5b3f",
+      "oracle_path": "research/machining-completeness/tasks/MC-012/fixture_oracle.py",
+      "oracle_blob_sha": "2f0c7f5ff91ce9f82b591267d3ba1b3070c34e54",
+      "challenge_slots": [
+        {"class": "baseline", "procedure": "accessible_internal_passage_network"},
+        {"class": "boundary", "procedure": "positive_zero_wall_boundary"},
+        {"class": "metamorphic", "procedure": "mm_in_physical_equivalence"},
+        {"class": "corruption", "procedure": "seal_passage_or_delete_thin_wall"}
+      ],
+      "accuracy_profiles": ["A-SEMANTIC", "A-ENGINEERING", "A-PRECISION-BOUNDARY"],
+      "required_stages": ["material", "topology_or_identity", "certificate", "engineering_output_when_applicable"]
+    },
+    {
+      "id": "F06",
+      "mandatory": true,
+      "owner": "MC-012",
+      "corpus_path": "research/machining-completeness/tasks/MC-012/physical-corpus-f05-f08-v1.json",
+      "corpus_blob_sha": "8bb04fd5c643d02c42d2b58e49192ddb346b5b3f",
+      "oracle_path": "research/machining-completeness/tasks/MC-012/fixture_oracle.py",
+      "oracle_blob_sha": "2f0c7f5ff91ce9f82b591267d3ba1b3070c34e54",
+      "challenge_slots": [
+        {"class": "baseline", "procedure": "finite_nose_finish_and_parting"},
+        {"class": "boundary", "procedure": "complete_parting_vs_positive_core"},
+        {"class": "metamorphic", "procedure": "exact_retrace_idempotence"},
+        {"class": "corruption", "procedure": "sharp_point_nose_or_round_core_to_split"}
+      ],
+      "accuracy_profiles": ["A-SEMANTIC", "A-ENGINEERING", "A-PRECISION-BOUNDARY"],
+      "required_stages": ["material", "topology_or_identity", "certificate", "engineering_output_when_applicable"]
+    },
+    {
+      "id": "F07",
+      "mandatory": true,
+      "owner": "MC-012",
+      "corpus_path": "research/machining-completeness/tasks/MC-012/physical-corpus-f05-f08-v1.json",
+      "corpus_blob_sha": "8bb04fd5c643d02c42d2b58e49192ddb346b5b3f",
+      "oracle_path": "research/machining-completeness/tasks/MC-012/fixture_oracle.py",
+      "oracle_blob_sha": "2f0c7f5ff91ce9f82b591267d3ba1b3070c34e54",
+      "challenge_slots": [
+        {"class": "baseline", "procedure": "lathe_mill_lathe_handoff"},
+        {"class": "boundary", "procedure": "same_radius_asymmetric_setup_witnesses"},
+        {"class": "metamorphic", "procedure": "qualified_rigid_transform_covariance"},
+        {"class": "corruption", "procedure": "reset_axisymmetry_or_body_identity"}
+      ],
+      "accuracy_profiles": ["A-SEMANTIC", "A-ENGINEERING", "A-PRECISION-BOUNDARY"],
+      "required_stages": ["material", "topology_or_identity", "certificate", "engineering_output_when_applicable"]
+    },
+    {
+      "id": "F08",
+      "mandatory": true,
+      "owner": "MC-012",
+      "corpus_path": "research/machining-completeness/tasks/MC-012/physical-corpus-f05-f08-v1.json",
+      "corpus_blob_sha": "8bb04fd5c643d02c42d2b58e49192ddb346b5b3f",
+      "oracle_path": "research/machining-completeness/tasks/MC-012/fixture_oracle.py",
+      "oracle_blob_sha": "2f0c7f5ff91ce9f82b591267d3ba1b3070c34e54",
+      "challenge_slots": [
+        {"class": "baseline", "procedure": "accessible_form_undercut"},
+        {"class": "boundary", "procedure": "starter_clearance_and_roof_boundary"},
+        {"class": "metamorphic", "procedure": "subdivision_equivalence"},
+        {"class": "corruption", "procedure": "neck_only_tool_or_inaccessible_head"}
+      ],
+      "accuracy_profiles": ["A-SEMANTIC", "A-ENGINEERING", "A-PRECISION-BOUNDARY"],
+      "required_stages": ["material", "topology_or_identity", "certificate", "engineering_output_when_applicable"]
+    },
+    {
+      "id": "F09",
+      "mandatory": true,
+      "owner": "MC-013",
+      "corpus_path": "research/machining-completeness/tasks/MC-013/physical-corpus-f09-f12-v1.json",
+      "corpus_blob_sha": "cc02473bc7afc47dface7812f9fbbbc3f41b9fa4",
+      "oracle_path": "research/machining-completeness/tasks/MC-013/fixture_oracle.py",
+      "oracle_blob_sha": "f0e64a7ced8e57de21a24fffa55609e2dff04aca",
+      "challenge_slots": [
+        {"class": "baseline", "procedure": "phase_sensitive_turning"},
+        {"class": "boundary", "procedure": "closed_endpoint_and_signed_phase_neighbours"},
+        {"class": "metamorphic", "procedure": "qualified_time_parameter_preservation"},
+        {"class": "corruption", "procedure": "average_phase_or_decouple_feed"}
+      ],
+      "accuracy_profiles": ["A-SEMANTIC", "A-ENGINEERING", "A-PRECISION-BOUNDARY"],
+      "required_stages": ["material", "topology_or_identity", "certificate", "engineering_output_when_applicable"]
+    },
+    {
+      "id": "F10",
+      "mandatory": true,
+      "owner": "MC-013",
+      "corpus_path": "research/machining-completeness/tasks/MC-013/physical-corpus-f09-f12-v1.json",
+      "corpus_blob_sha": "cc02473bc7afc47dface7812f9fbbbc3f41b9fa4",
+      "oracle_path": "research/machining-completeness/tasks/MC-013/fixture_oracle.py",
+      "oracle_blob_sha": "f0e64a7ced8e57de21a24fffa55609e2dff04aca",
+      "challenge_slots": [
+        {"class": "baseline", "procedure": "eight_retained_positive_bodies"},
+        {"class": "boundary", "procedure": "positive_web_vs_exact_separation"},
+        {"class": "metamorphic", "procedure": "qualified_component_permutation_invariance"},
+        {"class": "corruption", "procedure": "drop_body_or_round_web_to_split"}
+      ],
+      "accuracy_profiles": ["A-SEMANTIC", "A-ENGINEERING", "A-PRECISION-BOUNDARY"],
+      "required_stages": ["material", "topology_or_identity", "certificate", "engineering_output_when_applicable"]
+    },
+    {
+      "id": "F11",
+      "mandatory": true,
+      "owner": "MC-013",
+      "corpus_path": "research/machining-completeness/tasks/MC-013/physical-corpus-f09-f12-v1.json",
+      "corpus_blob_sha": "cc02473bc7afc47dface7812f9fbbbc3f41b9fa4",
+      "oracle_path": "research/machining-completeness/tasks/MC-013/fixture_oracle.py",
+      "oracle_blob_sha": "f0e64a7ced8e57de21a24fffa55609e2dff04aca",
+      "challenge_slots": [
+        {"class": "baseline", "procedure": "singular_boundary_limit"},
+        {"class": "boundary", "procedure": "separated_tangent_penetrating_triplet"},
+        {"class": "metamorphic", "procedure": "rigid_transform_covariance"},
+        {"class": "corruption", "procedure": "epsilon_collapse_exact_tangent"}
+      ],
+      "accuracy_profiles": ["A-SEMANTIC", "A-ENGINEERING", "A-PRECISION-BOUNDARY"],
+      "required_stages": ["material", "topology_or_identity", "certificate", "engineering_output_when_applicable"]
+    },
+    {
+      "id": "F12",
+      "mandatory": true,
+      "owner": "MC-013",
+      "corpus_path": "research/machining-completeness/tasks/MC-013/physical-corpus-f09-f12-v1.json",
+      "corpus_blob_sha": "cc02473bc7afc47dface7812f9fbbbc3f41b9fa4",
+      "oracle_path": "research/machining-completeness/tasks/MC-013/fixture_oracle.py",
+      "oracle_blob_sha": "f0e64a7ced8e57de21a24fffa55609e2dff04aca",
+      "challenge_slots": [
+        {"class": "baseline", "procedure": "large_scale_micro_web"},
+        {"class": "boundary", "procedure": "positive_zero_negative_microfeature"},
+        {"class": "metamorphic", "procedure": "translation_rotation_covariance"},
+        {"class": "corruption", "procedure": "consume_microfeature_by_tolerance"}
+      ],
+      "accuracy_profiles": ["A-SEMANTIC", "A-ENGINEERING", "A-PRECISION-BOUNDARY"],
+      "required_stages": ["material", "topology_or_identity", "certificate", "engineering_output_when_applicable"]
+    },
+    {
+      "id": "F13",
+      "mandatory": true,
+      "owner": "MC-014",
+      "corpus_path": "research/machining-completeness/tasks/MC-014/physical-corpus-f13-f16-v1.json",
+      "corpus_blob_sha": "391ca8723046284c7f8a54ce2c93b29f39cec566",
+      "oracle_path": "research/machining-completeness/tasks/MC-014/fixture_oracle.py",
+      "oracle_blob_sha": "4bf04b4520995ba20e14f337549f1f667776b1ef",
+      "challenge_slots": [
+        {"class": "baseline", "procedure": "genuine_geometric_growth"},
+        {"class": "boundary", "procedure": "one_two_four_eight_sixteen_changes"},
+        {"class": "metamorphic", "procedure": "prefix_material_monotonicity"},
+        {"class": "corruption", "procedure": "pad_event_count_without_material_change"}
+      ],
+      "accuracy_profiles": ["A-SEMANTIC", "A-ENGINEERING", "A-PRECISION-BOUNDARY"],
+      "required_stages": ["material", "topology_or_identity", "certificate", "engineering_output_when_applicable"]
+    },
+    {
+      "id": "F14",
+      "mandatory": true,
+      "owner": "MC-014",
+      "corpus_path": "research/machining-completeness/tasks/MC-014/physical-corpus-f13-f16-v1.json",
+      "corpus_blob_sha": "391ca8723046284c7f8a54ce2c93b29f39cec566",
+      "oracle_path": "research/machining-completeness/tasks/MC-014/fixture_oracle.py",
+      "oracle_blob_sha": "4bf04b4520995ba20e14f337549f1f667776b1ef",
+      "challenge_slots": [
+        {"class": "baseline", "procedure": "redundant_long_history"},
+        {"class": "boundary", "procedure": "changed_vs_retraced_operation_partition"},
+        {"class": "metamorphic", "procedure": "exact_retrace_idempotence"},
+        {"class": "corruption", "procedure": "inflate_material_by_retrace_count"}
+      ],
+      "accuracy_profiles": ["A-SEMANTIC", "A-ENGINEERING", "A-PRECISION-BOUNDARY"],
+      "required_stages": ["material", "topology_or_identity", "certificate", "engineering_output_when_applicable"]
+    },
+    {
+      "id": "F15",
+      "mandatory": true,
+      "owner": "MC-014",
+      "corpus_path": "research/machining-completeness/tasks/MC-014/physical-corpus-f13-f16-v1.json",
+      "corpus_blob_sha": "391ca8723046284c7f8a54ce2c93b29f39cec566",
+      "oracle_path": "research/machining-completeness/tasks/MC-014/fixture_oracle.py",
+      "oracle_blob_sha": "4bf04b4520995ba20e14f337549f1f667776b1ef",
+      "challenge_slots": [
+        {"class": "baseline", "procedure": "boundary_crossing_reconstruction"},
+        {"class": "boundary", "procedure": "exact_gap_overlap_interface_neighbours"},
+        {"class": "metamorphic", "procedure": "provider_partition_equivalence"},
+        {"class": "corruption", "procedure": "heal_gap_or_hide_overlap"}
+      ],
+      "accuracy_profiles": ["A-SEMANTIC", "A-ENGINEERING", "A-PRECISION-BOUNDARY"],
+      "required_stages": ["material", "topology_or_identity", "certificate", "engineering_output_when_applicable"]
+    },
+    {
+      "id": "F16",
+      "mandatory": true,
+      "owner": "MC-014",
+      "corpus_path": "research/machining-completeness/tasks/MC-014/physical-corpus-f13-f16-v1.json",
+      "corpus_blob_sha": "391ca8723046284c7f8a54ce2c93b29f39cec566",
+      "oracle_path": "research/machining-completeness/tasks/MC-014/fixture_oracle.py",
+      "oracle_blob_sha": "4bf04b4520995ba20e14f337549f1f667776b1ef",
+      "challenge_slots": [
+        {"class": "baseline", "procedure": "empty_and_exhausted_bodies"},
+        {"class": "boundary", "procedure": "exact_empty_vs_positive_residual"},
+        {"class": "metamorphic", "procedure": "durable_identity_under_exhaustion"},
+        {"class": "corruption", "procedure": "delete_empty_body_or_round_residual_empty"}
+      ],
+      "accuracy_profiles": ["A-SEMANTIC", "A-ENGINEERING", "A-PRECISION-BOUNDARY"],
+      "required_stages": ["material", "topology_or_identity", "certificate", "engineering_output_when_applicable"]
+    }
+  ],
+  "mutation_rejection_contract": [
+    "candidate-derived identity/configuration/result enters generator input",
+    "seed or seed commitment drifts",
+    "dependency, corpus, oracle, checker or fixture-registry blob pin drifts",
+    "mandatory family or challenge class is removed/optionalized",
+    "binary floating-point value enters challenge authority",
+    "public preregistration is mislabelled independent/held-out",
+    "timeout, resource exhaustion, pending or refusal becomes PASS",
+    "positive-volume material, durable body identity/lineage or canonical journal is weakened",
+    "MC-B through MC-F or MC-1 is promoted by this static freeze"
+  ],
+  "capability_guard": {
+    "MC-A": "ACCEPTED",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-C": "NOT_ESTABLISHED",
+    "MC-D": "NOT_ESTABLISHED",
+    "MC-E": "NOT_ESTABLISHED",
+    "MC-F": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED"
+  }
+}
