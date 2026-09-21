@@ -13,9 +13,9 @@
     {"id": "F10", "title": "Many surviving components", "owner": "MC-013", "state": "BUILT", "mandatory": true},
     {"id": "F11", "title": "Singular boundary limit", "owner": "MC-013", "state": "BUILT", "mandatory": true},
     {"id": "F12", "title": "Scale and precision separation", "owner": "MC-013", "state": "BUILT", "mandatory": true},
-    {"id": "F13", "title": "Genuine geometric growth", "owner": "MC-014", "state": "UNBUILT", "mandatory": true},
-    {"id": "F14", "title": "Redundant long history", "owner": "MC-014", "state": "UNBUILT", "mandatory": true},
-    {"id": "F15", "title": "Boundary-crossing reconstruction", "owner": "MC-014", "state": "UNBUILT", "mandatory": true},
-    {"id": "F16", "title": "Empty and exhausted bodies", "owner": "MC-014", "state": "UNBUILT", "mandatory": true}
+    {"id": "F13", "title": "Genuine geometric growth", "owner": "MC-014", "state": "BUILT", "mandatory": true},
+    {"id": "F14", "title": "Redundant long history", "owner": "MC-014", "state": "BUILT", "mandatory": true},
+    {"id": "F15", "title": "Boundary-crossing reconstruction", "owner": "MC-014", "state": "BUILT", "mandatory": true},
+    {"id": "F16", "title": "Empty and exhausted bodies", "owner": "MC-014", "state": "BUILT", "mandatory": true}
   ]
 }
