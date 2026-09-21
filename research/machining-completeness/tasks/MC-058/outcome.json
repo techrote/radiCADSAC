@@ -1,0 +1,111 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-058",
+  "result_kind": "COMPLETED_RESEARCH",
+  "evidence_class": [
+    "DESIGN_DECISION",
+    "REVIEWED_ARGUMENT",
+    "DETERMINISTIC_MODEL",
+    "DOCUMENTATION_RECONCILIATION"
+  ],
+  "source_baseline": "54a75e34e93f21964e93ba05a0391033d4081f3d",
+  "issue": 120,
+  "dependency_artifacts": [
+    {
+      "task": "MC-003",
+      "path": "research/machining-completeness/tasks/MC-003/outcome.json",
+      "blob_sha": "8f335f59f36c8761844806f9059af4a4f1671044",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-008",
+      "path": "research/machining-completeness/tasks/MC-008/outcome.json",
+      "blob_sha": "a4b3f3451abedd06f2467a8e11741cdc63826e2b",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-010",
+      "path": "research/machining-completeness/tasks/MC-010/outcome.json",
+      "blob_sha": "4960730316f89dbb3fbf958d054127fa4fc0d789",
+      "result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "accepted_claims": [
+    "Every MC-003 admitted motion class (stationary, line, circular arc, helical arc, polyline, spline, piecewise motion and timed-phase motion) now has an explicit source-faithful evaluator/enclosure rule and either a checked finite bound or an inherited named proof obligation.",
+    "Rigid setup transforms, reclamps and machine transitions preserve the exact right-handed column-vector source semantics, immutable historical intent, explicit units/order and monotone inherited error rather than silently reinterpreting saved operations.",
+    "For a finite cutter with certified support radius rho and the same exact engaged parameter set, a pose enclosure transfers to the actual cutter sweep by e_total = e_inherited + e_translation + rho*e_rotation + e_tool; centreline error alone is explicitly insufficient when cutter extent or orientation error is nonzero.",
+    "Circular-arc subdivision uses the exact turn fraction and a conservative rational pi upper bound only as an enclosure, never as equality or predicate authority; semantic endpoints are restored exactly and no algebraic-trigonometric assumption is introduced.",
+    "Non-rational B-splines retain exact Cox-de Boor/knot semantics and may be bounded by exact knot insertion, control-hull enclosures or exact rational derivative bounds without a knot epsilon.",
+    "Exact, signed-neighbour, subdivision, covariance, endpoint, engagement, cutter-length, unit/order and error-composition adversarial controls are deterministic and candidate-independent."
+  ],
+  "open_claims": [
+    "PB-007-01 remains open: MC-058 does not provide an unconditional finite exact decision for tangential, multiple or singular transcendental equality events.",
+    "PB-007-02 remains open: MC-058 does not provide the unconditional general constructive membership route for coupled helical/spindle-feed/eccentric sweeps.",
+    "PO-02 remains OPEN because downstream MC-018 through MC-023 still own actual cutter-sweep construction/qualification over their process slices.",
+    "PO-05 remains OPEN because an enclosure/refinement contract is not a universal termination proof for the inherited exact-event blockers.",
+    "PO-06 remains OPEN because this task supplies one error-transfer interface, not the complete source-to-reconstruction certificate chain.",
+    "MC-B, MC-C, MC-D, MC-E, MC-F and MC-1 remain NOT_ESTABLISHED."
+  ],
+  "native_execution": false,
+  "artifacts": [
+    "research/machining-completeness/tasks/MC-058/curve-sweep-contract-v1.json",
+    "research/machining-completeness/tasks/MC-058/report.md",
+    "research/machining-completeness/tasks/MC-058/outcome.json",
+    "research/machining-completeness/tasks/MC-058/verify.py",
+    "docs/machining-completeness/01-DOMAIN-AND-SEMANTICS.md",
+    "research/machining-completeness/outcomes-v1.json",
+    ".github/workflows/mc1-static.yml"
+  ],
+  "verification": [
+    "python3 research/machining-completeness/tasks/MC-058/verify.py --contract",
+    "python3 research/machining-completeness/tasks/MC-058/verify.py --self-test",
+    "python3 tools/mc_workflow.py verify MC-058",
+    "python3 tools/validate_machining_completeness.py --self-test",
+    "python3 tools/mc_workflow.py sync --check"
+  ],
+  "adversarial_controls": [
+    "reject saved-source mutation, endpoint deletion or engagement-boundary trimming",
+    "reject decimal/algebraic-pi authority or assumed algebraic trigonometric constants",
+    "reject circular-arc epsilon fitting and polyline cross-vertex shortcuts",
+    "reject spline knot snapping or epsilon multiplicity semantics",
+    "reject independent-angle substitution for shared timed path/phase motion",
+    "reject transform unit erasure, handedness/order changes and unnormalized q15 source semantics",
+    "reject reclamp/machine-transition error reset",
+    "reject centreline-only sweep certification when finite cutter extent or orientation error contributes",
+    "reject cutter support radius that ignores finite axial length",
+    "reject inherited/tool error channels being dropped from the composed bound",
+    "reject closure of inherited PB-007 blockers or premature MC-B promotion"
+  ],
+  "resources": {
+    "native_permit_required": false,
+    "native_or_paid_campaign_run": false
+  },
+  "review": {
+    "disposition": "completed bounded curve/transform and finite-cutter sweep-enclosure research contract; downstream sweep constructors may consume it while inherited exact-event blockers remain open",
+    "gate_changed": false,
+    "gate": "MC-B",
+    "gate_status": "NOT_ESTABLISHED",
+    "programme_capability_changed": false,
+    "downstream_release": "MC-018 through MC-023 and MC-038 may consume the MC-058 contract as an artifact; no native sweep capability or proof obligation is accepted by this task alone"
+  },
+  "blockers": [
+    {
+      "id": "PB-007-01",
+      "status": "OPEN",
+      "summary": "Unconditional finite exact decision for required tangential/multiple/singular transcendental events remains unestablished; directed sweep enclosures may remain UNCERTIFIED at equality rather than guessing.",
+      "affected_descendants": ["MC-022", "MC-024", "MC-032", "MC-038"]
+    },
+    {
+      "id": "PB-007-02",
+      "status": "OPEN",
+      "summary": "The unconditional full constructive route for general coupled helical/spindle-feed/eccentric sweep membership remains unestablished; time/path/phase correlation cannot be factored into independent coverage.",
+      "affected_descendants": ["MC-022", "MC-024", "MC-038"]
+    }
+  ],
+  "downstream_invalidations": [
+    "Any semantic change to MC-003 curve/transform/source encoding invalidates the matching MC-058 evaluator and enclosure claims and requires a prospective contract revision.",
+    "Any later cutter-origin/support convention change requires recomputing rho-based sweep transfer rather than retaining the old bound by name.",
+    "Any downstream approximation that crosses source-semantic endpoints/engagement/setup/tool/target boundaries, resets inherited error or substitutes centreline error for actual cutter extent invalidates the affected sweep certificate.",
+    "Future discharge of PB-007-01 or PB-007-02 supplements this task; it does not rewrite this task's recorded open-obligation state or fabricate native evidence."
+  ]
+}
