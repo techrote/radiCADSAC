@@ -1,0 +1,148 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-025",
+  "result_kind": "NEGATIVE_RESULT",
+  "evidence_class": [
+    "REVIEWED_ARGUMENT",
+    "DETERMINISTIC_MODEL",
+    "DOCUMENTATION_RECONCILIATION"
+  ],
+  "source_baseline": "9668fa058a97219880897a483ac25c530ccfc67b",
+  "issue": 87,
+  "dependency_artifacts": [
+    {
+      "task": "MC-008",
+      "path": "research/machining-completeness/tasks/MC-008/outcome.json",
+      "blob_sha": "a4b3f3451abedd06f2467a8e11741cdc63826e2b",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-010",
+      "path": "research/machining-completeness/tasks/MC-010/outcome.json",
+      "blob_sha": "4960730316f89dbb3fbf958d054127fa4fc0d789",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-016",
+      "path": "research/machining-completeness/tasks/MC-016/outcome.json",
+      "blob_sha": "606a7d0b8be61131b2272f2eb161d6a4dbba703a",
+      "result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "accepted_claims": [
+    "Certified adaptive interval/implicit material can avoid a fixed-pitch discretization floor on bounded cases when every material cell has sound outward bounds and all decisive critical events/stopping witnesses are separately certified.",
+    "The task-local exact-rational controls preserve an exact 1/1000000 material web, exact tangency, complete removal, split material and retrace idempotence without binary-float, epsilon or fixed-depth predicate authority.",
+    "Adaptive refinement alone does not supply a generic exact equality decision: the exact 1/3 control stays strictly inside a positive-width dyadic cell at every finite bisection depth unless the event is injected/certified separately.",
+    "PB-007-01 and PB-007-02 therefore remain decisive for required tangential/multiple/singular and coupled phase-sensitive cases; the candidate is not a total general fallback.",
+    "RB-016-03 and RB-016-04 remain output-side blockers: exact adaptive material retention does not by itself qualify native micro-feature preservation or singular/exact-zero engineering output."
+  ],
+  "open_claims": [
+    "PB-007-01: unconditional finite exact decisions for required tangential/multiple/singular transcendental equality events remain open.",
+    "PB-007-02: a full exact constructive route for general coupled helical/spindle-feed/eccentric event geometry remains open.",
+    "RB-016-03: native STEP preservation of certified positive micro-features remains unqualified.",
+    "RB-016-04: exact-zero contact/touching-cavity/singular-pinch output profile and independent-consumer behaviour remain unqualified.",
+    "Practical adaptive-cell resource growth and default production viability remain unqualified.",
+    "PO-08, MC-B, MC-C, MC-D, MC-E, MC-F and MC-1 remain NOT_ESTABLISHED."
+  ],
+  "native_execution": false,
+  "artifacts": [
+    "research/machining-completeness/tasks/MC-025/adaptive-implicit-falsification-v1.json",
+    "research/machining-completeness/tasks/MC-025/report.md",
+    "research/machining-completeness/tasks/MC-025/outcome.json",
+    "research/machining-completeness/tasks/MC-025/verify.py",
+    "docs/machining-completeness/02-COMPLETENESS-ARGUMENT.md",
+    "research/machining-completeness/outcomes-v1.json",
+    ".github/workflows/mc1-static.yml"
+  ],
+  "verification": [
+    "python3 research/machining-completeness/tasks/MC-025/verify.py --contract",
+    "python3 research/machining-completeness/tasks/MC-025/verify.py --self-test",
+    "python3 tools/mc_workflow.py verify MC-025",
+    "python3 tools/validate_machining_completeness.py --self-test",
+    "python3 tools/mc_workflow.py sync --check"
+  ],
+  "adversarial_controls": [
+    "reject promotion of adaptive implicit material to a total general fallback",
+    "reject global epsilon or binary-float decisive predicates",
+    "reject fixed pitch or maximum subdivision depth as correctness authority",
+    "reject unresolved cells being coerced to material/removal success",
+    "reject numeric error compensating topology or deleting positive material",
+    "reject cell-width threshold as exact equality decision",
+    "reject promotion of PB-007 blocked equality/motion classes into certified coverage",
+    "reject independent phase coverage for correlated spindle/feed motion",
+    "reject loss of the exact 1/1000000 micro-web",
+    "reject timeout/depth-cap success",
+    "reject removal of inherited blockers",
+    "reject dependency blob drift",
+    "reject premature MC-B acceptance"
+  ],
+  "resources": {
+    "native_permit_required": false,
+    "native_or_paid_campaign_run": false
+  },
+  "review": {
+    "disposition": "negative candidate result: retain certified adaptive interval/implicit material as a bounded provider/accelerator after independent event and finite-progress certification; reject it as the total general fallback",
+    "gate_changed": false,
+    "programme_capability_changed": false,
+    "downstream_release": "MC-026 may consume this negative candidate evidence while preserving all inherited blockers; MC-025 does not release MC-B or authorize native implementation"
+  },
+  "blockers": [
+    {
+      "id": "PB-007-01",
+      "status": "OPEN",
+      "source_task": "MC-008",
+      "affected_descendants": [
+        "MC-026",
+        "MC-032",
+        "MC-038"
+      ]
+    },
+    {
+      "id": "PB-007-02",
+      "status": "OPEN",
+      "source_task": "MC-008",
+      "affected_descendants": [
+        "MC-026",
+        "MC-038"
+      ]
+    },
+    {
+      "id": "RB-016-03",
+      "status": "OPEN",
+      "source_task": "MC-016",
+      "affected_descendants": [
+        "MC-026",
+        "MC-028",
+        "MC-029",
+        "MC-038",
+        "MC-041",
+        "MC-044",
+        "MC-052"
+      ]
+    },
+    {
+      "id": "RB-016-04",
+      "status": "OPEN",
+      "source_task": "MC-016",
+      "affected_descendants": [
+        "MC-026",
+        "MC-027",
+        "MC-028",
+        "MC-029",
+        "MC-030",
+        "MC-038",
+        "MC-041",
+        "MC-042",
+        "MC-043",
+        "MC-044",
+        "MC-052"
+      ]
+    }
+  ],
+  "downstream_invalidations": [
+    "A change to MC-008 arithmetic/event termination semantics invalidates the bounded admission and equality-refinement conclusions.",
+    "A future reviewed resolution of PB-007-01 or PB-007-02 may change the general-fallback assessment but must preserve this negative result as historical evidence.",
+    "A changed MC-016 output/profile conclusion invalidates only the affected output-side classification and may not promote adaptive material cells into STEP authority.",
+    "Any downstream implementation that treats fixed depth, epsilon, timeout or unresolved cells as success invalidates its MC-025 use."
+  ]
+}
