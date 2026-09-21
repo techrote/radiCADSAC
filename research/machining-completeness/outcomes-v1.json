@@ -50,7 +50,7 @@
     "MC-046": {"state": "NOT_STARTED", "issue": 108, "accepted_artifacts": [], "blockers": []},
     "MC-047": {"state": "NOT_STARTED", "issue": 109, "accepted_artifacts": [], "blockers": []},
     "MC-048": {"state": "NOT_STARTED", "issue": 110, "accepted_artifacts": [], "blockers": []},
-    "MC-049": {"state": "NOT_STARTED", "issue": 111, "accepted_artifacts": [], "blockers": []},
+    "MC-049": {"state": "COMPLETED_RESEARCH", "issue": 111, "accepted_artifacts": ["research/machining-completeness/tasks/MC-049/final-challenge-contract-v1.json", "research/machining-completeness/tasks/MC-049/challenge_generator.py", "research/machining-completeness/tasks/MC-049/report.md", "research/machining-completeness/tasks/MC-049/outcome.json", "research/machining-completeness/tasks/MC-049/verify.py", "docs/machining-completeness/03-ORACLE-AND-CORPUS.md"], "blockers": []},
     "MC-050": {"state": "NOT_STARTED", "issue": 112, "accepted_artifacts": [], "blockers": []},
     "MC-051": {"state": "NOT_STARTED", "issue": 113, "accepted_artifacts": [], "blockers": []},
     "MC-052": {"state": "NOT_STARTED", "issue": 114, "accepted_artifacts": [], "blockers": []},
