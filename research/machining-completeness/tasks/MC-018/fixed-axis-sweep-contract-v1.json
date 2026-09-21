@@ -1,0 +1,141 @@
+{
+  "schema": "radicadsac-mc018-fixed-axis-sweep/1.0",
+  "task": "MC-018",
+  "issue": 80,
+  "source_baseline": "b85b8081dd83ca35f81e6e1a9495bd5f88589ee0",
+  "result": "COMPLETED_RESEARCH_FIXED_AXIS_SWEEP_CONSTRUCTION",
+  "native_execution": false,
+  "formal_dependencies": [
+    {
+      "task": "MC-005",
+      "path": "research/machining-completeness/tasks/MC-005/outcome.json",
+      "blob_sha": "adec886597a06345fdfdf65ee018596cd396d249",
+      "result_kind": "CAPABILITY_ACCEPTED"
+    },
+    {
+      "task": "MC-010",
+      "path": "research/machining-completeness/tasks/MC-010/outcome.json",
+      "blob_sha": "4960730316f89dbb3fbf958d054127fa4fc0d789",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-058",
+      "path": "research/machining-completeness/tasks/MC-058/outcome.json",
+      "blob_sha": "038fccda9142650ee7e29c626aeb8e4602420278",
+      "result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "authority": {
+    "domain_profile": "MC-A accepted current tranche: conventional lathe plus fixed-axis three-axis mill with explicit setup transitions",
+    "source_profile": "mc-exact-source/1.0",
+    "sweep_semantics": "S = closure(union over engaged source parameter/time of translated finite effective cutting solid)",
+    "fixed_axis": true,
+    "orientation_error_in_this_task": "exactly zero inside one milling operation; reorientation belongs to an explicit later setup transition",
+    "saved_operation_is_immutable": true,
+    "engagement_boundaries_are_authoritative": true,
+    "retrace_is_not_deleted_from_journal": true,
+    "binary_float_authority_forbidden": true,
+    "global_epsilon_predicate_forbidden": true
+  },
+  "cutters": {
+    "mill_flat_end": {
+      "parameters": ["radius R > 0", "finite axial length L > 0"],
+      "local_set": "x^2+y^2 <= R^2 and 0 <= z <= L",
+      "complete_finite_cutting_region": true
+    },
+    "mill_corner_radius": {
+      "parameters": ["radius R > 0", "corner radius c with 0 < c < R", "finite axial length L >= c"],
+      "core_radius": "a = R-c",
+      "local_set": "for c<=z<=L use rho^2<=R^2; for 0<=z<=c use rho<=a or ((rho^2+a^2+(z-c)^2-c^2)^2 <= 4*a^2*rho^2 with rho^2>=a^2)",
+      "ball_round_excluded_to": "MC-019",
+      "complete_finite_cutting_region": true
+    }
+  },
+  "exact_construction": {
+    "source_classes": ["stationary", "line", "polyline"],
+    "representation": "finite ordered exact-rational line leaves bound to closed engaged source intervals",
+    "flat_algorithm": "intersect the source parameter interval with the cutter axial slab, then minimize exact quadratic XY distance on that closed rational interval",
+    "corner_algorithm": "split the axial interval into cylindrical and lower-fillet regions; cylindrical/core branches use exact quadratic minima and the fillet branch is an exact univariate semialgebraic decision using rational polynomial Sturm isolation",
+    "varying_z_supported": true,
+    "stationary_supported": true,
+    "reversal_and_retrace_supported": true,
+    "continuity_required": true,
+    "engaged_teleportation_rejected": true,
+    "equality_is_not_epsilonized": true
+  },
+  "mc058_leaf_construction": {
+    "source_classes": ["circular_arc", "helical_arc", "spline", "piecewise_motion", "timed_phase_motion"],
+    "input_requirement": "each finite derived line leaf remains bound to its exact source interval and carries a certified Euclidean translation enclosure e from the MC-058 rules; time/path/phase correlation and semantic boundaries remain bound",
+    "fixed_axis_requirement": "orientation is unchanged within MC-018, so the MC-058 rho*e_rotation term is zero here rather than silently discarded for a rotating cutter",
+    "outer_rule": "true cutter sweep is contained in the union of approximate-segment cylinders of radius R+e and axial range [-e,L+e]",
+    "inner_rule": "the union of approximate-segment central cylinders of radius core_radius-e and axial range [e,L-e], when nonempty, is contained in the true cutter sweep",
+    "flat_core_radius": "R",
+    "corner_core_radius": "R-c",
+    "classification": ["INSIDE", "OUTSIDE", "UNCERTIFIED"],
+    "uncertified_is_not_failure_or_pass": true,
+    "missing_or_unbound_leaf_certificate_is_rejected": true,
+    "topology_or_exact_zero_claim_implied": false
+  },
+  "boundary_controls": {
+    "flat_varying_z_tangent": {
+      "tool": {"R": "1", "L": "2"},
+      "path": [["0","0","0"],["2","0","2"]],
+      "point": ["1","1","2"],
+      "inside_neighbor": ["1","99/100","2"],
+      "outside_neighbor": ["1","101/100","2"]
+    },
+    "corner_fillet_tangent": {
+      "tool": {"R": "2", "c": "1", "L": "4"},
+      "path": [["0","0","0"],["0","0","0"]],
+      "point": ["9/5","0","2/5"],
+      "inside_neighbor": ["179/100","0","2/5"],
+      "outside_neighbor": ["181/100","0","2/5"],
+      "identity": "(rho-(R-c))^2 + (z-c)^2 = c^2 via the 4/5-3/5 rational circle point"
+    },
+    "corner_varying_z": {
+      "tool": {"R": "2", "c": "1", "L": "4"},
+      "path": [["0","0","0"],["2","0","2"]],
+      "point": ["14/5","0","7/5"],
+      "witness_parameter": "1/2",
+      "local_point": ["9/5","0","2/5"]
+    },
+    "retrace": {
+      "tool": {"R": "1", "L": "2"},
+      "forward": [["0","0","0"],["2","0","0"]],
+      "forward_reverse": [["0","0","0"],["2","0","0"],["0","0","0"]],
+      "require_same_union_semantics": true,
+      "require_journal_retrace_preserved": true
+    },
+    "bounded_leaf": {
+      "tool": {"R": "1", "L": "2"},
+      "derived_path": [["0","0","0"],["2","0","0"]],
+      "translation_error": "1/10",
+      "definite_inside": ["1","0","1"],
+      "definite_outside": ["1","2","1"],
+      "uncertified_shell": ["1","21/20","1"]
+    }
+  },
+  "forbidden": [
+    "CENTRELINE_ONLY_SWEEP",
+    "INFINITE_OR_ZERO_LENGTH_CUTTER_SUBSTITUTION",
+    "CORNER_RADIUS_REPLACED_BY_FLAT_CYLINDER",
+    "DROP_VARYING_Z",
+    "DELETE_RETRACE_FROM_SOURCE_JOURNAL",
+    "FIT_ACROSS_ENGAGEMENT_OR_PIECE_BOUNDARY",
+    "ENGAGED_TELEPORTATION",
+    "BINARY_FLOAT_OR_GLOBAL_EPSILON_EQUALITY",
+    "TREAT_MC058_TRANSLATION_ERROR_AS_ZERO",
+    "UNBOUND_NONLINEAR_LEAF",
+    "PROMOTE_UNCERTIFIED_TO_INSIDE_OR_OUTSIDE",
+    "PROMOTE_MODEL_EVIDENCE_TO_NATIVE_GEOMETRY",
+    "PREMATURE_MC_B_ACCEPTANCE"
+  ],
+  "proof_boundary": {
+    "PO-02": "OPEN; MC-018 contributes the flat/corner-radius fixed-axis milling slice only",
+    "PO-04": "OPEN; exact/validated global material-event classification remains downstream",
+    "PO-05": "OPEN; inherited transcendental equality/termination blockers are not discharged by this constructor",
+    "PO-06": "OPEN; MC-018 exposes a source-bound sweep sandwich but not the complete source-to-engineering-output error chain",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED"
+  }
+}
