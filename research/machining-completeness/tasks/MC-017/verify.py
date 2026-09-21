@@ -133,7 +133,9 @@ def validate_contract(contract: dict, *, check_files: bool = True) -> None:
     assert measurement["minimum_refinement_runs"] >= 3
     assert measurement["require_explicit_grid_spacing_and_limit"] is True
     assert measurement["require_cross_view_convergence_within_declared_error_budget"] is True
-    assert "insufficient" in measurement["micro_feature_rule"].lower()
+    micro_rule = measurement["micro_feature_rule"].lower()
+    assert "no positive micro-feature" in micro_rule
+    assert "qualified by gqa unless" in micro_rule
 
     follow = protocol["follow_on_operation"]
     assert follow["consumer"] == "BRL-CAD"
@@ -207,6 +209,10 @@ def adversarial_self_test(contract: dict) -> None:
 
     bad = copy.deepcopy(contract)
     bad["probe_protocol"]["measurement"]["minimum_refinement_runs"] = 1
+    mutations.append(bad)
+
+    bad = copy.deepcopy(contract)
+    bad["probe_protocol"]["measurement"]["micro_feature_rule"] = "gqa alone exactly qualifies every positive micro-feature"
     mutations.append(bad)
 
     bad = copy.deepcopy(contract)
