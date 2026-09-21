@@ -59,6 +59,6 @@
     "MC-055": {"state": "COMPLETED_RESEARCH", "issue": 117, "accepted_artifacts": ["research/machining-completeness/tasks/MC-055/historical-corpus-import-v1.json", "research/machining-completeness/tasks/MC-055/report.md", "research/machining-completeness/tasks/MC-055/outcome.json", "research/machining-completeness/tasks/MC-055/verify.py", "docs/machining-completeness/03-ORACLE-AND-CORPUS.md"], "blockers": []},
     "MC-056": {"state": "COMPLETED_RESEARCH", "issue": 118, "accepted_artifacts": [".github/workflows/mc1-static.yml", "tools/validate_mc_ci_impact.py", "legacy workflow paths-ignore routing"], "blockers": []},
     "MC-057": {"state": "NOT_STARTED", "issue": 119, "accepted_artifacts": [], "blockers": []},
-    "MC-058": {"state": "NOT_STARTED", "issue": 120, "accepted_artifacts": [], "blockers": []}
+    "MC-058": {"state": "COMPLETED_RESEARCH", "issue": 120, "accepted_artifacts": ["research/machining-completeness/tasks/MC-058/curve-sweep-contract-v1.json", "research/machining-completeness/tasks/MC-058/report.md", "research/machining-completeness/tasks/MC-058/outcome.json", "research/machining-completeness/tasks/MC-058/verify.py", "docs/machining-completeness/01-DOMAIN-AND-SEMANTICS.md"], "blockers": [{"id": "PB-007-01", "status": "OPEN", "affected_descendants": ["MC-022", "MC-024", "MC-032", "MC-038"]}, {"id": "PB-007-02", "status": "OPEN", "affected_descendants": ["MC-022", "MC-024", "MC-038"]}]}
   }
 }
