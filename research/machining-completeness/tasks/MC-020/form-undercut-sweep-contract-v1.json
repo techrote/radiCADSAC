@@ -1,0 +1,157 @@
+{
+  "schema": "radicadsac-mc020-form-undercut-sweep/1.0",
+  "task": "MC-020",
+  "issue": 82,
+  "source_baseline": "a5b6905bb212afed21a7747cd80a0bf87ee34cca",
+  "result": "COMPLETED_RESEARCH_BOUNDED_FORM_UNDERCUT_SWEEP_CONSTRUCTION",
+  "native_execution": false,
+  "formal_dependencies": [
+    {"task":"MC-005","path":"research/machining-completeness/tasks/MC-005/outcome.json","blob_sha":"adec886597a06345fdfdf65ee018596cd396d249","result_kind":"CAPABILITY_ACCEPTED"},
+    {"task":"MC-010","path":"research/machining-completeness/tasks/MC-010/outcome.json","blob_sha":"4960730316f89dbb3fbf958d054127fa4fc0d789","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-058","path":"research/machining-completeness/tasks/MC-058/outcome.json","blob_sha":"038fccda9142650ee7e29c626aeb8e4602420278","result_kind":"COMPLETED_RESEARCH"}
+  ],
+  "independent_control": {
+    "task":"MC-010",
+    "path":"research/machining-completeness/tasks/MC-010/independent_exact_oracle.py",
+    "blob_sha":"cfb5a8def57e8f4bb5109982da456621766a2b22",
+    "role":"axis-parallel exact rational box-sweep cross-check only; it is not imported by the MC-020 implementation"
+  },
+  "authority": {
+    "domain_profile":"MC-A accepted current tranche: conventional lathe plus fixed-axis three-axis mill with explicit access/clearance witnesses",
+    "source_profile":"mc-exact-source/1.0",
+    "sweep_semantics":"S = closure(union over engaged source parameter/time of K(t)(T))",
+    "saved_operation_is_immutable":true,
+    "engagement_boundaries_are_authoritative":true,
+    "cutting_and_noncutting_regions_are_distinct":true,
+    "access_is_independent_of_candidate_success":true,
+    "binary_float_authority_forbidden":true,
+    "global_epsilon_predicate_forbidden":true
+  },
+  "bounded_cutter_codec": {
+    "id":"exact_rational_box_union_v1",
+    "meaning":"finite nonempty union of strictly positive-volume axis-aligned boxes with exact rational local coordinates; holder/non-cutting boxes are encoded separately",
+    "nonconvexity_preserved_by_union_not_hull":true,
+    "reentrant_voids_are_not_filled":true,
+    "complete_finite_extent_required":true,
+    "universal_form_codec_claimed":false,
+    "scope_boundary":"covered deterministic subtype only; admitted arbitrary form/undercut source instances outside this codec retain PB-007-03"
+  },
+  "constructor_coverage": {
+    "mill_form": {
+      "status":"EXECUTABLE_BOUNDED_ROUTE",
+      "route":"exact fixed-axis stationary/line/polyline sweep for exact_rational_box_union_v1; MC-058 source-bound conservative route for admitted nonlinear motion",
+      "outside_codec":"PB-007-03"
+    },
+    "mill_accessible_undercut": {
+      "status":"EXECUTABLE_BOUNDED_ROUTE_WITH_ACCESS_WITNESS",
+      "route":"same sweep route plus independent complete-body access/holder-clearance check against explicit retained-material/fixture obstacles",
+      "outside_codec":"PB-007-03"
+    },
+    "lathe_form_tool": {
+      "status":"LOCAL_CUTTER_CODEC_EXECUTABLE_PROCESS_SWEEP_DEFERRED",
+      "route":"covered local cutting/holder region is executable, but spindle rotational reduction and timed/phase-sensitive lathe process sweep are owned by MC-021/MC-022",
+      "process_owner":["MC-021","MC-022"],
+      "outside_codec":"PB-007-03"
+    },
+    "frozen_domain_denominator_unchanged":true,
+    "no_constructor_excluded_for_provider_convenience":true
+  },
+  "exact_construction": {
+    "source_classes":["stationary","line","polyline"],
+    "algorithm":"for each positive-volume cutting box and source line leaf, intersect the three exact rational parameter bands induced by x/y/z box inequalities using one shared source parameter",
+    "shared_xyz_parameter_required":true,
+    "simultaneous_xyz_supported":true,
+    "aabb_or_convex_hull_substitution_forbidden":true,
+    "stationary_supported":true,
+    "reversal_and_retrace_supported":true,
+    "continuity_required":true,
+    "engaged_teleportation_rejected":true,
+    "equality_is_not_epsilonized":true
+  },
+  "mc058_leaf_construction": {
+    "source_classes":["circular_arc","helical_arc","spline","piecewise_motion","timed_phase_motion"],
+    "input_requirement":"each finite derived line leaf remains bound to its exact source interval and carries certified Euclidean translation error e from MC-058; semantic boundaries remain bound",
+    "outer_rule":"inflate every cutting box by e on each coordinate face; Euclidean translation displacement <= e implies coordinate displacement <= e, so this is a conservative superset",
+    "inner_rule":"erode every cutting box by e on each coordinate face when a strictly positive-volume core remains; that core is a conservative subset under any translation displacement <= e",
+    "classification":["INSIDE","OUTSIDE","UNCERTIFIED"],
+    "uncertified_is_not_failure_or_pass":true,
+    "missing_or_unbound_leaf_certificate_is_rejected":true,
+    "topology_or_exact_zero_claim_implied":false
+  },
+  "access_witness": {
+    "required_for":"mill_accessible_undercut and any other cutter instance whose physical validity depends on access/holder clearance",
+    "complete_body":"cutting region plus separately encoded non-cutting holder region",
+    "path":"explicit finite continuous unengaged approach path before the cutting interval",
+    "obstacles":"explicit retained material and fixture regions that the complete body must not contact",
+    "contact_policy":"closed-set contact with a forbidden obstacle is collision",
+    "target_material_note":"material intentionally engaged by the later cutting interval is not mislabelled as a forbidden obstacle",
+    "candidate_success_is_not_access_oracle":true,
+    "cutting_region_only_clearance_is_insufficient":true
+  },
+  "boundary_controls": {
+    "nonconvex_form": {
+      "cutting_boxes":[["-1","1","-1","1","0","1"],["-1/2","1/2","-1","1","1","2"]],
+      "stationary_tangent":["1","0","1/2"],
+      "inside_neighbor":["99/100","0","1/2"],
+      "outside_neighbor":["101/100","0","1/2"],
+      "reentrant_void_probe":["3/4","0","3/2"]
+    },
+    "shared_parameter_xyz": {
+      "cutting_box":["0","1","0","1","0","1"],
+      "path":[["0","0","0"],["1","1","1"]],
+      "boundary_probe":["3/2","3/2","3/2"],
+      "decoupled_aabb_false_positive":["2","0","1"]
+    },
+    "undercut_access": {
+      "cutting_head":["-1","1","-1","1","0","3/4"],
+      "cutting_neck":["-1/4","1/4","-1/4","1/4","3/4","5/2"],
+      "holder":["-1/4","1/4","-1/4","1/4","5/2","7/2"],
+      "clear_side_approach":[["-4","0","0"],["0","0","0"]],
+      "colliding_vertical_approach":[["0","0","3"],["0","0","0"]],
+      "forbidden_lips":[["-2","2","-3","-1/2","1","2"],["-2","2","1/2","3","1","2"]]
+    },
+    "bounded_leaf": {
+      "cutting_box":["-1","1","-1","1","0","1"],
+      "derived_path":[["0","0","0"],["1","0","0"]],
+      "translation_error":"1/10",
+      "definite_inside":["1/2","0","1/2"],
+      "definite_outside":["3","0","1/2"],
+      "uncertified_shell":["41/20","0","1/2"]
+    }
+  },
+  "blockers": [
+    {
+      "id":"PB-007-03",
+      "status":"OPEN_PROPAGATED",
+      "reason":"the admitted domain still lacks a universal finite exact source codec for arbitrary form/undercut cutting-region instances; MC-020's box-union subtype is not permission to narrow that domain",
+      "affected_descendants":["MC-026","MC-028","MC-029","MC-030","MC-031","MC-038"]
+    }
+  ],
+  "forbidden": [
+    "AABB_OR_CONVEX_HULL_AS_TOOL_TRUTH",
+    "FILL_REENTRANT_VOID",
+    "DROP_HOLDER_FROM_ACCESS_WITNESS",
+    "CUTTING_REGION_ONLY_CLEARANCE",
+    "CANDIDATE_SUCCESS_AS_ACCESS_ORACLE",
+    "ENGAGED_TELEPORTATION",
+    "DELETE_RETRACE_FROM_SOURCE_JOURNAL",
+    "BINARY_FLOAT_OR_GLOBAL_EPSILON_EQUALITY",
+    "TREAT_MC058_TRANSLATION_ERROR_AS_ZERO",
+    "UNBOUND_NONLINEAR_LEAF",
+    "PROMOTE_UNCERTIFIED_TO_INSIDE_OR_OUTSIDE",
+    "CLAIM_UNIVERSAL_ARBITRARY_FORM_CODEC",
+    "CLAIM_LATHE_ROTATIONAL_OR_TIMED_SWEEP_FROM_LOCAL_TOOL_CODEC",
+    "REUSE_CANDIDATE_GEOMETRY_AS_INDEPENDENT_ORACLE",
+    "PROMOTE_MODEL_EVIDENCE_TO_NATIVE_GEOMETRY",
+    "CLOSE_PB_007_03",
+    "PREMATURE_MC_B_ACCEPTANCE"
+  ],
+  "proof_boundary": {
+    "PO-02":"OPEN; MC-020 contributes a bounded form/undercut cutter and access slice only",
+    "PO-04":"OPEN; exact/validated global material-event classification remains downstream",
+    "PO-05":"OPEN; PB-007-03 and inherited general finite-progress obligations remain",
+    "PO-06":"OPEN; the source-bound sweep sandwich is not the complete source-to-engineering-output error chain",
+    "MC-B":"NOT_ESTABLISHED",
+    "MC-1":"NOT_ESTABLISHED"
+  }
+}
