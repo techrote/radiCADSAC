@@ -51,7 +51,7 @@
     "research/machining-completeness/tasks/MC-018/report.md",
     "research/machining-completeness/tasks/MC-018/outcome.json",
     "research/machining-completeness/tasks/MC-018/verify.py",
-    "docs/machining-completeness/02-COMPLETENESS-ARGUMENT.md",
+    "docs/machining-completeness/13-MC018-FIXED-AXIS-SWEEPS.md",
     "research/machining-completeness/outcomes-v1.json",
     ".github/workflows/mc1-static.yml"
   ],
