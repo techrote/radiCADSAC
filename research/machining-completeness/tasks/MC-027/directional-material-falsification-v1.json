@@ -1,0 +1,142 @@
+{
+  "schema": "radicadsac-mc027-directional-material-falsification/1.0",
+  "task": "MC-027",
+  "issue": 89,
+  "source_baseline": "263b5e35f6a0d9a6c9695a926cbb37e3f65b9606",
+  "result": "NEGATIVE_RESULT_AS_TOTAL_MATERIAL_AUTHORITY",
+  "native_execution": false,
+  "formal_dependencies": [
+    {"task":"MC-010","path":"research/machining-completeness/tasks/MC-010/outcome.json","blob_sha":"4960730316f89dbb3fbf958d054127fa4fc0d789","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-016","path":"research/machining-completeness/tasks/MC-016/outcome.json","blob_sha":"606a7d0b8be61131b2272f2eb161d6a4dbba703a","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-019","path":"research/machining-completeness/tasks/MC-019/outcome.json","blob_sha":"4456c964315c10b46ce61a5a8d4a45e8025730b7","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-023","path":"research/machining-completeness/tasks/MC-023/outcome.json","blob_sha":"15cd3b128cdaa14370594debd490e76a4a0d6b23","result_kind":"COMPLETED_RESEARCH"}
+  ],
+  "candidate": {
+    "id": "MULTI_TRI_DIRECTIONAL_INTERVAL_MATERIAL",
+    "role": "BOUNDED_DERIVED_INDEX_AFTER_CERTIFIED_3D_RELATION",
+    "general_material_authority_qualified": false,
+    "admission_predicate": {
+      "requirements": [
+        "canonical full-3D material relation is independently authoritative",
+        "every stored line interval is derived from that relation with exact or outward-certified endpoints",
+        "transverse event boundaries where interval count or ordering changes are certified",
+        "all positive-volume material is preserved",
+        "MC-023 common-frame transform semantics are preserved",
+        "MC-019 complete finite cutter and simultaneous-XYZ semantics are preserved",
+        "unknown classification remains explicit and fail-closed"
+      ],
+      "finite_direction_set_is_completeness_proof": false,
+      "finite_sampled_lines_may_define_material": false,
+      "binary_float_predicates_allowed": false,
+      "global_epsilon_predicates_allowed": false,
+      "majority_vote_between_directions_allowed": false,
+      "on_failure": "return UNCERTIFIED or the inherited typed blocker; do not cycle providers or reinterpret the source"
+    }
+  },
+  "representation_contract": {
+    "line_record": "finite ordered union of exact/certified closed material intervals on one directed line",
+    "multiple_intervals_required": true,
+    "directional_indexes_are_material_authority": false,
+    "canonical_relation_resolves_direction_conflict": true,
+    "missing_or_unknown_line_is_material": false,
+    "reorientation": "exact/certified MC-023 common-frame transform; signed-permutation exact control included",
+    "boundary_equality_must_be_preserved": true,
+    "positive_volume_may_be_deleted_by_tolerance": false,
+    "durable_body_identity_is_interval_identity": false,
+    "lineage_is_interval_connectivity": false
+  },
+  "coverage_matrix": [
+    {"id":"DI-027-01","class":"finite exact box unions with certified full-3D relation","status":"DERIVED_INDEX_ELIGIBLE","basis":"exact rational control","guard":"directional intervals are a derived acceleration/index only"},
+    {"id":"DI-027-02","class":"multiple intervals and axis-visible cavities","status":"MODEL_REFERENCE_ELIGIBLE","basis":"CTRL-027-MULTI-AXIS-CAVITY","guard":"retain every interval; no height-field collapse"},
+    {"id":"DI-027-03","class":"reoriented material under exact setup transform","status":"MODEL_REFERENCE_ELIGIBLE","basis":"CTRL-027-REORIENTATION","guard":"MC-023 common-frame direction/order/handedness semantics remain authoritative"},
+    {"id":"DI-027-04","class":"finite sampled directional rays used as material authority","status":"FALSIFIED","basis":"finite-sampling blind-spot witness","guard":"a positive-volume hidden cavity can avoid every sampled ray"},
+    {"id":"DI-027-05","class":"continuous directional field over arbitrary admitted 3D material","status":"NOT_SELF_SUFFICIENT","basis":"requires finite transverse event partition and certified full-3D relation","guard":"generation/query correctness may not be assumed from the directional index itself"},
+    {"id":"DI-027-06","class":"engineering output, grouped bodies and exact-zero contacts","status":"MATERIAL_MODEL_ONLY_OUTPUT_BLOCKED","basis":"RB-016-02 and RB-016-04","guard":"interval groups are not durable body/lineage or STEP/profile authority"}
+  ],
+  "exact_controls": [
+    {
+      "id": "CTRL-027-MULTI-AXIS-CAVITY",
+      "boxes": [
+        {"x":["0","1"],"y":["0","3"],"z":["0","3"]},
+        {"x":["2","3"],"y":["0","3"],"z":["0","3"]},
+        {"x":["1","2"],"y":["0","1"],"z":["0","3"]},
+        {"x":["1","2"],"y":["2","3"],"z":["0","3"]},
+        {"x":["1","2"],"y":["1","2"],"z":["0","1"]},
+        {"x":["1","2"],"y":["1","2"],"z":["2","3"]}
+      ],
+      "probes": [
+        {"axis":"x","transverse":{"y":"3/2","z":"3/2"},"expected":[["0","1"],["2","3"]]},
+        {"axis":"y","transverse":{"x":"3/2","z":"3/2"},"expected":[["0","1"],["2","3"]]},
+        {"axis":"z","transverse":{"x":"3/2","y":"3/2"},"expected":[["0","1"],["2","3"]]}
+      ]
+    },
+    {
+      "id": "CTRL-027-REORIENTATION",
+      "boxes": [{"x":["0","2"],"y":["0","1"],"z":["0","1"]}],
+      "transform": {
+        "matrix": [["0","-1","0"],["1","0","0"],["0","0","1"]],
+        "translation": ["1","0","0"]
+      },
+      "expected_box": {"x":["0","1"],"y":["0","2"],"z":["0","1"]},
+      "probe": {"axis":"y","transverse":{"x":"1/2","z":"1/2"},"expected":[["0","2"]]}
+    },
+    {
+      "id": "CTRL-027-MICROFEATURE",
+      "boxes": [{"x":["0","1/1000000"],"y":["0","1"],"z":["0","1"]}],
+      "probe": {"axis":"x","transverse":{"y":"1/2","z":"1/2"},"expected":[["0","1/1000000"]]},
+      "expected_length": "1/1000000"
+    },
+    {
+      "id": "CTRL-027-TANGENCY",
+      "boxes": [{"x":["0","1"],"y":["0","1"],"z":["0","1"]}],
+      "probes": [
+        {"axis":"x","transverse":{"y":"1","z":"1/2"},"expected":[["0","1"]]},
+        {"axis":"x","transverse":{"y":"1000001/1000000","z":"1/2"},"expected":[]},
+        {"axis":"x","transverse":{"y":"999999/1000000","z":"1/2"},"expected":[["0","1"]]}
+      ]
+    }
+  ],
+  "finite_sampling_obstruction": {
+    "stock": {"x":["0","1"],"y":["0","1"],"z":["0","1"]},
+    "sample_transverse_values": ["1/4","3/4"],
+    "hidden_cavity": {"x":["49/100","51/100"],"y":["49/100","51/100"],"z":["49/100","51/100"]},
+    "expected_sampled_line_interval": ["0","1"],
+    "expected_hidden_volume": "1/125000",
+    "all_sampled_lines_miss_hidden_cavity": true,
+    "same_sampled_data_implies_same_material": false,
+    "generalization": "for any finite family of sampled lines in finitely many directions, a sufficiently small positive-volume rational box can be placed away from their union; finite ray samples are therefore not injective material authority"
+  },
+  "continuous_field_obstruction": {
+    "finite_self_sufficient_representation_requires": [
+      "finite transverse partition",
+      "certified event boundaries where interval topology changes",
+      "exact or outward-certified endpoint relations",
+      "independent full-3D relation for unresolved points"
+    ],
+    "directional_index_alone_supplies_these": false,
+    "sampling_density_may_replace_event_certificate": false,
+    "timeout_may_be_reported_as_success": false
+  },
+  "total_dispatch_conclusion": {
+    "candidate_can_be_general_material_authority": false,
+    "candidate_can_be_bounded_derived_index": true,
+    "candidate_can_be_optional_accelerator_after_admission": true,
+    "finite_sampled_rays_are_complete": false,
+    "continuous_directional_field_eliminates_need_for_full_3d_relation": false,
+    "unresolved_required_case_is_success": false,
+    "noncycling_requirement": "failure may dispatch once to another reviewed owner or return a truthful blocker; it may not cycle"
+  },
+  "retained_blockers": [
+    {"id":"RB-016-02","status":"OPEN","source_task":"MC-016","affected_descendants":["MC-026","MC-030","MC-038","MC-041","MC-044","MC-052"]},
+    {"id":"RB-016-04","status":"OPEN","source_task":"MC-016","affected_descendants":["MC-026","MC-030","MC-038","MC-041","MC-042","MC-043","MC-044","MC-052"]}
+  ],
+  "capability_guard": {
+    "MC-A": "ACCEPTED",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-C": "NOT_ESTABLISHED",
+    "MC-D": "NOT_ESTABLISHED",
+    "MC-E": "NOT_ESTABLISHED",
+    "MC-F": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED"
+  }
+}
