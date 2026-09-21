@@ -1,0 +1,247 @@
+{
+  "schema": "radicadsac-mc054-engineering-output-profile/1.0",
+  "task": "MC-054",
+  "issue": 116,
+  "source_baseline": "1b86aff77958dd1f0330f0a5aac9631a8ebef1b3",
+  "result": "COMPLETED_RESEARCH_PROFILE_DECIDED_QUALIFICATION_OPEN",
+  "native_execution": false,
+  "hypothesis": "A versioned engineering-output profile can preserve all admitted MC-1 material/body semantics by separating programme authority from derived STEP geometry, using explicit grouped manifold-solid decomposition plus a binding manifest for singular/grouped nonempty states, and an explicit manifest-only empty outcome.",
+  "falsification": "Reject the profile if it drops positive material, fuses durable bodies at zero-volume contact, invents residual material for empty states, treats auxiliary decomposition seams as physical material boundaries, lets STEP/kernel topology replace canonical body/lineage authority, or claims interoperability without source-bound native and independent-consumer evidence.",
+  "formal_dependencies": [
+    {
+      "task": "MC-005",
+      "path": "research/machining-completeness/tasks/MC-005/outcome.json",
+      "blob_sha": "adec886597a06345fdfdf65ee018596cd396d249",
+      "result_kind": "CAPABILITY_ACCEPTED"
+    },
+    {
+      "task": "MC-016",
+      "path": "research/machining-completeness/tasks/MC-016/outcome.json",
+      "blob_sha": "606a7d0b8be61131b2272f2eb161d6a4dbba703a",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-017",
+      "path": "research/machining-completeness/tasks/MC-017/outcome.json",
+      "blob_sha": "e7dbfce169febd81de5e0025df204ebd7f8cc53f",
+      "result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "standards_sources": [
+    {
+      "id": "STEP-ABSR",
+      "kind": "SOURCE_FACT",
+      "url": "https://www.steptools.com/stds/stp_aim/html/t_advanced_brep_shape_representation.html",
+      "claim": "advanced_brep_shape_representation accepts manifold_solid_brep/mapped_item members and requires at least one such solid-bearing item; the representation is not restricted to a single manifold solid."
+    },
+    {
+      "id": "STEP-MSB",
+      "kind": "SOURCE_FACT",
+      "url": "https://www.steptools.com/docs/stp_aim/html/t_manifold_solid_brep.html",
+      "claim": "manifold_solid_brep carries one outer closed_shell; singular/non-manifold material therefore cannot be made faithful merely by relabeling one manifold solid."
+    }
+  ],
+  "profile": {
+    "id": "MC-ENG-OUTPUT/1.0",
+    "status": "VERSIONED_PROFILE_DECISION",
+    "primary_engineering_geometry": "STEP advanced B-rep for every nonempty representable piece",
+    "binding_manifest": "engineering-output-manifest.json",
+    "authority_rules": {
+      "canonical_material_authority": "unchanged nominal material certificate/canonical journal result",
+      "canonical_body_authority": "programme durable-body/lineage record",
+      "step_geometry_is_derived": true,
+      "step_topology_may_define_body_identity": false,
+      "consumer_repair_may_change_material": false,
+      "faceted_or_tessellated_primary_success": false
+    },
+    "manifest_required_fields": [
+      "profile_id",
+      "material_state",
+      "source_material_certificate_digest",
+      "source_body_lineage_digest",
+      "step_artifacts",
+      "representation_pieces",
+      "durable_bodies",
+      "contact_relations",
+      "empty_transition"
+    ],
+    "classes": [
+      {
+        "id": "EO-054-01",
+        "name": "regular-nonempty-manifold",
+        "material_state": "NONEMPTY",
+        "step_policy": "one or more ADVANCED_BREP_SHAPE_REPRESENTATION files/items containing faithful MANIFOLD_SOLID_BREP/BREP_WITH_VOIDS as applicable",
+        "manifest_policy": "bind every emitted STEP artifact/item to canonical durable_body_id and lineage; no kernel handle is authority",
+        "representation_piece_policy": "not required unless a certified decomposition is needed",
+        "forbidden": [
+          "DROP_POSITIVE_MATERIAL",
+          "KEEP_LARGEST_ONLY",
+          "MESH_WRAPPER_AS_PRIMARY_SUCCESS"
+        ]
+      },
+      {
+        "id": "EO-054-02",
+        "name": "multiple-disconnected-positive-volume-bodies",
+        "material_state": "NONEMPTY_GROUPED",
+        "step_policy": "emit every retained body as a distinct manifold-solid item or distinct STEP artifact under one manifest; never keep only the largest body",
+        "manifest_policy": "one-to-one binding from each emitted body-level item to canonical durable_body_id plus lineage; body count and mapping are qualification observables",
+        "representation_piece_policy": "body-level items are not permitted to merge distinct durable bodies",
+        "forbidden": [
+          "FUSE_DURABLE_BODIES",
+          "DROP_SMALL_COMPONENT",
+          "GEOMETRIC_NEAREST_MATCH_AS_IDENTITY"
+        ]
+      },
+      {
+        "id": "EO-054-03",
+        "name": "exact-zero-contact-between-distinct-bodies",
+        "material_state": "NONEMPTY_GROUPED",
+        "step_policy": "retain separate manifold-solid items for the already-distinct durable bodies; touching boundaries do not authorize fusion",
+        "manifest_policy": "record exact-zero contact as a source-certificate-bound contact_relation, not as an inferred STEP tolerance event",
+        "representation_piece_policy": "no positive bridge may be inserted and no touching bodies may be fused",
+        "forbidden": [
+          "HEAL_CONTACT",
+          "ADD_BRIDGE",
+          "TOLERANCE_FUSE",
+          "CONTACT_CREATES_BODY_IDENTITY"
+        ]
+      },
+      {
+        "id": "EO-054-04",
+        "name": "touching-cavity-or-singular-nonmanifold-body",
+        "material_state": "NONEMPTY_GROUPED",
+        "step_policy": "if one manifold solid cannot faithfully represent the material, emit a certified finite decomposition into regular positive-volume manifold representation pieces under one durable-body binding",
+        "manifest_policy": "all pieces retain the canonical durable_body_id/lineage; exact contact graph and union certificate are authoritative; auxiliary seams are declared NON_MATERIAL_PARTITION",
+        "representation_piece_policy": "piece interiors must be disjoint, the certified union must equal the canonical material set, and auxiliary partition faces must not be interpreted as physical material boundaries",
+        "forbidden": [
+          "HEAL_PINCH",
+          "DELETE_BRANCH",
+          "FAKE_POSITIVE_WALL",
+          "DROP_CAVITY",
+          "AUXILIARY_SEAM_BECOMES_MATERIAL",
+          "TRIANGULATE_AND_COUNT_AS_ENGINEERING_SUCCESS"
+        ]
+      },
+      {
+        "id": "EO-054-05",
+        "name": "positive-micro-feature",
+        "material_state": "NONEMPTY",
+        "step_policy": "use the ordinary faithful manifold/grouped route without rounding a positive feature to zero",
+        "manifest_policy": "bind protected-feature certificates and required accuracy budget to the emitted item(s)",
+        "representation_piece_policy": "decomposition cannot be used to erase the feature or bridge a certified positive gap",
+        "forbidden": [
+          "TOLERANCE_ERASE_POSITIVE_MATERIAL",
+          "SEW_ACROSS_GAP",
+          "DROP_SLIVER"
+        ]
+      },
+      {
+        "id": "EO-054-06",
+        "name": "empty-material",
+        "material_state": "EMPTY",
+        "step_policy": "emit no nonempty STEP geometry; step_artifacts must be an empty list",
+        "manifest_policy": "record explicit EMPTY_MATERIAL result plus exhausted/disappeared durable-body and lineage transitions; absence of STEP is successful-by-contract only for this state",
+        "representation_piece_policy": "representation_pieces must be empty; no placeholder body, epsilon solid or empty STEP masquerading as nonempty geometry",
+        "forbidden": [
+          "FAKE_EPSILON_SOLID",
+          "EMPTY_PLACEHOLDER_COUNTED_AS_NONEMPTY_PASS",
+          "DROP_LINEAGE"
+        ]
+      }
+    ],
+    "grouped_decomposition_contract": {
+      "allowed_only_when": "single faithful conventional manifold-solid representation is unavailable or when multiple canonical durable bodies must remain distinct",
+      "piece_requirements": [
+        "positive-volume unless the entire material state is EMPTY",
+        "regular manifold STEP representation",
+        "certified subset of canonical material",
+        "pairwise interior-disjoint with all sibling pieces",
+        "certified union equals the canonical material assigned to the bound durable body",
+        "stable piece_id scoped to the output package",
+        "explicit durable_body_id and lineage binding"
+      ],
+      "contact_semantics": "exact-zero contacts come from the nominal/source certificate and are serialized in the manifest; STEP sewing/tolerance is not authority",
+      "auxiliary_seams": "NON_MATERIAL_PARTITION",
+      "may_change_canonical_body_identity": false
+    },
+    "empty_contract": {
+      "success_state": "EMPTY_MATERIAL",
+      "step_artifacts": [],
+      "representation_pieces": [],
+      "require_exhausted_body_lineage": true,
+      "consumer_geometry_import": "NOT_APPLICABLE_EMPTY",
+      "follow_on_geometry_request": "EMPTY_NO_GEOMETRY",
+      "placeholder_step_allowed": false,
+      "epsilon_solid_allowed": false
+    }
+  },
+  "consumer_evidence_plan": {
+    "nonempty_route": "Use MC-017's pinned BRL-CAD step-g strict/exact/no-repair path on the exact STEP bytes, then bind imported object inventory back to the manifest without geometric-nearest or largest-body heuristics.",
+    "required_controls": [
+      "known-good conventional nonempty STEP control",
+      "known-bad/incomplete STEP control",
+      "valid-but-materially-wrong negative control",
+      "multi-body exact-zero-contact control with no fusion",
+      "grouped singular decomposition control with all pieces retained",
+      "positive micro-feature boundary control",
+      "empty manifest-only control with no STEP importer invocation"
+    ],
+    "nonempty_acceptance": [
+      "strict import is complete with no repair/inference",
+      "every manifest STEP item/piece is accounted for",
+      "durable-body and lineage bindings survive without guessing",
+      "no consumer fusion, dropped component, healed contact or invented material",
+      "downstream operation consumes imported geometry rather than replaying nominal machining authority"
+    ],
+    "empty_acceptance": [
+      "manifest validates EMPTY_MATERIAL and zero STEP artifacts",
+      "exhausted/disappeared body lineage remains available",
+      "consumer harness returns NOT_APPLICABLE_EMPTY instead of fabricating geometry",
+      "follow-on geometric operation returns EMPTY_NO_GEOMETRY"
+    ],
+    "qualification_owner": "MC-043",
+    "native_campaign_harness_owner": "MC-045",
+    "execution_status": "NOT_RUN_BY_MC-054"
+  },
+  "blockers": [
+    {
+      "id": "RB-016-01",
+      "status": "OPEN",
+      "remaining_obligation": "native BREP_WITH_VOIDS write/read plus independent-consumer witness; MC-054 does not alter the cavity route"
+    },
+    {
+      "id": "RB-016-02",
+      "status": "OPEN",
+      "remaining_obligation": "native multi-body STEP plus independent-consumer preservation of every durable-body/lineage binding under MC-ENG-OUTPUT/1.0"
+    },
+    {
+      "id": "RB-016-03",
+      "status": "OPEN",
+      "remaining_obligation": "native STEP plus independent-consumer proof that the certified positive micro-feature survives within the declared accuracy budget"
+    },
+    {
+      "id": "RB-016-04",
+      "status": "OPEN",
+      "remaining_obligation": "profile-decision portion is resolved by MC-ENG-OUTPUT/1.0; native grouped/singular STEP and independent-consumer evidence remain outstanding"
+    },
+    {
+      "id": "RB-016-05",
+      "status": "OPEN",
+      "remaining_obligation": "profile-decision portion is resolved by the explicit manifest-only EMPTY_MATERIAL contract; downstream empty-handling qualification remains outstanding"
+    },
+    {
+      "id": "XB-017-01",
+      "status": "OPEN",
+      "remaining_obligation": "actual source-bound independent-consumer execution remains owned by MC-043 under an authorized native campaign"
+    }
+  ],
+  "capability_guard": {
+    "MC-A": "ACCEPTED",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-C": "NOT_ESTABLISHED",
+    "MC-D": "NOT_ESTABLISHED",
+    "MC-E": "NOT_ESTABLISHED",
+    "MC-F": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED"
+  }
+}

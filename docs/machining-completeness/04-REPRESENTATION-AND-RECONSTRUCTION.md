@@ -1,6 +1,6 @@
 # Actual sweeps, material candidates and conventional reconstruction
 
-Status: MC-016 early representability screen and MC-017 source-level independent-consumer probe completed with explicit open blockers; MC-C remains not established and candidate/native reconstruction remains under investigation. Owners: MC-016–044 and MC-054. [Proof](02-COMPLETENESS-ARGUMENT.md), [oracles](03-ORACLE-AND-CORPUS.md), [qualification](05-QUALIFICATION.md).
+Status: MC-016 early representability screen, MC-017 source-level independent-consumer probe and MC-054 engineering-output profile decision completed with explicit open qualification blockers; MC-C remains not established and candidate/native reconstruction remains under investigation. Owners: MC-016–044 and MC-054. [Proof](02-COMPLETENESS-ARGUMENT.md), [oracles](03-ORACLE-AND-CORPUS.md), [qualification](05-QUALIFICATION.md).
 
 ## Sweep contract
 
@@ -62,6 +62,20 @@ The meaningful follow-on operation is a BRL-CAD Boolean difference whose retaine
 **XB-017-01** remains open: the consumer route is source-viable, but no explicit native-execution permit/`expensive-campaign` lock and no pre-existing source-bound MC-1 STEP-through-BRL-CAD result were available to MC-017. Therefore no actual import, measurement or follow-on operation is claimed. MC-043 remains the existing owner of measured independent-consumer continuation, and MC-054 may consume MC-017's source-level path and explicit limits for its output-profile decision without treating any MC-016 blocker as closed.
 
 RB-016-01 through RB-016-05 all remain open. No cavity, disconnected-body, micro-feature, singular/contact or empty-output claim is upgraded by this source inspection. MC-C remains **NOT_ESTABLISHED**.
+
+### MC-054 engineering-output profile
+
+MC-054 freezes the versioned `MC-ENG-OUTPUT/1.0` profile. Every derived engineering-output package carries a mandatory `engineering-output-manifest.json` binding the exact material certificate and programme-owned durable-body/lineage record to the emitted geometry. STEP topology, kernel handles, largest-volume selection and geometric-nearest matching remain derived observations and cannot become body identity authority.
+
+Regular nonempty material remains advanced B-rep STEP. Multiple disconnected durable bodies are all emitted as distinct manifold-solid items or distinct STEP artifacts under the same manifest. Exact-zero contact between distinct bodies is recorded as a source-certificate-bound contact relation; it does not authorize a bridge, tolerance fusion or body merge.
+
+When one faithful manifold solid cannot represent a physically valid singular/touching body, the approved representation is a **certified grouped decomposition** into regular positive-volume manifold representation pieces. Every piece is a certified subset of the canonical material, sibling interiors are pairwise disjoint, and their certified union equals the canonical material assigned to the same durable body. Auxiliary partition faces are explicitly `NON_MATERIAL_PARTITION`: they exist only to regularize the derived engineering representation and may not create material, change canonical body identity or be interpreted as a physical manufacturing boundary.
+
+Positive micro-features remain ordinary positive material and cannot be rounded away by sewing or writer tolerance. Complete removal instead uses the explicit manifest state `EMPTY_MATERIAL` with no STEP artifacts and no representation pieces while exhausted/disappeared durable-body lineage remains recorded. The geometry-consumer state is `NOT_APPLICABLE_EMPTY`; a follow-on geometric request returns `EMPTY_NO_GEOMETRY`. No epsilon solid or placeholder nonempty STEP is permitted.
+
+Qualification remains separate from the profile decision. Nonempty cases route through MC-017's exact-byte, strict/exact/no-repair BRL-CAD path under MC-043, with every manifest item/piece accounted for and downstream operations consuming the imported geometry. The empty control must demonstrate that no STEP import or fake geometry is invoked. MC-045 remains the native-campaign harness owner.
+
+The profile-decision portions of **RB-016-04** and **RB-016-05** are resolved, but both blockers remain **OPEN** because the required native and independent-consumer evidence has not been produced. RB-016-01 through RB-016-05 and XB-017-01 therefore remain evidence obligations. MC-C remains **NOT_ESTABLISHED**.
 
 ## Reconstruction chain
 
