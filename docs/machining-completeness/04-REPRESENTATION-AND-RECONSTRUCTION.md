@@ -1,6 +1,6 @@
 # Actual sweeps, material candidates and conventional reconstruction
 
-Status: MC-016 early representability screen completed with explicit open blockers and MC-C still not established; candidate/native reconstruction remains under investigation. Owners: MC-016–044 and MC-054. [Proof](02-COMPLETENESS-ARGUMENT.md), [oracles](03-ORACLE-AND-CORPUS.md), [qualification](05-QUALIFICATION.md).
+Status: MC-016 early representability screen and MC-017 source-level independent-consumer probe completed with explicit open blockers; MC-C remains not established and candidate/native reconstruction remains under investigation. Owners: MC-016–044 and MC-054. [Proof](02-COMPLETENESS-ARGUMENT.md), [oracles](03-ORACLE-AND-CORPUS.md), [qualification](05-QUALIFICATION.md).
 
 ## Sweep contract
 
@@ -48,6 +48,20 @@ The public STEP schema/resource definitions provide structural routes for ordina
 A positive bridge/sliver remains material even when it is below a convenient writer/sewing tolerance; exact zero remains distinct from a positive bridge or gap. Multiple durable bodies may not be reduced to the largest component or fused merely because shells touch. Faceted or tessellated wrapping may be diagnostic/derived evidence where separately allowed, but it is **not** primary engineering reconstruction success.
 
 MC-C remains **NOT_ESTABLISHED**. MC-016 is a completed bounded research artifact, not a gate pass. Its blockers propagate to candidate/output/reconstruction work until the recorded native, profile and independent-consumer evidence genuinely exists.
+
+### MC-017 independent-consumer probe
+
+MC-017 identifies BRL-CAD's `step-g` plus its BRL-CAD/STEPcode/OpenNURBS analysis path as a **source-viable** independent consumer candidate at pinned upstream commit `0d745fca358e6b4655552186da4221206f4b7483`. The direct `step-g` target is built on BRL-CAD `libbrep`/`librt`, STEPcode and OpenNURBS and does not name OCCT/Open CASCADE or Manifold. This is source-level independence evidence, not a complete transitive runtime dependency audit and **not measured native interoperability**.
+
+The fail-closed probe consumes the exact STEP bytes and records their SHA-256 digest, `FILE_SCHEMA`, producer profile and accuracy contract. The required import route is `step-g --strict --exact --repair none --reject-invalid-objs` with machine-readable report and summary outputs. Only a successful `complete` import counts; partial publication, repair, permissive inference or invalid-preserved geometry is a failed qualification control even when BRL-CAD can retain it for diagnosis.
+
+A native continuation must first prove the environment with an independently known good STEP solid and a bad/incomplete STEP that fails under the same strict policy, and must preserve the valid-but-materially-wrong class as a negative control. BRL-CAD `gqa` can then provide downstream volume, bounding-box, overlap and gap measurements over the imported database, but those are progressively refined ray-grid measurements and remain approximate. They cannot alone certify an exact-zero contact or protected micro-feature. At least three recorded refinements, an explicit grid-spacing limit and convergence within the declared error budget are required.
+
+The meaningful follow-on operation is a BRL-CAD Boolean difference whose retained operand is the independently imported STEP object and whose cutter is created in BRL-CAD. Measurement is repeated on the result. Replaying nominal machining authority or substituting producer-side geometry does not count as downstream engineering use.
+
+**XB-017-01** remains open: the consumer route is source-viable, but no explicit native-execution permit/`expensive-campaign` lock and no pre-existing source-bound MC-1 STEP-through-BRL-CAD result were available to MC-017. Therefore no actual import, measurement or follow-on operation is claimed. MC-043 remains the existing owner of measured independent-consumer continuation, and MC-054 may consume MC-017's source-level path and explicit limits for its output-profile decision without treating any MC-016 blocker as closed.
+
+RB-016-01 through RB-016-05 all remain open. No cavity, disconnected-body, micro-feature, singular/contact or empty-output claim is upgraded by this source inspection. MC-C remains **NOT_ESTABLISHED**.
 
 ## Reconstruction chain
 
