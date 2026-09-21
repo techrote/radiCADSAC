@@ -1,0 +1,91 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-045",
+  "result_kind": "COMPLETED_RESEARCH",
+  "evidence_class": [
+    "DESIGN_DECISION",
+    "DETERMINISTIC_MODEL",
+    "PLATFORM_PROCESS_EVIDENCE",
+    "DOCUMENTATION_RECONCILIATION"
+  ],
+  "source_baseline": "25ca84ad82022e832b9198ec313178f8d1500130",
+  "issue": 107,
+  "dependency_artifacts": [
+    {
+      "task": "MC-056",
+      "path": "research/machining-completeness/tasks/MC-056/outcome.json",
+      "blob_sha": "e9b971c593ca1a90baf17f9ae9a5a568dd313ac3",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-009",
+      "path": "research/machining-completeness/tasks/MC-009/outcome.json",
+      "blob_sha": "3a2c52997ace526add72b0f2051e6b5120c0a44d",
+      "result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "accepted_claims": [
+    "A campaign plan can be admitted fail-closed only when permit/source/candidate/profile/platform bindings match exactly and every planned resource limit remains within the permit.",
+    "Sequential-repeat and nested-parallelism rules are machine-checkable before dispatch; parallel repeat copies and process/thread oversubscription are rejected.",
+    "Worst reserved vCPU consumption is reproducible with exact integer/rational arithmetic from allocated vCPUs, timeout, jobs and sequential repeats without conflating runner wall time with CPU time.",
+    "Every attempt, including TIMEOUT, RESOURCE_EXHAUSTED and CRASH, can be retained durably as canonical fsynced JSONL and non-success terminals cannot be promoted to PASS.",
+    "Paid tariff authority fails closed unless explicitly marked current/verified; issue existence, placeholders and model-only self-tests cannot authorize native or paid execution."
+  ],
+  "open_claims": [
+    "No native geometry campaign has been executed under this harness.",
+    "No candidate has been qualified against MC-RH-Q1 or the MC-004 T0/T1/T2 ladder.",
+    "Windows/Linux fault and replay qualification remains owned by later tasks.",
+    "Provider-specific billing, runner behaviour and monetary projections must be verified prospectively for each actual campaign permit.",
+    "MC-B, MC-C, MC-D, MC-E, MC-F and MC-1 remain NOT_ESTABLISHED."
+  ],
+  "native_execution": false,
+  "artifacts": [
+    "research/machining-completeness/tasks/MC-045/campaign-harness-contract-v1.json",
+    "research/machining-completeness/tasks/MC-045/campaign_harness.py",
+    "research/machining-completeness/tasks/MC-045/report.md",
+    "research/machining-completeness/tasks/MC-045/outcome.json",
+    "research/machining-completeness/tasks/MC-045/verify.py",
+    "docs/machining-completeness/05-QUALIFICATION.md",
+    "research/machining-completeness/outcomes-v1.json",
+    ".github/workflows/mc1-static.yml"
+  ],
+  "verification": [
+    "python3 research/machining-completeness/tasks/MC-045/campaign_harness.py self-test",
+    "python3 research/machining-completeness/tasks/MC-045/verify.py --contract",
+    "python3 research/machining-completeness/tasks/MC-045/verify.py --self-test",
+    "python3 tools/mc_workflow.py verify MC-045",
+    "python3 tools/validate_machining_completeness.py --self-test",
+    "python3 tools/mc_workflow.py sync --check"
+  ],
+  "adversarial_controls": [
+    "reject placeholder approval evidence",
+    "reject source/config/profile/platform binding mismatch",
+    "reject parallel repeat copies",
+    "reject nested process/thread oversubscription",
+    "reject timeout/memory/storage/egress over-plans",
+    "reject unverified paid tariff authority",
+    "reject expensive-campaign lock mismatch",
+    "retain timeout/resource-exhaustion/crash attempts as non-pass",
+    "retain three successful repeats in strict sequential order",
+    "verify exact reserved vCPU-minute arithmetic"
+  ],
+  "resources": {
+    "native_permit_required_for_future_native_execution": true,
+    "native_or_paid_campaign_run": false,
+    "self_test_dispatch_class": "MODEL_ONLY",
+    "self_test_reserved_vcpu_seconds": 120,
+    "self_test_reserved_vcpu_minutes": {"numerator": 2, "denominator": 1}
+  },
+  "review": {
+    "disposition": "accept the static fail-closed campaign admission/accounting harness; retain actual native execution as separately permit-gated downstream work",
+    "gate_changed": false,
+    "programme_capability_changed": false,
+    "downstream_release": "later native-campaign tasks may consume the harness artifact but must supply their own valid versioned NATIVE_BOUNDED permit and retained evidence"
+  },
+  "blockers": [],
+  "downstream_invalidations": [
+    "Changing MC-004 repeat/resource semantics invalidates the corresponding MC-045 admission/accounting assumptions and requires review.",
+    "Changing MC-009 canonical evidence-binding semantics invalidates the attempt/binding format use until reconciled.",
+    "Any downstream runner that bypasses exact permit binding, sequential repeats, nested-parallelism caps or durable failure retention cannot claim MC-045 compliance."
+  ]
+}

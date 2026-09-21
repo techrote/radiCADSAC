@@ -1,0 +1,155 @@
+{
+  "schema": "radicadsac-mc045-campaign-harness-contract/1.0",
+  "task": "MC-045",
+  "issue": 107,
+  "source_baseline": "25ca84ad82022e832b9198ec313178f8d1500130",
+  "result": "QUALIFIED_STATIC_CAMPAIGN_HARNESS",
+  "native_execution": false,
+  "formal_dependencies": [
+    {
+      "task": "MC-056",
+      "path": "research/machining-completeness/tasks/MC-056/outcome.json",
+      "blob_sha": "e9b971c593ca1a90baf17f9ae9a5a568dd313ac3",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-009",
+      "path": "research/machining-completeness/tasks/MC-009/outcome.json",
+      "blob_sha": "3a2c52997ace526add72b0f2051e6b5120c0a44d",
+      "result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "reviewed_auxiliary_inputs": [
+    {
+      "task": "MC-004",
+      "path": "research/machining-completeness/tasks/MC-004/qualification-contract-v1.json",
+      "blob_sha": "22d5f976718edac9a8ccce3cb46f799b76e85ab4",
+      "purpose": "freeze repeat, hardware, timeout, memory and resource-accounting semantics; MC-004 is not a graph dependency"
+    }
+  ],
+  "permit_contract": {
+    "schema": "radicadsac-mc-native-permit/1.0",
+    "required_fields": [
+      "schema",
+      "permit_id",
+      "programme",
+      "owner_task",
+      "dispatch_class",
+      "approval_authority",
+      "approval_evidence",
+      "source_sha",
+      "candidate_config_digest",
+      "fixture_profile_digest",
+      "platform_id",
+      "allocated_vcpus",
+      "max_processes",
+      "threads_per_process",
+      "max_jobs",
+      "sequential_repeats",
+      "timeout_seconds",
+      "peak_rss_bytes_max",
+      "storage_bytes_max",
+      "egress_bytes_max",
+      "tariff_basis",
+      "retention_path",
+      "stop_rules",
+      "expensive_campaign_lock"
+    ],
+    "dispatch_classes": ["MODEL_ONLY", "NATIVE_BOUNDED"],
+    "approval_authority": "MC-1-programme",
+    "native_dispatch_requires_external_approved_permit": true,
+    "issue_existence_is_approval": false,
+    "missing_or_placeholder_approval_is_rejected": true,
+    "paid_tariff_may_be_guessed": false,
+    "permit_reuse_across_source_candidate_profile_or_platform": false,
+    "one_active_expensive_campaign": true,
+    "expensive_campaign_lock_value": "HELD_BY_THIS_PERMIT"
+  },
+  "plan_contract": {
+    "schema": "radicadsac-mc-campaign-plan/1.0",
+    "bindings": [
+      "permit_id",
+      "source_sha",
+      "candidate_config_digest",
+      "fixture_profile_digest",
+      "platform_id"
+    ],
+    "command_is_argv_array": true,
+    "shell_command_forbidden": true,
+    "repeats_are_sequential": true,
+    "parallel_repeat_copies_forbidden": true,
+    "max_jobs_must_not_exceed_permit": true,
+    "nested_parallelism_rule": "max_processes * threads_per_process <= allocated_vcpus unless the permit explicitly records a smaller effective cap; oversubscription is rejected rather than merely reported",
+    "timeout_must_not_exceed_permit": true,
+    "memory_storage_egress_caps_must_not_exceed_permit": true,
+    "environment_overrides_are_explicit": true
+  },
+  "accounting_contract": {
+    "reserved_vcpu_seconds_formula": "allocated_vcpus * timeout_seconds * max_jobs * sequential_repeats",
+    "reserved_vcpu_minutes_representation": "exact rational numerator/denominator; binary float forbidden",
+    "runner_wall_time_distinct_from_cpu_time": true,
+    "attempt_fields": [
+      "attempt_id",
+      "permit_id",
+      "repeat_index",
+      "job_index",
+      "terminal_reason",
+      "started_utc",
+      "finished_utc",
+      "wall_time_ns",
+      "cpu_time_ns",
+      "allocated_vcpus",
+      "observed_peak_rss_bytes",
+      "output_bytes",
+      "storage_bytes",
+      "egress_bytes",
+      "return_code",
+      "stdout_sha256",
+      "stderr_sha256",
+      "source_sha",
+      "candidate_config_digest",
+      "fixture_profile_digest",
+      "platform_id"
+    ],
+    "all_attempts_retained": true,
+    "ledger_format": "append-only UTF-8 JSONL with canonical object encoding and fsync after every attempt",
+    "timeout_resource_crash_incomplete_are_nonpass": true,
+    "resource_cap_violation_terminal": "RESOURCE_EXHAUSTED",
+    "budget_exhaustion_terminal": "INCOMPLETE"
+  },
+  "stop_rules": [
+    "semantic mismatch",
+    "invalid evidence or certificate",
+    "permit binding mismatch",
+    "timeout or memory/storage/egress cap violation",
+    "uncontrolled worker growth or oversubscription",
+    "lost or unwritable durable attempt ledger",
+    "exhausted approved resource or monetary budget"
+  ],
+  "self_test_controls": [
+    "valid MODEL_ONLY permit and exact-bound plan",
+    "missing permit",
+    "placeholder approval evidence",
+    "source/config/profile/platform binding mismatch",
+    "parallel repeats",
+    "nested worker oversubscription",
+    "timeout/memory/storage/egress over-plan",
+    "paid tariff marked unverified",
+    "lock mismatch",
+    "timeout terminal retention",
+    "resource-exhausted terminal retention",
+    "crash terminal retention",
+    "three sequential successful repeats retained in order",
+    "exact reserved vCPU-minute calculation"
+  ],
+  "capability_guard": {
+    "MC-A": "ACCEPTED",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-C": "NOT_ESTABLISHED",
+    "MC-D": "NOT_ESTABLISHED",
+    "MC-E": "NOT_ESTABLISHED",
+    "MC-F": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED"
+  },
+  "scope_limit": "MC-045 qualifies the static permit/admission/accounting harness and deterministic fault controls. It does not authorize or execute a native or paid geometry campaign, does not qualify any candidate, and does not satisfy later native geometry, STEP, scale, platform or recovery gates by itself."
+}
