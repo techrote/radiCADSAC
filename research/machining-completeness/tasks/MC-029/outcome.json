@@ -1,0 +1,42 @@
+{
+  "schema":"radicadsac-mc-task-outcome/1.0",
+  "task":"MC-029",
+  "result_kind":"NEGATIVE_RESULT",
+  "evidence_class":["DETERMINISTIC_MODEL","REVIEWED_ARGUMENT","BOUNDARY_AND_ADVERSARIAL_CONTROLS","DOCUMENTATION_RECONCILIATION"],
+  "source_baseline":"4f99c99b524049a9e288416f6329e2b14badaded",
+  "issue":91,
+  "dependency_artifacts":[
+    {"task":"MC-010","path":"research/machining-completeness/tasks/MC-010/outcome.json","blob_sha":"4960730316f89dbb3fbf958d054127fa4fc0d789","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-016","path":"research/machining-completeness/tasks/MC-016/outcome.json","blob_sha":"606a7d0b8be61131b2272f2eb161d6a4dbba703a","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-018","path":"research/machining-completeness/tasks/MC-018/outcome.json","blob_sha":"085f864b4bd58b38f154b6c9d58d9e68b60ee7ec","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-019","path":"research/machining-completeness/tasks/MC-019/outcome.json","blob_sha":"4456c964315c10b46ce61a5a8d4a45e8025730b7","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-020","path":"research/machining-completeness/tasks/MC-020/outcome.json","blob_sha":"19504a35f47bca710bb6369abb723de83d1afede","result_kind":"COMPLETED_RESEARCH"}
+  ],
+  "accepted_claims":[
+    "Finite sparse node/sign samples do not determine sub-cell positive material or topology, so sampling resolution cannot be sole canonical material authority.",
+    "Sampling/reconstruction, resampling and extraction error are separate from inherited source-sweep error and must be accumulated explicitly.",
+    "Refinement may reduce a certified uncertainty envelope but cannot by itself establish exact equality, topology, durable body identity or lineage.",
+    "Sparse volume/level-set methods remain eligible as bounded derived accelerators/challengers only behind an independently certified source/material relation and explicit fail-closed uncertainty."
+  ],
+  "open_claims":[
+    "PB-007-03 remains OPEN_PROPAGATED for a universal exact source codec covering arbitrary admitted form/undercut cutters.",
+    "RB-016-02 remains OPEN for durable multi-body mapping and independent engineering-output preservation.",
+    "RB-016-03 remains OPEN for native STEP preservation of certified positive micro-material.",
+    "RB-016-04 remains OPEN for exact-zero/touching/singular engineering output without healing or tolerance fusion.",
+    "No native sparse-volume provider has been qualified for robustness, scale or production use in this task.",
+    "MC-B, MC-C, MC-D, MC-E, MC-F and MC-1 remain NOT_ESTABLISHED."
+  ],
+  "native_execution":false,
+  "artifacts":["research/machining-completeness/tasks/MC-029/sparse-levelset-falsification-v1.json","research/machining-completeness/tasks/MC-029/report.md","research/machining-completeness/tasks/MC-029/outcome.json","research/machining-completeness/tasks/MC-029/verify.py","docs/machining-completeness/21-MC029-SPARSE-VOLUME-LEVELSET.md","research/machining-completeness/outcomes-v1.json",".github/workflows/mc1-static.yml"],
+  "verification":["python3 research/machining-completeness/tasks/MC-029/verify.py --contract","python3 research/machining-completeness/tasks/MC-029/verify.py --self-test","python3 tools/mc_workflow.py verify MC-029","python3 tools/validate_machining_completeness.py --self-test","python3 tools/mc_workflow.py sync --check"],
+  "adversarial_controls":["reject same-sign cell corners as proof that the cell contains no positive sub-cell feature","reject pitch/refinement convergence as exact-equality or topology authority","reject omission or reset of inherited source-sweep error","reject silent omission of resampling or extraction error","reject binary-float/tolerance deletion of exact positive material","reject tolerance fusion of tangent, penetrating and separated material events","reject voxel/level-set components as durable body identity or lineage","reject extracted mesh/isosurface as primary STEP success","reject closure of PB-007-03 or RB-016-02/03/04 without producing-owner evidence","reject native-capability or MC-B promotion from deterministic model evidence","reject timeout/resource refusal/UNCERTIFIED as solved material"],
+  "resources":{"native_permit_required":false,"native_or_paid_campaign_run":false},
+  "review":{"disposition":"negative candidate result: reject finite sparse sampled/narrow-band volume or level-set state as sole canonical material/engineering-output authority; retain only a bounded derived accelerator/challenger role behind independent source/material certification, explicit accumulated error and separate topology/body witnesses","gate_changed":false,"programme_capability_changed":false,"downstream_release":"MC-026 may consume MC-029 as negative candidate evidence; MC-030 may compare retained bounded roles, but MC-029 does not release MC-B or authorize native execution"},
+  "blockers":[
+    {"id":"PB-007-03","status":"OPEN_PROPAGATED","source_task":"MC-020","affected_descendants":["MC-026","MC-030","MC-031","MC-038"]},
+    {"id":"RB-016-02","status":"OPEN","source_task":"MC-016","affected_descendants":["MC-026","MC-030","MC-038","MC-041","MC-044","MC-052"]},
+    {"id":"RB-016-03","status":"OPEN","source_task":"MC-016","affected_descendants":["MC-026","MC-038","MC-041","MC-044","MC-052"]},
+    {"id":"RB-016-04","status":"OPEN","source_task":"MC-016","affected_descendants":["MC-026","MC-030","MC-038","MC-041","MC-042","MC-043","MC-044","MC-052"]}
+  ],
+  "downstream_invalidations":["Any use of grid pitch, band width, sample density or extraction success as authority to erase positive material or decide exact-zero contact invalidates the retained role.","Any error budget that resets inherited source error or omits sampling, resampling or extraction terms invalidates certification.","Any promotion of voxel/level-set component identity to durable body/lineage, or extracted mesh/isosurface to primary STEP success, invalidates the MC-029 boundary.","A future native campaign may qualify bounded implementation robustness/performance but cannot rewrite this deterministic representational negative result without a prospective contract review."]
+}
