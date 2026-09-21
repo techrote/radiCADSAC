@@ -1,0 +1,96 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-027",
+  "result_kind": "NEGATIVE_RESULT",
+  "evidence_class": [
+    "DETERMINISTIC_MODEL",
+    "REVIEWED_ARGUMENT",
+    "BOUNDARY_AND_ADVERSARIAL_CONTROLS",
+    "DOCUMENTATION_RECONCILIATION"
+  ],
+  "source_baseline": "263b5e35f6a0d9a6c9695a926cbb37e3f65b9606",
+  "issue": 89,
+  "dependency_artifacts": [
+    {"task":"MC-010","path":"research/machining-completeness/tasks/MC-010/outcome.json","blob_sha":"4960730316f89dbb3fbf958d054127fa4fc0d789","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-016","path":"research/machining-completeness/tasks/MC-016/outcome.json","blob_sha":"606a7d0b8be61131b2272f2eb161d6a4dbba703a","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-019","path":"research/machining-completeness/tasks/MC-019/outcome.json","blob_sha":"4456c964315c10b46ce61a5a8d4a45e8025730b7","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-023","path":"research/machining-completeness/tasks/MC-023/outcome.json","blob_sha":"15cd3b128cdaa14370594debd490e76a4a0d6b23","result_kind":"COMPLETED_RESEARCH"}
+  ],
+  "accepted_claims": [
+    "multiple exact/certified intervals per directed line remove the single-height-field obstruction for bounded derived material indexes, including axis-visible cavities and separated material",
+    "exact MC-023 common-frame reorientation can transform/rebuild directional indexes without changing source semantics; a right-handed signed-permutation control is verified exactly",
+    "exact tangency, signed one-millionth neighbours and a positive 1/1000000 interval are preserved without binary-floating or global-epsilon correctness authority",
+    "finite sampled directional rays are falsified as complete 3D material authority because two materials can agree on every sampled ray while differing by an exact positive-volume hidden cavity",
+    "a continuous directional field is useful only when its transverse event partition, interval endpoints and unresolved points are supplied by an independently certified full-3D relation; the index does not eliminate that underlying obligation",
+    "directional interval groups are not durable body identity, lineage or engineering-output authority; RB-016-02 and RB-016-04 remain open"
+  ],
+  "open_claims": [
+    "a self-sufficient total finite 3D material representation for the full admitted machining domain is not established by directional intervals",
+    "native directional/tridexel material realization and practical-scale performance remain unqualified",
+    "native material classification/topology/reconstruction and STEP qualification remain downstream work",
+    "RB-016-02 remains OPEN for durable multi-body engineering output and independent-consumer preservation",
+    "RB-016-04 remains OPEN for exact-zero/touching/singular output without healing or tolerance fusion",
+    "PO-08, MC-B, MC-C, MC-D, MC-E, MC-F and MC-1 remain NOT_ESTABLISHED"
+  ],
+  "native_execution": false,
+  "artifacts": [
+    "research/machining-completeness/tasks/MC-027/directional-material-falsification-v1.json",
+    "research/machining-completeness/tasks/MC-027/report.md",
+    "research/machining-completeness/tasks/MC-027/outcome.json",
+    "research/machining-completeness/tasks/MC-027/verify.py",
+    "docs/machining-completeness/19-MC027-DIRECTIONAL-MATERIAL.md",
+    "research/machining-completeness/outcomes-v1.json",
+    ".github/workflows/mc1-static.yml"
+  ],
+  "verification": [
+    "python3 research/machining-completeness/tasks/MC-027/verify.py --contract",
+    "python3 research/machining-completeness/tasks/MC-027/verify.py --self-test",
+    "python3 tools/mc_workflow.py verify MC-027",
+    "python3 tools/validate_machining_completeness.py --self-test",
+    "python3 tools/mc_workflow.py sync --check"
+  ],
+  "adversarial_controls": [
+    "reject promotion of directional indexes to total material authority",
+    "reject finite sampled rays or a finite direction set as a completeness proof",
+    "reject majority voting, intersection or union heuristics between directions as canonical truth",
+    "reject height-field collapse of multiple intervals",
+    "reject inverse/left-handed reorientation or source-frame reinterpretation",
+    "reject deletion of positive 1/1000000 material by tolerance or pitch",
+    "reject binary-float/global-epsilon boundary authority",
+    "reject sampling density as a substitute for certified transverse event boundaries",
+    "reject interval identity/connectivity as durable body identity or lineage",
+    "reject closure of RB-016-02 or RB-016-04 without owner evidence",
+    "reject dependency blob drift and premature MC-B promotion"
+  ],
+  "resources": {
+    "native_permit_required": false,
+    "native_or_paid_campaign_run": false
+  },
+  "review": {
+    "disposition": "negative candidate result: retain multi-/tri-directional intervals as a bounded derived index/accelerator after certified full-3D material authority; reject finite rays or the directional index itself as the total authoritative representation",
+    "gate_changed": false,
+    "programme_capability_changed": false,
+    "downstream_release": "MC-026 may consume MC-027 as candidate evidence and may retain directional indexing only behind the reviewed admission predicate; MC-027 does not release MC-B or authorize native implementation"
+  },
+  "blockers": [
+    {
+      "id": "RB-016-02",
+      "status": "OPEN",
+      "source_task": "MC-016",
+      "affected_descendants": ["MC-026","MC-030","MC-038","MC-041","MC-044","MC-052"]
+    },
+    {
+      "id": "RB-016-04",
+      "status": "OPEN",
+      "source_task": "MC-016",
+      "affected_descendants": ["MC-026","MC-030","MC-038","MC-041","MC-042","MC-043","MC-044","MC-052"]
+    }
+  ],
+  "downstream_invalidations": [
+    "any downstream use of finite directional samples as complete material truth invalidates the MC-027 admission boundary",
+    "a future independently certified finite continuous-directional representation may supplement this negative result but must preserve the finite-sampling counterexample as historical evidence",
+    "any change to MC-019 complete-cutter/simultaneous-XYZ semantics or MC-023 common-frame transform semantics invalidates the affected directional-index compatibility claim",
+    "closing RB-016-02 or RB-016-04 requires the producing owner evidence; interval grouping or healing cannot close them",
+    "future native evidence may qualify performance or implementation properties but may not rewrite this deterministic evidence class"
+  ]
+}
