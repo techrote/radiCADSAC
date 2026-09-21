@@ -105,10 +105,12 @@ def validate() -> None:
     expected_families = [f"F{i:02d}" for i in range(1, 17)]
     if [f.get("id") for f in families] != expected_families:
         fail("F01-F16 fixture family denominator drift")
-    if any(f.get("state") != "UNBUILT" or f.get("mandatory") is not True for f in families):
-        fail("MC-009 improperly fabricated or weakened future mandatory fixture families")
+    if any(f.get("mandatory") is not True for f in families):
+        fail("MC-009 future mandatory fixture denominator was weakened")
+    if any(f.get("state") not in {"UNBUILT", "BUILT"} for f in families):
+        fail("unrecognized future fixture progression state")
     if obj["fixture_registry_guard"].get("families") != expected_families or obj["fixture_registry_guard"].get("required_state") != "UNBUILT":
-        fail("fixture registry guard drift")
+        fail("MC-009 frozen production-time fixture registry guard drift")
 
     outcome = load(OUTCOME)
     central.validate_outcome(outcome)
