@@ -56,6 +56,14 @@ Worst reserved vCPU-minutes is the sum of each job's allocated vCPUs × timeout 
 
 One active expensive campaign holds the programme-wide `expensive-campaign` lock. Repeats are sequential. Compile once/reuse exact builds when valid. Run cheap decisive controls first and stop on correctness failure before broad matrices. Budget exhaustion yields INCOMPLETE, not capability refusal-as-success. No paid dispatch, runner resize, cancellation of other work or clone job is authorized by issue existence.
 
+### MC-045 permit-bound campaign harness
+
+MC-045 implements the machine-checkable admission/accounting side of this contract in `research/machining-completeness/tasks/MC-045/campaign_harness.py`, with the reviewed contract in `campaign-harness-contract-v1.json`. Permit, plan and attempt authority objects use canonical JSON and reject binary floating-point values. A plan must bind the exact permit ID, source SHA, candidate configuration, frozen fixture profile and platform; shell command strings, parallel repeat copies and process/thread oversubscription are rejected.
+
+The harness distinguishes `MODEL_ONLY` from `NATIVE_BOUNDED`. Its deterministic qualification uses only a synthetic `MODEL_ONLY` permit. A `NATIVE_BOUNDED` plan requires both a separately approved versioned permit and explicit caller opt-in; the opt-in flag is not approval and cannot create missing authority. MC-045 does not authorize native or paid execution.
+
+Reserved vCPU time is computed exactly from allocated vCPUs × timeout × jobs × sequential repeats, while runner wall time and process CPU time stay distinct. Paid monetary accounting fails closed without a current verified tariff/billing basis. Every attempt, including TIMEOUT, RESOURCE_EXHAUSTED and CRASH, is appended to canonical JSONL with `fsync`; non-success terminals cannot become PASS. These controls qualify the harness contract only, not a geometry candidate, platform campaign, STEP result or capability gate.
+
 ## Cache, invalidation and stops
 
 Cache keys include source/dependency commit, ABI/compiler, platform, flags, toolkits and relevant configuration. Separate build caches, disposable geometry caches and evidence. Reuse frozen evidence only for unchanged claims/inputs. Semantic, arithmetic, oracle, reconstruction or profile changes invalidate named downstream certificates and trigger affected reruns. Documentation-only changes must not rerun the historical geometry catalogue automatically, while appropriate static checks stay required.
