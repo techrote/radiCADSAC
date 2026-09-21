@@ -1,0 +1,89 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-049",
+  "result_kind": "COMPLETED_RESEARCH",
+  "evidence_class": [
+    "DESIGN_DECISION",
+    "MEASURED_DETERMINISTIC_MODEL",
+    "DOCUMENTATION_RECONCILIATION"
+  ],
+  "source_baseline": "3f8e695838b41913b5a05a0b235e7b3ff118e04f",
+  "issue": 111,
+  "dependency_artifacts": [
+    {"task": "MC-005", "path": "research/machining-completeness/tasks/MC-005/outcome.json", "blob_sha": "adec886597a06345fdfdf65ee018596cd396d249", "result_kind": "CAPABILITY_ACCEPTED"},
+    {"task": "MC-009", "path": "research/machining-completeness/tasks/MC-009/outcome.json", "blob_sha": "3a2c52997ace526add72b0f2051e6b5120c0a44d", "result_kind": "COMPLETED_RESEARCH"},
+    {"task": "MC-010", "path": "research/machining-completeness/tasks/MC-010/outcome.json", "blob_sha": "4960730316f89dbb3fbf958d054127fa4fc0d789", "result_kind": "COMPLETED_RESEARCH"},
+    {"task": "MC-011", "path": "research/machining-completeness/tasks/MC-011/outcome.json", "blob_sha": "939f8a6ce8bf4fa8cb5c08d854cc0d3c30aea32f", "result_kind": "COMPLETED_RESEARCH"},
+    {"task": "MC-012", "path": "research/machining-completeness/tasks/MC-012/outcome.json", "blob_sha": "378700980c686566eeffa0b21981480fa9bbf700", "result_kind": "COMPLETED_RESEARCH"},
+    {"task": "MC-013", "path": "research/machining-completeness/tasks/MC-013/outcome.json", "blob_sha": "6f0becdec6d1041c869b45a3da348fd191997496", "result_kind": "COMPLETED_RESEARCH"},
+    {"task": "MC-014", "path": "research/machining-completeness/tasks/MC-014/outcome.json", "blob_sha": "9a70377c92c37272331fb5a76fc3ec25c23f4d8a", "result_kind": "COMPLETED_RESEARCH"},
+    {"task": "MC-015", "path": "research/machining-completeness/tasks/MC-015/outcome.json", "blob_sha": "c334e7d9ed9aea5541338e0c0397f6b0e98ff3e6", "result_kind": "COMPLETED_RESEARCH"}
+  ],
+  "accepted_claims": [
+    "The candidate-blind final-challenge generator, public seed/commitment, F01-F16 denominator, four challenge classes per family, oracle/checker pins and accuracy request are frozen before MC-026 provider selection.",
+    "The deterministic generator produces exactly 64 unique frozen challenge records using only the fixed seed, family ID, challenge class and reviewed procedure label; candidate identity, configuration, output and achieved error are not generator inputs.",
+    "Every mandatory F01-F16 family retains baseline, exact/boundary, qualified metamorphic and targeted corruption challenges with A-SEMANTIC, A-ENGINEERING and A-PRECISION-BOUNDARY requests.",
+    "The freeze pins the accepted MC-A workload contract, MC-009 binding contract, MC-010 exact control, all four prospective corpus/oracle tranches and the MC-015 certificate checker by Git blob identity.",
+    "Custody is accurately classified PUBLIC_PRESELECTION_PREREGISTRATION: the public set is candidate-blind but is not independent, secret or held-out; later independent custody/execution remains owned by MC-057.",
+    "No native or paid execution is authorized or claimed, and the static freeze does not promote MC-B through MC-F or MC-1."
+  ],
+  "open_claims": [
+    "No geometry candidate has executed the frozen challenge set; all generated records remain FROZEN_NOT_EXECUTED.",
+    "Independent/secret held-out custody is not established by MC-049; MC-057 must record any later independent ownership and execution honestly.",
+    "MC-007 proof blockers, MC-016 representability blockers, MC-017 independent-consumer blocker and all other inherited unresolved claims retain their owners.",
+    "MC-B, MC-C, MC-D, MC-E, MC-F and MC-1 remain NOT_ESTABLISHED."
+  ],
+  "native_execution": false,
+  "custody": {
+    "classification": "PUBLIC_PRESELECTION_PREREGISTRATION",
+    "held_out": false,
+    "independent_custodian": false,
+    "secret_seed": false,
+    "later_independent_execution_owner": "MC-057"
+  },
+  "artifacts": [
+    "research/machining-completeness/tasks/MC-049/final-challenge-contract-v1.json",
+    "research/machining-completeness/tasks/MC-049/challenge_generator.py",
+    "research/machining-completeness/tasks/MC-049/report.md",
+    "research/machining-completeness/tasks/MC-049/outcome.json",
+    "research/machining-completeness/tasks/MC-049/verify.py",
+    "docs/machining-completeness/03-ORACLE-AND-CORPUS.md",
+    "research/machining-completeness/outcomes-v1.json",
+    ".github/workflows/mc1-static.yml"
+  ],
+  "verification": [
+    "python3 research/machining-completeness/tasks/MC-049/challenge_generator.py --self-test",
+    "python3 research/machining-completeness/tasks/MC-049/verify.py --contract",
+    "python3 tools/mc_workflow.py verify MC-049",
+    "python3 tools/validate_machining_completeness.py --self-test",
+    "python3 tools/mc_workflow.py sync --check"
+  ],
+  "adversarial_controls": [
+    "reject candidate-derived identity/configuration/result fields in challenge authority",
+    "reject seed/commitment or algorithm-version drift",
+    "reject F01-F16 denominator shrinkage, family optionalization or missing baseline/boundary/metamorphic/corruption class",
+    "reject weakened accuracy profile binding or binary-floating correctness authority",
+    "reject dependency/corpus/oracle/checker Git-blob drift",
+    "reject public preregistration mislabelled as independent, secret or held-out",
+    "reject timeout/resource/pending/refusal as PASS",
+    "reject weakening positive-volume material, durable body identity/lineage, canonical-journal or historical-provenance semantics",
+    "reject MC-B or other downstream capability promotion"
+  ],
+  "resources": {
+    "native_permit_required": false,
+    "native_or_paid_campaign_run": false,
+    "generated_challenge_count": 64
+  },
+  "review": {
+    "disposition": "completed pre-selection candidate-blind challenge freeze only; no native challenge execution or independent custody claim",
+    "gate_changed": false,
+    "programme_capability_changed": false,
+    "downstream_release": "MC-026 may consume this frozen public preregistration for selection; MC-057 remains the independent-custody/execution owner"
+  },
+  "blockers": [],
+  "downstream_invalidations": [
+    "changing the generator algorithm, public seed, family/class denominator or procedure labels requires a new reviewed MC-049 version",
+    "changing any pinned corpus/oracle/checker/fixture-registry/qualification artifact requires review before affected challenges retain the same freeze identity",
+    "a later candidate failure cannot be removed by editing this version; failures remain visible and any prospective revision is separately versioned"
+  ]
+}
