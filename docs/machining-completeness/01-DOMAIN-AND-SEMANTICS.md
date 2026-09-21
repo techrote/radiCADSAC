@@ -98,7 +98,7 @@ e_total = e_inherited + e_translation + rho*e_rotation + e_tool
 
 where rotation error is a certified angular upper bound in radians. A centreline-only error is therefore insufficient whenever finite cutter extent or orientation error contributes. The formula is a geometric enclosure, not a topology, material-membership or exact-zero event certificate. Exact rigid transforms preserve distance bounds; reclamps and machine transitions inherit rather than reset upstream error.
 
-`PB-007-01` and `PB-007-02` remain open. MC-058 does not decide all tangential/multiple/singular transcendental equalities and does not establish the unconditional general coupled helical/spindle-feed/eccentric sweep-membership route. PO-02, PO-05 and PO-06 remain open under their existing owners. No native or paid campaign ran, and **MC-B remains NOT_ESTABLISHED**.
+`PB-007-01` and `PB-007-02` remain open. MC-058 does not decide all tangential/multiple/singular transcendental equalities and does not establish the unconditional general coupled helical/spindle-feed/eccentric sweep-membership route. PO-02, PO-05 and PO-06 remain open under their existing owners. No native or paid campaign ran, and MC-B remains **NOT_ESTABLISHED**.
 
 ## Domain-lock outputs
 
