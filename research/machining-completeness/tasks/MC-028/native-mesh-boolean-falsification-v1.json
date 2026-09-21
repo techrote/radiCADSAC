@@ -1,0 +1,138 @@
+{
+  "schema": "radicadsac-mc028-native-mesh-boolean-falsification/1.0",
+  "task": "MC-028",
+  "issue": 90,
+  "source_baseline": "e21aa9fa45959ebc3a6f3a3a56fca26a4cb6af1f",
+  "result": "NEGATIVE_RESULT_AS_TOTAL_MATERIAL_AUTHORITY",
+  "native_execution": false,
+  "native_or_paid_campaign_run": false,
+  "formal_dependencies": [
+    {"task":"MC-010","path":"research/machining-completeness/tasks/MC-010/outcome.json","blob_sha":"4960730316f89dbb3fbf958d054127fa4fc0d789","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-016","path":"research/machining-completeness/tasks/MC-016/outcome.json","blob_sha":"606a7d0b8be61131b2272f2eb161d6a4dbba703a","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-018","path":"research/machining-completeness/tasks/MC-018/outcome.json","blob_sha":"085f864b4bd58b38f154b6c9d58d9e68b60ee7ec","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-019","path":"research/machining-completeness/tasks/MC-019/outcome.json","blob_sha":"4456c964315c10b46ce61a5a8d4a45e8025730b7","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-020","path":"research/machining-completeness/tasks/MC-020/outcome.json","blob_sha":"19504a35f47bca710bb6369abb723de83d1afede","result_kind":"COMPLETED_RESEARCH"}
+  ],
+  "upstream_candidate": {
+    "repository": "elalish/manifold",
+    "version": "v3.5.3",
+    "tag_commit": "0edd9d54876f3135e431575214dd6d8a72866fee",
+    "release_tarball_sha256": "9545a1c944280673553d0c97602def29f62afa4ade4b27ad1593bb13aa266218",
+    "source_pins": [
+      {"path":"include/manifold/common.h","blob_sha":"4e8ee4202ce10dbc5896259a0936ef0fb9317b43","fact":"MeshGL is single precision, MeshGL64 is double precision, and core vector/matrix geometry uses double."},
+      {"path":"include/manifold/mesh.h","blob_sha":"984af936d370121878f40a325af52066fe0040cd","fact":"MeshGLP is a triangle-mesh interchange structure; polygonal faces are planar within output tolerance; mesh tolerance may collapse edges shorter than tolerance and may grow with floating-point error."},
+      {"path":"include/manifold/manifold.h","blob_sha":"ff4e04b86ddff563d88ef4e85f6e141d4eed4479","fact":"Manifold's internal representation is an oriented 2-manifold triangle mesh; MeshGL/MeshGL64 are its mesh I/O, while LevelSet is a separate constructor."}
+    ],
+    "source_urls": [
+      "https://github.com/elalish/manifold/blob/v3.5.3/include/manifold/common.h",
+      "https://github.com/elalish/manifold/blob/v3.5.3/include/manifold/mesh.h",
+      "https://github.com/elalish/manifold/blob/v3.5.3/include/manifold/manifold.h",
+      "https://github.com/elalish/manifold/releases/tag/v3.5.3"
+    ]
+  },
+  "candidate_input_contract": {
+    "uses_independently_qualified_actual_sweeps": true,
+    "actual_sweep_sources": ["MC-018", "MC-019", "MC-020"],
+    "historical_levelset_sampling_used": false,
+    "candidate_geometry_may_not_reconstruct_or_reinterpret_source_motion": true,
+    "uncertified_sweep_shell_may_not_be_promoted_to_exact_mesh_truth": true
+  },
+  "source_facts": {
+    "representation": "FINITE_FLOATING_TRIANGLE_BOUNDARY_MESH",
+    "internal_geometry_precision": "double",
+    "single_precision_mesh_io_exists": true,
+    "double_precision_mesh_io_exists": true,
+    "mesh_tolerance_is_part_of_representation_contract": true,
+    "edge_shorter_than_tolerance_may_collapse": true,
+    "tolerance_may_enlarge_with_roundoff": true,
+    "baseline_bbox_tolerance_applies_on_mesh_construction": true,
+    "manifold_output_is_not_synonymous_with_exact_mc1_material_semantics": true
+  },
+  "exact_controls": {
+    "flat_sweep": {
+      "provider": "MC-018",
+      "tool": {"radius":"1","length":"2"},
+      "leaf": {"p0":["0","0","0"],"p1":["0","0","0"],"source_class":"stationary"},
+      "boundary": ["1","0","1"],
+      "outside": ["1000001/1000000","0","1"]
+    },
+    "ball_curvature": {
+      "provider": "MC-019",
+      "tool": {"radius":"1","length":"2"},
+      "leaf": {"p0":["0","0","0"],"p1":["0","0","0"],"source_class":"stationary"},
+      "exact_boundary": ["3/5","0","1/5"],
+      "inside_neighbour": ["3/5","0","200001/1000000"],
+      "outside_neighbour": ["3/5","0","199999/1000000"],
+      "xz_chord_endpoints": [["0","0"],["1","1"]],
+      "witness_not_on_chord": ["3/5","1/5"],
+      "sphere_equation": "x^2+(z-1)^2=1"
+    },
+    "form_union": {
+      "provider": "MC-020",
+      "tool_kind": "mill_form",
+      "boxes": [["-1","-1/2","-1","1","0","1"],["1/2","1","-1","1","0","1"]],
+      "leaf": {"p0":["0","0","0"],"p1":["0","0","0"],"source_class":"stationary"},
+      "inside": ["-3/4","0","1/2"],
+      "reentrant_gap": ["0","0","1/2"]
+    },
+    "positive_microfeature": {
+      "provider": "MC-020",
+      "tool_kind": "mill_form",
+      "box": ["0","1/1000000","0","1","0","1"],
+      "leaf": {"p0":["0","0","0"],"p1":["0","0","0"],"source_class":"stationary"},
+      "probe": ["1/2000000","1/2","1/2"],
+      "required_width": "1/1000000"
+    },
+    "zero_contact": {
+      "stock_interval": ["0","1"],
+      "tangent_sweep_interval": ["1","2"],
+      "penetrating_sweep_interval": ["999999/1000000","2"],
+      "separated_sweep_interval": ["1000001/1000000","2"],
+      "tangent_positive_overlap": "0",
+      "penetrating_positive_overlap": "1/1000000",
+      "separated_positive_overlap": "0"
+    }
+  },
+  "falsification": {
+    "hypothesis": "A finite floating triangle-mesh Boolean provider can be the sole authoritative MC-1 material representation and engineering-output source for every admitted operation when fed independently qualified actual cutter sweeps.",
+    "criterion": "Falsified if a required source-faithful material distinction cannot be represented as exact authoritative truth by the finite triangle/tolerance state without an external certified relation or if the candidate cannot by itself satisfy the conventional primary engineering-output contract.",
+    "decisive_observations": [
+      "MC-019 contains an exact curved ball-end sweep boundary; the rational 3-4-5 witness lies on the exact spherical nose but not on the straight chord between exact endpoint samples, so a finite planar faceting is approximation rather than identical material authority.",
+      "The upstream candidate's own mesh contract permits simplification-driven collapse below tolerance and tolerance growth with floating-point error, while MC-1 forbids deleting positive material merely because it is small.",
+      "Exact-zero tangency and signed one-millionth neighbours are non-compensating semantics; epsilon-valid/manifold mesh status cannot itself decide which material event occurred.",
+      "A manifold triangle mesh and successful mesh Boolean do not constitute conventional analytic/grouped STEP qualification; MC-016 output blockers remain independent."
+    ],
+    "finite_planar_mesh_exact_for_open_spherical_patch": false,
+    "mesh_validity_implies_mc1_material_correctness": false,
+    "mesh_boolean_success_implies_engineering_output_success": false
+  },
+  "retained_role": {
+    "status": "ELIGIBLE_ONLY_AS_BOUNDED_DERIVED_OR_CHALLENGER_PROVIDER",
+    "requirements": [
+      "independently qualified source-faithful sweep construction remains authoritative",
+      "a separate exact or outward-certified material relation/error envelope owns correctness",
+      "positive-volume and exact-zero distinctions are checked outside mesh tolerance heuristics",
+      "durable body identity and lineage remain journal-owned rather than mesh-component-owned",
+      "mesh results are not promoted to primary STEP or independent-consumer qualification",
+      "uncertified, resource-refused or tolerance-ambiguous cases fail closed and dispatch non-cyclically"
+    ],
+    "total_material_authority": false,
+    "primary_engineering_output_authority": false,
+    "native_capability_qualified": false
+  },
+  "blockers": [
+    {"id":"PB-007-03","status":"OPEN_PROPAGATED","source_task":"MC-020","reason":"no universal exact source codec for every admitted arbitrary form/undercut cutter instance"},
+    {"id":"RB-016-02","status":"OPEN","source_task":"MC-016","reason":"durable multi-body mapping and independent engineering-output preservation remain unqualified"},
+    {"id":"RB-016-03","status":"OPEN","source_task":"MC-016","reason":"native STEP preservation of certified positive micro-material remains unqualified"},
+    {"id":"RB-016-04","status":"OPEN","source_task":"MC-016","reason":"exact-zero/touching/singular engineering output remains unqualified without healing or fusion"}
+  ],
+  "capability_state": {"MC-A":"ACCEPTED","MC-B":"NOT_ESTABLISHED","MC-C":"NOT_ESTABLISHED","MC-D":"NOT_ESTABLISHED","MC-E":"NOT_ESTABLISHED","MC-F":"NOT_ESTABLISHED","MC-1":"NOT_ESTABLISHED"},
+  "protected_semantics": [
+    "historical research/rcs-* evidence remains immutable",
+    "source/audio/provenance meaning remains unchanged",
+    "canonical operation journal remains durable authority",
+    "positive-volume material may not be erased by tolerance",
+    "durable body identity and lineage may not be inferred from mesh components or enumeration",
+    "STEP remains mandatory primary engineering output; mesh-wrapped STEP is not success"
+  ]
+}
