@@ -37,7 +37,7 @@ No native or paid campaign was executed. No production bootstrap is authorized.
 
 `fixture-families-v1.json` now marks F01–F04 `BUILT` and leaves F05–F16 `UNBUILT`. `BUILT` means the family record and its independent control path exist; it does not mean a candidate passed.
 
-The programme validator now permits only `UNBUILT`/`BUILT` and rejects a `BUILT` family whose owner is still `NOT_STARTED`. MC-055's verifier was corrected so its historical statement (“none were built by MC-055”) remains frozen in the MC-055 artifact rather than incorrectly requiring the live future registry to stay forever `UNBUILT`.
+The programme validator now permits only `UNBUILT`/`BUILT` and rejects a `BUILT` family whose owner is still `NOT_STARTED`. Two completed historical verifiers contained production-time assertions that accidentally froze the *live future registry*: MC-009 required all families to remain `UNBUILT`, and MC-055 did the same. Both verifiers now preserve their own frozen production-time contracts (`required_state=UNBUILT` for MC-009 and `F01-F16=UNBUILT` for MC-055) while allowing later reviewed family records to progress to `BUILT`. They continue to reject denominator loss, optionalization, unknown states, owner drift and historical-source mutation. No historical result or contract was rewritten into a pass.
 
 ## Adversarial verification
 
