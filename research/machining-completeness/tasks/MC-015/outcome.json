@@ -1,0 +1,89 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-015",
+  "result_kind": "COMPLETED_RESEARCH",
+  "evidence_class": [
+    "MEASURED_DETERMINISTIC_MODEL",
+    "DESIGN_DECISION",
+    "DOCUMENTATION_RECONCILIATION"
+  ],
+  "source_baseline": "045a6a85972ad381cfcc0ccfc014e4dca8c5a970",
+  "issue": 77,
+  "dependency_artifacts": [
+    {
+      "task": "MC-009",
+      "path": "research/machining-completeness/tasks/MC-009/outcome.json",
+      "blob_sha": "3a2c52997ace526add72b0f2051e6b5120c0a44d",
+      "result_kind": "COMPLETED_RESEARCH"
+    },
+    {
+      "task": "MC-010",
+      "path": "research/machining-completeness/tasks/MC-010/outcome.json",
+      "blob_sha": "4960730316f89dbb3fbf958d054127fa4fc0d789",
+      "result_kind": "COMPLETED_RESEARCH"
+    }
+  ],
+  "accepted_claims": [
+    "MC-015 provides a programme-owned exact certificate checker that is structurally independent from candidate geometry and the MC-010/MC-011/MC-012/MC-013/MC-014 oracle implementations.",
+    "The checker rejects candidate-owned truth/checking authority, false oracle independence, shared decisive geometry, non-success terminal promotion, binary-float authority and invalid exact material sandwiches.",
+    "Material probes, exact component count, durable body identity and lineage are non-compensating certificate obligations, so aggregate volume agreement cannot hide a lost thin web, filled channel, added bridge, deleted body or lost lineage.",
+    "An exact 1/1000000 positive material witness remains positive, exact tangent/boundary state remains distinct, and valid exact-empty material may pass while exhausted durable body identity is retained.",
+    "The adversarial verifier pins the reviewed dependency/oracle/historical-import sources and reruns the MC-009 binding-verifier corruption suite.",
+    "F01-F16 remain mandatory BUILT prospective fixtures; this task does not convert fixture construction into candidate PASS, native geometry evidence or a capability-gate result."
+  ],
+  "open_claims": [
+    "The MC-015 checker validates supplied certificate statements and discriminating witnesses; it does not prove that the witness set is complete over the full machining domain.",
+    "MC-007 transcendental/tangential blockers and all propagated proof obligations remain open under their recorded downstream owners.",
+    "No native geometry candidate has been executed or qualified by MC-015.",
+    "Native material/topology/reconstruction correctness and independent STEP engineering qualification remain unestablished.",
+    "MC-B, MC-C, MC-D, MC-E, MC-F and MC-1 remain NOT_ESTABLISHED."
+  ],
+  "native_execution": false,
+  "artifacts": [
+    "research/machining-completeness/tasks/MC-015/certificate-attack-contract-v1.json",
+    "research/machining-completeness/tasks/MC-015/certificate_checker.py",
+    "research/machining-completeness/tasks/MC-015/report.md",
+    "research/machining-completeness/tasks/MC-015/outcome.json",
+    "research/machining-completeness/tasks/MC-015/verify.py",
+    "docs/machining-completeness/03-ORACLE-AND-CORPUS.md",
+    "research/machining-completeness/outcomes-v1.json",
+    ".github/workflows/mc1-static.yml"
+  ],
+  "verification": [
+    "python3 research/machining-completeness/tasks/MC-015/certificate_checker.py",
+    "python3 research/machining-completeness/tasks/MC-015/verify.py --contract",
+    "python3 research/machining-completeness/tasks/MC-015/verify.py --self-test",
+    "python3 tools/mc_evidence_verifier.py --self-test",
+    "python3 tools/mc_workflow.py verify MC-015",
+    "python3 tools/validate_machining_completeness.py --self-test",
+    "python3 tools/mc_workflow.py sync --check"
+  ],
+  "adversarial_controls": [
+    "reject binary floating authority and malformed exact material bounds",
+    "reject timeout/resource exhaustion as certificate success",
+    "reject candidate-owned checker, expected truth or inclusion-proof authority",
+    "reject false oracle independence and shared decisive geometry",
+    "reject inconsistent/over-broad material sandwiches and unproved inclusion relations",
+    "reject lost positive thin material, filled void/channel and tangent collapse",
+    "reject wrong component count, lost durable body identity and lost lineage",
+    "reject positive residual material rounded to empty and duplicate witness identities",
+    "reject pinned dependency/oracle/historical-import source drift"
+  ],
+  "resources": {
+    "native_permit_required": false,
+    "native_or_paid_campaign_run": false
+  },
+  "review": {
+    "disposition": "completed independent certificate/checker and oracle-adversarial research only; no native geometry or capability promotion",
+    "gate_changed": false,
+    "programme_capability_changed": false,
+    "downstream_release": "artifact dependents may consume the MC-015 checker and adversarial contract while preserving its bounded witness scope and every recorded open proof/native/output obligation"
+  },
+  "blockers": [],
+  "downstream_invalidations": [
+    "changing the MC-009 binding schema/verifier requires a reviewed MC-015 compatibility revision",
+    "changing any pinned oracle or F01-F16 fixture meaning requires re-review of affected certificate assumptions and controls",
+    "changing the MC-055 historical import requires explicit provenance review without rewriting historical evidence",
+    "a later checker/oracle defect supersedes affected certificates but may not remove failures or shrink the mandatory corpus"
+  ]
+}
