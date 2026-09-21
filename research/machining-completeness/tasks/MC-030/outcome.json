@@ -1,0 +1,87 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-030",
+  "result_kind": "COMPLETED_RESEARCH",
+  "evidence_class": ["SOURCE_INSPECTION","DETERMINISTIC_MODEL","REVIEWED_ARGUMENT","DESIGN_DECISION","BOUNDARY_AND_ADVERSARIAL_CONTROLS","DOCUMENTATION_RECONCILIATION"],
+  "source_baseline": "fd0662dbefcc1eaa03e2be0503e53860feaa4cf0",
+  "issue": 92,
+  "dependency_artifacts": [
+    {"task":"MC-010","path":"research/machining-completeness/tasks/MC-010/outcome.json","blob_sha":"4960730316f89dbb3fbf958d054127fa4fc0d789","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-016","path":"research/machining-completeness/tasks/MC-016/outcome.json","blob_sha":"606a7d0b8be61131b2272f2eb161d6a4dbba703a","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-018","path":"research/machining-completeness/tasks/MC-018/outcome.json","blob_sha":"085f864b4bd58b38f154b6c9d58d9e68b60ee7ec","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-019","path":"research/machining-completeness/tasks/MC-019/outcome.json","blob_sha":"4456c964315c10b46ce61a5a8d4a45e8025730b7","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-020","path":"research/machining-completeness/tasks/MC-020/outcome.json","blob_sha":"19504a35f47bca710bb6369abb723de83d1afede","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-021","path":"research/machining-completeness/tasks/MC-021/outcome.json","blob_sha":"442397474c596bc3a73e9442e4ab2f955e19b0e6","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-022","path":"research/machining-completeness/tasks/MC-022/outcome.json","blob_sha":"8ca7cfd0d098d746394cab71257b1dfc6e3a7250","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-023","path":"research/machining-completeness/tasks/MC-023/outcome.json","blob_sha":"15cd3b128cdaa14370594debd490e76a4a0d6b23","result_kind":"COMPLETED_RESEARCH"}
+  ],
+  "accepted_claims": [
+    "Four bounded native/process fast paths now have explicit sufficient source-bound admission predicates; operation names and kernel success are not admission or correctness evidence.",
+    "Native B-rep/process output is accepted from a fast provider only with an independent material certificate; kernel validity and kernel topology identity are not canonical material, body or lineage authority.",
+    "The dispatcher is noncycling: at most one fast provider may run, any failure/uncertified result/success-without-certificate falls back exactly once to a unique GENERAL_CERTIFIED_ROUTE, and that route never dispatches back to a fast provider.",
+    "The general route is total as routing but may terminate with preserved proof blockers, UNCERTIFIED, RESOURCE_REFUSAL or SEMANTIC_BLOCKER rather than fabricating success.",
+    "Multi-setup material-changing operations are independently dispatched in the MC-023 common frame while exact revision/body binding and inherited error remain continuous.",
+    "Directional, mesh/Manifold and sparse-volume/level-set candidates remain derived accelerators or challengers rather than canonical authority."
+  ],
+  "open_claims": [
+    "PB-007-01 remains OPEN for unconditional tangential/multiple/singular transcendental event decisions.",
+    "PB-007-02 remains OPEN for unconditional general coupled spindle/feed/eccentric sweep membership.",
+    "PB-007-03 remains OPEN_PROPAGATED for a universal finite exact source codec covering arbitrary admitted form/undercut cutters.",
+    "RB-016-02 remains OPEN for durable multi-body mapping and independent engineering-output preservation.",
+    "RB-016-04 remains OPEN for exact-zero/touching/singular independent-consumer output qualification.",
+    "No native provider has been newly qualified for total-domain material correctness, robustness, scale or production use by MC-030.",
+    "MC-B, MC-C, MC-D, MC-E, MC-F and MC-1 remain NOT_ESTABLISHED."
+  ],
+  "native_execution": false,
+  "artifacts": [
+    "research/machining-completeness/tasks/MC-030/provider-dispatch-contract-v1.json",
+    "research/machining-completeness/tasks/MC-030/dispatch_model.py",
+    "research/machining-completeness/tasks/MC-030/report.md",
+    "research/machining-completeness/tasks/MC-030/outcome.json",
+    "research/machining-completeness/tasks/MC-030/verify.py",
+    "docs/machining-completeness/22-MC030-NATIVE-PROVIDER-DISPATCH.md",
+    "research/machining-completeness/outcomes-v1.json",
+    ".github/workflows/mc1-static.yml"
+  ],
+  "verification": [
+    "python3 research/machining-completeness/tasks/MC-030/verify.py --contract",
+    "python3 research/machining-completeness/tasks/MC-030/verify.py --self-test",
+    "python3 tools/mc_workflow.py verify MC-030",
+    "python3 tools/validate_machining_completeness.py --self-test",
+    "python3 tools/mc_workflow.py sync --check"
+  ],
+  "adversarial_controls": [
+    "reject operation labels as sufficient provider admission",
+    "reject unresolved nonlinear/MC-058 uncertainty from exact fast paths",
+    "reject accessible undercut without complete cutter-plus-holder access evidence",
+    "reject phase-sensitive turning from the axisymmetric path",
+    "reject transcendental blockers from bounded phase-provider success",
+    "reject stale or missing revision/body binding",
+    "reject B-rep validity or kernel topology identity as canonical material/body/lineage authority",
+    "reject fast SUCCESS without independent material certificate",
+    "reject timeout/resource refusal/UNCERTIFIED as success",
+    "reject provider cycles or general-to-fast redispatch",
+    "reject derived directional/mesh/sparse candidates as canonical authority",
+    "reject positive-material deletion, exact-zero healing, inherited-blocker closure and premature gate promotion"
+  ],
+  "resources": {"native_permit_required": false, "native_or_paid_campaign_run": false},
+  "review": {
+    "disposition": "completed bounded native/process provider-admission and total noncycling dispatch design; general-route proof/output blockers remain explicit and no native capability is promoted",
+    "gate_changed": false,
+    "programme_capability_changed": false,
+    "downstream_release": "MC-026 may consume the provider/dispatch design together with MC-024/025/027/028/029 and MC-049 evidence; MC-030 does not release MC-B or authorize native/paid execution"
+  },
+  "blockers": [
+    {"id":"PB-007-01","status":"OPEN","source_task":"MC-022","affected_descendants":["MC-026","MC-032","MC-038"]},
+    {"id":"PB-007-02","status":"OPEN","source_task":"MC-022","affected_descendants":["MC-026","MC-031","MC-038"]},
+    {"id":"PB-007-03","status":"OPEN_PROPAGATED","source_task":"MC-020","affected_descendants":["MC-026","MC-031","MC-038"]},
+    {"id":"RB-016-02","status":"OPEN","source_task":"MC-016","affected_descendants":["MC-026","MC-038","MC-041","MC-044","MC-052"]},
+    {"id":"RB-016-04","status":"OPEN","source_task":"MC-016","affected_descendants":["MC-026","MC-038","MC-041","MC-042","MC-043","MC-044","MC-052"]}
+  ],
+  "downstream_invalidations": [
+    "Any dispatcher that admits by operation label, drops source/common-frame/revision/body binding or resets inherited uncertainty invalidates the matching fast-path claim.",
+    "Any provider success accepted without an independent material certificate, or any promotion of kernel topology to durable identity, invalidates MC-030 authority separation.",
+    "Any cycle, general-to-fast redispatch, timeout/refusal laundering or blocker-to-success conversion invalidates the total-dispatch result.",
+    "Future native qualification may supplement individual fast paths but must not rewrite historical negative evidence or close unrelated proof/output blockers without producing-owner evidence."
+  ]
+}

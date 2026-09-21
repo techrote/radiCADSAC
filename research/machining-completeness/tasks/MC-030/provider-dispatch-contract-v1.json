@@ -1,0 +1,138 @@
+{
+  "schema": "radicadsac-mc030-provider-dispatch/1.0",
+  "task": "MC-030",
+  "issue": 92,
+  "source_baseline": "fd0662dbefcc1eaa03e2be0503e53860feaa4cf0",
+  "result": "COMPLETED_RESEARCH_TOTAL_NONCYCLING_DISPATCH_DESIGN",
+  "native_execution": false,
+  "native_or_paid_campaign_run": false,
+  "formal_dependencies": [
+    {"task":"MC-010","path":"research/machining-completeness/tasks/MC-010/outcome.json","blob_sha":"4960730316f89dbb3fbf958d054127fa4fc0d789","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-016","path":"research/machining-completeness/tasks/MC-016/outcome.json","blob_sha":"606a7d0b8be61131b2272f2eb161d6a4dbba703a","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-018","path":"research/machining-completeness/tasks/MC-018/outcome.json","blob_sha":"085f864b4bd58b38f154b6c9d58d9e68b60ee7ec","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-019","path":"research/machining-completeness/tasks/MC-019/outcome.json","blob_sha":"4456c964315c10b46ce61a5a8d4a45e8025730b7","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-020","path":"research/machining-completeness/tasks/MC-020/outcome.json","blob_sha":"19504a35f47bca710bb6369abb723de83d1afede","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-021","path":"research/machining-completeness/tasks/MC-021/outcome.json","blob_sha":"442397474c596bc3a73e9442e4ab2f955e19b0e6","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-022","path":"research/machining-completeness/tasks/MC-022/outcome.json","blob_sha":"8ca7cfd0d098d746394cab71257b1dfc6e3a7250","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-023","path":"research/machining-completeness/tasks/MC-023/outcome.json","blob_sha":"15cd3b128cdaa14370594debd490e76a4a0d6b23","result_kind":"COMPLETED_RESEARCH"}
+  ],
+  "authority": {
+    "canonical_material_authority": "programme-owned source/material relation bound to the canonical operation journal, durable body_id and exact input revision",
+    "kernel_brep_validity_is_material_correctness": false,
+    "kernel_topology_is_body_or_lineage_authority": false,
+    "fast_success_requires_independent_material_certificate": true,
+    "step_or_brep_write_success_is_engineering_output_qualification": false,
+    "fallback_may_rewrite_source_history": false
+  },
+  "fast_paths": [
+    {
+      "id": "FP-MILL-ANALYTIC-TRANSLATION",
+      "sources": ["MC-018","MC-019","MC-023"],
+      "scope": "fixed-axis flat/corner-radius/ball-round stationary-line-polyline exact-rational translation with complete finite cutter region",
+      "sufficient_admission": ["source_bound","common_frame_bound","exact body_id and input_revision","RIGHT_HANDED_PARENT_FROM_CHILD transform","EXACT_RATIONAL source","fixed_axis","motion in stationary/line/polyline","complete_finite_cutter_region","mc058_uncertainty == ZERO","no body transition required","no singular_or_exact_zero_output_boundary"],
+      "fallback": "GENERAL_CERTIFIED_ROUTE"
+    },
+    {
+      "id": "FP-FORM-BOX-UNION",
+      "sources": ["MC-020","MC-023"],
+      "scope": "bounded exact-rational box-union form/accessible-undercut stationary-line-polyline fixed-axis sweeps",
+      "sufficient_admission": ["source_bound","common_frame_bound","exact body_id and input_revision","EXACT_RATIONAL_BOX_UNION_V1 cutter codec","complete_finite_cutter_region","complete_holder_region","COMPLETE_TOOL_CLEAR access witness for accessible undercut","mc058_uncertainty == ZERO","no body transition required","no singular_or_exact_zero_output_boundary"],
+      "fallback": "GENERAL_CERTIFIED_ROUTE"
+    },
+    {
+      "id": "FP-LATHE-AXISYMMETRIC",
+      "sources": ["MC-021","MC-023"],
+      "scope": "certified conventional/form turning admitting exact rotational reduction",
+      "sufficient_admission": ["source_bound","common_frame_bound","exact body_id and input_revision","exact axisymmetric target certificate","coaxial_setup","phase_independent_meridian","full_phase_orbit","EXACT_RATIONAL_RECTANGLES_V1 meridian codec","phase_sensitive == false","no body transition required","no singular_or_exact_zero_output_boundary"],
+      "fallback": "GENERAL_CERTIFIED_ROUTE"
+    },
+    {
+      "id": "FP-LATHE-PHASE-BOUNDED",
+      "sources": ["MC-022","MC-023"],
+      "scope": "bounded synchronized-threading/eccentric-turning subtypes with exact shared time and unwrapped phase",
+      "sufficient_admission": ["source_bound","common_frame_bound","exact body_id and input_revision","shared_exact_time_parameter","unwrapped_spindle_phase","CERTIFIED_FINITE_EXACT_SUBTYPE phase constructor","transcendental_event_status == NONE","complete_finite_cutter_region","no body transition required","no singular_or_exact_zero_output_boundary"],
+      "fallback": "GENERAL_CERTIFIED_ROUTE"
+    }
+  ],
+  "multi_setup_composition": {
+    "source": "MC-023",
+    "reclamp_is_material_changing": false,
+    "each_material_changing_operation_is_dispatched_independently": true,
+    "common_frame_transform": "RIGHT_HANDED_PARENT_FROM_CHILD",
+    "target_binding": "exact input_revision plus durable body_id",
+    "inherited_error_resets_at_setup_transition": false
+  },
+  "general_route": {
+    "id": "GENERAL_CERTIFIED_ROUTE",
+    "role": "single noncycling sink for requests not covered by a sufficient fast-path predicate and for any fast-path failure or uncertified success",
+    "implemented_as_total_success_by_mc030": false,
+    "terminal_outcomes": ["SUCCESS_CERTIFIED","PB-007-01","PB-007-02","PB-007-03","UNCERTIFIED","RESOURCE_REFUSAL","SEMANTIC_BLOCKER"],
+    "timeout_or_resource_refusal_is_success": false,
+    "uncertified_is_success": false,
+    "may_dispatch_back_to_fast_path": false,
+    "derived_accelerators": {
+      "directional_material": "challenger_or_accelerator_only",
+      "native_mesh_boolean": "challenger_or_accelerator_only",
+      "sparse_volume_levelset": "challenger_or_accelerator_only",
+      "may_become_canonical_authority": false
+    }
+  },
+  "dispatcher": {
+    "max_fast_provider_invocations": 1,
+    "max_general_route_invocations": 1,
+    "cycles_allowed": false,
+    "fast_failure_fallback": "exactly once to GENERAL_CERTIFIED_ROUTE",
+    "fast_uncertified_fallback": "exactly once to GENERAL_CERTIFIED_ROUTE",
+    "fast_success_without_independent_material_certificate": "exactly once to GENERAL_CERTIFIED_ROUTE",
+    "ambiguous_fast_admission": "GENERAL_CERTIFIED_ROUTE",
+    "unknown_or_unbound_source": "INVALID_SOURCE",
+    "request_semantics_are_immutable": true
+  },
+  "blockers": [
+    {"id":"PB-007-01","status":"OPEN","summary":"general tangential/multiple/singular transcendental event decision remains unestablished"},
+    {"id":"PB-007-02","status":"OPEN","summary":"unconditional general coupled spindle/feed/eccentric sweep membership remains unestablished"},
+    {"id":"PB-007-03","status":"OPEN_PROPAGATED","summary":"universal finite exact source codec for arbitrary admitted form/undercut cutters remains unestablished"},
+    {"id":"RB-016-02","status":"OPEN","summary":"durable multi-body mapping and independent engineering-output preservation remain unqualified"},
+    {"id":"RB-016-04","status":"OPEN","summary":"exact-zero/touching/singular engineering output still lacks independent-consumer qualification"}
+  ],
+  "capability_state": {"MC-A":"ACCEPTED","MC-B":"NOT_ESTABLISHED","MC-C":"NOT_ESTABLISHED","MC-D":"NOT_ESTABLISHED","MC-E":"NOT_ESTABLISHED","MC-F":"NOT_ESTABLISHED","MC-1":"NOT_ESTABLISHED"},
+  "protected_semantics": [
+    "historical source/audio/provenance remains immutable",
+    "canonical operation journal remains source authority",
+    "positive-volume material may not be deleted or fused for provider convenience",
+    "durable body and lineage semantics are programme-owned rather than kernel topology identity",
+    "exact input revision and durable body_id remain mandatory target bindings",
+    "STEP remains mandatory engineering output and provider B-rep success is not output qualification",
+    "historical negative evidence remains preserved"
+  ],
+  "adversarial_controls": [
+    "reject operation labels as sufficient fast-path admission",
+    "reject nonlinear or unresolved MC-058 uncertainty from exact fast paths",
+    "reject accessible undercut without complete cutter-plus-holder access witness",
+    "reject phase-sensitive turning from the axisymmetric fast path",
+    "reject transcendental-event blockers from bounded phase fast-path success",
+    "reject stale or missing input_revision/body_id binding",
+    "reject native B-rep validity as material correctness",
+    "reject kernel component identity/order/size as durable body or lineage authority",
+    "reject fast SUCCESS without an independent material certificate",
+    "reject timeout/resource refusal/UNCERTIFIED as success",
+    "reject provider cycling or general-to-fast redispatch",
+    "reject directional, mesh or sparse candidates as canonical authority",
+    "reject healing exact-zero contacts or deleting positive micro-material",
+    "reject inherited blocker closure or premature capability promotion"
+  ],
+  "control_cases": [
+    {"id":"mill-flat-exact-line","expected":"FP-MILL-ANALYTIC-TRANSLATION"},
+    {"id":"mill-ball-exact-polyline-varying-z","expected":"FP-MILL-ANALYTIC-TRANSLATION"},
+    {"id":"mill-nonlinear-uncertified","expected":"GENERAL_CERTIFIED_ROUTE"},
+    {"id":"undercut-complete-tool-access","expected":"FP-FORM-BOX-UNION"},
+    {"id":"undercut-holder-collision-or-missing-access","expected":"GENERAL_CERTIFIED_ROUTE"},
+    {"id":"lathe-axisymmetric-certified","expected":"FP-LATHE-AXISYMMETRIC"},
+    {"id":"lathe-phase-sensitive-reject-axisym","expected":"FP-LATHE-PHASE-BOUNDED"},
+    {"id":"lathe-transcendental-blocker","expected":"GENERAL_CERTIFIED_ROUTE"},
+    {"id":"exact-zero-boundary","expected":"GENERAL_CERTIFIED_ROUTE"},
+    {"id":"body-transition","expected":"GENERAL_CERTIFIED_ROUTE"},
+    {"id":"stale-or-missing-binding","expected":"INVALID_SOURCE"},
+    {"id":"reclamp","expected":"NON_CUTTING_SETUP_EVENT"}
+  ]
+}
