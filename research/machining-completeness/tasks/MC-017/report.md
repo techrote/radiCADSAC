@@ -20,7 +20,7 @@ The execution protocol requires native permits and the global `expensive-campaig
 
 ## Source-level independent consumer candidate
 
-A credible independent candidate exists in current BRL-CAD source at commit `0d745fca358e6b4655552186da4221206f4b7483` (18 September 2026):
+A credible independent candidate exists in current BRL-CAD source at commit `0d745fca358e6b4655552186da4221206f4b7483` (18 September 2026). The date is recorded from that pinned upstream commit rather than inferred from the current branch:
 
 - `step-g` reads ISO 10303-21 files, selects schema plugins from `FILE_SCHEMA`, and documents AP203/AP203e2/AP214 plus AP242 editions 1–4.
 - The documented strict route exposes `--strict --exact --repair none --reject-invalid-objs`, plus machine-readable `--report` and `--summary` outputs. This is suitable for a fail-closed consumer probe because partial output, repair, inference and preserved-invalid geometry need not be accepted as success.
