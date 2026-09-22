@@ -1,0 +1,98 @@
+{
+  "schema": "radicadsac-mc038-pb00701-pointwise-derivative-envelope-boundary/20.0",
+  "task": "MC-038",
+  "corrective_issue": 202,
+  "source_baseline": "ac3d034633f9f50d216b0afdec4958a8ed005d40",
+  "target_blocker": "PB-007-01",
+  "decision": "EXACT_POINTWISE_POLYNOMIAL_DERIVATIVE_ENVELOPE_ROUTE_ESTABLISHED_GENERAL_COUPLED_ROUTE_OPEN",
+  "gate": "MC-B",
+  "gate_state": "NOT_ESTABLISHED",
+  "historical_v19_evidence": [
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-multiharmonic-monotone-anchor-boundary-v19.json", "git_blob_sha1": "56ac3cb745c0b34de7bdb1221d31e649ef50ec9b", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-report-v19.md", "git_blob_sha1": "b1a6602536d7310ebaa675bf1c12f7a1a137d183", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701_multiharmonic_monotone_anchor_model.py", "git_blob_sha1": "38db0b5f1f4549f7ea632db27a5347b3aadd7b1a", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/test_pb00701_multiharmonic_monotone_anchor_adversarial.py", "git_blob_sha1": "5a588809d2f2510ba77b5299de38f57a3d6e679c", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v19.py", "git_blob_sha1": "5cbbfd3512c8c6429ae0ed08d3820f4b37f1456f", "preserved": true},
+    {"path": "docs/machining-completeness/45-PB00701-MULTIHARMONIC-MONOTONE-ANCHOR.md", "git_blob_sha1": "28d3fcc73f232e0726362732355d95890e989147", "preserved": true},
+    {"path": ".github/workflows/mc1-pb00701-v19.yml", "git_blob_sha1": "da3992655fd2e71b8f9e32259de4e1dbae43574a", "preserved": true}
+  ],
+  "implemented_extension": {
+    "id": "EXACT_MULTI_HARMONIC_POINTWISE_POLYNOMIAL_DERIVATIVE_ENVELOPE",
+    "scope": "residual v19 monotone-anchor spans blocked only because separate whole-span Bernstein suprema do not establish derivative dominance; a nonconstant harmonic-0 anchor, nonzero exact-rational affine phase rate, and at least two active positive harmonics remain required",
+    "source_derived_terms": "derive exact rational-polynomial terms C'_h, S'_h, (44/7)|h*r|C_h and (44/7)|h*r|S_h directly from the source; omit exact zero terms only",
+    "pointwise_authority": "Cauchy-Schwarz gives sum_i |f_i(s)| <= sqrt(N * sum_i f_i(s)^2) pointwise on the complete source span",
+    "dominance_polynomial": "derive Q(s)=P'(s)^2-N*sum_i f_i(s)^2 exactly and require Q>0 everywhere together with one fixed strict sign for P'",
+    "sturm_authority": "prove the sign of P' and strict positivity of Q on closed [0,1] from exact endpoint events plus MC-032 exact rational Sturm zero counts; endpoint equality and every interior root fail closed",
+    "termination": "the route performs a fixed finite set of exact rational-polynomial constructions and two closed-interval Sturm decisions; no arbitrary subdivision depth or timeout is truth authority",
+    "endpoint_authority": "reuse v19/v6 exact rational-turn tangent-half endpoint classification, including exact half-turn (-1)^h parity shifting at tangent-coordinate poles",
+    "root_decision": "strict derivative sign plus exact endpoint relations yields zero or one open root and exact endpoint events; every admitted root is simple because the complete derivative is strictly nonzero",
+    "precedence": "v8-v19 retain ownership of every source they already certify; v20 upgrades only the exact v19 derivative-dominance residual",
+    "forbidden_authority": [
+      "caller envelope certificate",
+      "caller Q polynomial",
+      "caller Sturm root count",
+      "caller endpoint or root certificate",
+      "binary float",
+      "epsilon",
+      "sampling",
+      "numerical trigonometry",
+      "approximate minimization",
+      "arbitrary subdivision cap",
+      "timeout",
+      "resource refusal as truth"
+    ]
+  },
+  "boundary_controls": [
+    "a residual source whose separated derivative terms attain global suprema at different source locations is blocked by v19 and certified by the v20 pointwise polynomial envelope",
+    "positive and negative complete derivative directions are both certified",
+    "zero-root, one-open-root and exact endpoint-root decisions reuse v19 endpoint authority",
+    "exact Q=0 equality and signed +/-1/1000000 anchor neighbours are distinguished",
+    "anchor derivative sign changes or zeros fail closed",
+    "interior or endpoint Q roots fail closed through exact Sturm authority",
+    "missing anchor, single-positive-harmonic and zero-phase-rate cases fail closed",
+    "v19 prior-route precedence is preserved",
+    "source-parameter mismatch is rejected",
+    "forged envelope/Q/Sturm/sign/root metadata cannot override source authority",
+    "binary-float authority is rejected",
+    "resource refusal is explicitly not a truth value",
+    "historical v19 evidence mutation is rejected",
+    "26-operation denominator shrinkage is rejected",
+    "false MC-B promotion is rejected"
+  ],
+  "full_blocker_review": {
+    "status": "OPEN",
+    "residual_branch": "required coupled multi-harmonic exponential-polynomial event predicates not decided by v8-v20, including sources lacking a fixed-sign anchor derivative or a positive exact pointwise envelope polynomial",
+    "not_an_impossibility_theorem": true
+  },
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false,
+    "next_pre_gate_priority": "PB-007-01 residual coupled multi-harmonic exact decision route beyond the finite pointwise polynomial derivative envelope"
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "protected_semantics": {
+    "source_audio_provenance": true,
+    "canonical_journal": true,
+    "exact_time_path_phase": true,
+    "source_uncertainty": true,
+    "positive_volume_material": true,
+    "cutter_holder_access": true,
+    "durable_body_lineage": true,
+    "refusal_uncertified": true,
+    "conventional_step": true
+  }
+}
