@@ -31,6 +31,16 @@ def validate(graph=None,programme=None,outcomes=None,ghmap=None,posdoc=None):
             indeg[y]-=1
             if indeg[y]==0: q.append(y); q.sort()
     if len(seen)!=58: fail("dependency cycle")
+    # MC-038 pre-gate repair: producing MG-07 tasks must not depend on the gate they help establish.
+    tmap={t["id"]:t for t in tasks}
+    for tid in ("MC-031","MC-032","MC-033"):
+        deps={(d["task"],d["type"]) for d in tmap[tid]["dependencies"]}
+        if ("MC-038","capability") in deps: fail(f"{tid} reintroduced circular MC-038 capability dependency")
+        if ("MC-005","capability") not in deps: fail(f"{tid} missing accepted MC-A pre-gate authority")
+    for tid in ("MC-034","MC-035","MC-036","MC-037"):
+        deps={(d["task"],d["type"]) for d in tmap[tid]["dependencies"]}
+        if ("MC-038","capability") not in deps: fail(f"{tid} lost legitimate post-gate MC-038 dependency")
+
     pids=[p["id"] for p in graph["packages"]]
     if pids!=[f"MG-{i:02d}" for i in range(14)]: fail("package hierarchy mismatch")
     members=[x for p in graph["packages"] for x in p["tasks"]]
@@ -104,6 +114,14 @@ def self_test():
     try: validate(g,p,bado,m,pos)
     except AssertionError: pass
     else: fail("self-test failed to reject MC-005 gate/outcome mismatch")
+    bad=copy.deepcopy(g); tm={t["id"]:t for t in bad["tasks"]}; tm["MC-031"]["dependencies"][0]={"task":"MC-038","type":"capability"}
+    try: validate(bad,p,o,m,pos)
+    except AssertionError: pass
+    else: fail("self-test failed to reject reintroduced MC-038 pre-gate cycle")
+    bad=copy.deepcopy(g); tm={t["id"]:t for t in bad["tasks"]}; tm["MC-034"]["dependencies"]=[d for d in tm["MC-034"]["dependencies"] if d!={"task":"MC-038","type":"capability"}]
+    try: validate(bad,p,o,m,pos)
+    except AssertionError: pass
+    else: fail("self-test failed to reject removed post-gate MC-038 dependency")
     print("MC-1 validator self-test passed")
 if __name__=="__main__":
     ap=argparse.ArgumentParser(); ap.add_argument("--self-test",action="store_true"); a=ap.parse_args()

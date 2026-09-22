@@ -2,7 +2,13 @@
   "schema": "radicadsac-mc-task-outcome/1.0",
   "task": "MC-038",
   "result_kind": "BLOCKED",
-  "evidence_class": ["DEPENDENCY_SYNTHESIS", "GATE_REVIEW", "BLOCKER_RECONCILIATION", "ADVERSARIAL_CONTROLS", "DOCUMENTATION_RECONCILIATION"],
+  "evidence_class": [
+    "DEPENDENCY_SYNTHESIS",
+    "GATE_REVIEW",
+    "BLOCKER_RECONCILIATION",
+    "ADVERSARIAL_CONTROLS",
+    "DOCUMENTATION_RECONCILIATION"
+  ],
   "source_baseline": "e82f417b0474a51648928f26d1035d39860777b0",
   "issue": 100,
   "accepted_claims": [
@@ -10,7 +16,8 @@
     "MC-B remains NOT_ESTABLISHED because required proof and representation blockers remain open; the 26-operation denominator is unchanged.",
     "The current task graph contains a pre-gate orchestration inversion: MC-031, MC-032 and MC-033 require MC-038 capability even though they own or repair obligations that MC-038 requires to be closed.",
     "A safe repair must remove that pre-gate inversion without accepting MC-B, authorizing production/native spend, shrinking the domain or weakening protected semantics.",
-    "No new geometric theorem, native material capability or engineering-output capability is claimed by this blocker review."
+    "No new geometric theorem, native material capability or engineering-output capability is claimed by this blocker review.",
+    "ORCH-038-01 is resolved by issue #156: MC-031/032/033 have a noncircular pre-gate authority path through MC-A while MC-B remains NOT_ESTABLISHED."
   ],
   "open_claims": [
     "PB-007-01 remains OPEN.",
@@ -58,16 +65,111 @@
     "issue_must_remain_open": true
   },
   "blockers": [
-    {"id":"PB-007-01","status":"OPEN","source_task":"MC-007/MC-022","affected_descendants":["MC-032","MC-038"]},
-    {"id":"PB-007-02","status":"OPEN","source_task":"MC-007/MC-022","affected_descendants":["MC-031","MC-038"]},
-    {"id":"PB-007-03","status":"OPEN_PROPAGATED","source_task":"MC-006/MC-020","affected_descendants":["MC-031","MC-038"]},
-    {"id":"PB-007-04","status":"OPEN_PROPAGATED","source_task":"MC-007/MC-008","affected_descendants":["MC-032","MC-033","MC-038"]},
-    {"id":"RB-016-01","status":"OPEN","source_task":"MC-016/MC-054","affected_descendants":["MC-034","MC-035","MC-036","MC-037","MC-038"]},
-    {"id":"RB-016-02","status":"OPEN","source_task":"MC-016/MC-054","affected_descendants":["MC-033","MC-037","MC-038"]},
-    {"id":"RB-016-03","status":"OPEN","source_task":"MC-016/MC-054","affected_descendants":["MC-035","MC-037","MC-038"]},
-    {"id":"RB-016-04","status":"OPEN","source_task":"MC-016/MC-054","affected_descendants":["MC-032","MC-036","MC-037","MC-038"]},
-    {"id":"RB-016-05","status":"OPEN","source_task":"MC-016/MC-054","affected_descendants":["MC-034","MC-035","MC-036","MC-037","MC-038"]},
-    {"id":"ORCH-038-01","status":"OPEN","source_task":"MC-038","affected_descendants":["MC-031","MC-032","MC-033","MC-038"],"reason":"pre-gate remediation tasks require MC-038 capability, creating a dependency inversion with the MC-B acceptance obligations they own"}
+    {
+      "id": "PB-007-01",
+      "status": "OPEN",
+      "source_task": "MC-007/MC-022",
+      "affected_descendants": [
+        "MC-032",
+        "MC-038"
+      ]
+    },
+    {
+      "id": "PB-007-02",
+      "status": "OPEN",
+      "source_task": "MC-007/MC-022",
+      "affected_descendants": [
+        "MC-031",
+        "MC-038"
+      ]
+    },
+    {
+      "id": "PB-007-03",
+      "status": "OPEN_PROPAGATED",
+      "source_task": "MC-006/MC-020",
+      "affected_descendants": [
+        "MC-031",
+        "MC-038"
+      ]
+    },
+    {
+      "id": "PB-007-04",
+      "status": "OPEN_PROPAGATED",
+      "source_task": "MC-007/MC-008",
+      "affected_descendants": [
+        "MC-032",
+        "MC-033",
+        "MC-038"
+      ]
+    },
+    {
+      "id": "RB-016-01",
+      "status": "OPEN",
+      "source_task": "MC-016/MC-054",
+      "affected_descendants": [
+        "MC-034",
+        "MC-035",
+        "MC-036",
+        "MC-037",
+        "MC-038"
+      ]
+    },
+    {
+      "id": "RB-016-02",
+      "status": "OPEN",
+      "source_task": "MC-016/MC-054",
+      "affected_descendants": [
+        "MC-033",
+        "MC-037",
+        "MC-038"
+      ]
+    },
+    {
+      "id": "RB-016-03",
+      "status": "OPEN",
+      "source_task": "MC-016/MC-054",
+      "affected_descendants": [
+        "MC-035",
+        "MC-037",
+        "MC-038"
+      ]
+    },
+    {
+      "id": "RB-016-04",
+      "status": "OPEN",
+      "source_task": "MC-016/MC-054",
+      "affected_descendants": [
+        "MC-032",
+        "MC-036",
+        "MC-037",
+        "MC-038"
+      ]
+    },
+    {
+      "id": "RB-016-05",
+      "status": "OPEN",
+      "source_task": "MC-016/MC-054",
+      "affected_descendants": [
+        "MC-034",
+        "MC-035",
+        "MC-036",
+        "MC-037",
+        "MC-038"
+      ]
+    },
+    {
+      "id": "ORCH-038-01",
+      "status": "RESOLVED",
+      "source_task": "MC-038",
+      "affected_descendants": [
+        "MC-031",
+        "MC-032",
+        "MC-033",
+        "MC-038"
+      ],
+      "reason": "pre-gate remediation tasks require MC-038 capability, creating a dependency inversion with the MC-B acceptance obligations they own",
+      "resolved_by_issue": 156
+    }
   ],
   "downstream_invalidations": [
     "Any MC-B acceptance while one of the recorded decisive blockers remains open invalidates this gate review.",

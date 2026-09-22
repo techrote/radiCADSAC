@@ -9,28 +9,112 @@
   "hypothesis": "MC-B may be accepted only if every required constructive branch has a reviewed terminating semantics-preserving route and no required proof or representation lemma remains open.",
   "falsification": "Any required admitted request that can still reach an OPEN proof/representation blocker, or any required proof obligation that remains OPEN, falsifies MC-B acceptance without shrinking the frozen domain or laundering refusal/uncertainty into success.",
   "dependency_review": {
-    "artifact_dependencies_consumed": ["MC-006", "MC-007", "MC-008", "MC-016", "MC-018", "MC-019", "MC-020", "MC-021", "MC-022", "MC-023", "MC-026", "MC-054", "MC-058"],
-    "capability_dependencies_consumed": ["MC-005"],
+    "artifact_dependencies_consumed": [
+      "MC-006",
+      "MC-007",
+      "MC-008",
+      "MC-016",
+      "MC-018",
+      "MC-019",
+      "MC-020",
+      "MC-021",
+      "MC-022",
+      "MC-023",
+      "MC-026",
+      "MC-054",
+      "MC-058"
+    ],
+    "capability_dependencies_consumed": [
+      "MC-005"
+    ],
     "selected_route": "PRIMARY_CERTIFIED_ADAPTIVE_IMPLICIT behind bounded MC-030 fast paths with EXACT_CELL_SEMIALGEBRAIC_CONTROL as an independent bounded challenger",
     "domain_operation_count": 26
   },
   "blocking_lemmas": [
-    {"id":"PB-007-01","status":"OPEN","source_owner":"MC-007/MC-022","reason":"unconditional finite exact decisions for tangential, multiple-root or singular transcendental events are not established","repair_owner_hint":"MC-032"},
-    {"id":"PB-007-02","status":"OPEN","source_owner":"MC-007/MC-022","reason":"general coupled spindle/feed/eccentric constructive membership remains unresolved outside bounded slices","repair_owner_hint":"MC-031/MC-032"},
-    {"id":"PB-007-03","status":"OPEN_PROPAGATED","source_owner":"MC-006/MC-020","reason":"a universal finite exact source codec for every admitted imported-stock and arbitrary form/undercut cutter instance remains unresolved","repair_owner_hint":"MC-031"},
-    {"id":"PB-007-04","status":"OPEN_PROPAGATED","source_owner":"MC-007/MC-008","reason":"universal exact topology/connectivity certification remains unresolved","repair_owner_hint":"MC-032/MC-033"},
-    {"id":"RB-016-01","status":"OPEN","source_owner":"MC-016/MC-054","reason":"the complete conventional engineering representation profile is not yet constructively qualified for all required material states","repair_owner_hint":"MC-034..MC-037"},
-    {"id":"RB-016-02","status":"OPEN","source_owner":"MC-016/MC-054","reason":"durable multi-body mapping and independent engineering-output preservation remain unresolved","repair_owner_hint":"MC-033/MC-037"},
-    {"id":"RB-016-03","status":"OPEN","source_owner":"MC-016/MC-054","reason":"native engineering output preserving certified positive micro-material remains unresolved","repair_owner_hint":"MC-035/MC-037"},
-    {"id":"RB-016-04","status":"OPEN","source_owner":"MC-016/MC-054","reason":"exact-zero, touching and singular engineering output without healing/tolerance fusion remains unresolved","repair_owner_hint":"MC-032/MC-036/MC-037"},
-    {"id":"RB-016-05","status":"OPEN","source_owner":"MC-016/MC-054","reason":"complete reconstruction/certificate coverage for the frozen output profile remains unresolved","repair_owner_hint":"MC-034..MC-037"}
+    {
+      "id": "PB-007-01",
+      "status": "OPEN",
+      "source_owner": "MC-007/MC-022",
+      "reason": "unconditional finite exact decisions for tangential, multiple-root or singular transcendental events are not established",
+      "repair_owner_hint": "MC-032"
+    },
+    {
+      "id": "PB-007-02",
+      "status": "OPEN",
+      "source_owner": "MC-007/MC-022",
+      "reason": "general coupled spindle/feed/eccentric constructive membership remains unresolved outside bounded slices",
+      "repair_owner_hint": "MC-031/MC-032"
+    },
+    {
+      "id": "PB-007-03",
+      "status": "OPEN_PROPAGATED",
+      "source_owner": "MC-006/MC-020",
+      "reason": "a universal finite exact source codec for every admitted imported-stock and arbitrary form/undercut cutter instance remains unresolved",
+      "repair_owner_hint": "MC-031"
+    },
+    {
+      "id": "PB-007-04",
+      "status": "OPEN_PROPAGATED",
+      "source_owner": "MC-007/MC-008",
+      "reason": "universal exact topology/connectivity certification remains unresolved",
+      "repair_owner_hint": "MC-032/MC-033"
+    },
+    {
+      "id": "RB-016-01",
+      "status": "OPEN",
+      "source_owner": "MC-016/MC-054",
+      "reason": "the complete conventional engineering representation profile is not yet constructively qualified for all required material states",
+      "repair_owner_hint": "MC-034..MC-037"
+    },
+    {
+      "id": "RB-016-02",
+      "status": "OPEN",
+      "source_owner": "MC-016/MC-054",
+      "reason": "durable multi-body mapping and independent engineering-output preservation remain unresolved",
+      "repair_owner_hint": "MC-033/MC-037"
+    },
+    {
+      "id": "RB-016-03",
+      "status": "OPEN",
+      "source_owner": "MC-016/MC-054",
+      "reason": "native engineering output preserving certified positive micro-material remains unresolved",
+      "repair_owner_hint": "MC-035/MC-037"
+    },
+    {
+      "id": "RB-016-04",
+      "status": "OPEN",
+      "source_owner": "MC-016/MC-054",
+      "reason": "exact-zero, touching and singular engineering output without healing/tolerance fusion remains unresolved",
+      "repair_owner_hint": "MC-032/MC-036/MC-037"
+    },
+    {
+      "id": "RB-016-05",
+      "status": "OPEN",
+      "source_owner": "MC-016/MC-054",
+      "reason": "complete reconstruction/certificate coverage for the frozen output profile remains unresolved",
+      "repair_owner_hint": "MC-034..MC-037"
+    }
   ],
-  "required_open_proof_obligations": ["PO-02", "PO-03", "PO-04", "PO-05", "PO-07", "PO-08", "PO-09"],
+  "required_open_proof_obligations": [
+    "PO-02",
+    "PO-03",
+    "PO-04",
+    "PO-05",
+    "PO-07",
+    "PO-08",
+    "PO-09"
+  ],
   "dependency_inversion": {
-    "present": true,
-    "description": "MC-031, MC-032 and MC-033 are package-order predecessors of MC-038 and own or repair required constructive obligations, but their current task-graph entries require MC-038 as a capability dependency. MC-038 therefore cannot honestly accept while the work needed to discharge its blockers is gated behind MC-038 acceptance.",
-    "affected_tasks": ["MC-031", "MC-032", "MC-033"],
-    "safe_repair_constraint": "Repair orchestration only; do not accept MC-B, narrow the domain, authorize production, or convert native/paid execution into implicit permission. Pre-gate remediation may consume accepted artifacts and must preserve blockers until producing evidence closes them."
+    "present": false,
+    "description": "Issue #156 removed the backward MC-038 capability edge from MC-031/032/033 and replaced it with explicit accepted MC-A authority while preserving their artifact dependencies; MC-B remains NOT_ESTABLISHED.",
+    "affected_tasks": [
+      "MC-031",
+      "MC-032",
+      "MC-033"
+    ],
+    "safe_repair_constraint": "Repair orchestration only; do not accept MC-B, narrow the domain, authorize production, or convert native/paid execution into implicit permission. Pre-gate remediation may consume accepted artifacts and must preserve blockers until producing evidence closes them.",
+    "resolved_by_issue": 156,
+    "resolution": "MC-031/032/033 now depend on MC-005 capability rather than MC-038 capability; post-gate MC-034..037 remain gated by MC-038."
   },
   "repair_path": [
     "Correct the MC-038 -> MC-031/MC-032/MC-033 dependency inversion without weakening MC-B; keep post-gate reconstruction/qualification work gated where its capability dependency is legitimate.",
