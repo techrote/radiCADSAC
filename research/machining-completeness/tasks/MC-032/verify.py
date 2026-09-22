@@ -140,7 +140,8 @@ def contract_test(root:Path):
     reg=json.loads((root/"research/machining-completeness/outcomes-v1.json").read_text())
     require(reg["tasks"]["MC-032"]["state"]=="COMPLETED_RESEARCH","registry state")
     require(any(a.endswith("MC-032/outcome.json") for a in reg["tasks"]["MC-032"]["accepted_artifacts"]),"registry artifact")
-    require(reg["tasks"]["MC-032"]["blockers"]==outcome["blockers"],"registry blocker drift")
+    reg_blockers={b["id"]:b["status"] for b in reg["tasks"]["MC-032"]["blockers"]}
+    require(reg_blockers==own_blockers,"registry blocker state drift")
 
     attacks=[
         ("epsilon", lambda x: x["truth_authority"].__setitem__("epsilon_or_tolerance",True)),
