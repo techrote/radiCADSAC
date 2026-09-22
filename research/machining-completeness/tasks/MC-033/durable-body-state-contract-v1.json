@@ -1,0 +1,44 @@
+{
+  "schema": "radicadsac-mc033-durable-body-state-contract/1.0",
+  "task": "MC-033",
+  "issue": 95,
+  "source_baseline": "46b84622bccc2ae68f4a68042480b3d2d5d6de9b",
+  "scope": "programme-owned regularized material-body transitions, durable lineage and finite-history state",
+  "hypothesis": "Given source-bound MC-031 material evidence and independent certified MC-032-compatible event/connectivity evidence, a finite pure-removal machining history can commit explicit continue/split/disappearance/touch-only body transitions without inferring durable identity from provider topology.",
+  "falsification": "Any required control that merges touching bodies, drops a positive-volume component, rounds a positive residual to empty, reuses an exhausted identifier, guesses lineage from backend topology/order/size/proximity, accepts stale or mutated certificate bindings, revives an exhausted body, or mutates state from a non-success terminal falsifies the implementation.",
+  "dependency_artifacts": [
+    {"task":"MC-005","type":"capability","path":"research/machining-completeness/tasks/MC-005/outcome.json","blob_sha":"adec886597a06345fdfdf65ee018596cd396d249","required_result":"CAPABILITY_ACCEPTED"},
+    {"task":"MC-026","type":"artifact","path":"research/machining-completeness/tasks/MC-026/outcome.json","blob_sha":"185693afc30b77097031ced218c9ae19fb1653ac","required_result":"COMPLETED_RESEARCH"},
+    {"task":"MC-015","type":"artifact","path":"research/machining-completeness/tasks/MC-015/outcome.json","blob_sha":"c334e7d9ed9aea5541338e0c0397f6b0e98ff3e6","required_result":"COMPLETED_RESEARCH"}
+  ],
+  "auxiliary_bound_inputs": [
+    {"task":"MC-031","path":"research/machining-completeness/tasks/MC-031/material_evaluator.py","blob_sha":"da38e50bcb52fbbdfd31c95fc8d9a0d2dbef467e","purpose":"source-bound material result and MC-033 handoff semantics"},
+    {"task":"MC-032","path":"research/machining-completeness/tasks/MC-032/event_engine.py","blob_sha":"789a709c5141479a343035d1b7055dd4e53534e1","purpose":"critical-event certificate and PB-007-04 topology handoff semantics"}
+  ],
+  "identity_authority": "canonical_journal",
+  "forbidden_identity_authorities": ["backend_topology_id","kernel_handle","tessellation_component","component_enumeration_order","largest_component","nearest_component","proximity_match"],
+  "common_frame": "workpiece_common",
+  "transition_kinds": ["CONTINUE","SPLIT","DISAPPEAR","TOUCH_ONLY"],
+  "pure_removal": {"may_preserve_body":true,"may_split_body":true,"may_exhaust_body":true,"merge_supported":false,"revive_exhausted_body":false,"add_material":false},
+  "regularization": {"definition":"closure(interior(M_b \\ S))","zero_volume_artifacts_are_material":false,"positive_volume_may_be_dropped":false,"exact_zero_contact_merges_durable_bodies":false,"positive_residual_may_be_rounded_to_empty":false},
+  "certificate_chain": {
+    "material":"radicadsac-mc031-material-certificate/1.0",
+    "event":"radicadsac-mc032-event-certificate/1.0",
+    "connectivity":"radicadsac-mc033-connectivity-certificate/1.0",
+    "transition":"radicadsac-mc033-lineage-transition/1.0",
+    "bindings":["input_revision","output_revision","target_body_id","target_lineage_id","source_digest","canonical_digest","material_certificate_digest","event_certificate_digest_when_required","connectivity_certificate_digest","challenge_id","configuration_digest"]
+  },
+  "split_contract": {"minimum_positive_outputs":2,"complete_remainder_partition_required":true,"pairwise_interior_disjoint_required":true,"independent_component_count_required":true,"positive_new_removal_required":true,"continuation_count_max":1,"continuation_must_retain_parent_body_and_lineage":true,"descendants_require_fresh_body_and_lineage_ids":true,"lineage_edges_programme_owned":true},
+  "disappearance_contract": {"outputs":0,"exact_empty_material_required":true,"residual_positive_volume":"0","durable_record_retained":true,"lineage_retained":true,"step_or_geometry_placeholder_created":false},
+  "touch_contract": {"positive_new_removal":"0","body_transition":false,"durable_merge":false,"contact_relation_recorded":true},
+  "finite_history": {"journal_order_strict":true,"stale_revision_rejected":true,"first_non_success_stops":true,"non_success_mutates_state":false,"historical_body_records_retained":true,"durable_ids_never_reused":true},
+  "authority_arithmetic": {"exact_rational":true,"binary_float_correctness_authority":false,"epsilon_correctness_authority":false,"timeout_or_resource_refusal_is_truth":false},
+  "retained_blockers": [
+    {"id":"PB-007-04","status":"OPEN_PROPAGATED","reason":"MC-033 consumes independently proved connectivity facts but does not establish a universal exact topology/connectivity decision procedure."},
+    {"id":"RB-016-02","status":"OPEN","reason":"programme-owned multi-body mapping is now explicit in nominal state, but native engineering-output and independent-consumer preservation remain unqualified."},
+    {"id":"RB-016-04","status":"OPEN","reason":"touch-only body semantics are explicit, but exact-zero/singular engineering-output qualification remains open."},
+    {"id":"RB-016-05","status":"OPEN","reason":"nominal empty/disappearance state is explicit, but downstream native/independent-consumer empty-output qualification remains open."}
+  ],
+  "capability_state": {"MC-A":"ACCEPTED","MC-B":"NOT_ESTABLISHED","MC-C":"NOT_ESTABLISHED","MC-D":"NOT_ESTABLISHED","MC-E":"NOT_ESTABLISHED","MC-F":"NOT_ESTABLISHED","MC-1":"NOT_ESTABLISHED"},
+  "execution": {"native_campaign_required":false,"native_campaign_run":false,"paid_campaign_run":false,"production_authorized":false,"expensive_execution_authorized":false}
+}
