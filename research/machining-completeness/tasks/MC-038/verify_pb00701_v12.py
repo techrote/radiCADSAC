@@ -240,10 +240,20 @@ def run_model_controls():
     assert b_event["projective_phase"] == "1/2"
     assert b_event["event_multiplicity"] == 1
 
+    a_poly = [Fraction(-1, 3), Fraction(1)]
+    b_poly = [Fraction(2, 3), Fraction(-1)]
+    a_neighborhood = next(n for n in partition["root_neighborhoods"] if n["owner"] == "A")
     eps = Fraction(1, 1000000)
-    for shifted in (Fraction(-1, 12) - eps, Fraction(-1, 12) + eps):
-        neighbor = v12_route(model.classify_required_analytic_event(both_root_spec(offset=str(shifted))))
-        assert component_event(neighbor, "A")["relation"] == "COMPONENT_ROOT_IS_NOT_AN_EVENT"
+    for theta_offset in (Fraction(-1, 12) - eps, Fraction(-1, 12) + eps):
+        neighbor = model._component_root_event(
+            a_neighborhood,
+            a_poly,
+            b_poly,
+            2 * theta_offset,
+            Fraction(1, 2),
+        )
+        assert neighbor["status"] == "CERTIFIED"
+        assert neighbor["relation"] == "COMPONENT_ROOT_IS_NOT_AN_EVENT"
 
     repeated_a = [Fraction(1, 9), Fraction(-2, 3), Fraction(1)]
     repeated_b = [Fraction(2, 3), Fraction(-1)]
