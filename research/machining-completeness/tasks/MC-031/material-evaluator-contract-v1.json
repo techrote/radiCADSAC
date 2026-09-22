@@ -1,0 +1,110 @@
+{
+  "schema": "radicadsac-mc031-material-evaluator/1.0",
+  "task": "MC-031",
+  "issue": 93,
+  "source_baseline": "8cac00439bec4b8c6032be9709f81ac1bed21a7d",
+  "selected_primary": "PRIMARY_CERTIFIED_ADAPTIVE_IMPLICIT",
+  "ownership": ["MC031-A", "MC031-B", "MC031-C"],
+  "qualified_sweep_modules": {
+    "MC-018": {"path": "research/machining-completeness/tasks/MC-018/fixed_axis_sweep.py", "blob_sha": "99809befb3381b9a374605f99431c080ca4ad647"},
+    "MC-019": {"path": "research/machining-completeness/tasks/MC-019/ball_round_sweep.py", "blob_sha": "8edd4168b88927c4426ee08ab78beb133e426ecf"},
+    "MC-020": {"path": "research/machining-completeness/tasks/MC-020/form_undercut_sweep.py", "blob_sha": "8f82454f521e3964d16b9482e6c7ab34db67f23a"},
+    "MC-021": {"path": "research/machining-completeness/tasks/MC-021/rotational_reduction.py", "blob_sha": "eadfd24548fb31cbfc632ca7b0b60d38314bf12d"},
+    "MC-022": {"path": "research/machining-completeness/tasks/MC-022/phase_sensitive_lathe.py", "blob_sha": "91810eb637ce12b8a660ada607e4b3eef9e328ff"},
+    "MC-023": {"path": "research/machining-completeness/tasks/MC-023/multi_setup.py", "blob_sha": "9691af76b1c5e267a7d48b468fdec5195d4cb26e"}
+  },
+  "operation_coverage": {
+    "lathe_od_turning": ["MC-021"],
+    "lathe_facing": ["MC-021"],
+    "lathe_shoulder": ["MC-021"],
+    "lathe_taper_chamfer_profile": ["MC-021"],
+    "lathe_id_boring_internal": ["MC-021"],
+    "lathe_axial_drilling": ["MC-021"],
+    "lathe_grooving": ["MC-021"],
+    "lathe_parting_cutthrough": ["MC-021", "MC-023"],
+    "lathe_form_turning": ["MC-020", "MC-021"],
+    "lathe_threading_synchronized": ["MC-022"],
+    "lathe_eccentric_turning": ["MC-022"],
+    "lathe_exact_retrace_finish": ["MC-021"],
+    "mill_face": ["MC-018"],
+    "mill_slot_pocket_freehand": ["MC-018"],
+    "mill_drill_plunge": ["MC-018"],
+    "mill_ball_rounded_xyz": ["MC-019"],
+    "mill_form_chamfer_countersink": ["MC-020"],
+    "mill_accessible_undercut": ["MC-020"],
+    "mill_thread_helix_fixed_axis": ["MC-020"],
+    "mill_simultaneous_xyz": ["MC-018"],
+    "mill_retrace_self_cross_stationary": ["MC-018"],
+    "mill_cutthrough_multibody": ["MC-018", "MC-023"],
+    "reclamp_reorient_continue": ["MC-023"],
+    "lathe_mill_lathe_history": ["MC-021", "MC-018", "MC-023"],
+    "machine_separated_retained_body": ["MC-023"],
+    "complete_body_removal": ["MC-023"]
+  },
+  "required_bindings": [
+    "canonical_source",
+    "common_workpiece_frame",
+    "exact_input_revision",
+    "durable_body_id",
+    "engagement_boundaries",
+    "complete_mc058_error_terms"
+  ],
+  "truth_authority": {
+    "actual_qualified_sweep_constructors": true,
+    "exact_or_outward_certified_bounds": true,
+    "independent_positive_volume_witness": true,
+    "binary_float": false,
+    "epsilon_or_global_tolerance": false,
+    "sampling_pitch_or_refinement_depth": false,
+    "timeout_or_resource_budget": false,
+    "accelerator_observation": false,
+    "backend_topology_identity": false
+  },
+  "material_semantics": {
+    "rule": "regularized_monotone_removal",
+    "point_membership_alone_commits_removal": false,
+    "touching_is_positive_volume_removal": false,
+    "positive_volume_witness_required": true,
+    "machining_can_add_material": false,
+    "uncertified_result_can_mutate_material": false
+  },
+  "error_composition": {
+    "formula": "e_inherited + e_translation + support_radius * e_rotation_radians + e_tool",
+    "all_terms_required": true,
+    "inherited_error_may_reset": false
+  },
+  "body_state_boundary": {
+    "durable_identity_authority": "canonical_journal_body_lineage",
+    "multi_setup_owner_consumed": "MC-023",
+    "durable_connectivity_transition_owner": "MC-033",
+    "backend_components_commit_body_transition": false,
+    "touching_commits_body_transition": false
+  },
+  "accelerator_policy": {
+    "directional": "NON_AUTHORITATIVE",
+    "mesh_manifold": "NON_AUTHORITATIVE",
+    "sparse_levelset": "NON_AUTHORITATIVE"
+  },
+  "terminals": ["DECIDED", "CERTIFIED", "BLOCKED", "UNCERTIFIED", "RESOURCE_REFUSAL", "SEMANTIC_BLOCKER"],
+  "preserved_open_obligations": ["PB-007-02", "PB-007-03", "PB-007-04", "PO-02", "MC-B"],
+  "blockers": [
+    {"id": "PB-007-02", "status": "OPEN", "scope": "general coupled spindle/feed/eccentric membership outside the bounded MC-022 subtype"},
+    {"id": "PB-007-03", "status": "OPEN_PROPAGATED", "scope": "universal finite exact source codec for arbitrary required form/imported cutter instances"},
+    {"id": "PB-007-04", "status": "OPEN_PROPAGATED", "scope": "durable connectivity/body-transition certification remains MC-033 work"}
+  ],
+  "proof_boundary": {
+    "PO-02": "OPEN",
+    "reason": "bounded qualified constructors are integrated, but PB-007-02/PB-007-03 prevent a universal sweep-semantics theorem"
+  },
+  "capability_promotions": [],
+  "native_or_paid_campaign_run": false,
+  "production_authorized": false,
+  "protected_semantics": {
+    "historical_source_audio_provenance": true,
+    "canonical_journal": true,
+    "positive_volume_material": true,
+    "durable_body_lineage": true,
+    "conventional_step_requirement": true,
+    "frozen_domain_denominator": true
+  }
+}
