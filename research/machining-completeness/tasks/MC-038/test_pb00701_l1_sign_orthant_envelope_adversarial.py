@@ -88,7 +88,6 @@ def run():
     assert certificate["orthant_count"] == 16
     assert len(certificate["orthant_certificates"]) == 16
     assert all(item["certificate"]["status"] == "CERTIFIED" for item in certificate["orthant_certificates"])
-    assert "max_" not in certificate["pointwise_identity"]  # guard against accidental numeric max metadata
     assert "max_{sigma" in certificate["pointwise_identity"]
     assert certificate["approximate_root_ordering_used"] is False
     assert certificate["sampling_used"] is False
@@ -122,9 +121,6 @@ def run():
     assert left_root["endpoint_root_multiplicity"] == {"left": 1}
     assert left_root["distinct_roots_open"] == 0
 
-    # Exact L1 boundary: phase envelopes are exactly 1 and 2, so |P'|=3 is
-    # equality.  v21 must reject equality and the lower neighbour, while the
-    # exact +1/1000000 neighbour is certified.  v20 remains blocked even there.
     eps = Fraction(1, 1000000)
     equality = model._l1_sign_orthant_derivative_certificate(
         {0: [0, 3], 1: [1], 2: [1]}, {}, Fraction(7, 44)
@@ -145,8 +141,6 @@ def run():
     )
     assert v20_above["status"] == "BLOCKED"
 
-    # Rational and algebraic-irrational sign changes need no approximate root
-    # ordering.  Every possible sign cell is covered by exact orthant margins.
     rational_change = model._l1_sign_orthant_derivative_certificate(
         {0: [0, 4], 1: [0, Fraction(-1, 2), Fraction(1, 2)], 2: [Fraction(1, 100)]},
         {}, Fraction(1, 1000)
@@ -173,7 +167,6 @@ def run():
     assert changing_anchor["status"] == "BLOCKED"
     assert changing_anchor["reason"] == "L1_ENVELOPE_ANCHOR_SIGN_NOT_CERTIFIED"
 
-    # Historical precedence: v20-owned coverage stays v20-owned.
     prior_spec = v20test._separated_sup_fixture()
     prior = model.classify_required_analytic_event(prior_spec)
     assert prior["status"] == "CERTIFIED"
