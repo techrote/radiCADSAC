@@ -52,8 +52,8 @@ def detect_finite_strict_dominance_multiplier(cos_polys, sin_polys):
       (lambda_0 + sum_{k=1}^m lambda_k*cos(2*k*alpha))
         * (A*cos(alpha) + B*sin(alpha)),
 
-    for finite m >= 3.  The highest coefficient is normalized to lambda_m=1
-    by absorbing the original nonzero scale into A and B.  This removes only
+    for finite m >= 3. The highest coefficient is normalized to lambda_m=1
+    by absorbing the original nonzero scale into A and B. This removes only
     product scale ambiguity; every coefficient is reconstructed from the
     unfactored source harmonic maps and then checked exactly.
     """
@@ -95,7 +95,6 @@ def detect_finite_strict_dominance_multiplier(cos_polys, sin_polys):
             return None
         ratios.append((c_ratio, s_ratio))
 
-    # The normalized top harmonic must be exactly A/2 and B/2.
     if ratios[-1] != (Fraction(1, 2), Fraction(1, 2)):
         return None
 
@@ -320,8 +319,16 @@ def analyze_finite_multiplier_event(spec):
 
 
 def classify_required_analytic_event(spec):
-    if isinstance(spec, dict) and spec.get("grammar") == "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE":
-        return analyze_finite_multiplier_event(spec)
+    if isinstance(spec, dict):
+        # Factorization metadata is explicitly non-authoritative. Ignore these
+        # caller assertions before historical lowering so only source maps can
+        # establish the factorization or its dominance certificate.
+        source_spec = dict(spec)
+        source_spec.pop("lambda_vector", None)
+        source_spec.pop("factorization", None)
+        if source_spec.get("grammar") == "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE":
+            return analyze_finite_multiplier_event(source_spec)
+        return v14.classify_required_analytic_event(source_spec)
     return v14.classify_required_analytic_event(spec)
 
 
