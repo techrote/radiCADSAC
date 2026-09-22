@@ -107,6 +107,11 @@ jobs:
         run: |
           python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v6.py --contract
           python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v6.py --self-test
+      - name: Verify PB-007-01 coupled B-spline follow-up
+        run: |
+          python3 -m py_compile research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py research/machining-completeness/tasks/MC-038/verify_pb00701_v7.py
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v7.py --contract
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v7.py --self-test
       - name: Verify PB-007-03 exact-source follow-up
         run: |
           python3 research/machining-completeness/tasks/MC-038/verify_pb00703.py --contract
