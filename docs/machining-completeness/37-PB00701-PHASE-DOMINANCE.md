@@ -28,7 +28,7 @@ For the selected exact-zero-free denominator `den`, construct exactly
 
 `P(s)=3*abs(u')*den(s)^2-sign(u')*D(s)`.
 
-The theorem `pi>3`, together with `sec^2>=1` and `csc^2>=1` on their pole-free charts, proves the required derivative direction whenever `P>0` on the entire closed local source span. `P>0` must itself be proved from exact rational-polynomial authority: exact positive endpoint values and exact Sturm exclusion of every open-span root. Numerical pi, epsilon tests, finite samples and time/resource limits are not correctness authority.
+The theorem `pi > 3`, together with `sec^2>=1` and `csc^2>=1` on their pole-free charts, proves the required derivative direction whenever `P>0` on the entire closed local source span. `P>0` must itself be proved from exact rational-polynomial authority: exact positive endpoint values and exact Sturm exclusion of every open-span root. Numerical pi, epsilon tests, finite samples and time/resource limits are not correctness authority.
 
 ## Dispatch precedence
 
