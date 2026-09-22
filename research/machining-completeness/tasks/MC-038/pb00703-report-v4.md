@@ -22,7 +22,7 @@ The versioned machine record pins MC-002 domain authority, MC-003 numeric author
 - MC-003 exact scalar/curve/time encodings do not themselves manufacture an exact universal solid/import codec;
 - MC-020's box-union result remains a bounded result, not a universal-source theorem.
 
-The frozen denominator remains exactly **26 operations**.
+The frozen **26-operation denominator** remains exactly 26 operations.
 
 ## Exact bounded source language
 
@@ -32,7 +32,7 @@ The frozen denominator remains exactly **26 operations**.
 - an explicit `stock`, `cutting` or `holder` role;
 - units and common `frame_id`;
 - finite exact rational X/Y/Z source bounds;
-- an explicit source-uncertainty quantity separate from nominal geometry;
+- an explicit source uncertainty quantity separate from nominal geometry;
 - a finite exact solid-expression tree.
 
 The exact solid grammar contains rational-polynomial `<= 0` and `>= 0` atoms over `(x,y,z)`, finite union/intersection, ordered difference and complement inside the explicit finite source bound. Polynomial coefficients are exact rationals only. Like polynomial monomials are combined and sorted; union/intersection children are canonically ordered; noncommutative difference is not reordered. The normalized source is serialized to canonical JSON bytes and SHA-256 bound, including source identity, role, units, frame, bounds, solid and source uncertainty.
