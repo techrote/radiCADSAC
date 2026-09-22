@@ -1,0 +1,115 @@
+{
+  "schema": "radicadsac-mc038-gate-scope-retry/2.0",
+  "task": "MC-038",
+  "issue": 100,
+  "corrective_issue": 162,
+  "source_baseline": "7a480da12e46764ed972c814df3991ebbf0baee5",
+  "decision": "BLOCKED_DO_NOT_PROMOTE",
+  "gate": "MC-B",
+  "gate_state": "NOT_ESTABLISHED",
+  "historical_review": {
+    "path": "research/machining-completeness/tasks/MC-038/constructive-coverage-review-v1.json",
+    "blob_sha": "9042bec1a77d36cfe64de8a13c579a460c926176",
+    "preserved_as_historical_negative_evidence": true,
+    "note": "The v1 review correctly preserved all then-live blockers and the first dependency inversion. This retry corrects only the classification of which still-open global obligations are prerequisites of MC-B; it does not rewrite v1 or close any blocker."
+  },
+  "producing_owner_evidence": [
+    {
+      "task": "MC-031",
+      "issue": 93,
+      "report_path": "research/machining-completeness/tasks/MC-031/report.md",
+      "report_blob_sha": "4aa539cd6cc37212e258dd2ba0d984a2e0d8346c",
+      "outcome_path": "research/machining-completeness/tasks/MC-031/outcome.json",
+      "outcome_blob_sha": "dffac14b7e1381f966641485827b2df968d92144",
+      "surviving_claims": ["PB-007-02", "PB-007-03", "PB-007-04", "PO-02"]
+    },
+    {
+      "task": "MC-032",
+      "issue": 94,
+      "report_path": "research/machining-completeness/tasks/MC-032/report.md",
+      "report_blob_sha": "b713bb17199d1973e13815c84e6b84c72e980f1c",
+      "outcome_path": "research/machining-completeness/tasks/MC-032/outcome.json",
+      "outcome_blob_sha": "bc42e0f824621af10354534dc83aa03765a893ed",
+      "surviving_claims": ["PB-007-01", "PB-007-04", "PO-04", "PO-07"]
+    },
+    {
+      "task": "MC-033",
+      "issue": 95,
+      "report_path": "research/machining-completeness/tasks/MC-033/report.md",
+      "report_blob_sha": "ff7f49eb8c7c4f6439d0baf5741d4b3e8b04cef2",
+      "outcome_path": "research/machining-completeness/tasks/MC-033/outcome.json",
+      "outcome_blob_sha": "5bd663c1aa098224f5909d8781009c13f50e40e4",
+      "surviving_claims": ["PB-007-04", "RB-016-02", "RB-016-04", "RB-016-05"]
+    }
+  ],
+  "gate_scope": {
+    "canonical_mc_b_requirement": "reviewed terminating material/topology routes and explicit finite output construction before full native implementation claims",
+    "pre_gate_blockers": [
+      {
+        "id": "PB-007-01",
+        "status": "OPEN",
+        "reason": "unconditional exact decisions for required tangential, multiple-root or singular transcendental events remain unestablished"
+      },
+      {
+        "id": "PB-007-02",
+        "status": "OPEN",
+        "reason": "general coupled spindle/feed/eccentric sweep membership remains unresolved outside bounded certified slices"
+      },
+      {
+        "id": "PB-007-03",
+        "status": "OPEN_PROPAGATED",
+        "reason": "a universal finite exact source codec for every admitted imported-stock/arbitrary form or undercut source instance remains unresolved"
+      },
+      {
+        "id": "PB-007-04",
+        "status": "OPEN_PROPAGATED",
+        "reason": "universal exact topology/connectivity certification remains unresolved"
+      }
+    ],
+    "required_pre_gate_open_proof_obligations": ["PO-02", "PO-04", "PO-05", "PO-07", "PO-08"],
+    "downstream_open_not_mc_b_prerequisites": {
+      "representation_blockers": [
+        {"id": "RB-016-01", "status": "OPEN"},
+        {"id": "RB-016-02", "status": "OPEN"},
+        {"id": "RB-016-03", "status": "OPEN"},
+        {"id": "RB-016-04", "status": "OPEN"},
+        {"id": "RB-016-05", "status": "OPEN"}
+      ],
+      "proof_obligations": [
+        {"id": "PO-03", "state": "OPEN", "owner": "MC-039", "reason": "global finite-history implementation closure is downstream of the constructive gate"},
+        {"id": "PO-06", "state": "OPEN", "owner": "MC-037", "reason": "global reconstruction error certification is downstream native realization work"},
+        {"id": "PO-09", "state": "OPEN", "owner": "MC-037", "reason": "global conventional engineering realization is downstream native realization/output work"}
+      ],
+      "rule": "These obligations remain real MC-1 blockers and may not be marked accepted. Their OPEN state does not itself constitute a prerequisite-to-close before MC-B because their producing implementation tasks are intentionally downstream of MC-038 capability."
+    },
+    "no_status_changes": true
+  },
+  "graph_contract": {
+    "pre_gate_producers": ["MC-031", "MC-032", "MC-033"],
+    "post_gate_reconstruction_tasks": ["MC-034", "MC-035", "MC-036", "MC-037"],
+    "post_gate_integration_task": "MC-039",
+    "post_gate_reconstruction_tasks_retain_mc038_capability": true,
+    "mc039_consumes_reconstruction_artifacts": true,
+    "move_native_work_before_gate": false
+  },
+  "resources": {
+    "domain_operation_count": 26,
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "protected_semantics": {
+    "historical_source_audio_provenance_unchanged": true,
+    "canonical_journal_meaning_unchanged": true,
+    "positive_volume_material_preserved": true,
+    "durable_body_lineage_preserved": true,
+    "step_remains_conventional_engineering_output": true,
+    "timeout_refusal_uncertified_are_not_success": true
+  },
+  "next_repair": {
+    "kind": "PRE_GATE_PROOF_BLOCKER_FOLLOWUP",
+    "priority": ["PB-007-01", "PB-007-02", "PB-007-03", "PB-007-04"],
+    "mc_b_retry_allowed_only_after_required_pre_gate_claims_close": true
+  }
+}
