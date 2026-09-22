@@ -1431,7 +1431,7 @@
       "objective": "Implement the selected material evaluator over actual qualified sweeps with certified relation to nominal material.",
       "dependencies": [
         {
-          "task": "MC-038",
+          "task": "MC-005",
           "type": "capability"
         },
         {
@@ -1491,7 +1491,7 @@
       "objective": "Implement finite inside/outside/boundary, equality, root and topology-critical event decisions needed by the selected complete route.",
       "dependencies": [
         {
-          "task": "MC-038",
+          "task": "MC-005",
           "type": "capability"
         },
         {
@@ -1535,7 +1535,7 @@
       "objective": "Implement programme-owned body transitions and regularized material semantics across split/disappearance/remachining without kernel/private identity leakage.",
       "dependencies": [
         {
-          "task": "MC-038",
+          "task": "MC-005",
           "type": "capability"
         },
         {

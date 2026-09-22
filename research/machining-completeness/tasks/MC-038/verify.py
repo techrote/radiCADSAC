@@ -53,7 +53,8 @@ def validate_review(review, check_repo=True):
     assert all(b['status'].startswith('OPEN') for b in blockers.values())
     assert set(review['required_open_proof_obligations']) == DECISIVE_OPEN_POS
     inv = review['dependency_inversion']
-    assert inv['present'] is True
+    assert inv['present'] is False
+    assert inv['resolved_by_issue'] == 156
     assert set(inv['affected_tasks']) == PRE_GATE_REPAIR_TASKS
     assert len(review['repair_path']) == 5
     assert review['repair_path'][0].startswith('Correct the MC-038 -> MC-031/MC-032/MC-033')
@@ -101,7 +102,8 @@ def validate_review(review, check_repo=True):
     assert graph['package_order'].index('MG-07') < graph['package_order'].index('MG-08')
     for tid in PRE_GATE_REPAIR_TASKS:
         deps = {(d['task'], d['type']) for d in tm[tid]['dependencies']}
-        assert ('MC-038','capability') in deps, f'{tid} inversion changed; rerun MC-038 review before relying on frozen result'
+        assert ('MC-038','capability') not in deps, f'{tid} circular MC-038 dependency reintroduced'
+        assert ('MC-005','capability') in deps, f'{tid} missing accepted MC-A pre-gate authority'
     assert tm['MC-038']['gate'] == 'MC-B'
     assert 'no required lemma is OPEN' in ' '.join(tm['MC-038']['acceptance'])
 
@@ -146,7 +148,7 @@ def self_test():
         lambda r: r['blocking_lemmas'].pop(),
         lambda r: r['blocking_lemmas'][0].__setitem__('status','CLOSED'),
         lambda r: r.__setitem__('required_open_proof_obligations',['PO-05']),
-        lambda r: r['dependency_inversion'].__setitem__('present',False),
+        lambda r: r['dependency_inversion'].__setitem__('present',True),
         lambda r: r['dependency_inversion'].__setitem__('affected_tasks',['MC-031']),
         lambda r: r['protected_semantics'].__setitem__('positive_volume_material_preserved',False),
         lambda r: r['resource_policy'].__setitem__('production_authorized',True),

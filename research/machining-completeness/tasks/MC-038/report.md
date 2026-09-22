@@ -70,3 +70,7 @@ python3 tools/mc_workflow.py sync --check
 ```
 
 A blocked MC-038 review may be merged only after the exact PR head passes the repository gate. Issue #100 must remain open because its capability acceptance criterion is not satisfied.
+
+## Orchestration repair status
+
+Issue #156 resolved `ORCH-038-01`: MC-031/032/033 now consume accepted MC-A (`MC-005`) capability instead of MC-038 capability, while MC-034/035/036/037 retain the legitimate post-gate MC-038 dependency. This removes the programme-level dependency inversion only. MC-038 remains **BLOCKED** on the recorded PB-007/RB-016 and proof-obligation evidence; MC-B remains `NOT_ESTABLISHED`.
