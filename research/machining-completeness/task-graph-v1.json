@@ -314,7 +314,7 @@
       "id": "MC-005",
       "package": "MG-01",
       "title": "MC-A domain-lock integration review",
-      "objective": "Review MC-002\u2013004 as one domain/precision/workload contract and decide MC-A.",
+      "objective": "Review MC-002–004 as one domain/precision/workload contract and decide MC-A.",
       "dependencies": [
         {
           "task": "MC-002",
@@ -433,7 +433,7 @@
       "id": "MC-008",
       "package": "MG-02",
       "title": "Termination, certified arithmetic and proof-obligation DAG",
-      "objective": "Integrate arithmetic escalation, event decisions, finite progress, error composition and the PO-01\u201312 lemma DAG into checkable research contracts.",
+      "objective": "Integrate arithmetic escalation, event decisions, finite progress, error composition and the PO-01–12 lemma DAG into checkable research contracts.",
       "dependencies": [
         {
           "task": "MC-003",
@@ -487,7 +487,7 @@
           "type": "artifact"
         }
       ],
-      "scope": "independent oracle stack, schemas, F01\u2013F16 corpus, historical imports and certificate attacks",
+      "scope": "independent oracle stack, schemas, F01–F16 corpus, historical imports and certificate attacks",
       "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
       "acceptance": [
         "Verifier rejects mismatched hashes, missing stages, stale profiles, altered accuracy and candidate self-verdicts.",
@@ -530,7 +530,7 @@
           "type": "artifact"
         }
       ],
-      "scope": "independent oracle stack, schemas, F01\u2013F16 corpus, historical imports and certificate attacks",
+      "scope": "independent oracle stack, schemas, F01–F16 corpus, historical imports and certificate attacks",
       "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
       "acceptance": [
         "Shared decisive code/math is documented and independently challenged.",
@@ -554,7 +554,7 @@
     {
       "id": "MC-011",
       "package": "MG-03",
-      "title": "Physical adversarial corpus F01\u2013F04",
+      "title": "Physical adversarial corpus F01–F04",
       "objective": "Construct and validate F01 jittered crossing, F02 thin web, F03 rounded XYZ remachining and F04 reoriented-stock families.",
       "dependencies": [
         {
@@ -574,7 +574,7 @@
           "type": "artifact"
         }
       ],
-      "scope": "independent oracle stack, schemas, F01\u2013F16 corpus, historical imports and certificate attacks",
+      "scope": "independent oracle stack, schemas, F01–F16 corpus, historical imports and certificate attacks",
       "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
       "acceptance": [
         "All four families have physically valid witnesses and discriminating oracle paths.",
@@ -598,8 +598,8 @@
     {
       "id": "MC-012",
       "package": "MG-03",
-      "title": "Physical adversarial corpus F05\u2013F08",
-      "objective": "Construct F05 internal passage, F06 lathe finish/parting, F07 lathe\u2013mill\u2013lathe and F08 accessible form/undercut families.",
+      "title": "Physical adversarial corpus F05–F08",
+      "objective": "Construct F05 internal passage, F06 lathe finish/parting, F07 lathe–mill–lathe and F08 accessible form/undercut families.",
       "dependencies": [
         {
           "task": "MC-002",
@@ -618,7 +618,7 @@
           "type": "artifact"
         }
       ],
-      "scope": "independent oracle stack, schemas, F01\u2013F16 corpus, historical imports and certificate attacks",
+      "scope": "independent oracle stack, schemas, F01–F16 corpus, historical imports and certificate attacks",
       "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
       "acceptance": [
         "All four families have valid workholding/access witnesses and independent validation routes.",
@@ -642,7 +642,7 @@
     {
       "id": "MC-013",
       "package": "MG-03",
-      "title": "Physical adversarial corpus F09\u2013F12",
+      "title": "Physical adversarial corpus F09–F12",
       "objective": "Construct F09 phase turning, F10 many bodies, F11 singular boundary and F12 scale/precision families.",
       "dependencies": [
         {
@@ -662,7 +662,7 @@
           "type": "artifact"
         }
       ],
-      "scope": "independent oracle stack, schemas, F01\u2013F16 corpus, historical imports and certificate attacks",
+      "scope": "independent oracle stack, schemas, F01–F16 corpus, historical imports and certificate attacks",
       "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
       "acceptance": [
         "Each family has exact semantics and signed/equality controls.",
@@ -686,7 +686,7 @@
     {
       "id": "MC-014",
       "package": "MG-03",
-      "title": "Physical adversarial corpus F13\u2013F16",
+      "title": "Physical adversarial corpus F13–F16",
       "objective": "Construct F13 genuine geometric growth, F14 redundant history, F15 boundary-crossing reconstruction and F16 empty/exhausted-body families.",
       "dependencies": [
         {
@@ -706,7 +706,7 @@
           "type": "artifact"
         }
       ],
-      "scope": "independent oracle stack, schemas, F01\u2013F16 corpus, historical imports and certificate attacks",
+      "scope": "independent oracle stack, schemas, F01–F16 corpus, historical imports and certificate attacks",
       "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
       "acceptance": [
         "F13 proves real changing work per tier.",
@@ -742,7 +742,7 @@
           "type": "artifact"
         }
       ],
-      "scope": "independent oracle stack, schemas, F01\u2013F16 corpus, historical imports and certificate attacks",
+      "scope": "independent oracle stack, schemas, F01–F16 corpus, historical imports and certificate attacks",
       "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
       "acceptance": [
         "Checker rejects all required corruptions and can distinguish materially wrong controls.",
@@ -1045,7 +1045,7 @@
       "id": "MC-023",
       "package": "MG-04",
       "title": "Re-clamp, reorientation and multi-setup sweep composition",
-      "objective": "Qualify common-frame transforms and body-target semantics across repeated setups and lathe\u2194mill transitions.",
+      "objective": "Qualify common-frame transforms and body-target semantics across repeated setups and lathe↔mill transitions.",
       "dependencies": [
         {
           "task": "MC-005",
@@ -1716,7 +1716,7 @@
       "id": "MC-037",
       "package": "MG-08",
       "title": "Reconstructed-solid comparison and end-to-end error certificate",
-      "objective": "Independently compare reconstructed engineering solids to nominal material and bind the complete source\u2192reconstruction error budget.",
+      "objective": "Independently compare reconstructed engineering solids to nominal material and bind the complete source→reconstruction error budget.",
       "dependencies": [
         {
           "task": "MC-038",
@@ -1951,7 +1951,7 @@
       "id": "MC-041",
       "package": "MG-09",
       "title": "MC-D mandatory-suite native engineering closure",
-      "objective": "Qualify the complete native material\u2192topology\u2192reconstruction chain on every mandatory valid MC-1 case at frozen requests.",
+      "objective": "Qualify the complete native material→topology→reconstruction chain on every mandatory valid MC-1 case at frozen requests.",
       "dependencies": [
         {
           "task": "MC-038",
@@ -2013,7 +2013,7 @@
     {
       "id": "MC-042",
       "package": "MG-10",
-      "title": "Exact STEP profile implementation and Layers A\u2013C qualification",
+      "title": "Exact STEP profile implementation and Layers A–C qualification",
       "objective": "Export the actual reconstructed engineering state under a pinned profile and independently verify file/read-back geometry against nominal authority.",
       "dependencies": [
         {
@@ -2025,15 +2025,15 @@
           "type": "artifact"
         }
       ],
-      "scope": "exact STEP A\u2013D qualification and actual independent downstream engineering use",
+      "scope": "exact STEP A–D qualification and actual independent downstream engineering use",
       "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
       "acceptance": [
-        "A\u2013C pass for mandatory representative cases with physical-unit error accounting.",
+        "A–C pass for mandatory representative cases with physical-unit error accounting.",
         "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
         "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
       ],
       "verification": [
-        "Run exact-file A\u2013D identity checks, fresh read-back, negative STEP controls and imported-solid downstream operations.",
+        "Run exact-file A–D identity checks, fresh read-back, negative STEP controls and imported-solid downstream operations.",
         "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
       ],
       "artifacts": [
@@ -2065,7 +2065,7 @@
           "type": "artifact"
         }
       ],
-      "scope": "exact STEP A\u2013D qualification and actual independent downstream engineering use",
+      "scope": "exact STEP A–D qualification and actual independent downstream engineering use",
       "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
       "acceptance": [
         "At least one genuinely independent consumer measures required properties and successfully performs the defined engineering operation within the full error budget.",
@@ -2073,7 +2073,7 @@
         "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
       ],
       "verification": [
-        "Run exact-file A\u2013D identity checks, fresh read-back, negative STEP controls and imported-solid downstream operations.",
+        "Run exact-file A–D identity checks, fresh read-back, negative STEP controls and imported-solid downstream operations.",
         "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
       ],
       "artifacts": [
@@ -2105,15 +2105,15 @@
           "type": "artifact"
         }
       ],
-      "scope": "exact STEP A\u2013D qualification and actual independent downstream engineering use",
+      "scope": "exact STEP A–D qualification and actual independent downstream engineering use",
       "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
       "acceptance": [
-        "Every mandatory final nonempty output passes exact-profile A\u2013D requirements.",
+        "Every mandatory final nonempty output passes exact-profile A–D requirements.",
         "Deliver the task-specific evidence/artifacts in a form a later agent can validate without chat context.",
         "Preserve negative results and leave every unresolved required claim explicitly open rather than weakening the target."
       ],
       "verification": [
-        "Run exact-file A\u2013D identity checks, fresh read-back, negative STEP controls and imported-solid downstream operations.",
+        "Run exact-file A–D identity checks, fresh read-back, negative STEP controls and imported-solid downstream operations.",
         "Run `python3 tools/validate_machining_completeness.py` and the task's deterministic contract/native checks when applicable."
       ],
       "artifacts": [
@@ -2408,7 +2408,7 @@
       "id": "MC-051",
       "package": "MG-12",
       "title": "Final traceability, invalidation and repository consistency audit",
-      "objective": "Verify bidirectional requirement\u2192proof\u2192code\u2192fixture\u2192run\u2192artifact\u2192decision traceability and repository/GitHub consistency before final decision.",
+      "objective": "Verify bidirectional requirement→proof→code→fixture→run→artifact→decision traceability and repository/GitHub consistency before final decision.",
       "dependencies": [
         {
           "task": "MC-050",
@@ -2588,7 +2588,7 @@
           "type": "artifact"
         }
       ],
-      "scope": "independent oracle stack, schemas, F01\u2013F16 corpus, historical imports and certificate attacks",
+      "scope": "independent oracle stack, schemas, F01–F16 corpus, historical imports and certificate attacks",
       "non_goals": "Do not narrow the supported machining domain, weaken tests, overwrite historical evidence, treat pending/refusal as solved, create production repositories, or dispatch paid/native work merely because this issue exists.",
       "acceptance": [
         "Every inherited identity is either pinned/imported or explicitly unavailable.",
