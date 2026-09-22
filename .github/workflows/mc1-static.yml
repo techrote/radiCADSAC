@@ -142,6 +142,11 @@ jobs:
           python3 -m py_compile research/machining-completeness/tasks/MC-038/pb00701_multiharmonic_multiplier_model.py research/machining-completeness/tasks/MC-038/verify_pb00701_v13.py
           python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v13.py --contract
           python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v13.py --self-test
+      - name: Verify PB-007-01 strict-dominance multi-term multiplier follow-up
+        run: |
+          python3 -m py_compile research/machining-completeness/tasks/MC-038/pb00701_multiterm_multiplier_model.py research/machining-completeness/tasks/MC-038/verify_pb00701_v14.py
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v14.py --contract
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v14.py --self-test
       - name: Verify PB-007-03 exact-source follow-up
         run: |
           python3 research/machining-completeness/tasks/MC-038/verify_pb00703.py --contract
