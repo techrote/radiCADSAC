@@ -1,0 +1,100 @@
+{
+  "schema": "radicadsac-mc038-pb00703-source-codec-boundary/4.0",
+  "task": "MC-038",
+  "corrective_issue": 166,
+  "source_baseline": "c762ba3a7c5ceff81e7c8ec2f5c37c21e1aa758c",
+  "target_blocker": "PB-007-03",
+  "decision": "BOUNDED_EXACT_SOURCE_CODEC_ESTABLISHED_FULL_BLOCKER_OPEN",
+  "gate": "MC-B",
+  "gate_state": "NOT_ESTABLISHED",
+  "evidence_class": [
+    "SOURCE_CONTRACT_RECONCILIATION",
+    "REVIEWED_ARGUMENT",
+    "DETERMINISTIC_EXACT_MODEL",
+    "BOUNDARY_AND_ADVERSARIAL_CONTROLS"
+  ],
+  "historical_evidence": [
+    {"path":"research/machining-completeness/tasks/MC-002/domain-contract-v1.json","git_blob_sha1":"23de82f5240a72509f7afe4acd5948b65bc4ff13","preserved":true},
+    {"path":"research/machining-completeness/tasks/MC-003/numeric-encoding-contract-v1.json","git_blob_sha1":"a5538cab698c806fdedcef7cf563b650638348e0","preserved":true},
+    {"path":"research/machining-completeness/tasks/MC-006/outcome.json","git_blob_sha1":"0319e00b492c57e4a11e3e78ef9a2e15ff67e52e","preserved":true},
+    {"path":"research/machining-completeness/tasks/MC-020/outcome.json","git_blob_sha1":"19504a35f47bca710bb6369abb723de83d1afede","preserved":true},
+    {"path":"research/machining-completeness/tasks/MC-031/outcome.json","git_blob_sha1":"dffac14b7e1381f966641485827b2df968d92144","preserved":true},
+    {"path":"research/machining-completeness/tasks/MC-038/gate-scope-retry-v2.json","git_blob_sha1":"76094029a264a5ce226694548b27896f9e0cd430","preserved":true},
+    {"path":"research/machining-completeness/tasks/MC-038/pb00701-decision-boundary-v3.json","git_blob_sha1":"ec2edaef5ef1cf838fc91e68b25147f41525ac2a","preserved":true}
+  ],
+  "required_source_domain": {
+    "domain_operation_count": 26,
+    "domain_narrowed": false,
+    "relevant_source_families": ["imported_stock","lathe_form_tool","mill_form","mill_accessible_undercut"],
+    "import_success_is_not_validity": true,
+    "missing_constructor_is_gap_not_exclusion": true,
+    "source_uncertainty_is_separate_from_nominal_geometry": true,
+    "cutting_and_noncutting_tool_regions_remain_distinct": true,
+    "finite_source_extent_required": true
+  },
+  "implemented_bounded_subroute": {
+    "id": "EXACT_RATIONAL_SEMIALGEBRAIC_SOURCE_V1",
+    "implementation": "research/machining-completeness/tasks/MC-038/pb00703_source_codec.py",
+    "scalar_domain": "exact rational only",
+    "solid_grammar": ["rational polynomial <= 0 atoms over x/y/z","rational polynomial >= 0 atoms over x/y/z","finite union","finite intersection","ordered difference","complement within an explicit finite source bound"],
+    "required_binding": ["source_id","stock/cutting/holder role","units","frame_id","finite exact x/y/z bounds","source_uncertainty"],
+    "canonicalization": "combined/sorted polynomial monomials, commutative union/intersection child ordering, exact rational text and canonical JSON bytes hashed with SHA-256",
+    "established_claims": [
+      "exact nominal membership for the bounded rational semialgebraic source language without binary floating predicate authority",
+      "exact atom equality is reported conservatively as BOUNDARY_CANDIDATE rather than being laundered into topology truth",
+      "nonzero source uncertainty prevents nominal exactness from becoming certifying material truth",
+      "cutting and holder sources retain distinct roles and durable source identities",
+      "opaque STEP/B-rep/NURBS/mesh/import success has no exact-source authority without a separately reviewed exact lowering or certified uncertainty route"
+    ],
+    "not_claimed": [
+      "no claim that every admitted imported_stock instance has a finite rational semialgebraic encoding",
+      "no claim that every arbitrary form/undercut cutter source is rational semialgebraic",
+      "no claim that kernel import success proves exact source validity",
+      "no claim that tessellation, hull or AABB representation preserves exact source material",
+      "no engineering-output or STEP qualification claim"
+    ]
+  },
+  "boundary_controls": [
+    "exact rational box interior/exterior/boundary-candidate membership",
+    "exact unit-sphere quadric equality and signed 1/1000000 neighbours",
+    "nonconvex reentrant Boolean source remains nonconvex rather than becoming its hull or AABB",
+    "exact 1/1000000-width positive-volume feature remains representable and distinguishable from zero volume",
+    "cutting and holder source roles remain distinct and common-frame bound",
+    "binary-float coefficients and points are rejected from exact authority",
+    "missing units/frame/source identity or finite bounds are rejected",
+    "opaque STEP/B-rep/NURBS/mesh/import descriptors retain PB-007-03 without reviewed exact lowering",
+    "nonzero source uncertainty yields UNCERTIFIED_SOURCE for certifying membership",
+    "canonical source hashing is invariant to commutative child order and polynomial term order but not source identity",
+    "malformed or unreviewed solid grammar fails closed"
+  ],
+  "full_blocker_review": {
+    "status": "OPEN",
+    "reason": "MC-002 deliberately admits imported stock and arbitrary form/undercut cutting solids through explicit representation and uncertainty contracts without restricting every valid source to rational semialgebraic geometry. The new codec supplies a finite exact constructive sublanguage, but no reviewed source-wide lowering establishes that every admitted imported/form/undercut instance belongs to it. Restricting the domain to this codec would violate the frozen-domain missing-constructor-is-gap rule.",
+    "not_an_impossibility_theorem": true,
+    "authority_laundering_forbidden": ["opaque importer success","kernel B-rep validity alone","mesh/tessellation equality","AABB or convex hull substitution","binary floating coordinates","global tolerance","source uncertainty treated as exact zero"],
+    "residual_obligation": "Provide a universal finite source representation/lowering and certificate route for every admitted imported_stock and arbitrary form/undercut cutter instance, or make a separately reviewed product-domain decision that changes the admitted source contract prospectively without rewriting historical evidence."
+  },
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDS_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-02": "OPEN",
+    "PO-05": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "next_pre_gate_action": "DEPENDENCY_REVIEW_PB-007-04"
+  },
+  "resources": {"native_campaign_run":false,"paid_campaign_run":false,"production_authorized":false,"expensive_execution_authorized":false},
+  "protected_semantics": {
+    "historical_source_audio_provenance_unchanged": true,
+    "canonical_journal_meaning_unchanged": true,
+    "source_uncertainty_preserved": true,
+    "positive_volume_material_preserved": true,
+    "cutting_holder_access_semantics_preserved": true,
+    "durable_body_lineage_preserved": true,
+    "conventional_step_output_semantics_unchanged": true,
+    "historical_negative_evidence_preserved": true,
+    "opaque_import_or_uncertainty_is_not_success": true
+  }
+}
