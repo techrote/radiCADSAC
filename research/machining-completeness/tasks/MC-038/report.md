@@ -74,3 +74,24 @@ A blocked MC-038 review may be merged only after the exact PR head passes the re
 ## Orchestration repair status
 
 Issue #156 resolved `ORCH-038-01`: MC-031/032/033 now consume accepted MC-A (`MC-005`) capability instead of MC-038 capability, while MC-034/035/036/037 retain the legitimate post-gate MC-038 dependency. This removes the programme-level dependency inversion only. MC-038 remains **BLOCKED** on the recorded PB-007/RB-016 and proof-obligation evidence; MC-B remains `NOT_ESTABLISHED`.
+
+## Post-remediation retry and ORCH-038-02 gate-scope reconciliation
+
+After MC-032/#94, MC-031/#93 and MC-033/#95 completed, MC-038 was retried against authoritative main `7a480da12e46764ed972c814df3991ebbf0baee5`. The retry remains **BLOCKED**: those producing-owner tasks deliberately retain the theorem-level `PB-007-01`, `PB-007-02`, `PB-007-03` and `PB-007-04` boundaries, and the corresponding pre-gate PO-02/PO-04/PO-05/PO-07/PO-08 claims are not all established. MC-B therefore remains `NOT_ESTABLISHED`.
+
+The retry also exposed a narrower contract-classification error in the historical v1 review. The canonical programme defines MC-B as reviewed terminating material/topology routes plus explicit finite output construction **before full native implementation claims**. By design, MC-034/035/036/037 remain capability-gated on MC-038 and MC-039 consumes their implementation artifacts later. It is therefore circular to demand that the global downstream native/consumer obligations produced by those tasks be *closed before* MC-038 can establish the capability that unlocks them.
+
+`gate-scope-retry-v2.json` resolves this as `ORCH-038-02` without erasing any negative evidence:
+
+- the historical `constructive-coverage-review-v1.json` remains byte-identical and continues to describe the evidence available at that review;
+- `PB-007-01..04` remain explicit **pre-gate constructive blockers** and retain their existing OPEN/OPEN_PROPAGATED states;
+- PO-02, PO-04, PO-05, PO-07 and PO-08 remain the still-open proof obligations directly relevant to the current MC-B constructive gate;
+- `RB-016-01..05` remain fully **OPEN**, but are classified as downstream representation/native-consumer qualification blockers rather than obligations whose closure is demanded before MC-B;
+- global PO-03 (owned by MC-039), PO-06 and PO-09 (owned by MC-037) likewise remain **OPEN**. They are not accepted, waived or weakened; their producing implementation work remains downstream of MC-038 capability;
+- MC-034/035/036/037 retain their MC-038 capability dependency and MC-039 retains its reconstruction-artifact dependencies. No native implementation work is moved ahead of the gate.
+
+This supersedes only the v1 review's **gate-prerequisite classification** of those downstream obligations. It does not supersede their blocker state, evidence, or later MC-1 significance. The earlier statement that every listed RB/PO was sufficient *as a prerequisite-to-close before MC-B* is therefore historical and overbroad; the blockers themselves remain real and unchanged.
+
+The distinction is adversarially enforced. The MC-038 verifier now rejects either direction of corruption: falsely closing/promoting a surviving pre-gate PB/PO to force MC-B through, or reintroducing a circular requirement that post-gate MC-034..039 evidence must already exist before MC-038 can unlock those tasks. It also rejects moving native work before the gate, closing any RB-016 blocker, accepting downstream PO-03/PO-06/PO-09, changing the 26-operation denominator, laundering refusal/UNCERTIFIED into success, or weakening source/audio/provenance, canonical-journal, positive-volume, durable-body/lineage or conventional STEP semantics.
+
+With ORCH-038-02 repaired, the next dependency-ready repair is again the surviving **pre-gate proof/constructive blocker path**, beginning with `PB-007-01`. MC-038 must not be retried for acceptance until those required pre-gate claims are genuinely discharged.
