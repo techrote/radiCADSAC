@@ -1,0 +1,80 @@
+{
+  "schema": "radicadsac-mc038-pb00701-multiharmonic-multiplier-boundary/13.0",
+  "task": "MC-038",
+  "corrective_issue": 188,
+  "source_baseline": "423d742d3f615f448d58d30332dacc60c51313ba",
+  "target_blocker": "PB-007-01",
+  "decision": "EXACT_NONVANISHING_EVEN_MULTIPLIER_MULTIHARMONIC_SUBGRAMMAR_ESTABLISHED_GENERAL_MULTIHARMONIC_ROUTE_OPEN",
+  "gate": "MC-B",
+  "gate_state": "NOT_ESTABLISHED",
+  "historical_v12_evidence": [
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-component-root-partition-boundary-v12.json", "git_blob_sha1": "f307a323c660d2475c03466737230b4a5bdb1873", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-report-v12.md", "git_blob_sha1": "697f6b7327594fcfc43c99dc99bcfffb09e94bf0", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701_component_partition_model.py", "git_blob_sha1": "da8d48b44e866aa52746f9d551c5a1617225b308", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v12.py", "git_blob_sha1": "36c09cb5a888522d291407356bb4fb9caf0e9d28", "preserved": true},
+    {"path": "docs/machining-completeness/38-PB00701-COMPONENT-ROOT-PARTITION.md", "git_blob_sha1": "b4a45ef8e0dec4208540ea07568653e52ea15e2c", "preserved": true}
+  ],
+  "implemented_extension": {
+    "id": "EXACT_NONVANISHING_EVEN_MULTIPLIER_MULTIHARMONIC_REDUCTION",
+    "harmonic_family": "exact nonzero harmonics {h,3h}, h>0",
+    "source_derived_factorization": "infer A=2*C_3h and B=2*S_3h; require C_h=(lambda+1/2)A and S_h=(lambda-1/2)B exactly and infer the same rational lambda from both channels",
+    "factor_identity": "F=(lambda+cos(2*alpha))*(A*cos(alpha)+B*sin(alpha)), alpha=2*pi*h*theta_turn",
+    "multiplier_authority": "exact rational |lambda|>1 implies |lambda+cos(2*alpha)|>=|lambda|-1>0",
+    "carrier_dispatch": "delegate exactly to v10 dual-projective, then v11 phase-dominance when applicable, then v12 component-root partition for the established residual",
+    "multiplicity_rule": "multiplication by a smooth globally nonzero factor preserves the carrier zero set and finite root multiplicities exactly",
+    "forbidden_authority": ["caller factorization assertion", "binary float", "epsilon", "sampling", "numeric trigonometry", "approximate minimization", "timeout", "resource refusal as truth"]
+  },
+  "boundary_controls": [
+    "genuine multi-harmonic {h,3h} case blocked by v12 and certified by v13",
+    "exact lambda=1 multiplier threshold fails closed",
+    "exact lambda=1+1/1000000 nonvanishing neighbour certifies",
+    "exact lambda=1-1/1000000 vanishing-possible neighbour fails closed",
+    "negative lambda<-1 globally nonvanishing multiplier",
+    "perturbed source coefficient identity rejected",
+    "extra, missing, and wrong harmonics rejected",
+    "v8 common-factor ownership is not relabelled",
+    "unsupported carrier residual remains PB-007-01",
+    "source-parameter mismatch rejected",
+    "binary-float and epsilon authority rejected",
+    "resource refusal is not a truth value",
+    "historical v12 evidence mutation rejected",
+    "26-operation denominator shrinkage rejected",
+    "false MC-B promotion rejected"
+  ],
+  "full_blocker_review": {
+    "status": "OPEN",
+    "residual_branch": "multi-harmonic coupled predicates outside the exact source-derived nonvanishing even-multiplier family, plus any carrier cells outside established v10/v11/v12 authority",
+    "not_an_impossibility_theorem": true
+  },
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false,
+    "next_pre_gate_priority": "PB-007-01 broader exact multi-harmonic factor/decision construction"
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "protected_semantics": {
+    "source_audio_provenance": true,
+    "canonical_journal": true,
+    "exact_time_path_phase": true,
+    "source_uncertainty": true,
+    "positive_volume_material": true,
+    "cutter_holder_access": true,
+    "durable_body_lineage": true,
+    "refusal_uncertified": true,
+    "conventional_step": true
+  }
+}
