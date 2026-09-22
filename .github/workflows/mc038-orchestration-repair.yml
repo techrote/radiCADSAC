@@ -1,0 +1,124 @@
+name: mc038-orchestration-repair
+on:
+  push:
+    branches: [mc038/pre-gate-dependency-repair]
+    paths:
+      - '.github/workflows/mc038-orchestration-repair.yml'
+permissions:
+  contents: write
+  issues: write
+jobs:
+  repair:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Apply bounded orchestration repair
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path('.')
+          graph_path = root/'research/machining-completeness/task-graph-v1.json'
+          graph = json.loads(graph_path.read_text())
+          tasks = {t['id']: t for t in graph['tasks']}
+          repair = {'MC-031','MC-032','MC-033'}
+          for tid in repair:
+              deps = tasks[tid]['dependencies']
+              assert sum(d == {'task':'MC-038','type':'capability'} for d in deps) == 1, (tid, deps)
+              assert not any(d == {'task':'MC-005','type':'capability'} for d in deps), (tid, deps)
+              tasks[tid]['dependencies'] = [
+                  {'task':'MC-005','type':'capability'} if d == {'task':'MC-038','type':'capability'} else d
+                  for d in deps
+              ]
+          graph_path.write_text(json.dumps(graph, indent=2) + '\n')
+
+          roadmap_path = root/'docs/machining-completeness/12-ROADMAP.md'
+          roadmap = roadmap_path.read_text()
+          for tid in sorted(repair):
+              old = next(line for line in roadmap.splitlines() if line.startswith(f'| **{tid}**'))
+              assert 'MC-038 (capability)' in old and 'MC-005 (capability)' not in old, old
+              new = old.replace('MC-038 (capability)', 'MC-005 (capability)', 1)
+              roadmap = roadmap.replace(old, new, 1)
+          note = '''\n## MC-038 pre-gate remediation routing\n\nThe MC-038 blocker review found that MC-031/032/033 were package-order predecessors whose producing work was circularly gated on MC-B. Issue #156 corrects only that orchestration boundary: MC-031/032/033 consume the already accepted MC-A (`MC-005`) capability plus their existing artifact dependencies so they can produce pre-gate evidence. MC-B remains `NOT_ESTABLISHED`; MC-034/035/036/037 and other genuinely post-gate work retain their MC-038 capability dependency. This routing change does not close any PB-007/RB-016/proof obligation, narrow the 26-operation denominator, or authorize production/native/paid execution.\n'''
+          if '## MC-038 pre-gate remediation routing' not in roadmap:
+              roadmap += note
+          roadmap_path.write_text(roadmap)
+
+          validator_path = root/'tools/validate_machining_completeness.py'
+          validator = validator_path.read_text()
+          marker = '    pids=[p["id"] for p in graph["packages"]]\n'
+          assert marker in validator
+          regression = '''    # MC-038 pre-gate repair: producing MG-07 tasks must not depend on the gate they help establish.\n    tmap={t["id"]:t for t in tasks}\n    for tid in ("MC-031","MC-032","MC-033"):\n        deps={(d["task"],d["type"]) for d in tmap[tid]["dependencies"]}\n        if ("MC-038","capability") in deps: fail(f"{tid} reintroduced circular MC-038 capability dependency")\n        if ("MC-005","capability") not in deps: fail(f"{tid} missing accepted MC-A pre-gate authority")\n    for tid in ("MC-034","MC-035","MC-036","MC-037"):\n        deps={(d["task"],d["type"]) for d in tmap[tid]["dependencies"]}\n        if ("MC-038","capability") not in deps: fail(f"{tid} lost legitimate post-gate MC-038 dependency")\n\n'''
+          assert 'reintroduced circular MC-038 capability dependency' not in validator
+          validator = validator.replace(marker, regression + marker, 1)
+          self_marker = '    print("MC-1 validator self-test passed")\n'
+          assert self_marker in validator
+          self_attacks = '''    bad=copy.deepcopy(g); tm={t["id"]:t for t in bad["tasks"]}; tm["MC-031"]["dependencies"][0]={"task":"MC-038","type":"capability"}\n    try: validate(bad,p,o,m,pos)\n    except AssertionError: pass\n    else: fail("self-test failed to reject reintroduced MC-038 pre-gate cycle")\n    bad=copy.deepcopy(g); tm={t["id"]:t for t in bad["tasks"]}; tm["MC-034"]["dependencies"]=[d for d in tm["MC-034"]["dependencies"] if d!={"task":"MC-038","type":"capability"}]\n    try: validate(bad,p,o,m,pos)\n    except AssertionError: pass\n    else: fail("self-test failed to reject removed post-gate MC-038 dependency")\n'''
+          validator = validator.replace(self_marker, self_attacks + self_marker, 1)
+          validator_path.write_text(validator)
+
+          review_path = root/'research/machining-completeness/tasks/MC-038/constructive-coverage-review-v1.json'
+          review = json.loads(review_path.read_text())
+          inv = review['dependency_inversion']
+          assert inv['present'] is True
+          inv['present'] = False
+          inv['description'] = 'Issue #156 removed the backward MC-038 capability edge from MC-031/032/033 and replaced it with explicit accepted MC-A authority while preserving their artifact dependencies; MC-B remains NOT_ESTABLISHED.'
+          inv['resolved_by_issue'] = 156
+          inv['resolution'] = 'MC-031/032/033 now depend on MC-005 capability rather than MC-038 capability; post-gate MC-034..037 remain gated by MC-038.'
+          review_path.write_text(json.dumps(review, indent=2) + '\n')
+
+          outcome_path = root/'research/machining-completeness/tasks/MC-038/outcome.json'
+          outcome = json.loads(outcome_path.read_text())
+          orch = next(b for b in outcome['blockers'] if b['id']=='ORCH-038-01')
+          assert orch['status']=='OPEN'
+          orch['status']='RESOLVED'
+          orch['resolved_by_issue']=156
+          outcome['accepted_claims'].append('ORCH-038-01 is resolved by issue #156: MC-031/032/033 have a noncircular pre-gate authority path through MC-A while MC-B remains NOT_ESTABLISHED.')
+          outcome_path.write_text(json.dumps(outcome, indent=2) + '\n')
+
+          report_path = root/'research/machining-completeness/tasks/MC-038/report.md'
+          report = report_path.read_text()
+          repair_note = '''\n## Orchestration repair status\n\nIssue #156 resolved `ORCH-038-01`: MC-031/032/033 now consume accepted MC-A (`MC-005`) capability instead of MC-038 capability, while MC-034/035/036/037 retain the legitimate post-gate MC-038 dependency. This removes the programme-level dependency inversion only. MC-038 remains **BLOCKED** on the recorded PB-007/RB-016 and proof-obligation evidence; MC-B remains `NOT_ESTABLISHED`.\n'''
+          if '## Orchestration repair status' not in report:
+              report += repair_note
+          report_path.write_text(report)
+
+          verify_path = root/'research/machining-completeness/tasks/MC-038/verify.py'
+          verify = verify_path.read_text()
+          verify = verify.replace("assert inv['present'] is True", "assert inv['present'] is False\n    assert inv['resolved_by_issue'] == 156")
+          verify = verify.replace("assert ('MC-038','capability') in deps, f'{tid} inversion changed; rerun MC-038 review before relying on frozen result'", "assert ('MC-038','capability') not in deps, f'{tid} circular MC-038 dependency reintroduced'\n        assert ('MC-005','capability') in deps, f'{tid} missing accepted MC-A pre-gate authority'")
+          verify = verify.replace("lambda r: r['dependency_inversion'].__setitem__('present',False)", "lambda r: r['dependency_inversion'].__setitem__('present',True)")
+          verify_path.write_text(verify)
+          PY
+      - name: Validate repaired contracts before issue reconciliation
+        run: |
+          python3 tools/validate_machining_completeness.py --self-test
+          python3 research/machining-completeness/tasks/MC-038/verify.py --contract
+          python3 research/machining-completeness/tasks/MC-038/verify.py --self-test
+      - name: Reconcile managed task issues
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          python3 tools/mc_workflow.py sync --apply
+          python3 tools/mc_workflow.py sync --check
+      - name: Check repaired frontier
+        run: |
+          python3 tools/mc_workflow.py ready | tee /tmp/frontier.txt
+          grep -Fx MC-031 /tmp/frontier.txt
+          grep -Fx MC-032 /tmp/frontier.txt
+          grep -Fx MC-033 /tmp/frontier.txt
+      - name: Commit repair to owner branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add research/machining-completeness/task-graph-v1.json docs/machining-completeness/12-ROADMAP.md tools/validate_machining_completeness.py research/machining-completeness/tasks/MC-038/constructive-coverage-review-v1.json research/machining-completeness/tasks/MC-038/outcome.json research/machining-completeness/tasks/MC-038/report.md research/machining-completeness/tasks/MC-038/verify.py
+          git diff --cached --check
+          git commit -m 'MC-038 repair: unblock pre-gate material remediation'
+          git push origin HEAD:mc038/pre-gate-dependency-repair
