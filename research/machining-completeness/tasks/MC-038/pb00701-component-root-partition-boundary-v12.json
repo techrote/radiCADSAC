@@ -1,0 +1,81 @@
+{
+  "schema": "radicadsac-mc038-pb00701-component-root-partition-boundary/12.0",
+  "task": "MC-038",
+  "corrective_issue": 186,
+  "source_baseline": "72617ed78a3b98779ac5812346616dc21394e26f",
+  "target_blocker": "PB-007-01",
+  "decision": "EXACT_FINITE_COMPONENT_ROOT_PARTITION_SINGLE_HARMONIC_SUBGRAMMAR_ESTABLISHED_GENERAL_COUPLED_ROUTE_OPEN",
+  "gate": "MC-B",
+  "gate_state": "NOT_ESTABLISHED",
+  "historical_v11_evidence": [
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-phase-dominance-boundary-v11.json", "git_blob_sha1": "402fc6f6de953b0d42c36b6cda098da908ce692f", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-report-v11.md", "git_blob_sha1": "8be35910b129f0b6387d139b96a5c02f8c59c7a2", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701_phase_dominance_model.py", "git_blob_sha1": "bd0ee3d04a05134778905d690985d78acf347c84", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v11.py", "git_blob_sha1": "6251182de02b0fbf2910e427858593a1aaface62", "preserved": true},
+    {"path": "docs/machining-completeness/37-PB00701-PHASE-DOMINANCE.md", "git_blob_sha1": "2d931d9977fde2a61c314c179eb66245e4bdfbe0", "preserved": true}
+  ],
+  "implemented_extension": {
+    "id": "EXACT_FINITE_COMPONENT_ROOT_PARTITION_SINGLE_HARMONIC_REDUCTION",
+    "root_authority": "MC-032 exact rational Sturm distinct-root counting over A*B",
+    "partition": "finite rational closed cells; every component-root neighborhood contains exactly one root of exactly one coprime component and every complement cell is component-root-free",
+    "local_dispatch": "exact affine reparameterization; v10 dual-projective route first, v11 phase-dominance only for its established residual",
+    "component_root_event_rule": "A=0 requires u in Z; B=0 requires u in Z+1/2; all candidate rational sources are evaluated exactly",
+    "component_root_simplicity": "a multiple qualified component-root event would force pi to equal an exact rational number",
+    "shared_boundary_rule": "cell endpoint events are deduplicated by exact global rational source",
+    "forbidden_authority": ["binary float", "epsilon", "sampling", "approximate root solver", "timeout", "resource refusal as truth"]
+  },
+  "boundary_controls": [
+    "alternating A/B component roots requiring local tangent/cotangent switching",
+    "exact A-zero integer-phase event",
+    "exact B-zero half-integer-phase event",
+    "rational off-lattice component-root non-event",
+    "algebraic-irrational component-root non-event",
+    "repeated component root with simple original event",
+    "exact +/-1/1000000 phase-lattice neighbours",
+    "shared partition boundary event deduplicated exactly",
+    "forged or incomplete root partition",
+    "coincident component roots rejected",
+    "source-parameter mismatch",
+    "binary-float and epsilon authority rejected",
+    "resource refusal is not a truth value",
+    "historical v11 evidence mutation rejected",
+    "26-operation denominator shrinkage rejected",
+    "false MC-B promotion rejected"
+  ],
+  "full_blocker_review": {
+    "status": "OPEN",
+    "residual_branch": "multi-harmonic coupled predicates and single-harmonic local cells outside both v10 opposed-monotone and v11 exact phase-dominance authority",
+    "not_an_impossibility_theorem": true
+  },
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false,
+    "next_pre_gate_priority": "PB-007-01 multi-harmonic coupled exact-event construction"
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "protected_semantics": {
+    "source_audio_provenance": true,
+    "canonical_journal": true,
+    "exact_time_path_phase": true,
+    "source_uncertainty": true,
+    "positive_volume_material": true,
+    "cutter_holder_access": true,
+    "durable_body_lineage": true,
+    "refusal_uncertified": true,
+    "conventional_step": true
+  }
+}
