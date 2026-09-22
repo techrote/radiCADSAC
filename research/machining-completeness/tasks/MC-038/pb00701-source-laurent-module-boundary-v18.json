@@ -1,0 +1,95 @@
+{
+  "schema": "radicadsac-mc038-pb00701-source-laurent-module-boundary/18.0",
+  "task": "MC-038",
+  "corrective_issue": 198,
+  "source_baseline": "e3c12693aa369b90de562ca8087158ca4eda7c39",
+  "target_blocker": "PB-007-01",
+  "decision": "EXACT_SOURCE_LAURENT_MODULE_FACTORIZATION_ROUTE_ESTABLISHED_GENERAL_COUPLED_ROUTE_OPEN",
+  "gate": "MC-B",
+  "gate_state": "NOT_ESTABLISHED",
+  "historical_v17_evidence": [
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-even-trig-multiplier-boundary-v17.json", "git_blob_sha1": "c67c61981e6db6b32d9e8a519a8204a95d2dd74d", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-report-v17.md", "git_blob_sha1": "584bd3737afb33bc36f77889bbfb81c963984b92", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701_even_trig_multiplier_model.py", "git_blob_sha1": "9c3e579f73aee1645b829c8cfe1f5f14674eeb86", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/test_pb00701_even_trig_multiplier_adversarial.py", "git_blob_sha1": "5cbaa167a900769dfc401cb27632f3f58b4dec44", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v17.py", "git_blob_sha1": "af6085932e4c2f5ac45a3359a1071f33aa53a190", "preserved": true},
+    {"path": "docs/machining-completeness/43-PB00701-EVEN-TRIG-PROJECTIVE-MULTIPLIER.md", "git_blob_sha1": "986593eeac4bf07195ca4e0648d63f1457eb92bb", "preserved": true},
+    {"path": ".github/workflows/mc1-pb00701-v17.yml", "git_blob_sha1": "1dbe0ac5e7edb08bba938467e26ffa3894ada49e", "preserved": true}
+  ],
+  "implemented_extension": {
+    "id": "EXACT_SOURCE_AND_LAURENT_MODULE_NONVANISHING_FACTORIZATION",
+    "source_polynomial_factor": "derive the maximal monic exact rational gcd across every nonzero local source channel; exact-divide and regenerate every channel",
+    "source_nonvanishing": "reject exact endpoint roots and use MC-032 exact rational Sturm authority for zero open-span roots and a fixed exact sign",
+    "laurent_factorization": "lift exact odd-harmonic Gaussian-rational source coefficient slices to a centered Laurent polynomial in w=z^(2h), compute their exact common Gaussian-rational gcd, and admit only an even-degree factor that can be normalized to conjugate-reciprocal real even-trigonometric form",
+    "laurent_nonvanishing": "reuse v17 tangent-projective exact rational Sturm authority including the projective point at infinity",
+    "residual_dispatch": "reconstruct the exact residual source and recursively delegate only through the preserved v17 classifier; no new residual zero oracle is introduced",
+    "precedence": "v8-v17 keep ownership of every source already certified by those routes; v18 consumes only residual blocked spans",
+    "multiplicity_rule": "only an exact smooth factor proved nowhere zero may be removed; such multiplication preserves finite residual event multiplicities",
+    "forbidden_authority": [
+      "caller factorization",
+      "caller root count",
+      "caller sign",
+      "binary float",
+      "epsilon",
+      "sampling",
+      "numeric trigonometry",
+      "timeout",
+      "resource refusal as truth"
+    ]
+  },
+  "boundary_controls": [
+    "previously blocked nonzero-phase source becomes certified only after exact nonvanishing common source-polynomial factor removal and v17 residual delegation",
+    "exact source-factor endpoint root fails closed",
+    "exact interior rational source root fails closed",
+    "algebraic-irrational source root fails closed under exact Sturm authority",
+    "exact +/-1/1000000 source-root boundary neighbours are distinguished",
+    "genuine Laurent extraction with a multi-harmonic residual is exact and regeneration-bound",
+    "odd-degree or malformed conjugate-reciprocal Laurent factors fail closed",
+    "projective-rooted phase factors fail closed through preserved v17 authority",
+    "one-coefficient source perturbation cannot pass exact module divisibility",
+    "v8-v17 prior-route precedence is preserved",
+    "source-parameter mismatch is rejected",
+    "forged source/Laurent/Sturm/sign metadata cannot override source authority",
+    "binary-float authority is rejected",
+    "resource refusal is explicitly not a truth value",
+    "historical v17 evidence mutation is rejected",
+    "26-operation denominator shrinkage is rejected",
+    "false MC-B promotion is rejected"
+  ],
+  "full_blocker_review": {
+    "status": "OPEN",
+    "residual_branch": "required coupled analytic and multi-harmonic predicates that remain after all exactly certified globally nonvanishing source-polynomial and even-trigonometric module factors are removed, including residual carriers outside v8-v17 authority and structurally ambiguous Laurent factorizations",
+    "not_an_impossibility_theorem": true
+  },
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false,
+    "next_pre_gate_priority": "PB-007-01 residual coupled multi-harmonic decision route after exact nonvanishing source/Laurent module factor removal"
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "protected_semantics": {
+    "source_audio_provenance": true,
+    "canonical_journal": true,
+    "exact_time_path_phase": true,
+    "source_uncertainty": true,
+    "positive_volume_material": true,
+    "cutter_holder_access": true,
+    "durable_body_lineage": true,
+    "refusal_uncertified": true,
+    "conventional_step": true
+  }
+}
