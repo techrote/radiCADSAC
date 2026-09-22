@@ -1,0 +1,95 @@
+{
+  "schema": "radicadsac-mc038-pb00701-multiharmonic-monotone-anchor-boundary/19.0",
+  "task": "MC-038",
+  "corrective_issue": 200,
+  "source_baseline": "4e337136731a423fbdf3aa6fd1952f372de5601a",
+  "target_blocker": "PB-007-01",
+  "decision": "EXACT_MULTI_HARMONIC_MONOTONE_ANCHOR_ROUTE_ESTABLISHED_GENERAL_COUPLED_ROUTE_OPEN",
+  "gate": "MC-B",
+  "gate_state": "NOT_ESTABLISHED",
+  "historical_v18_evidence": [
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-source-laurent-module-boundary-v18.json", "git_blob_sha1": "48d6eb9b144407064708b9b805f57611815d7f65", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-report-v18.md", "git_blob_sha1": "5ea9aa4c7c5e58b888d584394b70267922811c33", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701_source_laurent_factor_model.py", "git_blob_sha1": "4e656c95a13858ee8ed496149d200a0a321a61a0", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/test_pb00701_source_laurent_factor_adversarial.py", "git_blob_sha1": "591a95afc8e5893742c99e3339086d21dd87f45a", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v18.py", "git_blob_sha1": "0a0359a5909eb7152966082ea0c39ef63aaeb1fa", "preserved": true},
+    {"path": "docs/machining-completeness/44-PB00701-SOURCE-LAURENT-MODULE-FACTORIZATION.md", "git_blob_sha1": "dd7ae014f083a7529c8ecd2b41e2f39bacd1e030", "preserved": true},
+    {"path": ".github/workflows/mc1-pb00701-v18.yml", "git_blob_sha1": "97bf76f178b3a70183023e37e03fec6ff25d78b7", "preserved": true}
+  ],
+  "implemented_extension": {
+    "id": "EXACT_MULTI_HARMONIC_MONOTONE_ANCHOR_DERIVATIVE_DOMINANCE",
+    "scope": "residual exact local polynomial spans with a nonconstant phase-independent harmonic-0 cosine anchor, nonzero exact-rational affine phase rate, and at least two active positive harmonics after v18 remains blocked",
+    "bernstein_authority": "convert exact rational source polynomials and their derivatives to exact Bernstein coefficients on [0,1]; use the Bernstein convex-hull property for rational lower, upper and absolute bounds",
+    "derivative_bound": "bound every oscillatory source derivative by ||C_h'||+||S_h'||+(44/7)|h*r|(||C_h||+||S_h||), using only the proved theorem pi < 22/7",
+    "strict_monotonicity": "accept only min_Bernstein(P') > B or max_Bernstein(P') < -B and record the exact positive rational margin; equality fails closed",
+    "endpoint_authority": "evaluate each closed source endpoint at its exact rational phase through preserved v6 algebraic tangent-half authority; an endpoint at a tangent-half pole is moved by an exact half-turn and each harmonic coefficient is multiplied by (-1)^h",
+    "root_decision": "strict monotonicity plus exact endpoint signs gives zero or one open root; an exact endpoint root is unique on the closed span and every admitted root is simple because the derivative is bounded away from zero",
+    "precedence": "v8-v18 retain ownership of every source they already certify; v19 consumes only residual blocked spans and performs no factor removal",
+    "forbidden_authority": [
+      "caller derivative certificate",
+      "caller Bernstein bound",
+      "caller endpoint sign",
+      "caller root count",
+      "binary float",
+      "epsilon",
+      "sampling",
+      "numeric trigonometry",
+      "approximate minimization",
+      "timeout",
+      "resource refusal as truth"
+    ]
+  },
+  "boundary_controls": [
+    "previously blocked residual source with nonconstant harmonic-0 anchor and two active positive harmonics is certified directly rather than by factor removal",
+    "positive and negative strict monotonicity are both certified",
+    "zero-root, one-open-root, left-endpoint-root and right-endpoint-root cases are distinguished exactly",
+    "a rational half-turn endpoint at a tangent-half pole is evaluated only through exact parity shift",
+    "exact derivative-dominance equality and signed +/-1/1000000 neighbours are distinguished",
+    "nonconstant positive-harmonic modulation derivatives contribute to the exact Bernstein budget",
+    "missing anchor, constant anchor, single-positive-harmonic and insufficient-dominance cases fail closed",
+    "v18 prior-route precedence is preserved",
+    "source-parameter mismatch is rejected",
+    "forged derivative/Bernstein/root/sign metadata cannot override source authority",
+    "binary-float authority is rejected",
+    "resource refusal is explicitly not a truth value",
+    "historical v18 evidence mutation is rejected",
+    "26-operation denominator shrinkage is rejected",
+    "false MC-B promotion is rejected"
+  ],
+  "full_blocker_review": {
+    "status": "OPEN",
+    "residual_branch": "required coupled analytic multi-harmonic predicates lacking a certified globally monotone source anchor after all v8-v19 routes, including derivative-dominance failures and more general irreducible exponential-polynomial zero structure",
+    "not_an_impossibility_theorem": true
+  },
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false,
+    "next_pre_gate_priority": "PB-007-01 residual coupled multi-harmonic exact decision route beyond global monotone-anchor derivative dominance"
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "protected_semantics": {
+    "source_audio_provenance": true,
+    "canonical_journal": true,
+    "exact_time_path_phase": true,
+    "source_uncertainty": true,
+    "positive_volume_material": true,
+    "cutter_holder_access": true,
+    "durable_body_lineage": true,
+    "refusal_uncertified": true,
+    "conventional_step": true
+  }
+}
