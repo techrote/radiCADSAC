@@ -1,0 +1,102 @@
+{
+  "schema": "radicadsac-mc038-pb00701-phase-dominance-boundary/11.0",
+  "task": "MC-038",
+  "corrective_issue": 184,
+  "source_baseline": "d136ea93d6473b3ce48dae4c70985b0545a9b554",
+  "target_blocker": "PB-007-01",
+  "decision": "EXACT_PHASE_DOMINATED_NONMONOTONE_SINGLE_HARMONIC_SUBGRAMMAR_ESTABLISHED_GENERAL_COUPLED_ROUTE_OPEN",
+  "gate": "MC-B",
+  "gate_state": "NOT_ESTABLISHED",
+  "historical_v10_evidence": [
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-dual-ratio-boundary-v10.json", "git_blob_sha1": "e96a6feba54fa859001e9e7f814eaf709a714b2b", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-report-v10.md", "git_blob_sha1": "b53ba5d4cab6e93af529f93a3d20ce5e792900eb", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701_dual_ratio_model.py", "git_blob_sha1": "7644219ae12011d3c5493104e6d752cf87bc6923", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v10.py", "git_blob_sha1": "401c7bb4b49537ed27aad7fa972b81cab9fef94d", "preserved": true},
+    {"path": "docs/machining-completeness/36-PB00701-DUAL-PROJECTIVE-RATIO.md", "git_blob_sha1": "1215e00ea728640d4680fb64e0e4c7298b82d9c3", "preserved": true}
+  ],
+  "historical_chain_policy": "v10 verifier remains mandatory and transitively pins v3/v6/v7/v8/v9 historical evidence; all historical PB-007-01 verifiers remain in mc1-static",
+  "implemented_extension": {
+    "id": "EXACT_PHASE_DERIVATIVE_DOMINANCE_SINGLE_HARMONIC_REDUCTION",
+    "source_domain": "the existing exact one-positive-harmonic v10 rational-polynomial family with gcd(A,B)=1, nonzero rational affine phase rate, and an exact-zero-free tangent or cotangent denominator",
+    "derivative_authority": "D=A*B'-A'*B; H'=pi*u'*sec^2(pi*u)-D/B^2 and K'=-pi*u'*csc^2(pi*u)+D/A^2",
+    "dominance_predicate": "P(s)=3*abs(u')*den(s)^2-sign(u')*D(s) > 0 on the full closed source span",
+    "transcendental_theorem": "pi>3 exactly; no numeric approximation of pi participates in the proof",
+    "exact_certification": "P has exact positive endpoint values and no exact rational-polynomial root in the open span under MC-032 Sturm authority",
+    "routing": "v9/v10 opposed-monotone routes retain ownership; v11 upgrades only their exact nonmonotone residual when the stronger phase-dominance predicate is certified",
+    "boundary_semantics": "tangent/cotangent poles, exact rational-turn finite comparisons, and endpoint multiplicity certificates are inherited from v10 unchanged",
+    "not_claimed": [
+      "a universal exact decision procedure for all non-common polynomial/trigonometric modulation",
+      "a route for multiple active harmonics",
+      "a route when neither A nor B is zero-free on the closed source span",
+      "a route when the exact phase-dominance predicate is zero or negative anywhere",
+      "an impossibility theorem for the residual PB-007-01 grammar",
+      "closure of PB-007-01 or PB-007-02",
+      "MC-B acceptance"
+    ]
+  },
+  "boundary_controls": [
+    "genuine tangent-chart nonmonotone ratio with an interior D root is certified exactly",
+    "genuine cotangent-chart nonmonotone ratio with an interior D root is certified exactly",
+    "decreasing affine phase direction is handled by exact sign(u') authority",
+    "exact dominance threshold minus 1/1000000 remains certifiable",
+    "exact dominance threshold equality fails closed",
+    "exact dominance threshold plus 1/1000000 fails closed",
+    "tangent and cotangent pole cuts remain exact rational boundaries with symbolic infinities",
+    "v10 external endpoint-simple certificates remain authoritative",
+    "neither A nor B zero-free fails closed under PB-007-01",
+    "multiple active harmonics remain PB-007-01",
+    "source-parameter mismatch is rejected",
+    "binary-float and epsilon authority are rejected",
+    "forged phase-dominance evidence is rejected",
+    "resource refusal is not a truth value",
+    "historical PB-007-01 evidence cannot mutate",
+    "26-operation denominator cannot shrink",
+    "MC-B cannot be promoted from this bounded extension"
+  ],
+  "full_blocker_review": {
+    "status": "OPEN",
+    "residual_branch": "non-common coupled rational-polynomial harmonic modulation outside the certified single-harmonic v10/v11 families, especially multi-harmonic cases, neither-component-zero-free spans, phase-dominance failures, and broader required analytic/source cases",
+    "reason": "The exact pi>3 dominance certificate covers a materially broader derivative-sign-changing single-harmonic family, but no unconditional exact root/multiplicity procedure for every remaining required coupled predicate is established.",
+    "not_an_impossibility_theorem": true,
+    "forbidden_truth_substitutes": [
+      "binary floating point",
+      "epsilon sign",
+      "finite sampling",
+      "subdivision cap",
+      "timeout",
+      "resource refusal",
+      "unproved transcendence conjecture"
+    ]
+  },
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false,
+    "next_pre_gate_priority": "PB-007-01 residual multi-harmonic/neither-component-zero-free/phase-dominance-failure coupled analytic decision route"
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "protected_semantics": {
+    "source_audio_provenance_preserved": true,
+    "canonical_journal_preserved": true,
+    "exact_time_path_phase_correlation_preserved": true,
+    "source_uncertainty_preserved": true,
+    "positive_volume_material_preserved": true,
+    "cutter_holder_access_preserved": true,
+    "durable_body_lineage_preserved": true,
+    "refusal_uncertified_semantics_preserved": true,
+    "conventional_step_semantics_preserved": true
+  }
+}
