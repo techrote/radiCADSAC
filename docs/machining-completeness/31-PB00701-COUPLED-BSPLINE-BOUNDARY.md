@@ -4,7 +4,7 @@ This note records corrective issue #172 under MC-038. It extends, rather than re
 
 ## Established
 
-Exact rational non-rational B-spline source channels are now lowered finitely at exact knot boundaries to rational local power-basis polynomials. Repeated knots remain source boundaries; no knot epsilon exists. The same source parameter drives modulation and the affine exact-rational spindle-phase law.
+Exact rational non-rational B-spline source channels are now lowered finitely at exact knot boundaries to rational local power-basis polynomials. Repeated knots remain source boundaries; no knot epsilon exists. One shared source parameter drives modulation and the affine exact-rational spindle-phase law; an independent phase projection is not accepted.
 
 Three terminating exact subroutes are executable: strict rational amplitude-dominance separation, stationary-cardinal reduction to MC-032 rational polynomial classification, and exact constant-modulation delegation to the v6 rational-turn/Sturm route.
 
