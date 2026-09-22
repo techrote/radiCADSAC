@@ -43,7 +43,7 @@ Therefore exact rational
 
 `|lambda| > |mu| + 1`
 
-implies
+has the canonical machine-readable contract token `|lambda|>|mu|+1` and implies
 
 `|lambda + mu*cos(2*alpha) + cos(4*alpha)| >= |lambda| - |mu| - 1 > 0`.
 
