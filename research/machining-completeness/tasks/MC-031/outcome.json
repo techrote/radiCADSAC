@@ -1,0 +1,96 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-031",
+  "result_kind": "COMPLETED_RESEARCH",
+  "evidence_class": [
+    "SOURCE_INSPECTION",
+    "ACTUAL_QUALIFIED_SWEEP_INTEGRATION",
+    "DETERMINISTIC_MODEL",
+    "EXACT_AND_OUTWARD_CERTIFIED_CONTROLS",
+    "BOUNDARY_AND_ADVERSARIAL_CONTROLS",
+    "DOCUMENTATION_RECONCILIATION"
+  ],
+  "source_baseline": "8cac00439bec4b8c6032be9709f81ac1bed21a7d",
+  "issue": 93,
+  "dependency_artifacts": [
+    {"task":"MC-005","path":"research/machining-completeness/tasks/MC-005/outcome.json","blob_sha":"adec886597a06345fdfdf65ee018596cd396d249","result_kind":"CAPABILITY_ACCEPTED"},
+    {"task":"MC-018","path":"research/machining-completeness/tasks/MC-018/outcome.json","blob_sha":"085f864b4bd58b38f154b6c9d58d9e68b60ee7ec","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-019","path":"research/machining-completeness/tasks/MC-019/outcome.json","blob_sha":"4456c964315c10b46ce61a5a8d4a45e8025730b7","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-020","path":"research/machining-completeness/tasks/MC-020/outcome.json","blob_sha":"19504a35f47bca710bb6369abb723de83d1afede","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-021","path":"research/machining-completeness/tasks/MC-021/outcome.json","blob_sha":"442397474c596bc3a73e9442e4ab2f955e19b0e6","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-022","path":"research/machining-completeness/tasks/MC-022/outcome.json","blob_sha":"8ca7cfd0d098d746394cab71257b1dfc6e3a7250","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-023","path":"research/machining-completeness/tasks/MC-023/outcome.json","blob_sha":"15cd3b128cdaa14370594debd490e76a4a0d6b23","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-026","path":"research/machining-completeness/tasks/MC-026/outcome.json","blob_sha":"185693afc30b77097031ced218c9ae19fb1653ac","result_kind":"COMPLETED_RESEARCH"}
+  ],
+  "accepted_claims": [
+    "All 26 frozen MC-002 operation IDs are mapped exactly once into actual accepted MC-018..023 sweep/setup constructors; the evaluator dynamically loads and calls those reviewed modules rather than substituting labels or duplicate geometry.",
+    "MC-018 flat/corner, MC-019 ball/round and MC-020 bounded form/undercut sweeps feed exact or outward-certified INSIDE/OUTSIDE/UNCERTIFIED material queries without promoting refinement width to truth.",
+    "MC-021 axisymmetric meridian sweeps and the bounded MC-022 synchronized phase subtype are integrated with their existing sufficient admission predicates and shared source-parameter semantics.",
+    "MC-023 common-frame finite histories preserve exact revision order, durable body/lineage IDs and inherited error; durable connectivity transition commitment remains deferred to MC-033.",
+    "Closed sweep-boundary membership alone cannot delete material: an independent exact positive-volume witness is required, zero witness is touching only, and machining cannot add material.",
+    "The complete MC-058/MC-023 error transfer e_inherited + e_translation + support_radius*e_rotation + e_tool is mandatory and inherited uncertainty cannot reset on re-clamp.",
+    "Resource refusal, uncertified enclosure bands, unresolved event/source cases and semantic mismatches remain finite typed non-success terminals.",
+    "Material certificates bind source/canonical/sweep/body/revision/configuration/challenge/result identity and reject stale or mutated bindings."
+  ],
+  "open_claims": [
+    "PB-007-02 remains OPEN for general coupled spindle/feed/eccentric material membership outside the bounded MC-022 subtype.",
+    "PB-007-03 remains OPEN_PROPAGATED for a universal finite exact source codec for every required arbitrary form/imported cutter instance.",
+    "PB-007-04 remains OPEN_PROPAGATED for durable connectivity/body-transition certification owned downstream by MC-033.",
+    "PO-02 remains OPEN because the bounded integration does not erase PB-007-02/PB-007-03 or prove universal sweep semantics.",
+    "MC-B, MC-C, MC-D, MC-E, MC-F and MC-1 remain NOT_ESTABLISHED."
+  ],
+  "native_execution": false,
+  "artifacts": [
+    "research/machining-completeness/tasks/MC-031/material-evaluator-contract-v1.json",
+    "research/machining-completeness/tasks/MC-031/material_evaluator.py",
+    "research/machining-completeness/tasks/MC-031/report.md",
+    "research/machining-completeness/tasks/MC-031/outcome.json",
+    "research/machining-completeness/tasks/MC-031/verify.py",
+    "docs/machining-completeness/25-MC031-SWEEP-MATERIAL-EVALUATOR.md",
+    "research/machining-completeness/outcomes-v1.json",
+    ".github/workflows/mc1-static.yml"
+  ],
+  "verification": [
+    "python3 research/machining-completeness/tasks/MC-031/verify.py --self-test",
+    "python3 research/machining-completeness/tasks/MC-031/verify.py --contract",
+    "python3 tools/mc_workflow.py verify MC-031",
+    "python3 tools/validate_machining_completeness.py --self-test",
+    "python3 tools/mc_workflow.py sync --check"
+  ],
+  "adversarial_controls": [
+    "exact tangent and signed +/-1/1000000 neighbours for MC-018, MC-019 and MC-021",
+    "bounded nonlinear MC-058 leaf remains UNCERTIFIED in the enclosure band",
+    "MC-020 arbitrary-source codec gap remains PB-007-03 and complete cutter+holder access cannot be omitted",
+    "axisymmetry admission rejects phase synchronization into PB-007-02",
+    "MC-022 synchronized phase/feed uses one shared source time; unresolved analytic event remains PB-007-01 and general eccentric membership remains PB-007-02",
+    "stale MC-023 revisions and re-clamp inherited-error reset are rejected",
+    "durable connectivity transition remains PB-007-04/MC-033 and backend topology cannot become body identity",
+    "missing error terms, binary-float authority, wrong common frame and unbound source are rejected",
+    "touching cannot remove positive-volume material; uncertainty/refusal cannot mutate canonical material",
+    "certificate body/revision/configuration mutation is rejected",
+    "denominator shrinkage, accelerator promotion and premature MC-B promotion are rejected"
+  ],
+  "resources": {
+    "native_permit_required": false,
+    "native_or_paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "review": {
+    "disposition": "completed bounded source-bound sweep-to-material integration; universal coupled-phase/source-codec/connectivity obligations remain explicit",
+    "gate_changed": false,
+    "programme_capability_changed": false,
+    "downstream_release": "MC-033 may consume MC-031 material/body preview evidence. MC-038 may later consume the bounded MC-031 result, but MC-031 does not release MC-B while PO-02/PB-007-02/PB-007-03 and other required lemmas remain open."
+  },
+  "blockers": [
+    {"id":"PB-007-02","status":"OPEN","source_task":"MC-007","affected_descendants":["MC-038"]},
+    {"id":"PB-007-03","status":"OPEN_PROPAGATED","source_task":"MC-020","affected_descendants":["MC-038"]},
+    {"id":"PB-007-04","status":"OPEN_PROPAGATED","source_task":"MC-032","affected_descendants":["MC-033","MC-038"]}
+  ],
+  "downstream_invalidations": [
+    "Any path that bypasses the accepted MC-018..023 constructors or assigns truth from labels, sampling pitch, epsilon, binary float, timeout or resource exhaustion invalidates MC-031.",
+    "Any material mutation from touching-only or UNCERTIFIED evidence, deletion of positive-volume features without a witness, or addition of material invalidates MC-031.",
+    "Any re-clamp that resets inherited error, stale-revision cut, backend component/body identity substitution or guessed lineage invalidates MC-031.",
+    "Closing PB-007-02/PB-007-03/PB-007-04, PO-02 or promoting MC-B without independent producing-owner evidence is outside MC-031 authority."
+  ]
+}
