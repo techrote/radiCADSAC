@@ -1,0 +1,100 @@
+{
+  "schema": "radicadsac-mc038-pb00703-trimmed-shell/6.0",
+  "task": "MC-038",
+  "corrective_issue": 176,
+  "source_baseline": "c9c3a41877ec4c4e4c842873a291e746b3239a3e",
+  "target_blocker": "PB-007-03",
+  "decision": "EXACT_TRIMMED_CONVEX_SHELL_AND_MEMBERSHIP_SUBROUTE_ESTABLISHED_FULL_BLOCKER_OPEN",
+  "gate_state": "NOT_ESTABLISHED",
+  "historical_v5_evidence": [
+    {"path": "research/machining-completeness/tasks/MC-038/pb00703-parametric-patch-boundary-v5.json", "git_blob_sha1": "ffcb920514048684f17880ba47a18479b38ea68a", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00703_parametric_patch.py", "git_blob_sha1": "5d3b350bfa77dfaac46b90a5a42194419c904b3d", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/verify_pb00703_v5.py", "git_blob_sha1": "e6519ad171151e930ff16009f4b224be1808615c", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00703-report-v5.md", "git_blob_sha1": "8f0b505b19b41a21a7bf37a10b3f559b3e0462ce", "preserved": true}
+  ],
+  "required_source_domain": {
+    "domain_operation_count": 26,
+    "domain_narrowed": false,
+    "relevant_source_families": ["imported_stock", "lathe_form_tool", "mill_form", "mill_accessible_undercut"],
+    "missing_constructor_is_gap_not_exclusion": true,
+    "opaque_import_success_is_not_exact_source_authority": true
+  },
+  "implemented_bounded_subroute": {
+    "id": "EXACT_RATIONAL_TRIMMED_CONVEX_SHELL_V1",
+    "input_authority": "PB-007-03 v5 exact-rational parametric boundary patches",
+    "admission": [
+      "degree-1 x degree-1 affine-planar 2x2 patches",
+      "equal exact-rational positive weights",
+      "zero source uncertainty",
+      "strictly convex exact-rational trim polygons within active parameter domains",
+      "common source/role/units/frame identity",
+      "explicit shell/revision/configuration identity"
+    ],
+    "trim_authority": "exact rational convex parameter polygons mapped through the v5 evaluator",
+    "seam_authority": "every mapped geometric edge has exactly two opposite-oriented face incidences",
+    "topology_authority": "connected closed orientable genus-0 incidence with exact Euler V-E+F=2",
+    "orientation_authority": "exact strict interior witness lies on the negative side of every outward face plane",
+    "convexity_authority": "all shell vertices lie in every exact outward face half-space",
+    "membership_authority": "exact rational half-space signs produce INSIDE, BOUNDARY or OUTSIDE",
+    "certificate_binding": ["shell_id", "source_id", "role", "units", "frame_id", "revision_id", "configuration_id", "interior_witness", "v5 patch SHA-256 identities", "trim_uv"],
+    "not_claimed": [
+      "arbitrary curved or rationally weighted non-affine trimmed-shell authority",
+      "non-convex shell membership",
+      "opaque STEP/NURBS/importer or kernel watertightness authority",
+      "universal lowering of every admitted imported stock/form/undercut source",
+      "durable body_id or lineage_id authority"
+    ]
+  },
+  "boundary_controls": [
+    "exact unit cube closed shell and certificate",
+    "exact inside, boundary, outside and signed 1/1000000 boundary neighbours",
+    "trim-domain escape",
+    "zero-area or bow-tie/nonconvex trim rejection",
+    "non-affine bilinear and rational weighted patch rejection",
+    "nonzero source uncertainty rejection",
+    "missing seam and 1/1000000 micro-gap rejection",
+    "same-direction or duplicate seam incidence rejection",
+    "inward face orientation rejection",
+    "invalid exterior interior-witness rejection",
+    "source/role/units/frame binding drift rejection",
+    "stale v5 patch_sha256 rejection",
+    "binary-float trim/point authority rejection",
+    "fake watertight/kernel/import success rejection",
+    "backend topology/body/lineage identity laundering rejection",
+    "26-operation denominator shrinkage rejection",
+    "false MC-B promotion rejection"
+  ],
+  "full_blocker_review": {
+    "status": "OPEN",
+    "not_an_impossibility_theorem": true,
+    "reason": "The bounded route certifies exact trimmed convex polyhedral shells assembled from a strict affine subset of v5 patches, but the admitted source domain still includes arbitrary curved, trimmed, non-convex and opaque imported/form/undercut sources without a universal exact finite lowering/certificate route.",
+    "residual_obligation": "Provide exact source-solid trim/shell/orientation/membership authority for every admitted PB-007-03 source instance without narrowing the source domain or laundering importer/kernel/tessellation success.",
+    "authority_laundering_forbidden": ["opaque importer success", "kernel-valid B-rep", "fake watertight flag", "mesh/tessellation containment", "binary-float tolerance", "backend topology identity"]
+  },
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDS_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-02": "OPEN",
+    "PO-05": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED"
+  },
+  "resources": {
+    "native_campaign": false,
+    "paid_campaign": false,
+    "production_campaign": false,
+    "expensive_execution": false
+  },
+  "protected_semantics": {
+    "source_audio_provenance": true,
+    "canonical_journal": true,
+    "source_uncertainty": true,
+    "positive_volume_material": true,
+    "holder_access": true,
+    "durable_body_lineage": true,
+    "refusal_uncertified_not_success": true,
+    "conventional_step": true
+  }
+}
