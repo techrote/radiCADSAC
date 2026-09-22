@@ -1,0 +1,140 @@
+{
+  "schema": "radicadsac-mc038-pb00703-parametric-patch-boundary/5.0",
+  "task": "MC-038",
+  "corrective_issue": 174,
+  "source_baseline": "a4ca147c54827ef30f1192a4a29b72980a91722c",
+  "target_blocker": "PB-007-03",
+  "decision": "EXACT_RATIONAL_PARAMETRIC_BOUNDARY_SUBROUTE_ESTABLISHED_FULL_BLOCKER_OPEN",
+  "gate": "MC-B",
+  "gate_state": "NOT_ESTABLISHED",
+  "historical_v4_evidence": [
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00703-source-codec-boundary-v4.json",
+      "git_blob_sha1": "1a69ad4073a38d0448474fa8046657266a3b79e8",
+      "preserved": true
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00703_source_codec.py",
+      "git_blob_sha1": "87429f3aa42692222287e62762d08c01b989a61c",
+      "preserved": true
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/verify_pb00703.py",
+      "git_blob_sha1": "722b709f16fc719e5a47b46d4693eae270e1a376",
+      "preserved": true
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00703-report-v4.md",
+      "git_blob_sha1": "03b76486a581ab10fc9c7fd89d4903192400cb7b",
+      "preserved": true
+    },
+    {
+      "path": "docs/machining-completeness/28-PB00703-EXACT-SOURCE-CODEC-BOUNDARY.md",
+      "git_blob_sha1": "7ae0df2ff8ac9b9733c60a0d3629dffa4ebf00e8",
+      "preserved": true
+    }
+  ],
+  "required_source_domain": {
+    "domain_operation_count": 26,
+    "domain_narrowed": false,
+    "relevant_source_families": [
+      "imported_stock",
+      "lathe_form_tool",
+      "mill_form",
+      "mill_accessible_undercut"
+    ],
+    "opaque_import_success_is_not_exact_source_authority": true,
+    "missing_constructor_is_gap_not_exclusion": true
+  },
+  "implemented_bounded_subroute": {
+    "id": "EXACT_RATIONAL_TENSOR_PRODUCT_PARAMETRIC_BOUNDARY_V1",
+    "schema": "radicadsac-exact-rational-parametric-patch/1.0",
+    "authority": "exact nominal boundary patch only",
+    "scalar_domain": "exact rational",
+    "basis": "tensor-product Cox-de Boor B-spline with exact positive rational weights",
+    "required_binding": [
+      "source_id",
+      "patch_id",
+      "role",
+      "units",
+      "frame_id",
+      "u_parameter_id",
+      "v_parameter_id",
+      "parameter domains",
+      "knots",
+      "control points",
+      "weights",
+      "source_uncertainty",
+      "authority_kind"
+    ],
+    "established_claims": [
+      "finite exact rational B-spline/NURBS-style patch evaluation at exact rational parameters",
+      "exact repeated-knot and clamped active-domain endpoint semantics",
+      "canonical source hashing over all authority-bearing patch fields",
+      "binary float and tolerance values are excluded from exact source authority"
+    ],
+    "not_claimed": [
+      "trim-curve validity or exact trim classification",
+      "watertight or consistently oriented closed-shell certification",
+      "inside/outside solid membership from a patch set",
+      "opaque STEP/NURBS/B-rep importer or kernel success as exact source truth",
+      "coverage of every admitted imported_stock/form/undercut source"
+    ]
+  },
+  "boundary_controls": [
+    "exact planar/bilinear patch evaluation",
+    "genuinely rational weighted patch evaluation",
+    "exact 1/1000000 parameter neighbours",
+    "repeated knots and exact knot endpoint one-sided semantics",
+    "zero-width span handling without epsilon",
+    "malformed knot/control cardinality and ragged control-net rejection",
+    "nonpositive weight rejection",
+    "binary-float knot/control/weight/parameter authority rejection",
+    "source/role/units/frame/parameter-domain binding",
+    "unsupported trims and fake closed-shell claims fail closed",
+    "opaque STEP/NURBS/kernel success remains PB-007-03 blocked",
+    "nonzero source uncertainty remains UNCERTIFIED_SOURCE",
+    "denominator/domain shrinkage and false MC-B promotion rejected"
+  ],
+  "full_blocker_review": {
+    "status": "OPEN",
+    "not_an_impossibility_theorem": true,
+    "reason": "exact rational boundary patches do not by themselves provide independently certified trims, closed oriented shell validity, or exact volumetric membership for every admitted imported/form/undercut source",
+    "residual_obligation": "universal finite exact source-solid lowering/certificate route including trim/shell/orientation/membership authority for all admitted source instances",
+    "authority_laundering_forbidden": [
+      "opaque importer success",
+      "kernel-valid B-rep",
+      "mesh/tessellation equality",
+      "binary floating coordinates",
+      "global tolerance",
+      "fake watertight flag"
+    ]
+  },
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDS_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-02": "OPEN",
+    "PO-05": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED"
+  },
+  "resources": {
+    "native_campaign": false,
+    "paid_campaign": false,
+    "production_execution": false,
+    "expensive_execution": false
+  },
+  "protected_semantics": {
+    "frozen_26_operation_denominator": true,
+    "historical_source_audio_provenance": true,
+    "canonical_journal": true,
+    "source_uncertainty": true,
+    "positive_volume_material": true,
+    "holder_access": true,
+    "durable_body_lineage": true,
+    "refusal_uncertified": true,
+    "conventional_STEP_output": true
+  }
+}
