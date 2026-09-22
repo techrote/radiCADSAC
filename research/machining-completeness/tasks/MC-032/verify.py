@@ -122,17 +122,25 @@ def contract_test(root:Path):
         "MC-015":("research/machining-completeness/tasks/MC-015/outcome.json","COMPLETED_RESEARCH"),
         "MC-026":("research/machining-completeness/tasks/MC-026/outcome.json","COMPLETED_RESEARCH"),
     }
+    dep_objs={}
     for tid,(rel,kind) in deps.items():
         obj=json.loads((root/rel).read_text())
+        dep_objs[tid]=obj
         require(obj["task"]==tid and obj["result_kind"]==kind,f"{tid} dependency")
-    pb=json.loads((root/"research/machining-completeness/proof-obligations-v1.json").read_text())
-    text=json.dumps(pb,sort_keys=True)
-    require("PB-007-01" in text and "PB-007-04" in text,"required blockers absent")
-    require('"MC-B"' in text and "NOT_ESTABLISHED" in text,"MC-B must remain unestablished")
+
+    proof=json.loads((root/"research/machining-completeness/proof-obligations-v1.json").read_text())
+    obligations={entry["id"]:entry for entry in proof["obligations"]}
+    require(obligations["PO-04"]["state"]=="OPEN" and obligations["PO-04"]["integration_owner"]=="MC-032","PO-04 must remain an open MC-032 integration obligation")
+    require(obligations["PO-07"]["state"]=="OPEN" and obligations["PO-07"]["integration_owner"]=="MC-032","PO-07 must remain an open MC-032 integration obligation")
+    own_blockers={b["id"]:b["status"] for b in outcome["blockers"]}
+    require(own_blockers.get("PB-007-01")=="OPEN","PB-007-01 must remain open")
+    require(own_blockers.get("PB-007-04")=="OPEN_PROPAGATED","PB-007-04 must remain propagated")
+    require(contract["preserved_open_obligations"]==["PB-007-01","PB-007-04","PO-04","PO-07","MC-B"],"preserved-obligation contract drift")
 
     reg=json.loads((root/"research/machining-completeness/outcomes-v1.json").read_text())
     require(reg["tasks"]["MC-032"]["state"]=="COMPLETED_RESEARCH","registry state")
     require(any(a.endswith("MC-032/outcome.json") for a in reg["tasks"]["MC-032"]["accepted_artifacts"]),"registry artifact")
+    require(reg["tasks"]["MC-032"]["blockers"]==outcome["blockers"],"registry blocker drift")
 
     attacks=[
         ("epsilon", lambda x: x["truth_authority"].__setitem__("epsilon_or_tolerance",True)),
