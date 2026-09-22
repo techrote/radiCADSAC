@@ -1,0 +1,83 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-032",
+  "result_kind": "COMPLETED_RESEARCH",
+  "evidence_class": [
+    "SOURCE_INSPECTION",
+    "DETERMINISTIC_MODEL",
+    "EXACT_ALGEBRAIC_CONTROL",
+    "CERTIFIED_ANALYTIC_EVIDENCE_ADAPTER",
+    "BOUNDARY_AND_ADVERSARIAL_CONTROLS",
+    "DOCUMENTATION_RECONCILIATION"
+  ],
+  "source_baseline": "0e2e5bfdda5fdf5b3e11ab5f98c0f2d9fa10188e",
+  "issue": 94,
+  "dependency_artifacts": [
+    {"task":"MC-008","path":"research/machining-completeness/tasks/MC-008/outcome.json","blob_sha":"a4b3f3451abedd06f2467a8e11741cdc63826e2b","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-015","path":"research/machining-completeness/tasks/MC-015/outcome.json","blob_sha":"c334e7d9ed9aea5541338e0c0397f6b0e98ff3e6","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-026","path":"research/machining-completeness/tasks/MC-026/outcome.json","blob_sha":"185693afc30b77097031ced218c9ae19fb1653ac","result_kind":"COMPLETED_RESEARCH"}
+  ],
+  "accepted_claims": [
+    "The bounded algebraic event engine decides exact rational polynomial sign, exact-zero, multiplicity and singular controls without epsilon or binary-float correctness authority.",
+    "Square-free Sturm evidence prevents MC032-A from assigning a sign across a hidden critical root; endpoint zeros and interior roots route to MC032-B.",
+    "The analytic adapter accepts only independently certified separated intervals or unique transversal roots with a strict positive derivative lower bound on the same source parameter.",
+    "General tangential, multiple and singular transcendental events preserve TRANSCENDENTAL_EVENT_BLOCKER/PB-007-01 rather than being guessed.",
+    "Bounded critical-topology event facts require independent event and connectivity evidence plus positive-volume semantics; touching is not material and backend topology is not durable identity.",
+    "Event certificates bind input/canonical/sweep/challenge/configuration/decision identity and reject stale or mutated bindings.",
+    "Timeout, refinement/resource exhaustion and uncertainty terminate explicitly and cannot become fallback truth."
+  ],
+  "open_claims": [
+    "PB-007-01 remains OPEN for a universal exact/certified route through general tangential, multiple and singular transcendental events.",
+    "PB-007-04 remains OPEN_PROPAGATED for universal topology/connectivity certification.",
+    "PO-04 and PO-07 are not globally discharged by bounded MC-032 evidence.",
+    "MC-B, MC-C, MC-D, MC-E, MC-F and MC-1 remain NOT_ESTABLISHED."
+  ],
+  "native_execution": false,
+  "artifacts": [
+    "research/machining-completeness/tasks/MC-032/critical-event-engine-contract-v1.json",
+    "research/machining-completeness/tasks/MC-032/event_engine.py",
+    "research/machining-completeness/tasks/MC-032/report.md",
+    "research/machining-completeness/tasks/MC-032/outcome.json",
+    "research/machining-completeness/tasks/MC-032/verify.py",
+    "docs/machining-completeness/24-MC032-CERTIFIED-EVENT-ENGINE.md",
+    "research/machining-completeness/outcomes-v1.json",
+    ".github/workflows/mc1-static.yml"
+  ],
+  "verification": [
+    "python3 research/machining-completeness/tasks/MC-032/verify.py --self-test",
+    "python3 research/machining-completeness/tasks/MC-032/verify.py --contract",
+    "python3 tools/mc_workflow.py verify MC-032",
+    "python3 tools/validate_machining_completeness.py --self-test",
+    "python3 tools/mc_workflow.py sync --check"
+  ],
+  "adversarial_controls": [
+    "exact-zero and signed 1/1000000 neighbour discrimination",
+    "simple crossing versus even-multiplicity tangency versus odd-multiplicity singular crossing",
+    "Sturm endpoint-root and repeated-root controls",
+    "reject binary floats, epsilon/tolerance and refinement depth as truth authority",
+    "reject uncertified/semi-certified analytic evidence and independent parameter projections",
+    "preserve PB-007-01 for unresolved transcendental tangency/multiplicity/singularity",
+    "convert resource exhaustion to RESOURCE_REFUSAL rather than success",
+    "reject touching as positive-volume material and backend topology as durable identity",
+    "preserve PB-007-04 when connectivity is not independently certified",
+    "reject stale/mutated challenge/configuration certificate bindings",
+    "reject challenge-custody relabeling and premature capability promotion"
+  ],
+  "resources": {"native_permit_required": false, "native_or_paid_campaign_run": false},
+  "review": {
+    "disposition": "completed bounded certified classification/event engine; universal transcendental and topology/connectivity blockers remain explicit",
+    "gate_changed": false,
+    "programme_capability_changed": false,
+    "downstream_release": "MC-038 may consume MC-032 bounded event/classification evidence, but MC-032 does not release MC-B; MC-031 and MC-033 remain producing-owner work."
+  },
+  "blockers": [
+    {"id":"PB-007-01","status":"OPEN","source_task":"MC-007","affected_descendants":["MC-038"]},
+    {"id":"PB-007-04","status":"OPEN_PROPAGATED","source_task":"MC-007","affected_descendants":["MC-038"]}
+  ],
+  "downstream_invalidations": [
+    "Any implementation that assigns truth from epsilon, binary float, refinement depth, timeout or resource exhaustion invalidates MC-032.",
+    "Any analytic event accepted without an independent separated/transversal certificate on the same source parameter invalidates the analytic route.",
+    "Any topology claim that promotes touching, kernel component identity or backend topology IDs into positive-volume durable-body truth invalidates MC032-C.",
+    "Closing PB-007-01/PB-007-04 or promoting MC-B without independent producing-owner evidence is outside MC-032 authority."
+  ]
+}
