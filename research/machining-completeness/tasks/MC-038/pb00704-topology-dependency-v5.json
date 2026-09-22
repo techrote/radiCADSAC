@@ -77,7 +77,7 @@
       "revision",
       "independent completeness certificate digest"
     ],
-    "connectivity_rule": "cells are connected only through exact shared faces with strictly positive overlap in the other two axes",
+    "connectivity_rule": "connectivity is exact positive-area face adjacency: cells share one exact boundary plane and strictly positive overlap in the other two axes",
     "touch_rule": "edge-only and point-only contact are TOUCH_ONLY and do not connect positive-volume material components",
     "overlap_rule": "pairwise positive-volume interior overlap invalidates the purported partition",
     "identity_rule": "certificate-local cell/component identifiers are not body_id or lineage_id authority",
