@@ -13,24 +13,27 @@
   "issue": 100,
   "accepted_claims": [
     "MC-038 is evidence-ready for integration review, but the MC-B acceptance contract is not satisfied by the current evidence.",
-    "MC-B remains NOT_ESTABLISHED because required proof and representation blockers remain open; the 26-operation denominator is unchanged.",
-    "The current task graph contains a pre-gate orchestration inversion: MC-031, MC-032 and MC-033 require MC-038 capability even though they own or repair obligations that MC-038 requires to be closed.",
-    "A safe repair must remove that pre-gate inversion without accepting MC-B, authorizing production/native spend, shrinking the domain or weakening protected semantics.",
+    "MC-B remains NOT_ESTABLISHED because required pre-gate proof and constructive blockers remain open; the 26-operation denominator is unchanged.",
+    "The initial task graph contained a pre-gate orchestration inversion in which MC-031/032/033 required MC-038 capability even though they owned or repaired obligations required by MC-038.",
+    "A safe repair removes pre-gate inversions without accepting MC-B, authorizing production/native spend, shrinking the domain or weakening protected semantics.",
     "No new geometric theorem, native material capability or engineering-output capability is claimed by this blocker review.",
-    "ORCH-038-01 is resolved by issue #156: MC-031/032/033 have a noncircular pre-gate authority path through MC-A while MC-B remains NOT_ESTABLISHED."
+    "ORCH-038-01 is resolved by issue #156: MC-031/032/033 have a noncircular pre-gate authority path through MC-A while MC-B remains NOT_ESTABLISHED.",
+    "ORCH-038-02 is resolved by issue #162: downstream RB-016 qualification blockers and post-gate PO-03/PO-06/PO-09 remain OPEN but are no longer misclassified as obligations whose closure is required before MC-B unlocks their producing implementation tasks.",
+    "The post-MC-031/032/033 retry still leaves PB-007-01 through PB-007-04 and the directly relevant pre-gate PO-02/PO-04/PO-05/PO-07/PO-08 claims open, so MC-B remains blocked."
   ],
   "open_claims": [
     "PB-007-01 remains OPEN.",
     "PB-007-02 remains OPEN.",
     "PB-007-03 remains OPEN_PROPAGATED.",
     "PB-007-04 remains OPEN_PROPAGATED.",
-    "RB-016-01 through RB-016-05 remain OPEN.",
-    "PO-02, PO-03, PO-04, PO-05, PO-07, PO-08 and PO-09 remain OPEN; later proof obligations remain unchanged.",
+    "RB-016-01 through RB-016-05 remain OPEN as downstream representation/native-consumer qualification blockers.",
+    "PO-02, PO-03, PO-04, PO-05, PO-06, PO-07, PO-08 and PO-09 remain OPEN; gate-scope classification does not accept any global proof obligation.",
     "MC-B through MC-F and MC-1 remain NOT_ESTABLISHED."
   ],
   "native_execution": false,
   "artifacts": [
     "research/machining-completeness/tasks/MC-038/constructive-coverage-review-v1.json",
+    "research/machining-completeness/tasks/MC-038/gate-scope-retry-v2.json",
     "research/machining-completeness/tasks/MC-038/report.md",
     "research/machining-completeness/tasks/MC-038/outcome.json",
     "research/machining-completeness/tasks/MC-038/verify.py"
@@ -43,13 +46,15 @@
     "python3 tools/mc_workflow.py sync --check"
   ],
   "adversarial_controls": [
-    "reject removal or false closure of any decisive PB-007/RB-016 blocker",
-    "reject MC-B acceptance while required lemmas or proof obligations remain open",
+    "reject removal or false closure of any recorded PB-007/RB-016 blocker",
+    "reject MC-B acceptance while a required pre-gate constructive lemma or proof obligation remains open",
+    "reject reclassifying downstream RB-016 or PO-03/PO-06/PO-09 work as accepted merely to satisfy MC-B",
+    "reject making downstream MC-034..039 implementation completion a prerequisite to the MC-038 capability that unlocks that work",
+    "reject moving native reconstruction work ahead of the legitimate MC-038 capability gate",
     "reject domain denominator drift away from 26 required operations",
     "reject production or expensive/native execution authorization",
     "reject laundering timeout, refusal or UNCERTIFIED into success",
-    "reject protected source/audio/provenance, canonical-journal, positive-volume, durable-body/lineage or conventional STEP semantic weakening",
-    "reject treating the current MC-031/032/033 dependency inversion as permission to accept the gate"
+    "reject protected source/audio/provenance, canonical-journal, positive-volume, durable-body/lineage or conventional STEP semantic weakening"
   ],
   "resources": {
     "native_permit_required": false,
@@ -57,122 +62,100 @@
     "required_domain_operation_count": 26
   },
   "review": {
-    "disposition": "blocked constructive-coverage integration review; repair programme orchestration and producing-owner obligations before retrying MC-B",
+    "disposition": "blocked after producing-owner retry; gate scope reconciled, surviving pre-gate PB/PO claims require focused follow-up before MC-B can be retried for acceptance",
     "gate_changed": false,
     "gate": "MC-B",
     "gate_state": "NOT_ESTABLISHED",
     "programme_capability_changed": false,
-    "issue_must_remain_open": true
+    "issue_must_remain_open": true,
+    "latest_retry_baseline": "7a480da12e46764ed972c814df3991ebbf0baee5",
+    "gate_scope_artifact": "research/machining-completeness/tasks/MC-038/gate-scope-retry-v2.json"
   },
   "blockers": [
     {
       "id": "PB-007-01",
       "status": "OPEN",
       "source_task": "MC-007/MC-022",
-      "affected_descendants": [
-        "MC-032",
-        "MC-038"
-      ]
+      "mc_b_prerequisite": true,
+      "affected_descendants": ["MC-032", "MC-038"]
     },
     {
       "id": "PB-007-02",
       "status": "OPEN",
       "source_task": "MC-007/MC-022",
-      "affected_descendants": [
-        "MC-031",
-        "MC-038"
-      ]
+      "mc_b_prerequisite": true,
+      "affected_descendants": ["MC-031", "MC-038"]
     },
     {
       "id": "PB-007-03",
       "status": "OPEN_PROPAGATED",
       "source_task": "MC-006/MC-020",
-      "affected_descendants": [
-        "MC-031",
-        "MC-038"
-      ]
+      "mc_b_prerequisite": true,
+      "affected_descendants": ["MC-031", "MC-038"]
     },
     {
       "id": "PB-007-04",
       "status": "OPEN_PROPAGATED",
       "source_task": "MC-007/MC-008",
-      "affected_descendants": [
-        "MC-032",
-        "MC-033",
-        "MC-038"
-      ]
+      "mc_b_prerequisite": true,
+      "affected_descendants": ["MC-032", "MC-033", "MC-038"]
     },
     {
       "id": "RB-016-01",
       "status": "OPEN",
       "source_task": "MC-016/MC-054",
-      "affected_descendants": [
-        "MC-034",
-        "MC-035",
-        "MC-036",
-        "MC-037",
-        "MC-038"
-      ]
+      "mc_b_prerequisite": false,
+      "affected_descendants": ["MC-034", "MC-035", "MC-036", "MC-037"]
     },
     {
       "id": "RB-016-02",
       "status": "OPEN",
       "source_task": "MC-016/MC-054",
-      "affected_descendants": [
-        "MC-033",
-        "MC-037",
-        "MC-038"
-      ]
+      "mc_b_prerequisite": false,
+      "affected_descendants": ["MC-033", "MC-037"]
     },
     {
       "id": "RB-016-03",
       "status": "OPEN",
       "source_task": "MC-016/MC-054",
-      "affected_descendants": [
-        "MC-035",
-        "MC-037",
-        "MC-038"
-      ]
+      "mc_b_prerequisite": false,
+      "affected_descendants": ["MC-035", "MC-037"]
     },
     {
       "id": "RB-016-04",
       "status": "OPEN",
       "source_task": "MC-016/MC-054",
-      "affected_descendants": [
-        "MC-032",
-        "MC-036",
-        "MC-037",
-        "MC-038"
-      ]
+      "mc_b_prerequisite": false,
+      "affected_descendants": ["MC-032", "MC-036", "MC-037"]
     },
     {
       "id": "RB-016-05",
       "status": "OPEN",
       "source_task": "MC-016/MC-054",
-      "affected_descendants": [
-        "MC-034",
-        "MC-035",
-        "MC-036",
-        "MC-037",
-        "MC-038"
-      ]
+      "mc_b_prerequisite": false,
+      "affected_descendants": ["MC-034", "MC-035", "MC-036", "MC-037"]
     },
     {
       "id": "ORCH-038-01",
       "status": "RESOLVED",
       "source_task": "MC-038",
-      "affected_descendants": [
-        "MC-031",
-        "MC-032",
-        "MC-033",
-        "MC-038"
-      ],
-      "reason": "pre-gate remediation tasks require MC-038 capability, creating a dependency inversion with the MC-B acceptance obligations they own",
+      "affected_descendants": ["MC-031", "MC-032", "MC-033", "MC-038"],
+      "reason": "pre-gate remediation tasks required MC-038 capability, creating a dependency inversion with MC-B acceptance obligations they own",
       "resolved_by_issue": 156
+    },
+    {
+      "id": "ORCH-038-02",
+      "status": "RESOLVED",
+      "source_task": "MC-038",
+      "affected_descendants": ["MC-034", "MC-035", "MC-036", "MC-037", "MC-039", "MC-038"],
+      "reason": "the v1 review conflated downstream native/consumer qualification obligations with prerequisites required to close before the capability that unlocks their producing tasks",
+      "resolved_by_issue": 162,
+      "resolution": "preserve all downstream blocker/PO states and post-gate graph edges while restricting MC-B prerequisite classification to the constructive claims owned before/by MC-038"
     }
   ],
   "downstream_invalidations": [
-    "Any MC-B acceptance while one of the recorded decisive blockers remains open invalidates this gate review.",
+    "Any MC-B acceptance while a recorded required pre-gate PB-007 or directly relevant pre-gate proof obligation remains open invalidates this gate review.",
+    "Any false closure of RB-016 blockers or downstream PO-03/PO-06/PO-09 during this gate-scope repair invalidates the evidence record.",
     "Any repair that narrows the 26-operation denominator or treats blocker/refusal/uncertified outcomes as success invalidates the programme contract.",
     "Any graph repair that implicitly authorizes production/paid/native execution or moves post-gate qualification ahead of its legitimate capability gate invalidates the orchestration repair.",
     "Any rewrite of protected historical source/audio/provenance or durable journal/body/lineage semantics invalidates the repair path."
