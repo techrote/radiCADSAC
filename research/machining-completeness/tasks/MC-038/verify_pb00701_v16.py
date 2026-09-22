@@ -17,7 +17,8 @@ DOC = ROOT / "docs" / "machining-completeness" / "42-PB00701-CHEBYSHEV-STURM-MUL
 DOMAIN = MC / "tasks" / "MC-002" / "domain-contract-v1.json"
 PROGRAMME = MC / "programme-v1.json"
 PROOFS = MC / "proof-obligations-v1.json"
-WORKFLOW = ROOT / ".github" / "workflows" / "mc1-static.yml"
+CORE_WORKFLOW = ROOT / ".github" / "workflows" / "mc1-static.yml"
+V16_WORKFLOW = ROOT / ".github" / "workflows" / "mc1-pb00701-v16.yml"
 EXPECTED_BASE = "e9f0d464581939b4de0c0dc766553c8672aecdf8"
 OPEN_POS = {"PO-04", "PO-05", "PO-08"}
 EXPECTED_V15_HISTORY = {
@@ -71,8 +72,8 @@ def validate_artifact(artifact, *, check_repo=True):
     assert extension["id"] == "EXACT_CHEBYSHEV_STURM_EVEN_COSINE_MULTIPLIER_NONVANISHING"
     for token in ("P(x)", "T_k(x)", "[-1,1]"):
         assert token in extension["chebyshev_reduction"]
-    for token in ("endpoint", "Sturm", "zero", "sign"):
-        assert token.lower() in extension["closed_interval_authority"].lower()
+    for token in ("endpoint", "sturm", "zero", "sign"):
+        assert token in extension["closed_interval_authority"].lower()
     assert "v15" in extension["precedence"]
     assert all(token in extension["carrier_dispatch"] for token in ("v10", "v11", "v12", "v8"))
 
@@ -134,16 +135,17 @@ def validate_artifact(artifact, *, check_repo=True):
         ):
             assert token in text, f"documentation missing {token}"
 
-    workflow = WORKFLOW.read_text(encoding="utf-8")
+    core_workflow = CORE_WORKFLOW.read_text(encoding="utf-8")
+    for token in ("verify_pb00701_v15.py --contract", "verify_pb00701_v15.py --self-test"):
+        assert token in core_workflow, f"core workflow missing historical gate {token}"
+    v16_workflow = V16_WORKFLOW.read_text(encoding="utf-8")
     for token in (
-        "verify_pb00701_v15.py --contract",
-        "verify_pb00701_v15.py --self-test",
         "pb00701_chebyshev_multiplier_model.py",
+        "test_pb00701_chebyshev_multiplier_adversarial.py",
         "verify_pb00701_v16.py --contract",
         "verify_pb00701_v16.py --self-test",
-        "test_pb00701_chebyshev_multiplier_adversarial.py",
     ):
-        assert token in workflow, f"workflow missing {token}"
+        assert token in v16_workflow, f"v16 workflow missing {token}"
 
 
 def run_self_test():
