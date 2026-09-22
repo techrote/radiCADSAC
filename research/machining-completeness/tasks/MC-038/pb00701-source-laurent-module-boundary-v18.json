@@ -20,7 +20,7 @@
     "id": "EXACT_SOURCE_AND_LAURENT_MODULE_NONVANISHING_FACTORIZATION",
     "source_polynomial_factor": "derive the maximal monic exact rational gcd across every nonzero local source channel; exact-divide and regenerate every channel",
     "source_nonvanishing": "reject exact endpoint roots and use MC-032 exact rational Sturm authority for zero open-span roots and a fixed exact sign",
-    "laurent_factorization": "lift exact odd-harmonic Gaussian-rational source coefficient slices to a centered polynomial in w=z^(2h), compute their exact common Gaussian-rational gcd, and admit only an even-degree factor that can be normalized to conjugate-reciprocal real even-trigonometric form",
+    "laurent_factorization": "lift exact odd-harmonic Gaussian-rational source coefficient slices to a centered Laurent polynomial in w=z^(2h), compute their exact common Gaussian-rational gcd, and admit only an even-degree factor that can be normalized to conjugate-reciprocal real even-trigonometric form",
     "laurent_nonvanishing": "reuse v17 tangent-projective exact rational Sturm authority including the projective point at infinity",
     "residual_dispatch": "reconstruct the exact residual source and recursively delegate only through the preserved v17 classifier; no new residual zero oracle is introduced",
     "precedence": "v8-v17 keep ownership of every source already certified by those routes; v18 consumes only residual blocked spans",
