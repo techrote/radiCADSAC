@@ -1,0 +1,73 @@
+{
+  "schema": "radicadsac-mc-task-outcome/1.0",
+  "task": "MC-033",
+  "result_kind": "COMPLETED_RESEARCH",
+  "evidence_class": ["SOURCE_INSPECTION","DETERMINISTIC_MODEL","PROGRAMME_OWNED_DURABLE_IDENTITY","EXACT_RATIONAL_BOUNDARY_CONTROLS","CERTIFICATE_CHAIN_INTEGRATION","BOUNDARY_AND_ADVERSARIAL_CONTROLS","DOCUMENTATION_RECONCILIATION"],
+  "source_baseline": "46b84622bccc2ae68f4a68042480b3d2d5d6de9b",
+  "issue": 95,
+  "dependency_artifacts": [
+    {"task":"MC-005","path":"research/machining-completeness/tasks/MC-005/outcome.json","blob_sha":"adec886597a06345fdfdf65ee018596cd396d249","result_kind":"CAPABILITY_ACCEPTED"},
+    {"task":"MC-026","path":"research/machining-completeness/tasks/MC-026/outcome.json","blob_sha":"185693afc30b77097031ced218c9ae19fb1653ac","result_kind":"COMPLETED_RESEARCH"},
+    {"task":"MC-015","path":"research/machining-completeness/tasks/MC-015/outcome.json","blob_sha":"c334e7d9ed9aea5541338e0c0397f6b0e98ff3e6","result_kind":"COMPLETED_RESEARCH"}
+  ],
+  "auxiliary_bound_inputs": [
+    {"task":"MC-031","path":"research/machining-completeness/tasks/MC-031/material_evaluator.py","blob_sha":"da38e50bcb52fbbdfd31c95fc8d9a0d2dbef467e"},
+    {"task":"MC-032","path":"research/machining-completeness/tasks/MC-032/event_engine.py","blob_sha":"789a709c5141479a343035d1b7055dd4e53534e1"}
+  ],
+  "accepted_claims": [
+    "Programme-owned durable body and lineage records now have an executable finite-history state machine that never derives authority from kernel/backend topology, tessellation identity, component order, largest-volume selection or proximity matching.",
+    "Pure-removal machining has explicit CONTINUE, SPLIT, DISAPPEAR and TOUCH_ONLY transitions: it may preserve, split or exhaust material bodies but cannot merge previously distinct durable bodies, add material or revive an exhausted body.",
+    "A split requires a source-bound MC-031 material certificate, an MC-032-compatible event certificate, an independently proved complete pairwise-interior-disjoint remainder partition, exact positive-volume output witnesses and explicit canonical-journal body/lineage assignments.",
+    "At most one split output may explicitly continue the parent durable body/lineage; every other positive-volume descendant receives fresh durable body and lineage IDs linked by a programme-owned lineage edge. No size/order/proximity heuristic selects the continuation.",
+    "Exact-zero touch records a contact relation while preserving separate durable body identities; touching cannot create removal, connectivity or merge authority.",
+    "Complete removal requires independently certified exact empty material and exact zero residual positive volume; the exhausted durable body and lineage record remain present while active material becomes empty. No epsilon residual or placeholder body is invented.",
+    "Finite-history application is revision-ordered and fail-closed: stale certificates, non-success terminals, mutated bindings and resource refusal do not mutate canonical durable state.",
+    "All authority-path volume witnesses are exact rationals and binary floating point, epsilon, tolerance, timeout and resource exhaustion are rejected as body/connectivity truth authority."
+  ],
+  "open_claims": [
+    "PB-007-04 remains OPEN_PROPAGATED: MC-033 consumes independently proved connectivity/partition evidence but does not establish a universal exact topology/connectivity decision procedure for every admitted material state.",
+    "PO-07 remains OPEN under MC-032 integration ownership because the bounded state machine does not erase the universal topology/connectivity proof obligation.",
+    "RB-016-02 remains OPEN: nominal disconnected multi-body identity/lineage is explicit, but native engineering-output and independent-consumer preservation remain unqualified.",
+    "RB-016-04 remains OPEN: nominal exact-zero touch semantics are explicit, but exact-zero/touching/singular engineering-output qualification remains unproduced.",
+    "RB-016-05 remains OPEN: nominal disappearance/EMPTY_MATERIAL semantics are explicit, but downstream native/independent-consumer empty-output qualification remains unproduced.",
+    "PB-007-01, PB-007-02 and PB-007-03 remain open under their existing producing owners; MC-033 does not alter them.",
+    "MC-B, MC-C, MC-D, MC-E, MC-F and MC-1 remain NOT_ESTABLISHED."
+  ],
+  "native_execution": false,
+  "artifacts": ["research/machining-completeness/tasks/MC-033/durable-body-state-contract-v1.json","research/machining-completeness/tasks/MC-033/body_state.py","research/machining-completeness/tasks/MC-033/report.md","research/machining-completeness/tasks/MC-033/outcome.json","research/machining-completeness/tasks/MC-033/verify.py","docs/machining-completeness/26-MC033-DURABLE-BODY-STATE.md","research/machining-completeness/outcomes-v1.json",".github/workflows/mc1-static.yml"],
+  "verification": ["python3 research/machining-completeness/tasks/MC-033/verify.py --self-test","python3 research/machining-completeness/tasks/MC-033/verify.py --contract","python3 tools/mc_workflow.py verify MC-033","python3 tools/validate_machining_completeness.py --self-test","python3 tools/mc_workflow.py sync --check"],
+  "adversarial_controls": [
+    "exact 1/1000000 positive parting/split witness creates a fresh descendant without dropping the explicit continuation",
+    "descendant remachining targets its durable body ID explicitly rather than largest/nearest/provider component identity",
+    "exact-zero contact records contact but cannot merge, delete or reinterpret either durable body",
+    "exact disappearance retains exhausted body/lineage history and rejects a +1/1000000 residual rounded to empty",
+    "exhausted bodies cannot be revived by later pure-removal machining",
+    "zero-volume split outputs cannot become durable material bodies",
+    "binary-float positive-volume authority is rejected",
+    "missing/unknown independent connectivity proof terminates BLOCKED rather than guessing topology",
+    "incomplete/non-disjoint component partition evidence is blocked",
+    "backend topology identity authority and pure-removal MERGE requests are rejected",
+    "duplicate/reused historical durable body or lineage identifiers are rejected",
+    "stale revisions and mutated MC-031/MC-032/MC-033 certificate bindings are rejected",
+    "RESOURCE_REFUSAL/UNCERTIFIED/BLOCKED terminals preserve the exact pre-transition state"
+  ],
+  "resources": {"native_permit_required":false,"native_or_paid_campaign_run":false,"production_authorized":false,"expensive_execution_authorized":false},
+  "review": {
+    "disposition": "completed bounded programme-owned durable-body/lineage state implementation; universal topology and downstream engineering-output qualification remain explicit blockers",
+    "gate_changed": false,
+    "programme_capability_changed": false,
+    "downstream_release": "MC-038 may consume MC-033 nominal body/lineage semantics and finite-history implementation. This does not release MC-B while PB-007-01/02/03/04, required POs and RB-016 evidence obligations remain open."
+  },
+  "blockers": [
+    {"id":"PB-007-04","status":"OPEN_PROPAGATED","source_task":"MC-007/MC-032","affected_descendants":["MC-038"]},
+    {"id":"RB-016-02","status":"OPEN","source_task":"MC-016","affected_descendants":["MC-038","MC-041","MC-044","MC-052"]},
+    {"id":"RB-016-04","status":"OPEN","source_task":"MC-016","affected_descendants":["MC-038","MC-041","MC-042","MC-043","MC-044","MC-052"]},
+    {"id":"RB-016-05","status":"OPEN","source_task":"MC-016","affected_descendants":["MC-038","MC-041","MC-042","MC-043","MC-044","MC-052"]}
+  ],
+  "downstream_invalidations": [
+    "Any inference of durable body or lineage identity from kernel handles, provider components, tessellation IDs, enumeration order, largest component or nearest/proximity matching invalidates MC-033.",
+    "Any body merge from exact-zero contact, any dropped positive-volume split component, any zero-volume artifact promoted to a body, or any positive residual rounded to empty invalidates MC-033.",
+    "Any stale/mutated certificate accepted, non-success terminal committed, exhausted ID reused/revived, or pure-removal material addition invalidates MC-033.",
+    "Closing PB-007-04, PO-07, RB-016-02/04/05 or promoting MC-B without independent producing-owner evidence is outside MC-033 authority."
+  ]
+}
