@@ -1,0 +1,150 @@
+{
+  "schema": "radicadsac-mc038-pb00701-decision-boundary/3.0",
+  "task": "MC-038",
+  "corrective_issue": 164,
+  "source_baseline": "732b8e73e8e4669d51489df5f1975e21b5227a11",
+  "target_blocker": "PB-007-01",
+  "decision": "BOUNDED_EXACT_EXTENSION_ESTABLISHED_FULL_BLOCKER_OPEN",
+  "gate": "MC-B",
+  "gate_state": "NOT_ESTABLISHED",
+  "evidence_class": [
+    "SOURCE_CONTRACT_RECONCILIATION",
+    "REVIEWED_ARGUMENT",
+    "DETERMINISTIC_EXACT_MODEL",
+    "BOUNDARY_AND_ADVERSARIAL_CONTROLS"
+  ],
+  "historical_evidence": [
+    {
+      "path": "research/machining-completeness/tasks/MC-007/transcendental-route-v1.json",
+      "git_blob_sha1": "41ce571bb77a7c8a8b9b69f49f8be119acc66fff",
+      "preserved": true
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-032/event_engine.py",
+      "git_blob_sha1": "789a709c5141479a343035d1b7055dd4e53534e1",
+      "preserved": true
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-032/outcome.json",
+      "git_blob_sha1": "bc42e0f824621af10354534dc83aa03765a893ed",
+      "preserved": true
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/constructive-coverage-review-v1.json",
+      "git_blob_sha1": "9042bec1a77d36cfe64de8a13c579a460c926176",
+      "preserved": true
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/gate-scope-retry-v2.json",
+      "git_blob_sha1": "76094029a264a5ce226694548b27896f9e0cd430",
+      "preserved": true
+    }
+  ],
+  "required_source_grammar": {
+    "finite_exact_source": true,
+    "relevant_mc003_constructors": [
+      "circular_arc",
+      "helical_arc",
+      "spline",
+      "piecewise_motion",
+      "timed_phase_motion",
+      "spindle_rotation",
+      "phase_synchronization",
+      "eccentric_setup"
+    ],
+    "relevant_required_operations": [
+      "lathe_threading_synchronized",
+      "lathe_eccentric_turning",
+      "mill_thread_helix_fixed_axis"
+    ],
+    "domain_operation_count": 26,
+    "domain_narrowed": false,
+    "shared_time_path_phase_parameter_required": true,
+    "arbitrary_rational_turn_endpoints_may_occur": true,
+    "piecewise_polynomial_path_coefficients_may_occur": true
+  },
+  "implemented_bounded_subroute": {
+    "id": "RATIONAL_TRIG_POLYNOMIAL_CARDINAL_WINDOW",
+    "implementation": "research/machining-completeness/tasks/MC-038/pb00701_event_model.py",
+    "coefficient_domain": "exact rational",
+    "harmonics": "finite nonnegative integer harmonics",
+    "window": "source-bound quarter-turn endpoints on one tan-half monotonic branch without a pole",
+    "reduction": "x = tan(theta/2), yielding P(x)/(1+x^2)^n with exact rational P and strictly positive real denominator",
+    "decision_engine": "MC-032 exact rational polynomial Sturm/root/multiplicity machinery",
+    "established_claims": [
+      "exact root count on the bounded rational tan-half window",
+      "exact detection of whether any open-window root is repeated",
+      "exact multiplicity and sign-change classification at an exact rational tan-half event witness",
+      "binary floating point, epsilon and tolerance are absent from the correctness path"
+    ],
+    "not_claimed": [
+      "no decision route for arbitrary rational-turn endpoints",
+      "no decision route for polynomial-modulated trigonometric predicates",
+      "no decision route for general coupled exponential-polynomial predicates",
+      "no source-wide proof that every required event reduces to this sublanguage"
+    ]
+  },
+  "boundary_controls": [
+    "sin(theta) simple crossing at exact tan-half witness 0",
+    "1-cos(theta) even-multiplicity tangency at exact tan-half witness 0",
+    "sin(theta)^3 odd-multiplicity singular crossing using the exact 3*sin(theta)-sin(3*theta) identity",
+    "signed 1/1000000 tan-half neighbours remain distinct",
+    "cos(2*theta) has two hidden open-window roots counted exactly by Sturm evidence",
+    "non-cardinal rational-turn endpoints fail closed",
+    "tan-half pole crossings fail closed instead of being sampled across",
+    "polynomial-modulated/general coupled analytic predicates retain PB-007-01",
+    "independent parameter projection is rejected",
+    "binary-float coefficient or endpoint authority is rejected",
+    "resource refusal is explicitly not a truth value"
+  ],
+  "full_blocker_review": {
+    "status": "OPEN",
+    "reason": "The implemented exact subroute is strictly smaller than the required MC-003/MC-007 analytic predicate grammar. Required phase-sensitive/helical histories can generate polynomial-modulated trigonometric/exponential-polynomial event predicates and arbitrary rational-turn source windows. No unconditional finite exact source-wide decision construction for tangential, multiple-root or singular events in that full grammar has been established.",
+    "not_an_impossibility_theorem": true,
+    "conditional_or_unproved_authority_forbidden": [
+      "Schanuel's conjecture",
+      "epsilon sign",
+      "finite sampling",
+      "subdivision cap",
+      "timeout",
+      "assume no tangency"
+    ],
+    "supporting_research_boundary": [
+      {
+        "citation": "V. Chonev, J. Ouaknine, J. Worrell, On the Skolem Problem for Continuous Linear Dynamical Systems, ICALP 2016 / arXiv:1506.00695v2",
+        "url": "https://arxiv.org/abs/1506.00695v2",
+        "use": "already inspected by MC-007; supports the distinction between certified non-tangential zero finding and the harder tangential branch"
+      },
+      {
+        "citation": "V. Chonev, J. Ouaknine, J. Worrell, On the Zeros of Exponential Polynomials, Journal of the ACM 70(4), 2023",
+        "url": "https://doi.org/10.1145/3603543",
+        "use": "later literature confirms substantial exponential-polynomial zero problems remain conditional on Schanuel-type assumptions; this is supporting context, not a proof that the exact radiCADSAC grammar is undecidable"
+      }
+    ]
+  },
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "next_pre_gate_priority": "PB-007-02"
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "protected_semantics": {
+    "historical_source_audio_provenance_unchanged": true,
+    "canonical_journal_meaning_unchanged": true,
+    "time_path_phase_correlation_preserved": true,
+    "positive_volume_material_preserved": true,
+    "durable_body_lineage_preserved": true,
+    "conventional_step_semantics_unchanged": true,
+    "historical_negative_evidence_preserved": true,
+    "timeout_refusal_uncertified_are_not_success": true
+  }
+}
