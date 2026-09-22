@@ -137,7 +137,12 @@ def certify_chebyshev_nonvanishing(lambda_vector):
 
 
 def _upgrade_span(route, local_offset, local_rate, source_parameter_id):
-    factorization = route.get("factorization") if isinstance(route, dict) else None
+    factorization = None
+    if isinstance(route, dict):
+        if route.get("relation") == "EXACT_FINITE_STRICT_DOMINANCE_EVEN_COSINE_MULTIPLIER_FACTORIZATION":
+            factorization = route
+        elif isinstance(route.get("factorization"), dict):
+            factorization = route["factorization"]
     if not isinstance(factorization, dict):
         return None
     if factorization.get("relation") != "EXACT_FINITE_STRICT_DOMINANCE_EVEN_COSINE_MULTIPLIER_FACTORIZATION":
