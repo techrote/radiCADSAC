@@ -116,6 +116,11 @@ jobs:
         run: |
           python3 research/machining-completeness/tasks/MC-038/verify_pb00703.py --contract
           python3 research/machining-completeness/tasks/MC-038/verify_pb00703.py --self-test
+      - name: Verify PB-007-03 exact-parametric follow-up
+        run: |
+          python3 -m py_compile research/machining-completeness/tasks/MC-038/pb00703_parametric_patch.py research/machining-completeness/tasks/MC-038/verify_pb00703_v5.py
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00703_v5.py --contract
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00703_v5.py --self-test
       - name: Verify PB-007-04 topology dependency follow-up
         run: |
           python3 research/machining-completeness/tasks/MC-038/verify_pb00704.py --contract
