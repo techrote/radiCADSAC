@@ -1,0 +1,127 @@
+{
+  "schema": "radicadsac-mc038-pb00701-rational-turn-boundary/6.0",
+  "task": "MC-038",
+  "corrective_issue": 170,
+  "source_baseline": "fc11c30529c08db1524a99354843c174210a9797",
+  "target_blocker": "PB-007-01",
+  "decision": "ARBITRARY_RATIONAL_TURN_ENDPOINTS_ESTABLISHED_FOR_CONSTANT_COEFFICIENT_TRIG_BRANCH_FULL_BLOCKER_OPEN",
+  "gate": "MC-B",
+  "gate_state": "NOT_ESTABLISHED",
+  "historical_evidence": [
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701-decision-boundary-v3.json",
+      "git_blob_sha1": "ec2edaef5ef1cf838fc91e68b25147f41525ac2a",
+      "preserved": true
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701-report-v3.md",
+      "git_blob_sha1": "03105103fe9d90553e5add492efb073bd8c9ab1e",
+      "preserved": true
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701_event_model.py",
+      "git_blob_sha1": "104c0e7a459cd7da5025853b246faff244a5948e",
+      "preserved": true
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/verify_pb00701.py",
+      "git_blob_sha1": "b555e99f7b5978e6d7640a6389c83b5ce5569038",
+      "preserved": true
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/gate-scope-retry-v2.json",
+      "git_blob_sha1": "76094029a264a5ce226694548b27896f9e0cd430",
+      "preserved": true
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-032/event_engine.py",
+      "git_blob_sha1": "789a709c5141479a343035d1b7055dd4e53534e1",
+      "preserved": true
+    }
+  ],
+  "implemented_extension": {
+    "id": "RATIONAL_TRIG_POLYNOMIAL_RATIONAL_TURN_WINDOW",
+    "coefficient_domain": "exact rational",
+    "endpoint_domain": "arbitrary finite exact rational turns on one pole-free tangent-half branch",
+    "endpoint_construction": "x=tan(pi*p/q) is represented by the selected real root of Im((1+i*x)^q), isolated with exact rational Sturm bisection",
+    "endpoint_equality": "event polynomial equality at an algebraic endpoint is decided by exact polynomial gcd with the endpoint defining polynomial",
+    "endpoint_sign": "non-equality is decided by exact isolating-interval refinement until rational boundary signs are certified constant",
+    "root_count": "one-sided Sturm signs at algebraic endpoints give exact open-window root counts",
+    "established_claims": [
+      "non-cardinal rational-turn endpoint equality is exact for the finite rational trigonometric-polynomial branch",
+      "endpoint root multiplicity and sign-change classification are exact",
+      "hidden open-window roots are counted exactly between arbitrary pole-free rational-turn endpoints",
+      "negative and turn-period-equivalent endpoint encodings retain exact tangent semantics"
+    ],
+    "not_claimed": [
+      "a decision procedure for polynomial- or B-spline-modulated trigonometric predicates",
+      "a decision procedure for every general coupled path/feed/spindle analytic predicate admitted by MC-003/MC-007/MC-022",
+      "closure of PB-007-01, PB-007-02 or MC-B"
+    ]
+  },
+  "boundary_controls": [
+    "exact non-cardinal simple crossing at turn 1/6",
+    "exact non-cardinal even-multiplicity tangency at turn 1/6",
+    "hidden interior root on a pole-free non-cardinal rational-turn window",
+    "endpoint equality excluded from open-window root count",
+    "negative-turn and whole-turn-equivalent endpoint consistency",
+    "tangent-half pole crossing blocks",
+    "inverted or empty source interval rejects",
+    "shared source-parameter mismatch rejects",
+    "binary-float turn or coefficient authority rejects",
+    "forged direct tangent-half endpoint authority rejects",
+    "resource or iteration refusal is not a truth value",
+    "frozen 26-operation denominator and MC-B non-promotion are enforced"
+  ],
+  "full_blocker_review": {
+    "status": "OPEN",
+    "reason": "Arbitrary rational-turn endpoints are no longer the limiting case for constant-coefficient rational trigonometric polynomials, but the full grammar still includes polynomial/B-spline path/feed terms coupled to trigonometric phase; no unconditional finite exact route for that full grammar is established by this extension.",
+    "not_an_impossibility_theorem": true,
+    "residual_grammar": [
+      "POLYNOMIAL_MODULATED_TRIGONOMETRIC",
+      "GENERAL_COUPLED_EXPONENTIAL_POLYNOMIAL",
+      "GENERAL_TANGENTIAL_MULTIPLE_SINGULAR_TRANSCENDENTAL"
+    ],
+    "conditional_or_approximate_authority_forbidden": [
+      "binary floating point",
+      "epsilon sign",
+      "finite sampling",
+      "subdivision cap",
+      "timeout",
+      "resource refusal",
+      "assume no tangency",
+      "unproved transcendence conjecture"
+    ]
+  },
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false,
+    "next_pre_gate_priority": "PB-007-01_GENERAL_COUPLED_ANALYTIC_GRAMMAR"
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "protected_semantics": {
+    "historical_source_audio_provenance_unchanged": true,
+    "canonical_journal_meaning_unchanged": true,
+    "exact_time_path_phase_correlation_preserved": true,
+    "source_uncertainty_preserved": true,
+    "positive_volume_material_preserved": true,
+    "holder_access_semantics_preserved": true,
+    "durable_body_lineage_preserved": true,
+    "step_remains_conventional_engineering_output": true,
+    "timeout_refusal_uncertified_are_not_success": true
+  }
+}
