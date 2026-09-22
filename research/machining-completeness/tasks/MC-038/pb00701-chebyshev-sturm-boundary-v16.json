@@ -1,0 +1,79 @@
+{
+  "schema": "radicadsac-mc038-pb00701-chebyshev-sturm-boundary/16.0",
+  "task": "MC-038",
+  "corrective_issue": 194,
+  "source_baseline": "e9f0d464581939b4de0c0dc766553c8672aecdf8",
+  "target_blocker": "PB-007-01",
+  "decision": "EXACT_CHEBYSHEV_STURM_NONVANISHING_CERTIFICATE_ESTABLISHED_GENERAL_MULTIHARMONIC_ROUTE_OPEN",
+  "gate": "MC-B",
+  "gate_state": "NOT_ESTABLISHED",
+  "historical_v15_evidence": [
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-finite-multiplier-boundary-v15.json", "git_blob_sha1": "fb911c58b45d846c027bc0399e06faba900be727", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-report-v15.md", "git_blob_sha1": "cd683ace27fb456337169e1527205f8676675bcd", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701_finite_multiplier_model.py", "git_blob_sha1": "d2e48bbd5177c74678255c91c3600efdfc221461", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v15.py", "git_blob_sha1": "175fcf1af1c0a636e600f755a06fcab3a2be267b", "preserved": true},
+    {"path": "docs/machining-completeness/41-PB00701-FINITE-MULTIPLIER.md", "git_blob_sha1": "14dacadea94f6f8bc4e621dec8e0ee90da6473c4", "preserved": true}
+  ],
+  "implemented_extension": {
+    "id": "EXACT_CHEBYSHEV_STURM_EVEN_COSINE_MULTIPLIER_NONVANISHING",
+    "source_family": "the exact source-derived v15 finite odd-harmonic factor family with normalized rational lambda vector",
+    "chebyshev_reduction": "M(alpha)=lambda_0+sum lambda_k*cos(2*k*alpha) becomes P(x)=lambda_0+sum lambda_k*T_k(x), x=cos(2*alpha) in [-1,1]",
+    "closed_interval_authority": "reject exact endpoint roots P(-1)=0 or P(1)=0; require MC-032 exact rational Sturm distinct-root count zero on (-1,1); establish sign by exact rational evaluation",
+    "precedence": "v15 strict L1 dominance retains precedence; v16 only upgrades source-derived v15 strict-dominance rejections",
+    "carrier_dispatch": "delegate unchanged to the established v10/v11/v12 carrier authority; retain v8 ownership of a nonconstant carrier gcd",
+    "multiplicity_rule": "multiplication by a smooth globally nonzero exact multiplier preserves the carrier zero set and every finite root multiplicity",
+    "forbidden_authority": ["caller factorization", "caller Chebyshev polynomial", "caller Sturm count", "caller sign", "binary float", "epsilon", "sampling", "numeric trigonometry", "approximate minimization", "timeout", "resource refusal as truth"]
+  },
+  "boundary_controls": [
+    "genuine non-L1 positive degree-3 multiplier is certified by exact Chebyshev/Sturm authority",
+    "genuine non-L1 negative degree-3 multiplier is certified with exact negative sign",
+    "v15 strict-dominance cases retain prior-route ownership",
+    "exact x=-1 endpoint root fails closed",
+    "simple interior root fails closed",
+    "repeated interior root is detected after square-free Sturm reduction and fails closed",
+    "algebraic irrational interior roots are counted exactly without numerical root authority",
+    "exact +1/1000000 neighbour beyond an endpoint-root boundary certifies and exact -1/1000000 neighbour fails on an interior root",
+    "forged lambda, factorization, Chebyshev, Sturm, root-free and sign metadata cannot override source-derived authority",
+    "binary-float authority is rejected",
+    "resource refusal is explicitly not a truth value",
+    "historical v15 evidence mutation is rejected",
+    "26-operation denominator shrinkage is rejected",
+    "false MC-B promotion is rejected"
+  ],
+  "full_blocker_review": {
+    "status": "OPEN",
+    "residual_branch": "multi-harmonic coupled predicates not admitting the exact source-derived finite even-cosine multiplier times qualified carrier factorization, plus carrier cells outside established v10/v11/v12 authority",
+    "not_an_impossibility_theorem": true
+  },
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false,
+    "next_pre_gate_priority": "PB-007-01 source-derived finite even trigonometric multiplier broadening with exact projective rational/Sturm nonvanishing authority"
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "protected_semantics": {
+    "source_audio_provenance": true,
+    "canonical_journal": true,
+    "exact_time_path_phase": true,
+    "source_uncertainty": true,
+    "positive_volume_material": true,
+    "cutter_holder_access": true,
+    "durable_body_lineage": true,
+    "refusal_uncertified": true,
+    "conventional_step": true
+  }
+}
