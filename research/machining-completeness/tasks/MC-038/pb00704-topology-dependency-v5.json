@@ -1,0 +1,149 @@
+{
+  "schema": "radicadsac-mc038-pb00704-topology-dependency/5.0",
+  "task": "MC-038",
+  "corrective_issue": 168,
+  "source_baseline": "2f588da9f4315bed73be2700eccb34288accc82f",
+  "target_blocker": "PB-007-04",
+  "decision": "BOUNDED_EXACT_CONNECTIVITY_CHECKER_ESTABLISHED_FULL_BLOCKER_DEPENDENCY_OPEN",
+  "gate": "MC-B",
+  "gate_state": "NOT_ESTABLISHED",
+  "historical_evidence": [
+    {
+      "path": "research/machining-completeness/tasks/MC-007/outcome.json",
+      "git_blob_sha1": "8d54872292dfd9f632c79c76994a467d26eaaf9c",
+      "preserved": true
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-032/outcome.json",
+      "git_blob_sha1": "bc42e0f824621af10354534dc83aa03765a893ed",
+      "preserved": true
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-033/outcome.json",
+      "git_blob_sha1": "5bd663c1aa098224f5909d8781009c13f50e40e4",
+      "preserved": true
+    },
+    {
+      "path": "research/machining-completeness/proof-obligations-v1.json",
+      "git_blob_sha1": "97b023c5ea550f598b16ba9a1aeaabbf95ecba6f",
+      "preserved": true
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/gate-scope-retry-v2.json",
+      "git_blob_sha1": "76094029a264a5ce226694548b27896f9e0cd430",
+      "preserved": true
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701-decision-boundary-v3.json",
+      "git_blob_sha1": "ec2edaef5ef1cf838fc91e68b25147f41525ac2a",
+      "preserved": true
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00703-source-codec-boundary-v4.json",
+      "git_blob_sha1": "1a69ad4073a38d0448474fa8046657266a3b79e8",
+      "preserved": true
+    }
+  ],
+  "dependency_review": {
+    "independently_constructive_now": [
+      "Given an independently certified complete finite partition into exact-rational positive-volume axis-aligned cells in one common workpiece frame, exact component connectivity is decidable by positive-area face adjacency.",
+      "Exact edge-only and point-only contact can be separated from positive-area face adjacency without epsilon, tolerance or binary floating point.",
+      "A connectivity result can be canonically bound to source, material, event, configuration, revision, partition and independent completeness-certificate identities.",
+      "The resulting component certificate is evidence for bounded MC-032/MC-033 routes but is not durable body/lineage identity authority."
+    ],
+    "not_independently_constructive_yet": [
+      "Generating a complete exact partition for every admitted material state when source geometry lies outside the bounded PB-007-03 exact source sublanguage.",
+      "Generating all topology-critical boundaries when general tangential/multiple/singular analytic events remain unresolved under PB-007-01.",
+      "Generating universal coupled sweep/material membership needed by topology when PB-007-02 still depends on unresolved PB-007-01 equality authority.",
+      "Promoting bounded axis-aligned partition checking into a universal 3-D topology theorem for arbitrary curved, non-axis-aligned or analytically generated material states."
+    ],
+    "dependency_edges": {
+      "PB-007-04": ["PB-007-01", "PB-007-02", "PB-007-03", "PO-02", "PO-04"],
+      "note": "These are semantic evidence dependencies for universal topology generation, not a rewrite of the canonical global PO DAG and not permission to reclassify downstream RB-016 obligations as MC-B prerequisites."
+    },
+    "full_blocker_status": "OPEN_PROPAGATED",
+    "po07_status": "OPEN",
+    "not_an_impossibility_theorem": true
+  },
+  "implemented_bounded_subroute": {
+    "id": "EXACT_RATIONAL_AXIS_ALIGNED_COMPLETE_PARTITION_V1",
+    "input": "finite independently certified complete partition of exact-rational positive-volume axis-aligned material cells",
+    "required_binding": [
+      "frame_id",
+      "source_digest",
+      "material_digest",
+      "event_digest",
+      "configuration_digest",
+      "revision",
+      "independent completeness certificate digest"
+    ],
+    "connectivity_rule": "cells are connected only through exact shared faces with strictly positive overlap in the other two axes",
+    "touch_rule": "edge-only and point-only contact are TOUCH_ONLY and do not connect positive-volume material components",
+    "overlap_rule": "pairwise positive-volume interior overlap invalidates the purported partition",
+    "identity_rule": "certificate-local cell/component identifiers are not body_id or lineage_id authority",
+    "empty_rule": "an independently certified complete empty partition yields exact empty material with zero components",
+    "scalar_authority": "exact rationals only; floats/tolerances are forbidden",
+    "universal_claim": false
+  },
+  "boundary_controls": [
+    "exact positive-area face adjacency joins two cells",
+    "exact edge-only contact remains TOUCH_ONLY and yields separate components",
+    "exact point-only contact remains TOUCH_ONLY and yields separate components",
+    "an exact 1/1000000 positive-volume bridge changes disconnected cells into one connected component",
+    "an exact 1/1000000 positive gap preserves disconnected components",
+    "multiple disconnected components are enumerated canonically independent of input order",
+    "an independently certified exact empty partition yields zero components without placeholder identity",
+    "pairwise positive-volume interior overlap is rejected",
+    "zero-thickness/zero-volume cells are rejected",
+    "binary-float/scientific/tolerance coordinates are rejected as exact authority",
+    "backend/kernel/component/body/lineage/enumeration/largest-volume/proximity identity fields are rejected",
+    "stale or mismatched source/material/event/configuration/frame/revision binding is rejected",
+    "a forged complete=true assertion without the independent completeness certificate contract is rejected",
+    "self-certified partition completeness is rejected"
+  ],
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDS_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED_DEPENDS_ON_UNRESOLVED_SOURCE_MATERIAL_EVENT_AUTHORITY",
+    "PO-02": "OPEN",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-07": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED"
+  },
+  "downstream_non_prerequisites_unchanged": [
+    "RB-016-01",
+    "RB-016-02",
+    "RB-016-03",
+    "RB-016-04",
+    "RB-016-05",
+    "PO-03",
+    "PO-06",
+    "PO-09"
+  ],
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "protected_semantics": {
+    "historical_source_audio_provenance_unchanged": true,
+    "canonical_journal_meaning_unchanged": true,
+    "source_uncertainty_preserved": true,
+    "positive_volume_material_preserved": true,
+    "holder_access_semantics_preserved": true,
+    "durable_body_lineage_preserved": true,
+    "step_remains_conventional_engineering_output": true,
+    "timeout_refusal_uncertified_are_not_success": true,
+    "domain_operation_count_remains_26": true
+  },
+  "next_routing": {
+    "mc_b_retry_allowed": false,
+    "reason": "All four pre-gate PB-007 branches remain open; PB-007-04 universal generation is not independently closable while PB-007-01/02/03 source/material/event authority remains unresolved.",
+    "rule": "Preserve the blocker graph and select only independently dependency-ready work; do not accept MC-B to unlock downstream reconstruction tasks."
+  }
+}
