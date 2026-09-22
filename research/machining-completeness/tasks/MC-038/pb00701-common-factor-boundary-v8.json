@@ -1,0 +1,111 @@
+{
+  "schema": "radicadsac-mc038-pb00701-common-factor-boundary/8.0",
+  "task": "MC-038",
+  "corrective_issue": 178,
+  "source_baseline": "c61425cefba46deea9b9012ec833f80621d15163",
+  "target_blocker": "PB-007-01",
+  "decision": "EXACT_COMMON_POLYNOMIAL_FACTOR_SUBROUTE_ESTABLISHED_GENERAL_COUPLED_ZERO_ROUTE_OPEN",
+  "gate": "MC-B",
+  "gate_state": "NOT_ESTABLISHED",
+  "historical_evidence": [
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-decision-boundary-v3.json", "git_blob_sha1": "ec2edaef5ef1cf838fc91e68b25147f41525ac2a", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-report-v3.md", "git_blob_sha1": "03105103fe9d90553e5add492efb073bd8c9ab1e", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701_event_model.py", "git_blob_sha1": "104c0e7a459cd7da5025853b246faff244a5948e", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/verify_pb00701.py", "git_blob_sha1": "b555e99f7b5978e6d7640a6389c83b5ce5569038", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-rational-turn-boundary-v6.json", "git_blob_sha1": "fcff758b5f227452fb65cf273b6e6d8b9f6ab2f8", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-report-v6.md", "git_blob_sha1": "b782bd980d5b491d0b1bd0a8b95b74704c44767f", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701_rational_turn_model.py", "git_blob_sha1": "a1316ff0f71b2d7aa80807843a74fd8280779cb2", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v6.py", "git_blob_sha1": "7fb1966247bbe2d46b243d3f01db85efdb2c8c84", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-coupled-bspline-boundary-v7.json", "git_blob_sha1": "e75c0a0ab48a9a4eba7249e203a50f7366973ba3", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-report-v7.md", "git_blob_sha1": "31755f3dbb2ea5a21abd3a979b9875cd259984cd", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py", "git_blob_sha1": "a086b625e1a6dea8bd202699d161167bb69cc9e7", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v7.py", "git_blob_sha1": "7a2f08e578d0f649fd004d30691aea28bd3ffd2d", "preserved": true},
+    {"path": "docs/machining-completeness/31-PB00701-COUPLED-BSPLINE-BOUNDARY.md", "git_blob_sha1": "6005fc55e2d18e71639e6bc31cfbc1597bf4a915", "preserved": true}
+  ],
+  "implementation": {
+    "model": "research/machining-completeness/tasks/MC-038/pb00701_common_factor_model.py",
+    "model_git_blob_sha1": "7fef9b3a4673e4b64b8fb14833e425733b34f954",
+    "input_grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+    "recognized_subroute": "all nonzero local harmonic modulation polynomials have one exact nonconstant rational polynomial gcd and all exact quotients are constants",
+    "factorization": "F(s)=g(s)*T(a+b*u(s))",
+    "factor_authority": "computed exact rational polynomial GCD plus exact zero-remainder division; no caller-supplied factor is authority",
+    "phase_partition": "exact split at B-spline knot boundaries and every interior quarter-turn source point; each trigonometric chart is shifted by an exact cardinal quarter turn to avoid tangent-half poles",
+    "polynomial_authority": "MC-032 exact rational Sturm/multiplicity operations",
+    "trigonometric_authority": "PB-007-01 v6 exact rational-turn tangent-half/Sturm route",
+    "coincidence_authority": "exact rational-root theorem enumeration plus exact rational-turn event checks; algebraic-irrational factor roots are disjoint from nonzero rational trigonometric factors under the recorded Gelfond-Schneider preconditions"
+  },
+  "theorem_boundary": {
+    "theorem": "Gelfond-Schneider",
+    "source": "https://encyclopediaofmath.org/wiki/Gel%27fond%E2%80%93Schneider_method",
+    "recorded_application": "if a factor root is algebraic irrational, rational-affine nonzero-rate phase keeps the turn algebraic irrational; a rational trigonometric-polynomial zero would make z=exp(2*pi*i*turn) algebraic, contradicting transcendence of the corresponding value of (-1)^(2*turn)",
+    "preconditions": [
+      "source factor polynomial has rational coefficients",
+      "source/span affine maps have rational coefficients",
+      "phase offset and nonzero phase rate are rational",
+      "trigonometric factor is finite, nonzero and has rational harmonic coefficients"
+    ],
+    "not_claimed": [
+      "a general exact zero algorithm for arbitrary polynomial-modulated trigonometric sums",
+      "a general Pfaffian or continuous-Skolem decision procedure",
+      "an impossibility theorem for the remaining PB-007-01 grammar",
+      "closure of PB-007-01 or PB-007-02",
+      "MC-B acceptance"
+    ]
+  },
+  "boundary_controls": [
+    "simple common-factor root",
+    "repeated common-factor root",
+    "rational common-factor/trigonometric coincidence with additive multiplicity",
+    "algebraic-irrational common-factor root disjointness under explicit Gelfond-Schneider preconditions",
+    "exact source-span endpoint root",
+    "exact quarter-turn partition and pole-safe chart shift",
+    "constant common factor does not masquerade as v8",
+    "non-common polynomial modulation remains PB-007-01",
+    "zero phase rate is not promoted by v8",
+    "source-parameter mismatch remains rejected by v7 authority",
+    "binary-float and epsilon authority remain rejected",
+    "caller-supplied or forged common-factor authority is rejected as an unreviewed field",
+    "resource refusal is non-truth and cannot become success",
+    "26-operation denominator cannot shrink",
+    "historical v3/v6/v7 evidence cannot mutate",
+    "MC-B cannot be promoted from this bounded subroute"
+  ],
+  "full_blocker_review": {
+    "status": "OPEN",
+    "reason": "The common-factor product sublanguage is exactly decidable by existing rational-polynomial and rational-turn authorities, but the admitted v7 residual grammar still contains nonproportional nonconstant harmonic modulation polynomials for which no unconditional exact zero/multiplicity route is established.",
+    "residual_form": "finite sums p_k(u) cos(2*pi*k*(a+b*u)) + q_k(u) sin(2*pi*k*(a+b*u)) where the nonzero rational polynomials do not all reduce to constants after division by one nonconstant common factor",
+    "not_an_impossibility_theorem": true,
+    "sampling_refinement_timeout_or_conjecture_is_not_truth": true
+  },
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false,
+    "next_pre_gate_priority": "PB-007-01_NONPROPORTIONAL_POLYNOMIAL_MODULATION_OR_BROADER_PB-007-03_SOURCE_THEORY"
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "protected_semantics": {
+    "historical_source_audio_provenance_unchanged": true,
+    "canonical_journal_meaning_unchanged": true,
+    "exact_time_path_phase_correlation_preserved": true,
+    "source_uncertainty_preserved": true,
+    "positive_volume_material_preserved": true,
+    "holder_access_semantics_preserved": true,
+    "durable_body_lineage_preserved": true,
+    "timeout_refusal_uncertified_are_not_success": true,
+    "step_remains_conventional_engineering_output": true
+  }
+}
