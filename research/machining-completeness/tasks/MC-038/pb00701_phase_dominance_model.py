@@ -47,13 +47,13 @@ def _strict_positive_closed(poly):
 def _phase_dominance_certificate(a_poly, b_poly, u_rate, chart):
     """Prove phase derivative dominates the selected rational ratio derivative.
 
-    D=A*B'-A'*B.  For tangent H'=pi*u'*sec^2-D/B^2; for
-    cotangent K'=-pi*u'*csc^2+D/A^2.  pi>3 and
+    D=A*B'-A'*B. For tangent H'=pi*u'*sec^2-D/B^2; for
+    cotangent K'=-pi*u'*csc^2+D/A^2. The exact theorem pi>3 and
 
       3*|u'|*den^2 - sign(u')*D > 0
 
-    therefore fixes the exact projective-function derivative direction without
-    evaluating pi numerically, even when D changes sign.
+    fix the projective-function derivative direction without evaluating pi
+    numerically, even when D changes sign.
     """
     u_rate = q(u_rate)
     if u_rate == 0:
@@ -67,7 +67,11 @@ def _phase_dominance_certificate(a_poly, b_poly, u_rate, chart):
     positive = _strict_positive_closed(dominance_poly)
     if positive is None:
         return None
-    d_roots = EE.distinct_roots_open(d_poly, Fraction(0), Fraction(1)) if d_poly != [0] else 0
+    d_roots = (
+        EE.distinct_roots_open(d_poly, Fraction(0), Fraction(1))
+        if d_poly != [0]
+        else 0
+    )
     return {
         "status": "CERTIFIED",
         "method": "EXACT_RATIONAL_PHASE_DERIVATIVE_DOMINANCE_USING_PI_GT_3",
@@ -93,11 +97,21 @@ def _phase_dominance_certificate(a_poly, b_poly, u_rate, chart):
     }
 
 
-def _single_harmonic_phase_dominance_route(cos_polys, sin_polys, offset, rate, source_parameter_id):
+def _single_harmonic_phase_dominance_route(
+    cos_polys, sin_polys, offset, rate, source_parameter_id
+):
     if q(rate) == 0:
         return None
-    cos_nonzero = {h: v9._trim(poly) for h, poly in cos_polys.items() if v9._trim(poly) != [0]}
-    sin_nonzero = {h: v9._trim(poly) for h, poly in sin_polys.items() if v9._trim(poly) != [0]}
+    cos_nonzero = {
+        h: v9._trim(poly)
+        for h, poly in cos_polys.items()
+        if v9._trim(poly) != [0]
+    }
+    sin_nonzero = {
+        h: v9._trim(poly)
+        for h, poly in sin_polys.items()
+        if v9._trim(poly) != [0]
+    }
     harmonics = set(cos_nonzero) | set(sin_nonzero)
     if len(harmonics) != 1:
         return None
@@ -161,7 +175,9 @@ def _single_harmonic_phase_dominance_route(cos_polys, sin_polys, offset, rate, s
                 if comparison.get("status") != "DECIDED":
                     return {
                         "status": comparison.get("status", "BLOCKED"),
-                        "reason": comparison.get("reason", "PROJECTIVE_ENDPOINT_COMPARISON_NOT_DECIDED"),
+                        "reason": comparison.get(
+                            "reason", "PROJECTIVE_ENDPOINT_COMPARISON_NOT_DECIDED"
+                        ),
                         "blocker": "PB-007-01",
                         "delegate": comparison,
                     }
@@ -189,29 +205,43 @@ def _single_harmonic_phase_dominance_route(cos_polys, sin_polys, offset, rate, s
             )
             roots = 1 if has_root else 0
             total_open_roots += roots
-            charts.append({
-                "source_interval": [str(left), str(right)],
-                "left_boundary": left_cmp,
-                "right_boundary": right_cmp,
-                "projective_function_direction": "STRICTLY_INCREASING" if increasing else "STRICTLY_DECREASING",
-                "distinct_roots_open": roots,
-                "multiple_roots_open": 0,
-                "all_open_roots_simple": True,
-            })
+            charts.append(
+                {
+                    "source_interval": [str(left), str(right)],
+                    "left_boundary": left_cmp,
+                    "right_boundary": right_cmp,
+                    "projective_function_direction": (
+                        "STRICTLY_INCREASING" if increasing else "STRICTLY_DECREASING"
+                    ),
+                    "distinct_roots_open": roots,
+                    "multiple_roots_open": 0,
+                    "all_open_roots_simple": True,
+                }
+            )
 
         internal_poles = []
         for source in boundaries[1:-1]:
             if chart == "TANGENT":
-                boundary = v9._pole_boundary(a_poly, b_poly, u_offset, u_rate, source, "left")
+                boundary = v9._pole_boundary(
+                    a_poly, b_poly, u_offset, u_rate, source, "left"
+                )
             else:
-                boundary = v10._cot_pole_boundary(a_poly, u_offset, u_rate, source, "left")
-            internal_poles.append({
-                "source": str(source),
-                "harmonic_projective_turn": str(u_offset + u_rate * source),
-                "original_event_relation": boundary["original_event_relation"],
-                "original_event_zero": False,
-                "authority": "B_NONZERO_AT_TANGENT_POLE" if chart == "TANGENT" else "A_NONZERO_AT_COTANGENT_POLE",
-            })
+                boundary = v10._cot_pole_boundary(
+                    a_poly, u_offset, u_rate, source, "left"
+                )
+            internal_poles.append(
+                {
+                    "source": str(source),
+                    "harmonic_projective_turn": str(u_offset + u_rate * source),
+                    "original_event_relation": boundary["original_event_relation"],
+                    "original_event_zero": False,
+                    "authority": (
+                        "B_NONZERO_AT_TANGENT_POLE"
+                        if chart == "TANGENT"
+                        else "A_NONZERO_AT_COTANGENT_POLE"
+                    ),
+                }
+            )
 
         return {
             "status": "CERTIFIED",
@@ -226,7 +256,9 @@ def _single_harmonic_phase_dominance_route(cos_polys, sin_polys, offset, rate, s
                 "gcd_coefficients": [str(value) for value in v9._trim(common)],
             },
             "projective_chart": chart,
-            "projective_ratio": "-A(s)/B(s)" if chart == "TANGENT" else "-B(s)/A(s)",
+            "projective_ratio": (
+                "-A(s)/B(s)" if chart == "TANGENT" else "-B(s)/A(s)"
+            ),
             "ratio_denominator_certificate": denominator_certificate,
             "phase_dominance_certificate": dominance,
             "harmonic_projective_turn_law": {
@@ -251,16 +283,47 @@ def _single_harmonic_phase_dominance_route(cos_polys, sin_polys, offset, rate, s
                 "all_simple": True,
             },
             "simplicity_proof": {
-                "open_roots": "strict projective-function derivative from exact pi>3 phase-dominance certificate",
+                "open_roots": (
+                    "strict projective-function derivative from exact pi>3 "
+                    "phase-dominance certificate"
+                ),
                 "endpoint_roots": "v10 exact endpoint-simple irrational-pi contradiction",
                 "numeric_pi_used": False,
                 "sampling_used": False,
             },
         }
     except (v10.DualRatioRefusal, v9.MonotoneRatioRefusal) as exc:
-        return {"status": "RESOURCE_REFUSAL", "reason": str(exc), "is_truth_value": False}
+        return {
+            "status": "RESOURCE_REFUSAL",
+            "reason": str(exc),
+            "is_truth_value": False,
+        }
     except v6.EndpointIsolationRefusal as exc:
-        return {"status": "RESOURCE_REFUSAL", "reason": str(exc), "is_truth_value": False}
+        return {
+            "status": "RESOURCE_REFUSAL",
+            "reason": str(exc),
+            "is_truth_value": False,
+        }
+
+
+def _is_upgradeable_nonmonotone_span(span):
+    route = span["route"]
+    return (
+        route.get("status") == "BLOCKED"
+        and (
+            (
+                span.get("route_kind")
+                == "PB00701_V9_EXACT_MONOTONE_SINGLE_HARMONIC_RATIO"
+                and route.get("reason") == "OPPOSED_RATIO_MONOTONICITY_NOT_CERTIFIED"
+            )
+            or (
+                span.get("route_kind")
+                == "PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO"
+                and route.get("reason")
+                == "OPPOSED_DUAL_PROJECTIVE_MONOTONICITY_NOT_CERTIFIED"
+            )
+        )
+    )
 
 
 def analyze_phase_dominance_event(spec):
@@ -269,7 +332,10 @@ def analyze_phase_dominance_event(spec):
         return baseline
     if baseline.get("status") == "CERTIFIED":
         return baseline
-    if baseline.get("relation") != "FINITE_EXACT_PIECEWISE_LOWERING_WITH_RESIDUAL_COUPLED_THEOREM_BLOCKER":
+    if (
+        baseline.get("relation")
+        != "FINITE_EXACT_PIECEWISE_LOWERING_WITH_RESIDUAL_COUPLED_THEOREM_BLOCKER"
+    ):
         return baseline
 
     rate = q(baseline["phase_turn_law"]["rate"])
@@ -278,12 +344,7 @@ def analyze_phase_dominance_event(spec):
     upgraded = []
     for original_span in baseline["spans"]:
         span = dict(original_span)
-        route = span["route"]
-        if (
-            span.get("route_kind") == "PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO"
-            and route.get("status") == "BLOCKED"
-            and route.get("reason") == "OPPOSED_DUAL_PROJECTIVE_MONOTONICITY_NOT_CERTIFIED"
-        ):
+        if _is_upgradeable_nonmonotone_span(span):
             left = q(span["source_interval"][0])
             right = q(span["source_interval"][1])
             width = right - left
@@ -298,11 +359,16 @@ def analyze_phase_dominance_event(spec):
                 for h, poly in span["sin_polynomials"].items()
             }
             replacement = _single_harmonic_phase_dominance_route(
-                cos_polys, sin_polys, local_offset, local_rate,
+                cos_polys,
+                sin_polys,
+                local_offset,
+                local_rate,
                 baseline["source_parameter_id"],
             )
             if replacement is not None:
-                span["route_kind"] = "PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO"
+                span["route_kind"] = (
+                    "PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO"
+                )
                 span["route"] = replacement
                 span["local_phase_turn_law"] = {
                     "offset": str(local_offset),
@@ -337,7 +403,10 @@ def analyze_phase_dominance_event(spec):
 
 
 def classify_required_analytic_event(spec):
-    if isinstance(spec, dict) and spec.get("grammar") == "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE":
+    if (
+        isinstance(spec, dict)
+        and spec.get("grammar") == "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE"
+    ):
         return analyze_phase_dominance_event(spec)
     return v10.classify_required_analytic_event(spec)
 
