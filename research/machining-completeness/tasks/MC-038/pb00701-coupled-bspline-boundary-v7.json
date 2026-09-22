@@ -1,0 +1,113 @@
+{
+  "schema": "radicadsac-mc038-pb00701-coupled-bspline-boundary/7.0",
+  "task": "MC-038",
+  "corrective_issue": 172,
+  "source_baseline": "08834827a5277d782a7ddcd7437a6e1527353620",
+  "target_blocker": "PB-007-01",
+  "decision": "EXACT_BSPLINE_PIECEWISE_LOWERING_ESTABLISHED_GENERAL_NONCONSTANT_COUPLED_ZERO_ROUTE_OPEN",
+  "gate": "MC-B",
+  "gate_state": "NOT_ESTABLISHED",
+  "historical_evidence": [
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-decision-boundary-v3.json", "git_blob_sha1": "ec2edaef5ef1cf838fc91e68b25147f41525ac2a", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-report-v3.md", "git_blob_sha1": "03105103fe9d90553e5add492efb073bd8c9ab1e", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701_event_model.py", "git_blob_sha1": "104c0e7a459cd7da5025853b246faff244a5948e", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/verify_pb00701.py", "git_blob_sha1": "b555e99f7b5978e6d7640a6389c83b5ce5569038", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-rational-turn-boundary-v6.json", "git_blob_sha1": "fcff758b5f227452fb65cf273b6e6d8b9f6ab2f8", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-report-v6.md", "git_blob_sha1": "b782bd980d5b491d0b1bd0a8b95b74704c44767f", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701_rational_turn_model.py", "git_blob_sha1": "a1316ff0f71b2d7aa80807843a74fd8280779cb2", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v6.py", "git_blob_sha1": "7fb1966247bbe2d46b243d3f01db85efdb2c8c84", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-003/report.md", "git_blob_sha1": "289183f5fa4e2aaa8fc030fac056e6b1d466f620", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-007/report.md", "git_blob_sha1": "e5e922acd742e0774d7a62750a94a8a7ebefd2d3", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-022/report.md", "git_blob_sha1": "3a635abcce148c1f136ed0b7b8917e0815d221c3", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/gate-scope-retry-v2.json", "git_blob_sha1": "76094029a264a5ce226694548b27896f9e0cd430", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-032/event_engine.py", "git_blob_sha1": "789a709c5141479a343035d1b7055dd4e53534e1", "preserved": true}
+  ],
+  "implemented_extension": {
+    "id": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+    "source_domain": "exact rational non-rational B-splines with exact rational knots/control values plus affine exact rational turn phase on one shared source parameter",
+    "lowering": "finite exact split at nonzero source knot spans and Cox-de Boor lowering to local rational power-basis polynomials",
+    "exact_subroutes": [
+      "exact rational amplitude-dominance separation",
+      "stationary cardinal-phase rational polynomial event classification",
+      "constant-modulation delegation to PB-007-01 v6 rational-turn Sturm route"
+    ],
+    "residual_branch": "nonconstant rational polynomial modulation with nonzero trigonometric phase",
+    "residual_form": "finite sums p_k(u) cos(2*pi*k*(a+b*u)) + q_k(u) sin(2*pi*k*(a+b*u)) with rational power-basis p_k,q_k and exact rational a,b",
+    "not_claimed": [
+      "a general exact zero/multiplicity decision algorithm for the residual coupled branch",
+      "an impossibility theorem for that branch",
+      "closure of PB-007-01 or PB-007-02",
+      "MC-B acceptance"
+    ]
+  },
+  "boundary_controls": [
+    "degree-1 exact B-spline lowers to exact affine power basis",
+    "degree-2 exact B-spline lowers to exact quadratic power basis",
+    "repeated exact knot remains a semantic boundary and zero-width knot span is not epsilon-merged",
+    "exact source-span endpoint one-sided limits are preserved",
+    "constant-via-equal-control B-spline cancels to exact degree zero and delegates to PB-007-01 v6",
+    "stationary cardinal phase plus nonconstant modulation becomes an exact rational polynomial event",
+    "strict exact rational amplitude dominance proves a zero-free coupled span",
+    "genuinely nonconstant polynomial modulation with nonzero phase retains PB-007-01 theorem blocker",
+    "source-parameter mismatch and independent phase projection are rejected",
+    "binary-float coefficient, knot, phase or source endpoint authority is rejected",
+    "epsilon/tolerance authority field is rejected",
+    "malformed knot/control cardinality and excessive knot multiplicity are rejected",
+    "empty or inverted source intervals are rejected",
+    "resource refusal is non-truth and cannot become success",
+    "26-operation denominator cannot shrink",
+    "MC-B cannot be promoted from bounded subroutes"
+  ],
+  "full_blocker_review": {
+    "status": "OPEN",
+    "reason": "Exact rational B-spline source channels now lower to finitely many exact polynomial spans, but genuinely nonconstant polynomial modulation coupled to nonzero trigonometric phase is not reduced by the implemented routes to the constant-coefficient rational trig-polynomial problem. No unconditional general exact zero/multiplicity decision procedure for that residual branch is established by this repair.",
+    "theorem_context": "The residual functions are exponential-polynomial/Pfaffian-style on compact pole-free pieces. Effective restricted-Pfaffian methods are a plausible future constructive research route, but this repair does not implement or qualify the coefficient/sign/oracle machinery needed to turn that literature into programme authority.",
+    "continuous_skolem_note": "Continuous-Skolem literature is contextual evidence for the difficulty of exact bounded exponential-polynomial zero questions; it is not asserted as a reduction, hardness proof, or impossibility theorem for this narrower commensurate trigonometric grammar.",
+    "not_an_impossibility_theorem": true,
+    "conditional_or_approximate_authority_forbidden": [
+      "binary floating point",
+      "epsilon sign",
+      "finite sampling",
+      "subdivision cap",
+      "timeout",
+      "resource refusal",
+      "unproved transcendence conjecture"
+    ],
+    "next_constructive_options": [
+      "prove and implement an effective restricted-Pfaffian root/sign certificate route for the exact residual coefficient domain",
+      "find a stronger exact algebraic reduction for a further coupled sublanguage",
+      "retain PB-007-01 OPEN if neither route is established"
+    ]
+  },
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false,
+    "next_pre_gate_priority": "PB-007-03_BROADER_EXACT_SOURCE_CONSTRUCTION_AFTER_PB-007-01_THEOREM_BOUNDARY"
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "protected_semantics": {
+    "historical_source_audio_provenance_unchanged": true,
+    "canonical_journal_meaning_unchanged": true,
+    "exact_time_path_phase_correlation_preserved": true,
+    "source_uncertainty_preserved": true,
+    "positive_volume_material_preserved": true,
+    "holder_access_semantics_preserved": true,
+    "durable_body_lineage_preserved": true,
+    "timeout_refusal_uncertified_are_not_success": true,
+    "step_remains_conventional_engineering_output": true
+  }
+}
