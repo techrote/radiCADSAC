@@ -1,0 +1,83 @@
+{
+  "schema": "radicadsac-mc038-pb00701-even-trig-projective-boundary/17.0",
+  "task": "MC-038",
+  "corrective_issue": 196,
+  "source_baseline": "12e65ad2b032fcb9c4ac84b28b2b53195f9f194a",
+  "target_blocker": "PB-007-01",
+  "decision": "EXACT_SOURCE_DERIVED_EVEN_TRIG_PROJECTIVE_STURM_ROUTE_ESTABLISHED_GENERAL_COUPLED_ROUTE_OPEN",
+  "gate": "MC-B",
+  "gate_state": "NOT_ESTABLISHED",
+  "historical_v16_evidence": [
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-chebyshev-sturm-boundary-v16.json", "git_blob_sha1": "d5236f68be1effcffab28e814649936b259b0ede", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-report-v16.md", "git_blob_sha1": "a3913c6cedc3effa2930a8c2478c4a774e318fe0", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701_chebyshev_multiplier_model.py", "git_blob_sha1": "d07abb52bf6a7236d49a80774c40be3459f03fb5", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v16.py", "git_blob_sha1": "6cf047e02d3465f931441d273b25734642683b0b", "preserved": true},
+    {"path": "docs/machining-completeness/42-PB00701-CHEBYSHEV-STURM-MULTIPLIER.md", "git_blob_sha1": "a94a322375fa41b7afca4c3d765eefab4b8d890e", "preserved": true}
+  ],
+  "implemented_extension": {
+    "id": "EXACT_SOURCE_DERIVED_EVEN_TRIG_PROJECTIVE_STURM_MULTIPLIER",
+    "source_family": "finite exact odd-harmonic source maps factored as a real even-trigonometric multiplier times the established single-harmonic carrier",
+    "source_inversion": "with q=A-iB and m_k=(c_k-i*s_k)/2, derive p_r=q*m_r+conj(q)*m_{r+1}; determine normalized top phase from p_{m-1}=a*p_m+rho*conj(p_m), then recurse exactly and regenerate every source coefficient",
+    "projective_reduction": "t=tan(alpha); multiply by the known-positive (1+t^2)^m denominator to obtain an exact rational polynomial numerator N(t) on the real projective line",
+    "projective_authority": "reject an exact root at infinity; use an exact rational Cauchy bound plus MC-032 Sturm authority to prove zero finite real roots; establish sign exactly",
+    "precedence": "v15/v16 source families retain precedence; v17 requires a genuinely nonzero sine multiplier coefficient",
+    "carrier_dispatch": "delegate unchanged to v10/v11/v12 and retain v8 ownership of nonconstant carrier common factors",
+    "multiplicity_rule": "multiplication by a smooth globally nonzero exact multiplier preserves carrier zeros and finite multiplicities",
+    "forbidden_authority": ["caller factorization", "caller projective polynomial", "caller Sturm count", "caller sign", "binary float", "epsilon", "sampling", "numeric trigonometry", "approximate minimization", "timeout", "resource refusal as truth"]
+  },
+  "boundary_controls": [
+    "genuine sine multiplier blocked by v16 and certified by v17",
+    "exact positive and negative multiplier signs",
+    "exact projective infinity root fails closed",
+    "repeated finite projective root fails closed",
+    "algebraic irrational finite projective roots fail closed",
+    "exact +/-1/1000000 neighbours across the root boundary are distinguished",
+    "malformed source inversion, missing top data and wrong harmonic lattice fail closed",
+    "underdetermined top phase normalization is an explicit blocker",
+    "v15/v16 prior-route precedence is preserved",
+    "carrier common factor remains owned by v8",
+    "source-parameter mismatch is rejected",
+    "forged factorization/projective/Sturm/sign metadata cannot override source authority",
+    "binary-float authority is rejected",
+    "resource refusal is explicitly not a truth value",
+    "historical v16 evidence mutation is rejected",
+    "26-operation denominator shrinkage is rejected",
+    "false MC-B promotion is rejected"
+  ],
+  "full_blocker_review": {
+    "status": "OPEN",
+    "residual_branch": "coupled analytic and multi-harmonic predicates not admitting the exact source-derived normalized even-trigonometric multiplier factorization, including top-phase-underdetermined source maps and carriers outside v10/v11/v12 authority",
+    "not_an_impossibility_theorem": true
+  },
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false,
+    "next_pre_gate_priority": "PB-007-01 residual coupled analytic route after exact finite even-trigonometric multiplier factorization"
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "protected_semantics": {
+    "source_audio_provenance": true,
+    "canonical_journal": true,
+    "exact_time_path_phase": true,
+    "source_uncertainty": true,
+    "positive_volume_material": true,
+    "cutter_holder_access": true,
+    "durable_body_lineage": true,
+    "refusal_uncertified": true,
+    "conventional_step": true
+  }
+}
