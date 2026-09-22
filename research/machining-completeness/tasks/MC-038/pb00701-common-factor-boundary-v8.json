@@ -1,0 +1,107 @@
+{
+  "schema": "radicadsac-mc038-pb00701-common-factor-boundary/8.0",
+  "task": "MC-038",
+  "corrective_issue": 178,
+  "source_baseline": "c61425cefba46deea9b9012ec833f80621d15163",
+  "target_blocker": "PB-007-01",
+  "decision": "EXACT_COMMON_FACTOR_SUBGRAMMAR_ESTABLISHED_GENERAL_COUPLED_ROUTE_OPEN",
+  "gate": "MC-B",
+  "gate_state": "NOT_ESTABLISHED",
+  "historical_evidence": [
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-decision-boundary-v3.json", "git_blob_sha1": "ec2edaef5ef1cf838fc91e68b25147f41525ac2a", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-report-v3.md", "git_blob_sha1": "03105103fe9d90553e5add492efb073bd8c9ab1e", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701_event_model.py", "git_blob_sha1": "104c0e7a459cd7da5025853b246faff244a5948e", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/verify_pb00701.py", "git_blob_sha1": "b555e99f7b5978e6d7640a6389c83b5ce5569038", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-rational-turn-boundary-v6.json", "git_blob_sha1": "fcff758b5f227452fb65cf273b6e6d8b9f6ab2f8", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-report-v6.md", "git_blob_sha1": "b782bd980d5b491d0b1bd0a8b95b74704c44767f", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701_rational_turn_model.py", "git_blob_sha1": "a1316ff0f71b2d7aa80807843a74fd8280779cb2", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v6.py", "git_blob_sha1": "7fb1966247bbe2d46b243d3f01db85efdb2c8c84", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-coupled-bspline-boundary-v7.json", "git_blob_sha1": "e75c0a0ab48a9a4eba7249e203a50f7366973ba3", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-report-v7.md", "git_blob_sha1": "31755f3dbb2ea5a21abd3a979b9875cd259984cd", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py", "git_blob_sha1": "a086b625e1a6dea8bd202699d161167bb69cc9e7", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v7.py", "git_blob_sha1": "7a2f08e578d0f649fd004d30691aea28bd3ffd2d", "preserved": true},
+    {"path": "docs/machining-completeness/31-PB00701-COUPLED-BSPLINE-BOUNDARY.md", "git_blob_sha1": "6005fc55e2d18e71639e6bc31cfbc1597bf4a915", "preserved": true}
+  ],
+  "implemented_extension": {
+    "id": "EXACT_COMMON_FACTOR_COUPLED_ANALYTIC_REDUCTION",
+    "source_domain": "the existing v7 exact rational B-spline-modulated trigonometric affine-phase grammar, after exact knot-span lowering",
+    "factorization": "exact rational polynomial GCD followed by exact division of every nonzero modulation channel; acceptance requires one genuinely nonconstant common factor and degree-zero quotients with zero remainders",
+    "phase_partition": "exact source cuts at rational source points where affine phase reaches half-turn chart boundaries, including every tangent-half pole; no epsilon is used",
+    "trig_route": "each pole-safe constant-coefficient trigonometric chart is transformed by an exact quarter-turn identity and delegated to PB-007-01 v6 rational-turn/Sturm authority",
+    "factor_route": "MC-032 exact rational-polynomial Sturm/event authority supplies factor root counts, multiplicity and endpoint events",
+    "coincidence_route": "rational factor roots are evaluated against the trigonometric factor exactly; algebraic-irrational factor roots are excluded from rational trigonometric roots only under the stated nonzero-rational affine-phase Gelfond-Schneider preconditions",
+    "theorem_scope_generalized": false,
+    "not_claimed": [
+      "a universal exact decision procedure for non-common polynomial modulation",
+      "a result for irrational/transcendental phase coefficients",
+      "an impossibility theorem for the residual PB-007-01 grammar",
+      "closure of PB-007-01 or PB-007-02",
+      "MC-B acceptance"
+    ]
+  },
+  "boundary_controls": [
+    "simple common-factor root with exact Sturm count",
+    "repeated common-factor root with exact multiplicity",
+    "rational factor/trig coincidence with exact multiplicities added in the product",
+    "algebraic-irrational factor root disjointness only under explicit Gelfond-Schneider preconditions",
+    "source-span endpoint root with factor and trig endpoint multiplicities combined",
+    "phase-pole partitioning at exact rational source points without epsilon",
+    "constant common factor falls back and cannot masquerade as v8",
+    "non-common modulation remains PB-007-01 rather than sampling or timeout-as-truth",
+    "zero trig identity remains blocked rather than certified",
+    "zero phase rate uses prior exact stationary-phase authority rather than theorem laundering",
+    "source-parameter mismatch is rejected",
+    "binary-float authority is rejected",
+    "epsilon authority is rejected",
+    "forged quotient or common-factor evidence is not accepted from callers",
+    "resource refusal is not a truth value",
+    "26-operation denominator cannot shrink",
+    "MC-B cannot be promoted from this bounded subgrammar"
+  ],
+  "full_blocker_review": {
+    "status": "OPEN",
+    "residual_branch": "v7 spans with genuinely non-common nonconstant rational polynomial harmonic modulation coupled to nonzero rational affine trigonometric phase, plus broader required analytic/source cases not reduced by v3/v6/v7/v8",
+    "reason": "The exact common-factor product subgrammar now terminates, but the remaining admitted grammar is not generally reducible to one polynomial factor times one constant-coefficient rational trigonometric polynomial. No unconditional exact root/multiplicity procedure for every remaining required coupled predicate is established.",
+    "not_an_impossibility_theorem": true,
+    "forbidden_truth_substitutes": [
+      "binary floating point",
+      "epsilon sign",
+      "finite sampling",
+      "subdivision cap",
+      "timeout",
+      "resource refusal",
+      "unproved transcendence conjecture"
+    ]
+  },
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false,
+    "next_pre_gate_priority": "PB-007-01 residual non-common coupled analytic decision route"
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "protected_semantics": {
+    "source_audio_provenance_preserved": true,
+    "canonical_journal_preserved": true,
+    "exact_time_path_phase_correlation_preserved": true,
+    "source_uncertainty_preserved": true,
+    "positive_volume_material_preserved": true,
+    "cutter_holder_access_preserved": true,
+    "durable_body_lineage_preserved": true,
+    "refusal_uncertified_semantics_preserved": true,
+    "conventional_step_semantics_preserved": true
+  }
+}
