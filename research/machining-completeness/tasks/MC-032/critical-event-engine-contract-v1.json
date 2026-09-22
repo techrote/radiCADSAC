@@ -1,0 +1,105 @@
+{
+  "schema": "radicadsac-mc032-critical-event-engine/1.0",
+  "task": "MC-032",
+  "issue": 94,
+  "source_baseline": "0e2e5bfdda5fdf5b3e11ab5f98c0f2d9fa10188e",
+  "ownership": [
+    "MC032-A",
+    "MC032-B",
+    "MC032-C",
+    "CERT-026-A:event-classification"
+  ],
+  "input_authority": {
+    "source_parameter": "one shared programme-owned source parameter; independent coordinate/phase projections are not substitutes",
+    "canonical_geometry": "MC-003 canonical bytes and qualified MC-018..023 sweep evidence",
+    "body_identity": "durable body_id/lineage_id from canonical journal; backend topology identifiers are not authority"
+  },
+  "classifier": {
+    "algebraic": "exact rational polynomial evaluation, multiplicity by exact derivatives, and square-free Sturm root exclusion",
+    "interval_rule": "MC032-A returns a sign only when exact evidence proves the open interval root-free and neither endpoint is zero",
+    "critical_routing": "exact-zero or interior-root boxes route to MC032-B"
+  },
+  "analytic_route": {
+    "separated": "accept only an independently certified interval excluding zero",
+    "transversal": "accept only unique-root evidence with a strict positive certified derivative lower bound on the same source parameter",
+    "general_tangential_multiple_singular": {
+      "terminal": "TRANSCENDENTAL_EVENT_BLOCKER",
+      "blocker": "PB-007-01",
+      "may_be_guessed": false
+    }
+  },
+  "topology": {
+    "positive_volume_required": true,
+    "touching_is_material": false,
+    "durable_identity_authority": "canonical_journal_body_lineage",
+    "durable_transition_owner": "MC-033",
+    "bounded_event_certificate": "MC-032 may certify a critical connectivity event fact when independent event and connectivity evidence exists; it does not itself commit the durable body transition",
+    "universal_connectivity_blocker": "PB-007-04"
+  },
+  "termination": {
+    "terminal_states": [
+      "DECIDED",
+      "CERTIFIED",
+      "BLOCKED",
+      "UNCERTIFIED",
+      "RESOURCE_REFUSAL",
+      "SEMANTIC_BLOCKER"
+    ],
+    "provider_cycles": false,
+    "resource_exhaustion_is_truth": false
+  },
+  "truth_authority": {
+    "exact_rational_and_certified_bounds": true,
+    "epsilon_or_tolerance": false,
+    "timeout_or_budget": false,
+    "refinement_depth": false,
+    "binary_float": false,
+    "backend_topology_id": false
+  },
+  "certificate_binding": {
+    "fields": [
+      "input_digest",
+      "canonical_digest",
+      "sweep_digest",
+      "challenge_id",
+      "configuration_digest",
+      "decision"
+    ],
+    "digest": "SHA-256 over canonical sorted JSON",
+    "stale_or_mutated_binding": "reject"
+  },
+  "challenge_discipline": {
+    "owner": "MC-049",
+    "record_count": 64,
+    "custody": "PUBLIC_PRESELECTION_PREREGISTRATION",
+    "may_relabel_as_secret_or_held_out": false,
+    "mc032_modifies_challenge_set": false
+  },
+  "dependency_pins": {
+    "MC-008": {
+      "outcome_blob_sha": "a4b3f3451abedd06f2467a8e11741cdc63826e2b"
+    },
+    "MC-015": {
+      "outcome_blob_sha": "c334e7d9ed9aea5541338e0c0397f6b0e98ff3e6"
+    },
+    "MC-026": {
+      "outcome_blob_sha": "185693afc30b77097031ced218c9ae19fb1653ac"
+    }
+  },
+  "capability_promotions": [],
+  "preserved_open_obligations": [
+    "PB-007-01",
+    "PB-007-04",
+    "PO-04",
+    "PO-07",
+    "MC-B"
+  ],
+  "protected_semantics": [
+    "canonical journal remains durable source of intent",
+    "positive-volume material semantics",
+    "durable body_id and lineage_id are independent of backend topology",
+    "historical source/audio/provenance are immutable",
+    "timeouts/resource refusals are terminal evidence states, not fallback truth",
+    "conventional STEP semantics are unchanged"
+  ]
+}
