@@ -1,0 +1,87 @@
+{
+  "schema": "radicadsac-mc038-pb00701-finite-multiplier-boundary/15.0",
+  "task": "MC-038",
+  "corrective_issue": 192,
+  "source_baseline": "c61fc3338992f40e3382eb75d69d2a3bfbe5003e",
+  "target_blocker": "PB-007-01",
+  "decision": "EXACT_FINITE_STRICT_DOMINANCE_EVEN_COSINE_MULTIPLIER_FAMILY_ESTABLISHED_GENERAL_MULTIHARMONIC_ROUTE_OPEN",
+  "gate": "MC-B",
+  "gate_state": "NOT_ESTABLISHED",
+  "historical_v14_evidence": [
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-multiterm-multiplier-boundary-v14.json", "git_blob_sha1": "7483bdc568341b89a24f0e27ba6c8e3d72db551d", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-report-v14.md", "git_blob_sha1": "349fc4b6f12ba0d1a53a374f17a471fba7bd6aa8", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701_multiterm_multiplier_model.py", "git_blob_sha1": "7eb80ea1a660b5a935e67c45355784cba4d7c34f", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v14.py", "git_blob_sha1": "a7221fe951d54d1c83f146b4059808303f4d8cee", "preserved": true},
+    {"path": "docs/machining-completeness/40-PB00701-MULTITERM-MULTIPLIER.md", "git_blob_sha1": "3875e142dc77eb96a40ef77ba475dafff1c3f88e", "preserved": true}
+  ],
+  "implemented_extension": {
+    "id": "EXACT_FINITE_STRICT_DOMINANCE_EVEN_COSINE_MULTIPLIER_REDUCTION",
+    "harmonic_family": "finite odd-harmonic lattice {h,3h,...,(2m+1)h}, h>0, finite m>=3",
+    "factor_identity": "F=(lambda_0+sum_{k=1}^m lambda_k*cos(2*k*alpha))*(A*cos(alpha)+B*sin(alpha)), alpha=2*pi*h*theta_turn",
+    "normalization": "highest nonzero multiplier coefficient normalized to lambda_m=1 by absorbing its exact nonzero scalar into the carrier reconstructed from the top source channels",
+    "source_derived_inversion": "A=2*C_top; B=2*S_top; lambda_0=(c_0+s_0)/2; lambda_1=c_0-s_0; for 1<=r<m infer lambda_r=c_r+s_r and lambda_{r+1}=c_r-s_r; require all overlapping inferences and regenerated source equations to agree exactly",
+    "multiplier_authority": "exact rational |lambda_0|>sum_{k>=1}|lambda_k| implies the finite even-cosine multiplier has constant nonzero sign",
+    "carrier_dispatch": "delegate exactly to v10 dual-projective, v11 phase-dominance when applicable, and v12 component-root partition; retain v8 ownership for nonconstant carrier gcd; preserve v14 and earlier route precedence",
+    "multiplicity_rule": "multiplication by a smooth globally nonzero factor preserves the carrier zero set and finite root multiplicities exactly",
+    "forbidden_authority": ["caller factorization assertion", "caller lambda vector", "binary float", "epsilon", "sampling", "numeric trigonometry", "approximate minimization", "timeout", "resource refusal as truth"]
+  },
+  "boundary_controls": [
+    "genuine {h,3h,5h,7h} case blocked by v14 and certified by v15",
+    "broader finite degree m=4 case is source-derived and certified",
+    "exact strict-dominance equality fails closed",
+    "exact +1/1000000 dominance neighbour certifies and exact -1/1000000 neighbour fails closed",
+    "positive and negative lambda_0 strict-dominance cases",
+    "mixed-sign higher multiplier coefficients are inverted exactly",
+    "missing intermediate exact-zero harmonic channel is reconstructed as zero rather than tolerance-filled",
+    "inconsistent adjacent lambda inference is rejected",
+    "perturbed source coefficient identity is rejected",
+    "missing or zero top carrier channel is rejected",
+    "wrong, even, and extra non-lattice harmonic channels are rejected",
+    "v14 prior-route ownership is preserved",
+    "v8 common-factor ownership is not relabelled",
+    "unsupported carrier residual remains PB-007-01",
+    "source-parameter projection mismatch is rejected",
+    "binary-float and epsilon authority are rejected",
+    "forged lambda vector and factor metadata cannot override source coefficients",
+    "resource refusal is not a truth value",
+    "historical v14 evidence mutation is rejected",
+    "26-operation denominator shrinkage is rejected",
+    "false MC-B promotion is rejected"
+  ],
+  "full_blocker_review": {
+    "status": "OPEN",
+    "residual_branch": "multi-harmonic coupled predicates not admitting the exact finite strict-dominance even-cosine factor family, plus carrier cells outside established v10/v11/v12 authority",
+    "not_an_impossibility_theorem": true
+  },
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false,
+    "next_pre_gate_priority": "PB-007-01 residual multi-harmonic constructions outside finite strict-dominance even-cosine multiplier factorization"
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "protected_semantics": {
+    "source_audio_provenance": true,
+    "canonical_journal": true,
+    "exact_time_path_phase": true,
+    "source_uncertainty": true,
+    "positive_volume_material": true,
+    "cutter_holder_access": true,
+    "durable_body_lineage": true,
+    "refusal_uncertified": true,
+    "conventional_step": true
+  }
+}
