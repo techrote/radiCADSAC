@@ -244,7 +244,7 @@ def run_model_controls():
     assert zero_trig["status"] == "BLOCKED"
     assert zero_trig["blocker"] == "PB-007-01"
 
-    stationary = model.classify_required_analytic_event(spec(sin={"1": linear_factor(1)}, rate="0"))
+    stationary = model.classify_required_analytic_event(spec(cos={"1": linear_factor(1)}, rate="0"))
     assert stationary["status"] == "CERTIFIED"
     assert stationary["spans"][0]["route_kind"] == "EXACT_STATIONARY_PHASE_POLYNOMIAL"
 
