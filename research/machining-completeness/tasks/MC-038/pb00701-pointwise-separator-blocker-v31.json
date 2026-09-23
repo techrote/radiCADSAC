@@ -33,7 +33,7 @@
     "caller-supplied diagnostic separator remains explicitly non-authoritative",
     "binary float, numerical trigonometry, sampling, epsilon, approximate critical values, unbounded search, arbitrary denominator/depth caps and timeout remain forbidden truth authority",
     "unsupported exact algebraic ordering and exact-resource refusal propagate fail closed",
-    "historical v30 evidence is blob-pinned, domain remains 26 operations and MC-B/MC-1 remain NOT_ESTABLISHED"
+    "historical v30 evidence is blob-pinned, the frozen 26-operation denominator is preserved, and MC-B/MC-1 remain NOT_ESTABLISHED"
   ],
   "programme_effect": {
     "PB-007-01": "OPEN",
