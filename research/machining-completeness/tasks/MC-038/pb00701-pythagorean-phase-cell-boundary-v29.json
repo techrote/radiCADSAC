@@ -1,0 +1,98 @@
+{
+  "schema": "radicadsac-mc038-pb00701-pythagorean-phase-cell-boundary/29.0",
+  "task": "MC-038",
+  "corrective_issue": 221,
+  "source_baseline": "77cbe474927f66ebb49c13a1733dfa7359b3f3b7",
+  "target_blocker": "PB-007-01",
+  "decision": "EXACT_5_12_13_NESTED_ALGEBRAIC_PHASE_CELL_PROJECTION_ESTABLISHED_GENERAL_COUPLED_ROUTE_OPEN",
+  "gate_state": "NOT_ESTABLISHED",
+  "historical_v28_evidence": [
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-algebraic-phase-cell-boundary-v28.json", "git_blob_sha1": "ea6599571aca2fad0a1e8050ac1b529756588df2", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-report-v28.md", "git_blob_sha1": "fbfd3f31e7121b92f42a8c76421513661e1d7308", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_phase_cell_model.py", "git_blob_sha1": "117dafa3073dd2a5dc00c288089fd88d41628fae", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/test_pb00701_algebraic_phase_cell_adversarial.py", "git_blob_sha1": "6390eb45df036b5f14077717b54606e04918f83a", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v28.py", "git_blob_sha1": "288078e80b1e123bfbb936b2295943ae73e62c9a", "preserved": true},
+    {"path": "docs/machining-completeness/54-PB00701-ALGEBRAIC-PHASE-CELL.md", "git_blob_sha1": "0cbad28e5afdcee6ecde40d005ebac8b8197593d", "preserved": true},
+    {"path": ".github/workflows/mc1-pb00701-v28.yml", "git_blob_sha1": "00a871f70209f9adfcb9be3f8683a5a1c0497936", "preserved": true}
+  ],
+  "implemented_extension": {
+    "id": "EXACT_5_12_13_NESTED_ALGEBRAIC_PHASE_CELL_PROJECTION_DERIVATIVE_DOMINANCE",
+    "scope": "exact lowered multi-harmonic spans still blocked after complete v8-v28 authority because the v28 6/7 dominant and 1/2 transverse rational projection bounds are too conservative",
+    "phase_cell_authority": "exact 1/16-turn nested cells use endpoint magnitudes cos(pi/8)=sqrt(2+sqrt(2))/2 and sin(pi/8)=sqrt(2-sqrt(2))/2; the rational 5-12-13 bounds cos(pi/8)>12/13 and sin(pi/8)<5/13 reduce to sqrt(2)>238/169 and then 57122>56644",
+    "projection": "for SIN-dominant anchors use exact COS cells [-1/16,1/16]+k or [7/16,9/16]+k; for COS-dominant anchors use exact SIN cells [3/16,5/16]+k or [11/16,13/16]+k, including positive and negative quadrature cells",
+    "residual_authority": "retain both selected-harmonic amplitude derivatives, harmonic-0 derivative, and every non-anchor derivative term; prove all finite signed margins 6|hr|((12/13)sign(D)D-(5/13)sigma_T T)-sum sigma_i R_i strictly positive with MC-032 exact endpoint/Sturm authority",
+    "endpoint_authority": "reuse established exact rational-turn endpoint event relations and preserved simple-root summary authority after the complete derivative sign is proved",
+    "precedence": "complete v8-v28 classification retains strict precedence; v29 consumes only residual blocked lowered spans",
+    "termination": "finite exact 1/16-turn cell containment plus finite 2^(1+N) exact rational-polynomial orthant decisions; no subdivision, sampling or numerical minimization",
+    "forbidden_authority": [
+      "caller phase cells or algebraic endpoint values",
+      "caller projection or separation bounds",
+      "caller root counts or multiplicities",
+      "binary float",
+      "epsilon or tolerance as authority",
+      "sampling",
+      "numerical trigonometry",
+      "approximate algebraic comparison",
+      "approximate root ordering",
+      "adaptive subdivision",
+      "arbitrary refinement depth",
+      "timeout",
+      "resource refusal as truth"
+    ]
+  },
+  "boundary_controls": [
+    "genuine complete-v8-v28-blocked residual source certified only by the sharper 12/13 and 5/13 nested phase-cell projection bounds",
+    "exact 1/16-turn cell boundary and signed plus/minus 1/1000000 phase neighbours",
+    "exact projection-bound equality and signed plus/minus 1/1000000 rational neighbours",
+    "exact residual-L1 equality and signed plus/minus 1/1000000 neighbours",
+    "positive and negative phase rate",
+    "SIN-dominant and COS-dominant projection orientations",
+    "positive and negative dominant quadrature phase cells",
+    "unsupported wider nested phase cell fails closed",
+    "historical v28 success retains complete v8-v28 precedence",
+    "v27 certificate-cut root deduplication and multiplicity compatibility remain preserved transitively through v28 verification",
+    "forged caller algebraic cell separation root and multiplicity metadata are ignored",
+    "binary-float exact-authority rejection",
+    "source-parameter mismatch rejection",
+    "exact resource refusal propagates and is not a truth value",
+    "historical v28 blob hashes preserved",
+    "frozen 26-operation denominator preserved",
+    "false MC-B promotion rejected"
+  ],
+  "full_blocker_review": {
+    "status": "OPEN",
+    "residual_branch": "sources still blocked after complete v8-v29 exact authority, including phase intervals outside finite exact algebraic cells and coupled projections whose exact separation remains unproved by current rational/algebraic authority",
+    "not_an_impossibility_theorem": true
+  },
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false,
+    "next_pre_gate_priority": "PB-007-01 exact projective mixed-phase comparison beyond the finite v29 nested algebraic phase cells, or a precise theorem boundary if no further exact reduction exists"
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "protected_semantics": {
+    "source_audio_provenance": true,
+    "canonical_journal": true,
+    "exact_time_path_phase": true,
+    "source_uncertainty": true,
+    "positive_volume_material": true,
+    "cutter_holder_access": true,
+    "durable_body_lineage": true,
+    "refusal_uncertified": true,
+    "conventional_step": true
+  }
+}
