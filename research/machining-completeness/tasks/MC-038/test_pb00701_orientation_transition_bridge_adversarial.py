@@ -16,8 +16,8 @@ import test_pb00701_signed_a_direct_rotated_coordinate_adversarial as v39test  #
 
 EPS = Fraction(1, 1000000)
 TINY = Fraction(1, 100000000)
-C1 = [Fraction(-5, 6), Fraction(2)]
-S1 = [Fraction(-1, 6)]
+C1 = [Fraction(-23, 60), Fraction(11, 10)]
+S1 = [Fraction(17, 60), Fraction(-9, 10)]
 
 
 def _spec(cos_polys, sin_polys=None, *, offset="-1/8", rate="1/16", **extra):
@@ -74,11 +74,11 @@ def run():
     assert anchor["direction"] == "INCREASING"
     assert anchor["sign_identity"] == "sign(D)=sign(B')*diagonal_projection_sign"
     assert anchor["proof_cut_is_physical_event"] is False
-    assert derived["C_polynomial"] == ["-5/6", "2"]
-    assert derived["S_polynomial"] == ["-1/6"]
-    assert derived["A_polynomial"] == ["-1/2", "1"]
+    assert derived["C_polynomial"] == ["-23/60", "11/10"]
+    assert derived["S_polynomial"] == ["17/60", "-9/10"]
+    assert derived["A_polynomial"] == ["-1/20", "1/10"]
     assert derived["B_polynomial"] == ["-1/3", "1"]
-    assert derived["A_derivative_polynomial"] == ["1"]
+    assert derived["A_derivative_polynomial"] == ["1/10"]
     assert derived["B_derivative_polynomial"] == ["1"]
     assert derived["sigma_B_prime"] == 1
     assert derived["B_prime_bar_polynomial"] == ["1"]
@@ -102,7 +102,7 @@ def run():
 
     # Both whole-span v39/v40 orientation prerequisites genuinely fail for the source-owned
     # A and B. The integrated classifier above then proves the bridge only after complete v40.
-    assert v40.v39._derive_signed_a_orientation([Fraction(-1, 2), 1])["status"] == "BLOCKED"
+    assert v40.v39._derive_signed_a_orientation([Fraction(-1, 20), Fraction(1, 10)])["status"] == "BLOCKED"
     assert v40._derive_signed_b_orientation([Fraction(-1, 3), 1])["status"] == "BLOCKED"
 
     # Keep a live non-anchor derivative residual explicitly without another full predecessor pass.
@@ -119,7 +119,7 @@ def run():
     # Exact A-orientation zero and signed rational neighbors remain admissible and event-neutral.
     assert Fraction(derived["A_polynomial"][0]) + Fraction(1, 2) * Fraction(derived["A_polynomial"][1]) == 0
     for delta in (-EPS, EPS):
-        c, s = _cs_from_ab(Fraction(-1, 2) + delta, 1, Fraction(-1, 3), 1)
+        c, s = _cs_from_ab(Fraction(-1, 20) + delta, Fraction(1, 10), Fraction(-1, 3), 1)
         cert = model._transition_derivative_certificate(
             {1: c}, {1: s}, Fraction(-1, 8), Fraction(1, 16), 1
         )

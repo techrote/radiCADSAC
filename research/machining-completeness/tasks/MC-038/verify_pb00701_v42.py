@@ -93,11 +93,12 @@ def validate_artifact(artifact, *, check_repo=True):
         assert construction[forbidden] is False
 
     acceptance = artifact["acceptance_source"]
-    assert acceptance["C_1"] == "-5/6+2s"
-    assert acceptance["S_1"] == "-1/6"
-    assert acceptance["derived_A"] == "-1/2+s"
+    assert acceptance["C_1"] == "-23/60+11*s/10"
+    assert acceptance["S_1"] == "17/60-9*s/10"
+    assert acceptance["derived_A"] == "-1/20+s/10"
     assert acceptance["derived_B"] == "-1/3+s"
-    assert acceptance["derived_A_prime"] == acceptance["derived_B_prime"] == "1"
+    assert acceptance["derived_A_prime"] == "1/10"
+    assert acceptance["derived_B_prime"] == "1"
     assert acceptance["A_interior_zero"] == "1/2"
     assert acceptance["B_interior_zero"] == "1/3"
     assert acceptance["sigma_B_prime"] == 1

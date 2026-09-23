@@ -38,10 +38,10 @@ Strict equality fails closed. No numerical trigonometry, sampling, tolerance, ep
 
 The acceptance source is
 
-- `C_1=-5/6+2s`;
-- `S_1=-1/6`;
-- hence `A=s-1/2` and `B=s-1/3` both have simple interior zeros;
-- `A'=B'=1`;
+- `C_1=-23/60+11s/10`;
+- `S_1=17/60-9s/10`;
+- hence `A=s/10-1/20` and `B=s-1/3` both have simple interior zeros;
+- `A'=1/10`, `B'=1` (so both original `C'` and `S'` are nonzero);
 - exact harmonic-1 phase interval `[-1/8,-1/16]` with rate `1/16` lies inside the supported diagonal cell.
 
 Complete v40 blocks because neither whole-span signed-A nor signed-B orientation is strict. V42 derives `sigma_B_prime=+1` and certifies the full closed span. This directly repairs the obstruction recorded for #245 rather than attempting another orientation-root cut.
