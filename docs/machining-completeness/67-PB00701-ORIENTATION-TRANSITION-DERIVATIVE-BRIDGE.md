@@ -28,7 +28,7 @@ Thus `sign(D)=sigma_B_prime*diagonal_projection_sign`. Selected `C'` and `S'` ar
 
 ## Why this is not v41 partitioning
 
-The bridge certifies the complete **closed** transition span directly. It does not cut at `A=0`/`B=0`, reinterpret a child as open or half-open, or add an epsilon neighborhood. Proof orientation zeros are event-neutral and do not alter physical endpoint/root/multiplicity semantics. Once this independent bridge is merged and verified, #245 may resume composition using it as the missing handoff authority.
+The bridge certifies the complete **closed** transition span directly. It does not cut at `A=0`/`B=0`, reinterpret a child as open or half-open, or add an epsilon neighborhood. A proof orientation zero is not a physical event: it is event-neutral bookkeeping and does not alter physical endpoint/root/multiplicity semantics. Once this independent bridge is merged and verified, #245 may resume composition using it as the missing handoff authority.
 
 ## Fail-closed boundary
 
