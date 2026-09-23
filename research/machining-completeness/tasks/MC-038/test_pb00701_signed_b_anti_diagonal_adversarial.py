@@ -98,7 +98,7 @@ def run():
     assert anchor["orientation_is_proof_bookkeeping_only"] is True
     assert cell["cell"] == ["1/16", "3/16"] and cell["k"] == 0
     assert cell["anti_diagonal_projection_sign_number"] == 1
-    assert "quarter-turn" in cell["relation"].lower()
+    assert "quarter_turn" in cell["relation"].lower()
     assert cell["diagonal_symmetry_certificate"]["status"] == "CERTIFIED"
     assert derived["C_polynomial"] == ["19/20", "1/10"]
     assert derived["S_polynomial"] == ["-21/20", "1/10"]
