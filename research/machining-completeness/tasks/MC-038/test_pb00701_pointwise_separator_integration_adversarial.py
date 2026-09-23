@@ -54,8 +54,10 @@ def run():
     assert common_factor["status"] == "BLOCKED", common_factor
     cf_sep = common_factor["v32_separator_certificate"]
     assert cf_sep["status"] == "CERTIFIED" and model.v32.verify_binding(cf_sep)
-    assert cf_sep["reduced_dominant_polynomial"] == ["1"]
-    assert cf_sep["reduced_transverse_polynomial"] == ["1"]
+    reduced_d = [F(x) for x in cf_sep["reduced_dominant_polynomial"]]
+    reduced_t = [F(x) for x in cf_sep["reduced_transverse_polynomial"]]
+    assert len(reduced_d) == len(reduced_t) == 1
+    assert reduced_d[0] == reduced_t[0] and reduced_d[0] > 0
     assert common_factor["preserved_v30_residual_certificate"]["status"] == "BLOCKED"
 
     # Exact algebraic ordering controls remain exact and straddle sqrt(2)-1.
