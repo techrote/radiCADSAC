@@ -1,0 +1,130 @@
+{
+  "schema": "radicadsac-mc038-pb00701-phase-sector-partition-boundary/27.0",
+  "task": "MC-038",
+  "corrective_issue": 216,
+  "source_baseline": "cad06a39b2ba28d3b560dff409940473f4a3c186",
+  "target_blocker": "PB-007-01",
+  "decision": "EXACT_FINITE_RATIONAL_PHASE_SECTOR_PARTITION_COMPOSITION_ESTABLISHED_GENERAL_COUPLED_ROUTE_OPEN",
+  "gate": "MC-B",
+  "gate_state": "NOT_ESTABLISHED",
+  "historical_v26_evidence": [
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701-pointwise-component-cone-boundary-v26.json",
+      "git_blob_sha1": "13d53fdff086bda2937684d6e7b4cd6b431b0441",
+      "preserved": true
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701-report-v26.md",
+      "git_blob_sha1": "cc68b7f105b738f5fe0d03e520d718f5f8781cc9",
+      "preserved": true
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701_pointwise_component_cone_model.py",
+      "git_blob_sha1": "a303bba600fa83a1b55c8e113ce1ec7d06f68590",
+      "preserved": true
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/test_pb00701_pointwise_component_cone_adversarial.py",
+      "git_blob_sha1": "b94998804a72f439824b0db3383c1b942446c7cc",
+      "preserved": true
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v26.py",
+      "git_blob_sha1": "b64ff4b82f2caa04bbf0128a0cb2a757ee7af2f7",
+      "preserved": true
+    },
+    {
+      "path": "docs/machining-completeness/52-PB00701-POINTWISE-COMPONENT-CONE.md",
+      "git_blob_sha1": "1897bd75602588048202547c57d47ed7a7a98f36",
+      "preserved": true
+    },
+    {
+      "path": ".github/workflows/mc1-pb00701-v26.yml",
+      "git_blob_sha1": "a2a2c834cefb57620ef09b7fbdfa9ea809aaac60",
+      "preserved": true
+    }
+  ],
+  "implemented_extension": {
+    "id": "EXACT_FINITE_RATIONAL_PHASE_SECTOR_CERTIFICATE_CUT_COMPOSITION",
+    "scope": "Residual v26-blocked multi-harmonic exact-rational affine-phase spans whose whole-span phase sector fails but whose finite exact rational sector children are decidable by preserved v8-v26 authority.",
+    "cut_authority": "Every certificate cut is the exact rational affine preimage of an existing SIN/COS half-magnitude sector endpoint for a source-derived mixed candidate harmonic; external endpoints are omitted and coincident cuts deduplicate exactly.",
+    "reparameterization": "Every child polynomial is exactly substituted under s=a+(b-a)u over rational a,b and re-encoded as a single clamped exact rational B-spline without changing the shared source parameter identity.",
+    "child_authority": "Each child is classified once by the complete preserved v8-v26 classifier. Every child must be CERTIFIED; blocker, semantic blocker or resource refusal propagates fail-closed.",
+    "composition": "Child exact endpoint relations must agree at every internal cut. A shared ZERO endpoint is one parent-open root, counted once only when both children independently prove exact multiplicity one. Child open roots and external endpoint roots compose exactly.",
+    "termination": "The boundary family and candidate harmonic set are finite, affine preimages are exact rationals, sorting/deduplication is exact, and every resulting child is classified once. No adaptive subdivision or refinement cap exists.",
+    "precedence": "All v8-v26 authority runs before v27 and retains ownership of every source it already certifies.",
+    "forbidden_authority": [
+      "caller partition or cut metadata",
+      "caller child certificates or root counts",
+      "binary float arithmetic",
+      "epsilon or tolerance-expanded cuts",
+      "sampling or numerical trigonometry",
+      "approximate root ordering",
+      "adaptive subdivision or arbitrary refinement depth",
+      "timeout or resource cap as mathematical evidence",
+      "resource refusal as a truth value"
+    ]
+  },
+  "acceptance_case": {
+    "description": "A genuine v26-blocked h=1 mixed source spans harmonic phase [1/12,1/4] and crosses the exact 1/6 half-magnitude boundary at source s=1/2. The left exact child is certified by preserved v24 mixed-quadrature authority and the right exact child by preserved v25/v26 component-cone authority.",
+    "whole_span_v26": "BLOCKED",
+    "exact_cut": "1/2",
+    "expected_children": 2,
+    "global_event": "one simple open root with NEGATIVE left endpoint and POSITIVE right endpoint"
+  },
+  "boundary_controls": [
+    "genuine whole-span v26-blocked source certified only after exact rational phase-sector partition",
+    "positive and negative phase-rate cut-order reversal",
+    "external sector endpoint equality creates no zero-width child",
+    "signed 1/1000000 boundary neighbours around first interior cut",
+    "multiple exact interior cuts and coincident cut deduplication across harmonic/boundary families",
+    "internal-cut ZERO event is deduplicated to one parent-open simple root",
+    "internal-cut endpoint relation mismatch fails closed",
+    "missing exact internal-cut multiplicity authority fails closed",
+    "one blocked child keeps the parent blocked",
+    "exact child resource refusal propagates and is not a truth value",
+    "forged caller partition/cut/child/root metadata is ignored",
+    "binary-float source authority is rejected",
+    "source-parameter mismatch remains a semantic blocker",
+    "historical v26 prior-route ownership and exact evidence hashes are preserved",
+    "frozen 26-operation denominator remains unchanged",
+    "false MC-B promotion is rejected"
+  ],
+  "full_blocker_review": {
+    "status": "OPEN",
+    "residual_branch": "Residual coupled analytic spans still blocked after preserved v8-v27 exact routes remain PB-007-01 work.",
+    "not_an_impossibility_theorem": true,
+    "next_repair_direction": "Use the exact v27 phase cells as the new normalization boundary and target residual cells that remain blocked because no existing fixed-sign derivative anchor applies; do not widen with numerical subdivision or retry MC-B."
+  },
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false,
+    "next_pre_gate_priority": "PB-007-01 residual exact phase-cell decision beyond v27"
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "protected_semantics": {
+    "source_audio_provenance": true,
+    "canonical_operation_journal": true,
+    "exact_time_path_phase": true,
+    "source_uncertainty": true,
+    "positive_volume_material": true,
+    "cutter_holder_access": true,
+    "durable_body_lineage": true,
+    "refusal_uncertified": true,
+    "conventional_step": true
+  }
+}
