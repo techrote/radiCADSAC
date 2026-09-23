@@ -1,0 +1,129 @@
+{
+  "schema": "radicadsac-mc038-pb00701-signed-a-direct-rotated-coordinate/39.0",
+  "task": "MC-038",
+  "corrective_issue": 241,
+  "source_baseline": "783901d3682174406cc257bef07b27a714bb922d",
+  "target_blocker": "PB-007-01",
+  "decision": "EXACT_SIGNED_A_DIRECT_ROTATED_COORDINATE_ROUTE_ESTABLISHED_PB00701_OPEN",
+  "gate_state": "NOT_ESTABLISHED",
+  "historical_evidence": [
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701_direct_rotated_coordinate_model.py",
+      "git_blob_sha1": "f943ee9b0c093bb84d559beb403d83e07646c316",
+      "role": "v38 direct rotated-coordinate executable precedence"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/test_pb00701_direct_rotated_coordinate_adversarial.py",
+      "git_blob_sha1": "28f77dde12fd1dab014170bbc269c4d1c31ee64a",
+      "role": "v38 adversarial and endpoint precedence"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701-direct-rotated-coordinate-v38.json",
+      "git_blob_sha1": "0763331b7917ecf8b02ff99d0fdc36a3c69b1b2e",
+      "role": "v38 machine-readable authority"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701_pointwise_separator_integration_model.py",
+      "git_blob_sha1": "7d6c94e48c018fd6570336fea78930a7169cd650",
+      "role": "v33 amplitude-derivative theorem-boundary evidence"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701-pointwise-separator-integration-v33.json",
+      "git_blob_sha1": "0002c2283b4ef822f23b19ee821dcdd4bfe72a82",
+      "role": "v33 machine-readable blocker evidence"
+    }
+  ],
+  "construction": {
+    "family": "source-owned exact rational selected-harmonic quadratures C_h(s), S_h(s) with either strict sign of A=(C+S)/2",
+    "source_authority": "regenerate A=(C+S)/2, B=(C-S)/2, A'=(C'+S')/2 and B'=(C'-S')/2 only from source-owned exact rational coefficients",
+    "orientation_authority": "MC-032 endpoint/Sturm proves either A>0 or -A>0 on the complete closed span and derives sigma_A in {-1,+1}; caller orientation metadata is non-authoritative",
+    "oriented_variables": "Abar=sigma_A*A, Bbar=sigma_A*B, Abar'=sigma_A*A', Bbar'=sigma_A*B'",
+    "phase_cell": "-3/16+k/2 <= h*phi <= -1/16+k/2",
+    "rotated_variable": "X=cos(theta)+sin(theta), Y=cos(theta)-sin(theta)",
+    "oriented_selected_harmonic_identity": "sigma_A*D=Abar'(s)*X+Bbar'(s)*Y+2*pi*h*r*(Abar(s)*Y-Bbar(s)*X)",
+    "physical_selected_harmonic_identity": "D=A'(s)*X+B'(s)*Y+2*pi*h*r*(A(s)*Y-B(s)*X)",
+    "exact_rational_bounds": {
+      "L_joint_Y_lower": "2856/2197",
+      "U_joint_X_upper": "99/182",
+      "W_joint_Y_upper": "99/70",
+      "two_pi_lower": "6"
+    },
+    "phase_gap": "for sigma_B in {-1,+1}, P_sigma=Abar*(2856/2197)-sigma_B*Bbar*(99/182)>0",
+    "strict_margin": "for both sigma_B and every residual sign orthant: 6*|h*r|*P_sigma-sigma_Ap*(99/182)*Abar'-sigma_Bp*(99/70)*Bbar'-sum_i sigma_i*R_i>0",
+    "physical_sign_recovery": "sign(D)=sigma_A*sign(h*r)*diagonal_projection_sign",
+    "selected_C_prime_and_S_prime_consumed_only_jointly": true,
+    "selected_phase_C_and_phase_S_consumed_only_jointly": true,
+    "all_nonanchor_residuals_retained": true,
+    "positive_A_precedence_owned_by_v38": true,
+    "caller_orientation_trusted": false,
+    "caller_rotated_coordinates_trusted": false,
+    "caller_derivatives_trusted": false,
+    "caller_certificate_trusted": false,
+    "sampling_used": false,
+    "epsilon_used": false,
+    "numerical_trigonometry_used": false,
+    "arbitrary_subdivision_cap_used": false
+  },
+  "acceptance_source": {
+    "C_1": "-(1+6s/5)",
+    "S_1": "-(11/10+6s/5)",
+    "canonical_gcd": "1",
+    "derived_A": "-21/20-6s/5",
+    "derived_B": "1/20",
+    "derived_A_prime": "-6/5",
+    "derived_B_prime": "0",
+    "sigma_A": -1,
+    "derived_Abar": "21/20+6s/5",
+    "derived_Bbar": "-1/20",
+    "phase_interval_turns": ["-3/16", "-1/16"],
+    "nonanchor_harmonic": "nonzero tiny h=2 COS term retained in the exact residual",
+    "v38_result": "BLOCKED_BECAUSE_A_IS_STRICTLY_NEGATIVE",
+    "v39_result": "CERTIFIED",
+    "complete_waveform_is_exact_negation_of_v38_acceptance_fixture": true
+  },
+  "boundary_controls": [
+    "both sigma_A signs are exercised at low level while positive-A complete sources remain historical v38 precedence",
+    "exact A=0 strict-sign boundary plus signed rational 1/1000000 positive/negative neighbours and a sign-changing A polynomial",
+    "positive and negative phase-rate cases and opposite k-parity diagonal projection-sign cells",
+    "exact diagonal phase-cell boundary equality and signed rational 1/1000000 neighbours",
+    "exact oriented phase-gap equality and signed rational 1/1000000 neighbours",
+    "strict complete-margin equality and signed rational 1/1000000 neighbours",
+    "zero/open/left-endpoint/right-endpoint event outcomes preserve exact endpoint/root/multiplicity authority",
+    "forged sigma_A, sign, orientation, oriented-polynomial, derivative, cell, bound, margin and root metadata are non-authoritative",
+    "source-coordinate mismatch, unsupported phase cells and binary floats fail closed",
+    "exact resource refusal cannot be laundered into a truth value",
+    "historical v30, v37 and v38 successes retain exact precedence and v33 blocker evidence remains pinned",
+    "frozen 26-operation denominator is unchanged and false MC-B promotion is rejected"
+  ],
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false,
+    "next_pre_gate_priority": "continue only from residual PB-007-01 theorem blockers; do not retry MC-B"
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "protected_semantics": {
+    "source_audio_provenance": true,
+    "canonical_journal": true,
+    "exact_time_path_phase": true,
+    "source_uncertainty": true,
+    "positive_volume_material": true,
+    "cutter_holder": true,
+    "durable_body_lineage": true,
+    "refusal_uncertified": true,
+    "conventional_STEP": true
+  }
+}

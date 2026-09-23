@@ -1,0 +1,45 @@
+name: mc1-pb00701-v39
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_signed_a_direct_rotated_coordinate_model.py'
+      - 'research/machining-completeness/tasks/MC-038/test_pb00701_signed_a_direct_rotated_coordinate_adversarial.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v39.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-signed-a-direct-rotated-coordinate-v39.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-report-v39.md'
+      - 'docs/machining-completeness/65-PB00701-SIGNED-A-DIRECT-ROTATED-COORDINATE.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_direct_rotated_coordinate_model.py'
+      - 'research/machining-completeness/tasks/MC-038/test_pb00701_direct_rotated_coordinate_adversarial.py'
+      - '.github/workflows/mc1-pb00701-v39.yml'
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_signed_a_direct_rotated_coordinate_model.py'
+      - 'research/machining-completeness/tasks/MC-038/test_pb00701_signed_a_direct_rotated_coordinate_adversarial.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v39.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-signed-a-direct-rotated-coordinate-v39.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-report-v39.md'
+      - 'docs/machining-completeness/65-PB00701-SIGNED-A-DIRECT-ROTATED-COORDINATE.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_direct_rotated_coordinate_model.py'
+      - 'research/machining-completeness/tasks/MC-038/test_pb00701_direct_rotated_coordinate_adversarial.py'
+      - '.github/workflows/mc1-pb00701-v39.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile PB-007-01 v39 exact route
+        run: python3 -m py_compile research/machining-completeness/tasks/MC-038/pb00701_signed_a_direct_rotated_coordinate_model.py research/machining-completeness/tasks/MC-038/test_pb00701_signed_a_direct_rotated_coordinate_adversarial.py research/machining-completeness/tasks/MC-038/verify_pb00701_v39.py
+      - name: Verify PB-007-01 v39 contract and adversarial controls
+        run: |
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v39.py --contract
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v39.py --self-test
