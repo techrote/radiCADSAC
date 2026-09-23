@@ -27,13 +27,18 @@ def contract():
     assert artifact["programme_effect"]["PB-007-01"] == "OPEN"
     assert artifact["implemented_extension"]["caller_partition_trusted"] is False
     assert artifact["implemented_extension"]["exact_resource_refusal_is_truth"] is False
-    for path in (DOC, REPORT, WORKFLOW):
+    for path in (DOC, REPORT):
         text = path.read_text(encoding="utf-8")
         for token in ("PB-007-01", "NOT_ESTABLISHED", "26"):
             assert token in text, (path, token)
     workflow = WORKFLOW.read_text(encoding="utf-8")
-    assert "verify_pb00701_v41.py --contract" in workflow
-    assert "verify_pb00701_v41.py --self-test" in workflow
+    for token in (
+        "pb00701_orientation_root_partition_model.py",
+        "test_pb00701_orientation_root_partition_adversarial.py",
+        "verify_pb00701_v41.py --contract",
+        "verify_pb00701_v41.py --self-test",
+    ):
+        assert token in workflow, token
 
 
 def main():
