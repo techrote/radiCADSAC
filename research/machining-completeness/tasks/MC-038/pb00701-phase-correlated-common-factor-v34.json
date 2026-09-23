@@ -1,0 +1,112 @@
+{
+  "schema": "radicadsac-mc038-pb00701-phase-correlated-common-factor/34.0",
+  "task": "MC-038",
+  "corrective_issue": 231,
+  "source_baseline": "224e663bee1b45c50680e4739eed9424d06eb530",
+  "target_blocker": "PB-007-01",
+  "decision": "EXACT_PHASE_CORRELATED_COMMON_FACTOR_ROUTE_ESTABLISHED_PB00701_OPEN",
+  "gate_state": "NOT_ESTABLISHED",
+  "historical_evidence": [
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701_source_adaptive_separator_model.py",
+      "git_blob_sha1": "d920a5b670d14ac4a54b0ed879e83532f2114b95",
+      "role": "complete-v8-v30 executable precedence"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/test_pb00701_source_adaptive_separator_adversarial.py",
+      "git_blob_sha1": "84aa9e1b7bcabdcb87be5e7aab954e89b9709041",
+      "role": "historical-v30 adversarial precedence"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701_pointwise_separator_integration_model.py",
+      "git_blob_sha1": "7d6c94e48c018fd6570336fea78930a7169cd650",
+      "role": "v33 amplitude-derivative theorem-boundary evidence"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701-pointwise-separator-integration-v33.json",
+      "git_blob_sha1": "0002c2283b4ef822f23b19ee821dcdd4bfe72a82",
+      "role": "v33 machine-readable blocker evidence"
+    }
+  ],
+  "construction": {
+    "family": "source-owned C_h(s)=S_h(s)=G(s), with exact rational polynomial G of one strict sign",
+    "phase_cell": "-3/16+k/2 <= h*phi <= -1/16+k/2",
+    "rotated_variable": "u=2*pi*(h*phi+1/8-k/2) in [-pi/8,pi/8]",
+    "joint_amplitude_identity": "G'(cos+sin)=(-1)^k*sqrt(2)*G'*sin(u)",
+    "joint_phase_identity": "2*pi*h*r*G*(cos-sin)=(-1)^k*2*pi*h*r*sqrt(2)*G*cos(u)",
+    "exact_rational_bounds": {
+      "sqrt2_lower": "238/169",
+      "sqrt2_upper": "99/70",
+      "cos_abs_lower": "12/13",
+      "sin_abs_upper": "5/13",
+      "joint_phase_lower": "2856/2197",
+      "joint_amplitude_upper": "99/182",
+      "two_pi_lower": "6"
+    },
+    "strict_margin": "6*|h*r|*(2856/2197)*|G(s)|-(99/182)*|G'(s)|-sum_i|R_i(s)|>0",
+    "residual_authority": "finite exact rational-polynomial sign orthants plus MC-032 closed-interval endpoint/Sturm strict positivity",
+    "selected_C_prime_and_S_prime_consumed_only_jointly": true,
+    "selected_phase_C_and_phase_S_consumed_only_jointly": true,
+    "all_nonanchor_residuals_retained": true,
+    "caller_certificate_trusted": false,
+    "sampling_used": false,
+    "epsilon_used": false,
+    "numerical_trigonometry_used": false,
+    "arbitrary_subdivision_cap_used": false
+  },
+  "acceptance_source": {
+    "G": "(1+3s/4)^2",
+    "C_1_equals_S_1": true,
+    "phase_interval_turns": ["-3/16", "-1/16"],
+    "nonanchor_harmonic": "nonzero tiny h=2 COS term retained in the exact residual",
+    "v30_global_projective_ratio": "16/49",
+    "v30_boundary": "16/49 < sqrt(2)-1",
+    "v34_result": "CERTIFIED",
+    "both_selected_amplitude_derivatives_active": true
+  },
+  "boundary_controls": [
+    "positive and negative phase-rate cases and opposite k-parity diagonal projection-sign cells",
+    "exact diagonal-cell boundary equality and signed rational 1/1000000 neighbours",
+    "strict joint-margin equality and signed rational 1/1000000 neighbours",
+    "zero/open/left-endpoint/right-endpoint event outcomes use preserved exact endpoint/root authority",
+    "unequal C_h and S_h fail closed",
+    "sign-changing or zero common factor G fails closed",
+    "unsupported phase cell fails closed",
+    "source-coordinate mismatch fails closed",
+    "forged common-factor/cell/bound/margin/root metadata is non-authoritative",
+    "binary floats fail closed and exact resource refusal remains non-truth",
+    "historical v30 success retains exact precedence and v33 blocker evidence remains pinned",
+    "frozen 26-operation denominator and false MC-B promotion remain rejected"
+  ],
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false,
+    "next_pre_gate_priority": "generalize phase-correlated authority beyond equal quadratures to an exact source-owned proportional/common-factor selected harmonic without weakening non-anchor residual or event semantics"
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "protected_semantics": {
+    "source_audio_provenance": true,
+    "canonical_journal": true,
+    "exact_time_path_phase": true,
+    "source_uncertainty": true,
+    "positive_volume_material": true,
+    "cutter_holder_access": true,
+    "durable_body_lineage": true,
+    "refusal_uncertified": true,
+    "conventional_step": true
+  }
+}
