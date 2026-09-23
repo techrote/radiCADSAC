@@ -13,7 +13,7 @@
     {"path": "research/machining-completeness/tasks/MC-038/pb00701_phase_sector_anchor_model.py", "git_blob_sha1": "923e9d63e3950a705923b9b5e619fee43c2819eb", "preserved": true},
     {"path": "research/machining-completeness/tasks/MC-038/test_pb00701_phase_sector_anchor_adversarial.py", "git_blob_sha1": "4e45a1d80c3d03dcfc692ab65342fa00717e8d96", "preserved": true},
     {"path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v22.py", "git_blob_sha1": "a1596c32d1a8343ab2bbeb53c81755c5508ff399", "preserved": true},
-    {"path": "docs/machining-completeness/48-PB00701-PHASE-SECTOR-PARTIAL-DERIVATIVE-ANCHOR.md", "git_blob_sha1": "9a9d94563561f96dafbf98b055c1a56d8b533a9", "preserved": true},
+    {"path": "docs/machining-completeness/48-PB00701-PHASE-SECTOR-PARTIAL-DERIVATIVE-ANCHOR.md", "git_blob_sha1": "9a9d94563561d032c5e15e7b06c7032470cdac2f", "preserved": true},
     {"path": ".github/workflows/mc1-pb00701-v22.yml", "git_blob_sha1": "019359876ef2d36e0afc4b614cb8cde480ef22ff", "preserved": true}
   ],
   "implemented_extension": {
