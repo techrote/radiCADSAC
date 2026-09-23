@@ -12,7 +12,7 @@ V33 established a precise residual theorem boundary: exact source-owned separato
 
 For a source polynomial `G` proved one strict sign and phase turn `t=h*phi` contained in
 
-`-3/16+k/2 <= t <= -1/16+k/2`, 
+`-3/16+k/2 <= t <= -1/16+k/2`,
 
 set `u=2*pi*(t+1/8-k/2)`. Then `u` lies in `[-pi/8,pi/8]` and
 
