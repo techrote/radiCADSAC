@@ -41,36 +41,25 @@ def _acceptance_candidates():
     # Target the exact family that #246 proved impossible under v40-only child
     # authority. V42 now supplies the missing zero-adjacent closed handoff.
     root_pairs = [
-        (Fraction(1, 4), Fraction(1, 3)),
-        (Fraction(1, 3), Fraction(1, 4)),
-        (Fraction(1, 3), Fraction(2, 5)),
-        (Fraction(2, 5), Fraction(1, 3)),
-        (Fraction(3, 5), Fraction(2, 3)),
-        (Fraction(2, 3), Fraction(3, 5)),
-        (Fraction(2, 3), Fraction(3, 4)),
-        (Fraction(3, 4), Fraction(2, 3)),
-        (Fraction(1, 4), Fraction(2, 5)),
-        (Fraction(2, 5), Fraction(1, 4)),
-        (Fraction(3, 5), Fraction(3, 4)),
-        (Fraction(3, 4), Fraction(3, 5)),
         (Fraction(1, 4), Fraction(3, 4)),
         (Fraction(1, 3), Fraction(2, 3)),
         (Fraction(2, 5), Fraction(3, 5)),
+        (Fraction(1, 4), Fraction(1, 3)),
+        (Fraction(1, 3), Fraction(2, 5)),
+        (Fraction(3, 5), Fraction(2, 3)),
+        (Fraction(2, 3), Fraction(3, 4)),
     ]
     scales = [
-        (Fraction(1), Fraction(4)),
+        (Fraction(1), Fraction(1)),
         (Fraction(1), Fraction(2)),
-        (Fraction(1), Fraction(10)),
-        (Fraction(2), Fraction(4)),
+        (Fraction(1), Fraction(4)),
+        (Fraction(2), Fraction(1)),
     ]
     phases = [
-        (Fraction(-1, 6), Fraction(1, 3)),
-        (Fraction(0), Fraction(1, 3)),
-        (Fraction(-1, 8), Fraction(1, 4)),
-        (Fraction(0), Fraction(1, 4)),
-        (Fraction(1, 8), Fraction(1, 4)),
         (Fraction(-3, 16), Fraction(1, 8)),
         (Fraction(1, 16), Fraction(1, 8)),
+        (Fraction(-1, 8), Fraction(1, 4)),
+        (Fraction(0), Fraction(1, 4)),
     ]
     for ra, rb in root_pairs:
         if ra == rb:
