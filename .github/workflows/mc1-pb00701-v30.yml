@@ -1,0 +1,41 @@
+name: mc1-pb00701-v30
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_source_adaptive_separator_model.py'
+      - 'research/machining-completeness/tasks/MC-038/test_pb00701_source_adaptive_separator_adversarial.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v30.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-source-adaptive-separator-boundary-v30.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-report-v30.md'
+      - 'docs/machining-completeness/56-PB00701-SOURCE-ADAPTIVE-SEPARATOR.md'
+      - '.github/workflows/mc1-pb00701-v30.yml'
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_source_adaptive_separator_model.py'
+      - 'research/machining-completeness/tasks/MC-038/test_pb00701_source_adaptive_separator_adversarial.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v30.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-source-adaptive-separator-boundary-v30.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-report-v30.md'
+      - 'docs/machining-completeness/56-PB00701-SOURCE-ADAPTIVE-SEPARATOR.md'
+      - '.github/workflows/mc1-pb00701-v30.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile PB-007-01 v30 exact route
+        run: python3 -m py_compile research/machining-completeness/tasks/MC-038/pb00701_source_adaptive_separator_model.py research/machining-completeness/tasks/MC-038/test_pb00701_source_adaptive_separator_adversarial.py research/machining-completeness/tasks/MC-038/verify_pb00701_v30.py
+      - name: Verify PB-007-01 v30 contract and adversarial controls
+        run: |
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v30.py --contract
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v30.py --self-test
