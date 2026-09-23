@@ -20,11 +20,11 @@ The residual is discharged by the finite v21/v22 sign-orthant L1 construction. E
 
 ## Adversarial boundary
 
-The deterministic suite covers: a genuine nonconstant-amplitude multi-harmonic source blocked by v22 but certified by v23; increasing/decreasing directions; SIN/COS anchors; exact phase-sector equality and signed `±1/1000000` neighbours; exact amplitude-floor zero and signed neighbours; a pointwise-positive amplitude whose mixed Bernstein coefficients deliberately fail this sufficient certificate; exact residual-L1 equality and signed neighbours; zero/open/left-endpoint/right-endpoint root outcomes; constant-amplitude v22 precedence; non-pure quadrature rejection; source-parameter mismatch; forged amplitude/Bernstein/sector/L1/Sturm/root metadata; binary-float authority; resource-refusal laundering; historical-v22 preservation; frozen 26-operation coverage; and false MC-B promotion.
+The deterministic suite covers: a genuine nonconstant-amplitude multi-harmonic source blocked by v22 but certified by v23; increasing/decreasing directions; SIN/COS anchors; exact phase-sector equality and signed `±1/1000000` neighbours; exact amplitude-floor zero and signed neighbours; a pointwise-positive amplitude whose mixed Bernstein coefficients deliberately fail this sufficient certificate; exact residual-L1 equality and signed neighbours; zero/open/left-endpoint/right-endpoint root outcomes; constant-amplitude v22 precedence; non-pure quadrature rejection; source-parameter mismatch; forged amplitude/Bernstein/sector/L1/Sturm/root metadata; binary-float authority; resource refusal laundering; historical-v22 preservation; frozen 26-operation coverage; and false MC-B promotion.
 
 ## Contract preservation
 
-The frozen 26-operation denominator is unchanged. Historical v22 evidence is hash-pinned and preserved. Source/audio/provenance, canonical journal, exact time/path/phase, source uncertainty, positive-volume material, cutter/holder access, durable body/lineage, refusal/`UNCERTIFIED`, and conventional STEP semantics are unchanged. No native, paid, production or expensive campaign is authorized.
+The frozen 26-operation denominator is unchanged. Historical v22 evidence is hash-pinned and preserved. Source/audio/provenance, canonical journal, exact time/path/phase, source uncertainty, positive-volume material, cutter/holder access, durable body/lineage, refusal/`UNCERTIFIED`, and conventional STEP semantics are unchanged. No native, paid, production or expensive campaign is authorized. Any exact resource refusal remains a non-truth result and cannot certify or reject an event.
 
 ## Residual blocker
 
