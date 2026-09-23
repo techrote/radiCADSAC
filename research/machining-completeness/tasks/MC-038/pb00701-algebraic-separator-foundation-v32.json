@@ -26,7 +26,7 @@
     "root_isolation": "MC-032 Sturm isolation on rational intervals, with a conservative rational Mignotte-derived root-separation lower bound providing a source-derived finite bisection depth",
     "critical_value_elimination": "exact Sylvester/Bareiss resultant Res_s(square_free(H), D(s)^2-y^2*T(s)^2), augmented by closed-span endpoint factors",
     "algebraic_boundary_ordering": "exact ordering against tan(pi/8)=sqrt(2)-1 using the minimal polynomial y^2+2y-1 plus sign-at-algebraic-root decisions; no binary-float algebraic evaluation",
-    "separator_synthesis": "from a certified rational lower enclosure beta above sqrt(2)-1, use f(beta)=beta^2+2beta-1 and m=beta-f(beta)/(4(beta+1)); this proves sqrt(2)-1 < m < beta",
+    "separator_synthesis": "closed form: from a certified rational lower enclosure beta above sqrt(2)-1, use f(beta)=beta^2+2beta-1 and m=beta-f(beta)/(4(beta+1)); this proves sqrt(2)-1 < m < beta",
     "independent_final_check": "both rational polynomial margins sign(D)D-m*T and sign(D)D+m*T are strictly positive on [0,1] under MC-032 endpoint/Sturm authority",
     "finite_termination": "Cauchy root bounds and conservative Mignotte-derived root separation determine finite isolation/order depth; separator construction is closed form and no denominator/depth/timeout/resource cap is a truth criterion",
     "event_classifier_promoted": false,
