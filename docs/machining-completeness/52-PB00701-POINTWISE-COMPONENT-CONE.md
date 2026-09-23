@@ -52,6 +52,8 @@ Only the selected anchor harmonic's two phase terms are consumed. Both anchor am
 
 Once complete derivative nonvanishing is established, existing rational-turn endpoint/root/multiplicity authority is reused unchanged. Every admitted root is simple. v25 and all earlier routes retain precedence.
 
+Exact resource refusal is non-truth and propagates as refusal/`UNCERTIFIED`; it can never establish a pointwise margin or event result.
+
 ## Material broadening
 
 v26 is intentionally broader than v25's separate global cone test. A source may have `dominant_floor/2 <= transverse_ceiling` under the old Bernstein/global sufficient bounds and still satisfy every exact pointwise cone/residual orthant margin. The acceptance suite includes such a genuine multi-harmonic source.
