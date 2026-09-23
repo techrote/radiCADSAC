@@ -79,11 +79,14 @@ def run():
     assert route["adaptive_refinement_used"] is False
     assert route["arbitrary_subdivision_cap_used"] is False
 
-    # Exact negative-rate reversal has the same finite cut set in reverse traversal.
+    # Exact negative-rate reversal traverses the same phase crossings in the reversed
+    # source coordinate, so every forward cut c must map exactly to 1-c.
     reverse = _v27_route(model.classify_required_analytic_event(_fixture(reverse=True)))
     assert reverse["status"] == "CERTIFIED"
     assert reverse["phase_turn_law_local"]["rate"].startswith("-")
-    assert reverse["sector_cut_certificate"]["cuts"] == route["sector_cut_certificate"]["cuts"]
+    forward_cuts = [Fraction(value) for value in route["sector_cut_certificate"]["cuts"]]
+    reverse_cuts = [Fraction(value) for value in reverse["sector_cut_certificate"]["cuts"]]
+    assert reverse_cuts == sorted(Fraction(1) - value for value in forward_cuts)
 
     # Exact cuts on external source endpoints are excluded; no zero-width child exists.
     endpoints = model.exact_sector_cuts(Fraction(1, 6), Fraction(1, 6), [1])
