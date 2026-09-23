@@ -1,41 +1,57 @@
-# MC-038 / PB-007-01 v42 report — orientation-transition derivative bridge
+# PB-007-01 v42 — exact orientation-transition derivative bridge certificate
 
-## Decision
+Status: **bounded executable authority added; PB-007-01 remains OPEN; MC-B / MC-1 remain NOT_ESTABLISHED**.
 
-A bounded exact rotated-coordinate orientation-transition bridge is established for a diagonal phase cell. PB-007-01 remains open. MC-B and MC-1 remain `NOT_ESTABLISHED`. The frozen denominator remains 26 operations and no protected source/audio/provenance or downstream semantics change.
+## Why v42 exists
 
-## Corrective context
+Issue #245 / PR #246 established a real closed-interval theorem blocker: cutting exactly at an `A=0` or `B=0` orientation root does not make either adjacent **closed** child admissible to complete v39/v40 strict-orientation authority. The exact v41 root machinery was not the problem. V42 adds the missing local closed-span theorem and does not weaken v39/v40, reinterpret endpoints, or introduce epsilon neighborhoods.
 
-Issue #245 attempted exact orientation-root partition composition. That route is blocked because a proof cut at `A=0` or `B=0` is itself a closed endpoint where complete v39/v40 strict orientation and phase-gap predicates fail. Diagnostic run 35910280571 evaluated 1,680 exact complete-v40-blocked candidates and certified none through that composition route. v42 adds the missing closed-neighborhood theorem rather than weakening the child contract.
+## Exact bridge
 
-## Exact theorem
+For a residual exact lowered span, regenerate source-owned
 
-For source-owned quadratures `C_h(s), S_h(s)` regenerate
+`A=(C+S)/2`, `B=(C-S)/2`, `A'=(C'+S')/2`, `B'=(C'-S')/2`.
 
-`A=(C+S)/2`, `B=(C-S)/2`, `X=cos(theta)+sin(theta)`, `Y=cos(theta)-sin(theta)`.
+On an exact diagonal phase cell `-3/16+k/2 <= h*phi <= -1/16+k/2`, the established v34/v39 authority gives fixed sign of `Y=cos(theta)-sin(theta)` and exact rational bounds
 
-The selected physical derivative remains
+- `|Y| > 2856/2197`;
+- `|X| < 99/182` for `X=cos(theta)+sin(theta)`;
+- `|Y| < 99/70`.
 
-`D=A'X+B'Y+2*pi*h*r*(A Y-B X)`.
+MC-032 exact endpoint/Sturm authority must prove either `B'>0` or `-B'>0` over the complete closed span, deriving `sigma_B_prime` and `Bprime_bar=sigma_B_prime B'>0` from source. The historical exact rational theorem `2*pi < 44/7` bounds the selected phase terms adversely.
 
-On the exact diagonal phase cell, inherited algebraic authority gives fixed sign of `Y`, `|Y|>2856/2197`, `|X|<99/182`, and `|Y|<99/70`. The bridge derives strict sign of `B'` from source coefficients, then proves every finite sign orthant of
+For every finite sign orthant over `A'`, `A`, `B` and every retained non-anchor residual, MC-032 proves
 
-`|B'|*(2856/2197) - |A'|*(99/182) - (44/7)*|h*r|*(|A|*(99/70)+|B|*(99/182)) - sum_i |R_i| > 0`.
+`(2856/2197)Bprime_bar -(99/182)sigma_Ap A' -(44/7)|h r|(99/70)sigma_A A -(44/7)|h r|(99/182)sigma_B B - sum sigma_i R_i > 0`.
 
-`2*pi<44/7` is the exact rational upper theorem already recorded in v29 for adverse phase terms. Every orthant is discharged with existing MC-032 exact closed-interval endpoint/Sturm strict positivity. Equality is fail-closed; exact resource refusal is not a truth value.
+Therefore the favorable `B'Y` channel dominates the complete physical derivative
 
-## Genuine residual acceptance source
+`D=A'X+B'Y+2*pi*h*r*(AY-BX)+retained residuals`
 
-The source `C_1=-23/6+11s`, `S_1=17/6-9s` gives `A=-1/2+s` and `B=-10/3+10s`. Thus A crosses zero at `1/2`, B crosses zero at `1/3`, and neither complete whole-span signed-A nor signed-B orientation is available to v39/v40. Nevertheless `B'=10` is strictly positive. With exact phase law `phi=-1/8+s/1000`, the complete source span stays in one supported diagonal cell and the full v42 margin is strictly positive.
+without requiring `A` or `B` itself to have a strict whole-span sign. The certified physical sign is
 
-The selected C' and S' terms are consumed only through the rotated identity; selected phase terms remain jointly represented by `A Y-B X`; every non-anchor residual remains explicit. No proof cut becomes a physical event and root multiplicity remains governed by the complete derivative.
+`sign(D)=sigma_B_prime*diagonal_projection_sign`.
 
-## Controls
+Strict equality fails closed. No numerical trigonometry, sampling, tolerance, epsilon neighborhood, approximate root ordering, subdivision cap, timeout or denominator cap is proof authority.
 
-Adversarial coverage includes the exact interior A zero, both B' orientations, B'=0/sign-changing refusal, strict-margin equality fail-close controls, exact phase-cell boundaries and just-outside rational neighbors, forward/reverse phase laws, opposite diagonal projection sign, non-anchor residual retention, forged orientation/derivative/margin metadata, inherited binary-float/source-coordinate rejection, resource-refusal propagation, historical v39/v40 precedence, frozen 26-operation coverage, and false MC-B/MC-1 promotion.
+## Genuine residual acceptance
 
-## Contract effect
+The acceptance source is
 
-PB-007-01 remains open; PB-007-02 remains dependent, PB-007-03 remains open, PB-007-04 remains propagated open, and PO-04/05/08 remain open. The next dependency path is to use this exact closed transition bridge as an explicit child type when repairing #245 composition; v42 itself does not close #245.
+- `C_1=-5/6+2s`;
+- `S_1=-1/6`;
+- hence `A=s-1/2` and `B=s-1/3` both have simple interior zeros;
+- `A'=B'=1`;
+- exact harmonic-1 phase interval `[-1/8,-1/16]` with rate `1/16` lies inside the supported diagonal cell.
 
-Protected source/audio/provenance, journal, exact time/path/phase, material, cutter/holder, body/lineage, refusal, conventional STEP, and downstream semantics are unchanged. Production and expensive execution remain unauthorized.
+Complete v40 blocks because neither whole-span signed-A nor signed-B orientation is strict. V42 derives `sigma_B_prime=+1` and certifies the full closed span. This directly repairs the obstruction recorded for #245 rather than attempting another orientation-root cut.
+
+## Adversarial boundary
+
+A separate adversarial certificate keeps a tiny non-anchor harmonic live to prove residual retention without repeating the expensive complete-v40 residual traversal. The executable suite covers the exact interior A zero and rational neighbors, B' sign equality and both signs, exact complete-margin equality and rational neighbors, diagonal-cell endpoints and just-outside rational points, positive/negative phase rates and the opposite diagonal projection sign, exact resource refusal, forged caller orientation/derivative/margin/root metadata, binary-float and source-coordinate mismatch rejection, historical v39/v40 precedence, and proof-zero event neutrality. Selected `C'`/`S'` and selected phase channels are consumed only through the exact rotated identity; every non-anchor derivative residual remains explicit.
+
+## Programme and protected semantics
+
+V42 is only a bounded sufficient theorem. PB-007-01 remains OPEN; PB-007-02 remains dependent; PB-007-03 remains OPEN; PB-007-04 remains `OPEN_PROPAGATED`; PO-04, PO-05 and PO-08 remain OPEN. MC-B and MC-1 remain `NOT_ESTABLISHED`; the machining denominator remains frozen at 26 operations. Do not retry MC-B solely because v42 lands.
+
+Protected source/audio/provenance, canonical journal, exact time/path/phase, source uncertainty, positive-volume material, cutter/holder, durable-body/lineage, refusal/`UNCERTIFIED`, conventional STEP, endpoint/root/multiplicity and downstream semantics are unchanged. An orientation zero used only by the proof is not a physical event and cannot alter multiplicity.

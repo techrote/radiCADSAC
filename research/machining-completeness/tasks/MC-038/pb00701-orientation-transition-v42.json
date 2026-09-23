@@ -4,62 +4,90 @@
   "corrective_issue": 247,
   "source_baseline": "494a29091fcd9afadad006cded4a71b74349c824",
   "target_blocker": "PB-007-01",
-  "decision": "EXACT_ORIENTATION_TRANSITION_BRIDGE_ESTABLISHED_PB00701_OPEN",
+  "decision": "EXACT_ORIENTATION_TRANSITION_DERIVATIVE_BRIDGE_ESTABLISHED_PB00701_OPEN",
   "gate_state": "NOT_ESTABLISHED",
+  "historical_evidence": [
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701_signed_b_anti_diagonal_model.py",
+      "git_blob_sha1": "2f642ac0b6f222dd8ec2cf3a54ffa3c07bb27abe",
+      "role": "complete v40 executable precedence"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/test_pb00701_signed_b_anti_diagonal_adversarial.py",
+      "git_blob_sha1": "a27019656ab364d1de0559e75f9bacb1d2ba0126",
+      "role": "complete v40 adversarial precedence"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701-signed-b-anti-diagonal-v40.json",
+      "git_blob_sha1": "f4a2ea57445c9309620f58a6c19e0cd8cade1618",
+      "role": "verified v40 contract boundary"
+    }
+  ],
   "construction": {
-    "coordinates": "A=(C+S)/2; B=(C-S)/2; X=cos(theta)+sin(theta); Y=cos(theta)-sin(theta)",
-    "physical_selected_harmonic_identity": "D=A'(s)*X+B'(s)*Y+2*pi*h*r*(A(s)*Y-B(s)*X)",
-    "orientation_authority": "derive strict sign of source-owned B' with MC-032 closed-interval endpoint/Sturm authority",
+    "family": "exact source-owned C_h(s), S_h(s) with A=(C+S)/2 and B=(C-S)/2 allowed to cross zero on a supported diagonal phase cell",
+    "precedence": "complete v40 authority first; v42 only sees residual exact lowered spans",
+    "source_authority": "regenerate A=(C+S)/2, B=(C-S)/2, A' and B' exactly from source quadrature polynomials",
+    "derivative_orientation_authority": "MC-032 proves either B'>0 or -B'>0 on the complete closed span and derives sigma_B_prime; caller orientation is never trusted",
     "phase_cell": "-3/16+k/2 <= h*phi <= -1/16+k/2",
     "exact_rational_bounds": {
-      "L_joint_Y_lower": "2856/2197",
-      "U_joint_X_upper": "99/182",
-      "W_joint_Y_upper": "99/70",
+      "L_Y_abs_lower": "2856/2197",
+      "U_X_abs_upper": "99/182",
+      "W_Y_abs_upper": "99/70",
       "two_pi_upper": "44/7"
     },
-    "strict_margin": "|B'|*L-|A'|*U-(44/7)*|h*r|*(|A|*W+|B|*U)-sum_i|R_i|>0",
+    "physical_selected_harmonic_identity": "D=A'(s)*X+B'(s)*Y+2*pi*h*r*(A(s)*Y-B(s)*X)",
+    "favorable_channel": "sigma_B_prime*diagonal_projection_sign*B'(s)*Y >= Bprime_bar(s)*(2856/2197)",
+    "strict_margin": "(2856/2197)Bprime_bar-(99/182)sigma_Ap A'-(44/7)|h r|(99/70)sigma_A A-(44/7)|h r|(99/182)sigma_B B-sum sigma_i R_i > 0 for every exact sign orthant",
     "selected_C_prime_and_S_prime_consumed_only_jointly": true,
     "selected_phase_C_and_phase_S_consumed_only_jointly": true,
     "all_nonanchor_residuals_retained": true,
+    "A_or_B_strict_orientation_required": false,
+    "proof_orientation_zero_is_physical_event": false,
     "complete_v40_precedence_first": true,
-    "proof_cut_is_physical_event": false,
     "caller_orientation_trusted": false,
-    "caller_rotated_coordinates_trusted": false,
     "caller_derivatives_trusted": false,
     "caller_certificate_trusted": false,
+    "exact_resource_refusal_is_truth": false,
+    "binary_float_authority": false,
     "sampling_used": false,
     "epsilon_used": false,
     "numerical_trigonometry_used": false,
     "arbitrary_subdivision_cap_used": false
   },
   "acceptance_source": {
-    "C_1": "-23/6+11*s",
-    "S_1": "17/6-9*s",
+    "C_1": "-5/6+2s",
+    "S_1": "-1/6",
     "derived_A": "-1/2+s",
-    "derived_B": "-10/3+10*s",
+    "derived_B": "-1/3+s",
     "derived_A_prime": "1",
-    "derived_B_prime": "10",
-    "A_zero": "1/2",
-    "B_zero": "1/3",
-    "phase_interval_turns": ["-1/8", "-31/250"],
-    "complete_v40_result": "BLOCKED",
-    "v42_result": "CERTIFIED"
+    "derived_B_prime": "1",
+    "A_interior_zero": "1/2",
+    "B_interior_zero": "1/3",
+    "sigma_B_prime": 1,
+    "phase_interval_turns": [
+      "-1/8",
+      "-1/16"
+    ],
+    "phase_rate": "1/16",
+    "v40_result": "BLOCKED_BECAUSE_BOTH_WHOLE_SPAN_SIGNED_A_AND_SIGNED_B_ORIENTATION_ROUTES_FAIL",
+    "v42_result": "CERTIFIED",
+    "new_authority": "strict source-derived B' times fixed-sign diagonal Y bridges the closed orientation-transition span without cuts or endpoint reinterpretation"
   },
   "boundary_controls": [
-    "exact interior A orientation zero and rational neighbors",
-    "strict B' positive/negative orientation and B'=0/sign-changing refusal",
-    "complete-margin strict equality is fail-closed with rational neighbors",
-    "supported diagonal phase-cell boundaries and just-outside rational neighbors",
-    "positive and negative phase rate inside one diagonal projection cell",
-    "opposite diagonal projection sign",
-    "selected C' and S' consumed only through exact rotated identity",
-    "all non-anchor derivative residuals retained",
-    "forged orientation/derivative/margin metadata non-authoritative",
-    "binary floats and source-coordinate mismatch rejected by inherited exact grammar",
+    "exact interior A orientation zero at 1/2 and signed 1/1000000 rational neighbors",
+    "B' exact sign equality fails closed and both positive and negative B' signs are exercised",
+    "exact complete-margin equality and signed 1/1000000 rational neighbors",
+    "supported diagonal phase-cell left/right boundaries and just-outside 1/1000000 rational neighbors",
+    "positive and negative phase-rate directions and opposite diagonal projection sign",
+    "selected C' and S' consumed only through exact rotated identity and selected phase channels remain joint",
+    "every non-anchor derivative residual retained",
     "exact resource refusal remains non-truth",
-    "historical v39/v40 precedence unchanged",
+    "forged caller orientation derivative margin root and multiplicity metadata ignored",
+    "binary floats and source-coordinate mismatch rejected",
+    "historical v39 and v40 successes remain byte-for-byte owned by earlier authority",
+    "proof orientation zeros do not become physical events or alter multiplicity",
     "frozen 26-operation denominator unchanged",
-    "MC-B and MC-1 remain NOT_ESTABLISHED"
+    "no false MC-B or MC-1 promotion"
   ],
   "programme_effect": {
     "PB-007-01": "OPEN",
@@ -73,7 +101,7 @@
     "MC-1": "NOT_ESTABLISHED",
     "domain_operation_count": 26,
     "domain_narrowed": false,
-    "next_pre_gate_priority": "resume #245 only after v42 exact merged-main verification"
+    "next_pre_gate_priority": "resume blocked #245 composition only after v42 is merged and independently verified; do not retry MC-B"
   },
   "resources": {
     "native_campaign_run": false,
@@ -83,12 +111,13 @@
   },
   "protected_semantics": {
     "source_audio_provenance": true,
-    "journal": true,
+    "canonical_journal": true,
     "exact_time_path_phase": true,
-    "material": true,
-    "cutter_holder": true,
-    "body_lineage": true,
-    "refusal": true,
+    "source_uncertainty": true,
+    "positive_volume_material": true,
+    "cutter_holder_access": true,
+    "durable_body_lineage": true,
+    "refusal_uncertified": true,
     "conventional_step": true,
     "downstream": true
   }
