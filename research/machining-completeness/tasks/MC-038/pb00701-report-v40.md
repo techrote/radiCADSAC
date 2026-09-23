@@ -22,7 +22,7 @@ The anti-diagonal phase cell is exact rational-turn containment
 
 `1/16+k/2 <= h*phi <= 3/16+k/2`.
 
-It is not backed by new numerical trigonometry. Subtracting exactly one quarter turn maps it to the already-qualified v34-v39 diagonal cell. For `theta'=theta-pi/2`, `X'(theta')=-Y(theta)` and `Y'(theta')=X(theta)`. Therefore the historical exact rational bounds transfer directly:
+It is not backed by new numerical trigonometry. Subtracting exactly one quarter-turn maps it to the already-qualified v34-v39 diagonal cell. For `theta'=theta-pi/2`, `X'(theta')=-Y(theta)` and `Y'(theta')=X(theta)`. Therefore the historical exact rational bounds transfer directly:
 
 - fixed-sign `X`, with `|X| > 2856/2197`;
 - `|Y| < 99/182`;
