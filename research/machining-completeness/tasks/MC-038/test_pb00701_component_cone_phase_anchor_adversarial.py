@@ -183,7 +183,7 @@ def run():
     assert l1_below["status"] == "CERTIFIED"
     assert l1_above["status"] == "BLOCKED"
 
-    no_root = _v25_route(model.classify_required_analytic_event(_fixture(anchor0=[10])))
+    no_root = _v25_route(model.classify_required_analytic_event(_fixture(anchor0=[Fraction(21, 10)])))
     assert no_root["total_distinct_roots_closed"] == 0
 
     left_root_source = _fixture(anchor0=[Fraction(49, 1000)], offset="0", rate="1/12")
