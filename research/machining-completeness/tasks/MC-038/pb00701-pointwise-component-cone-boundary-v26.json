@@ -1,0 +1,92 @@
+{
+  "schema": "radicadsac-mc038-pb00701-pointwise-component-cone-boundary/26.0",
+  "task": "MC-038",
+  "corrective_issue": 214,
+  "source_baseline": "f668790f648eb9a6815d30fbacf982765cd3bed3",
+  "target_blocker": "PB-007-01",
+  "decision": "EXACT_POINTWISE_COMPONENT_CONE_RESIDUAL_ROUTE_ESTABLISHED_GENERAL_COUPLED_ROUTE_OPEN",
+  "gate": "MC-B",
+  "gate_state": "NOT_ESTABLISHED",
+  "historical_v25_evidence": [
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-component-cone-phase-anchor-boundary-v25.json", "git_blob_sha1": "8e6ce2fed319a0bd1e3cc8ab89f6b37553042eaf", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-report-v25.md", "git_blob_sha1": "2c60ce1d682a6e743ef34d7a734c8d1721759cf8", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701_component_cone_phase_anchor_model.py", "git_blob_sha1": "fc1f940f5b9b2b6fd8570b36a91c4389453e29b2", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/test_pb00701_component_cone_phase_anchor_adversarial.py", "git_blob_sha1": "ba78f2b3ab85f698ca066d984417ef08c4f6e636", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v25.py", "git_blob_sha1": "c853f1ee48660693562a778e1ab063bf02ea928d", "preserved": true},
+    {"path": "docs/machining-completeness/51-PB00701-COMPONENT-CONE-PHASE-ANCHOR.md", "git_blob_sha1": "ed9e464b506c48a9bd6c703b3f88da5d72a238ed", "preserved": true},
+    {"path": ".github/workflows/mc1-pb00701-v25.yml", "git_blob_sha1": "fa6ab2fff77fe4276a2a7fdd0d8f78b12a2e704d", "preserved": true}
+  ],
+  "implemented_extension": {
+    "id": "EXACT_POINTWISE_COMPONENT_CONE_RESIDUAL_ORTHANT_DERIVATIVE_DOMINANCE",
+    "scope": "v25-blocked residual multi-harmonic spans whose separate global dominant-floor/transverse-ceiling bounds overlap but whose source-derived pointwise mixed-projection cone and complete retained derivative residual admit a finite exact orthant proof",
+    "dominant_sign_authority": "the selected dominant source component has one strict sign on closed [0,1] proved by MC-032 exact rational endpoint/Sturm strict positivity; no Bernstein floor is required",
+    "phase_sector_authority": "the unchanged v25 exact rational single-quadrature half-magnitude sector supplies fixed sign and magnitude at least 1/2; the transverse quadrature uses only absolute bound 1",
+    "pointwise_cone_authority": "for S-dominant authority prove all exact polynomials 6*|h*r|*(sign(S)*S/2-sigma_C*C)-sum_i sigma_i R_i > 0; C-dominant is symmetric",
+    "residual_terms": "both anchor amplitude derivatives C' and S', harmonic-0 P', and every other derivative channel remain residual; only the selected anchor phase_C/phase_S pair is consumed and other phase terms use 44/7",
+    "orthant_identity": "finite signs sigma_T,sigma_i realize |T| and sum_i |R_i| exactly, so positivity of every directed margin proves 6*|h*r|*(|D|/2-|T|) > sum_i |R_i| pointwise",
+    "derivative_authority": "the pointwise cone fixes the anchor projection sign; exact pi>3 gives 2*pi>6, therefore the exact mixed phase derivative strictly dominates the complete retained residual everywhere",
+    "termination": "finite 2^(1+N) exact rational-polynomial decisions under MC-032 endpoint/Sturm authority; no sign-cell root approximation, sampling or subdivision is correctness authority",
+    "precedence": "v8-v25 historical routes run first; v26 consumes only residual blocked spans",
+    "forbidden_authority": [
+      "caller pointwise cone, dominant sign, orthant or Sturm certificate",
+      "caller component floor, ceiling or derivative bound",
+      "binary float",
+      "epsilon or tolerance",
+      "sampling or numerical trigonometry",
+      "approximate minimization or root ordering",
+      "arbitrary subdivision/refinement cap",
+      "timeout or resource refusal as truth"
+    ]
+  },
+  "boundary_controls": [
+    "genuine multi-harmonic source blocked by v25 because separate global dominant-floor/transverse-ceiling bounds overlap but certified by v26 pointwise cone/residual orthants",
+    "S-dominant and C-dominant routes with positive and negative complete derivative directions",
+    "exact dominant fixed-sign Sturm proof including a positive polynomial not accepted by the older strict Bernstein-floor sufficient certificate",
+    "sign-changing transverse source component",
+    "exact single-quadrature half-magnitude sector endpoint equality and signed 1/1000000 neighbours",
+    "exact pointwise cone equality and signed 1/1000000 neighbours",
+    "exact combined residual equality and signed 1/1000000 neighbours",
+    "dominant zero/sign-change failure",
+    "both anchor amplitude derivatives retained and anchor phase terms alone consumed",
+    "zero/open/left-endpoint/right-endpoint root outcomes with v25 prior-route precedence",
+    "source-parameter mismatch, forged pointwise/sign/orthant/Sturm/root metadata and binary-float authority",
+    "exact resource refusal propagation",
+    "historical v25 evidence preservation, 26-operation denominator and no false MC-B promotion"
+  ],
+  "full_blocker_review": {
+    "status": "OPEN",
+    "residual_branch": "PB-007-01 remains open beyond v8-v26 qualified families, including phase intervals outside the existing exact half-magnitude sectors, sources with no fixed-sign usable component, and broader irreducible coupled analytic zero-isolation cases",
+    "not_an_impossibility_theorem": true
+  },
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false,
+    "next_pre_gate_priority": "PB-007-01: exact terminating authority beyond fixed-sign single-quadrature half-magnitude component anchors, preferably widening phase projection authority without numerical transcendental minimization; otherwise record the precise theorem boundary"
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "protected_semantics": {
+    "source_audio_provenance": true,
+    "canonical_journal": true,
+    "exact_time_path_phase": true,
+    "source_uncertainty": true,
+    "positive_volume_material": true,
+    "cutter_holder_access": true,
+    "durable_body_lineage": true,
+    "refusal_uncertified": true,
+    "conventional_step": true
+  }
+}
