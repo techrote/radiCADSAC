@@ -1,0 +1,41 @@
+name: mc1-pb00701-v23
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_nonconstant_phase_anchor_model.py'
+      - 'research/machining-completeness/tasks/MC-038/test_pb00701_nonconstant_phase_anchor_adversarial.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v23.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-nonconstant-phase-anchor-boundary-v23.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-report-v23.md'
+      - 'docs/machining-completeness/49-PB00701-NONCONSTANT-AMPLITUDE-PHASE-ANCHOR.md'
+      - '.github/workflows/mc1-pb00701-v23.yml'
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_nonconstant_phase_anchor_model.py'
+      - 'research/machining-completeness/tasks/MC-038/test_pb00701_nonconstant_phase_anchor_adversarial.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v23.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-nonconstant-phase-anchor-boundary-v23.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-report-v23.md'
+      - 'docs/machining-completeness/49-PB00701-NONCONSTANT-AMPLITUDE-PHASE-ANCHOR.md'
+      - '.github/workflows/mc1-pb00701-v23.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile PB-007-01 v23 exact route
+        run: python3 -m py_compile research/machining-completeness/tasks/MC-038/pb00701_nonconstant_phase_anchor_model.py research/machining-completeness/tasks/MC-038/test_pb00701_nonconstant_phase_anchor_adversarial.py research/machining-completeness/tasks/MC-038/verify_pb00701_v23.py
+      - name: Verify PB-007-01 v23 contract and adversarial controls
+        run: |
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v23.py --contract
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v23.py --self-test
