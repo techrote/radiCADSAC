@@ -20,7 +20,7 @@
     "scope": "exact lowered multi-harmonic spans still blocked after complete v8-v29 authority because v29's fixed projective slope 5/12 is too conservative inside an already-supported exact 1/16-turn algebraic phase cell",
     "phase_cell_authority": "reuse v29 exact rational-turn 1/16-turn cells and the exact dominant quadrature lower bound 12/13; the projective algebraic boundary is tan(pi/8)=sqrt(2)-1",
     "separator_synthesis": "derive beta=D_floor/T_ceiling from canonical source Bernstein bounds; prove beta>sqrt(2)-1 by exact rational square comparison; then synthesize m=beta-(beta^2+2beta-1)/(4(beta+1)), which satisfies sqrt(2)-1<m<beta by the exact identity beta-alpha=f(beta)/(beta+alpha+2)",
-    "projection": "for SIN-dominant anchors use the v29 COS cells and factor S*cos-C*sin=cos*(S-C*tan); use the symmetric C-dominant SIN-cell formulation; both positive and negative quadrature cells remain supported",
+    "projection": "for SIN-dominant anchors use the v29 COS cells and factor S*cos-C*sin=cos*(S-C*tan); use the symmetric COS-dominant SIN-cell formulation; both positive and negative quadrature cells remain supported",
     "residual_authority": "retain both selected-harmonic amplitude derivatives, harmonic-0 derivative, and every non-anchor derivative term; prove every finite signed margin 6|hr|(12/13)(sign(D)D-m sigma_T T)-sum sigma_i R_i strictly positive with MC-032 exact endpoint/Sturm authority",
     "endpoint_authority": "reuse established exact rational-turn endpoint event relations and preserved simple-root summary authority after the complete derivative sign is proved",
     "precedence": "complete v8-v29 classification retains strict precedence; v30 consumes only residual blocked lowered spans",
