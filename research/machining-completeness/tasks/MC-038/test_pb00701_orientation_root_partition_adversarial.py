@@ -25,6 +25,14 @@ def _spec(a, b, *, offset, rate):
     return v40test._spec({1: c, 2: [-TINY]}, {1: s}, offset=str(offset), rate=str(rate))
 
 
+def _linear_spec(ra, rb, sa, sb, *, offset, rate):
+    a = [-sa * ra, sa]
+    b = [-sb * rb, sb]
+    c = model._trim(model.v22._padd(a, b))
+    sin = model._trim(model.v22._padd(a, model.v22._pscale(b, -1)))
+    return v40test._spec({1: c}, {1: sin}, offset=str(offset), rate=str(rate))
+
+
 def _route(result):
     assert result["status"] == "CERTIFIED", result
     routes = [
@@ -38,41 +46,39 @@ def _route(result):
 
 
 def _acceptance_candidates():
-    # Target the exact family that #246 proved impossible under v40-only child
-    # authority. V42 now supplies the missing zero-adjacent closed handoff.
+    # For phi=-1/8+s/4 the exact diagonal cell ends at s=1/4.
+    # Put both orientation roots strictly before that boundary so the
+    # v42 handoff owns the zero-adjacent pieces, while the later historical
+    # phase sectors see already-strict A/B orientations.
     root_pairs = [
-        (Fraction(1, 4), Fraction(3, 4)),
-        (Fraction(1, 3), Fraction(2, 3)),
-        (Fraction(2, 5), Fraction(3, 5)),
-        (Fraction(1, 4), Fraction(1, 3)),
-        (Fraction(1, 3), Fraction(2, 5)),
-        (Fraction(3, 5), Fraction(2, 3)),
-        (Fraction(2, 3), Fraction(3, 4)),
+        (Fraction(1, 8), Fraction(1, 6)),
+        (Fraction(1, 6), Fraction(1, 8)),
+        (Fraction(1, 8), Fraction(1, 5)),
+        (Fraction(1, 5), Fraction(1, 8)),
+        (Fraction(1, 6), Fraction(1, 5)),
+        (Fraction(1, 5), Fraction(1, 6)),
+        (Fraction(1, 8), Fraction(2, 9)),
+        (Fraction(2, 9), Fraction(1, 8)),
     ]
     scales = [
         (Fraction(1), Fraction(1)),
         (Fraction(1), Fraction(2)),
         (Fraction(1), Fraction(4)),
         (Fraction(2), Fraction(1)),
+        (Fraction(4), Fraction(1)),
     ]
     phases = [
-        (Fraction(-3, 16), Fraction(1, 8)),
-        (Fraction(1, 16), Fraction(1, 8)),
         (Fraction(-1, 8), Fraction(1, 4)),
-        (Fraction(0), Fraction(1, 4)),
+        (Fraction(3, 8), Fraction(1, 4)),
     ]
     for ra, rb in root_pairs:
-        if ra == rb:
-            continue
         for sa, sb in scales:
-            a = [-sa * ra, sa]
-            b = [-sb * rb, sb]
             for offset, rate in phases:
                 meta = {
                     "A_root": ra, "B_root": rb, "A_scale": sa, "B_scale": sb,
                     "offset": offset, "rate": rate,
                 }
-                yield meta, _spec(a, b, offset=offset, rate=rate)
+                yield meta, _linear_spec(ra, rb, sa, sb, offset=offset, rate=rate)
 
 
 def _child_owners(route):
@@ -158,15 +164,7 @@ def _find_acceptance():
         if len(distinct_owners) < 2:
             continue
 
-        reverse = copy.deepcopy(spec)
-        reverse["phase_turn_offset"] = str(meta["offset"] + meta["rate"])
-        reverse["phase_turn_rate"] = str(-meta["rate"])
-        reverse_predecessor = v42.classify_required_analytic_event(reverse)
-        reverse_new = model.classify_required_analytic_event(reverse)
-        if reverse_predecessor.get("status") == "CERTIFIED" or reverse_new.get("status") != "CERTIFIED":
-            continue
-
-        return meta, spec, predecessor, new, reverse, reverse_predecessor, reverse_new, owners
+        return meta, spec, predecessor, new, owners
 
     raise AssertionError(
         "no exact v42-residual composition fixture found in bounded two-harmonic family: "
@@ -213,7 +211,7 @@ def run_roots():
 
 
 def run_acceptance():
-    meta, source, predecessor, result, reverse, reverse_predecessor, reverse_new, owners = _find_acceptance()
+    meta, source, predecessor, result, owners = _find_acceptance()
     assert predecessor["status"] != "CERTIFIED"
     route = _route(result)
     assert route["relation"] == model.V41_ROUTE
@@ -237,6 +235,18 @@ def run_acceptance():
     assert any(r["coordinate"] == "A" and r["harmonic"] == 1 for r in roots), roots
     assert any(r["coordinate"] == "B" and r["harmonic"] == 2 for r in roots), roots
 
+    # Exact source-parameter reversal exercises the negative phase-rate direction
+    # without asking one asymmetric source to satisfy two different phase-cell layouts.
+    reverse = _linear_spec(
+        1 - meta["A_root"],
+        1 - meta["B_root"],
+        -meta["A_scale"],
+        -meta["B_scale"],
+        offset=meta["offset"] + meta["rate"],
+        rate=-meta["rate"],
+    )
+    reverse_predecessor = v42.classify_required_analytic_event(reverse)
+    reverse_new = model.classify_required_analytic_event(reverse)
     assert reverse_predecessor.get("status") != "CERTIFIED"
     assert reverse_new.get("status") == "CERTIFIED", reverse_new
 
