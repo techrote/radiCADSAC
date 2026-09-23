@@ -1,0 +1,130 @@
+{
+  "schema": "radicadsac-mc038-pb00701-direct-rotated-coordinate/38.0",
+  "task": "MC-038",
+  "corrective_issue": 239,
+  "source_baseline": "e8b9d37f6f2f23de7f1a176704c2c428ae71aac3",
+  "target_blocker": "PB-007-01",
+  "decision": "EXACT_DIRECT_ROTATED_COORDINATE_ROUTE_ESTABLISHED_PB00701_OPEN",
+  "gate_state": "NOT_ESTABLISHED",
+  "historical_evidence": [
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701_phase_correlated_two_polynomial_shared_factor_model.py",
+      "git_blob_sha1": "485ad89d9b5ff9847095f48880cc9a9cb3be96ce",
+      "role": "v37 two-polynomial shared-factor executable precedence"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/test_pb00701_phase_correlated_two_polynomial_shared_factor_adversarial.py",
+      "git_blob_sha1": "230fd40d7ae3d0035dae6c17075c0dcb9b533db3",
+      "role": "historical-v37 adversarial and endpoint precedence"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701-phase-correlated-two-polynomial-shared-factor-v37.json",
+      "git_blob_sha1": "0e81e744685f3d34872f9cad536ed514e8a3b628",
+      "role": "v37 machine-readable authority"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701_pointwise_separator_integration_model.py",
+      "git_blob_sha1": "7d6c94e48c018fd6570336fea78930a7169cd650",
+      "role": "v33 amplitude-derivative theorem-boundary evidence"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701-pointwise-separator-integration-v33.json",
+      "git_blob_sha1": "0002c2283b4ef822f23b19ee821dcdd4bfe72a82",
+      "role": "v33 machine-readable blocker evidence"
+    }
+  ],
+  "construction": {
+    "family": "source-owned exact rational selected-harmonic quadratures C_h(s), S_h(s) directly; no common-factor requirement",
+    "source_authority": "regenerate A=(C+S)/2, B=(C-S)/2, A'=(C'+S')/2 and B'=(C'-S')/2 only from source-owned exact rational coefficients",
+    "phase_cell": "-3/16+k/2 <= h*phi <= -1/16+k/2",
+    "rotated_variable": "X=cos(theta)+sin(theta), Y=cos(theta)-sin(theta)",
+    "A": "(C(s)+S(s))/2",
+    "B": "(C(s)-S(s))/2",
+    "selected_harmonic_identity": "A'(s)*X+B'(s)*Y+2*pi*h*r*(A(s)*Y-B(s)*X)",
+    "equivalent_source_derivative_identity": "C'(s)*cos(theta)+S'(s)*sin(theta)+2*pi*h*r*(-C(s)*sin(theta)+S(s)*cos(theta))",
+    "exact_rational_bounds": {
+      "L_joint_Y_lower": "2856/2197",
+      "U_joint_X_upper": "99/182",
+      "W_joint_Y_upper": "99/70",
+      "two_pi_lower": "6"
+    },
+    "A_authority": "MC-032 endpoint/Sturm strict positivity proves A(s)>0 on the complete closed span",
+    "phase_gap": "for sigma_B in {-1,+1}, P_sigma(s)=A(s)*(2856/2197)-sigma_B*B(s)*(99/182)>0",
+    "strict_margin": "for both sigma_B and every residual sign orthant: 6*|h*r|*P_sigma-sigma_Ap*(99/182)*A'-sigma_Bp*(99/70)*B'-sum_i sigma_i*R_i>0",
+    "residual_authority": "finite exact rational-polynomial sign families plus MC-032 closed-interval endpoint/Sturm strict positivity",
+    "selected_C_prime_and_S_prime_consumed_only_jointly": true,
+    "selected_A_prime_term_material": true,
+    "selected_B_prime_term_supported_and_material_when_nonzero": true,
+    "selected_phase_C_and_phase_S_consumed_only_jointly": true,
+    "all_nonanchor_residuals_retained": true,
+    "caller_rotated_coordinates_trusted": false,
+    "caller_derivatives_trusted": false,
+    "caller_certificate_trusted": false,
+    "sampling_used": false,
+    "epsilon_used": false,
+    "numerical_trigonometry_used": false,
+    "arbitrary_subdivision_cap_used": false
+  },
+  "acceptance_source": {
+    "C_1": "1+6s/5",
+    "S_1": "11/10+6s/5",
+    "canonical_gcd": "1",
+    "derived_A": "21/20+6s/5",
+    "derived_B": "-1/20",
+    "derived_A_prime": "6/5",
+    "derived_B_prime": "0",
+    "phase_interval_turns": ["-3/16", "-1/16"],
+    "nonanchor_harmonic": "nonzero tiny h=2 COS term retained in the exact residual",
+    "v37_result": "BLOCKED_BECAUSE_CANONICAL_GCD_IS_CONSTANT",
+    "v38_result": "CERTIFIED",
+    "C_prime_materially_nonzero": true,
+    "S_prime_materially_nonzero": true,
+    "unequal_derivative_secondary_fixture": "C_1=1+6s/5, S_1=11/10+7s/6 gives nonzero A' and B' and is also coprime"
+  },
+  "boundary_controls": [
+    "positive and negative phase-rate cases and opposite k-parity diagonal projection-sign cells",
+    "exact diagonal phase-cell boundary equality and signed rational 1/1000000 neighbours",
+    "exact A(s)>0 equality and signed rational 1/1000000 neighbours",
+    "exact phase-gap equality and signed rational 1/1000000 neighbours",
+    "strict complete-margin equality and signed rational 1/1000000 neighbours",
+    "zero/open/left-endpoint/right-endpoint event outcomes use preserved exact endpoint/root/multiplicity authority",
+    "genuine coprime C/S acceptance is confirmed blocked by v37 because its canonical GCD is constant",
+    "secondary coprime fixture has both A' and B' nonzero so both direct rotated derivative channels execute",
+    "zero source quadrature, zero or ambiguous A and unsupported phase cells fail closed",
+    "source-coordinate mismatch and forged rotated-coordinate/derivative/cell/bound/margin/root metadata fail closed",
+    "binary floats fail closed and exact resource refusal remains non-truth",
+    "historical v30, v34, v35, v36 and v37 successes retain exact precedence and v33 blocker evidence remains pinned",
+    "frozen 26-operation denominator and false MC-B promotion remain rejected"
+  ],
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false,
+    "next_pre_gate_priority": "after verified v38 landing, inspect only the residual PB-007-01 blocked family and record the next smallest exact dependency-ready theorem repair; do not retry MC-B"
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "protected_semantics": {
+    "source_audio_provenance": true,
+    "canonical_journal": true,
+    "exact_time_path_phase": true,
+    "source_uncertainty": true,
+    "positive_volume_material": true,
+    "cutter_holder_access": true,
+    "durable_body_lineage": true,
+    "refusal_uncertified": true,
+    "conventional_step": true
+  }
+}
