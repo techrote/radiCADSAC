@@ -43,7 +43,7 @@
     "rotated_variable": "X=cos(theta)+sin(theta), Y=cos(theta)-sin(theta)",
     "oriented_selected_harmonic_identity": "(-sigma_B)*D=Atilde'(s)*X-Bbar'(s)*Y+2*pi*h*r*(Bbar(s)*X+Atilde(s)*Y)",
     "physical_selected_harmonic_identity": "D=A'(s)*X+B'(s)*Y+2*pi*h*r*(A(s)*Y-B(s)*X)",
-    "issue_243_contract_reconciliation": "the issue prose wrote +Bbar'*Y after multiplication by -sigma_B; exact algebra requires -Bbar'*Y. The complete finite sign-orthant margin is unchanged because both signs of the Bbar' channel are enumerated.",
+    "issue_243_contract_reconciliation": "sign typo in the issue prose: it wrote +Bbar'*Y after multiplication by -sigma_B; exact algebra requires -Bbar'*Y. The complete finite sign-orthant margin is unchanged because both signs of the Bbar' channel are enumerated.",
     "exact_rational_bounds": {
       "L_joint_X_lower": "2856/2197",
       "U_joint_Y_upper": "99/182",
