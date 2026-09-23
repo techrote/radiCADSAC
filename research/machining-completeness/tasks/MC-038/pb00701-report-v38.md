@@ -8,7 +8,7 @@ PB-007-01 remains open. MC-B and MC-1 remain `NOT_ESTABLISHED`. The domain denom
 
 ## Exact repair
 
-V38 removes v37's nonconstant-common-factor prerequisite for one selected positive harmonic. From exact source polynomials it regenerates `A=(C+S)/2`, `B=(C-S)/2`, `A'=(C'+S')/2`, `B'=(C'-S')/2` and retains the complete derivative
+V38 establishes the bounded exact **direct rotated-coordinate** route and removes v37's nonconstant-common-factor prerequisite for one selected positive harmonic. From exact source polynomials it regenerates `A=(C+S)/2`, `B=(C-S)/2`, `A'=(C'+S')/2`, `B'=(C'-S')/2` and retains the complete derivative
 
 `A'*X+B'*Y+2*pi*h*r*(A*Y-B*X)`
 
