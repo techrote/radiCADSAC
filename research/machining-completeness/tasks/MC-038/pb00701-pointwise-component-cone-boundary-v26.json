@@ -21,7 +21,7 @@
     "scope": "v25-blocked residual multi-harmonic spans whose separate global dominant-floor/transverse-ceiling bounds overlap but whose source-derived pointwise mixed-projection cone and complete retained derivative residual admit a finite exact orthant proof",
     "dominant_sign_authority": "the selected dominant source component has one strict sign on closed [0,1] proved by MC-032 exact rational endpoint/Sturm strict positivity; no Bernstein floor is required",
     "phase_sector_authority": "the unchanged v25 exact rational single-quadrature half-magnitude sector supplies fixed sign and magnitude at least 1/2; the transverse quadrature uses only absolute bound 1",
-    "pointwise_cone_authority": "for S-dominant authority prove all exact polynomials 6*|h*r|*(sign(S)*S/2-sigma_C*C)-sum_i sigma_i R_i > 0; C-dominant is symmetric",
+    "pointwise_cone_authority": "for S-dominant authority require every exact polynomial 6*|h*r|*(sign(S)*S/2-sigma_C*C)-sum_i sigma_i R_i to be strictly positive (> 0) on closed [0,1]; C-dominant is symmetric",
     "residual_terms": "both anchor amplitude derivatives C' and S', harmonic-0 P', and every other derivative channel remain residual; only the selected anchor phase_C/phase_S pair is consumed and other phase terms use 44/7",
     "orthant_identity": "finite signs sigma_T,sigma_i realize |T| and sum_i |R_i| exactly, so positivity of every directed margin proves 6*|h*r|*(|D|/2-|T|) > sum_i |R_i| pointwise",
     "derivative_authority": "the pointwise cone fixes the anchor projection sign; exact pi>3 gives 2*pi>6, therefore the exact mixed phase derivative strictly dominates the complete retained residual everywhere",
