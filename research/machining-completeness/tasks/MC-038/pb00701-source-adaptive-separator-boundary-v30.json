@@ -1,0 +1,101 @@
+{
+  "schema": "radicadsac-mc038-pb00701-source-adaptive-separator-boundary/30.0",
+  "task": "MC-038",
+  "corrective_issue": 223,
+  "source_baseline": "e23493c16d5dff5f65df4f03a08103afd97ce2c3",
+  "target_blocker": "PB-007-01",
+  "decision": "EXACT_SOURCE_ADAPTIVE_PROJECTIVE_RATIONAL_SEPARATOR_ESTABLISHED_GENERAL_COUPLED_ROUTE_OPEN",
+  "gate_state": "NOT_ESTABLISHED",
+  "historical_v29_evidence": [
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-pythagorean-phase-cell-boundary-v29.json", "git_blob_sha1": "cc02a56bd86ffb72f9b02d27d6ddaa62297e122e", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-report-v29.md", "git_blob_sha1": "2e93b57b35102a54084359f75b3316d02eddb3cf", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701_pythagorean_phase_cell_model.py", "git_blob_sha1": "3c792284922a481c9c2edad4f61f3f4f1afbe63a", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/test_pb00701_pythagorean_phase_cell_adversarial.py", "git_blob_sha1": "2569836642e482e806af66a798c5fbe6f252e392", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v29.py", "git_blob_sha1": "68aeb5de95914ebb71d43c487b8d5825140816ce", "preserved": true},
+    {"path": "docs/machining-completeness/55-PB00701-PYTHAGOREAN-PHASE-CELL.md", "git_blob_sha1": "fe20765464c08feb8b5731f2970951f455dddd06", "preserved": true},
+    {"path": ".github/workflows/mc1-pb00701-v29.yml", "git_blob_sha1": "89931307e131388828734c7546bd21bee4ed241e", "preserved": true}
+  ],
+  "implemented_extension": {
+    "id": "EXACT_SOURCE_ADAPTIVE_PROJECTIVE_RATIONAL_SEPARATOR_DERIVATIVE_DOMINANCE",
+    "scope": "exact lowered multi-harmonic spans still blocked after complete v8-v29 authority because v29's fixed projective slope 5/12 is too conservative inside an already-supported exact 1/16-turn algebraic phase cell",
+    "phase_cell_authority": "reuse v29 exact rational-turn 1/16-turn cells and the exact dominant quadrature lower bound 12/13; the projective algebraic boundary is tan(pi/8)=sqrt(2)-1",
+    "separator_synthesis": "derive beta=D_floor/T_ceiling from canonical source Bernstein bounds; prove beta>sqrt(2)-1 by exact rational square comparison; then synthesize m=beta-(beta^2+2beta-1)/(4(beta+1)), which satisfies sqrt(2)-1<m<beta by the exact identity beta-alpha=f(beta)/(beta+alpha+2)",
+    "projection": "for SIN-dominant anchors use the v29 COS cells and factor S*cos-C*sin=cos*(S-C*tan); use the symmetric C-dominant SIN-cell formulation; both positive and negative quadrature cells remain supported",
+    "residual_authority": "retain both selected-harmonic amplitude derivatives, harmonic-0 derivative, and every non-anchor derivative term; prove every finite signed margin 6|hr|(12/13)(sign(D)D-m sigma_T T)-sum sigma_i R_i strictly positive with MC-032 exact endpoint/Sturm authority",
+    "endpoint_authority": "reuse established exact rational-turn endpoint event relations and preserved simple-root summary authority after the complete derivative sign is proved",
+    "precedence": "complete v8-v29 classification retains strict precedence; v30 consumes only residual blocked lowered spans",
+    "termination": "one exact source ratio, one exact algebraic square comparison, one closed-form rational separator expression, and finite 2^(1+N) exact rational-polynomial orthant decisions; no iterative separator search or subdivision",
+    "forbidden_authority": [
+      "caller rational separators or source projective ceilings",
+      "caller algebraic boundary values or comparisons",
+      "caller phase cells or projection certificates",
+      "caller root counts or multiplicities",
+      "binary float",
+      "epsilon or tolerance as authority",
+      "sampling",
+      "numerical trigonometry",
+      "approximate algebraic comparison",
+      "approximate root ordering",
+      "iterative separator or convergent search",
+      "adaptive subdivision",
+      "arbitrary refinement depth",
+      "timeout",
+      "resource refusal as truth"
+    ]
+  },
+  "boundary_controls": [
+    "genuine complete-v8-v29-blocked residual source whose source projective ceiling beta=83/200 lies below fixed 5/12 but above tan(pi/8), certified by the source-adaptive exact rational separator",
+    "paired adverse source whose exact source projective ceiling lies below tan(pi/8) remains blocked",
+    "exact algebraic-bound comparison controls immediately below and above sqrt(2)-1 using 70/169 and 169/408",
+    "exact full source residual-margin equality and signed plus/minus 1/1000000 rational neighbours",
+    "positive and negative phase rate",
+    "SIN-dominant and COS-dominant projection orientations",
+    "positive and negative dominant quadrature phase cells",
+    "selected-harmonic amplitude derivative materially active as a retained residual",
+    "non-anchor harmonic phase derivative materially active as a retained residual",
+    "historical v29 success retains complete v8-v29 precedence",
+    "forged caller separator algebraic margin root and multiplicity metadata are ignored",
+    "binary-float exact-authority rejection",
+    "source-parameter mismatch rejection",
+    "exact resource refusal propagates and is not a truth value",
+    "historical v29 blob hashes preserved",
+    "frozen 26-operation denominator preserved",
+    "false MC-B promotion rejected"
+  ],
+  "full_blocker_review": {
+    "status": "OPEN",
+    "residual_branch": "sources still blocked after complete v8-v30 exact authority, including spans outside the finite v29 phase cells, sources whose conservative canonical Bernstein floor/ceiling cannot place beta above tan(pi/8), and coupled projections whose exact residual separation remains unproved",
+    "not_an_impossibility_theorem": true
+  },
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false,
+    "next_pre_gate_priority": "PB-007-01 exact source-adaptive projective authority beyond Bernstein floor/ceiling conservatism or beyond the finite v29 phase cells, without numerical transcendental authority"
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "protected_semantics": {
+    "source_audio_provenance": true,
+    "canonical_journal": true,
+    "exact_time_path_phase": true,
+    "source_uncertainty": true,
+    "positive_volume_material": true,
+    "cutter_holder_access": true,
+    "durable_body_lineage": true,
+    "refusal_uncertified": true,
+    "conventional_step": true
+  }
+}
