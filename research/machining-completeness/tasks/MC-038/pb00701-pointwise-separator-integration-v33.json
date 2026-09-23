@@ -1,0 +1,74 @@
+{
+  "schema": "radicadsac-mc038-pb00701-pointwise-separator-integration/33.0",
+  "task": "MC-038",
+  "corrective_issue": 229,
+  "source_baseline": "9bf9ddf77371139d69540307ee8053b4ed158b41",
+  "target_blocker": "PB-007-01",
+  "decision": "V32_SEPARATOR_INTEGRATED_EXACTLY_BUT_PRESERVED_FULL_RESIDUAL_REMAINS_LIMITING_PB00701_OPEN",
+  "gate_state": "NOT_ESTABLISHED",
+  "historical_v30_executable_evidence": [
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701_source_adaptive_separator_model.py", "git_blob_sha1": "d920a5b670d14ac4a54b0ed879e83532f2114b95", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/test_pb00701_source_adaptive_separator_adversarial.py", "git_blob_sha1": "84aa9e1b7bcabdcb87be5e7aab954e89b9709041", "preserved": true}
+  ],
+  "qualified_v32_foundation": [
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_separator_exact.py", "git_blob_sha1": "bb90aed7b5933520fdcb43205da40a98701fb7bd"},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_separator_foundation_model.py", "git_blob_sha1": "2855b4de81e061801fb43abf94817434e33619d6"},
+    {"path": "research/machining-completeness/tasks/MC-038/test_pb00701_algebraic_separator_foundation_adversarial.py", "git_blob_sha1": "bb83917458699eedec8ef2177315a8e302248030"},
+    {"path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v32.py", "git_blob_sha1": "966365aaf280ed7c6a90db611ac67bfcdc334370"},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-algebraic-separator-foundation-v32.json", "git_blob_sha1": "1d0232358eb86d92a2d867b2427e7a33473e0837"},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-report-v32.md", "git_blob_sha1": "dc7688c623e9e9250c30ef0314316c3430fc037d"},
+    {"path": "docs/machining-completeness/58-PB00701-ALGEBRAIC-SEPARATOR-FOUNDATION.md", "git_blob_sha1": "2ad24a2028bca4827f44ad691d970bafef9c9147"},
+    {"path": ".github/workflows/mc1-pb00701-v32.yml", "git_blob_sha1": "c2a2eecf23620601892367bbd9664b43577b20c3"}
+  ],
+  "integration_result": {
+    "status": "THEOREM_BOUNDARY_RECORDED",
+    "mechanical_integration": "v32 source-owned separator synthesis and source binding feed directly into the unchanged v30 projective-plus-complete-residual finite sign-orthant verifier",
+    "v31_diagnostic": "D=1+2s, T=2+3s now receives a source-owned v32 separator without trusting diagnostic m=5/12, but retained D'=2 and T'=3 terms make the unchanged complete residual orthant fail",
+    "common_factor_control": "C=S=(1+3s/4)^2 has pointwise projective ratio exactly one while v30 separate global Bernstein ratio is 16/49 below tan(pi/8); v32 cancels the exact common factor and synthesizes a separator, but the preserved independent selected-harmonic amplitude-derivative envelope remains blocking",
+    "event_classifier_promoted": false,
+    "residual_contract_weakened": false,
+    "not_an_impossibility_theorem": true,
+    "precise_next_theorem": "replace only the conservative independent selected-harmonic |C'|+|S'| residual treatment with an exact phase-correlated joint amplitude/phase derivative certificate; retain all non-anchor residuals and exact event semantics"
+  },
+  "boundary_controls": [
+    "v31 diagnostic obtains source-owned v32 separator but remains blocked by the preserved full derivative residual",
+    "common-factor C=S=(1+3s/4)^2 control has v30 global 16/49 projective bound failure despite exact pointwise ratio one; v32 source-owned separator succeeds but the independent amplitude-derivative residual remains blocking",
+    "exact algebraic controls 70/169 below and 169/408 above sqrt(2)-1 remain rational-only",
+    "SIN/COS orientation and positive/negative phase-rate integration paths reach the same exact source-owned separator boundary",
+    "caller separator/root/critical-value/order/margin metadata and source-parameter substitution are non-authoritative",
+    "binary float and exact resource refusal remain fail-closed/non-truth",
+    "historical v30 success authority retains precedence and is not replaced by v33",
+    "frozen 26-operation denominator and false MC-B promotion remain rejected"
+  ],
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false,
+    "next_pre_gate_priority": "PB-007-01 v34: exact phase-correlated selected-harmonic amplitude/phase derivative certificate, beginning with a source-owned proportional/common-factor quadrature family and exact diagonal rational-turn phase cells"
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "protected_semantics": {
+    "source_audio_provenance": true,
+    "canonical_journal": true,
+    "exact_time_path_phase": true,
+    "source_uncertainty": true,
+    "positive_volume_material": true,
+    "cutter_holder_access": true,
+    "durable_body_lineage": true,
+    "refusal_uncertified": true,
+    "conventional_step": true
+  }
+}
