@@ -1,9 +1,6 @@
 name: mc1-pb00701-v42
 
 on:
-  push:
-    branches:
-      - pb00701-v42-orientation-transition-bridge
   pull_request:
     paths:
       - 'research/machining-completeness/tasks/MC-038/pb00701_orientation_transition_bridge_model.py'
