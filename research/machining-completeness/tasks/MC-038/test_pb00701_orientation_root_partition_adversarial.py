@@ -103,6 +103,47 @@ def _child_owners(route):
     return owners
 
 
+def _failure_digest(result):
+    out = []
+    for span in result.get("spans", []):
+        route = span.get("route", {})
+        item = {
+            "source_interval": span.get("source_interval"),
+            "route_kind": span.get("route_kind"),
+            "route_status": route.get("status"),
+            "route_reason": route.get("reason"),
+            "failed_child_interval": route.get("failed_child_interval"),
+        }
+        blocker = route.get("child_blocker", {})
+        if blocker:
+            item["child_blocker_status"] = blocker.get("status")
+            item["child_blocker_reason"] = blocker.get("reason")
+            item["child_blocker_relation"] = blocker.get("relation")
+        child_digests = []
+        for child in route.get("children", []):
+            cd = {
+                "interval": child.get("parent_local_interval"),
+                "summary_status": child.get("summary", {}).get("status"),
+                "summary_reason": child.get("summary", {}).get("reason"),
+                "child_status": child.get("child_result", {}).get("status"),
+                "child_relation": child.get("child_result", {}).get("relation"),
+                "routes": [],
+            }
+            for cspan in child.get("child_result", {}).get("spans", []):
+                cr = cspan.get("route", {})
+                cd["routes"].append({
+                    "kind": cspan.get("route_kind"),
+                    "status": cr.get("status"),
+                    "reason": cr.get("reason"),
+                    "harmonic": cr.get("harmonic"),
+                })
+            child_digests.append(cd)
+        if child_digests:
+            item["children"] = child_digests
+        out.append(item)
+    return out
+
+
 def _find_acceptance():
     diagnostics = []
     for meta, spec in _acceptance_candidates():
@@ -116,7 +157,7 @@ def _find_acceptance():
                     (
                         {k: str(v) for k, v in meta.items()},
                         new.get("status"),
-                        json.dumps(new, sort_keys=True)[-700:],
+                        _failure_digest(new),
                     )
                 )
             continue
