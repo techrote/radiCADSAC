@@ -1,0 +1,97 @@
+{
+  "schema": "radicadsac-mc038-pb00701-phase-sector-partition-boundary/27.0",
+  "task": "MC-038",
+  "corrective_issue": 216,
+  "source_baseline": "cad06a39b2ba28d3b560dff409940473f4a3c186",
+  "target_blocker": "PB-007-01",
+  "decision": "EXACT_FINITE_RATIONAL_PHASE_SECTOR_PARTITION_COMPOSITION_ESTABLISHED_GENERAL_COUPLED_ROUTE_OPEN",
+  "gate_state": "NOT_ESTABLISHED",
+  "historical_v26_evidence": [
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-pointwise-component-cone-boundary-v26.json", "git_blob_sha1": "13d53fdff086bda2937684d6e7b4cd6b431b0441", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-report-v26.md", "git_blob_sha1": "cc68b7f105b738f5fe0d03e520d718f5f8781cc9", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701_pointwise_component_cone_model.py", "git_blob_sha1": "a303bba600fa83a1b55c8e113ce1ec7d06f68590", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/test_pb00701_pointwise_component_cone_adversarial.py", "git_blob_sha1": "b94998804a72f439824b0db3383c1b942446c7cc", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v26.py", "git_blob_sha1": "b64ff4b82f2caa04bbf0128a0cb2a757ee7af2f7", "preserved": true},
+    {"path": "docs/machining-completeness/52-PB00701-POINTWISE-COMPONENT-CONE.md", "git_blob_sha1": "1897bd75602588048202547c57d47ed7a7a98f36", "preserved": true},
+    {"path": ".github/workflows/mc1-pb00701-v26.yml", "git_blob_sha1": "a2a2c834cefb57620ef09b7fbdfa9ea809aaac60", "preserved": true}
+  ],
+  "implemented_extension": {
+    "id": "EXACT_FINITE_RATIONAL_PHASE_SECTOR_PARTITION_COMPOSITION",
+    "scope": "v26-blocked exact lowered rational-polynomial multi-harmonic spans with nonzero exact-rational affine phase and one or more interior historical half-magnitude sector crossings",
+    "cut_authority": "for every active positive harmonic, solve the affine rational harmonic phase exactly against all existing SIN/COS half-magnitude sector boundary residues; retain only exact rational cuts strictly inside the source span and sort/deduplicate them exactly",
+    "reparameterization": "on each child [a,b], substitute s=a+(b-a)u exactly into every source polynomial and transform the affine phase to offset+r*a with rate r*(b-a); preserve the shared source parameter identity and exact map back to the parent span",
+    "child_authority": "rerun the complete preserved v8-v26 classifier independently on every child; certification requires every child to be CERTIFIED",
+    "composition": "sum exact child-open root counts, verify adjacent endpoint relations exactly, count a ZERO on an internal certificate cut once, and require matching explicit endpoint multiplicity from both adjacent children before deduplication",
+    "multiplicity": "never infer multiplicity from a root count; nonzero child endpoints are vacuous, zero endpoints require explicit compatible child authority, and child open roots require explicit simple/multiple-root evidence",
+    "termination": "finite active harmonic lattice times eight rational sector residues over a bounded rational affine phase interval, followed by a finite exact child list; no adaptive refinement or depth cap",
+    "precedence": "v8-v26 complete classifier retains strict precedence; v27 consumes only residual blocked spans",
+    "forbidden_authority": [
+      "caller cuts or partition metadata",
+      "caller child certificates or root counts",
+      "caller endpoint or deduplication assertions",
+      "binary float",
+      "epsilon or tolerance",
+      "sampling",
+      "numerical trigonometry",
+      "approximate root ordering",
+      "adaptive subdivision",
+      "arbitrary subdivision depth",
+      "timeout",
+      "resource refusal as truth"
+    ]
+  },
+  "boundary_controls": [
+    "genuine whole-span v26-blocked sector crossing with all exact children decidable under preserved v8-v26 authority",
+    "positive and negative phase-rate traversal",
+    "sector crossing exactly at an external endpoint creates no zero-width child",
+    "multiple interior sector cuts are sorted exactly",
+    "coincident cuts from harmonics and boundary families are deduplicated while preserving causes",
+    "internal-cut event root is counted once",
+    "internal-cut endpoint multiplicity mismatch fails closed",
+    "no-root and open-root child composition",
+    "one blocked child keeps the parent blocked",
+    "exact resource refusal propagates and is not a truth value",
+    "forged caller partition, cut, child, root and endpoint metadata are ignored",
+    "binary-float exact-authority rejection",
+    "source-parameter mismatch rejection",
+    "historical v26 precedence and exact blob hashes preserved",
+    "frozen 26-operation denominator preserved",
+    "false MC-B promotion rejected"
+  ],
+  "full_blocker_review": {
+    "status": "OPEN",
+    "residual_branch": "sources still blocked after complete v8-v27 exact authority, including children that retain genuinely unresolved transcendental zero/multiplicity structure",
+    "not_an_impossibility_theorem": true
+  },
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false,
+    "next_pre_gate_priority": "PB-007-01 residual event authority beyond finite rational phase-sector composition"
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "protected_semantics": {
+    "source_audio_provenance": true,
+    "canonical_journal": true,
+    "exact_time_path_phase": true,
+    "source_uncertainty": true,
+    "positive_volume_material": true,
+    "cutter_holder_access": true,
+    "durable_body_lineage": true,
+    "refusal_uncertified": true,
+    "conventional_step": true
+  }
+}
