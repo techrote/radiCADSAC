@@ -1,0 +1,125 @@
+{
+  "schema": "radicadsac-mc038-pb00701-phase-correlated-proportional-common-factor/35.0",
+  "task": "MC-038",
+  "corrective_issue": 233,
+  "source_baseline": "cd7a6c076202a34fa11f25ad32ffed3a14509191",
+  "target_blocker": "PB-007-01",
+  "decision": "EXACT_PHASE_CORRELATED_PROPORTIONAL_COMMON_FACTOR_ROUTE_ESTABLISHED_PB00701_OPEN",
+  "gate_state": "NOT_ESTABLISHED",
+  "historical_evidence": [
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701_phase_correlated_common_factor_model.py",
+      "git_blob_sha1": "dc7110fb46f585e8849b7fd3b0dc43f393fdbd87",
+      "role": "v34 equal-quadrature phase-correlated executable precedence"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/test_pb00701_phase_correlated_common_factor_adversarial.py",
+      "git_blob_sha1": "2eef97de1af17bb4f46cecd1ccc580a9ebeb656a",
+      "role": "historical-v34 adversarial and endpoint precedence"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701_source_adaptive_separator_model.py",
+      "git_blob_sha1": "d920a5b670d14ac4a54b0ed879e83532f2114b95",
+      "role": "complete-v8-v30 executable precedence"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701_pointwise_separator_integration_model.py",
+      "git_blob_sha1": "7d6c94e48c018fd6570336fea78930a7169cd650",
+      "role": "v33 amplitude-derivative theorem-boundary evidence"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701-pointwise-separator-integration-v33.json",
+      "git_blob_sha1": "0002c2283b4ef822f23b19ee821dcdd4bfe72a82",
+      "role": "v33 machine-readable blocker evidence"
+    }
+  ],
+  "construction": {
+    "family": "source-owned C_h(s)=lambda*G(s), S_h(s)=G(s), exact rational nonzero lambda, and exact rational polynomial G of one strict sign",
+    "lambda_authority": "derive lambda from the first nonzero source coefficient of S_h and regenerate every C_h=lambda*G coefficient identity exactly",
+    "phase_cell": "-3/16+k/2 <= h*phi <= -1/16+k/2",
+    "rotated_variable": "u=2*pi*(h*phi+1/8-k/2) in [-pi/8,pi/8]",
+    "A": "(lambda+1)/2",
+    "B": "(lambda-1)/2",
+    "selected_harmonic_identity": "G'*(A*X+B*Y)+2*pi*h*r*G*(A*Y-B*X), X=cos+sin, Y=cos-sin",
+    "exact_rational_bounds": {
+      "L_joint_Y_lower": "2856/2197",
+      "U_joint_X_upper": "99/182",
+      "W_joint_Y_upper": "99/70",
+      "two_pi_lower": "6"
+    },
+    "phase_gap": "P=A*(2856/2197)-|B|*(99/182)>0 with A>0",
+    "joint_amplitude_upper": "Q=|A|*(99/182)+|B|*(99/70)",
+    "strict_margin": "6*|h*r|*P*|G(s)|-Q*|G'(s)|-sum_i|R_i(s)|>0",
+    "residual_authority": "finite exact rational-polynomial sign orthants plus MC-032 closed-interval endpoint/Sturm strict positivity",
+    "selected_C_prime_and_S_prime_consumed_only_jointly": true,
+    "selected_phase_C_and_phase_S_consumed_only_jointly": true,
+    "all_nonanchor_residuals_retained": true,
+    "caller_lambda_trusted": false,
+    "caller_common_factor_trusted": false,
+    "caller_certificate_trusted": false,
+    "sampling_used": false,
+    "epsilon_used": false,
+    "numerical_trigonometry_used": false,
+    "arbitrary_subdivision_cap_used": false
+  },
+  "acceptance_source": {
+    "G": "(1+3s/4)^2",
+    "lambda": "9/10",
+    "C_1": "(9/10)G",
+    "S_1": "G",
+    "phase_interval_turns": ["-3/16", "-1/16"],
+    "nonanchor_harmonic": "nonzero tiny h=2 COS term retained in the exact residual",
+    "v34_result": "BLOCKED_BECAUSE_C_1_NE_S_1",
+    "v35_result": "CERTIFIED",
+    "derived_A": "19/20",
+    "derived_B": "-1/20",
+    "derived_P": "148593/123032",
+    "derived_Q": "2673/4550",
+    "both_selected_amplitude_derivatives_active": true
+  },
+  "boundary_controls": [
+    "positive and negative phase-rate cases and opposite k-parity diagonal projection-sign cells",
+    "exact diagonal-cell boundary equality and signed rational 1/1000000 neighbours",
+    "exact phase-gap equality P=0 at lambda=-7751/18905 and signed rational 1/1000000 neighbours",
+    "strict complete-margin equality and signed rational 1/1000000 neighbours",
+    "zero/open/left-endpoint/right-endpoint event outcomes use preserved exact endpoint/root/multiplicity authority",
+    "nonconstant proportionality and one-coefficient source perturbation fail closed",
+    "zero or sign-changing common factor G and A<=0 fail closed",
+    "unsupported phase cell and source-coordinate mismatch fail closed",
+    "forged lambda/common-factor/cell/bound/margin/root metadata is non-authoritative",
+    "binary floats fail closed and exact resource refusal remains non-truth",
+    "historical v30 and v34 successes retain exact precedence and v33 blocker evidence remains pinned",
+    "frozen 26-operation denominator and false MC-B promotion remain rejected"
+  ],
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false,
+    "next_pre_gate_priority": "extend phase-correlated common-factor authority beyond constant proportionality to a bounded source-owned varying-ratio/shared-factor family without splitting selected amplitude derivatives or weakening exact residual semantics"
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "protected_semantics": {
+    "source_audio_provenance": true,
+    "canonical_journal": true,
+    "exact_time_path_phase": true,
+    "source_uncertainty": true,
+    "positive_volume_material": true,
+    "cutter_holder_access": true,
+    "durable_body_lineage": true,
+    "refusal_uncertified": true,
+    "conventional_step": true
+  }
+}
