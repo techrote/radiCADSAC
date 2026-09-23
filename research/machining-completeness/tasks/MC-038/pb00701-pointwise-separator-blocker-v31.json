@@ -17,7 +17,7 @@
   ],
   "investigation": {
     "status": "THEOREM_ALGORITHM_BLOCKED",
-    "confirmed_existing_authority": "MC-032 can prove strict positivity of each rational polynomial sign-orthant margin once a rational separator m is already supplied; v30 can compare a supplied rational exactly with tan(pi/8)=sqrt(2)-1",
+    "confirmed_existing_authority": "MC-032 Sturm authority can prove strict positivity of each rational polynomial sign-orthant margin once a rational separator m is already supplied; v30 can compare a supplied rational exactly with tan(pi/8)=sqrt(2)-1",
     "diagnostic_witness": "D(s)=1+2s, T(s)=2+3s has separate Bernstein D_floor/T_ceiling=1/5, so v30 blocks, while the diagnostic rational m=5/12 is exactly above tan(pi/8) and both D-m*T and D+m*T are strictly positive under existing MC-032 authority",
     "missing_authority": "the repository has no qualified source-owned finite operation that isolates/orders the algebraic critical values of sign(D)D(s)/|T(s)| on closed [0,1] and then constructs a rational m strictly between tan(pi/8) and the exact minimum; existing Sturm authority is a decision procedure for a supplied rational margin, not an algebraic critical-value/rational-separator synthesis procedure",
     "required_foundation": "exact rational-function critical-point/resultant or subresultant construction, real-root isolation and ordering against sqrt(2)-1, plus a finitely bounded rational-between-algebraics constructor whose termination bound is derived from canonical integer/rational source data",
