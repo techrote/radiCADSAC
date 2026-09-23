@@ -1,0 +1,41 @@
+name: mc1-pb00701-v35
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_phase_correlated_proportional_common_factor_model.py'
+      - 'research/machining-completeness/tasks/MC-038/test_pb00701_phase_correlated_proportional_common_factor_adversarial.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v35.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-phase-correlated-proportional-common-factor-v35.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-report-v35.md'
+      - 'docs/machining-completeness/61-PB00701-PHASE-CORRELATED-PROPORTIONAL-COMMON-FACTOR.md'
+      - '.github/workflows/mc1-pb00701-v35.yml'
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_phase_correlated_proportional_common_factor_model.py'
+      - 'research/machining-completeness/tasks/MC-038/test_pb00701_phase_correlated_proportional_common_factor_adversarial.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v35.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-phase-correlated-proportional-common-factor-v35.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-report-v35.md'
+      - 'docs/machining-completeness/61-PB00701-PHASE-CORRELATED-PROPORTIONAL-COMMON-FACTOR.md'
+      - '.github/workflows/mc1-pb00701-v35.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile PB-007-01 v35 exact route
+        run: python3 -m py_compile research/machining-completeness/tasks/MC-038/pb00701_phase_correlated_proportional_common_factor_model.py research/machining-completeness/tasks/MC-038/test_pb00701_phase_correlated_proportional_common_factor_adversarial.py research/machining-completeness/tasks/MC-038/verify_pb00701_v35.py
+      - name: Verify PB-007-01 v35 contract and adversarial controls
+        run: |
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v35.py --contract
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v35.py --self-test
