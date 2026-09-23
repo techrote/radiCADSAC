@@ -217,30 +217,22 @@ def run():
     assert gap_inside["status"] == "CERTIFIED"
     assert gap_outside["status"] == "BLOCKED"
 
-    # Construct an exact complete-margin equality in one finite orthant.
-    atilde = [Fraction(1, 20), Fraction(-1, 10)]
-    phase_gap = model.v22._padd(
-        [model.ANTI_X_LOWER],
-        model.v22._pscale(atilde, -model.ANTI_Y_UPPER),
-    )
-    phase_base = model.v22._pscale(phase_gap, Fraction(3, 4))
-    target_derivative = model.v22._padd(
-        phase_base,
-        model.v22._pscale([Fraction(-1, 10)], -model.ANTI_X_UPPER),
-    )
-    p_equal = _integral_of_derivative(target_derivative)
+    # Exact complete-margin equality with zero transverse coordinate/derivative,
+    # so both sigma_A branches share the same genuine limiting orthant.
+    phase_base = [Fraction(3, 4) * model.ANTI_X_LOWER]
+    p_equal = _integral_of_derivative(phase_base)
     p_inside = list(p_equal)
     p_outside = list(p_equal)
     p_inside[1] -= EPS
     p_outside[1] += EPS
     equal = model._phase_correlated_signed_b_orthant_certificate(
-        {0: p_equal, 1: C1}, {1: S1}, Fraction(1, 8), 1
+        {0: p_equal, 1: [1]}, {1: [-1]}, Fraction(1, 8), 1
     )
     inside = model._phase_correlated_signed_b_orthant_certificate(
-        {0: p_inside, 1: C1}, {1: S1}, Fraction(1, 8), 1
+        {0: p_inside, 1: [1]}, {1: [-1]}, Fraction(1, 8), 1
     )
     outside = model._phase_correlated_signed_b_orthant_certificate(
-        {0: p_outside, 1: C1}, {1: S1}, Fraction(1, 8), 1
+        {0: p_outside, 1: [1]}, {1: [-1]}, Fraction(1, 8), 1
     )
     assert equal["status"] == "BLOCKED", equal
     assert inside["status"] == "CERTIFIED", inside
