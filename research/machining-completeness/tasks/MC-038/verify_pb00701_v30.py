@@ -127,7 +127,7 @@ def validate_artifact(artifact, *, check_repo=True):
     assert effect["next_pre_gate_priority"].startswith("PB-007-01")
     assert artifact["resources"] == {
         "native_campaign_run": False,
-        "paid_campaign_run": false,
+        "paid_campaign_run": False,
         "production_authorized": False,
         "expensive_execution_authorized": False,
     }
