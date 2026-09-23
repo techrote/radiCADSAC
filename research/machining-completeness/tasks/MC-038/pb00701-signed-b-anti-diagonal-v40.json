@@ -1,0 +1,131 @@
+{
+  "schema": "radicadsac-mc038-pb00701-signed-b-anti-diagonal/40.0",
+  "task": "MC-038",
+  "corrective_issue": 243,
+  "source_baseline": "a92115689da4713d30ba74d65c033897e877a4f7",
+  "target_blocker": "PB-007-01",
+  "decision": "EXACT_SIGNED_B_ANTI_DIAGONAL_ROUTE_ESTABLISHED_PB00701_OPEN",
+  "gate_state": "NOT_ESTABLISHED",
+  "historical_evidence": [
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701_signed_a_direct_rotated_coordinate_model.py",
+      "git_blob_sha1": "d8cf3c4f3abaf1299bae2e4fd7120b17724a2df1",
+      "role": "v39 signed-A direct rotated-coordinate executable precedence"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/test_pb00701_signed_a_direct_rotated_coordinate_adversarial.py",
+      "git_blob_sha1": "e777c69f7a54a6f61f92de1beaeda661e718b9a5",
+      "role": "v39 adversarial and endpoint precedence"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701-signed-a-direct-rotated-coordinate-v39.json",
+      "git_blob_sha1": "2b53d00acb12a6ac6d7f7e0fe417ebe09325758c",
+      "role": "v39 machine-readable authority"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701_pointwise_separator_integration_model.py",
+      "git_blob_sha1": "7d6c94e48c018fd6570336fea78930a7169cd650",
+      "role": "v33 amplitude-derivative theorem-boundary evidence"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701-pointwise-separator-integration-v33.json",
+      "git_blob_sha1": "0002c2283b4ef822f23b19ee821dcdd4bfe72a82",
+      "role": "v33 machine-readable blocker evidence"
+    }
+  ],
+  "construction": {
+    "family": "source-owned exact rational selected-harmonic quadratures C_h(s), S_h(s) with either strict sign of B=(C-S)/2 on an anti-diagonal phase cell",
+    "source_authority": "regenerate A=(C+S)/2, B=(C-S)/2, A'=(C'+S')/2 and B'=(C'-S')/2 only from source-owned exact rational coefficients",
+    "orientation_authority": "MC-032 endpoint/Sturm proves either B>0 or -B>0 on the complete closed span and derives sigma_B in {-1,+1}; caller orientation metadata is non-authoritative",
+    "oriented_variables": "Bbar=sigma_B*B, Atilde=-sigma_B*A, Bbar'=sigma_B*B', Atilde'=-sigma_B*A'",
+    "phase_cell": "1/16+k/2 <= h*phi <= 3/16+k/2",
+    "quarter_turn_symmetry": "subtract exactly 1/4 turn and reuse the verified v34-v39 diagonal certificate; theta'=theta-pi/2 gives X'(theta')=-Y(theta), Y'(theta')=X(theta), so diagonal Y' authority becomes anti-diagonal X authority",
+    "rotated_variable": "X=cos(theta)+sin(theta), Y=cos(theta)-sin(theta)",
+    "oriented_selected_harmonic_identity": "(-sigma_B)*D=Atilde'(s)*X-Bbar'(s)*Y+2*pi*h*r*(Bbar(s)*X+Atilde(s)*Y)",
+    "physical_selected_harmonic_identity": "D=A'(s)*X+B'(s)*Y+2*pi*h*r*(A(s)*Y-B(s)*X)",
+    "issue_243_contract_reconciliation": "the issue prose wrote +Bbar'*Y after multiplication by -sigma_B; exact algebra requires -Bbar'*Y. The complete finite sign-orthant margin is unchanged because both signs of the Bbar' channel are enumerated.",
+    "exact_rational_bounds": {
+      "L_joint_X_lower": "2856/2197",
+      "U_joint_Y_upper": "99/182",
+      "W_joint_X_upper": "99/70",
+      "two_pi_lower": "6"
+    },
+    "phase_gap": "for sigma_A in {-1,+1}, P_sigma=Bbar*(2856/2197)-sigma_A*Atilde*(99/182)>0",
+    "strict_margin": "for both sigma_A and every residual sign orthant: 6*|h*r|*P_sigma-sigma_Atildep*(99/70)*Atilde'-sigma_Bbarp*(99/182)*Bbar'-sum_i sigma_i*R_i>0",
+    "physical_sign_recovery": "sign(D)=-sigma_B*sign(h*r)*anti_diagonal_projection_sign",
+    "selected_C_prime_and_S_prime_consumed_only_jointly": true,
+    "selected_phase_C_and_phase_S_consumed_only_jointly": true,
+    "all_nonanchor_residuals_retained": true,
+    "complete_v39_precedence_first": true,
+    "caller_orientation_trusted": false,
+    "caller_rotated_coordinates_trusted": false,
+    "caller_derivatives_trusted": false,
+    "caller_certificate_trusted": false,
+    "sampling_used": false,
+    "epsilon_used": false,
+    "numerical_trigonometry_used": false,
+    "arbitrary_subdivision_cap_used": false
+  },
+  "acceptance_source": {
+    "C_1": "19/20+s/10",
+    "S_1": "-21/20+s/10",
+    "canonical_gcd": "1",
+    "derived_A": "-1/20+s/10",
+    "derived_B": "1",
+    "derived_A_prime": "1/10",
+    "derived_B_prime": "0",
+    "sigma_B": 1,
+    "derived_Bbar": "1",
+    "derived_Atilde": "1/20-s/10",
+    "phase_interval_turns": ["1/16", "3/16"],
+    "nonanchor_harmonic": "nonzero tiny h=2 COS term retained in the exact residual",
+    "v39_result": "BLOCKED_BECAUSE_A_CROSSES_ZERO",
+    "v40_result": "CERTIFIED",
+    "new_authority": "strict signed-B orientation plus exact anti-diagonal quarter-turn symmetry"
+  },
+  "boundary_controls": [
+    "both sigma_B signs are exercised at low level while complete v39 and earlier successes retain exact predecessor ownership",
+    "exact B=0 strict-sign boundary plus signed rational 1/1000000 positive/negative neighbours and a sign-changing B polynomial",
+    "positive and negative phase-rate cases and opposite k-parity anti-diagonal projection-sign cells",
+    "exact anti-diagonal phase-cell boundary equality and signed rational 1/1000000 in/out neighbours",
+    "exact complementary phase-gap equality and signed rational 1/1000000 neighbours",
+    "strict complete-margin equality and signed rational 1/1000000 neighbours",
+    "zero/open/left-endpoint/right-endpoint event outcomes preserve exact endpoint/root/multiplicity authority and historical endpoint ownership",
+    "forged sigma_B, sign, orientation, oriented-polynomial, derivative, anti-diagonal cell, bound, margin and root metadata are non-authoritative",
+    "source-coordinate mismatch, unsupported phase cells and binary floats fail closed",
+    "exact resource refusal cannot be laundered into a truth value",
+    "historical v30, v34, v35, v36, v37, v38 and v39 successes retain exact precedence and v33 blocker evidence remains pinned",
+    "frozen 26-operation denominator is unchanged and false MC-B promotion is rejected"
+  ],
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false,
+    "next_pre_gate_priority": "continue only from residual PB-007-01 theorem blockers; do not retry MC-B"
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "protected_semantics": {
+    "source_audio_provenance": true,
+    "canonical_journal": true,
+    "exact_time_path_phase": true,
+    "source_uncertainty": true,
+    "positive_volume_material": true,
+    "cutter_holder": true,
+    "durable_body_lineage": true,
+    "refusal_uncertified": true,
+    "conventional_STEP": true
+  }
+}
