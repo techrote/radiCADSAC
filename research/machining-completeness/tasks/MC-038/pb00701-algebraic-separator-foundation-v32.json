@@ -1,0 +1,80 @@
+{
+  "schema": "radicadsac-mc038-pb00701-algebraic-separator-foundation/32.0",
+  "task": "MC-038",
+  "corrective_issue": 227,
+  "source_baseline": "bee133512e8e95096c38356ca086b9a0ae53fe10",
+  "target_blocker": "PB-007-01",
+  "decision": "EXACT_ALGEBRAIC_CRITICAL_VALUE_SEPARATOR_FOUNDATION_CERTIFIED_PB00701_REMAINS_OPEN",
+  "gate_state": "NOT_ESTABLISHED",
+  "qualified_dependency": {
+    "path": "research/machining-completeness/tasks/MC-032/event_engine.py",
+    "git_blob_sha1": "789a709c5141479a343035d1b7055dd4e53534e1",
+    "authority": "exact rational polynomial arithmetic, one-sided signs, square-free reduction and Sturm distinct-root counting"
+  },
+  "historical_v31_evidence": [
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-pointwise-separator-blocker-v31.json", "git_blob_sha1": "10299cc9831989e27278eee5f67ca43156cfb1e5", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-report-v31.md", "git_blob_sha1": "3f9feddfc22b60f4d714029cae17e5f0f0f8ef41", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/test_pb00701_pointwise_separator_blocker_adversarial.py", "git_blob_sha1": "c64cd94c1b8e8266e0ccf40e9e99540df24eef6f", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v31.py", "git_blob_sha1": "1a26810f60f96cae9312718a0dca41f595fe9e00", "preserved": true},
+    {"path": "docs/machining-completeness/57-PB00701-POINTWISE-SEPARATOR-BLOCKER.md", "git_blob_sha1": "cf51db5d58db28cf5fcb3ef16e5399edbc7e92f2", "preserved": true},
+    {"path": ".github/workflows/mc1-pb00701-v31.yml", "git_blob_sha1": "496fc4827fa79c68d02c6613525b0d9baf2af757", "preserved": true}
+  ],
+  "foundation": {
+    "status": "CERTIFIED",
+    "scope": "finite exact source-owned rational separator synthesis for rational projective ratios sign(D)D(s)/abs(T(s)) on closed [0,1] after the dominant sign is certified",
+    "stationary_construction": "H(s)=D'(s)T(s)-D(s)T'(s), with exact transverse-root sign cells and repeated stationary-root multiplicities",
+    "root_isolation": "MC-032 Sturm isolation on rational intervals, with a conservative rational Mignotte-derived root-separation lower bound providing a source-derived finite bisection depth",
+    "critical_value_elimination": "exact Sylvester/Bareiss resultant Res_s(square_free(H), D(s)^2-y^2*T(s)^2), augmented by closed-span endpoint factors",
+    "algebraic_boundary_ordering": "exact ordering against tan(pi/8)=sqrt(2)-1 using the minimal polynomial y^2+2y-1 plus sign-at-algebraic-root decisions; no binary-float algebraic evaluation",
+    "separator_synthesis": "closed form: from a certified rational lower enclosure beta above sqrt(2)-1, use f(beta)=beta^2+2beta-1 and m=beta-f(beta)/(4(beta+1)); this proves sqrt(2)-1 < m < beta",
+    "independent_final_check": "both rational polynomial margins sign(D)D-m*T and sign(D)D+m*T are strictly positive on [0,1] under MC-032 endpoint/Sturm authority",
+    "finite_termination": "Cauchy root bounds and conservative Mignotte-derived root separation determine finite isolation/order depth; separator construction is closed form and no denominator/depth/timeout/resource cap is a truth criterion",
+    "event_classifier_promoted": false,
+    "caller_separator_or_root_metadata_authoritative": false
+  },
+  "acceptance_controls": [
+    "v31 diagnostic D=1+2s and T=2+3s is source-certified although v30 global D_floor/T_ceiling is 1/5; v32 synthesizes its own separator and never trusts diagnostic m=5/12",
+    "interior irrational stationary minimum is isolated by exact Sturm authority rather than endpoint-only reasoning",
+    "endpoint minima are included explicitly in the critical-value polynomial",
+    "transverse algebraic zero sign cells are isolated exactly and a repeated transverse zero coincident with a stationary-polynomial root is excluded from the finite projective minimum",
+    "repeated stationary root multiplicity is retained exactly",
+    "exact sqrt(2)-1 stationary-minimum equality fails closed; signed +/-1/1000000 rational neighbours straddle the decision boundary",
+    "independent rational algebraic-bound controls use 70/169 below and 169/408 above sqrt(2)-1",
+    "positive and negative dominant/transverse orientations and a sign-changing transverse polynomial are covered",
+    "forged caller separator, critical-root, critical-value, root-ordering, margin and multiplicity metadata are rejected",
+    "binary float, sampling, numerical minimization, epsilon, arbitrary denominator cap, arbitrary subdivision depth and timeout truth authority are rejected",
+    "exact resource refusal propagates as refusal rather than evidence",
+    "historical v31 evidence and MC-032 authority are blob-pinned, the frozen 26-operation denominator is preserved, and false MC-B promotion is rejected"
+  ],
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false,
+    "next_pre_gate_priority": "PB-007-01 v33 integration: consume the qualified v32 source-owned separator foundation in the v31 pointwise projective derivative route, retain every derivative residual and preserve complete v8-v30 precedence"
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "protected_semantics": {
+    "source_audio_provenance": true,
+    "canonical_journal": true,
+    "exact_time_path_phase": true,
+    "source_uncertainty": true,
+    "positive_volume_material": true,
+    "cutter_holder_access": true,
+    "durable_body_lineage": true,
+    "refusal_uncertified": true,
+    "conventional_step": true
+  }
+}
