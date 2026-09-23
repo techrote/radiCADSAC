@@ -1,0 +1,69 @@
+{
+  "schema": "radicadsac-mc038-pb00701-pointwise-separator-blocker/31.0",
+  "task": "MC-038",
+  "corrective_issue": 225,
+  "source_baseline": "c5b11f6a168bcf4108b05f1432466ac9a30c763d",
+  "target_blocker": "PB-007-01",
+  "decision": "EXACT_POINTWISE_SEPARATOR_SYNTHESIS_AUTHORITY_BLOCKED_GENERAL_COUPLED_ROUTE_OPEN",
+  "gate_state": "NOT_ESTABLISHED",
+  "historical_v30_evidence": [
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-source-adaptive-separator-boundary-v30.json", "git_blob_sha1": "eb9790c2b6260dfacacc821f3a0f0a4a1404ed31", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-report-v30.md", "git_blob_sha1": "d94cd8ec8b8c4157cfa35742cb48c4179a583a66", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701_source_adaptive_separator_model.py", "git_blob_sha1": "d920a5b670d14ac4a54b0ed879e83532f2114b95", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/test_pb00701_source_adaptive_separator_adversarial.py", "git_blob_sha1": "84aa9e1b7bcabdcb87be5e7aab954e89b9709041", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v30.py", "git_blob_sha1": "5796bb100cb54ac7a495ac3de88bfadfbed7b12a", "preserved": true},
+    {"path": "docs/machining-completeness/56-PB00701-SOURCE-ADAPTIVE-SEPARATOR.md", "git_blob_sha1": "54af68b2de02d12eb906f15eb3b3384873667e7b", "preserved": true},
+    {"path": ".github/workflows/mc1-pb00701-v30.yml", "git_blob_sha1": "0a560b4289064c8ea43c242f7260632fcf8f94c5", "preserved": true}
+  ],
+  "investigation": {
+    "status": "THEOREM_ALGORITHM_BLOCKED",
+    "confirmed_existing_authority": "MC-032 Sturm authority can prove strict positivity of each rational polynomial sign-orthant margin once a rational separator m is already supplied; v30 can compare a supplied rational exactly with tan(pi/8)=sqrt(2)-1",
+    "diagnostic_witness": "D(s)=1+2s, T(s)=2+3s has separate Bernstein D_floor/T_ceiling=1/5, so v30 blocks, while the diagnostic rational m=5/12 is exactly above tan(pi/8) and both D-m*T and D+m*T are strictly positive under existing MC-032 authority",
+    "missing_authority": "the repository has no qualified source-owned finite algebraic root isolation/ordering operation for the critical values of sign(D)D(s)/|T(s)| on closed [0,1] and no qualified constructor that then produces a rational m strictly between sqrt(2)-1=tan(pi/8) and the exact minimum; existing Sturm authority is a decision procedure for a supplied rational margin, not an algebraic critical-value/root isolation/rational-separator synthesis procedure",
+    "required_foundation": "exact rational-function critical-point/resultant or subresultant construction, real-root isolation and ordering against sqrt(2)-1, plus a finitely bounded rational-between-algebraics constructor whose termination bound is derived from canonical integer/rational source data",
+    "why_not_promoted": "a fixed rational diagnostic separator, numerical minimization, sampled ratio, unbounded continued fraction/bisection, or search stopped by denominator/depth/timeout/resource budget would violate issue #225; coefficientwise Bernstein correlation is only a partial sufficient family and is not a total pointwise-safe separator synthesis authority",
+    "caller_separator_authoritative": false,
+    "not_an_impossibility_theorem": true
+  },
+  "boundary_controls": [
+    "decorrelated-extrema diagnostic where v30 global 1/5 ratio blocks but supplied exact m=5/12 gives two MC-032-certified pointwise polynomial margins",
+    "exact m>sqrt(2)-1 comparison uses (m+1)^2>2 with 5/12 giving exact polynomial value 1/144",
+    "exact pointwise margin equality at m=1/2 fails closed with signed plus/minus 1/1000000 rational neighbours",
+    "exact algebraic-bound controls 70/169 below and 169/408 above sqrt(2)-1",
+    "caller-supplied diagnostic separator remains explicitly non-authoritative",
+    "binary float, numerical trigonometry, sampling, epsilon, approximate critical values, unbounded search, arbitrary denominator/depth caps and timeout remain forbidden truth authority",
+    "unsupported exact algebraic ordering and exact-resource refusal propagate fail closed",
+    "historical v30 evidence is blob-pinned, the frozen 26-operation denominator is preserved, and MC-B/MC-1 remain NOT_ESTABLISHED"
+  ],
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false,
+    "next_pre_gate_priority": "PB-007-01 prerequisite: qualify exact rational-function critical-value isolation/root ordering and finite rational-between-algebraics separator synthesis before retrying pointwise projective integration"
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "protected_semantics": {
+    "source_audio_provenance": true,
+    "canonical_journal": true,
+    "exact_time_path_phase": true,
+    "source_uncertainty": true,
+    "positive_volume_material": true,
+    "cutter_holder_access": true,
+    "durable_body_lineage": true,
+    "refusal_uncertified": true,
+    "conventional_step": true
+  }
+}
