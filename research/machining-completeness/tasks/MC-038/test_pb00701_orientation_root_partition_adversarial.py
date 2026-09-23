@@ -37,61 +37,53 @@ def _route(result):
     return routes[0]
 
 
-def _handoff_spec(r1, r2, ka, kb, e, m, *, offset, rate):
-    # Harmonic 1 owns the outer pieces after A1 orientation cuts. Its B1'
-    # changes sign through the middle, so complete v42 cannot use it globally.
-    a1 = [ka * r1 * r2, -ka * (r1 + r2), ka]
-    b1 = [Fraction(1, 100) + kb * Fraction(1, 4), -kb, kb]
-
-    # Harmonic 2 has a source-owned strictly positive B2' that is strongest
-    # around the middle. B2 is centred to have one exact rational root at 1/2.
-    a2 = [Fraction(1, 100)]
-    b2 = [
-        -e * Fraction(1, 2) - m * Fraction(1, 12),
-        e,
-        m * Fraction(1, 2),
-        -m * Fraction(1, 3),
-    ]
-
-    c1 = model._trim(model.v22._padd(a1, b1))
-    s1 = model._trim(model.v22._padd(a1, model.v22._pscale(b1, -1)))
-    c2 = model._trim(model.v22._padd(a2, b2))
-    s2 = model._trim(model.v22._padd(a2, model.v22._pscale(b2, -1)))
-    return v40test._spec(
-        {1: c1, 2: c2},
-        {1: s1, 2: s2},
-        offset=str(offset),
-        rate=str(rate),
-    )
-
-
 def _acceptance_candidates():
-    # Bounded exact family designed for a genuine v42-residual composition:
-    # h1 can dominate outer children, h2 can dominate central children, while
-    # neither harmonic supplies one whole-parent certificate.
+    # Target the exact family that #246 proved impossible under v40-only child
+    # authority. V42 now supplies the missing zero-adjacent closed handoff.
     root_pairs = [
+        (Fraction(1, 4), Fraction(1, 3)),
+        (Fraction(1, 3), Fraction(1, 4)),
+        (Fraction(1, 3), Fraction(2, 5)),
+        (Fraction(2, 5), Fraction(1, 3)),
+        (Fraction(3, 5), Fraction(2, 3)),
+        (Fraction(2, 3), Fraction(3, 5)),
+        (Fraction(2, 3), Fraction(3, 4)),
+        (Fraction(3, 4), Fraction(2, 3)),
+        (Fraction(1, 4), Fraction(2, 5)),
+        (Fraction(2, 5), Fraction(1, 4)),
+        (Fraction(3, 5), Fraction(3, 4)),
+        (Fraction(3, 4), Fraction(3, 5)),
+        (Fraction(1, 4), Fraction(3, 4)),
         (Fraction(1, 3), Fraction(2, 3)),
         (Fraction(2, 5), Fraction(3, 5)),
     ]
-    ka_values = [Fraction(1, 10), Fraction(1, 4), Fraction(1, 2)]
-    kb_values = [Fraction(2), Fraction(4), Fraction(8), Fraction(16)]
-    e_values = [Fraction(1, 10), Fraction(1, 4), Fraction(1, 2)]
-    m_values = [Fraction(2), Fraction(4), Fraction(8), Fraction(16)]
-    phases = [
-        (Fraction(-5, 64), Fraction(1, 128)),
-        (Fraction(-5, 64), Fraction(1, 64)),
+    scales = [
+        (Fraction(1), Fraction(4)),
+        (Fraction(1), Fraction(2)),
+        (Fraction(1), Fraction(10)),
+        (Fraction(2), Fraction(4)),
     ]
-    for r1, r2 in root_pairs:
-        for ka in ka_values:
-            for kb in kb_values:
-                for e in e_values:
-                    for m in m_values:
-                        for offset, rate in phases:
-                            meta = {
-                                "r1": r1, "r2": r2, "ka": ka, "kb": kb,
-                                "e": e, "m": m, "offset": offset, "rate": rate,
-                            }
-                            yield meta, _handoff_spec(r1, r2, ka, kb, e, m, offset=offset, rate=rate)
+    phases = [
+        (Fraction(-1, 6), Fraction(1, 3)),
+        (Fraction(0), Fraction(1, 3)),
+        (Fraction(-1, 8), Fraction(1, 4)),
+        (Fraction(0), Fraction(1, 4)),
+        (Fraction(1, 8), Fraction(1, 4)),
+        (Fraction(-3, 16), Fraction(1, 8)),
+        (Fraction(1, 16), Fraction(1, 8)),
+    ]
+    for ra, rb in root_pairs:
+        if ra == rb:
+            continue
+        for sa, sb in scales:
+            a = [-sa * ra, sa]
+            b = [-sb * rb, sb]
+            for offset, rate in phases:
+                meta = {
+                    "A_root": ra, "B_root": rb, "A_scale": sa, "B_scale": sb,
+                    "offset": offset, "rate": rate,
+                }
+                yield meta, _spec(a, b, offset=offset, rate=rate)
 
 
 def _child_owners(route):
