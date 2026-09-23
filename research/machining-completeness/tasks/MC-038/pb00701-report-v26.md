@@ -50,7 +50,7 @@ Therefore every accepted source satisfies pointwise
 
 `6*|h*r|*(|D(s)|/2-|T(s)|) > sum_i |R_i(s)|`.
 
-The selected half-magnitude sector fixes the dominant projection sign. Exact `pi>3` gives `2*pi>6`, so the true mixed phase derivative is strictly larger in that direction than the complete retained residual at every source point. The full derivative is therefore nonzero with exact fixed sign. Equality in any orthant is rejected.
+The selected half-magnitude sector fixes the dominant projection sign. Exact `pi > 3` gives `2*pi > 6`, so the true mixed phase derivative is strictly larger in that direction than the complete retained residual at every source point. The full derivative is therefore nonzero with exact fixed sign. Equality in any orthant is rejected.
 
 ## Material broadening beyond v25
 
