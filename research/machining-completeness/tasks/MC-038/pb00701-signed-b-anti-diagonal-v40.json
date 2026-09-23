@@ -39,7 +39,7 @@
     "orientation_authority": "MC-032 endpoint/Sturm proves either B>0 or -B>0 on the complete closed span and derives sigma_B in {-1,+1}; caller orientation metadata is non-authoritative",
     "oriented_variables": "Bbar=sigma_B*B, Atilde=-sigma_B*A, Bbar'=sigma_B*B', Atilde'=-sigma_B*A'",
     "phase_cell": "1/16+k/2 <= h*phi <= 3/16+k/2",
-    "quarter_turn_symmetry": "subtract exactly 1/4 turn and reuse the verified v34-v39 diagonal certificate; theta'=theta-pi/2 gives X'(theta')=-Y(theta), Y'(theta')=X(theta), so diagonal Y' authority becomes anti-diagonal X authority",
+    "quarter_turn_symmetry": "subtract one exact quarter-turn (1/4 turn) and reuse the verified v34-v39 diagonal certificate; theta'=theta-pi/2 gives X'(theta')=-Y(theta), Y'(theta')=X(theta), so diagonal Y' authority becomes anti-diagonal X authority",
     "rotated_variable": "X=cos(theta)+sin(theta), Y=cos(theta)-sin(theta)",
     "oriented_selected_harmonic_identity": "(-sigma_B)*D=Atilde'(s)*X-Bbar'(s)*Y+2*pi*h*r*(Bbar(s)*X+Atilde(s)*Y)",
     "physical_selected_harmonic_identity": "D=A'(s)*X+B'(s)*Y+2*pi*h*r*(A(s)*Y-B(s)*X)",
