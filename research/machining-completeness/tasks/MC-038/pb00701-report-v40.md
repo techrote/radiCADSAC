@@ -4,7 +4,7 @@ Status: **bounded executable authority added; PB-007-01 remains OPEN; MC-B / MC-
 
 ## Baseline and scope
 
-V40 starts from verified v39 main `a92115689da4713d30ba74d65c033897e877a4f7`. Complete v39 authority always runs first. V40 consumes only residual exact lowered spans and does not alter any historical route, endpoint/root/multiplicity semantics, the frozen 26-operation machining denominator, or protected source/audio/provenance and downstream contracts.
+V40 starts from verified v39 main `a92115689da4713d30ba74d65c033897e877a4f7`. Complete v39 authority always runs first. V40 consumes only residual exact lowered spans and does not alter any historical route, endpoint/root/multiplicity semantics, the frozen machining denominator of 26 operations, or protected source/audio/provenance and downstream contracts.
 
 The new bounded family addresses the complementary anti-diagonal phase cells in which `X=cos(theta)+sin(theta)` is the fixed-sign dominant rotated coordinate. It removes the need for `A=(C+S)/2` itself to have one strict sign when `B=(C-S)/2` has a source-owned strict sign.
 
