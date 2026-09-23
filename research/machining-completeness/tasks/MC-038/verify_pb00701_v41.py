@@ -15,9 +15,9 @@ REPORT = TASK / "pb00701-report-v41.md"
 WORKFLOW = ROOT / ".github" / "workflows" / "mc1-pb00701-v41.yml"
 EXPECTED_BASE = "ab9bc9e52a7db184f10bb6d4b7101cf0682a48d2"
 EXPECTED_V42 = {
-    "research/machining-completeness/tasks/MC-038/pb00701_orientation_transition_bridge_model.py": "691e3221a632bb40bef4f91d38836a6020c32ee9",
-    "research/machining-completeness/tasks/MC-038/test_pb00701_orientation_transition_bridge_adversarial.py": "5f82e27396a89df2b62e558592b70c87528241d9",
-    "research/machining-completeness/tasks/MC-038/pb00701-orientation-transition-v42.json": "1d3f042008b0a14b5ae34ca1e01283b543b946f4"
+    "research/machining-completeness/tasks/MC-038/pb00701_orientation_transition_bridge_model.py": "a0930d7bfddd619bf930a51bbfa14570e2450fe5",
+    "research/machining-completeness/tasks/MC-038/test_pb00701_orientation_transition_bridge_adversarial.py": "21e12227262229c095276d0fa6d6656ca49418a3",
+    "research/machining-completeness/tasks/MC-038/pb00701-orientation-transition-v42.json": "e622d5b2f13bfe59d5e80310632d90d35b9d351a"
 }
 
 sys.path.insert(0, str(TASK))
