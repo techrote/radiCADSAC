@@ -93,6 +93,44 @@ def run():
     assert endpoints["status"] == "CERTIFIED"
     assert endpoints["cuts"] == []
 
+    # The recorded exact +/-1/1000000 phase/cut neighbours stay on the correct sides
+    # of the half-magnitude crossing.  No binary float or tolerance participates.
+    eps = Fraction(1, 1000000)
+    rate_lo = Fraction(1, 6) - eps
+    rate_eq = Fraction(1, 6)
+    rate_hi = Fraction(1, 6) + eps
+    neighbour_lo = model.exact_sector_cuts(Fraction(1, 12), rate_lo, [1])
+    neighbour_eq = model.exact_sector_cuts(Fraction(1, 12), rate_eq, [1])
+    neighbour_hi = model.exact_sector_cuts(Fraction(1, 12), rate_hi, [1])
+    target_lo = Fraction(1, 12) / rate_lo
+    target_eq = Fraction(1, 2)
+    target_hi = Fraction(1, 12) / rate_hi
+    assert neighbour_lo["status"] == neighbour_eq["status"] == neighbour_hi["status"] == "CERTIFIED"
+    assert [Fraction(value) for value in neighbour_lo["cuts"]] == [target_lo]
+    assert [Fraction(value) for value in neighbour_eq["cuts"]] == [target_eq]
+    assert [Fraction(value) for value in neighbour_hi["cuts"]] == [target_hi]
+    assert target_hi < target_eq < target_lo
+
+    # A phase-sector boundary coincident with an existing source spline knot is an
+    # external endpoint of both lowered source spans, not a duplicate internal cut.
+    source_knot = Fraction(1, 2)
+    global_offset = Fraction(1, 12)
+    global_rate = Fraction(1, 6)
+    left_knot_span = model.exact_sector_cuts(
+        global_offset,
+        global_rate * source_knot,
+        [1],
+    )
+    right_knot_span = model.exact_sector_cuts(
+        global_offset + global_rate * source_knot,
+        global_rate * (Fraction(1) - source_knot),
+        [1],
+    )
+    assert left_knot_span["status"] == "CERTIFIED"
+    assert right_knot_span["status"] == "CERTIFIED"
+    assert left_knot_span["cuts"] == []
+    assert right_knot_span["cuts"] == []
+
     # Multiple harmonics/families produce several cuts, sorted exactly, while coincident
     # crossings are represented once with all exact causes retained.
     many = model.exact_sector_cuts(Fraction(0), Fraction(1), [1, 2])
@@ -143,6 +181,34 @@ def run():
     bad_relation = copy.deepcopy(synthetic)
     bad_relation[1]["summary"]["left_event"] = positive
     assert model._compose_child_summaries(bad_relation)["status"] == "SEMANTIC_BLOCKER"
+
+    # Composition is not allowed to assume one global derivative direction.  Two
+    # adjacent certified children may carry opposite monotonic directions and their
+    # exact open-root summaries still compose when the shared endpoint relation agrees.
+    opposing = [
+        {
+            "parent_local_interval": ["0", "1/2"],
+            "summary": {
+                "status": "CERTIFIED", "left_event": positive, "right_event": negative,
+                "left_endpoint_multiplicity": None, "right_endpoint_multiplicity": None,
+                "distinct_roots_open": 1, "multiple_roots_open": 0, "all_roots_simple": True,
+                "derivative_direction": "NEGATIVE",
+            },
+        },
+        {
+            "parent_local_interval": ["1/2", "1"],
+            "summary": {
+                "status": "CERTIFIED", "left_event": negative, "right_event": positive,
+                "left_endpoint_multiplicity": None, "right_endpoint_multiplicity": None,
+                "distinct_roots_open": 1, "multiple_roots_open": 0, "all_roots_simple": True,
+                "derivative_direction": "POSITIVE",
+            },
+        },
+    ]
+    opposing_composed = model._compose_child_summaries(opposing)
+    assert opposing_composed["status"] == "CERTIFIED", opposing_composed
+    assert opposing_composed["distinct_roots_open"] == 2
+    assert opposing_composed["internal_cut_roots"] == []
 
     # One unresolved child and an exact resource refusal both propagate fail-closed.
     blocked = copy.deepcopy(synthetic)
