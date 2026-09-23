@@ -35,7 +35,7 @@ jobs:
           python-version: '3.12'
       - name: Compile PB-007-01 v41 exact route
         run: python3 -m py_compile research/machining-completeness/tasks/MC-038/pb00701_orientation_root_partition_model.py research/machining-completeness/tasks/MC-038/test_pb00701_orientation_root_partition_adversarial.py research/machining-completeness/tasks/MC-038/verify_pb00701_v41.py
-      - name: Verify PB-007-01 v41 contract and adversarial controls
-        run: |
-          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v41.py --contract
-          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v41.py --self-test
+      - name: Verify PB-007-01 v41 contract
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v41.py --contract
+      - name: Verify PB-007-01 v41 adversarial controls
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v41.py --self-test
