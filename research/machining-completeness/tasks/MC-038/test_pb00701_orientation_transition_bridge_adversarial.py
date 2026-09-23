@@ -149,7 +149,7 @@ def run():
         {1: [0, 1]}, {1: [0, -1]}, equal_rate + EPS, 1, 1
     )
     assert equal_margin["status"] == "BLOCKED"
-    assert "0" in equal_margin["failed_margin_polynomial"]
+    assert sum(Fraction(x) for x in equal_margin["failed_margin_polynomial"]) == 0
     assert inside_margin["status"] == "CERTIFIED", inside_margin
     assert outside_margin["status"] == "BLOCKED", outside_margin
 
