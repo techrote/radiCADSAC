@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 import sys
 
-ROOT = Path(__file__).resolve().parents[3]
+ROOT = Path(__file__).resolve().parents[4]
 TASK = ROOT / "research" / "machining-completeness" / "tasks" / "MC-038"
 DOC = ROOT / "docs" / "machining-completeness" / "67-PB00701-ORIENTATION-ROOT-PARTITION.md"
 ARTIFACT = TASK / "pb00701-orientation-root-partition-v41.json"
