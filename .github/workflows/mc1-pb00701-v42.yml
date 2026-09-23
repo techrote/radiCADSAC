@@ -28,11 +28,13 @@ jobs:
         run: |
           python3 -m py_compile \
             research/machining-completeness/tasks/MC-038/pb00701_orientation_transition_bridge_model.py \
-            research/machining-completeness/tasks/MC-038/test_pb00701_orientation_transition_bridge_adversarial.py
+            research/machining-completeness/tasks/MC-038/test_pb00701_orientation_transition_bridge_adversarial.py \
+            research/machining-completeness/tasks/MC-038/verify_pb00701_v42.py
       - name: Run v42 adversarial and boundary suite
         run: python3 research/machining-completeness/tasks/MC-038/test_pb00701_orientation_transition_bridge_adversarial.py
+      - name: Verify v42 publication contract
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v42.py --contract
+      - name: Run v42 verifier self-test
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v42.py --self-test
       - name: Preserve v40 regression authority
         run: python3 research/machining-completeness/tasks/MC-038/test_pb00701_signed_b_anti_diagonal_adversarial.py
-      - name: Verify v42 publication artifact
-        if: ${{ hashFiles('research/machining-completeness/tasks/MC-038/verify_pb00701_v42.py') != '' }}
-        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v42.py
