@@ -36,7 +36,10 @@ def contract():
         "pb00701_orientation_root_partition_model.py",
         "test_pb00701_orientation_root_partition_adversarial.py",
         "verify_pb00701_v41.py --contract",
-        "verify_pb00701_v41.py --self-test",
+        "t.run_roots()",
+        "t.run_acceptance()",
+        "t.run_precedence()",
+        "t.run_composition()",
     ):
         assert token in workflow, token
 
