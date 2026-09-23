@@ -195,6 +195,81 @@ def _rotated_polynomials(cos_poly, sin_poly):
     return a, b
 
 
+def _floor_fraction(value):
+    value = q(value)
+    return value.numerator // value.denominator
+
+
+def exact_rotated_coordinate_certificate_cuts(offset, rate, harmonics):
+    """Exact source cuts at verified v39/v40/v42 rotated phase-cell boundaries.
+
+    These are proof/certificate boundaries only. They never become physical
+    events by virtue of being cuts.
+    """
+    try:
+        offset, rate = q(offset), q(rate)
+        if rate == 0:
+            return {"status": "CERTIFIED", "cuts": [], "crossings": []}
+
+        # Residues are modulo 1/2 turn. v39/v42 diagonal authority owns
+        # [-3/16,-1/16]+k/2; v40 anti-diagonal authority owns
+        # [1/16,3/16]+k/2. Include every boundary so child reclassification
+        # cannot accidentally span beyond a predecessor certificate cell.
+        residues = (
+            (Fraction(-3, 16), "V39_V42_DIAGONAL_LEFT"),
+            (Fraction(-1, 16), "V39_V42_DIAGONAL_RIGHT"),
+            (Fraction(1, 16), "V40_ANTI_DIAGONAL_LEFT"),
+            (Fraction(3, 16), "V40_ANTI_DIAGONAL_RIGHT"),
+        )
+        cuts = {}
+        for harmonic in sorted(set(int(h) for h in harmonics if int(h) > 0)):
+            t0 = Fraction(harmonic) * offset
+            tr = Fraction(harmonic) * rate
+            t1 = t0 + tr
+            lo, hi = min(t0, t1), max(t0, t1)
+            for residue, family in residues:
+                # boundary = residue + k/2. A small exact guard around the
+                # finite k interval avoids any float/epsilon reasoning.
+                k0 = _floor_fraction(2 * (lo - residue)) - 2
+                k1 = _floor_fraction(2 * (hi - residue)) + 2
+                for k in range(k0, k1 + 1):
+                    boundary = residue + Fraction(k, 2)
+                    if not lo < boundary < hi:
+                        continue
+                    source_cut = (boundary - t0) / tr
+                    if not Fraction(0) < source_cut < Fraction(1):
+                        continue
+                    cuts.setdefault(source_cut, []).append({
+                        "kind": "rotated_coordinate_certificate_cell_boundary",
+                        "family": family,
+                        "harmonic": harmonic,
+                        "boundary_residue": str(residue),
+                        "boundary_turn": str(boundary),
+                        "harmonic_phase_rate": str(tr),
+                    })
+        ordered = sorted(cuts)
+        return {
+            "status": "CERTIFIED",
+            "relation": "FINITE_EXACT_ROTATED_COORDINATE_CERTIFICATE_CELL_BOUNDARIES",
+            "cuts": [str(x) for x in ordered],
+            "crossings": [
+                {"source_cut": str(x), "causes": cuts[x]}
+                for x in ordered
+            ],
+            "proof_cuts_are_physical_events": False,
+            "binary_float_used": False,
+            "epsilon_used": False,
+            "sampling_used": False,
+            "finite_termination": "finite active harmonic lattice times four rational half-turn residue families over a bounded rational turn interval",
+        }
+    except (ArithmeticError, MemoryError, RecursionError, OverflowError) as exc:
+        return {
+            "status": "RESOURCE_REFUSAL",
+            "reason": f"PB00701_V41_CERTIFICATE_CUT_RESOURCE_REFUSAL:{type(exc).__name__}",
+            "is_truth_value": False,
+        }
+
+
 def _orientation_cut_certificate(cos_polys, sin_polys, offset, rate):
     harmonics = sorted(h for h in set(cos_polys) | set(sin_polys) if int(h) > 0 and (_trim(cos_polys.get(h, [0])) != [0] or _trim(sin_polys.get(h, [0])) != [0]))
     cut_causes, roots, endpoints = {}, [], []
@@ -219,6 +294,14 @@ def _orientation_cut_certificate(cos_polys, sin_polys, offset, rate):
     for crossing in sector.get("crossings", []):
         x = q(crossing["source_cut"])
         cut_causes.setdefault(x, []).append({"kind": "historical_phase_sector_cut", "causes": crossing["causes"]})
+
+    certificate_cells = exact_rotated_coordinate_certificate_cuts(offset, rate, harmonics)
+    if certificate_cells.get("status") != "CERTIFIED":
+        return certificate_cells
+    for crossing in certificate_cells.get("crossings", []):
+        x = q(crossing["source_cut"])
+        cut_causes.setdefault(x, []).extend(crossing["causes"])
+
     cuts = sorted(cut_causes)
     return {
         "status": "CERTIFIED",
@@ -228,8 +311,9 @@ def _orientation_cut_certificate(cos_polys, sin_polys, offset, rate):
         "orientation_roots": roots,
         "endpoint_orientation_roots": endpoints,
         "coincident_cuts_deduplicated": True,
+        "current_rotated_certificate_cell_cuts_included": True,
         "caller_cuts_trusted": False,
-        "finite_termination": "finite harmonic lattice; rational-root theorem enumeration checked complete by exact Sturm distinct-root count; finite historical sector cuts",
+        "finite_termination": "finite harmonic lattice; rational-root theorem enumeration checked complete by exact Sturm distinct-root count; finite historical sector cuts; finite verified v39/v40/v42 rotated-coordinate certificate-cell cuts",
     }
 
 
