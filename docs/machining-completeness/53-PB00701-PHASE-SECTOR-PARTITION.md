@@ -12,6 +12,8 @@ Every child is reparameterized exactly under `s=a+(b-a)u`. Polynomial coefficien
 
 Composition is exact. Child-open root counts are summed, adjacent endpoint relations are re-evaluated with established rational-turn authority, and a root exactly on an internal certificate cut is counted once. A cut root is composable only when both adjacent children supply the same explicit endpoint multiplicity. Missing or conflicting multiplicity blocks the composition; multiplicity is never invented from counts.
 
+The recorded acceptance boundary also fixes exact `±1/1000000` phase-rate neighbours on the rational certificate cut, treats a phase-sector crossing coincident with an existing source spline knot as the shared external endpoint of the already-lowered source spans rather than a duplicate zero-width child, and verifies exact composition across adjacent certified children with opposing derivative directions. No global monotonicity assumption is introduced by composition.
+
 ## Red residual boundary
 
 Any blocked child, semantic blocker, exact resource refusal, or child without composable exact event/multiplicity evidence keeps the parent blocked. The route does not use sampling, epsilon, tolerance, binary-float trigonometry, numerical minimization, approximate root ordering, adaptive subdivision, arbitrary refinement depth, timeout, or resource refusal as correctness authority.
