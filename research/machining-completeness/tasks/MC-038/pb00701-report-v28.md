@@ -2,7 +2,7 @@
 
 ## Decision
 
-PB-007-01 **remains OPEN**. MC-B and MC-1 remain `NOT_ESTABLISHED`; the frozen machining-domain denominator remains 26 operations. V28 adds one exact sufficient route for complete-v8–v27-blocked residual multi-harmonic spans. It does not alter source/audio/provenance or downstream semantics.
+PB-007-01 **remains OPEN**. MC-B and MC-1 remain `NOT_ESTABLISHED`; the frozen machining-domain denominator remains 26 operations. V28 adds one exact sufficient route for residual multi-harmonic spans still blocked after complete v8–v27 authority. It does not alter source/audio/provenance or downstream semantics.
 
 ## Exact phase-cell authority
 
