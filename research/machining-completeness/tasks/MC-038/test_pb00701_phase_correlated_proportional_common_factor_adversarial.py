@@ -162,7 +162,7 @@ def run():
     assert outside["status"] == "BLOCKED", outside
 
     # Preserved endpoint/root authority: v35 itself proves open/zero-root cases,
-    # while exact historical v34 endpoint-root cases retain unchanged precedence.
+    # while historical exact endpoint routes retain unchanged precedence.
     open_route = model._phase_correlated_proportional_route(
         {1: CG, 2: [TINY]}, {1: G}, Fraction(-3, 16), Fraction(1, 8), "s"
     )
@@ -179,10 +179,13 @@ def run():
     left_new = model.classify_required_analytic_event(left_spec)
     right_new = model.classify_required_analytic_event(right_spec)
     assert left_new == left_old and right_new == right_old
-    left_route = v34test._v34_route(left_new)
-    right_route = v34test._v34_route(right_new)
-    assert left_route["left_endpoint_root"] is True and left_route["endpoint_root_multiplicity"] == {"left": 1}
-    assert right_route["right_endpoint_root"] is True and right_route["endpoint_root_multiplicity"] == {"right": 1}
+    left_route = left_new["spans"][0]["route"]
+    right_route = right_new["spans"][0]["route"]
+    assert left_route["status"] == right_route["status"] == "CERTIFIED"
+    assert left_route["left_event"]["relation"] == "ZERO"
+    assert left_route["left_event"]["multiplicity"] == 1
+    assert right_route["right_event"]["relation"] == "ZERO"
+    assert right_route["right_event"]["multiplicity"] == 1
 
     # Structural and source-ownership boundaries fail closed.
     perturbed = list(CG)
