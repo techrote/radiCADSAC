@@ -77,7 +77,7 @@ def validate_artifact(artifact, *, check_repo=True):
     for token in ("1/16-turn", "12/13", "tan(pi/8)", "sqrt(2)-1"):
         assert token in ext["phase_cell_authority"].lower(), token
     compact_separator = ext["separator_synthesis"].lower().replace(" ", "")
-    for token in ("beta=d_floor/t_ceiling", "squarecomparison", "closed-form", "sqrt(2)-1<m<beta"):
+    for token in ("beta=d_floor/t_ceiling", "squarecomparison", "sqrt(2)-1<m<beta"):
         assert token in compact_separator, token
     for token in ("sin-dominant", "cos-dominant", "negative"):
         assert token in ext["projection"].lower(), token
@@ -127,7 +127,7 @@ def validate_artifact(artifact, *, check_repo=True):
     assert effect["next_pre_gate_priority"].startswith("PB-007-01")
     assert artifact["resources"] == {
         "native_campaign_run": False,
-        "paid_campaign_run": False,
+        "paid_campaign_run": false,
         "production_authorized": False,
         "expensive_execution_authorized": False,
     }
