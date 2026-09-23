@@ -76,8 +76,9 @@ def validate_artifact(artifact, *, check_repo=True):
         assert token in ext["scope"].lower(), token
     for token in ("1/16-turn", "12/13", "tan(pi/8)", "sqrt(2)-1"):
         assert token in ext["phase_cell_authority"].lower(), token
-    for token in ("beta=d_floor/t_ceiling", "square comparison", "closed-form", "sqrt(2)-1<m<beta"):
-        assert token in ext["separator_synthesis"].lower().replace(" ", ""), token
+    compact_separator = ext["separator_synthesis"].lower().replace(" ", "")
+    for token in ("beta=d_floor/t_ceiling", "squarecomparison", "closed-form", "sqrt(2)-1<m<beta"):
+        assert token in compact_separator, token
     for token in ("sin-dominant", "cos-dominant", "negative"):
         assert token in ext["projection"].lower(), token
     for token in ("amplitude derivatives", "finite signed margin", "mc-032", "sturm"):
