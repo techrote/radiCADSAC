@@ -25,12 +25,14 @@ def _spec(cos_polys, sin_polys=None, *, offset="0", rate="1/12", **extra):
 
 
 def _fixture(*, offset="0", rate="1/12"):
-    # v26's historical pointwise cone is deliberately too conservative:
-    # S/2 = 1/2 <= |C| = 3/5. On the exact phase cell [0,1/12],
-    # however, cos >= sqrt(3)/2 > 6/7 while sin <= 1/2.
+    # The selected h=1 amplitude is genuinely source-modulated so historical v6
+    # constant-modulation authority cannot claim it.  v26's pointwise cone is still
+    # deliberately too conservative at s=0: S/2 = 1/2 <= |C| = 3/5.  On the exact
+    # phase cell [0,1/12], however, cos >= sqrt(3)/2 > 6/7 while sin <= 1/2, and
+    # v28 retains S'=1/100 as an explicit residual rather than hiding it in the anchor.
     return _spec(
         {0: [Fraction(-4, 5)], 1: [Fraction(3, 5)], 2: [Fraction(1, 10000)]},
-        {1: [1]},
+        {1: [1, Fraction(1, 100)]},
         offset=offset,
         rate=rate,
     )
@@ -80,7 +82,7 @@ def run():
     assert combined["transverse_rational_upper_bound"] == "1/2"
     assert all(item["certificate"]["status"] == "CERTIFIED" for item in combined["orthant_certificates"])
     assert not any(term["harmonic"] == 1 and term["kind"] == "C_prime" for term in combined["residual_terms"])
-    assert not any(term["harmonic"] == 1 and term["kind"] == "S_prime" for term in combined["residual_terms"])
+    assert any(term["harmonic"] == 1 and term["kind"] == "S_prime" for term in combined["residual_terms"])
     assert any(term["harmonic"] == 2 and term["kind"] == "phase_C" for term in combined["residual_terms"])
     assert route["distinct_roots_open"] == 1
     assert route["all_roots_simple"] is True
