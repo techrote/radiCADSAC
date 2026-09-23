@@ -98,10 +98,11 @@ def validate_artifact(artifact, *, check_repo=True):
 
     controls = [item.lower() for item in artifact["boundary_controls"]]
     for token in (
-        "whole-span v26-blocked", "negative phase-rate", "external endpoint", "multiple interior",
-        "coincident cuts", "counted once", "multiplicity mismatch", "open-root", "blocked child",
-        "resource refusal", "forged caller", "binary-float", "source-parameter", "historical v26",
-        "26-operation", "mc-b",
+        "whole-span v26-blocked", "negative phase-rate", "plus/minus 1/1000000",
+        "external endpoint", "source spline knot", "multiple interior", "coincident cuts",
+        "counted once", "multiplicity mismatch", "open-root", "opposing derivative directions",
+        "blocked child", "resource refusal", "forged caller", "binary-float", "source-parameter",
+        "historical v26", "26-operation", "mc-b",
     ):
         assert any(token in item for item in controls), token
 
