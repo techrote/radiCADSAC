@@ -1,0 +1,91 @@
+{
+  "schema": "radicadsac-mc038-pb00701-mixed-quadrature-phase-anchor-boundary/24.0",
+  "task": "MC-038",
+  "corrective_issue": 210,
+  "source_baseline": "2fedcc3ac66a08b82df41a3a68ad2425bf77f8a5",
+  "target_blocker": "PB-007-01",
+  "decision": "EXACT_MIXED_QUADRATURE_PHASE_ANCHOR_ROUTE_ESTABLISHED_GENERAL_COUPLED_ROUTE_OPEN",
+  "gate": "MC-B",
+  "gate_state": "NOT_ESTABLISHED",
+  "historical_v23_evidence": [
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-nonconstant-phase-anchor-boundary-v23.json", "git_blob_sha1": "294259e253f642dda59c8f142a075992556b9f08", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701-report-v23.md", "git_blob_sha1": "16d479d011aeea00c7f436a41a1420643c0e58ad", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/pb00701_nonconstant_phase_anchor_model.py", "git_blob_sha1": "1eb91cd3274256fdff7b1e3d296508bdcf7a87e2", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/test_pb00701_nonconstant_phase_anchor_adversarial.py", "git_blob_sha1": "4d7ee8145b83910a8979e0bcb4c4645084507a4c", "preserved": true},
+    {"path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v23.py", "git_blob_sha1": "3fee3f4a7628900c47eac948bf59571fe7f909f7", "preserved": true},
+    {"path": "docs/machining-completeness/49-PB00701-NONCONSTANT-AMPLITUDE-PHASE-ANCHOR.md", "git_blob_sha1": "72e56c84d0650986b1a508f4e5a6d8c05a61bcc9", "preserved": true},
+    {"path": ".github/workflows/mc1-pb00701-v23.yml", "git_blob_sha1": "d2b48d0d673917f002571da3676a9269ffe5ce07", "preserved": true}
+  ],
+  "implemented_extension": {
+    "id": "EXACT_MIXED_QUADRATURE_PHASE_ANCHOR_WITH_RESIDUAL_L1_DOMINANCE",
+    "scope": "v23-blocked residual multi-harmonic spans with both source-owned C_h and S_h active at one positive harmonic",
+    "component_authority": "each C_h and S_h component has an independently source-derived exact fixed sign and strict rational floor, using constant exact authority or one-sign Bernstein convex-hull authority",
+    "phase_sector_authority": "the exact harmonic phase lies wholly in a rational sector where both sin and cos have fixed signs and magnitude at least 1/2",
+    "projection_authority": "the proved C/S signs and phase-quadrature signs align -C*sin and S*cos; pi>3 gives L_anchor=3*|h*r|*(C_floor+S_floor)",
+    "residual_terms": "both anchor amplitude derivatives C' and S' remain residual together with P' and every other source derivative; remaining phase upper bounds use 44/7",
+    "l1_identity": "sum_i |f_i(s)| = max over sigma in {-1,+1}^N of sum_i sigma_i f_i(s)",
+    "dominance_authority": "every L_anchor residual sign-orthant margin is strictly positive on closed [0,1] under MC-032 exact endpoint/Sturm authority",
+    "precedence": "v8-v23 historical routes run first; pure-quadrature phase anchors remain v22/v23-owned",
+    "forbidden_authority": [
+      "caller mixed phase anchor certificate",
+      "caller component floor or Bernstein certificate",
+      "caller phase-sector or derivative lower bound",
+      "binary float",
+      "epsilon or tolerance",
+      "sampling or numerical trigonometry",
+      "approximate minimization or root ordering",
+      "arbitrary subdivision/refinement cap",
+      "timeout or resource refusal as truth"
+    ]
+  },
+  "boundary_controls": [
+    "genuine mixed-quadrature multi-harmonic source blocked by v23 and certified by v24",
+    "positive and negative complete derivative directions with multiple mixed-quadrature sign patterns",
+    "both-component nonconstant amplitudes and a constant/nonconstant mixed pair",
+    "exact dual-half-magnitude phase-sector endpoint equality and signed 1/1000000 neighbours",
+    "zero Bernstein component floor and signed 1/1000000 neighbours independently for C and S",
+    "misaligned mixed projection signs fail closed",
+    "exact residual L1 equality and signed 1/1000000 neighbours",
+    "zero/open/left-endpoint/right-endpoint root outcomes",
+    "v23 prior-route precedence and source-parameter mismatch",
+    "forged mixed-anchor/component-floor/sector/L1/Sturm/root metadata and binary-float authority",
+    "exact resource refusal propagation",
+    "historical v23 evidence preservation, 26-operation denominator and no false MC-B promotion"
+  ],
+  "full_blocker_review": {
+    "status": "OPEN",
+    "residual_branch": "PB-007-01 remains open beyond v8-v24 qualified families, including mixed projections that cross quadrature/sign sectors, component-zero/sign-ambiguous anchors and broader coupled analytic cases",
+    "not_an_impossibility_theorem": true
+  },
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false,
+    "next_pre_gate_priority": "PB-007-01: exact mixed-quadrature projection beyond a fixed dual-half-magnitude sector, or another terminating broader residual event route; otherwise record the precise theorem blocker"
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "protected_semantics": {
+    "source_audio_provenance": true,
+    "canonical_journal": true,
+    "exact_time_path_phase": true,
+    "source_uncertainty": true,
+    "positive_volume_material": true,
+    "cutter_holder_access": true,
+    "durable_body_lineage": true,
+    "refusal_uncertified": true,
+    "conventional_step": true
+  }
+}
