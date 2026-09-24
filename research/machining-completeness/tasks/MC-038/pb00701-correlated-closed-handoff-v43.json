@@ -1,0 +1,134 @@
+{
+  "schema": "radicadsac-mc038-pb00701-correlated-closed-handoff/43.0",
+  "task": "MC-038",
+  "corrective_issue": 250,
+  "source_baseline": "ab9bc9e52a7db184f10bb6d4b7101cf0682a48d2",
+  "target_blocker": "PB-007-01",
+  "decision": "EXACT_CORRELATED_CLOSED_HANDOFF_DERIVATIVE_CERTIFICATE_ESTABLISHED_PB00701_OPEN",
+  "gate_state": "NOT_ESTABLISHED",
+  "historical_evidence": [
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701_orientation_transition_bridge_model.py",
+      "git_blob_sha1": "a0930d7bfddd619bf930a51bbfa14570e2450fe5",
+      "role": "verified v42 predecessor model"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/test_pb00701_orientation_transition_bridge_adversarial.py",
+      "git_blob_sha1": "21e12227262229c095276d0fa6d6656ca49418a3",
+      "role": "verified v42 predecessor adversarial authority"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701-orientation-transition-v42.json",
+      "git_blob_sha1": "e622d5b2f13bfe59d5e80310632d90d35b9d351a",
+      "role": "verified v42 boundary contract"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701_phase_sector_partition_model.py",
+      "git_blob_sha1": "6211e658621af7100c2509dcafdaeaf348e48d46",
+      "role": "historical exact child reparameterization and event composition authority"
+    }
+  ],
+  "construction": {
+    "family": "residual exact lowered spans with two source-owned quadratures on a supported diagonal phase cell and a source-derived weak closed sign for A",
+    "precedence": "complete v42 authority first; v43 only sees residual blocked exact lowered spans",
+    "physical_identity": "D=A'*X+B'*Y+2*pi*h*r*(A*Y-B*X)+retained residuals",
+    "orientation": "eta is derived from sign(h*r*A), so eta*h*r*A is weakly nonnegative on the complete closed span; endpoint A=0 is allowed but interior A roots are not",
+    "correlated_y_channel": "eta*B'*|Y| + 2*pi*eta*h*r*A*|Y|",
+    "B_prime_bound": "if eta*B' is weakly positive use L*eta*B'; if weakly negative use W*eta*B'; identically zero B' is neutral",
+    "favorable_phase_A_bound": "2*pi*eta*h*r*A*|Y| >= 6*L*eta*h*r*A",
+    "transverse_A_prime_bound": "|X*A'| <= U*|A'|",
+    "transverse_phase_B_bound": "|2*pi*h*r*B*X| < (44/7)*U*|h*r*B|",
+    "exact_rational_bounds": {
+      "L_Y_abs_lower": "2856/2197",
+      "U_X_abs_upper": "99/182",
+      "W_Y_abs_upper": "99/70",
+      "two_pi_lower": "6",
+      "two_pi_upper": "44/7"
+    },
+    "selected_C_prime_and_S_prime_consumed_only_jointly": true,
+    "selected_phase_C_and_phase_S_consumed_only_jointly": true,
+    "all_nonanchor_residuals_retained": true,
+    "endpoint_orientation_zero_allowed": true,
+    "interior_orientation_root_allowed": false,
+    "caller_orientation_trusted": false,
+    "caller_derivatives_trusted": false,
+    "caller_margin_trusted": false,
+    "exact_resource_refusal_is_truth": false,
+    "binary_float_authority": false,
+    "sampling_used": false,
+    "epsilon_used": false,
+    "numerical_trigonometry_used": false,
+    "arbitrary_subdivision_cap_used": false
+  },
+  "acceptance_source": {
+    "C_1": "-3/10+17*s/20",
+    "S_1": "1/20+3*s/20",
+    "C_2": "1/100000000",
+    "derived_A_1": "-1/8+s/2",
+    "derived_B_1": "-7/40+7*s/20",
+    "A_handoff_root": "1/4",
+    "B_root": "1/2",
+    "phase_turn_offset": "-1/8",
+    "phase_turn_rate": "1/16",
+    "parent_v42_result": "BLOCKED",
+    "parent_v43_result": "BLOCKED_BECAUSE_A_HAS_AN_INTERIOR_ROOT",
+    "left_child_interval": ["0", "1/4"],
+    "left_child_authority": "complete v42 predecessor authority",
+    "right_child_interval": ["1/4", "1"],
+    "right_child_local_A": "3*u/8",
+    "right_child_v42_result": "BLOCKED",
+    "right_child_v43_result": "CERTIFIED",
+    "composition_authority": "historical v27 exact child event/root/multiplicity composer",
+    "composed_parent_result": "CERTIFIED",
+    "handoff_cut_is_physical_root": false
+  },
+  "boundary_controls": [
+    "exact correlated-margin equality at the left endpoint and signed 1/1000000 rational neighbors",
+    "supported diagonal phase-cell left/right boundaries and just-outside rational neighbors",
+    "positive and negative exact source-parameter/phase directions",
+    "weak A sign with exact endpoint zero and signed rational near-handoff controls",
+    "interior A sign change rejected from v43 local authority",
+    "exact resource refusal propagated as non-truth",
+    "forged caller orientation derivative margin root and multiplicity metadata ignored",
+    "binary-float authority rejected",
+    "historical v42 successes retain exact precedence",
+    "proof handoff cut is event-neutral when physical relation is nonzero",
+    "matching physical internal root counted exactly once by historical v27 composition",
+    "exact v42-v39 and v42-v19 incompatibility regressions remain explicit",
+    "every non-anchor derivative residual retained",
+    "frozen 26-operation denominator unchanged",
+    "no false MC-B or MC-1 promotion"
+  ],
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false,
+    "next_pre_gate_priority": "land v43, then resume #245 against verified v43 current authority; do not retry MC-B"
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "protected_semantics": {
+    "source_audio_provenance": true,
+    "canonical_journal": true,
+    "exact_time_path_phase": true,
+    "source_uncertainty": true,
+    "positive_volume_material": true,
+    "cutter_holder_access": true,
+    "durable_body_lineage": true,
+    "refusal_uncertified": true,
+    "conventional_step": true,
+    "downstream": true
+  }
+}
