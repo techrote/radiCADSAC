@@ -12,6 +12,7 @@ sys.path.insert(0, str(HERE))
 import pb00701_correlated_closed_handoff_model as model  # noqa: E402
 import pb00701_orientation_transition_bridge_model as v42  # noqa: E402
 import test_pb00701_multiharmonic_monotone_anchor_adversarial as base_test  # noqa: E402
+import test_pb00701_orientation_transition_bridge_adversarial as v42test  # noqa: E402
 
 v27 = model.v27
 TINY = Fraction(1, 100000000)
@@ -134,16 +135,175 @@ def run_acceptance():
     return source, right_v43, composition
 
 
+def _right_child_material():
+    source = _spec()
+    cos_polys, sin_polys = _maps()
+    source_id = source["source_parameter_id"]
+    return v27._child_spec(
+        cos_polys, sin_polys, OFFSET, RATE,
+        HANDOFF, Fraction(1), source_id,
+    )
+
+
+def _margin_source(m):
+    # A=s, B=m*s. At s=0 the adverse transverse phase-B term vanishes,
+    # so the critical v43 orthant is exactly L*m-U. m=U/L is equality.
+    a = [Fraction(0), Fraction(1)]
+    b = [Fraction(0), m]
+    c = model._trim(model.v22._padd(a, b))
+    sin = model._trim(model.v22._padd(a, model.v22._pscale(b, -1)))
+    return {1: c}, {1: sin}
+
+
+def run_margin_boundary_controls():
+    equality = model.X_UPPER / model.Y_LOWER
+    inside = equality + EPS
+    outside = equality - EPS
+    rate = Fraction(1, 1000000)
+
+    equal_cert = model._correlated_orthant_certificate(
+        *_margin_source(equality), rate, 1, 1
+    )
+    inside_cert = model._correlated_orthant_certificate(
+        *_margin_source(inside), rate, 1, 1
+    )
+    outside_cert = model._correlated_orthant_certificate(
+        *_margin_source(outside), rate, 1, 1
+    )
+    assert equal_cert["status"] == "BLOCKED", equal_cert
+    assert sum(Fraction(x) for x in equal_cert["failed_margin_polynomial"]) == 0
+    assert inside_cert["status"] == "CERTIFIED", inside_cert
+    assert outside_cert["status"] == "BLOCKED", outside_cert
+
+
+def run_phase_boundary_controls():
+    cos_polys, sin_polys = _margin_source(Fraction(10))
+    tiny_rate = Fraction(1, 1000000)
+    exact_left = model._correlated_derivative_certificate(
+        cos_polys, sin_polys, Fraction(-3, 16), tiny_rate, 1
+    )
+    just_left = model._correlated_derivative_certificate(
+        cos_polys, sin_polys, Fraction(-3, 16) - EPS, tiny_rate, 1
+    )
+    exact_right = model._correlated_derivative_certificate(
+        cos_polys, sin_polys, Fraction(-1, 16) - tiny_rate, tiny_rate, 1
+    )
+    just_right = model._correlated_derivative_certificate(
+        cos_polys, sin_polys, Fraction(-1, 16) - tiny_rate + EPS, tiny_rate, 1
+    )
+    assert exact_left["status"] == exact_right["status"] == "CERTIFIED"
+    assert just_left["status"] == just_right["status"] == "BLOCKED"
+
+
+def run_reverse_direction():
+    right_spec, right_cos, right_sin = _right_child_material()
+    right_offset = OFFSET + RATE * HANDOFF
+    right_rate = RATE * (Fraction(1) - HANDOFF)
+    reverse_cos = {
+        h: v27._reparameterize_polynomial(poly, Fraction(1), Fraction(0))
+        for h, poly in right_cos.items()
+    }
+    reverse_sin = {
+        h: v27._reparameterize_polynomial(poly, Fraction(1), Fraction(0))
+        for h, poly in right_sin.items()
+    }
+    reverse = base_test._spec(
+        reverse_cos,
+        reverse_sin,
+        offset=str(right_offset + right_rate),
+        rate=str(-right_rate),
+        source_parameter_id=right_spec["source_parameter_id"],
+    )
+    predecessor = v42.classify_required_analytic_event(reverse)
+    assert predecessor["status"] != "CERTIFIED", predecessor
+    result = model.classify_required_analytic_event(reverse)
+    route = _v43_route(result)
+    assert route["correlated_closed_handoff_certificate"]["direction"] == "DECREASING"
+
+
+def run_resource_refusal_control():
+    _, right_cos, right_sin = _right_child_material()
+    right_rate = RATE * (Fraction(1) - HANDOFF)
+    saved = model._strict_positive
+    try:
+        model._strict_positive = lambda *args, **kwargs: {
+            "status": "RESOURCE_REFUSAL",
+            "reason": "TEST_RESOURCE_REFUSAL",
+            "is_truth_value": False,
+        }
+        refused = model._correlated_orthant_certificate(
+            right_cos, right_sin, right_rate, 1, 1
+        )
+        assert refused["status"] == "RESOURCE_REFUSAL"
+        assert refused["is_truth_value"] is False
+    finally:
+        model._strict_positive = saved
+
+
+def run_composition_neutrality():
+    source, _, composition = run_acceptance()
+    assert composition["internal_cut_roots"] == []
+
+    # The handoff is a proof cut, not a physical event.
+    cos_polys, sin_polys = _maps()
+    event = model.v19._endpoint_relation(
+        cos_polys, sin_polys, HANDOFF, OFFSET + RATE * HANDOFF
+    )
+    assert event["relation"] != "ZERO", (source, event)
+
+    # Conversely, a genuine matching physical root is counted exactly once.
+    neutral = [
+        {
+            "parent_local_interval": ["0", "1/2"],
+            "summary": {
+                "status": "CERTIFIED",
+                "right_event": {"relation": "ZERO"},
+                "left_event": {"relation": "POSITIVE"},
+                "right_endpoint_multiplicity": 1,
+                "left_endpoint_multiplicity": None,
+                "distinct_roots_open": 0,
+                "multiple_roots_open": 0,
+                "all_roots_simple": True,
+            },
+        },
+        {
+            "parent_local_interval": ["1/2", "1"],
+            "summary": {
+                "status": "CERTIFIED",
+                "left_event": {"relation": "ZERO"},
+                "right_event": {"relation": "POSITIVE"},
+                "right_endpoint_multiplicity": None,
+                "left_endpoint_multiplicity": 1,
+                "distinct_roots_open": 0,
+                "multiple_roots_open": 0,
+                "all_roots_simple": True,
+            },
+        },
+    ]
+    composed = v27._compose_child_summaries(neutral)
+    assert composed["status"] == "CERTIFIED"
+    assert len(composed["internal_cut_roots"]) == 1
+    assert composed["distinct_roots_open"] == 1
+
+
+def run_precedence():
+    prior = v42test._fixture()
+    assert model.classify_required_analytic_event(prior) == v42.classify_required_analytic_event(prior)
+
+
 def run_weak_sign_controls():
     positive = model._closed_weak_sign([0, 1], "TEST_POSITIVE")
     negative = model._closed_weak_sign([0, -1], "TEST_NEGATIVE")
     crossing = model._closed_weak_sign([Fraction(-1, 2), 1], "TEST_CROSSING")
+    near_inside = model._closed_weak_sign([EPS, 1], "TEST_NEAR_INSIDE")
+    near_cross = model._closed_weak_sign([-EPS, 1], "TEST_NEAR_CROSS")
     zero = model._closed_weak_sign([0], "TEST_ZERO", allow_zero=True)
-    assert positive["status"] == negative["status"] == zero["status"] == "CERTIFIED"
-    assert positive["sign_number"] == 1 and negative["sign_number"] == -1
+    assert positive["status"] == negative["status"] == near_inside["status"] == zero["status"] == "CERTIFIED"
+    assert positive["sign_number"] == near_inside["sign_number"] == 1
+    assert negative["sign_number"] == -1
     assert zero["sign_number"] == 0
-    assert crossing["status"] == "BLOCKED"
-    assert "INTERIOR_ROOT" in crossing["reason"]
+    assert crossing["status"] == near_cross["status"] == "BLOCKED"
+    assert "INTERIOR_ROOT" in crossing["reason"] and "INTERIOR_ROOT" in near_cross["reason"]
 
 
 def run_incompatibility_regression():
@@ -184,7 +344,13 @@ def run_adversarial():
 
 def run():
     run_weak_sign_controls()
+    run_margin_boundary_controls()
+    run_phase_boundary_controls()
+    run_reverse_direction()
+    run_resource_refusal_control()
     run_incompatibility_regression()
+    run_precedence()
+    run_composition_neutrality()
     run_adversarial()
 
 
