@@ -78,7 +78,7 @@ def _acceptance_candidates():
         "r1": Fraction(1, 3),
         "r2": Fraction(2, 3),
         "ka": Fraction(1, 10),
-        "kb": Fraction(2),
+        "kb": Fraction(4),
         "e": Fraction(1, 10),
         "m": Fraction(2),
         "offset": Fraction(-5, 64),
