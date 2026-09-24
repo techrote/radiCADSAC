@@ -52,7 +52,7 @@ def _acceptance_candidates():
     meta = {
         "A_root": Fraction(1, 8),
         "B_root": Fraction(1, 6),
-        "A_scale": Fraction(1),
+        "A_scale": Fraction(4),
         "B_scale": Fraction(1),
         "offset": Fraction(-1, 8),
         "rate": Fraction(1, 4),
