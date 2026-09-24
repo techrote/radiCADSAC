@@ -171,7 +171,7 @@ def run_margin_boundary_controls():
         *_margin_source(outside), rate, 1, 1
     )
     assert equal_cert["status"] == "BLOCKED", equal_cert
-    assert sum(Fraction(x) for x in equal_cert["failed_margin_polynomial"]) == 0
+    assert Fraction(equal_cert["failed_margin_polynomial"][0]) == 0
     assert inside_cert["status"] == "CERTIFIED", inside_cert
     assert outside_cert["status"] == "BLOCKED", outside_cert
 
