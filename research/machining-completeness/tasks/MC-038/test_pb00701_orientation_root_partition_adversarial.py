@@ -141,6 +141,22 @@ def _failure_digest(result):
                     "status": cr.get("status"),
                     "reason": cr.get("reason"),
                     "harmonic": cr.get("harmonic"),
+                    "attempts": [
+                        {
+                            "status": attempt.get("status"),
+                            "reason": attempt.get("reason"),
+                            "harmonic": attempt.get("harmonic"),
+                            "failed_orthant": (
+                                attempt.get("orientation_transition_residual_certificate", {})
+                                .get("failed_orthant")
+                            ),
+                            "inner_reason": (
+                                attempt.get("orientation_transition_residual_certificate", {})
+                                .get("reason")
+                            ),
+                        }
+                        for attempt in cr.get("attempts", [])
+                    ],
                 })
             child_digests.append(cd)
         if child_digests:
