@@ -146,14 +146,12 @@ def _failure_digest(result):
                             "status": attempt.get("status"),
                             "reason": attempt.get("reason"),
                             "harmonic": attempt.get("harmonic"),
-                            "failed_orthant": (
-                                attempt.get("orientation_transition_residual_certificate", {})
-                                .get("failed_orthant")
-                            ),
-                            "inner_reason": (
-                                attempt.get("orientation_transition_residual_certificate", {})
-                                .get("reason")
-                            ),
+                            "failed_orthant": attempt.get("failed_orthant"),
+                            "failed_margin_polynomial": attempt.get("failed_margin_polynomial"),
+                            "failed_A_prime_sign": attempt.get("failed_A_prime_sign"),
+                            "failed_A_sign": attempt.get("failed_A_sign"),
+                            "failed_B_sign": attempt.get("failed_B_sign"),
+                            "transition_coordinate_certificate": attempt.get("transition_coordinate_certificate"),
                         }
                         for attempt in cr.get("attempts", [])
                     ],
