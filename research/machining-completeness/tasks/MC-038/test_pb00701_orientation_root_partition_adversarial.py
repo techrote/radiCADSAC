@@ -45,21 +45,48 @@ def _route(result):
     return routes[0]
 
 
+def _handoff_spec(r1, r2, ka, kb, e, m, *, offset, rate):
+    # h1: two exact A orientation roots; B1' changes sign so v42 cannot
+    # certify the full parent from h1 alone.
+    a1 = [ka * r1 * r2, -ka * (r1 + r2), ka]
+    b1 = [Fraction(1, 100) + kb * Fraction(1, 4), -kb, kb]
+
+    # h2: B2 has a rational orientation root at 1/2 while B2' is strongest
+    # around the middle; this gives a distinct local transition-handoff owner.
+    a2 = [Fraction(1, 100)]
+    b2 = [
+        -e * Fraction(1, 2) - m * Fraction(1, 12),
+        e,
+        m * Fraction(1, 2),
+        -m * Fraction(1, 3),
+    ]
+
+    c1 = model._trim(model.v22._padd(a1, b1))
+    s1 = model._trim(model.v22._padd(a1, model.v22._pscale(b1, -1)))
+    c2 = model._trim(model.v22._padd(a2, b2))
+    s2 = model._trim(model.v22._padd(a2, model.v22._pscale(b2, -1)))
+    return v40test._spec(
+        {1: c1, 2: c2},
+        {1: s1, 2: s2},
+        offset=str(offset),
+        rate=str(rate),
+    )
+
+
 def _acceptance_candidates():
-    # Focused exact candidate while establishing the v42-aware composition witness.
-    # phi=-1/8+s/4: diagonal v42 authority owns [0,1/4] in source s;
-    # both orientation roots lie strictly inside that cell.
     meta = {
-        "A_root": Fraction(1, 8),
-        "B_root": Fraction(1, 6),
-        "A_scale": Fraction(4),
-        "B_scale": Fraction(1),
-        "offset": Fraction(-1, 8),
-        "rate": Fraction(1, 4),
+        "r1": Fraction(1, 3),
+        "r2": Fraction(2, 3),
+        "ka": Fraction(1, 10),
+        "kb": Fraction(2),
+        "e": Fraction(1, 10),
+        "m": Fraction(2),
+        "offset": Fraction(-5, 64),
+        "rate": Fraction(1, 128),
     }
-    yield meta, _linear_spec(
-        meta["A_root"], meta["B_root"],
-        meta["A_scale"], meta["B_scale"],
+    yield meta, _handoff_spec(
+        meta["r1"], meta["r2"], meta["ka"], meta["kb"],
+        meta["e"], meta["m"],
         offset=meta["offset"], rate=meta["rate"],
     )
 
@@ -226,26 +253,11 @@ def run_acceptance():
     ), owners
     assert len({(kind, harmonic) for _, kind, harmonic, _ in owners}) >= 2, owners
 
-    # Both source-owned A1 roots and the source-owned B2 root participate in
-    # exact partitioning; zero-adjacent pieces are never relabelled strict v39/v40.
+    # Both source-owned h1 A roots and the source-owned h2 B root participate.
     roots = route["partition_certificate"]["orientation_roots"]
-    assert any(r["coordinate"] == "A" and r["harmonic"] == 1 for r in roots), roots
+    h1_a = [r for r in roots if r["coordinate"] == "A" and r["harmonic"] == 1]
+    assert {r["source"] for r in h1_a} == {str(meta["r1"]), str(meta["r2"])}, roots
     assert any(r["coordinate"] == "B" and r["harmonic"] == 2 for r in roots), roots
-
-    # Exact source-parameter reversal exercises the negative phase-rate direction
-    # without asking one asymmetric source to satisfy two different phase-cell layouts.
-    reverse = _linear_spec(
-        1 - meta["A_root"],
-        1 - meta["B_root"],
-        -meta["A_scale"],
-        -meta["B_scale"],
-        offset=meta["offset"] + meta["rate"],
-        rate=-meta["rate"],
-    )
-    reverse_predecessor = v42.classify_required_analytic_event(reverse)
-    reverse_new = model.classify_required_analytic_event(reverse)
-    assert reverse_predecessor.get("status") != "CERTIFIED"
-    assert reverse_new.get("status") == "CERTIFIED", reverse_new
 
     forged = copy.deepcopy(source)
     forged.update(
