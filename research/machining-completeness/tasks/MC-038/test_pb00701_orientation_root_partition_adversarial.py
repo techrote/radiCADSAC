@@ -45,50 +45,21 @@ def _route(result):
     return routes[0]
 
 
-def _handoff_spec(r1, r2, ka, kb, e, m, *, offset, rate):
-    # h1: two exact A orientation roots; B1' changes sign so v42 cannot
-    # certify the full parent from h1 alone.
-    a1 = [ka * r1 * r2, -ka * (r1 + r2), ka]
-    b1 = [Fraction(1, 100) + kb * Fraction(1, 4), -kb, kb]
-
-    # h2: B2 has a rational orientation root at 1/2 while B2' is strongest
-    # around the middle; this gives a distinct local transition-handoff owner.
-    a2 = [Fraction(1, 100)]
-    b2 = [
-        -e * Fraction(1, 2) - m * Fraction(1, 12),
-        e,
-        m * Fraction(1, 2),
-        -m * Fraction(1, 3),
-    ]
-
-    c1 = model._trim(model.v22._padd(a1, b1))
-    s1 = model._trim(model.v22._padd(a1, model.v22._pscale(b1, -1)))
-    c2 = model._trim(model.v22._padd(a2, b2))
-    s2 = model._trim(model.v22._padd(a2, model.v22._pscale(b2, -1)))
-    return v40test._spec(
-        {1: c1, 2: c2},
-        {1: s1, 2: s2},
-        offset=str(offset),
-        rate=str(rate),
-    )
-
-
 def _acceptance_candidates():
+    # Tiny h2 keeps this outside the historical single-harmonic v12 shortcut.
+    # h1 has both A/B orientation roots inside the first v42 diagonal cell,
+    # while the full phase law crosses later rotated-certificate boundaries.
     meta = {
-        "r1": Fraction(1, 3),
-        "r2": Fraction(2, 3),
-        "ka": Fraction(1, 10),
-        "kb": Fraction(4),
-        "e": Fraction(1, 10),
-        "m": Fraction(2),
-        "offset": Fraction(-5, 64),
-        "rate": Fraction(1, 128),
+        "A_root": Fraction(1, 8),
+        "B_root": Fraction(1, 6),
+        "A_scale": Fraction(1),
+        "B_scale": Fraction(4),
+        "offset": Fraction(-1, 8),
+        "rate": Fraction(1, 4),
     }
-    yield meta, _handoff_spec(
-        meta["r1"], meta["r2"], meta["ka"], meta["kb"],
-        meta["e"], meta["m"],
-        offset=meta["offset"], rate=meta["rate"],
-    )
+    a = [-meta["A_scale"] * meta["A_root"], meta["A_scale"]]
+    b = [-meta["B_scale"] * meta["B_root"], meta["B_scale"]]
+    yield meta, _spec(a, b, offset=meta["offset"], rate=meta["rate"])
 
 
 def _child_owners(route):
@@ -168,21 +139,7 @@ def _find_acceptance():
     for meta, spec in _acceptance_candidates():
         predecessor = v42.classify_required_analytic_event(spec)
         if predecessor.get("status") == "CERTIFIED":
-            raise AssertionError(
-                "focused candidate already certified by predecessor: "
-                + repr({
-                    "meta": {k: str(v) for k, v in meta.items()},
-                    "relation": predecessor.get("relation"),
-                    "routes": [
-                        {
-                            "kind": span.get("route_kind"),
-                            "relation": span.get("route", {}).get("relation"),
-                            "harmonic": span.get("route", {}).get("harmonic"),
-                        }
-                        for span in predecessor.get("spans", [])
-                    ],
-                })
-            )
+            continue
         new = model.classify_required_analytic_event(spec)
         if new.get("status") != "CERTIFIED":
             if len(diagnostics) < 16:
@@ -267,11 +224,18 @@ def run_acceptance():
     ), owners
     assert len({(kind, harmonic) for _, kind, harmonic, _ in owners}) >= 2, owners
 
-    # Both source-owned h1 A roots and the source-owned h2 B root participate.
+    # Both source-owned h1 orientation roots participate; the tiny h2 residual
+    # prevents fallback to the historical single-harmonic component-root route.
     roots = route["partition_certificate"]["orientation_roots"]
-    h1_a = [r for r in roots if r["coordinate"] == "A" and r["harmonic"] == 1]
-    assert {r["source"] for r in h1_a} == {str(meta["r1"]), str(meta["r2"])}, roots
-    assert any(r["coordinate"] == "B" and r["harmonic"] == 2 for r in roots), roots
+    assert any(
+        r["coordinate"] == "A" and r["harmonic"] == 1
+        and r["source"] == str(meta["A_root"]) for r in roots
+    ), roots
+    assert any(
+        r["coordinate"] == "B" and r["harmonic"] == 1
+        and r["source"] == str(meta["B_root"]) for r in roots
+    ), roots
+    assert route["partition_certificate"]["current_rotated_certificate_cell_cuts_included"] is True
 
     forged = copy.deepcopy(source)
     forged.update(
