@@ -127,7 +127,21 @@ def _find_acceptance():
     for meta, spec in _acceptance_candidates():
         predecessor = v42.classify_required_analytic_event(spec)
         if predecessor.get("status") == "CERTIFIED":
-            continue
+            raise AssertionError(
+                "focused candidate already certified by predecessor: "
+                + repr({
+                    "meta": {k: str(v) for k, v in meta.items()},
+                    "relation": predecessor.get("relation"),
+                    "routes": [
+                        {
+                            "kind": span.get("route_kind"),
+                            "relation": span.get("route", {}).get("relation"),
+                            "harmonic": span.get("route", {}).get("harmonic"),
+                        }
+                        for span in predecessor.get("spans", [])
+                    ],
+                })
+            )
         new = model.classify_required_analytic_event(spec)
         if new.get("status") != "CERTIFIED":
             if len(diagnostics) < 16:
