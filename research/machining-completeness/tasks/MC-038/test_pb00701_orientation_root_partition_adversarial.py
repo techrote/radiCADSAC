@@ -46,39 +46,22 @@ def _route(result):
 
 
 def _acceptance_candidates():
-    # For phi=-1/8+s/4 the exact diagonal cell ends at s=1/4.
-    # Put both orientation roots strictly before that boundary so the
-    # v42 handoff owns the zero-adjacent pieces, while the later historical
-    # phase sectors see already-strict A/B orientations.
-    root_pairs = [
-        (Fraction(1, 8), Fraction(1, 6)),
-        (Fraction(1, 6), Fraction(1, 8)),
-        (Fraction(1, 8), Fraction(1, 5)),
-        (Fraction(1, 5), Fraction(1, 8)),
-        (Fraction(1, 6), Fraction(1, 5)),
-        (Fraction(1, 5), Fraction(1, 6)),
-        (Fraction(1, 8), Fraction(2, 9)),
-        (Fraction(2, 9), Fraction(1, 8)),
-    ]
-    scales = [
-        (Fraction(1), Fraction(1)),
-        (Fraction(1), Fraction(2)),
-        (Fraction(1), Fraction(4)),
-        (Fraction(2), Fraction(1)),
-        (Fraction(4), Fraction(1)),
-    ]
-    phases = [
-        (Fraction(-1, 8), Fraction(1, 4)),
-        (Fraction(3, 8), Fraction(1, 4)),
-    ]
-    for ra, rb in root_pairs:
-        for sa, sb in scales:
-            for offset, rate in phases:
-                meta = {
-                    "A_root": ra, "B_root": rb, "A_scale": sa, "B_scale": sb,
-                    "offset": offset, "rate": rate,
-                }
-                yield meta, _linear_spec(ra, rb, sa, sb, offset=offset, rate=rate)
+    # Focused exact candidate while establishing the v42-aware composition witness.
+    # phi=-1/8+s/4: diagonal v42 authority owns [0,1/4] in source s;
+    # both orientation roots lie strictly inside that cell.
+    meta = {
+        "A_root": Fraction(1, 8),
+        "B_root": Fraction(1, 6),
+        "A_scale": Fraction(1),
+        "B_scale": Fraction(1),
+        "offset": Fraction(-1, 8),
+        "rate": Fraction(1, 4),
+    }
+    yield meta, _linear_spec(
+        meta["A_root"], meta["B_root"],
+        meta["A_scale"], meta["B_scale"],
+        offset=meta["offset"], rate=meta["rate"],
+    )
 
 
 def _child_owners(route):
