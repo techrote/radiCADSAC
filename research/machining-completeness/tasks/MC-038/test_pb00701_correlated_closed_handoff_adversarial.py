@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import copy
 from fractions import Fraction
+from math import comb
 from pathlib import Path
 import sys
 
@@ -195,18 +196,21 @@ def run_phase_boundary_controls():
     assert just_left["status"] == just_right["status"] == "BLOCKED"
 
 
+def _reverse_polynomial(poly):
+    poly = [Fraction(x) for x in poly]
+    out = [Fraction(0)] * len(poly)
+    for i, coefficient in enumerate(poly):
+        for j in range(i + 1):
+            out[j] += coefficient * Fraction(comb(i, j)) * ((-1) ** j)
+    return model._trim(out)
+
+
 def run_reverse_direction():
     right_spec, right_cos, right_sin = _right_child_material()
     right_offset = OFFSET + RATE * HANDOFF
     right_rate = RATE * (Fraction(1) - HANDOFF)
-    reverse_cos = {
-        h: v27._reparameterize_polynomial(poly, Fraction(1), Fraction(0))
-        for h, poly in right_cos.items()
-    }
-    reverse_sin = {
-        h: v27._reparameterize_polynomial(poly, Fraction(1), Fraction(0))
-        for h, poly in right_sin.items()
-    }
+    reverse_cos = {h: _reverse_polynomial(poly) for h, poly in right_cos.items()}
+    reverse_sin = {h: _reverse_polynomial(poly) for h, poly in right_sin.items()}
     reverse = base_test._spec(
         reverse_cos,
         reverse_sin,
