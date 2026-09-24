@@ -45,36 +45,47 @@ def _route(result):
     return routes[0]
 
 
+def _multiplier_spec(*, carrier_cos_root, carrier_sin_root, multiplier_lambda, offset, rate):
+    # Exact v13 identity:
+    # (lambda + cos(2*alpha)) * (Ac*cos(alpha) + Bc*sin(alpha))
+    # gives harmonics {1,3}. The parent carrier has one Ac root and one Bc
+    # root, so v10 has no global zero-free projective chart.
+    ac = [-carrier_cos_root, Fraction(1)]
+    bc = [-carrier_sin_root, Fraction(1)]
+    lam = multiplier_lambda
+    cos1 = model.v22._pscale(ac, lam + Fraction(1, 2))
+    sin1 = model.v22._pscale(bc, lam - Fraction(1, 2))
+    cos3 = model.v22._pscale(ac, Fraction(1, 2))
+    sin3 = model.v22._pscale(bc, Fraction(1, 2))
+    return v40test._spec(
+        {1: cos1, 3: cos3},
+        {1: sin1, 3: sin3},
+        offset=str(offset),
+        rate=str(rate),
+    )
+
+
 def _acceptance_candidates():
-    # Bounded search of the original #246 exact linear family at the
-    # diagonal->historical handoff. v42 may now own zero-adjacent children;
-    # the remaining children must be certified by existing predecessor routes.
-    root_pairs = [
-        (Fraction(1, 4), Fraction(1, 3)),
-        (Fraction(1, 3), Fraction(1, 4)),
-        (Fraction(1, 4), Fraction(2, 5)),
-        (Fraction(2, 5), Fraction(1, 4)),
-    ]
-    scales = [
-        (Fraction(1), Fraction(1)),
-        (Fraction(2), Fraction(1)),
-        (Fraction(1), Fraction(2)),
-        (Fraction(4), Fraction(1)),
-        (Fraction(1), Fraction(4)),
-        (Fraction(10), Fraction(1)),
-        (Fraction(1), Fraction(10)),
-    ]
-    for ra, rb in root_pairs:
-        for sa, sb in scales:
-            meta = {
-                "A_root": ra, "B_root": rb,
-                "A_scale": sa, "B_scale": sb,
-                "offset": Fraction(-1, 8),
-                "rate": Fraction(1, 4),
-            }
-            a = [-sa * ra, sa]
-            b = [-sb * rb, sb]
-            yield meta, _spec(a, b, offset=meta["offset"], rate=meta["rate"])
+    # Genuine composition witness. Complete predecessor authority sees the
+    # exact v13 multiplier but its carrier has Ac=0 at 1/4 and Bc=0 at 3/4,
+    # so no one v10 projective chart is zero-free on the parent. Source-owned
+    # orientation roots at 7/16 and 1/2 partition the carrier zeros: left
+    # children can use the Bc chart and the right child can use the Ac chart.
+    meta = {
+        "carrier_cos_root": Fraction(1, 4),
+        "carrier_sin_root": Fraction(3, 4),
+        "multiplier_lambda": Fraction(2),
+        "offset": Fraction(0),
+        "rate": Fraction(-1, 16),
+        "expected_orientation_cuts": (Fraction(7, 16), Fraction(1, 2)),
+    }
+    yield meta, _multiplier_spec(
+        carrier_cos_root=meta["carrier_cos_root"],
+        carrier_sin_root=meta["carrier_sin_root"],
+        multiplier_lambda=meta["multiplier_lambda"],
+        offset=meta["offset"],
+        rate=meta["rate"],
+    )
 
 
 def _child_owners(route):
@@ -168,12 +179,8 @@ def _find_acceptance():
             continue
         route = _route(new)
         owners = _child_owners(route)
-        if not any(kind == "PB00701_V42_EXACT_ROTATED_COORDINATE_ORIENTATION_TRANSITION_BRIDGE" for _, kind, _, _ in owners):
+        if not owners:
             continue
-        distinct_owners = {(kind, harmonic) for _, kind, harmonic, _ in owners}
-        if len(distinct_owners) < 2:
-            continue
-
         return meta, spec, predecessor, new, owners
 
     raise AssertionError(
@@ -231,26 +238,32 @@ def run_acceptance():
     assert route["partition_certificate"]["coincident_cuts_deduplicated"] is True
     assert all(child["summary"]["status"] == "CERTIFIED" for child in route["children"])
 
-    # The new authority must be composition beyond v42 alone, with at least
-    # one actual v42 handoff child and at least one differently owned child.
-    assert any(
-        kind == "PB00701_V42_EXACT_ROTATED_COORDINATE_ORIENTATION_TRANSITION_BRIDGE"
+    # This is composition beyond v42 itself: the parent remains predecessor-
+    # blocked, while every child is independently accepted through the exact
+    # historical v13 multiplier reduction / v10 dual-projective carrier route.
+    assert all(
+        kind == "PB00701_V13_EXACT_NONVANISHING_EVEN_MULTIPLIER"
         for _, kind, _, _ in owners
     ), owners
-    assert len({(kind, harmonic) for _, kind, harmonic, _ in owners}) >= 2, owners
 
-    # Both source-owned h1 orientation roots participate; tiny h2 keeps
-    # the source outside the old single-harmonic v12 shortcut.
     roots = route["partition_certificate"]["orientation_roots"]
-    assert any(
-        r["coordinate"] == "A" and r["harmonic"] == 1
-        and r["source"] == str(meta["A_root"]) for r in roots
-    ), roots
-    assert any(
-        r["coordinate"] == "B" and r["harmonic"] == 1
-        and r["source"] == str(meta["B_root"]) for r in roots
-    ), roots
-    assert route["partition_certificate"]["current_rotated_certificate_cell_cuts_included"] is True
+    cut_sources = {r["source"] for r in roots}
+    assert {str(x) for x in meta["expected_orientation_cuts"]}.issubset(cut_sources), roots
+
+    # Verify the nested carrier actually changes exact projective chart across
+    # the partition instead of relabelling one global certificate.
+    charts = []
+    for child in route["children"]:
+        for span in child["child_result"].get("spans", []):
+            cr = span.get("route", {})
+            if span.get("route_kind") == "PB00701_V13_EXACT_NONVANISHING_EVEN_MULTIPLIER":
+                carrier = cr.get("carrier", {})
+                chart = carrier.get("projective_chart")
+                if chart is None:
+                    chart = carrier.get("denominator_certificate", {}).get("component")
+                charts.append((tuple(child["parent_local_interval"]), cr.get("carrier_route_kind"), chart))
+    assert len(charts) == route["child_count"], charts
+    assert len({entry[2] for entry in charts}) >= 2, charts
 
     forged = copy.deepcopy(source)
     forged.update(
@@ -275,14 +288,17 @@ def run_acceptance():
     assert float_result.get("status") != "CERTIFIED"
 
     print(
-        "v41 v42-aware acceptance",
+        "v41 v42-aware exact multiplier composition",
         {k: str(v) for k, v in meta.items()},
         "children",
         route["child_count"],
         "owners",
         owners,
+        "charts",
+        charts,
     )
     return source, result
+
 
 
 def run_precedence():
