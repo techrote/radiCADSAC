@@ -53,9 +53,9 @@ def _acceptance_candidates():
         "A_root": Fraction(1, 8),
         "B_root": Fraction(1, 6),
         "A_scale": Fraction(1),
-        "B_scale": Fraction(4),
+        "B_scale": Fraction(1, 2),
         "offset": Fraction(-1, 8),
-        "rate": Fraction(1, 4),
+        "rate": Fraction(1, 16),
     }
     a = [-meta["A_scale"] * meta["A_root"], meta["A_scale"]]
     b = [-meta["B_scale"] * meta["B_root"], meta["B_scale"]]
