@@ -25,6 +25,31 @@ def _spec(a, b, *, offset, rate):
     return v40test._spec({1: c, 2: [-TINY]}, {1: s}, offset=str(offset), rate=str(rate))
 
 
+def _composition_spec(a, b, *, handoff, offset, rate):
+    # h0 derivative P'=2+3s is insufficient globally but, after the exact
+    # handoff at s=1/3, its Bernstein lower bound is strong enough for the
+    # historical v19 monotone-anchor route.
+    p0 = [Fraction(0), Fraction(2), Fraction(3, 2)]
+
+    c1 = model._trim(model.v22._padd(a, b))
+    s1 = model._trim(model.v22._padd(a, model.v22._pscale(b, -1)))
+
+    # Tiny h2 creates an exact A2 orientation root at the handoff without
+    # materially owning the derivative. B2 remains tiny and nonzero so both
+    # source quadratures exist and the orientation-root machinery sees A2.
+    a2 = [-TINY * handoff, TINY]
+    b2 = [TINY]
+    c2 = model._trim(model.v22._padd(a2, b2))
+    s2 = model._trim(model.v22._padd(a2, model.v22._pscale(b2, -1)))
+
+    return v40test._spec(
+        {0: p0, 1: c1, 2: c2},
+        {1: s1, 2: s2},
+        offset=str(offset),
+        rate=str(rate),
+    )
+
+
 def _linear_spec(ra, rb, sa, sb, *, offset, rate):
     a = [-sa * ra, sa]
     b = [-sb * rb, sb]
@@ -46,20 +71,27 @@ def _route(result):
 
 
 def _acceptance_candidates():
-    # Tiny h2 keeps this outside the historical single-harmonic v12 shortcut.
-    # h1 has both A/B orientation roots inside the first v42 diagonal cell,
-    # while the full phase law crosses later rotated-certificate boundaries.
+    # Exact v42 -> v19 composition witness:
+    # - h1 A/B roots at 1/8 and 1/6 force zero-adjacent v42 handoff pieces;
+    # - tiny h2 A root at 1/3 supplies a proof-only handoff cut;
+    # - h0 is globally insufficient for v19, but dominates on [1/3,1].
     meta = {
         "A_root": Fraction(1, 8),
         "B_root": Fraction(1, 6),
         "A_scale": Fraction(1),
         "B_scale": Fraction(1, 2),
+        "handoff": Fraction(1, 3),
         "offset": Fraction(-1, 8),
         "rate": Fraction(1, 16),
     }
     a = [-meta["A_scale"] * meta["A_root"], meta["A_scale"]]
     b = [-meta["B_scale"] * meta["B_root"], meta["B_scale"]]
-    yield meta, _spec(a, b, offset=meta["offset"], rate=meta["rate"])
+    yield meta, _composition_spec(
+        a, b,
+        handoff=meta["handoff"],
+        offset=meta["offset"],
+        rate=meta["rate"],
+    )
 
 
 def _child_owners(route):
@@ -234,6 +266,10 @@ def run_acceptance():
     assert any(
         r["coordinate"] == "B" and r["harmonic"] == 1
         and r["source"] == str(meta["B_root"]) for r in roots
+    ), roots
+    assert any(
+        r["coordinate"] == "A" and r["harmonic"] == 2
+        and r["source"] == str(meta["handoff"]) for r in roots
     ), roots
     assert route["partition_certificate"]["current_rotated_certificate_cell_cuts_included"] is True
 
