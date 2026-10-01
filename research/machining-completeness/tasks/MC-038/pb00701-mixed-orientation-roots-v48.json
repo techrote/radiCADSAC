@@ -1,0 +1,73 @@
+{
+  "schema": "radicadsac-mc038-pb00701-mixed-orientation-roots/48.0",
+  "task": "MC-038",
+  "corrective_issue": 261,
+  "source_baseline": "8033c8102acc0cf1db77b259a56cee5cb85998ea",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "decision": "MIXED_ROOT_ISOLATION_AND_PRESERVED_SINGLE_CUT_CONSUMPTION_REPAIRED",
+  "historical_git_blob_pins": {
+    "pb00701_algebraic_orientation_cut_model.py": "a56d6487963d269405ab82f3db4cce58a0165520",
+    "pb00701_algebraic_child_map_model.py": "c055e7f392a921b386a1a99cc70b5004121ae7f6",
+    "pb00701_algebraic_endpoint_model.py": "77c18cb5c8c0700072c65969c973e8f3c4c12a99",
+    "pb00701_algebraic_monotone_cut_model.py": "07b092f9c7df8b3325c2b15d17ca7abe9781cb10",
+    "pb00701_algebraic_monotone_cut_certificate.py": "f98e0e4f506f9b4c5eb247eca4f5a142caa3c4b6",
+    "pb00701_algebraic_interval_model.py": "859cb6ee600486198f53bfcc9660e2b482bb54d0",
+    "verify_pb00701_v47.py": "b77e2c2255cfc00fe1bf4d9c3f9efa09ce913725"
+  },
+  "repair": {
+    "endpoint_factor_removal": "ISOLATION_WORKSPACE_ONLY",
+    "irrational_interval_uniqueness": "FULL_ORIGINAL_SQUARE_FREE_SOURCE",
+    "multiplicity": "FULL_ORIGINAL_SOURCE",
+    "root_accounting": "EXACT_OPEN_STURM_COUNT_PLUS_ENDPOINT_RECORDS_ENFORCED",
+    "termination": "FINITE_DISTINCT_ROOT_SEPARATION_NO_CAP",
+    "consumer": "UNCHANGED_V45_V46_V47_THEOREMS_WITH_NEW_SOURCE_REGENERATING_ADAPTER",
+    "physical_source_deflated": false,
+    "global_monkeypatch": false,
+    "exception_text_is_source_authority": false,
+    "full_multi_cut_partition": false,
+    "resource_refusal_is_truth": false
+  },
+  "boundary_controls": [
+    "legacy_endpoint_and_mixed_isolation_failures",
+    "endpoint_rational_irrational_multiplicities",
+    "full_source_unique_intervals_and_exact_neighbors",
+    "rational_only_constant_identity",
+    "AB_deduplication_and_algebraic_order",
+    "enforced_accounting_and_certificate_corruption",
+    "actual_source_restored_with_unchanged_derivative_proofs",
+    "phase_directions_global_coordinates_precedence",
+    "finite_checker_without_route_or_sign_search",
+    "unknown_source_and_unrelated_exception_preservation",
+    "resource_refusal"
+  ],
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "protected_semantics": {
+    "source_audio_provenance": true,
+    "canonical_journal": true,
+    "exact_time_path_phase": true,
+    "source_uncertainty": true,
+    "positive_volume_material": true,
+    "cutter_holder_access": true,
+    "durable_body_lineage": true,
+    "refusal_uncertified": true,
+    "conventional_step": true
+  }
+}
