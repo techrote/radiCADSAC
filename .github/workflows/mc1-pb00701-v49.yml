@@ -1,0 +1,37 @@
+name: mc1-pb00701-v49
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/*mixed_boundary*'
+      - 'research/machining-completeness/tasks/MC-038/*mixed_multicut*'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-mixed-boundary-multicut-v49.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-report-v49.md'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v49.py'
+      - 'docs/machining-completeness/73-PB00701-MIXED-MULTICUT.md'
+      - '.github/workflows/mc1-pb00701-v49.yml'
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/*mixed_boundary*'
+      - 'research/machining-completeness/tasks/MC-038/*mixed_multicut*'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-mixed-boundary-multicut-v49.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-report-v49.md'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v49.py'
+      - 'docs/machining-completeness/73-PB00701-MIXED-MULTICUT.md'
+      - '.github/workflows/mc1-pb00701-v49.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify actual-source mixed-boundary multi-cut events
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v49.py --contract --self-test
