@@ -1,0 +1,31 @@
+name: mc1-pb00701-v45
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/*child*map*'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v45.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-report-v45.md'
+      - 'docs/machining-completeness/69-PB00701-ALGEBRAIC-CHILD-MAP.md'
+      - '.github/workflows/mc1-pb00701-v45.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/*child*map*'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v45.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-report-v45.md'
+      - 'docs/machining-completeness/69-PB00701-ALGEBRAIC-CHILD-MAP.md'
+      - '.github/workflows/mc1-pb00701-v45.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify exact child representation and source-bound adversarial tests
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v45.py --contract --self-test
