@@ -1,0 +1,109 @@
+{
+  "schema": "radicadsac-mc038-pb00701-orientation-root-partition-boundary/41.2",
+  "task": "MC-038",
+  "corrective_issue": 245,
+  "source_baseline": "99abe3973d46af670693875e5a554239e89be283",
+  "required_predecessor": {
+    "issue": 250,
+    "pull_request": 251,
+    "v43_merge": "99abe3973d46af670693875e5a554239e89be283",
+    "v43_pr_head": "655ec932bfc5916f65f17e2dca971903c47a1498",
+    "v42_parent": "ab9bc9e52a7db184f10bb6d4b7101cf0682a48d2",
+    "v40_ancestor": "494a29091fcd9afadad006cded4a71b74349c824"
+  },
+  "target_blocker": "PB-007-01",
+  "decision": "EXACT_V43_AWARE_ORIENTATION_ROOT_PARTITION_COMPOSITION_ESTABLISHED_PB00701_OPEN",
+  "gate_state": "NOT_ESTABLISHED",
+  "implemented_extension": {
+    "id": "EXACT_ROTATED_COORDINATE_ORIENTATION_ROOT_PARTITION_COMPOSITION",
+    "precedence": "complete current predecessor authority through v43 first; only residual blocked lowered spans are eligible",
+    "root_authority": "derive A=(C+S)/2 and B=(C-S)/2 from source; rational-root theorem candidates accepted only when exact Sturm distinct-root count proves completeness",
+    "multiplicity": "exact repeated division by the source-owned rational linear factor",
+    "partition": "exact union of interior orientation roots, historical v27 phase-sector cuts, and verified rotated-coordinate certificate-cell cuts; exact sort/dedup; endpoints never create zero-width children",
+    "reparameterization": "reuse v27 exact rational polynomial and affine phase child map while preserving source_parameter_id; bind exact child affine coefficients and exact parent-source intervals",
+    "child_authority": "complete v43 classifier independently on every child, preserving all predecessor precedence and using v42/v43 transition or correlated handoff authority only where exact premises hold",
+    "zero_adjacent_contract": "a cut at A=0 or B=0 does not make an adjacent closed child v39/v40-admissible; it needs complete current authority through v43 or remains blocked",
+    "composition": "validate source identity, exact child contiguity and reparameterization binding before reusing the historical v27 exact endpoint/root/multiplicity composer; proof cuts are event-neutral absent matching physical equality",
+    "acceptance": "parent must remain blocked by complete v43 predecessor authority and become certified only after exact source-owned orientation partition plus independently certified child composition; at least one child must be v43-owned and composed children must exhibit more than one exact owner",
+    "irrational_root_boundary": "Sturm-proven interior roots not exactly rational are BLOCKED because the current child parameter maps are rational; no approximate cut is admitted",
+    "caller_partition_trusted": false,
+    "caller_reparameterization_trusted": false,
+    "exact_resource_refusal_is_truth": false,
+    "binary_float_authority": false,
+    "epsilon_or_tolerance_authority": false,
+    "sampling_authority": false,
+    "approximate_root_ordering_authority": false,
+    "adaptive_refinement_authority": false
+  },
+  "historical_evidence": [
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701_correlated_closed_handoff_model.py",
+      "git_blob_sha1": "d47b8dd8fe8b4b91fd12c1e76974a5a4e85b03b2"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/test_pb00701_correlated_closed_handoff_adversarial.py",
+      "git_blob_sha1": "5128cc2ea69c2b567f57dc5578114bd6e9fd2faa"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701-correlated-closed-handoff-v43.json",
+      "git_blob_sha1": "095414925836ad23893eedcfe8b1c1e466fbccb1"
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701_phase_sector_partition_model.py",
+      "git_blob_sha1": "6211e658621af7100c2509dcafdaeaf348e48d46"
+    }
+  ],
+  "boundary_controls": [
+    "two nearby rational orientation roots exact order without tolerance",
+    "repeated even-multiplicity rational orientation root",
+    "endpoint orientation roots create no interior child",
+    "coincident A and B orientation cuts exact deduplication",
+    "orientation root coincident with an existing v27 exact certificate cut deduplicates to one canonical cut",
+    "Sturm-proven irrational algebraic orientation root blocks rather than approximates",
+    "complete-v43 residual exact composition acceptance source",
+    "simple A orientation root at the verified v43 closed handoff and simple B orientation root in the same source",
+    "zero-adjacent children require valid current v42/v43 handoff authority rather than strict signed-A or signed-B assertion",
+    "at least one v43 child and more than one exact predecessor owner across composed children",
+    "positive and negative phase-rate certificate construction and preserved anti-diagonal v40 ownership",
+    "forged caller partition root child multiplicity and reparameterization evidence rejected",
+    "source-parameter identity and exact child interval/reparameterization mismatch fail closed",
+    "historical v27 v40 v42 and v43 precedence preserved",
+    "internal proof cut without physical equality contributes zero roots",
+    "matching physical internal root counted exactly once",
+    "adjacent endpoint semantic or multiplicity mismatch fails closed",
+    "exact root-isolation and reparameterization resource refusal remain non-truth",
+    "frozen 26-operation denominator",
+    "false MC-B promotion rejected"
+  ],
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false,
+    "next_pre_gate_priority": "PB-007-01 remains open beyond this rational orientation-partition subset; do not retry MC-B while required coupled analytic/source/topology obligations remain open"
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "protected_semantics": {
+    "source_audio_provenance": true,
+    "canonical_journal": true,
+    "exact_time_path_phase": true,
+    "source_uncertainty": true,
+    "positive_volume_material": true,
+    "cutter_holder_access": true,
+    "durable_body_lineage": true,
+    "refusal_uncertified": true,
+    "conventional_step": true
+  }
+}
