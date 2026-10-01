@@ -183,6 +183,17 @@ def validate_algebraic_root_certificate(certificate, source_poly=None):
     assert certificate["root_type"] == "REAL_ALGEBRAIC_IRRATIONAL"
     defining = [_exact(value) for value in certificate["defining_square_free_polynomial"]]
     assert _primitive_integer_polynomial(defining) == certificate["defining_square_free_polynomial"]
+
+    # Bind the root certificate back to the exact source polynomial from which
+    # it was derived.  A different polynomial that happens to have one root in
+    # the same rational isolating interval is not authority for this source.
+    bound_source = [_exact(value) for value in certificate["source_polynomial_primitive"]]
+    assert _primitive_integer_polynomial(bound_source) == certificate["source_polynomial_primitive"]
+    expected_defining = _primitive_integer_polynomial(_square_free_part(bound_source))
+    assert certificate["defining_square_free_polynomial"] == expected_defining
+    if source_poly is not None:
+        assert _primitive_integer_polynomial(source_poly) == certificate["source_polynomial_primitive"]
+
     assert _degree(_pgcd(defining, v41._pderiv(defining))) == 0
     lo, hi = map(_exact, certificate["isolating_interval"])
     assert Fraction(0) < lo < hi < Fraction(1)
@@ -208,12 +219,15 @@ def exact_algebraic_orientation_roots(poly, label):
         irrational_part = _remove_rational_roots_once(square_free, rational_roots)
         intervals = _isolate_irrational_roots(irrational_part) if _degree(irrational_part) > 0 else []
         defining = _primitive_integer_polynomial(square_free)
+        source_primitive = _primitive_integer_polynomial(original)
         certificates = []
         for index, (lo, hi) in enumerate(intervals):
             cert = {
                 "root_type": "REAL_ALGEBRAIC_IRRATIONAL",
                 "label": label,
                 "defining_square_free_polynomial": defining,
+                "source_polynomial_primitive": source_primitive,
+                "source_binding": "EXACT_PRIMITIVE_SOURCE_POLYNOMIAL_TO_SQUARE_FREE_DEFINING_POLYNOMIAL",
                 "isolating_interval": [str(lo), str(hi)],
                 "unique_root_proof": {
                     "method": "EXACT_STURM_OPEN_INTERVAL_COUNT",
