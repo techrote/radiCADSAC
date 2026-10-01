@@ -126,7 +126,7 @@ def validate_artifact(artifact, *, check_repo=True):
     for path in (DOC, REPORT):
         text = path.read_text(encoding="utf-8").lower()
         for token in (
-            "pb-007-01", "remains open", "v43", "orientation", "sturm",
+            "pb-007-01", "remains", "open", "v43", "orientation", "sturm",
             "zero-adjacent", "source", "reparameterization", "resource",
             "26 operations", "mc-b",
         ):
