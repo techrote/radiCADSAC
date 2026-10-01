@@ -1,0 +1,79 @@
+{
+  "schema": "radicadsac-mc038-pb00701-algebraic-child-map/45.0",
+  "task": "MC-038",
+  "corrective_issue": 255,
+  "source_baseline": "8b215136ea9d30bc018618525d73d9b97c09b4bc",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "decision": "EXACT_SINGLE_GENERATOR_CHILD_REPRESENTATION_ESTABLISHED",
+  "arithmetic": {
+    "modulus": "SOURCE_DERIVED_IRREDUCIBLE_MINIMAL_FACTOR",
+    "factorization": "FINITE_EXACT_KRONECKER_WITH_QUADRATIC_DISCRIMINANT",
+    "canonical_embedding": "MINIMAL_POLYNOMIAL_REAL_ROOT_INDEX_AND_DYADIC_ISOLATION",
+    "equality": "UNIQUE_REDUCED_RATIONAL_COEFFICIENT_VECTOR",
+    "sign": "EXACT_RATIONAL_ENCLOSURE_PLUS_MC032_STURM_REFINEMENT"
+  },
+  "historical_git_blob_pins": {
+    "research/machining-completeness/tasks/MC-032/event_engine.py": "789a709c5141479a343035d1b7055dd4e53534e1",
+    "research/machining-completeness/tasks/MC-038/pb00701_algebraic_orientation_cut_model.py": "a56d6487963d269405ab82f3db4cce58a0165520",
+    "research/machining-completeness/tasks/MC-038/test_pb00701_algebraic_orientation_cut_adversarial.py": "376e4f376471f0a796b2cd2663a5b17393344a33",
+    "research/machining-completeness/tasks/MC-038/pb00701-algebraic-orientation-cut-v44.json": "db8aae272996950d0e3c006ec1872c59afb40bc5",
+    "research/machining-completeness/tasks/MC-038/pb00701_orientation_root_partition_model.py": "2f96622b5c69655279d66fe2b36f8f3e03414660"
+  },
+  "boundary_controls": [
+    "minimal_factor_not_square_free_quotient",
+    "canonical_real_embedding",
+    "field_zero_equality_inverse_sign",
+    "both_affine_maps",
+    "coefficient_roundtrip",
+    "amplitude_chain_rule",
+    "simple_and_even_multiplicity",
+    "common_AB_identity",
+    "nearby_algebraic_order",
+    "phase_rate_both_directions",
+    "source_binding_mutations",
+    "forged_field_and_child_metadata",
+    "nonexact_rejection",
+    "resource_refusal",
+    "historical_precedence",
+    "no_event_promotion",
+    "frozen_domain"
+  ],
+  "unsupported": [
+    "ALGEBRAIC_IRRATIONAL_PHASE_EVENT_CONSUMPTION",
+    "MULTI_GENERATOR_COMPOSITUM_AND_FULL_MULTI_CUT_PARTITION"
+  ],
+  "analytic_cut_consumed": false,
+  "caller_metadata_trusted": false,
+  "resource_refusal_is_truth": false,
+  "protected_semantics": {
+    "source_audio_provenance": true,
+    "canonical_journal": true,
+    "exact_time_path_phase": true,
+    "source_uncertainty": true,
+    "positive_volume_material": true,
+    "cutter_holder_access": true,
+    "durable_body_lineage": true,
+    "refusal_uncertified": true,
+    "conventional_step": true
+  },
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "next_repair": "Exact algebraic-irrational phase endpoint equality/sign/multiplicity, without consuming cuts until independent event evidence exists."
+}
