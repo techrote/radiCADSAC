@@ -1,0 +1,35 @@
+name: mc1-pb00701-v46
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/*algebraic_endpoint*.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-algebraic-endpoint-v46.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-report-v46.md'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v46.py'
+      - 'docs/machining-completeness/70-PB00701-ALGEBRAIC-ENDPOINT.md'
+      - '.github/workflows/mc1-pb00701-v46.yml'
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/*algebraic_endpoint*.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-algebraic-endpoint-v46.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-report-v46.md'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v46.py'
+      - 'docs/machining-completeness/70-PB00701-ALGEBRAIC-ENDPOINT.md'
+      - '.github/workflows/mc1-pb00701-v46.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify exact endpoint decisions and independent certificates
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v46.py --contract --self-test
