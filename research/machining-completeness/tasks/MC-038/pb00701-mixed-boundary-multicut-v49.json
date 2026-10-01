@@ -1,10 +1,10 @@
 {
-  "schema": "radicadsac-mc038-pb00701-mixed-boundary-multicut/49.0",
+  "schema": "radicadsac-mc038-pb00701-mixed-boundary-multicut/49.1",
   "task": "MC-038",
   "corrective_issue": 263,
   "source_baseline": "d13d1e24d13f087a999a68228c200136d9aedf79",
   "evidence_class": "DETERMINISTIC_MODEL",
-  "decision": "IMPLEMENTATION_CANDIDATE_PENDING_REPOSITORY_ACCEPTANCE",
+  "decision": "BOUNDED_MIXED_BOUNDARY_MULTICUT_MONOTONE_COMPOSITION_ESTABLISHED",
   "authority": {
     "root_producer": "PRESERVED_V48_FULL_SOURCE_MIXED_ROOT_ACCOUNTING",
     "representation": "UNCHANGED_PARENT_COORDINATE_INDEPENDENT_BOUNDARY_PAIR",
@@ -27,6 +27,11 @@
     "research/machining-completeness/tasks/MC-038/pb00701_algebraic_monotone_cut_certificate.py": "f98e0e4f506f9b4c5eb247eca4f5a142caa3c4b6",
     "research/machining-completeness/tasks/MC-038/pb00701_mixed_orientation_roots_model.py": "22ddac25d318082178ba28bee77b5b8021c80734",
     "research/machining-completeness/tasks/MC-038/pb00701_mixed_orientation_consumer.py": "ad14933591ec6caea1ee28431252381015a7edd7"
+  },
+  "implementation_git_blob_pins": {
+    "pb00701_mixed_boundary_model.py": "4c4c9697b2237790d2e7ac8b96ec1dcdf2398303",
+    "pb00701_mixed_multicut_model.py": "d7a0c35dee39514c4d49b91739c01f57866a0bf5",
+    "pb00701_mixed_multicut_certificate.py": "0d6acd3259346be863e9c40a039f694b1b750c71"
   },
   "phase_cut_family": "V34_DIAGONAL_BOUNDARIES_MINUS_3_16_MINUS_1_16_PLUS_K_OVER_2",
   "partition_scope": "FINITE_SOURCE_ORIENTATION_ROOTS_PLUS_EXPLICIT_PHASE_BOUNDARIES",
@@ -69,11 +74,19 @@
     "native_campaign_run": false, "paid_campaign_run": false,
     "production_authorized": false, "expensive_execution_authorized": false
   },
-  "validation_state": {
-    "local_core": "PASSED_AGAINST_TWO_BYTE_PINNED_REPOSITORY_MODULES",
-    "repository_integration": "NOT_RUN", "github_pr_checks": "NOT_RUN",
-    "merged_main_checks": "NOT_RUN", "issue_acceptance": "NOT_ESTABLISHED"
+  "initial_repository_evidence": {
+    "checked_head": "acabfbce7edb63864ae32b19ab849f67d0a7cb43",
+    "checked_tree": "9454e1f271427dbb6f63996b749abf8bfc4031e9",
+    "focused_run": 36938994942,
+    "static_run": 36938994888,
+    "conclusion": "SUCCESS",
+    "core_test_methods": 14,
+    "integration_test_methods": 11,
+    "complete_predecessor_residual_executed": true,
+    "implementation_repair_required": false
   },
+  "landing_policy": "EXACT_FINAL_HEAD_AND_INDEPENDENT_MERGED_MAIN_REQUIRED",
+  "landing_evidence_owner": "MC-038_ISSUE_263_ACCEPTANCE_LEDGER",
   "unsupported": [
     "GENERAL_NONMONOTONE_COUPLED_ZERO_ISOLATION",
     "NONCOMMENSURATE_OR_INDEPENDENT_PHASE_LAWS",

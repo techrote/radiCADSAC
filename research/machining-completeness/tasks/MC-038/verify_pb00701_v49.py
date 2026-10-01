@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """V49 scope/pin contract and full-repository acceptance entrypoint.
 
---self-test runs the ACTUAL historical source stack, not offline substitutes.
-The provisional artifact truthfully remains pre-landing; reconcile it only
-once repository integration/CI evidence has actually been obtained.
+--self-test executes the actual historical source stack, never substitutes.
+Initial repository evidence is a pinned past checkpoint, not a claim that an
+untested future head or merge passes. Final landing evidence lives on #263.
 """
 import argparse
 import ast
@@ -33,12 +33,22 @@ PINS = {
  PREFIX+'MC-038/pb00701_mixed_orientation_roots_model.py': '22ddac25d318082178ba28bee77b5b8021c80734',
  PREFIX+'MC-038/pb00701_mixed_orientation_consumer.py': 'ad14933591ec6caea1ee28431252381015a7edd7',
 }
+IMPLEMENTATION_PINS = {
+ 'pb00701_mixed_boundary_model.py': '4c4c9697b2237790d2e7ac8b96ec1dcdf2398303',
+ 'pb00701_mixed_multicut_model.py': 'd7a0c35dee39514c4d49b91739c01f57866a0bf5',
+ 'pb00701_mixed_multicut_certificate.py': '0d6acd3259346be863e9c40a039f694b1b750c71',
+}
+INITIAL_EVIDENCE = {
+ 'checked_head': 'acabfbce7edb63864ae32b19ab849f67d0a7cb43',
+ 'checked_tree': '9454e1f271427dbb6f63996b749abf8bfc4031e9',
+ 'focused_run': 36938994942, 'static_run': 36938994888, 'conclusion': 'SUCCESS',
+ 'core_test_methods': 14, 'integration_test_methods': 11,
+ 'complete_predecessor_residual_executed': True, 'implementation_repair_required': False,
+}
 CONTROLS = {'rational_phase_cut_coincidence', 'distinct_conjugates_and_minimal_polynomials', 'multiple_root_strict_derivative_contradiction', 'unknown_source_and_nonexact_rejection', 'source_field_partition_derivative_endpoint_corruption', 'zero_open_external_endpoint_outcomes', 'historical_success_precedence', 'internal_physical_root_once', 'genuine_complete_v48_residual', 'uniform_phase_containment_and_exact_floor', 'both_phase_directions', 'overlap_is_not_root_equality', 'exact_mixed_source_partition', 'strict_margin_equality_and_neighbors', 'all_physical_derivative_channels', 'finite_checker_no_route_or_endpoint_sign_search', 'exact_resource_refusal', 'boundary_local_sturm_one_sided_jets', 'original_parent_coordinate_chain_rule', 'full_source_counts_and_multiplicities', 'no_false_capability_promotion', 'frozen_26_operations'}
 EFFECT = {'PB-007-01': 'OPEN', 'PB-007-02': 'OPEN_DEPENDENT_ON_PB-007-01', 'PB-007-03': 'OPEN', 'PB-007-04': 'OPEN_PROPAGATED', 'PO-04': 'OPEN', 'PO-05': 'OPEN', 'PO-08': 'OPEN', 'MC-B': 'NOT_ESTABLISHED', 'MC-1': 'NOT_ESTABLISHED', 'domain_operation_count': 26, 'domain_narrowed': False}
 PROTECTED = {'durable_body_lineage', 'canonical_journal', 'exact_time_path_phase', 'source_uncertainty', 'cutter_holder_access', 'source_audio_provenance', 'conventional_step', 'positive_volume_material', 'refusal_uncertified'}
 AUTHORITY = {'root_producer': 'PRESERVED_V48_FULL_SOURCE_MIXED_ROOT_ACCOUNTING', 'representation': 'UNCHANGED_PARENT_COORDINATE_INDEPENDENT_BOUNDARY_PAIR', 'polynomial': 'RATIONAL_STURM_WITH_BOUNDARY_LOCAL_ONE_SIDED_JETS', 'derivative': 'PRESERVED_V42_V43_COMPLETE_STRICT_ORTHANT_INEQUALITIES', 'external_and_rational_endpoint': 'PRESERVED_V19_V6_RATIONAL_TURN', 'irrational_endpoint': 'PRESERVED_V46_SOURCE_BOUND_ENDPOINT_CHECKER', 'composition': 'SOURCE_VALIDATION_THEN_PRESERVED_V27_COMPOSER'}
-MODEL_FILES = ('pb00701_mixed_boundary_model.py', 'pb00701_mixed_multicut_model.py',
-               'pb00701_mixed_multicut_certificate.py')
 FALSE_FLAGS = ('compositum_claimed', 'normalized_mixed_field_maps_claimed',
                'general_nonmonotone_solver_claimed', 'caller_metadata_trusted',
                'resource_refusal_is_truth', 'unknown_source_fields_stripped',
@@ -59,11 +69,15 @@ def same(x, y):
 
 
 def contract(data, check_repo=True):
-    assert data['schema'] == 'radicadsac-mc038-pb00701-mixed-boundary-multicut/49.0'
+    assert data['schema'] == 'radicadsac-mc038-pb00701-mixed-boundary-multicut/49.1'
     assert data['task'] == 'MC-038' and type(data['corrective_issue']) is int and data['corrective_issue'] == 263
     assert data['source_baseline'] == BASE and data['evidence_class'] == 'DETERMINISTIC_MODEL'
-    assert data['decision'] == 'IMPLEMENTATION_CANDIDATE_PENDING_REPOSITORY_ACCEPTANCE'
+    assert data['decision'] == 'BOUNDED_MIXED_BOUNDARY_MULTICUT_MONOTONE_COMPOSITION_ESTABLISHED'
     assert same(data['authority'], AUTHORITY) and same(data['historical_git_blob_pins'], PINS)
+    assert same(data['implementation_git_blob_pins'], IMPLEMENTATION_PINS)
+    assert same(data['initial_repository_evidence'], INITIAL_EVIDENCE)
+    assert data['landing_policy'] == 'EXACT_FINAL_HEAD_AND_INDEPENDENT_MERGED_MAIN_REQUIRED'
+    assert data['landing_evidence_owner'] == 'MC-038_ISSUE_263_ACCEPTANCE_LEDGER'
     assert set(data['boundary_controls']) == CONTROLS and len(data['boundary_controls']) == len(CONTROLS)
     assert data['phase_cut_family'] == 'V34_DIAGONAL_BOUNDARIES_MINUS_3_16_MINUS_1_16_PLUS_K_OVER_2'
     assert data['partition_scope'] == 'FINITE_SOURCE_ORIENTATION_ROOTS_PLUS_EXPLICIT_PHASE_BOUNDARIES'
@@ -74,10 +88,6 @@ def contract(data, check_repo=True):
     assert same(data['programme_effect'], EFFECT)
     assert same(data['resources'], {'native_campaign_run':False, 'paid_campaign_run':False,
                                     'production_authorized':False, 'expensive_execution_authorized':False})
-    assert data['validation_state'] == {
-        'local_core':'PASSED_AGAINST_TWO_BYTE_PINNED_REPOSITORY_MODULES',
-        'repository_integration':'NOT_RUN', 'github_pr_checks':'NOT_RUN',
-        'merged_main_checks':'NOT_RUN', 'issue_acceptance':'NOT_ESTABLISHED'}
     assert data['unsupported'] == ['GENERAL_NONMONOTONE_COUPLED_ZERO_ISOLATION',
                                    'NONCOMMENSURATE_OR_INDEPENDENT_PHASE_LAWS',
                                    'HEURISTIC_OR_UNBOUNDED_PARTITION_SEARCH',
@@ -86,6 +96,8 @@ def contract(data, check_repo=True):
         return
     for path, sha in PINS.items():
         assert blob(ROOT / path) == sha, 'historical source changed: ' + path
+    for path, sha in IMPLEMENTATION_PINS.items():
+        assert blob(TASK / path) == sha, 'checked implementation changed: ' + path
     domain = load(MC / 'tasks/MC-002/domain-contract-v1.json')
     assert len(domain['coverage_rule']['required_operation_ids']) == 26
     programme = load(MC / 'programme-v1.json')
@@ -99,7 +111,7 @@ def contract(data, check_repo=True):
         text = path.read_text(encoding='utf-8').lower()
         for token in ('sturm', 'multi-cut', 'not_established', '26 operations'):
             assert token in text, (str(path), token)
-    for filename in MODEL_FILES:
+    for filename in IMPLEMENTATION_PINS:
         for node in ast.walk(ast.parse((TASK / filename).read_text(encoding='utf-8'))):
             if isinstance(node, ast.Constant):
                 assert not isinstance(node.value, float), 'floating proof constant'
@@ -136,7 +148,10 @@ def self_test():
     for key, value in (('MC-B', 'ESTABLISHED'), ('domain_operation_count', 25), ('domain_narrowed', 0)):
         bad = copy.deepcopy(data); bad['programme_effect'][key] = value
         rejected(lambda: contract(bad, False))
-    bad = copy.deepcopy(data); bad['historical_git_blob_pins'][next(iter(PINS))] = '0' * 40
+    for key in ('historical_git_blob_pins', 'implementation_git_blob_pins'):
+        bad = copy.deepcopy(data); bad[key][next(iter(bad[key]))] = '0' * 40
+        rejected(lambda: contract(bad, False))
+    bad = copy.deepcopy(data); bad['initial_repository_evidence']['integration_test_methods'] = 0
     rejected(lambda: contract(bad, False))
     bad = copy.deepcopy(data); bad['corrective_issue'] = True
     rejected(lambda: contract(bad, False))
@@ -144,7 +159,7 @@ def self_test():
     rejected(lambda: contract(bad, False))
     subprocess.run([sys.executable, str(TASK / 'verify_pb00701_v48.py'), '--contract'], check=True)
     subprocess.run([sys.executable, str(TASK / 'verify_pb00701_v47.py'), '--contract'], check=True)
-    print('PB-007-01 v49 mixed-boundary runtime self-test: PASS; landing still requires exact-head CI')
+    print('PB-007-01 v49 mixed-boundary actual-repository self-test: PASS')
 
 
 def main():
