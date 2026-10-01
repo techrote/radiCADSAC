@@ -1,0 +1,92 @@
+{
+  "schema": "radicadsac-mc038-pb00701-algebraic-endpoint/46.0",
+  "task": "MC-038",
+  "corrective_issue": 257,
+  "source_baseline": "e5efc6e441483b2ba594928b84aaa76cc7af1dc3",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "decision": "EXACT_ALGEBRAIC_IRRATIONAL_ENDPOINT_DECISION_ESTABLISHED",
+  "authority": {
+    "equality": "GELFOND_SCHNEIDER_ALGEBRAIC_COEFFICIENT_LAURENT_ZERO_TEST",
+    "multiplicity": "MINIMUM_FINITE_SOURCE_AMPLITUDE_VANISHING_ORDER",
+    "sign": "RATIONAL_MACHIN_TAYLOR_LAGRANGE_LIPSCHITZ",
+    "termination": "ALGEBRAIC_NONZERO_BRANCH_PLUS_CONVERGENT_ENCLOSURES",
+    "checker": "SOURCE_REGENERATION_AND_DIRECT_FINITE_SERIES_AUDIT",
+    "source": "VERIFIED_V45_SINGLE_GENERATOR_REPRESENTATION"
+  },
+  "historical_git_blob_pins": {
+    "research/machining-completeness/tasks/MC-032/event_engine.py": "789a709c5141479a343035d1b7055dd4e53534e1",
+    "research/machining-completeness/tasks/MC-038/pb00701_algebraic_orientation_cut_model.py": "a56d6487963d269405ab82f3db4cce58a0165520",
+    "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py": "c055e7f392a921b386a1a99cc70b5004121ae7f6",
+    "research/machining-completeness/tasks/MC-038/test_pb00701_algebraic_child_map_integration.py": "13792a40ae3c8f2e7484743938972812541bc0cb",
+    "research/machining-completeness/tasks/MC-038/pb00701-algebraic-child-map-v45.json": "b0a8424f0416dbbdd409f742cce8feec2f7cfb70"
+  },
+  "boundary_controls": [
+    "genuine_v44_endpoint_not_whole_span",
+    "finite_Laurent_equality",
+    "physical_minimum_jet_multiplicity",
+    "odd_even_unequal_orders",
+    "identity_no_refinement",
+    "Machin_branch_and_alternating_remainder",
+    "Taylor_Lagrange_Lipschitz_enclosures",
+    "nonzero_then_terminating_refinement",
+    "independent_finite_certificate_check",
+    "non_anchor_and_harmonic_zero_retained",
+    "near_cancellation_exact_straddles",
+    "nonzero_source_scaling",
+    "distinct_real_embeddings",
+    "both_phase_rate_directions",
+    "nonunit_source_intervals",
+    "shared_child_endpoint_jet_compatibility",
+    "event_neutral_orientation_cut",
+    "source_field_phase_Laurent_jet_mutations",
+    "enclosure_and_remainder_mutations",
+    "unknown_source_fields_preserve_rejection",
+    "binary_float_rejection",
+    "resource_refusal_at_each_stage",
+    "predecessor_success_not_relabelled",
+    "historical_pins",
+    "frozen_26_operation_coverage",
+    "false_MC_B_promotion_rejection"
+  ],
+  "whole_span_certified": false,
+  "analytic_cut_consumed": false,
+  "caller_metadata_trusted": false,
+  "resource_refusal_is_truth": false,
+  "unknown_source_fields_stripped": false,
+  "unsupported": [
+    "WHOLE_CHILD_ROOT_ISOLATION",
+    "FULL_MULTI_CUT_ANALYTIC_COMPOSITION",
+    "NONCOMMENSURATE_OR_INDEPENDENT_PHASE_LAWS"
+  ],
+  "protected_semantics": {
+    "source_audio_provenance": true,
+    "canonical_journal": true,
+    "exact_time_path_phase": true,
+    "source_uncertainty": true,
+    "positive_volume_material": true,
+    "cutter_holder_access": true,
+    "durable_body_lineage": true,
+    "refusal_uncertified": true,
+    "conventional_step": true
+  },
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "next_repair": "Exact whole-closed-child derivative/root authority over algebraic source intervals followed by exact event composition; do not retry MC-B."
+}
