@@ -469,7 +469,11 @@ BLOCKED/refusal outcome. No algebraic child is fed to a rational-only classifier
     statuses = {r["representation"]["status"] for r in representations}
     status = ("RESOURCE_REFUSAL" if "RESOURCE_REFUSAL" in statuses else
               "REPRESENTATION_CERTIFIED" if statuses == {"REPRESENTATION_CERTIFIED"} else
-              "BLOCKED" if representations else "NOT_APPLICABLE")
+              "BLOCKED" if representations else
+              "NOT_APPLICABLE" if baseline.get("status") == "CERTIFIED" else
+              baseline.get("status", "BLOCKED"))
+    if baseline.get("status") in ("RESOURCE_REFUSAL", "SEMANTIC_BLOCKER"):
+        status = baseline["status"]
     return {
         "status": status, "relation": V45_RELATION,
         "predecessor_event_result": baseline, "span_representations": representations,

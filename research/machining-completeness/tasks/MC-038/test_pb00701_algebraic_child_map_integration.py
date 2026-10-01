@@ -37,9 +37,18 @@ class SourceIntegrationTests(unittest.TestCase):
                     self.assertTrue(child['exact_polynomial_roundtrip'])
         forged = copy.deepcopy(source)
         forged.update({'algebraic_child_maps': {'status': 'CERTIFIED'},
-                       'v45_child_representation': {'root_count': 0},
                        'algebraic_endpoint_signs': ['ZERO'], 'algebraic_roots': ['1/2']})
         self.assertEqual(m.represent_required_event_children(forged), result)
+        # Unknown v45 claim fields are rejected by the historical source grammar,
+        # not stripped to manufacture a clean source. Preserve that exact refusal.
+        forged['v45_child_representation'] = {'root_count': 0}
+        rejected = v44.classify_required_analytic_event(forged)
+        self.assertNotEqual(rejected['status'], 'CERTIFIED')
+        rejection = m.represent_required_event_children(forged)
+        self.assertEqual(rejection['predecessor_event_result'], rejected)
+        self.assertEqual(rejection['status'], rejected['status'])
+        self.assertEqual(rejection['span_representations'], [])
+        self.assertFalse(rejection['analytic_cut_consumed'])
 
     def test_actual_common_root_even_multiplicity_and_phase_rates(self):
         for poly in ([-1, 0, 2], [1, 0, -4, 0, 4]):
