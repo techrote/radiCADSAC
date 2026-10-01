@@ -1,0 +1,83 @@
+{
+  "schema": "radicadsac-mc038-pb00701-mixed-boundary-multicut/49.0",
+  "task": "MC-038",
+  "corrective_issue": 263,
+  "source_baseline": "d13d1e24d13f087a999a68228c200136d9aedf79",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "decision": "IMPLEMENTATION_CANDIDATE_PENDING_REPOSITORY_ACCEPTANCE",
+  "authority": {
+    "root_producer": "PRESERVED_V48_FULL_SOURCE_MIXED_ROOT_ACCOUNTING",
+    "representation": "UNCHANGED_PARENT_COORDINATE_INDEPENDENT_BOUNDARY_PAIR",
+    "polynomial": "RATIONAL_STURM_WITH_BOUNDARY_LOCAL_ONE_SIDED_JETS",
+    "derivative": "PRESERVED_V42_V43_COMPLETE_STRICT_ORTHANT_INEQUALITIES",
+    "external_and_rational_endpoint": "PRESERVED_V19_V6_RATIONAL_TURN",
+    "irrational_endpoint": "PRESERVED_V46_SOURCE_BOUND_ENDPOINT_CHECKER",
+    "composition": "SOURCE_VALIDATION_THEN_PRESERVED_V27_COMPOSER"
+  },
+  "historical_git_blob_pins": {
+    "research/machining-completeness/tasks/MC-032/event_engine.py": "789a709c5141479a343035d1b7055dd4e53534e1",
+    "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py": "c055e7f392a921b386a1a99cc70b5004121ae7f6",
+    "research/machining-completeness/tasks/MC-038/pb00701_algebraic_endpoint_model.py": "77c18cb5c8c0700072c65969c973e8f3c4c12a99",
+    "research/machining-completeness/tasks/MC-038/pb00701_algebraic_endpoint_certificate.py": "92258bbad7fa4cfa1be5413a7253369e73abc318",
+    "research/machining-completeness/tasks/MC-038/pb00701_algebraic_orientation_cut_model.py": "a56d6487963d269405ab82f3db4cce58a0165520",
+    "research/machining-completeness/tasks/MC-038/pb00701_orientation_root_partition_model.py": "2f96622b5c69655279d66fe2b36f8f3e03414660",
+    "research/machining-completeness/tasks/MC-038/pb00701_phase_sector_partition_model.py": "6211e658621af7100c2509dcafdaeaf348e48d46",
+    "research/machining-completeness/tasks/MC-038/pb00701_algebraic_interval_model.py": "859cb6ee600486198f53bfcc9660e2b482bb54d0",
+    "research/machining-completeness/tasks/MC-038/pb00701_algebraic_monotone_cut_model.py": "07b092f9c7df8b3325c2b15d17ca7abe9781cb10",
+    "research/machining-completeness/tasks/MC-038/pb00701_algebraic_monotone_cut_certificate.py": "f98e0e4f506f9b4c5eb247eca4f5a142caa3c4b6",
+    "research/machining-completeness/tasks/MC-038/pb00701_mixed_orientation_roots_model.py": "22ddac25d318082178ba28bee77b5b8021c80734",
+    "research/machining-completeness/tasks/MC-038/pb00701_mixed_orientation_consumer.py": "ad14933591ec6caea1ee28431252381015a7edd7"
+  },
+  "phase_cut_family": "V34_DIAGONAL_BOUNDARIES_MINUS_3_16_MINUS_1_16_PLUS_K_OVER_2",
+  "partition_scope": "FINITE_SOURCE_ORIENTATION_ROOTS_PLUS_EXPLICIT_PHASE_BOUNDARIES",
+  "compositum_claimed": false,
+  "normalized_mixed_field_maps_claimed": false,
+  "general_nonmonotone_solver_claimed": false,
+  "caller_metadata_trusted": false,
+  "resource_refusal_is_truth": false,
+  "unknown_source_fields_stripped": false,
+  "historical_source_mutated": false,
+  "native_geometry_claimed": false,
+  "boundary_controls": [
+    "genuine_complete_v48_residual", "exact_mixed_source_partition",
+    "rational_phase_cut_coincidence", "full_source_counts_and_multiplicities",
+    "distinct_conjugates_and_minimal_polynomials", "overlap_is_not_root_equality",
+    "boundary_local_sturm_one_sided_jets", "strict_margin_equality_and_neighbors",
+    "uniform_phase_containment_and_exact_floor", "all_physical_derivative_channels",
+    "original_parent_coordinate_chain_rule", "both_phase_directions",
+    "zero_open_external_endpoint_outcomes", "internal_physical_root_once",
+    "multiple_root_strict_derivative_contradiction",
+    "source_field_partition_derivative_endpoint_corruption",
+    "finite_checker_no_route_or_endpoint_sign_search",
+    "unknown_source_and_nonexact_rejection", "exact_resource_refusal",
+    "historical_success_precedence", "frozen_26_operations", "no_false_capability_promotion"
+  ],
+  "protected_semantics": {
+    "source_audio_provenance": true, "canonical_journal": true,
+    "exact_time_path_phase": true, "source_uncertainty": true,
+    "positive_volume_material": true, "cutter_holder_access": true,
+    "durable_body_lineage": true, "refusal_uncertified": true, "conventional_step": true
+  },
+  "programme_effect": {
+    "PB-007-01": "OPEN", "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN", "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN", "PO-05": "OPEN", "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED", "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26, "domain_narrowed": false
+  },
+  "resources": {
+    "native_campaign_run": false, "paid_campaign_run": false,
+    "production_authorized": false, "expensive_execution_authorized": false
+  },
+  "validation_state": {
+    "local_core": "PASSED_AGAINST_TWO_BYTE_PINNED_REPOSITORY_MODULES",
+    "repository_integration": "NOT_RUN", "github_pr_checks": "NOT_RUN",
+    "merged_main_checks": "NOT_RUN", "issue_acceptance": "NOT_ESTABLISHED"
+  },
+  "unsupported": [
+    "GENERAL_NONMONOTONE_COUPLED_ZERO_ISOLATION",
+    "NONCOMMENSURATE_OR_INDEPENDENT_PHASE_LAWS",
+    "HEURISTIC_OR_UNBOUNDED_PARTITION_SEARCH",
+    "NORMALIZED_MAPS_OVER_MULTIPLE_ALGEBRAIC_GENERATORS"
+  ]
+}
