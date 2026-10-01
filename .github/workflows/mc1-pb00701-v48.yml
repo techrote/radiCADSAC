@@ -1,0 +1,35 @@
+name: mc1-pb00701-v48
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/*mixed_orientation*'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-mixed-orientation-roots-v48.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-report-v48.md'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v48.py'
+      - 'docs/machining-completeness/72-PB00701-MIXED-ROOT-REPAIR.md'
+      - '.github/workflows/mc1-pb00701-v48.yml'
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/*mixed_orientation*'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-mixed-orientation-roots-v48.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-report-v48.md'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v48.py'
+      - 'docs/machining-completeness/72-PB00701-MIXED-ROOT-REPAIR.md'
+      - '.github/workflows/mc1-pb00701-v48.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify source-root correction and preserved child proofs
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v48.py --contract --self-test
