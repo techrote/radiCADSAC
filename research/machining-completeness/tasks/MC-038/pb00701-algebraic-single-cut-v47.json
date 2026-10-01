@@ -1,0 +1,90 @@
+{
+  "schema": "radicadsac-mc038-pb00701-algebraic-single-cut/47.0",
+  "task": "MC-038",
+  "corrective_issue": 259,
+  "source_baseline": "2b67c7e6b4befff04dfc456af6afb0894aafc4e8",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "decision": "BOUNDED_CLOSED_CHILD_AND_ALGEBRAIC_SINGLE_CUT_COMPOSITION_ESTABLISHED",
+  "authority": {
+    "polynomial": "RATIONAL_STURM_WITH_EXACT_ONE_SIDED_FIELD_JETS",
+    "derivative": "V42_V43_COMPLETE_ORTHANTS_ON_CLOSED_ALGEBRAIC_CHILDREN",
+    "external_endpoint": "PRESERVED_V19_V6_RATIONAL_TURN",
+    "internal_endpoint": "VERIFIED_V46_SOURCE_BOUND_ENDPOINT",
+    "composition": "SOURCE_VALIDATION_THEN_PRESERVED_V27_TWO_CHILD_COMPOSER",
+    "representation": "VERIFIED_V45_SINGLE_GENERATOR_BISECTION"
+  },
+  "historical_git_blob_pins": {
+    "research/machining-completeness/tasks/MC-032/event_engine.py": "789a709c5141479a343035d1b7055dd4e53534e1",
+    "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py": "c055e7f392a921b386a1a99cc70b5004121ae7f6",
+    "research/machining-completeness/tasks/MC-038/pb00701_algebraic_endpoint_model.py": "77c18cb5c8c0700072c65969c973e8f3c4c12a99",
+    "research/machining-completeness/tasks/MC-038/pb00701_algebraic_endpoint_certificate.py": "92258bbad7fa4cfa1be5413a7253369e73abc318",
+    "research/machining-completeness/tasks/MC-038/pb00701_algebraic_orientation_cut_model.py": "a56d6487963d269405ab82f3db4cce58a0165520",
+    "research/machining-completeness/tasks/MC-038/pb00701_orientation_root_partition_model.py": "2f96622b5c69655279d66fe2b36f8f3e03414660",
+    "research/machining-completeness/tasks/MC-038/pb00701_phase_sector_partition_model.py": "6211e658621af7100c2509dcafdaeaf348e48d46",
+    "research/machining-completeness/tasks/MC-038/pb00701_orientation_transition_bridge_model.py": "a0930d7bfddd619bf930a51bbfa14570e2450fe5",
+    "research/machining-completeness/tasks/MC-038/pb00701_correlated_closed_handoff_model.py": "d47b8dd8fe8b4b91fd12c1e76974a5a4e85b03b2"
+  },
+  "boundary_controls": [
+    "all_derivative_channels",
+    "both_phase_directions",
+    "exact_algebraic_sturm_one_sided_jets",
+    "exact_resource_refusal",
+    "external_root_outcomes",
+    "finite_checker_no_route_or_sign_search",
+    "forged_sturm_field_map_source_phase",
+    "frozen_26_operations",
+    "genuine_predecessor_residual",
+    "global_chain_rule",
+    "historical_precedence",
+    "internal_physical_root_once",
+    "multiple_root_strict_derivative_contradiction",
+    "neutral_orientation_cut",
+    "no_false_gate_promotion",
+    "open_closed_multiplicity",
+    "strict_margin_equality_neighbors",
+    "uniform_phase_containment",
+    "unknown_source_rejection",
+    "weak_not_strict"
+  ],
+  "bounded_single_cut_consumption": true,
+  "full_multi_cut_partition": false,
+  "caller_metadata_trusted": false,
+  "resource_refusal_is_truth": false,
+  "unknown_source_fields_stripped": false,
+  "protected_semantics": {
+    "canonical_journal": true,
+    "conventional_step": true,
+    "cutter_holder_access": true,
+    "durable_body_lineage": true,
+    "exact_time_path_phase": true,
+    "positive_volume_material": true,
+    "refusal_uncertified": true,
+    "source_audio_provenance": true,
+    "source_uncertainty": true
+  },
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  },
+  "unsupported": [
+    "GENERAL_NONMONOTONE_COUPLED_ZERO_ISOLATION",
+    "FULL_MULTI_CUT_OR_MULTIGENERATOR_PARTITION",
+    "NONCOMMENSURATE_OR_INDEPENDENT_PHASE_LAWS"
+  ],
+  "next_repair": "Complete source root coverage beyond the lifted sufficient derivative family; do not retry MC-B."
+}
