@@ -1,7 +1,7 @@
 # PB-007-01 v50 — vanishing source factor product composition
 
-Status: implementation candidate for #265; actual-repository checks and landing
-are required. Evidence class: deterministic model, not native geometry.
+Status: bounded construction executed in actual repository CI; exact final-head
+and merged-main acceptance is recorded separately on #265. Evidence class: deterministic model, not native geometry.
 PB-007-01 remains OPEN; MC-B and MC-1 remain `NOT_ESTABLISHED`. The denominator
 remains 26 operations.
 
@@ -29,15 +29,30 @@ not to F. No sorted full analytic-root-list or universal solver is claimed.
 
 ## Implementation evidence and reproducibility
 
-Seven core algebra/theorem-premise methods pass locally against byte-identical
-repository MC-032/v45/v46/v49 support. The local checkout is partial and cannot
-execute the complete predecessor dependency stack. Ten actual-source integration
-methods are committed for the focused repository run; their results are not
-assumed by this report. The main test must show complete v49 BLOCKED followed by
-a checked product containing two distinct open roots, one double and one simple.
-Other tests require rational coincidences with additive multiplicity, endpoint
-roots, nearby separated roots, prior v19 carrier ownership, unchanged source
-amplitudes, negative/global transformations, refusal and certificate attacks.
+Seven core and eleven actual-source integration methods passed on head
+`f94c1eb3934e78cb832b6e1a4f8fac668e0ab0e8`, focused run **37010402407**
+and repository mc1-static **37010402361**, on Python 3.12.14 / Ubuntu 24.04.
+This supersedes the initial local-only evidence; no local arithmetic substitute
+was installed in the repository.
+
+The full source is genuinely BLOCKED by complete v49. V50 derives the monic
+factor (t^2-1/2)^2 and carrier 4H, preserves v49 carrier ownership and certifies
+two distinct open physical roots: one irrational double tangency and one
+separate simple crossing. Rational factor/carrier coincidence is counted once
+with additive multiplicity. Exterior coincidences with v19 carriers, v47/v48
+carrier preservation, nearby roots, root-free factors, genuinely blocked
+carriers, negative/global transformations and full evidence corruption pass.
+The finite checker passes while carrier/derivative selection and endpoint sign
+search entrypoints are disabled.
+
+The first focused run **37009866404** failed in the test guard's setup: it
+patched `certify_derivative` on the consumer module rather than the actual
+boundary module. The substantive source cases had passed. Correcting that guard
+to `prior.b.certify_derivative` and adding direct v47/v48 checker-owner coverage
+required no product-model or theorem change. Historical source and protected
+semantics were not weakened. These checked-head results do not pre-approve the
+subsequent documentation commit or merged main; both still require their own
+focused/static success and exact tree verification.
 
 Command: `python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v50.py --contract --self-test`.
 The full proof and exact premises are in

@@ -1,7 +1,7 @@
 # PB-007-01 v50 — vanishing source factors and certified modulated carriers
 
-Status: bounded deterministic-model candidate; actual repository acceptance and
-landing must be recorded on #265. PB-007-01 remains OPEN. MC-B and MC-1 remain
+Status: bounded deterministic-model construction, executed in repository CI.
+Verified merge acceptance and final producing identities are recorded on #265. PB-007-01 remains OPEN. MC-B and MC-1 remain
 `NOT_ESTABLISHED`; the denominator remains 26 operations.
 Reviewed base: v49 / PR #264, `eb76a34405244f842e3b10ae6d45acb22ffef973`.
 
@@ -141,13 +141,15 @@ exact root separation/minimal-field authority provides root/sign termination.
 
 ## Witness and verification
 
-The proposed main fixture multiplies EVERY amplitude of the accepted v49
+The executed main fixture multiplies EVERY amplitude of the accepted v49
 A=t^2-t+469/2500, B=t/2-1/4 carrier by (2*t^2-1)^2. Its GCD is monic
 (t^2-1/2)^2, so H is four times the original carrier. Actual repository tests
-must demonstrate complete v49 remains BLOCKED on F, the delegated H remains
-v49-owned, and the checked product has an irrational double factor root plus
-a disjoint simple carrier root. These are acceptance assertions, not a substitute
-for executing the repository suite.
+demonstrate complete v49 remains BLOCKED on F, the delegated H remains v49-owned,
+and the checked product has an irrational double factor root plus a disjoint
+simple carrier root. Seven core and eleven source-integration methods passed
+on head `f94c1eb3934e78cb832b6e1a4f8fac668e0ab0e8`: focused run
+37010402407 and repository mc1-static run 37010402361 both passed. All four
+listed carrier-checker owners are exercised without changing their old results.
 
 Controls cover simple/odd/even factors, rational coincidences, exterior additive
 multiplicity with an older v19 carrier, exact near-root separation, root-free
@@ -161,7 +163,16 @@ Reproduce with:
 Required final-head focused and mc1-static CI precede expected-head merge;
 independent merged-main checks precede explicit #265 disposition. Local core
 checks are not full-source repository acceptance. The issue acceptance ledger
-records final heads, trees and runs when available.
+records final heads, trees and independent post-merge runs. This documentation
+checkpoint does not assume later final-head or merged-main checks pass.
+
+The first focused run 37009866404 reached and passed the substantive source
+cases but failed when its no-replacement-search guard targeted a nonexistent
+function on the consumer instead of the actual boundary module. The guard now
+disables the real `prior.b.certify_derivative` entrypoint, and the finite checker
+still passes with carrier selection, derivative selection and endpoint sign
+search disabled. V47/v48 checker-owner regressions were added. No implementation
+predicate, physical fixture or mathematical acceptance boundary was relaxed.
 
 ## Programme implications and remaining work
 
