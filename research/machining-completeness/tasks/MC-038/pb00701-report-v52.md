@@ -40,51 +40,88 @@ classifiers, derivative selection and irrational sign searches are disabled in
 its tests. Exact resource failures remain non-truth; unrelated exceptions
 propagate. The separately retained predecessor envelope is not new truth evidence.
 
-## Hypothesis, candidate and falsification
+## Hypothesis, executed candidate and falsification
 
 The candidate comprises two real B-spline pieces on global [0,2], phase u/4.
 Each carrier has local polynomial `t-1/2`, cosine harmonic one amplitude 1/100,
 and sine harmonic two amplitude 1/200. Left/right physical factors are
 `(t-1)^2*(2*t^2-1)^2` and `t^3*(2*t^2-1)^2`, applied to EVERY amplitude.
 
-Expected after actual execution: each span retains v19-owned strict carrier plus
-v50/v51 product evidence, and the global source has five distinct open roots.
-The knot u=1 should count once, with local orders [2,3] and opposite neighborhood
-signs. Negating only the right source piece should give a tangency with the SAME
-orders. The main expected sign cells are NEGATIVE/POSITIVE/POSITIVE/NEGATIVE/
-POSITIVE/POSITIVE. The tests execute complete predecessors before accepting
-these outcomes; this report does not substitute expectations for execution.
+This actual source has now executed successfully in the repository. Both pieces
+retain v19-owned strict carrier and unchanged v50/v51 product evidence. V52
+certifies five distinct OPEN roots. The knot u=1 counts once, with one-sided
+orders [2,3], opposite neighborhood signs and no invented global analytic
+multiplicity. Negating only the right piece preserves those orders but makes the
+knot a tangency. The main six maximal sign cells have signs
+NEGATIVE/POSITIVE/POSITIVE/NEGATIVE/POSITIVE/POSITIVE.
 
 Decisive failures include an unqualified span, forged lowering/source/control
 binding, matching signs accepted as physical equality, a missed/duplicated knot
 root, sum-of-orders reported as analytic multiplicity, incorrect nonzero bridge
 coverage, replacement proof search in the checker, altered old results, or a
-resource limit becoming successful evidence.
+resource limit becoming successful evidence. Tests explicitly challenge these
+conditions; successful counts alone are not the acceptance rule.
 
-## Tests and reproducibility
+## Actual repository execution checkpoint
+
+Implementation head `639c87ff710663e267ff2399f1b9cc8f355b9733` passed focused
+**37021963532** and repository `mc1-static` **37021963708** on the first attempt.
+The focused log (job **110887010209**) confirms exact-head checkout and PASS for
+all six new source/core tests and twelve new actual-source integration methods.
+It also executes the full preserved v51/v50 regression: seven v51 core, thirteen
+v51 integration, seven v50 core and eleven v50 integration methods, with inherited
+v48/v49 contracts. No test or mathematical predicate was weakened to obtain green.
+
+The new core/integration groups reported 0.052 / 10.301 seconds on Ubuntu 24.04.5
+and CPython 3.12.14. These are model execution observations, not native geometry
+qualification, performance acceptance thresholds or mathematical resource bounds.
+
+The actual integration confirms nonzero physical knot continuity from harmonic
+cancellation despite unequal amplitude limits, coalescing six elementary cells
+into five maximal cells with the knot point covered. Same-sign but unequal values,
+including the tiny positive jump control, correctly BLOCK the new global result.
+Both exterior-root orders, cropped/global/reversed sources, full source negation,
+unknown-field/Boolean/float rejection, stale proofs after visible digest updates,
+all source/span/join/root/cell corruptions, resource non-truth and unrelated
+exception propagation are covered. The finite full-source checker passes with
+source/carrier classification, derivative selection and sign searches disabled.
+
+## More than one knot and final-head acceptance
+
+After this first passing checkpoint, the verifier adds a distinct three-span
+actual-source control to falsify a possible single-join-only implementation.
+Use left/right factors as above and middle factor
+`t^3*(t-1)^2*(2*t^2-1)^2`, on global [0,3] with the same phase law and carrier
+formula. The required result is eight globally ordered roots, two distinct knot
+crossings counted once each, local orders [2,3] at both joins and nine sign cells.
+It also challenges swapped join records and repeated span witnesses, and checks
+the full original source with replacement searches disabled.
+
+These additional assertions and the reconciled report do not change the model,
+finite checker, original eighteen test methods or historical evidence. They must
+pass on the final head and independent merged-main run before #269 is closed.
+Their actual outcome and exact final head/tree/merge/run identities are recorded
+in the issue ledger rather than presumed from the earlier passing checkpoint.
+
+## Reproduction and integrity
 
 Six original-source controls independently expand Bernstein coefficients back
 to powers; check repeated knots and unioned channel partitions; different degrees;
 cropped source/global phase maps; Boolean/float/unknown-field rejection; and
-unchanged input data. Twelve actual-source integration methods cover principal
-acceptance, crossing versus tangency with equal local orders, physical harmonic
-cancellation at a nonzero join, same-sign unequal and tiny-jump blockers, both
-exterior roots, reversal/affine/cropped source, whole-source negation, classifier-
-free checking, adversarial lowering/span/knot/root/cell mutations, stale proofs
-after updating visible source digests, missing owner/single-span precedence,
-exact resources and unrelated exceptions. The complete v51 self-test (and its
-full v50 regression) is also required.
+unchanged input data. Twelve actual-source integration methods cover the cases
+above; the verifier additionally executes the three-span control and full
+preserved v51/v50 tests.
 
 ```sh
 python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v52.py --contract --self-test
 ```
 
 The editing environment has no complete local GitHub checkout; there is no claim
-of new local test execution or substituted predecessor integration. Repository
-CI is the execution authority. One pre-publication multiline test guard syntax
-error was corrected with `ExitStack` before opening a PR; assertions and theorem
-premises were unchanged. Actual attempt outcomes must be retained in the issue
-ledger, including any further required repairs.
+of new local test execution or substituted predecessor integration. The actual
+GitHub checkout produced the evidence above. One pre-publication multiline test
+guard syntax error was corrected with `ExitStack` before opening the PR; assertions
+and theorem premises were unchanged. No CI repair was required at the recorded
+checkpoint. Further attempted failures, if any, must remain in the issue ledger.
 
 The focused workflow checks the exact PR head and independently checks the merged
 main SHA after landing. Repository `mc1-static` must also pass on the final head

@@ -102,10 +102,59 @@ def rejected(fn):
     raise AssertionError('corrupt V52 contract accepted')
 
 
+def multi_knot_self_test():
+    """Additional actual-source control: three spans, two distinct zero joins.
+
+This exercises composition beyond a single join, not merely repeated execution
+of the two-span fixture or fabricated per-span event summaries.
+    """
+    from contextlib import ExitStack
+    from unittest.mock import patch
+    import pb00701_piecewise_product_model as m
+    import pb00701_piecewise_product_certificate as checker
+    import pb00701_ordered_product_model as predecessor
+    import test_pb00701_piecewise_product as core
+    common=core.power([-1,0,2],2)
+    left=core.a.pmul(core.power([-1,1],2),common)
+    middle=core.a.pmul(core.power([0,1],3),left)
+    right=core.a.pmul(core.power([0,1],3),common)
+    spec=core.encode([core.physical_piece(factor) for factor in (left,middle,right)])
+    prior=predecessor.build_ordered_source_evidence(spec)
+    assert prior['status']=='ORDERED_SOURCE_EVIDENCE_CERTIFIED',prior.get('reason')
+    result=m.build_piecewise_source_evidence(spec)
+    assert result['status']=='PIECEWISE_SOURCE_EVIDENCE_CERTIFIED',result.get('reason')
+    assert same(prior,result['predecessor_result'])
+    proof=result['certificate']
+    assert checker.validate_piecewise_certificate(proof,spec) is True
+    assert proof['source_lowering']['source_boundaries']==['0','1','2','3']
+    assert [join['one_sided_orders'] for join in proof['knot_evidence']]==[[2,3],[2,3]]
+    summary=proof['global_root_summary']
+    assert summary['distinct_roots_open']==summary['total_distinct_roots_closed']==8
+    assert (summary['crossings_open'],summary['tangencies_open'])==(5,3)
+    assert summary['source_knot_roots']==2
+    assert [cell['physical_sign'] for cell in proof['maximal_open_sign_cells']]==[-1,1,1]*3
+    assert [root['id'] for root in proof['ordered_physical_events'] if root['kind']=='SOURCE_KNOT']==['knot:0','knot:1']
+    assert len(proof['span_proofs'])==3 and len(proof['elementary_open_cells'])==9
+    bad=copy.deepcopy(proof);bad['knot_evidence'].reverse()
+    rejected(lambda:checker.validate_piecewise_certificate(bad,spec))
+    bad=copy.deepcopy(proof);bad['span_proofs'][1]=copy.deepcopy(bad['span_proofs'][0])
+    rejected(lambda:checker.validate_piecewise_certificate(bad,spec))
+    with ExitStack() as stack:
+        for module,name in ((predecessor,'build_ordered_source_evidence'),
+                            (predecessor.v50,'classify_required_analytic_event'),
+                            (predecessor.v50,'carrier_proof'),
+                            (predecessor,'_decide_factor_sign'),
+                            (predecessor.e,'_decide_endpoint')):
+            stack.enter_context(patch.object(module,name,side_effect=AssertionError('no replacement search')))
+        assert checker.validate_piecewise_certificate(proof,spec) is True
+    print('v52 THREE-SPAN ACTUAL SOURCE: eight ordered roots, two distinct knot crossings counted once each, nine sign cells: PASS')
+
+
 def self_test():
     import test_pb00701_piecewise_product as core
     import test_pb00701_piecewise_product_integration as integration
     core.run();integration.run()
+    multi_knot_self_test()
     data=load(TASK/'pb00701-piecewise-product-v52.json')
     for key,value in FLAGS.items():
         bad=copy.deepcopy(data);bad[key]=not value
