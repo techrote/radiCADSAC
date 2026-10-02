@@ -1,0 +1,33 @@
+name: mc1-pb00701-v51
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/*ordered*product*'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-report-v51.md'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v51.py'
+      - 'docs/machining-completeness/75-PB00701-ORDERED-PRODUCT.md'
+      - '.github/workflows/mc1-pb00701-v51.yml'
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/*ordered*product*'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-report-v51.md'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v51.py'
+      - 'docs/machining-completeness/75-PB00701-ORDERED-PRODUCT.md'
+      - '.github/workflows/mc1-pb00701-v51.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify ordered physical roots, exact sign cells and preserved v50
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v51.py --contract --self-test
