@@ -3,6 +3,7 @@
 from fractions import Fraction as Q
 from functools import lru_cache
 from pathlib import Path
+from contextlib import ExitStack
 import copy
 import sys
 import unittest
@@ -86,7 +87,6 @@ class PiecewiseIntegrationTests(unittest.TestCase):
         self.assertIsNone(knot['analytic_multiplicity'])
         self.assertEqual((proof['global_root_summary']['crossings_open'],proof['global_root_summary']['tangencies_open']),(2,3))
         self.assertEqual([c['physical_sign'] for c in proof['maximal_open_sign_cells']],[-1,1,1,1,-1,-1])
-        # Opposite carrier directions across a REAL source knot are legitimate.
         self.assertEqual([p['carrier_ordering']['direction']['delta'] for p in proof['span_proofs']],[1,-1])
 
     def test_nonzero_physical_continuity_by_harmonic_cancellation_coalesces(self):
@@ -161,15 +161,13 @@ class PiecewiseIntegrationTests(unittest.TestCase):
 
     def test_finite_full_source_checker_cannot_search_or_relower_from_claims(self):
         spec,_,result=acceptance();proof=result['certificate']
-        with patch.object(prior,'build_ordered_source_evidence',side_effect=AssertionError('no classifier envelope')),
-             patch.object(prior.v50,'classify_required_analytic_event',side_effect=AssertionError('no v50 classifier')),
-             patch.object(v49,'classify_required_analytic_event',side_effect=AssertionError('no v49 classifier')),
-             patch.object(v7,'classify_required_analytic_event',side_effect=AssertionError('no v7 classifier')),
-             patch.object(prior.v50,'carrier_proof',side_effect=AssertionError('no carrier selector')),
-             patch.object(v49.b,'certify_derivative',side_effect=AssertionError('no multicut selector')),
-             patch.object(v47,'certify_derivative',side_effect=AssertionError('no singlecut selector')),
-             patch.object(prior,'_decide_factor_sign',side_effect=AssertionError('no factor sign search')),
-             patch.object(prior.e,'_decide_endpoint',side_effect=AssertionError('no endpoint sign search')):
+        guards=[(prior,'build_ordered_source_evidence'),(prior.v50,'classify_required_analytic_event'),
+                (v49,'classify_required_analytic_event'),(v7,'classify_required_analytic_event'),
+                (prior.v50,'carrier_proof'),(v49.b,'certify_derivative'),(v47,'certify_derivative'),
+                (prior,'_decide_factor_sign'),(prior.e,'_decide_endpoint')]
+        with ExitStack() as stack:
+            for module,name in guards:
+                stack.enter_context(patch.object(module,name,side_effect=AssertionError('no replacement search: '+name)))
             self.assertIs(checker.validate_piecewise_certificate(proof,spec),True)
 
     def test_forged_lowering_join_orders_union_and_sign_coverage_rejected(self):
@@ -216,8 +214,6 @@ class PiecewiseIntegrationTests(unittest.TestCase):
         for changed in variants:
             with self.assertRaises((ValueError,TypeError,KeyError)):
                 checker.validate_piecewise_certificate(proof,changed)
-            # Updating the visible source and digest still cannot launder stale
-            # per-span analytic evidence into a proof for different controls.
             forged=copy.deepcopy(proof);forged['source_lowering']=m.lower_source(changed)
             forged['source_binding_sha256']=forged['source_lowering']['source_binding_sha256']
             with self.assertRaises((ValueError,TypeError,KeyError)):
