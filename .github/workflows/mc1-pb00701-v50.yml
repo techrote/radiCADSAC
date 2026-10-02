@@ -1,0 +1,35 @@
+name: mc1-pb00701-v50
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/*vanishing*source*factor*'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-vanishing-source-factor-v50.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-report-v50.md'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v50.py'
+      - 'docs/machining-completeness/74-PB00701-VANISHING-FACTOR.md'
+      - '.github/workflows/mc1-pb00701-v50.yml'
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/*vanishing*source*factor*'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-vanishing-source-factor-v50.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-report-v50.md'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v50.py'
+      - 'docs/machining-completeness/74-PB00701-VANISHING-FACTOR.md'
+      - '.github/workflows/mc1-pb00701-v50.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify physical factor-carrier root union and multiplicity
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v50.py --contract --self-test
