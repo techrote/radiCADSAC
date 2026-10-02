@@ -1,36 +1,36 @@
-name: mc1-pb00701-v53-baseline
+name: mc1-pb00701-v53
 on:
+  workflow_dispatch:
   push:
-    branches: [mc038/pb00701-v53-mixed-owner-spans]
-    paths: ['.github/workflows/mc1-pb00701-v53.yml']
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/*mixed_owner_span*'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-mixed-owner-spans-v53.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-report-v53.md'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py'
+      - 'docs/machining-completeness/78-PB00701-MIXED-OWNER-SPANS.md'
+      - '.github/workflows/mc1-pb00701-v53.yml'
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/*mixed_owner_span*'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-mixed-owner-spans-v53.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-report-v53.md'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py'
+      - 'docs/machining-completeness/78-PB00701-MIXED-OWNER-SPANS.md'
+      - '.github/workflows/mc1-pb00701-v53.yml'
 permissions:
   contents: read
 jobs:
-  baseline:
+  verify:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.sha }}
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
-      - name: Export pinned tracked source for local inspection
-        run: |
-          git archive --format=tar --output="$RUNNER_TEMP/v53-source.tar" HEAD
-          git rev-parse HEAD > "$RUNNER_TEMP/v53-source-head.txt"
-      - uses: actions/upload-artifact@v4
-        with:
-          name: v53-source-${{ github.sha }}
-          path: |
-            ${{ runner.temp }}/v53-source.tar
-            ${{ runner.temp }}/v53-source-head.txt
-          retention-days: 1
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Validate programme and read readiness
-        run: |
-          python3 tools/validate_machining_completeness.py --self-test
-          python3 tools/mc_workflow.py ready
-      - name: Execute complete unchanged v52 authority once before implementation
-        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v52.py --contract --self-test
+      - name: Verify mixed-owner original-source evidence and preserved V52 once
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py --contract --self-test
