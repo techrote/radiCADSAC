@@ -95,3 +95,12 @@ This supersedes only the v1 review's **gate-prerequisite classification** of tho
 The distinction is adversarially enforced. The MC-038 verifier now rejects either direction of corruption: falsely closing/promoting a surviving pre-gate PB/PO to force MC-B through, or reintroducing a circular requirement that post-gate MC-034..039 evidence must already exist before MC-038 can unlock those tasks. It also rejects moving native work before the gate, closing any RB-016 blocker, accepting downstream PO-03/PO-06/PO-09, changing the 26-operation denominator, laundering refusal/UNCERTIFIED into success, or weakening source/audio/provenance, canonical-journal, positive-volume, durable-body/lineage or conventional STEP semantics.
 
 With ORCH-038-02 repaired, the next dependency-ready repair is again the surviving **pre-gate proof/constructive blocker path**, beginning with `PB-007-01`. MC-038 must not be retried for acceptance until those required pre-gate claims are genuinely discharged.
+
+
+## Current implementation-state navigation note — 2 October 2026
+
+This report and `outcome.json` are preserved as the historical MC-B gate-review decision. They are not rewritten each time a bounded PB-007-01 repair lands. Since this report was authored, the versioned PB-007-01 implementation chain has advanced through verified v52 / issue #269 / PR #270, landing on authoritative `main` `59e1b5a3cf28ab3d9f4f799632c290259c284e76`.
+
+Those bounded results materially reduce the implementation gap, but they do **not** establish PB-007-01 universally and do not change this report's gate disposition: MC-B remains `NOT_ESTABLISHED`. The current dependency-ready owner is v53 / issue #271.
+
+Use [docs/machining-completeness/77-MC038-CURRENT-IMPLEMENTATION-STATE.md](../../../../docs/machining-completeness/77-MC038-CURRENT-IMPLEMENTATION-STATE.md) and `current-implementation-state-v1.json` for the reconciled current frontier, landed v41–v52 chain, latest verification checkpoint and explicit remaining boundaries. Historical per-version reports and negative results remain authoritative within their recorded scopes.

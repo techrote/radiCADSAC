@@ -2,6 +2,10 @@
 
 Status: canonical execution hierarchy for MC-1. Stable task IDs are repository authority; GitHub issue numbers are navigation bindings. A closed issue does not pass a capability gate.
 
+## Current MC-038 / PB-007 checkpoint
+
+The detailed landed implementation frontier is maintained in [77-MC038-CURRENT-IMPLEMENTATION-STATE.md](77-MC038-CURRENT-IMPLEMENTATION-STATE.md). As of 2 October 2026, v52 / #269 / PR #270 is the latest verified bounded PB-007-01 landing on authoritative `main` `59e1b5a3cf28ab3d9f4f799632c290259c284e76`; v53 / #271 is the next dependency-ready owner. PB-007-01 remains OPEN globally and MC-B / MC-1 remain `NOT_ESTABLISHED`. This checkpoint is informational and does not alter the canonical task graph or dependency semantics below.
+
 ## Milestone hierarchy
 
 - **MG-00 — Authority, evidence and execution safety**: 2 task(s).

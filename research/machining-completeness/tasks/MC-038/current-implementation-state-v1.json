@@ -1,0 +1,148 @@
+{
+  "schema": "radicadsac-mc038-current-implementation-state/1.0",
+  "as_of": "2026-10-02",
+  "authority": {
+    "main_sha": "59e1b5a3cf28ab3d9f4f799632c290259c284e76",
+    "mc_b": "NOT_ESTABLISHED",
+    "mc_1": "NOT_ESTABLISHED",
+    "mc038_issue": 100,
+    "required_operation_count": 26,
+    "production_authorized": false
+  },
+  "pb007": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT",
+    "PB-007-03": "OPEN_PROPAGATED",
+    "PB-007-04": "OPEN_PROPAGATED"
+  },
+  "latest_verified_landing": {
+    "version": 52,
+    "issue": 269,
+    "pull_request": 270,
+    "pr_head": "78eeda72d5b659e852d056a0f838480af651622c",
+    "merge_sha": "59e1b5a3cf28ab3d9f4f799632c290259c284e76",
+    "tree_sha": "eeedc9dad93fcd1183a85616320d1d0fef9a5097",
+    "final_head_runs": {
+      "focused": 37022722397,
+      "static": 37022722239
+    },
+    "merged_main_runs": {
+      "focused": 37023385179,
+      "static": 37023385288
+    },
+    "scope": "EXACT_CONTINUOUS_CROSS_SPLINE_ROOT_AND_SIGN_CELL_COMPOSITION_FOR_CHECKED_PRODUCT_SPANS"
+  },
+  "landed_chain": [
+    {
+      "version": 41,
+      "issue": 245,
+      "pr": 252,
+      "state": "COMPLETED",
+      "scope": "orientation-root partition and composition on complete v43 authority"
+    },
+    {
+      "version": 42,
+      "issue": 247,
+      "pr": 248,
+      "state": "COMPLETED",
+      "scope": "orientation-transition derivative bridge"
+    },
+    {
+      "version": 43,
+      "issue": 250,
+      "pr": 251,
+      "state": "COMPLETED",
+      "scope": "correlated closed-handoff derivative certificate"
+    },
+    {
+      "version": 44,
+      "issue": 253,
+      "pr": 254,
+      "state": "COMPLETED",
+      "scope": "algebraic orientation-cut coordinate boundary"
+    },
+    {
+      "version": 45,
+      "issue": 255,
+      "pr": 256,
+      "state": "COMPLETED",
+      "scope": "real-algebraic child-map representation"
+    },
+    {
+      "version": 46,
+      "issue": 257,
+      "pr": 258,
+      "state": "COMPLETED",
+      "scope": "algebraic-irrational endpoint equality sign and multiplicity"
+    },
+    {
+      "version": 47,
+      "issue": 259,
+      "pr": 260,
+      "state": "COMPLETED",
+      "scope": "algebraic closed-child monotonicity and single-cut composition"
+    },
+    {
+      "version": 48,
+      "issue": 261,
+      "pr": 262,
+      "state": "COMPLETED",
+      "scope": "mixed rational/algebraic root isolation repair"
+    },
+    {
+      "version": 49,
+      "issue": 263,
+      "pr": 264,
+      "state": "COMPLETED",
+      "scope": "mixed-boundary multi-cut monotone composition"
+    },
+    {
+      "version": 50,
+      "issue": 265,
+      "pr": 266,
+      "state": "COMPLETED",
+      "scope": "vanishing common-source factors with checked modulated carriers"
+    },
+    {
+      "version": 51,
+      "issue": 267,
+      "pr": 268,
+      "state": "COMPLETED",
+      "scope": "ordered product-root union and physical sign cells"
+    },
+    {
+      "version": 52,
+      "issue": 269,
+      "pr": 270,
+      "state": "COMPLETED",
+      "scope": "continuous cross-spline composition from original B-spline source"
+    }
+  ],
+  "active_frontier": {
+    "version": 53,
+    "issue": 271,
+    "state": "OPEN",
+    "title": "exact mixed-owner continuous spline-span composition",
+    "pull_request": null,
+    "ownership_gap": "strict/simple spans from v19/v47/v48/v49 lack the ordered-span view required to compose with v51 product spans"
+  },
+  "directly_relevant_open_proof_obligations": [
+    "PO-02",
+    "PO-04",
+    "PO-05",
+    "PO-07",
+    "PO-08"
+  ],
+  "unresolved": [
+    "general noncommon-factor/nonmonotone analytic event coverage",
+    "unsupported carrier owners or multiplicity structures",
+    "arithmetic on implicit analytic root coordinates beyond checked ordering/brackets",
+    "discontinuous source-knot point-value policy",
+    "general PB-007-02 coupled phase/motion coverage",
+    "general PB-007-03 source/codec coverage",
+    "general PB-007-04 topology/connectivity coverage",
+    "native material/topology/reconstruction/STEP/consumer/scale qualification"
+  ],
+  "historical_files_are_not_superseded": true,
+  "note": "This snapshot is navigation/current-state metadata, not gate acceptance authority. Closed bounded child issues do not close PB-007-01 globally."
+}
