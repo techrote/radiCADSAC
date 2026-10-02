@@ -2,7 +2,7 @@
   "schema": "radicadsac-mc038-current-implementation-state/1.0",
   "as_of": "2026-10-02",
   "authority": {
-    "main_sha": "59e1b5a3cf28ab3d9f4f799632c290259c284e76",
+    "main_sha": "a13702b28fcc349442e78cfb1e971eb94991a69e",
     "mc_b": "NOT_ESTABLISHED",
     "mc_1": "NOT_ESTABLISHED",
     "mc038_issue": 100,
@@ -16,21 +16,22 @@
     "PB-007-04": "OPEN_PROPAGATED"
   },
   "latest_verified_landing": {
-    "version": 52,
-    "issue": 269,
-    "pull_request": 270,
-    "pr_head": "78eeda72d5b659e852d056a0f838480af651622c",
-    "merge_sha": "59e1b5a3cf28ab3d9f4f799632c290259c284e76",
-    "tree_sha": "eeedc9dad93fcd1183a85616320d1d0fef9a5097",
+    "version": 53,
+    "issue": 271,
+    "pull_request": 273,
+    "pr_head": "e4d5646fd3b16e0f152c70fd817904df74426a8b",
+    "merge_sha": "a13702b28fcc349442e78cfb1e971eb94991a69e",
+    "direct_parent_sha": "7126dabf013ef95b0965b74008466e12f0650ef8",
+    "tree_sha": "17fe7642600b12edd573e21b57933e5811cea991",
     "final_head_runs": {
-      "focused": 37022722397,
-      "static": 37022722239
+      "focused": 37040746459,
+      "static": 37040746380
     },
     "merged_main_runs": {
-      "focused": 37023385179,
-      "static": 37023385288
+      "focused": 37041568030,
+      "static": 37041567973
     },
-    "scope": "EXACT_CONTINUOUS_CROSS_SPLINE_ROOT_AND_SIGN_CELL_COMPOSITION_FOR_CHECKED_PRODUCT_SPANS"
+    "scope": "EXACT_CONTINUOUS_MIXED_V51_PRODUCT_AND_STRICT_OWNER_SPAN_ROOT_AND_SIGN_CELL_COMPOSITION_FROM_ORIGINAL_BSPLINE_SOURCE"
   },
   "landed_chain": [
     {
@@ -116,15 +117,24 @@
       "pr": 270,
       "state": "COMPLETED",
       "scope": "continuous cross-spline composition from original B-spline source"
+    },
+    {
+      "version": 53,
+      "issue": 271,
+      "pr": 273,
+      "state": "COMPLETED",
+      "scope": "mixed V51 product and strict v19/v47/v48/v49 continuous span composition from original B-spline source"
     }
   ],
   "active_frontier": {
     "version": 53,
     "issue": 271,
-    "state": "OPEN",
+    "state": "COMPLETED_NO_SUCCESSOR_SELECTED",
     "title": "exact mixed-owner continuous spline-span composition",
-    "pull_request": null,
-    "ownership_gap": "strict/simple spans from v19/v47/v48/v49 lack the ordered-span view required to compose with v51 product spans"
+    "pull_request": 273,
+    "ownership_gap": "CLOSED_BY_V53_DISTINCT_STRICT_SPAN_AND_V51_PRODUCT_ORDERED_VIEWS",
+    "successor_selected": false,
+    "remaining_boundary": "PB-007-01 remains globally open for general noncommon-factor/nonmonotone analytic coverage, unsupported owner families and discontinuous point-value semantics"
   },
   "directly_relevant_open_proof_obligations": [
     "PO-02",
@@ -144,5 +154,5 @@
     "native material/topology/reconstruction/STEP/consumer/scale qualification"
   ],
   "historical_files_are_not_superseded": true,
-  "note": "This snapshot is navigation/current-state metadata, not gate acceptance authority. Closed bounded child issues do not close PB-007-01 globally."
+  "note": "This snapshot is navigation/current-state metadata, not gate acceptance authority. V53/#271 is the latest verified bounded landing; no successor PB-007-01 child is selected here. PB-007-01 remains globally open and MC-B/MC-1 remain NOT_ESTABLISHED."
 }
