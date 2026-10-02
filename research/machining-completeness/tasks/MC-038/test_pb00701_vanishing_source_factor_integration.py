@@ -81,6 +81,19 @@ class ProductIntegrationTests(unittest.TestCase):
         self.assertEqual(proof['carrier_root_correspondence']['carrier_only_open_roots'], 1)
         print('v50 actual source: complete v49 BLOCKED -> irrational double factor root + disjoint simple modulated-carrier root')
 
+    def test_preserved_v47_and_v48_strict_carrier_owners(self):
+        A, B = [Q(-1, 8), Q(1, 2), Q(1, 10000)], [Q(-7, 40), Q(7, 20)]
+        for degree_shift, owner in ((False, 'PB00701_V47_EXACT_ALGEBRAIC_SINGLE_CUT'),
+                                    (True, 'PB00701_V48_MIXED_ROOT_SINGLE_CUT')):
+            rotated = a.pmul(A, [0, 1]) if degree_shift else A
+            carrier = ({1: a.padd(rotated, B), 2: [Q(1, 10**8)]},
+                       {1: a.padd(rotated, a.pscale(B, -1))}, 'preserved-carrier', ('0', '1'), '-1/8', '1/16')
+            proof = m.build_product_event(*core.product_args(carrier=carrier))
+            self.assertEqual(proof['status'], 'CERTIFIED', proof)
+            self.assertEqual(proof['carrier_evidence']['owner'], owner)
+            self.assertTrue(checker.validate_product_event(proof, *core.product_args(carrier=carrier)))
+            self.assertEqual((proof['distinct_roots_open'], proof['multiple_roots_open']), (2, 1))
+
     def test_rational_and_irrational_simple_odd_even_factor_roots(self):
         for factor in ([-Q(1, 2), 1], [-1, 0, 2]):
             for n in (1, 2, 3):
@@ -225,7 +238,7 @@ class ProductIntegrationTests(unittest.TestCase):
                 checker.validate_product_event(proof, *changed)
         with patch.object(m, 'carrier_proof', side_effect=AssertionError('no carrier selection in checker')), \
              patch.object(prior, 'classify_required_analytic_event', side_effect=AssertionError('no predecessor search')), \
-             patch.object(prior, 'certify_derivative', side_effect=AssertionError('no replacement derivative route')), \
+             patch.object(prior.b, 'certify_derivative', side_effect=AssertionError('no replacement derivative route')), \
              patch.object(m.v46, '_decide_endpoint', side_effect=AssertionError('no endpoint sign search')):
             self.assertTrue(checker.validate_product_event(proof, *args))
 
