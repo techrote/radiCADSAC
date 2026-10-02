@@ -1,10 +1,10 @@
 # MC-038 / PB-007 current implementation state
 
 Status date: **2 October 2026**.  
-Authoritative repository commit at reconciliation: `59e1b5a3cf28ab3d9f4f799632c290259c284e76`.  
+Authoritative repository commit at reconciliation: `a13702b28fcc349442e78cfb1e971eb94991a69e`.  
 Programme capability: **MC-B NOT_ESTABLISHED; MC-1 NOT_ESTABLISHED**.  
 Primary gate tracker: [MC-038 / #100](https://github.com/techrote/radiCADSAC/issues/100).  
-Current dependency-ready PB-007-01 owner: [v53 / #271](https://github.com/techrote/radiCADSAC/issues/271).
+Latest bounded PB-007-01 owner: [v53 / #271](https://github.com/techrote/radiCADSAC/issues/271) — verified landed through PR #273; this reconciliation precedes explicit issue closure. No successor PB-007-01 child is selected here.
 
 This document is the **navigation and current-state ledger** for the active MC-038 constructive-proof work. It does not replace historical reports, proof artifacts, issue acceptance ledgers, or gate authority. Closed PB-007-01 child issues establish bounded results only; they do not close PB-007-01 globally.
 
@@ -41,23 +41,24 @@ Earlier v3–v40 evidence remains preserved under the existing versioned reports
 | v50 | [#265](https://github.com/techrote/radiCADSAC/issues/265) / [PR #266](https://github.com/techrote/radiCADSAC/pull/266) | Vanishing common-source factors with checked modulated carriers, including repeated physical roots. | Product-root counts and multiplicities established beyond strict physical monotonicity. |
 | v51 | [#267](https://github.com/techrote/radiCADSAC/issues/267) / [PR #268](https://github.com/techrote/radiCADSAC/pull/268) | Exact ordered product-root union and physical sign cells. | Orders factor roots against the carrier’s implicit simple root without fabricating its arithmetic type. |
 | v52 | [#269](https://github.com/techrote/radiCADSAC/issues/269) / [PR #270](https://github.com/techrote/radiCADSAC/pull/270) | Exact continuous cross-spline root/sign-cell composition from the **original B-spline source**. | Qualifying product spans compose across proved-continuous source knots; shared roots count once and one-sided orders remain distinct. |
-| v53 | [#271](https://github.com/techrote/radiCADSAC/issues/271) | **OPEN — current owner.** Exact mixed-owner continuous spline-span composition. | Must adapt already-certified strict spans alongside v51 product spans without fabricating product ownership. |
+| v53 | [#271](https://github.com/techrote/radiCADSAC/issues/271) / [PR #273](https://github.com/techrote/radiCADSAC/pull/273) | Exact mixed-owner continuous spline-span composition using distinct checked `STRICT_SPAN` and `V51_PRODUCT` views. | Strict/simple v19/v47/v48/v49 spans can compose with v51 product spans across proved-continuous original-source knots without fabricated product ownership. |
 
-All v41–v52 issues above are explicitly closed **completed**. There is currently no open pull request at this reconciliation checkpoint.
+All v41–v52 issues above are explicitly closed **completed**. V53/#271 is verified landed through PR #273; this reconciliation records the completed bounded result before explicit issue closure. There is currently no open v53 implementation pull request.
 
-## Latest verified landed checkpoint: v52
+## Latest verified landed checkpoint: v53
 
-The latest landed bounded implementation is v52:
+The latest landed bounded implementation is v53:
 
-- final checked PR head: `78eeda72d5b659e852d056a0f838480af651622c`;
-- final-head focused run: **37022722397 — PASS**;
-- final-head `mc1-static`: **37022722239 — PASS**;
-- squash merge / authoritative `main`: `59e1b5a3cf28ab3d9f4f799632c290259c284e76`;
-- checked tree: `eeedc9dad93fcd1183a85616320d1d0fef9a5097`;
-- merged-main focused run: **37023385179 — PASS**;
-- merged-main `mc1-static`: **37023385288 — PASS**.
+- final checked PR head: `e4d5646fd3b16e0f152c70fd817904df74426a8b`;
+- final-head focused run: **37040746459 — PASS**;
+- final-head `mc1-static`: **37040746380 — PASS**;
+- squash merge / authoritative implementation `main`: `a13702b28fcc349442e78cfb1e971eb94991a69e`;
+- direct parent: `7126dabf013ef95b0965b74008466e12f0650ef8`;
+- checked tree: `17fe7642600b12edd573e21b57933e5811cea991`;
+- independent merged-main focused run: **37041568030 — PASS**;
+- independent merged-main `mc1-static`: **37041567973 — PASS**.
 
-The decisive two-span original-source result has five globally ordered physical roots, a shared source-knot root counted once, one-sided orders `(2,3)`, and no invented global analytic multiplicity at the knot. A separate three-span control establishes eight roots across two source knots. These are deterministic exact-arithmetic research results, **not** native material/topology or STEP qualification.
+The principal original-source acceptance source retains genuine V50/V51 product ownership on the left and genuine V19 strict ownership with amplitude GCD one on the right. The physical join is exactly `1/2`. V53 certifies two distinct open physical roots — a simple crossing and an irrational double tangency — with maximal signs NEGATIVE, POSITIVE, POSITIVE and exact nonzero knot-cell coalescing. Existing all-product V52 evidence remains byte-for-byte preserved. These are deterministic exact-arithmetic research results, **not** native material/topology or STEP qualification.
 
 ## What is implemented now
 
@@ -72,19 +73,17 @@ Within the exact source families admitted by the relevant versioned contracts, t
 - source-owned common-factor/product decomposition with repeated/tangential roots;
 - exact ordering of polynomial-factor roots against a checked carrier’s unique implicit root;
 - physical sign-cell construction using exact root order, multiplicity parity and one-sided endpoint authority;
-- exact continuity checking and physical event/sign-cell composition across multiple **product-owned** B-spline spans from the original source.
+- exact continuity checking and physical event/sign-cell composition across multiple original-source B-spline spans using explicit checked **V51 product** and **strict v19/v47/v48/v49** ordered views.
 
 The versioned artifacts deliberately retain their own proof boundaries. A later success does not rewrite an earlier negative result or expand an earlier theorem’s scope retroactively.
 
-## Current active frontier: v53
+## Current bounded frontier after v53
 
-Issue #271 owns the next dependency-ready gap exposed by v52:
+Issue #271 closes the specific V52 interface residual where an already-certified strict/simple source span lacked the ordered-span view needed for continuous composition beside a V51 product span.
 
-> a source span can have a complete strict/simple certificate from v19/v47/v48/v49 but no nonconstant common factor, so it is not a v50/v51 product span and v52 cannot yet mix it with neighboring product spans.
+V53 adds a distinct checked `STRICT_SPAN` view without creating a fake `g=1` product factor, preserves actual v19/v47/v48/v49 ownership, and reuses the established original-source lowering, exact physical continuity, source-knot root union and maximal sign-cell composition machinery. Unsupported owners still require their own finite checked ordering interface.
 
-V53 must introduce a distinct checked `STRICT_SPAN` ordered view, preserve the actual historical owner, and feed that view into the already-established original-source continuity/knot composition layer. It must **not** create a fake `g=1` nonconstant-factor certificate or relabel strict-owner evidence as v50/v51 product authority.
-
-The proposed acceptance source and all expected outcomes in #271 remain hypotheses until executed and landed.
+No successor PB-007-01 child is selected by this reconciliation. PB-007-01 remains globally **OPEN** because the bounded v53 result does not establish general noncommon-factor/nonmonotone analytic coverage, discontinuous point-value semantics, unsupported owner families, or native material/topology/STEP qualification.
 
 ## Still explicitly unresolved
 
@@ -107,8 +106,8 @@ These are implementation/proof frontiers, not permission to shrink the supported
 - **Gate decision / historical blocker review:** `research/machining-completeness/tasks/MC-038/report.md` and `outcome.json`.
 - **Current-state snapshot:** this document and `research/machining-completeness/tasks/MC-038/current-implementation-state-v1.json`.
 - **Per-version exact evidence:** `research/machining-completeness/tasks/MC-038/pb00701-report-v*.md`, matching JSON boundary artifacts, models, tests and verifiers.
-- **RAG documents:** `docs/machining-completeness/27-PB00701-...` through `76-PB00701-PIECEWISE-PRODUCT.md`.
-- **Active implementation contract:** issue #271.
+- **RAG documents:** `docs/machining-completeness/27-PB00701-...` through `78-PB00701-MIXED-OWNER-SPANS.md`.
+- **Latest bounded implementation contract:** issue #271 / PR #273.
 - **Global gate tracker:** issue #100.
 
 Some historical RAG filename prefixes intentionally collide (for example the two `67-` and two `68-` files). They are preserved because they are already referenced by historical evidence. **Do not renumber historical files merely for cosmetic ordering.**
