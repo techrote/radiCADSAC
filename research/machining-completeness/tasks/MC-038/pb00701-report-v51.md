@@ -1,7 +1,7 @@
 # PB-007-01 v51 report — ordered product-root evidence
 
 Date: 2026-10-02. Issue: #267. Source baseline: `5c7dcf48829176c9e74f60221120ef5414e14e8a`.  
-Status: implementation candidate; seven local exact endpoint methods pass; complete repository integration pending.  
+Status: implemented and full-repository checkpoint verified; final landing is governed by the verified #267 ledger.  
 Evidence: deterministic exact-arithmetic model, not native machining or a wholly independent geometry oracle.
 
 ## Question, hypothesis and falsification
@@ -63,21 +63,41 @@ the two conjugate A-factor roots have NEGATIVE/POSITIVE carrier signs. Close
 irrational neighbors around the rational carrier root `1/2` also have opposite
 exact signs, without tolerance or a borrowed orientation root.
 
-The full predecessor chain is unavailable locally. The thirteen actual-source
-integration methods and complete preserved v50 regression must run in repository
-CI; they have not yet been executed at this checkpoint. Main source acceptance
-expects the simple carrier root before the irrational double root, with physical
-sign cells NEGATIVE/POSITIVE/POSITIVE, while retaining v50's complete result
-byte-for-byte in its deterministic serialization. This is an executable assertion,
-not evidence inferred from the number of test methods or metadata.
+The full predecessor chain is unavailable locally; complete acceptance was
+therefore executed in the actual repository, not against substituted modules.
+Head `b6c5813d241d39420914c89c2a2cc8fb809b1d6c` passed focused **37015844714** and
+`mc1-static` **37015844864**. All seven core and thirteen integration methods
+passed on the first attempt, as did the full preserved v50 regression (seven
+core and eleven integration methods) and inherited v48/v49 contracts. The runner
+was Ubuntu 24.04.5 / CPython 3.12.14. New core/integration test durations reported
+1.170 / 148.543 seconds; preserved v50 core/integration reported 0.069 / 106.118
+seconds. These timings are observations, not performance thresholds or truth rules.
 
-Other integration controls include all four carrier owners with search functions
-disabled in the checker; rational coincidence with multiplicity 2-4; factor roots
-on both irrational proof boundaries; different minimal polynomials; close roots;
-root-free factors/carriers; roots at zero/one/both exteriors; physical source
-negation and negative phase traversal; non-unit global intervals; Boolean/float
-and unknown-field rejection; corrupted source/field/phase/sign/ordering/cells;
-exact resource non-truth retaining the count certificate; unrelated exceptions.
+The decisive full source now certifies the simple carrier crossing **before**
+the irrational double factor root. Physical sign cells are
+NEGATIVE/POSITIVE/POSITIVE. The original complete v50 result is retained byte-for-
+byte in deterministic serialization; two distinct open roots, one multiple root,
+one crossing, one tangency and no exterior roots are unchanged. The actual old
+carrier root-bearing child overlaps the factor cut, so the result is not an
+assumed ordering of old isolations. The checked factor-owned carrier sign and
+positive whole-carrier derivative establish the new order exactly.
+
+Executed controls include all four carrier owners with source/carrier classifiers,
+derivative selection and endpoint sign search disabled in the finite checker;
+rational coincidences with physical multiplicity 2-4; factor roots on rational
+and both irrational proof boundaries; different minimal polynomials; close exact
+neighbors; root-free factors/carriers of both signs; zero/one/both exterior roots
+and inward jets; physical negation, reversed phase and non-unit global source;
+Boolean/float and unknown-field rejection; corrupted ordering/source/phase/field/
+sign/remainder/parity/coverage/capability and every live physical channel; exact
+resource non-truth preserving the valid count certificate; unrelated exceptions.
+
+No model repair, fixture weakening or theorem relaxation was needed after CI.
+All nine new uploaded file blobs were matched to local source bytes. The following
+documentation reconciliation changes no implementation, tests or historical
+source. Final-head and exact merged-main checks are independently required; their
+results and the final SHA/tree/parent are recorded on #267/#100 rather than
+assumed from this earlier passing checkpoint.
 
 ## Reproduction and landing
 

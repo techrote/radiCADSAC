@@ -1,6 +1,6 @@
 # PB-007-01 v51 — ordered physical product roots and sign cells
 
-Status: implementation candidate; local exact endpoint controls pass, actual-repository acceptance pending.  
+Status: implemented; full actual-repository acceptance verified at the checkpoint below; final landing authority is the verified #267 ledger.  
 Date: 2026-10-02. Issue: [#267](https://github.com/techrote/radiCADSAC/issues/267).  
 Reviewed source baseline: `5c7dcf48829176c9e74f60221120ef5414e14e8a` (v50).  
 Evidence class: deterministic exact-arithmetic model, not native geometry or an independent full geometry oracle.  
@@ -169,31 +169,45 @@ propagate rather than becoming false arithmetic/refusal facts.
 ## Falsifiable acceptance and current execution checkpoint
 
 The principal actual-source test multiplies every amplitude of the v49 carrier
-by `(2*t^2-1)^2`. It requires the complete v50 result to remain unchanged while
-an independently checked ordered union is added. The old carrier root-bearing
-child must actually overlap the factor cut; mere old interval ordering cannot
-satisfy this test. Local exact endpoint controls already establish `H(sqrt(2)/2)>0`.
-The full-source test must establish the checked direction and ordering, expected
-as simple carrier crossing before double factor tangency, with physical cell
-signs `NEGATIVE, POSITIVE, POSITIVE`. These full-source results are not yet claimed
-as executed at this documentation checkpoint.
+by `(2*t^2-1)^2`. Complete v50 qualifies that source, and v51 preserves its entire
+physical result in identical deterministic serialization while adding a checked
+ordered union. The actual old carrier root-bearing child contains the factor cut,
+so mere old interval ordering cannot establish the new result.
 
-Seven local exact endpoint test methods pass using hash-matched repository
-arithmetic. They include both signs at the two conjugate A roots, close exact
-neighbors around a rational carrier zero, negative phase traversal, physical
-negation/global coordinates, finite-checker search prohibition, premise and
-remainder corruption, and resource non-truth. The partial local checkout cannot
-execute the full predecessor chain. No stub predecessor or alternate oracle is
-presented as integration evidence.
+Actual-repository head `b6c5813d241d39420914c89c2a2cc8fb809b1d6c` passed focused
+run **37015844714** and repository `mc1-static` run **37015844864**. The checked
+carrier direction is positive and `H(sqrt(2)/2)>0`; therefore the simple carrier
+crossing precedes the irrational double factor tangency. The physical sign cells
+are exactly `NEGATIVE, POSITIVE, POSITIVE`. Counts remain two distinct open roots,
+one multiple root, one crossing and one tangency, with no exterior roots. The
+old v50 ordered-list flag stays false; only the new scoped ordered proof gains
+that capability.
 
-The actual-repository integration suite additionally checks all four strict
-carrier owners; rational coincidence; odd/even repeated roots; factors at rational
-and irrational proof boundaries; distinct factor fields; no open carrier root;
-zero/one/both exteriors and inward jets; root-free factors; exact ordered coverage;
-source negation/reversal; source and proof mutation; and preserved old ownership.
-The focused job also runs the complete preserved v50 regression. Final acceptance
-requires these executions, repository static checks, final-head review, protected
-merge and independent exact-merged-main verification recorded on #267/#100.
+All seven new exact endpoint/core and thirteen actual-source integration methods
+passed on the first focused run. Their reported test durations were 1.170 seconds
+and 148.543 seconds. The complete preserved v50 regression also passed: seven
+core and eleven integration methods, with its historical v48/v49 contracts.
+The runner used Ubuntu 24.04.5 and CPython 3.12.14. These are observations of this
+deterministic research model, not native geometry or cross-platform qualification.
+No CI repair, fixture weakening or predicate relaxation was needed.
+
+The executed integration controls include all four strict carrier owners with
+classifier, derivative-selection and endpoint-sign searches disabled in the
+finite checker; rational coincidence with additive multiplicity 2-4; factors at
+rational and both irrational proof boundaries; different selected factor fields;
+close exact neighbors; root-free factors and carriers of both signs; zero/one/both
+exteriors and inward jets; source negation/reversal/non-unit global coordinates;
+source and proof corruption, including every live physical channel; preserved
+older ownership; exact resource non-truth and unrelated error propagation.
+
+The partial local checkout supplied only hash-matched endpoint controls. No stub
+predecessor or alternate oracle was presented as integration evidence; the
+complete-source acceptance above executed in the actual GitHub checkout. All nine
+new uploaded file blobs were independently matched to their local source bytes.
+The documentation reconciliation does not alter the checked implementation or
+tests. Final-head review, protected merge and independent exact-merged-main
+focused/static verification are still required and recorded on #267/#100; this
+checkpoint does not presume those later operations succeeded.
 
 ## Reproduction, sources and remaining obligations
 
