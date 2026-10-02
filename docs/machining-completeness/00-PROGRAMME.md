@@ -8,6 +8,10 @@ Read this document, [execution protocol](07-EXECUTION-PROTOCOL.md), [task graph]
 
 The source plan is the user-supplied `radiCADSAC-machining-completeness-research-plan-v1.0.md`, SHA-256 `b7cb369e1fef31bb6a02d02960931b3090424114395af9487babf6c0ecbb609c`, prepared against `e86c15ca0479240a0045ebc80c83973137b58c60`. These repository specifications adopt its requirements and repair operational omissions. They do not claim to reproduce the source file byte-for-byte. The source-section crosswalk is in [review/change log](09-REVIEW-AND-CHANGELOG.md).
 
+### Current implementation checkpoint
+
+For the current landed MC-038 / PB-007 implementation frontier, read [MC-038 / PB-007 current implementation state](77-MC038-CURRENT-IMPLEMENTATION-STATE.md). That ledger distinguishes bounded implemented results from still-open global proof obligations and names the current dependency-ready owner. It is navigation/current-state metadata, not a substitute for gate acceptance, the task graph, historical evidence, or issue acceptance ledgers.
+
 ## Governing outcome
 
 For every admissible finitely specified history in the independently defined conventional lathe and fixed-axis three-axis mill domain, provide a correct finite route to nominal material, topology and conventional usable engineering output at the admitted accuracy request. Include repeated/reoriented setups, simultaneous XYZ, accessible form/undercut tooling, ordinary phase-sensitive lathe work, degeneracies and all finite compositions. A physically valid awkward intersection is not an unsupported operation. Do not add arbitrary mathematical surfaces, continuous five-axis orientation, additive/deformation/force simulation or a full workshop to this tranche.
