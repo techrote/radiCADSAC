@@ -1,0 +1,36 @@
+name: mc1-pb00701-v53
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/*mixed_owner_span*'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-mixed-owner-spans-v53.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-report-v53.md'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py'
+      - 'docs/machining-completeness/78-PB00701-MIXED-OWNER-SPANS.md'
+      - '.github/workflows/mc1-pb00701-v53.yml'
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/*mixed_owner_span*'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-mixed-owner-spans-v53.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-report-v53.md'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py'
+      - 'docs/machining-completeness/78-PB00701-MIXED-OWNER-SPANS.md'
+      - '.github/workflows/mc1-pb00701-v53.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify mixed-owner original-source evidence and preserved V52 once
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py --contract --self-test
