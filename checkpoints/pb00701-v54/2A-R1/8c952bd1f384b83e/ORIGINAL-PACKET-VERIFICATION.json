@@ -1,0 +1,35 @@
+{
+  "status": "PASS",
+  "archive_name": "radiCADSAC-2A-R1-packet.zip",
+  "archive_bytes": 218929,
+  "archive_sha256": "72eaa52c10be6951ec4ca68a8813fab6bb920da575b437a9bb82ea35762272d2",
+  "zip_crc": "PASS",
+  "all_members_readable": true,
+  "unique_safe_members": true,
+  "exact_file_set": true,
+  "all_archive_members_match_local_sha256": true,
+  "fresh_extraction_verification": {
+    "status": "PASS",
+    "packet_files": 106,
+    "manifest_entries": 105,
+    "original_source_entries_verified": 18,
+    "new_source_entries": 10,
+    "prior_files": 53,
+    "prior_manifest_entries": 52,
+    "complete_git_tree": false,
+    "proof_or_acceptance_verified": false
+  },
+  "local_packet_verification": {
+    "status": "PASS",
+    "packet_files": 106,
+    "manifest_entries": 105,
+    "original_source_entries_verified": 18,
+    "new_source_entries": 10,
+    "prior_files": 53,
+    "prior_manifest_entries": 52,
+    "complete_git_tree": false,
+    "proof_or_acceptance_verified": false
+  },
+  "verified_at_utc": "2026-10-04T16:46:24.242337+00:00",
+  "scope": "Archive/file integrity and original source blob matches only; no complete Git tree or mathematical/v54 acceptance."
+}

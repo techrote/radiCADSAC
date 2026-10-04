@@ -1,0 +1,34 @@
+{
+  "schema": "radicadsac-checkpoint-restore-map/1.0",
+  "payload_id": "8c952bd1f384b83e",
+  "canonical_packet": {
+    "saved_path": "ORIGINAL-PACKET.zip",
+    "sha256": "72eaa52c10be6951ec4ca68a8813fab6bb920da575b437a9bb82ea35762272d2",
+    "packet_root": "radiCADSAC-2A-R1/",
+    "original_manifest": "radiCADSAC-2A-R1/SHA256SUMS",
+    "original_manifest_sha256": "d85536f434634f29b1ac61d8861f061524b4c0b6d0d45951fe664f36bdabc894",
+    "mapping_rule": "For each of the 105 records in the original SHA256SUMS, original_path is the manifest path and restore_from is ORIGINAL-PACKET.zip!<original_path>; verify against that record's SHA-256."
+  },
+  "direct_documents": {
+    "CHECKPOINT.md": {
+      "source": "chat upload CHECKPOINT(7).md",
+      "sha256": "d58da7cdd1a65d814d11ee18759f2d9136c9ab5af690d0960fb797cc6d7e5568",
+      "packet_member": "radiCADSAC-2A-R1/CHECKPOINT.md"
+    },
+    "SOURCE_DEPENDENCY_MAP.md": {
+      "source": "chat upload SOURCE_DEPENDENCY_MAP(1).md",
+      "sha256": "12d3c10caa567c7fa00cd74ecaccf3900f1dbfa7539c1a2c57448428910e6d3d",
+      "packet_member": "radiCADSAC-2A-R1/SOURCE_DEPENDENCY_MAP.md"
+    },
+    "ORIGINAL-PACKET-VERIFICATION.json": {
+      "source": "chat upload radiCADSAC-2A-R1-packet-verification(1).json",
+      "sha256": "619cd6e192c499c111dd74efb3ad5ca31f058bf2e38f1087a83c3e8b825e72ce"
+    }
+  },
+  "source_provenance": {
+    "authoritative_manifest": "ORIGINAL-PACKET.zip!radiCADSAC-2A-R1/records/source-manifest.json",
+    "rule": "Each recovered-source/<local_path> is the exact Git blob named by the retained source manifest; repository_path, commit/ref, Git blob SHA-1 and SHA-256 are authoritative there. The direct archival copy reuses that same Git blob object."
+  },
+  "prior_material": "ORIGINAL-PACKET.zip!radiCADSAC-2A-R1/prior/2A/",
+  "omitted_from_direct_expansion": "Other packet members are not duplicated as loose Git files; they remain byte-exact inside ORIGINAL-PACKET.zip and are individually covered by its original SHA256SUMS."
+}
