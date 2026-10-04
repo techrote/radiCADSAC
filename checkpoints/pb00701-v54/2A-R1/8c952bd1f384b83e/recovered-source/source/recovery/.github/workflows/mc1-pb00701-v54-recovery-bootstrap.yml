@@ -1,0 +1,34 @@
+name: mc1-pb00701-v54-recovery-bootstrap
+on:
+  push:
+    branches: [mc038/pb00701-v54-recovery]
+    paths: ['.github/workflows/mc1-pb00701-v54-recovery-bootstrap.yml']
+permissions:
+  contents: read
+jobs:
+  recover:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Recover interrupted local payload without modifying forensic branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          forensic=8cec4953dc898e70270c654f5453b108bb80d47b
+          git fetch --no-tags --depth=1 origin "$forensic"
+          mkdir -p "$RUNNER_TEMP/recovered"
+          for i in 00 01 02 03 04 05; do
+            git show "$forensic:.v54-bootstrap/part$i"
+          done | base64 -d | gzip -d > "$RUNNER_TEMP/recovered.tar"
+          tar -xf "$RUNNER_TEMP/recovered.tar" -C "$RUNNER_TEMP/recovered"
+          find "$RUNNER_TEMP/recovered" -type f -printf '%P\n' | LC_ALL=C sort > "$RUNNER_TEMP/recovered/MANIFEST.txt"
+          cat "$RUNNER_TEMP/recovered/MANIFEST.txt"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pb00701-v54-recovered-payload
+          path: ${{ runner.temp }}/recovered
+          retention-days: 1

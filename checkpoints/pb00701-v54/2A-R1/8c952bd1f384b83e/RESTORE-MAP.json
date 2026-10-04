@@ -1,0 +1,33 @@
+{
+  "schema": "radicadsac-checkpoint-restore-map/1.0",
+  "payload_id": "8c952bd1f384b83e",
+  "remote_status": "PARTIALLY_SAVED",
+  "direct": {
+    "CHECKPOINT": {
+      "path": "CHECKPOINT.md",
+      "sha256": "d58da7cdd1a65d814d11ee18759f2d9136c9ab5af690d0960fb797cc6d7e5568"
+    },
+    "PACKET_VERIFICATION": {
+      "path": "ORIGINAL-PACKET-VERIFICATION.json",
+      "sha256": "619cd6e192c499c111dd74efb3ad5ca31f058bf2e38f1087a83c3e8b825e72ce"
+    },
+    "SOURCES": {
+      "manifest": "SOURCE-PROVENANCE.json",
+      "saved_prefix": "recovered-source/"
+    }
+  },
+  "external_fallback": {
+    "required": true,
+    "name": "radiCADSAC-2A-R1-packet.zip",
+    "bytes": 218929,
+    "sha256": "72eaa52c10be6951ec4ca68a8813fab6bb920da575b437a9bb82ea35762272d2",
+    "members": 106,
+    "internal_manifest": "radiCADSAC-2A-R1/SHA256SUMS",
+    "manifest_entries": 105,
+    "contains_prior_2A": true,
+    "contains_dependency_map": true,
+    "contains_commands_results": true,
+    "contains_residual_queue": true
+  },
+  "note": "The exact fallback packet is required to restore generated records omitted from the remote partial save; do not recreate those records from summaries."
+}

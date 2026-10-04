@@ -1,0 +1,138 @@
+{
+  "schema": "radicadsac-mc038-pb00701-mixed-owner-spans/53.0",
+  "task": "MC-038",
+  "corrective_issue": 271,
+  "source_baseline": "7126dabf013ef95b0965b74008466e12f0650ef8",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "decision": "BOUNDED_CONTINUOUS_MIXED_OWNER_SOURCE_CERTIFICATE",
+  "acceptance_authority": "EXECUTED_REPOSITORY_SELF_TEST_AND_VERIFIED_ISSUE_LEDGER",
+  "source_interface": "ORIGINAL_RATIONAL_BSPLINE_CONTROLS_KNOTS_ID_INTERVAL_AND_AFFINE_PHASE",
+  "inherited_contract": "verify_pb00701_v52.py",
+  "historical_additional_git_blob_pins": {
+    "pb00701_piecewise_product_model.py": "6ca7a321bd027f3ed2a22059e9aa856c76485f8a",
+    "pb00701_piecewise_product_certificate.py": "e5546f2d408505e8b07d1ebb20253d075d0ada19",
+    "test_pb00701_piecewise_product.py": "c847b27a8981aa3743291a60e267ee8d91d5b5d5",
+    "test_pb00701_piecewise_product_integration.py": "46ed0adba3e752be1fbd91f6469ac378fe9af61c",
+    "verify_pb00701_v52.py": "d3372ed41a1218dbc4906cfb3a7eae4d37d830a6",
+    "pb00701-piecewise-product-v52.json": "95fd5b3e34e41bd9fc2d6a6df09295789ec67c3d",
+    "pb00701-report-v52.md": "27ad74be7104c267a206d29037069c4c262043a7",
+    "pb00701_multiharmonic_monotone_anchor_model.py": "38db0b5f1f4549f7ea632db27a5347b3aadd7b1a",
+    "pb00701_vanishing_source_factor_model.py": "dfd554bf9ee41c96f9009f8ed8ceae485e134a5d"
+  },
+  "ordered_evidence_kinds": [
+    "V51_PRODUCT",
+    "STRICT_SPAN"
+  ],
+  "strict_owner_versions": [
+    19,
+    47,
+    48,
+    49
+  ],
+  "finite_checking_policy": "SUPPLIED_OWNER_RECIPE_AND_EXACT_RATIONAL_TURN_REGENERATION_NO_REPLACEMENT_SEARCH",
+  "full_original_source_checker": true,
+  "global_root_union_claimed": true,
+  "physical_continuity_at_every_source_knot_required": true,
+  "distinct_strict_and_product_provenance": true,
+  "normalized_view_alone_is_authority": false,
+  "strict_owners_relabelled_as_product": false,
+  "unit_factor_fabricates_v50_authority": false,
+  "implicit_root_arithmetic_claimed": false,
+  "global_analytic_multiplicity_at_source_knots_claimed": false,
+  "discontinuous_source_point_policy_claimed": false,
+  "general_nonmonotone_solver_claimed": false,
+  "native_topology_claimed": false,
+  "material_body_transition_claimed": false,
+  "caller_lowering_trusted": false,
+  "historical_span_evidence_changed": false,
+  "resource_refusal_is_truth": false,
+  "boundary_controls": [
+    "actual_original_bspline_missing_view_novelty",
+    "all_product_v52_byte_preservation",
+    "all_four_actual_strict_owner_witnesses",
+    "every_closed_child_direction_checked",
+    "gcd_one_is_not_product_authority",
+    "strict_open_free_and_both_exterior_roots",
+    "both_derivative_directions_and_rational_but_implicit_root",
+    "all_strict_three_piece_zigzag",
+    "four_piece_two_product_two_strict_distinct_fields",
+    "same_knot_simple_repeated_orders_crossing_tangency",
+    "full_expression_continuity_not_equal_amplitudes",
+    "same_sign_exact_tiny_jump_refusal",
+    "repeated_knots_channel_degrees_and_partitions",
+    "nonconstant_live_harmonic_amplitudes",
+    "crop_nonunit_global_maps_reversal_negation",
+    "old_amplitude_dominance_owner_not_relabelled",
+    "implicit_roots_namespaced_by_source_span",
+    "nonzero_bridge_point_and_maximal_cell_coverage",
+    "no_missing_duplicate_reordered_span_or_event",
+    "owner_route_derivative_endpoint_and_view_forgery",
+    "original_source_and_digest_substitution",
+    "boolean_float_unknown_and_ignored_annotation_dispositions",
+    "finite_checker_with_classifier_derivative_selector_sign_search_disabled",
+    "stage_resource_nontruth_retains_predecessor",
+    "unrelated_errors_propagate",
+    "historical_pins_full_v52_once",
+    "frozen_26_no_false_solver_material_native_gate_promotion"
+  ],
+  "unsupported": [
+    "SPAN_OWNER_OUTSIDE_FINITE_V53_SCOPE",
+    "PRODUCT_SPAN_WITHOUT_CHECKED_V51_VIEW",
+    "DISCONTINUOUS_PHYSICAL_SOURCE_KNOT",
+    "GLOBAL_ANALYTIC_MULTIPLICITY_AT_NONANALYTIC_KNOT",
+    "GENERAL_NONMONOTONE_OR_NONCOMMON_FACTOR_SOLVER",
+    "IMPLICIT_ROOT_ARITHMETIC_BEYOND_ORDER_BRACKET",
+    "NATIVE_MATERIAL_TOPOLOGY_AND_STEP_QUALIFICATION"
+  ],
+  "primary_acceptance": {
+    "source": "test_pb00701_mixed_owner_span_integration.candidate",
+    "original_source_pieces": 2,
+    "physical_owners": [
+      50,
+      19
+    ],
+    "open_roots": 2,
+    "open_crossings": 1,
+    "open_tangencies": 1,
+    "shared_knot_relation": "POSITIVE",
+    "maximal_signs": [
+      -1,
+      1,
+      1
+    ]
+  },
+  "programme_effect": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT_ON_PB-007-01",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-08": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "domain_operation_count": 26,
+    "domain_narrowed": false
+  },
+  "other_open_obligations": [
+    "PO-02",
+    "PO-07"
+  ],
+  "protected_semantics": {
+    "source_audio_provenance": true,
+    "canonical_journal": true,
+    "exact_time_path_phase": true,
+    "source_uncertainty": true,
+    "positive_volume_material": true,
+    "cutter_holder_access": true,
+    "durable_body_lineage": true,
+    "refusal_uncertified": true,
+    "conventional_step": true
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "production_authorized": false,
+    "expensive_execution_authorized": false
+  }
+}
