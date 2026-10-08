@@ -1,0 +1,42 @@
+{
+  "main_source_files_listed": 22,
+  "all_source_files_in_repository_read": false,
+  "main_MC038_tree": "73794bae7f7c2face00cdfb389410e405ccf4625",
+  "MC038_listing": "tool output truncated; not fully exported/read; not used as a complete-tree absence proof",
+  "staging_tree_metadata": "complete six entries; independently reconstructed tree-object hash only",
+  "full_snapshot_available_locally": false,
+  "complete_runtime_dependency_closure": false,
+  "git_history_available": false,
+  "foundation_documents_listed_in_AGENTS_but_not_reread": [
+    "docs/00-FOUNDING-BRIEF.md",
+    "docs/01-MSAC-GEOMETRY-CONTRACT.md",
+    "docs/04-REVISED-RESEARCH-ROADMAP.md",
+    "docs/06-RESEARCH-METHOD.md",
+    "docs/08-TERMINOLOGY.md",
+    "docs/09-FOUNDATION-AUDIT.md",
+    "historical Genesis handoff/evidence trees"
+  ],
+  "other_not_read": [
+    "Every historical owner emitter/proof/checker before v19/v47/v48/v49",
+    "Complete v52/v51/v50 bodies and transitive imports",
+    "Full v53 direct/integration suites",
+    "Old v54 decompressed payload or any recovered adapter implementation",
+    "Full logs of accepted v53 focused/static checks (metadata and acceptance records read)"
+  ],
+  "no_execution": [
+    "No complete predecessor verifier",
+    "No v54 verifier",
+    "No reversed-source execution",
+    "No domain owner enumeration/classification",
+    "No adapter implementation or review acceptance",
+    "No native/GPU/USB/shared resources"
+  ],
+  "transport_limits": [
+    "Direct shell GitHub DNS failure",
+    "GitHub code search returned no result for known existing source; not an absence proof",
+    "Generic job-log URL rejected; dedicated decoded-log tool worked",
+    "Generic single-artifact metadata URL rejected; allowed run artifact listings worked and both were empty",
+    "Connector timeout knobs unavailable; calls were individually bounded by finite batch count rather than CI polling"
+  ],
+  "scope_status": "PARTIAL; explicit read coverage retained rather than claiming all inherited AGENTS historical reading complete"
+}

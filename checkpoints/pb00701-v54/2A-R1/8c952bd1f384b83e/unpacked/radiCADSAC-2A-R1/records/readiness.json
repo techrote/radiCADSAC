@@ -1,0 +1,33 @@
+{
+  "status": "PARTIAL",
+  "readiness": "MORE_NAMED_SOURCE_RECOVERY_NEEDED",
+  "source_batch_complete": true,
+  "new_source_file_count": 10,
+  "cumulative_source_entries": 18,
+  "cumulative_main_files": 16,
+  "cumulative_python_files": 14,
+  "ordinary_import_sites": 119,
+  "dynamic_source_loads": 1,
+  "visible_missing_module_references": 15,
+  "visible_missing_references_are_complete_closure": false,
+  "fixture_import": "FAILED",
+  "actual_missing_module": "pb00701_algebraic_endpoint_model",
+  "smoke_returncode": 1,
+  "smoke_timed_out": false,
+  "factory_called": false,
+  "residual_case_run": false,
+  "new_owner_result": null,
+  "new_margin_result": null,
+  "canonical_owner_inventory_created": false,
+  "v54_implementation_recovered": false,
+  "full_git_tree_verified": false,
+  "remote_writes": 0,
+  "native_shared_resources_used": false,
+  "full_verifier_run": false,
+  "next_immediate_files": [
+    "research/machining-completeness/tasks/MC-038/pb00701_algebraic_endpoint_model.py",
+    "research/machining-completeness/tasks/MC-038/pb00701_algebraic_endpoint_certificate.py"
+  ],
+  "readiness_rationale": "Batch cap reached with authoritative bytes gained, but normal fixture-module import fails; deeper fixed classifier source also absent.",
+  "recorded_at": "2026-10-04T16:44:41.962677+00:00"
+}

@@ -1,0 +1,12 @@
+{
+  "status": "NOT_RUN",
+  "reason": "Fixture-module import failed; ten newly recovered repository files cap reached.",
+  "factory_called": false,
+  "case_commands_executed": [],
+  "actual_owner": null,
+  "actual_refusal": null,
+  "historical_expected_owner": "EXACT_RATIONAL_AMPLITUDE_DOMINANCE",
+  "historical_expected_refusal": "SPAN_OWNER_OUTSIDE_FINITE_V53_SCOPE",
+  "expected_strings_are_new_measurements": false,
+  "evidence": "logs/import-smoke.stdout.txt"
+}

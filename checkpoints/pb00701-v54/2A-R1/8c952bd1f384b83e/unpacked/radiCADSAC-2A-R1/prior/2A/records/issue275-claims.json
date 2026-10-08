@@ -1,0 +1,42 @@
+[
+  {
+    "comment_id": 5962246401,
+    "created_at": "2026-10-02T22:08:29Z",
+    "count_claim": "43 route cases; 41 final identifiers; 5 supported / 20 adapters / 15 missing-premise / 1 blocker, plus two literal emitters",
+    "progress_claim": "Claims local completion, 21 tests and full v53 passed",
+    "disposition": "UNVERIFIED_UNPUBLISHED; incompatible with later progress accounting",
+    "url": "https://github.com/techrote/radiCADSAC/issues/275#issuecomment-5962246401"
+  },
+  {
+    "comment_id": 5964187550,
+    "created_at": "2026-10-03T01:39:00Z",
+    "count_claim": "14 families unresolved",
+    "progress_claim": "Conservative continuation says work incomplete, no v54 acceptance",
+    "disposition": "REPORTED_CLAIM; incomplete publication confirmed by live branch comparisons",
+    "url": "https://github.com/techrote/radiCADSAC/issues/275#issuecomment-5964187550"
+  },
+  {
+    "comment_id": 5964233252,
+    "created_at": "2026-10-03T01:45:14Z",
+    "count_claim": "No canonical count established",
+    "progress_claim": "Claims clean recovery branch and locally tree-verified baseline archive",
+    "disposition": "Branch existence verified; former local archive verification not reproduced",
+    "url": "https://github.com/techrote/radiCADSAC/issues/275#issuecomment-5964233252"
+  },
+  {
+    "comment_id": 5966598172,
+    "created_at": "2026-10-03T07:04:34Z",
+    "count_claim": "43 rows: 5 supported / 30 proposed adapters / 6 missing-premise / 2 blockers",
+    "progress_claim": "Amplitude and 28 more adapters reportedly replayed; test expectation mismatch; no implementation published",
+    "disposition": "Counts/replay unverified. Runtime refusal string confirmed in v52 source, alleged v54 test not recovered",
+    "url": "https://github.com/techrote/radiCADSAC/issues/275#issuecomment-5966598172"
+  },
+  {
+    "comment_id": 5968122740,
+    "created_at": "2026-10-03T10:10:22Z",
+    "count_claim": "Earlier 43-row figure remains working state only",
+    "progress_claim": "Recovery workflow failed on truncated six-part gzip stream; no PR or acceptance",
+    "disposition": "Workflow/head/failure verified; no stronger impossibility-of-salvage conclusion",
+    "url": "https://github.com/techrote/radiCADSAC/issues/275#issuecomment-5968122740"
+  }
+]

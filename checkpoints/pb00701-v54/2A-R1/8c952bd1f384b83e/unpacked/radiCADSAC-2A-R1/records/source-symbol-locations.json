@@ -1,0 +1,1322 @@
+[
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_certificate.py",
+    "name": "validate_ordered_span_view",
+    "start_line": 13,
+    "end_line": 22
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_certificate.py",
+    "name": "validate_mixed_certificate",
+    "start_line": 25,
+    "end_line": 47
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py",
+    "name": "expected_boundary",
+    "start_line": 62,
+    "end_line": 81
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py",
+    "name": "contract",
+    "start_line": 84,
+    "end_line": 115
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py",
+    "name": "rejected",
+    "start_line": 118,
+    "end_line": 123
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py",
+    "name": "self_test",
+    "start_line": 126,
+    "end_line": 148
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py",
+    "name": "main",
+    "start_line": 151,
+    "end_line": 163
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py",
+    "name": "refusal",
+    "start_line": 27,
+    "end_line": 29
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py",
+    "name": "strict_components",
+    "start_line": 32,
+    "end_line": 130
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py",
+    "name": "regenerate_view",
+    "start_line": 133,
+    "end_line": 155
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py",
+    "name": "build_ordered_span_view",
+    "start_line": 158,
+    "end_line": 162
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py",
+    "name": "check_views",
+    "start_line": 165,
+    "end_line": 173
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py",
+    "name": "assemble",
+    "start_line": 176,
+    "end_line": 183
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py",
+    "name": "build_mixed_certificate",
+    "start_line": 186,
+    "end_line": 203
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py",
+    "name": "retained_failure",
+    "start_line": 206,
+    "end_line": 207
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py",
+    "name": "build_mixed_source_evidence",
+    "start_line": 210,
+    "end_line": 280
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+    "name": "_trim",
+    "start_line": 20,
+    "end_line": 24
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+    "name": "_padd",
+    "start_line": 27,
+    "end_line": 35
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+    "name": "_pscale",
+    "start_line": 38,
+    "end_line": 40
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+    "name": "_pmul",
+    "start_line": 43,
+    "end_line": 50
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+    "name": "_peval",
+    "start_line": 53,
+    "end_line": 58
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+    "name": "_is_constant",
+    "start_line": 61,
+    "end_line": 62
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+    "name": "_normalise_bspline",
+    "start_line": 65,
+    "end_line": 104
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+    "name": "_basis_piece",
+    "start_line": 107,
+    "end_line": 143
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+    "name": "bspline_piece",
+    "start_line": 146,
+    "end_line": 176
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+    "name": "lower_bspline",
+    "start_line": 179,
+    "end_line": 192
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+    "name": "_normalise_harmonic_splines",
+    "start_line": 195,
+    "end_line": 215
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+    "name": "_canonical_bspline_spec",
+    "start_line": 218,
+    "end_line": 223
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+    "name": "_master_boundaries",
+    "start_line": 226,
+    "end_line": 233
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+    "name": "_piece_from_normal",
+    "start_line": 236,
+    "end_line": 237
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+    "name": "_quarter_turn_index",
+    "start_line": 240,
+    "end_line": 245
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+    "name": "_cardinal_cos_sin",
+    "start_line": 248,
+    "end_line": 258
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+    "name": "_event_summary",
+    "start_line": 261,
+    "end_line": 266
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+    "name": "_stationary_cardinal_result",
+    "start_line": 269,
+    "end_line": 304
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+    "name": "_dominance_certificate",
+    "start_line": 307,
+    "end_line": 329
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+    "name": "_constant_modulation_result",
+    "start_line": 332,
+    "end_line": 355
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+    "name": "analyze_coupled_bspline_event",
+    "start_line": 358,
+    "end_line": 477
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+    "name": "classify_required_analytic_event",
+    "start_line": 480,
+    "end_line": 516
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+    "name": "resource_refusal",
+    "start_line": 519,
+    "end_line": 520
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_piecewise_product.py",
+    "name": "power",
+    "start_line": 15,
+    "end_line": 19
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_piecewise_product.py",
+    "name": "bernstein",
+    "start_line": 22,
+    "end_line": 26
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_piecewise_product.py",
+    "name": "encode",
+    "start_line": 29,
+    "end_line": 46
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_piecewise_product.py",
+    "name": "physical_piece",
+    "start_line": 49,
+    "end_line": 51
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_piecewise_product.py",
+    "name": "fixture",
+    "start_line": 54,
+    "end_line": 66
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_piecewise_product.py",
+    "name": "reverse_source",
+    "start_line": 69,
+    "end_line": 78
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_piecewise_product.py",
+    "name": "affine_source",
+    "start_line": 81,
+    "end_line": 92
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_piecewise_product.py",
+    "name": "mutate",
+    "start_line": 95,
+    "end_line": 100
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_piecewise_product.py",
+    "name": "run",
+    "start_line": 184,
+    "end_line": 187
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_piecewise_product.py",
+    "name": "test_bernstein_coefficients_and_exact_polynomial_roundtrip",
+    "start_line": 104,
+    "end_line": 121
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_piecewise_product.py",
+    "name": "test_different_channel_knot_sets_and_repeated_knots_exact_union",
+    "start_line": 123,
+    "end_line": 133
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_piecewise_product.py",
+    "name": "test_cropped_source_preserves_original_controls_and_exact_maps",
+    "start_line": 135,
+    "end_line": 144
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_piecewise_product.py",
+    "name": "test_phase_global_map_identity_and_exact_limits",
+    "start_line": 146,
+    "end_line": 157
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_piecewise_product.py",
+    "name": "test_float_boolean_unknown_field_bad_knots_and_projection_rejected",
+    "start_line": 159,
+    "end_line": 171
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_piecewise_product.py",
+    "name": "test_source_encoding_is_not_modified_by_lowering",
+    "start_line": 173,
+    "end_line": 181
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+    "name": "anchor",
+    "start_line": 19,
+    "end_line": 20
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+    "name": "scale_piece",
+    "start_line": 23,
+    "end_line": 24
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+    "name": "strict_args",
+    "start_line": 27,
+    "end_line": 38
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+    "name": "strict_view",
+    "start_line": 41,
+    "end_line": 51
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+    "name": "no_search",
+    "start_line": 55,
+    "end_line": 73
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+    "name": "run",
+    "start_line": 205,
+    "end_line": 208
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+    "name": "rejected",
+    "start_line": 77,
+    "end_line": 79
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+    "name": "test_all_four_actual_owners_and_complete_child_directions_without_search",
+    "start_line": 81,
+    "end_line": 101
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+    "name": "test_open_free_and_both_endpoint_roots_in_both_directions",
+    "start_line": 103,
+    "end_line": 127
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+    "name": "test_source_bound_implicit_even_when_the_root_is_exactly_rational",
+    "start_line": 129,
+    "end_line": 139
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+    "name": "test_owner_route_derivative_simplicity_and_normalized_view_forgery",
+    "start_line": 141,
+    "end_line": 164
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+    "name": "test_original_channels_phase_map_and_id_cannot_be_substituted",
+    "start_line": 166,
+    "end_line": 178
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+    "name": "test_no_fake_unit_factor_product_or_unsupported_strict_owner",
+    "start_line": 180,
+    "end_line": 188
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+    "name": "test_owner_and_endpoint_resource_nontruth_and_unrelated_errors",
+    "start_line": 190,
+    "end_line": 202
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+    "name": "candidate",
+    "start_line": 18,
+    "end_line": 20
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+    "name": "acceptance",
+    "start_line": 24,
+    "end_line": 29
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+    "name": "tail_for",
+    "start_line": 32,
+    "end_line": 37
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+    "name": "owner_source",
+    "start_line": 40,
+    "end_line": 42
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+    "name": "zero_join",
+    "start_line": 45,
+    "end_line": 48
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+    "name": "four_piece",
+    "start_line": 51,
+    "end_line": 61
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+    "name": "run",
+    "start_line": 368,
+    "end_line": 371
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+    "name": "checked",
+    "start_line": 65,
+    "end_line": 72
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+    "name": "rejected",
+    "start_line": 74,
+    "end_line": 76
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+    "name": "test_candidate_actual_predecessor_boundary_owners_and_exact_two_root_union",
+    "start_line": 78,
+    "end_line": 103
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+    "name": "test_existing_all_product_v52_result_byte_for_byte_and_typed_common_view",
+    "start_line": 105,
+    "end_line": 116
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+    "name": "test_all_strict_three_real_pieces_multiple_implicit_roots_and_opposite_directions",
+    "start_line": 118,
+    "end_line": 131
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+    "name": "test_four_original_pieces_two_products_two_stricts_and_distinct_algebraic_fields",
+    "start_line": 133,
+    "end_line": 147
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+    "name": "test_each_strict_owner_in_an_actual_continuous_full_source_without_search",
+    "start_line": 149,
+    "end_line": 159
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+    "name": "test_simple_repeated_source_knot_zero_crossing_tangency_and_global_scales",
+    "start_line": 161,
+    "end_line": 176
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+    "name": "test_strict_external_roots_and_both_directions_from_original_source",
+    "start_line": 178,
+    "end_line": 187
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+    "name": "test_physical_not_amplitude_continuity_and_same_sign_tiny_jump_refusal",
+    "start_line": 189,
+    "end_line": 204
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+    "name": "test_original_channel_partitions_repeated_knots_and_nonconstant_harmonic_amplitudes",
+    "start_line": 206,
+    "end_line": 219
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+    "name": "test_cropped_global_maps_reversal_and_source_negation_preserve_physical_counts",
+    "start_line": 221,
+    "end_line": 253
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+    "name": "test_full_source_checker_rejects_corruption_without_replacement_search",
+    "start_line": 255,
+    "end_line": 289
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+    "name": "test_original_source_controls_harmonics_phase_id_degree_knots_cannot_be_rescued_by_digest",
+    "start_line": 291,
+    "end_line": 314
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+    "name": "test_typed_invalid_unknown_ignored_and_single_span_predecessor_dispositions",
+    "start_line": 316,
+    "end_line": 339
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+    "name": "test_exact_resources_at_each_new_stage_keep_predecessor_and_errors_propagate",
+    "start_line": 341,
+    "end_line": 365
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_piecewise_product_model.py",
+    "name": "refusal",
+    "start_line": 25,
+    "end_line": 27
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_piecewise_product_model.py",
+    "name": "lower_source",
+    "start_line": 30,
+    "end_line": 72
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_piecewise_product_model.py",
+    "name": "source_args",
+    "start_line": 75,
+    "end_line": 80
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_piecewise_product_model.py",
+    "name": "check_spans",
+    "start_line": 83,
+    "end_line": 91
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_piecewise_product_model.py",
+    "name": "knot_continuity",
+    "start_line": 94,
+    "end_line": 144
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_piecewise_product_model.py",
+    "name": "build_joins",
+    "start_line": 147,
+    "end_line": 154
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_piecewise_product_model.py",
+    "name": "assemble",
+    "start_line": 157,
+    "end_line": 253
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_piecewise_product_model.py",
+    "name": "build_piecewise_certificate",
+    "start_line": 256,
+    "end_line": 273
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_piecewise_product_model.py",
+    "name": "build_piecewise_source_evidence",
+    "start_line": 276,
+    "end_line": 308
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_certificate.py",
+    "name": "validate_factor_carrier_sign",
+    "start_line": 9,
+    "end_line": 13
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_certificate.py",
+    "name": "validate_ordered_product_event",
+    "start_line": 16,
+    "end_line": 49
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_model.py",
+    "name": "refusal",
+    "start_line": 29,
+    "end_line": 31
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_model.py",
+    "name": "_factorization",
+    "start_line": 34,
+    "end_line": 37
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_model.py",
+    "name": "_sign_context",
+    "start_line": 40,
+    "end_line": 56
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_model.py",
+    "name": "_decide_factor_sign",
+    "start_line": 59,
+    "end_line": 67
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_model.py",
+    "name": "build_factor_carrier_sign",
+    "start_line": 70,
+    "end_line": 75
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_model.py",
+    "name": "_check_factor_sign",
+    "start_line": 78,
+    "end_line": 88
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_model.py",
+    "name": "carrier_direction",
+    "start_line": 91,
+    "end_line": 123
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_model.py",
+    "name": "_factor_point",
+    "start_line": 126,
+    "end_line": 135
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_model.py",
+    "name": "_sign_row",
+    "start_line": 138,
+    "end_line": 151
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_model.py",
+    "name": "_factor_signs",
+    "start_line": 154,
+    "end_line": 163
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_model.py",
+    "name": "_inward_exteriors",
+    "start_line": 166,
+    "end_line": 189
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_model.py",
+    "name": "_assemble_ordered",
+    "start_line": 192,
+    "end_line": 355
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_model.py",
+    "name": "build_ordered_product_event",
+    "start_line": 358,
+    "end_line": 371
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_model.py",
+    "name": "build_ordered_source_evidence",
+    "start_line": 374,
+    "end_line": 410
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_model.py",
+    "name": "node",
+    "start_line": 204,
+    "end_line": 215
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "require",
+    "start_line": 33,
+    "end_line": 35
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "padd",
+    "start_line": 38,
+    "end_line": 43
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "pscale",
+    "start_line": 46,
+    "end_line": 47
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "pmul",
+    "start_line": 50,
+    "end_line": 56
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "primitive",
+    "start_line": 59,
+    "end_line": 68
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "_signed_divisors",
+    "start_line": 71,
+    "end_line": 76
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "_interpolate",
+    "start_line": 79,
+    "end_line": 88
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "_factor_primitive",
+    "start_line": 92,
+    "end_line": 130
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "irreducible_factors",
+    "start_line": 133,
+    "end_line": 134
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "_multiplicity",
+    "start_line": 137,
+    "end_line": 142
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "_canonical_interval",
+    "start_line": 145,
+    "end_line": 157
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "_etrim",
+    "start_line": 286,
+    "end_line": 289
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "compose_affine",
+    "start_line": 292,
+    "end_line": 303
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "_json",
+    "start_line": 306,
+    "end_line": 307
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "_material",
+    "start_line": 310,
+    "end_line": 327
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "_orientation",
+    "start_line": 330,
+    "end_line": 334
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "_bisection",
+    "start_line": 337,
+    "end_line": 404
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "resource_refusal",
+    "start_line": 407,
+    "end_line": 408
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "build_orientation_child_maps",
+    "start_line": 411,
+    "end_line": 433
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "validate_child_maps",
+    "start_line": 436,
+    "end_line": 440
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "classify_required_analytic_event",
+    "start_line": 443,
+    "end_line": 446
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "represent_required_event_children",
+    "start_line": 449,
+    "end_line": 481
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "__post_init__",
+    "start_line": 167,
+    "end_line": 171
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "from_source_certificate",
+    "start_line": 174,
+    "end_line": 197
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "element",
+    "start_line": 199,
+    "end_line": 206
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "record",
+    "start_line": 208,
+    "end_line": 214
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "__post_init__",
+    "start_line": 222,
+    "end_line": 224
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "__add__",
+    "start_line": 226,
+    "end_line": 228
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "__neg__",
+    "start_line": 230,
+    "end_line": 231
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "__sub__",
+    "start_line": 233,
+    "end_line": 234
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "__mul__",
+    "start_line": 236,
+    "end_line": 238
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "__pow__",
+    "start_line": 240,
+    "end_line": 247
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "inverse",
+    "start_line": 249,
+    "end_line": 258
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "is_zero",
+    "start_line": 260,
+    "end_line": 261
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "sign",
+    "start_line": 263,
+    "end_line": 280
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+    "name": "record",
+    "start_line": 282,
+    "end_line": 283
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-032/event_engine.py",
+    "name": "q",
+    "start_line": 13,
+    "end_line": 22
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-032/event_engine.py",
+    "name": "_trim",
+    "start_line": 24,
+    "end_line": 28
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-032/event_engine.py",
+    "name": "degree",
+    "start_line": 30,
+    "end_line": 32
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-032/event_engine.py",
+    "name": "peval",
+    "start_line": 34,
+    "end_line": 38
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-032/event_engine.py",
+    "name": "deriv",
+    "start_line": 40,
+    "end_line": 44
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-032/event_engine.py",
+    "name": "pdivmod",
+    "start_line": 46,
+    "end_line": 61
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-032/event_engine.py",
+    "name": "monic",
+    "start_line": 63,
+    "end_line": 67
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-032/event_engine.py",
+    "name": "pgcd",
+    "start_line": 69,
+    "end_line": 74
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-032/event_engine.py",
+    "name": "square_free",
+    "start_line": 76,
+    "end_line": 83
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-032/event_engine.py",
+    "name": "sign",
+    "start_line": 85,
+    "end_line": 87
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-032/event_engine.py",
+    "name": "multiplicity_at",
+    "start_line": 89,
+    "end_line": 100
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-032/event_engine.py",
+    "name": "exact_event",
+    "start_line": 102,
+    "end_line": 124
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-032/event_engine.py",
+    "name": "_one_sided_sign",
+    "start_line": 126,
+    "end_line": 139
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-032/event_engine.py",
+    "name": "sturm_sequence",
+    "start_line": 141,
+    "end_line": 151
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-032/event_engine.py",
+    "name": "_variations",
+    "start_line": 153,
+    "end_line": 155
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-032/event_engine.py",
+    "name": "distinct_roots_open",
+    "start_line": 157,
+    "end_line": 164
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-032/event_engine.py",
+    "name": "classify_open_interval",
+    "start_line": 166,
+    "end_line": 181
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-032/event_engine.py",
+    "name": "_certified_fraction",
+    "start_line": 183,
+    "end_line": 187
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-032/event_engine.py",
+    "name": "validate_analytic_evidence",
+    "start_line": 189,
+    "end_line": 224
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-032/event_engine.py",
+    "name": "resource_refusal",
+    "start_line": 226,
+    "end_line": 227
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-032/event_engine.py",
+    "name": "certify_topology_event",
+    "start_line": 229,
+    "end_line": 258
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-032/event_engine.py",
+    "name": "bind_event_certificate",
+    "start_line": 260,
+    "end_line": 273
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-032/event_engine.py",
+    "name": "verify_event_certificate",
+    "start_line": 275,
+    "end_line": 282
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-032/event_engine.py",
+    "name": "terminal_status",
+    "start_line": 284,
+    "end_line": 288
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+    "name": "same",
+    "start_line": 24,
+    "end_line": 25
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+    "name": "digest",
+    "start_line": 28,
+    "end_line": 29
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+    "name": "blocked",
+    "start_line": 32,
+    "end_line": 33
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+    "name": "refusal",
+    "start_line": 36,
+    "end_line": 38
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+    "name": "value_sign",
+    "start_line": 78,
+    "end_line": 79
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+    "name": "value_record",
+    "start_line": 82,
+    "end_line": 85
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+    "name": "_refine",
+    "start_line": 88,
+    "end_line": 92
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+    "name": "order_certificate",
+    "start_line": 95,
+    "end_line": 128
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+    "name": "side_jet",
+    "start_line": 131,
+    "end_line": 141
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+    "name": "polynomial_certificate",
+    "start_line": 144,
+    "end_line": 168
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+    "name": "validate_polynomial_certificate",
+    "start_line": 171,
+    "end_line": 174
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+    "name": "_floor_affine",
+    "start_line": 177,
+    "end_line": 192
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+    "name": "phase_cell",
+    "start_line": 195,
+    "end_line": 212
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+    "name": "maps",
+    "start_line": 215,
+    "end_line": 217
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+    "name": "local_phase",
+    "start_line": 220,
+    "end_line": 223
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+    "name": "residual_channels",
+    "start_line": 226,
+    "end_line": 239
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+    "name": "derivative_attempt",
+    "start_line": 242,
+    "end_line": 320
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+    "name": "certify_derivative",
+    "start_line": 323,
+    "end_line": 334
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+    "name": "__post_init__",
+    "start_line": 47,
+    "end_line": 52
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+    "name": "at",
+    "start_line": 55,
+    "end_line": 56
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+    "name": "from_source",
+    "start_line": 59,
+    "end_line": 60
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+    "name": "record",
+    "start_line": 62,
+    "end_line": 65
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+    "name": "evaluate",
+    "start_line": 67,
+    "end_line": 72
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+    "name": "affine",
+    "start_line": 74,
+    "end_line": 75
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+    "name": "add",
+    "start_line": 229,
+    "end_line": 232
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+    "name": "proof",
+    "start_line": 265,
+    "end_line": 268
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+    "name": "refusal",
+    "start_line": 31,
+    "end_line": 33
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+    "name": "blocked",
+    "start_line": 36,
+    "end_line": 37
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+    "name": "maps",
+    "start_line": 40,
+    "end_line": 42
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+    "name": "args",
+    "start_line": 45,
+    "end_line": 48
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+    "name": "amplitude_gcd",
+    "start_line": 51,
+    "end_line": 58
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+    "name": "factor_source",
+    "start_line": 61,
+    "end_line": 88
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+    "name": "source_spec",
+    "start_line": 91,
+    "end_line": 106
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+    "name": "carrier_proof",
+    "start_line": 109,
+    "end_line": 127
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+    "name": "validate_carrier",
+    "start_line": 130,
+    "end_line": 167
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+    "name": "rational_event",
+    "start_line": 170,
+    "end_line": 174
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+    "name": "irrational_factor_event",
+    "start_line": 177,
+    "end_line": 208
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+    "name": "factor_root_events",
+    "start_line": 211,
+    "end_line": 251
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+    "name": "physical_exteriors",
+    "start_line": 254,
+    "end_line": 278
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+    "name": "assemble_product",
+    "start_line": 281,
+    "end_line": 323
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+    "name": "build_product_event",
+    "start_line": 326,
+    "end_line": 350
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+    "name": "classify_required_analytic_event",
+    "start_line": 353,
+    "end_line": 386
+  },
+  {
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+    "name": "spline",
+    "start_line": 94,
+    "end_line": 99
+  }
+]

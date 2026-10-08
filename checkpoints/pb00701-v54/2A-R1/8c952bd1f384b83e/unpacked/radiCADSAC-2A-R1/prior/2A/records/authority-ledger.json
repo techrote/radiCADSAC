@@ -1,0 +1,71 @@
+{
+  "repository": "techrote/radiCADSAC",
+  "observed_date_utc": "2026-10-04",
+  "mutable_ref_observation": "Branches read once near start; no continuous polling or final ref lock",
+  "status": "PARTIAL",
+  "refs": [
+    {
+      "name": "main",
+      "commit": "9734776b3cef3d7039be9623e8872df2c2a85174",
+      "tree": "b0240e4d02a6165f8799d7af432ea36416009667",
+      "parents": [
+        "a13702b28fcc349442e78cfb1e971eb94991a69e"
+      ],
+      "evidence": "LIVE_COMMIT_AND_BRANCH_API",
+      "acceptance": "v53 accepted; current main is documentation reconciliation; not v54 acceptance",
+      "source_url": "https://api.github.com/repos/techrote/radiCADSAC/git/commits/9734776b3cef3d7039be9623e8872df2c2a85174"
+    },
+    {
+      "name": "v53 implementation landing / PR 273",
+      "commit": "a13702b28fcc349442e78cfb1e971eb94991a69e",
+      "tree": "17fe7642600b12edd573e21b57933e5811cea991",
+      "parents": [
+        "7126dabf013ef95b0965b74008466e12f0650ef8"
+      ],
+      "evidence": "LIVE_COMMIT_API_PLUS_ACCEPTANCE_LEDGER",
+      "acceptance": "ACCEPTED_BOUNDED_V53",
+      "source_url": "https://api.github.com/repos/techrote/radiCADSAC/git/commits/a13702b28fcc349442e78cfb1e971eb94991a69e"
+    },
+    {
+      "name": "mc038/pb00701-v54-recovery",
+      "commit": "823a8624739c337aeb41470cfebebd2ea2a931ca",
+      "tree": "99f93a6c2dcc5e60965ceefc9a5e9ec25409f4bd",
+      "parents": [
+        "9734776b3cef3d7039be9623e8872df2c2a85174"
+      ],
+      "evidence": "LIVE_COMMIT_BRANCH_COMPARE_APIS",
+      "acceptance": "NO_V54_ACCEPTANCE; only recovery workflow added",
+      "source_url": "https://api.github.com/repos/techrote/radiCADSAC/git/commits/823a8624739c337aeb41470cfebebd2ea2a931ca"
+    },
+    {
+      "name": "mc038/pb00701-v54-finite-owner-coverage",
+      "commit": "8cec4953dc898e70270c654f5453b108bb80d47b",
+      "tree": "6afc28d6b83f5c631b63c67d3e9b1ad93188e6a2",
+      "parents": [
+        "acc79884eb872344b2544f00e0cac0140f79fecd"
+      ],
+      "evidence": "LIVE_COMMIT_BRANCH_COMPARE_APIS",
+      "acceptance": "UNACCEPTED_FORENSIC_STAGING; six chunks and baseline workflow only",
+      "source_url": "https://api.github.com/repos/techrote/radiCADSAC/git/commits/8cec4953dc898e70270c654f5453b108bb80d47b"
+    }
+  ],
+  "full_git_tree_exported": false,
+  "commit_objects_locally_rehashed": false,
+  "local_blob_hashes": "exported-blobs.json",
+  "staging_subtree_metadata_hash": "staging-tree.json",
+  "programme": {
+    "operation_denominator": 26,
+    "PB-007-01": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "v54_acceptance": false
+  },
+  "authority_order": [
+    "Current user 2A read-only/bounded execution contract",
+    "AGENTS/current-authority/DR-0026/current execution protocol",
+    "Issue 275 scoped task body; comments are evidence claims, not acceptance",
+    "Accepted v53 source bytes, #271/#100 ledger and independent CI metadata",
+    "Current-state navigation records; historical roadmap/report text remains scoped history"
+  ],
+  "source_date_not_github_signature_validation": "Commit/tree fields were inspected via connector. Signature verified flags reported by GitHub were not independently cryptographically validated."
+}

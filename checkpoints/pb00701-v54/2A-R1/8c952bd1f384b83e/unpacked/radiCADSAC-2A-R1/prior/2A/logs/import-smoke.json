@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "scope": "IMPORT_ONLY_V53_VERIFIER",
+  "contract_called": false,
+  "self_test_called": false,
+  "predecessor_modules_imported": false,
+  "reversed_source_replayed": false,
+  "owner_inventory_verified": false,
+  "v54_accepted": false
+}

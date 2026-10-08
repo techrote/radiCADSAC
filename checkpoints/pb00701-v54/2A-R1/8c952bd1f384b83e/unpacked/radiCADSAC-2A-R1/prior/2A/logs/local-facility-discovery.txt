@@ -1,0 +1,6 @@
+Local discovery summary, normalized to omit unrelated environment details.
+At task start, no earlier source packet or checkout was present under /mnt/data.
+An isolated task directory was created. Python was available.
+Only environment variable names were initially inspected; no credential values
+were read, retained, emitted or used. Direct GitHub HTTPS failed DNS resolution.
+No sibling repository was written and no shared/native device was accessed.

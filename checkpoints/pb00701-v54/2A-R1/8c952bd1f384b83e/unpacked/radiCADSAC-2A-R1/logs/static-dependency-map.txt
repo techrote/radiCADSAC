@@ -1,0 +1,26 @@
+{
+  "python_files_inspected": 14,
+  "ordinary_import_sites": 119,
+  "fixture_import_time_missing_modules": [
+    "pb00701_algebraic_endpoint_certificate",
+    "pb00701_algebraic_endpoint_model"
+  ],
+  "third_party_imports_observed": [],
+  "unresolved_dynamic_source_loads": []
+}
+Residual source references: 15
+IMPORT_TIME_FIXTURE_FRONTIER pb00701_algebraic_endpoint_certificate
+IMPORT_TIME_FIXTURE_FRONTIER pb00701_algebraic_endpoint_model
+SOURCE_OR_PROOF_RUNTIME_FRONTIER pb00701_algebraic_monotone_cut_certificate
+SOURCE_OR_PROOF_RUNTIME_FRONTIER pb00701_algebraic_monotone_cut_model
+SOURCE_OR_PROOF_RUNTIME_FRONTIER pb00701_algebraic_orientation_cut_model
+SOURCE_OR_PROOF_RUNTIME_FRONTIER pb00701_mixed_multicut_certificate
+SOURCE_OR_PROOF_RUNTIME_FRONTIER pb00701_mixed_multicut_model
+SOURCE_OR_PROOF_RUNTIME_FRONTIER pb00701_mixed_orientation_consumer
+SOURCE_OR_PROOF_RUNTIME_FRONTIER pb00701_mixed_orientation_roots_model
+SOURCE_OR_PROOF_RUNTIME_FRONTIER pb00701_multiharmonic_monotone_anchor_model
+SOURCE_OR_PROOF_RUNTIME_FRONTIER pb00701_rational_turn_model
+SOURCE_OR_PROOF_RUNTIME_FRONTIER pb00701_vanishing_source_factor_certificate
+DEFERRED_OTHER_TEST_OR_FULL_VERIFIER test_pb00701_mixed_boundary
+DEFERRED_OTHER_TEST_OR_FULL_VERIFIER verify_pb00701_v51
+DEFERRED_OTHER_TEST_OR_FULL_VERIFIER verify_pb00701_v52

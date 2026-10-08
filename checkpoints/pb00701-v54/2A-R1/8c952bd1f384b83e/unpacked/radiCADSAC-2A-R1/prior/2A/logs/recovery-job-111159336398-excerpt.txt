@@ -1,0 +1,9 @@
+Selected exact log lines; NOT the full job log. Obtained by GitHub.fetch_workflow_job_logs(job_id=111159336398).
+https://github.com/techrote/radiCADSAC/actions/runs/37107690114/job/111159336398
+
+2026-10-03T07:50:44.2555049Z 823a8624739c337aeb41470cfebebd2ea2a931ca
+2026-10-03T07:50:44.9463517Z  * branch            8cec4953dc898e70270c654f5453b108bb80d47b -> FETCH_HEAD
+2026-10-03T07:50:44.9613355Z gzip: stdin: unexpected end of file
+2026-10-03T07:50:44.9631779Z ##[error]Process completed with exit code 1.
+
+Job metadata: recover=failure; artifact upload=skipped. No new run was dispatched in chunk 2A.

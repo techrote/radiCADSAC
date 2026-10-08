@@ -1,0 +1,1290 @@
+{
+  "scope": "Static import inspection of retained complete Python files only; not owner enumeration.",
+  "python_files_inspected": 14,
+  "ordinary_import_sites": 119,
+  "fixture_entry_module": "test_pb00701_mixed_owner_span_integration",
+  "known_recovered_import_time_modules": [
+    "event_engine",
+    "pb00701_algebraic_child_map_model",
+    "pb00701_mixed_boundary_model",
+    "pb00701_mixed_owner_span_certificate",
+    "pb00701_mixed_owner_span_model",
+    "pb00701_ordered_product_certificate",
+    "pb00701_ordered_product_model",
+    "pb00701_piecewise_product_model",
+    "pb00701_vanishing_source_factor_model",
+    "test_pb00701_mixed_owner_span",
+    "test_pb00701_mixed_owner_span_integration",
+    "test_pb00701_piecewise_product"
+  ],
+  "fixture_import_time_missing_modules": [
+    "pb00701_algebraic_endpoint_certificate",
+    "pb00701_algebraic_endpoint_model"
+  ],
+  "ordinary_imports": [
+    {
+      "from_module": "event_engine",
+      "repository_path": "research/machining-completeness/tasks/MC-032/event_engine.py",
+      "line": 2,
+      "imported_module": "__future__",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "event_engine",
+      "repository_path": "research/machining-completeness/tasks/MC-032/event_engine.py",
+      "line": 4,
+      "imported_module": "fractions",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "event_engine",
+      "repository_path": "research/machining-completeness/tasks/MC-032/event_engine.py",
+      "line": 5,
+      "imported_module": "hashlib",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "event_engine",
+      "repository_path": "research/machining-completeness/tasks/MC-032/event_engine.py",
+      "line": 6,
+      "imported_module": "json",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_algebraic_child_map_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+      "line": 8,
+      "imported_module": "__future__",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_algebraic_child_map_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+      "line": 10,
+      "imported_module": "dataclasses",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_algebraic_child_map_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+      "line": 11,
+      "imported_module": "fractions",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_algebraic_child_map_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+      "line": 12,
+      "imported_module": "functools",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_algebraic_child_map_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+      "line": 13,
+      "imported_module": "hashlib",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_algebraic_child_map_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+      "line": 14,
+      "imported_module": "importlib.util",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_algebraic_child_map_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+      "line": 15,
+      "imported_module": "itertools",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_algebraic_child_map_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+      "line": 16,
+      "imported_module": "json",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_algebraic_child_map_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+      "line": 17,
+      "imported_module": "math",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_algebraic_child_map_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+      "line": 18,
+      "imported_module": "pathlib",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_algebraic_child_map_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+      "line": 19,
+      "imported_module": "typing",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_algebraic_child_map_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+      "line": 418,
+      "imported_module": "pb00701_algebraic_orientation_cut_model",
+      "phase": "FUNCTION_SCOPED_DEFERRED",
+      "function_scopes": [
+        "build_orientation_child_maps"
+      ],
+      "classification": "MISSING_REPOSITORY_SOURCE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_orientation_cut_model.py"
+    },
+    {
+      "from_module": "pb00701_algebraic_child_map_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+      "line": 445,
+      "imported_module": "pb00701_algebraic_orientation_cut_model",
+      "phase": "FUNCTION_SCOPED_DEFERRED",
+      "function_scopes": [
+        "classify_required_analytic_event"
+      ],
+      "classification": "MISSING_REPOSITORY_SOURCE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_orientation_cut_model.py"
+    },
+    {
+      "from_module": "pb00701_algebraic_child_map_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+      "line": 455,
+      "imported_module": "pb00701_algebraic_orientation_cut_model",
+      "phase": "FUNCTION_SCOPED_DEFERRED",
+      "function_scopes": [
+        "represent_required_event_children"
+      ],
+      "classification": "MISSING_REPOSITORY_SOURCE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_orientation_cut_model.py"
+    },
+    {
+      "from_module": "pb00701_coupled_bspline_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+      "line": 2,
+      "imported_module": "__future__",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_coupled_bspline_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+      "line": 4,
+      "imported_module": "fractions",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_coupled_bspline_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+      "line": 5,
+      "imported_module": "pathlib",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_coupled_bspline_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+      "line": 6,
+      "imported_module": "sys",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_coupled_bspline_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+      "line": 10,
+      "imported_module": "pb00701_rational_turn_model",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "MISSING_REPOSITORY_SOURCE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_rational_turn_model.py"
+    },
+    {
+      "from_module": "pb00701_mixed_boundary_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+      "line": 8,
+      "imported_module": "__future__",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_mixed_boundary_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+      "line": 10,
+      "imported_module": "dataclasses",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_mixed_boundary_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+      "line": 11,
+      "imported_module": "fractions",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_mixed_boundary_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+      "line": 12,
+      "imported_module": "hashlib",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_mixed_boundary_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+      "line": 13,
+      "imported_module": "pathlib",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_mixed_boundary_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+      "line": 14,
+      "imported_module": "sys",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_mixed_boundary_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+      "line": 17,
+      "imported_module": "pb00701_algebraic_child_map_model",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "RECOVERED_REPOSITORY_FILE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py"
+    },
+    {
+      "from_module": "pb00701_mixed_owner_span_certificate",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_certificate.py",
+      "line": 7,
+      "imported_module": "pathlib",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_mixed_owner_span_certificate",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_certificate.py",
+      "line": 8,
+      "imported_module": "sys",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_mixed_owner_span_certificate",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_certificate.py",
+      "line": 10,
+      "imported_module": "pb00701_mixed_owner_span_model",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "RECOVERED_REPOSITORY_FILE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py"
+    },
+    {
+      "from_module": "pb00701_mixed_owner_span_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py",
+      "line": 8,
+      "imported_module": "fractions",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_mixed_owner_span_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py",
+      "line": 9,
+      "imported_module": "pathlib",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_mixed_owner_span_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py",
+      "line": 10,
+      "imported_module": "sys",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_mixed_owner_span_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py",
+      "line": 13,
+      "imported_module": "pb00701_piecewise_product_model",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "RECOVERED_REPOSITORY_FILE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_piecewise_product_model.py"
+    },
+    {
+      "from_module": "pb00701_mixed_owner_span_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py",
+      "line": 14,
+      "imported_module": "pb00701_ordered_product_model",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "RECOVERED_REPOSITORY_FILE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_model.py"
+    },
+    {
+      "from_module": "pb00701_mixed_owner_span_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py",
+      "line": 15,
+      "imported_module": "pb00701_ordered_product_certificate",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "RECOVERED_REPOSITORY_FILE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_certificate.py"
+    },
+    {
+      "from_module": "pb00701_mixed_owner_span_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py",
+      "line": 166,
+      "imported_module": "pb00701_mixed_owner_span_certificate",
+      "phase": "FUNCTION_SCOPED_DEFERRED",
+      "function_scopes": [
+        "check_views"
+      ],
+      "classification": "RECOVERED_REPOSITORY_FILE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_certificate.py"
+    },
+    {
+      "from_module": "pb00701_ordered_product_certificate",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_certificate.py",
+      "line": 3,
+      "imported_module": "pathlib",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_ordered_product_certificate",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_certificate.py",
+      "line": 4,
+      "imported_module": "sys",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_ordered_product_certificate",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_certificate.py",
+      "line": 6,
+      "imported_module": "pb00701_ordered_product_model",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "RECOVERED_REPOSITORY_FILE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_model.py"
+    },
+    {
+      "from_module": "pb00701_ordered_product_certificate",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_certificate.py",
+      "line": 23,
+      "imported_module": "pb00701_vanishing_source_factor_certificate",
+      "phase": "FUNCTION_SCOPED_DEFERRED",
+      "function_scopes": [
+        "validate_ordered_product_event"
+      ],
+      "classification": "MISSING_REPOSITORY_SOURCE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_certificate.py"
+    },
+    {
+      "from_module": "pb00701_ordered_product_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_model.py",
+      "line": 8,
+      "imported_module": "fractions",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_ordered_product_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_model.py",
+      "line": 9,
+      "imported_module": "pathlib",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_ordered_product_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_model.py",
+      "line": 10,
+      "imported_module": "sys",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_ordered_product_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_model.py",
+      "line": 13,
+      "imported_module": "pb00701_vanishing_source_factor_model",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "RECOVERED_REPOSITORY_FILE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py"
+    },
+    {
+      "from_module": "pb00701_ordered_product_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_model.py",
+      "line": 14,
+      "imported_module": "pb00701_algebraic_endpoint_certificate",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "MISSING_REPOSITORY_SOURCE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_endpoint_certificate.py"
+    },
+    {
+      "from_module": "pb00701_ordered_product_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_model.py",
+      "line": 360,
+      "imported_module": "pb00701_vanishing_source_factor_certificate",
+      "phase": "FUNCTION_SCOPED_DEFERRED",
+      "function_scopes": [
+        "build_ordered_product_event"
+      ],
+      "classification": "MISSING_REPOSITORY_SOURCE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_certificate.py"
+    },
+    {
+      "from_module": "pb00701_piecewise_product_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_piecewise_product_model.py",
+      "line": 8,
+      "imported_module": "fractions",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_piecewise_product_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_piecewise_product_model.py",
+      "line": 9,
+      "imported_module": "pathlib",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_piecewise_product_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_piecewise_product_model.py",
+      "line": 10,
+      "imported_module": "sys",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_piecewise_product_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_piecewise_product_model.py",
+      "line": 13,
+      "imported_module": "pb00701_algebraic_child_map_model",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "RECOVERED_REPOSITORY_FILE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py"
+    },
+    {
+      "from_module": "pb00701_piecewise_product_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_piecewise_product_model.py",
+      "line": 14,
+      "imported_module": "pb00701_mixed_boundary_model",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "RECOVERED_REPOSITORY_FILE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py"
+    },
+    {
+      "from_module": "pb00701_piecewise_product_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_piecewise_product_model.py",
+      "line": 32,
+      "imported_module": "pb00701_coupled_bspline_model",
+      "phase": "FUNCTION_SCOPED_DEFERRED",
+      "function_scopes": [
+        "lower_source"
+      ],
+      "classification": "RECOVERED_REPOSITORY_FILE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py"
+    },
+    {
+      "from_module": "pb00701_piecewise_product_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_piecewise_product_model.py",
+      "line": 84,
+      "imported_module": "pb00701_ordered_product_certificate",
+      "phase": "FUNCTION_SCOPED_DEFERRED",
+      "function_scopes": [
+        "check_spans"
+      ],
+      "classification": "RECOVERED_REPOSITORY_FILE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_certificate.py"
+    },
+    {
+      "from_module": "pb00701_piecewise_product_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_piecewise_product_model.py",
+      "line": 96,
+      "imported_module": "pb00701_multiharmonic_monotone_anchor_model",
+      "phase": "FUNCTION_SCOPED_DEFERRED",
+      "function_scopes": [
+        "knot_continuity"
+      ],
+      "classification": "MISSING_REPOSITORY_SOURCE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_multiharmonic_monotone_anchor_model.py"
+    },
+    {
+      "from_module": "pb00701_piecewise_product_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_piecewise_product_model.py",
+      "line": 278,
+      "imported_module": "pb00701_ordered_product_model",
+      "phase": "FUNCTION_SCOPED_DEFERRED",
+      "function_scopes": [
+        "build_piecewise_source_evidence"
+      ],
+      "classification": "RECOVERED_REPOSITORY_FILE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_model.py"
+    },
+    {
+      "from_module": "pb00701_vanishing_source_factor_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+      "line": 9,
+      "imported_module": "fractions",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_vanishing_source_factor_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+      "line": 10,
+      "imported_module": "functools",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_vanishing_source_factor_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+      "line": 11,
+      "imported_module": "math",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_vanishing_source_factor_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+      "line": 12,
+      "imported_module": "pathlib",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_vanishing_source_factor_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+      "line": 13,
+      "imported_module": "sys",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "pb00701_vanishing_source_factor_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+      "line": 16,
+      "imported_module": "pb00701_algebraic_child_map_model",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "RECOVERED_REPOSITORY_FILE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py"
+    },
+    {
+      "from_module": "pb00701_vanishing_source_factor_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+      "line": 17,
+      "imported_module": "pb00701_mixed_boundary_model",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "RECOVERED_REPOSITORY_FILE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py"
+    },
+    {
+      "from_module": "pb00701_vanishing_source_factor_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+      "line": 18,
+      "imported_module": "pb00701_algebraic_endpoint_model",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "MISSING_REPOSITORY_SOURCE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_endpoint_model.py"
+    },
+    {
+      "from_module": "pb00701_vanishing_source_factor_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+      "line": 111,
+      "imported_module": "pb00701_mixed_multicut_model",
+      "phase": "FUNCTION_SCOPED_DEFERRED",
+      "function_scopes": [
+        "carrier_proof"
+      ],
+      "classification": "MISSING_REPOSITORY_SOURCE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_multicut_model.py"
+    },
+    {
+      "from_module": "pb00701_vanishing_source_factor_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+      "line": 138,
+      "imported_module": "pb00701_mixed_multicut_certificate",
+      "phase": "FUNCTION_SCOPED_DEFERRED",
+      "function_scopes": [
+        "validate_carrier"
+      ],
+      "classification": "MISSING_REPOSITORY_SOURCE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_multicut_certificate.py"
+    },
+    {
+      "from_module": "pb00701_vanishing_source_factor_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+      "line": 141,
+      "imported_module": "pb00701_mixed_orientation_consumer",
+      "phase": "FUNCTION_SCOPED_DEFERRED",
+      "function_scopes": [
+        "validate_carrier"
+      ],
+      "classification": "MISSING_REPOSITORY_SOURCE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_orientation_consumer.py"
+    },
+    {
+      "from_module": "pb00701_vanishing_source_factor_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+      "line": 144,
+      "imported_module": "pb00701_algebraic_monotone_cut_certificate",
+      "phase": "FUNCTION_SCOPED_DEFERRED",
+      "function_scopes": [
+        "validate_carrier"
+      ],
+      "classification": "MISSING_REPOSITORY_SOURCE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_monotone_cut_certificate.py"
+    },
+    {
+      "from_module": "pb00701_vanishing_source_factor_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+      "line": 147,
+      "imported_module": "pb00701_multiharmonic_monotone_anchor_model",
+      "phase": "FUNCTION_SCOPED_DEFERRED",
+      "function_scopes": [
+        "validate_carrier"
+      ],
+      "classification": "MISSING_REPOSITORY_SOURCE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_multiharmonic_monotone_anchor_model.py"
+    },
+    {
+      "from_module": "pb00701_vanishing_source_factor_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+      "line": 171,
+      "imported_module": "pb00701_multiharmonic_monotone_anchor_model",
+      "phase": "FUNCTION_SCOPED_DEFERRED",
+      "function_scopes": [
+        "rational_event"
+      ],
+      "classification": "MISSING_REPOSITORY_SOURCE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_multiharmonic_monotone_anchor_model.py"
+    },
+    {
+      "from_module": "pb00701_vanishing_source_factor_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+      "line": 212,
+      "imported_module": "pb00701_mixed_orientation_roots_model",
+      "phase": "FUNCTION_SCOPED_DEFERRED",
+      "function_scopes": [
+        "factor_root_events"
+      ],
+      "classification": "MISSING_REPOSITORY_SOURCE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_orientation_roots_model.py"
+    },
+    {
+      "from_module": "pb00701_vanishing_source_factor_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+      "line": 354,
+      "imported_module": "pb00701_mixed_multicut_model",
+      "phase": "FUNCTION_SCOPED_DEFERRED",
+      "function_scopes": [
+        "classify_required_analytic_event"
+      ],
+      "classification": "MISSING_REPOSITORY_SOURCE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_multicut_model.py"
+    },
+    {
+      "from_module": "test_pb00701_mixed_owner_span",
+      "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+      "line": 3,
+      "imported_module": "contextlib",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "test_pb00701_mixed_owner_span",
+      "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+      "line": 4,
+      "imported_module": "fractions",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "test_pb00701_mixed_owner_span",
+      "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+      "line": 5,
+      "imported_module": "pathlib",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "test_pb00701_mixed_owner_span",
+      "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+      "line": 6,
+      "imported_module": "copy",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "test_pb00701_mixed_owner_span",
+      "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+      "line": 7,
+      "imported_module": "sys",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "test_pb00701_mixed_owner_span",
+      "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+      "line": 8,
+      "imported_module": "unittest",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "test_pb00701_mixed_owner_span",
+      "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+      "line": 9,
+      "imported_module": "unittest.mock",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "test_pb00701_mixed_owner_span",
+      "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+      "line": 11,
+      "imported_module": "pb00701_mixed_owner_span_model",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "RECOVERED_REPOSITORY_FILE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py"
+    },
+    {
+      "from_module": "test_pb00701_mixed_owner_span",
+      "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+      "line": 12,
+      "imported_module": "pb00701_mixed_owner_span_certificate",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "RECOVERED_REPOSITORY_FILE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_certificate.py"
+    },
+    {
+      "from_module": "test_pb00701_mixed_owner_span",
+      "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+      "line": 13,
+      "imported_module": "test_pb00701_piecewise_product",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "RECOVERED_REPOSITORY_FILE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_piecewise_product.py"
+    },
+    {
+      "from_module": "test_pb00701_mixed_owner_span",
+      "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+      "line": 31,
+      "imported_module": "test_pb00701_mixed_boundary",
+      "phase": "FUNCTION_SCOPED_DEFERRED",
+      "function_scopes": [
+        "strict_args"
+      ],
+      "classification": "MISSING_REPOSITORY_SOURCE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_boundary.py"
+    },
+    {
+      "from_module": "test_pb00701_mixed_owner_span",
+      "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+      "line": 56,
+      "imported_module": "pb00701_mixed_multicut_model",
+      "phase": "FUNCTION_SCOPED_DEFERRED",
+      "function_scopes": [
+        "no_search"
+      ],
+      "classification": "MISSING_REPOSITORY_SOURCE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_multicut_model.py"
+    },
+    {
+      "from_module": "test_pb00701_mixed_owner_span",
+      "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+      "line": 57,
+      "imported_module": "pb00701_mixed_orientation_consumer",
+      "phase": "FUNCTION_SCOPED_DEFERRED",
+      "function_scopes": [
+        "no_search"
+      ],
+      "classification": "MISSING_REPOSITORY_SOURCE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_orientation_consumer.py"
+    },
+    {
+      "from_module": "test_pb00701_mixed_owner_span",
+      "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+      "line": 58,
+      "imported_module": "pb00701_algebraic_monotone_cut_model",
+      "phase": "FUNCTION_SCOPED_DEFERRED",
+      "function_scopes": [
+        "no_search"
+      ],
+      "classification": "MISSING_REPOSITORY_SOURCE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_monotone_cut_model.py"
+    },
+    {
+      "from_module": "test_pb00701_mixed_owner_span",
+      "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+      "line": 59,
+      "imported_module": "pb00701_coupled_bspline_model",
+      "phase": "FUNCTION_SCOPED_DEFERRED",
+      "function_scopes": [
+        "no_search"
+      ],
+      "classification": "RECOVERED_REPOSITORY_FILE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py"
+    },
+    {
+      "from_module": "test_pb00701_mixed_owner_span",
+      "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+      "line": 60,
+      "imported_module": "pb00701_multiharmonic_monotone_anchor_model",
+      "phase": "FUNCTION_SCOPED_DEFERRED",
+      "function_scopes": [
+        "no_search"
+      ],
+      "classification": "MISSING_REPOSITORY_SOURCE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_multiharmonic_monotone_anchor_model.py"
+    },
+    {
+      "from_module": "test_pb00701_mixed_owner_span_integration",
+      "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+      "line": 3,
+      "imported_module": "fractions",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "test_pb00701_mixed_owner_span_integration",
+      "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+      "line": 4,
+      "imported_module": "functools",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "test_pb00701_mixed_owner_span_integration",
+      "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+      "line": 5,
+      "imported_module": "pathlib",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "test_pb00701_mixed_owner_span_integration",
+      "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+      "line": 6,
+      "imported_module": "copy",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "test_pb00701_mixed_owner_span_integration",
+      "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+      "line": 7,
+      "imported_module": "sys",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "test_pb00701_mixed_owner_span_integration",
+      "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+      "line": 8,
+      "imported_module": "unittest",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "test_pb00701_mixed_owner_span_integration",
+      "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+      "line": 9,
+      "imported_module": "unittest.mock",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "test_pb00701_mixed_owner_span_integration",
+      "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+      "line": 11,
+      "imported_module": "test_pb00701_mixed_owner_span",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "RECOVERED_REPOSITORY_FILE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py"
+    },
+    {
+      "from_module": "test_pb00701_mixed_owner_span_integration",
+      "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+      "line": 12,
+      "imported_module": "pb00701_mixed_owner_span_model",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "RECOVERED_REPOSITORY_FILE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py"
+    },
+    {
+      "from_module": "test_pb00701_mixed_owner_span_integration",
+      "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+      "line": 13,
+      "imported_module": "pb00701_mixed_owner_span_certificate",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "RECOVERED_REPOSITORY_FILE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_certificate.py"
+    },
+    {
+      "from_module": "test_pb00701_piecewise_product",
+      "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_piecewise_product.py",
+      "line": 3,
+      "imported_module": "fractions",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "test_pb00701_piecewise_product",
+      "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_piecewise_product.py",
+      "line": 4,
+      "imported_module": "math",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "test_pb00701_piecewise_product",
+      "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_piecewise_product.py",
+      "line": 5,
+      "imported_module": "pathlib",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "test_pb00701_piecewise_product",
+      "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_piecewise_product.py",
+      "line": 6,
+      "imported_module": "copy",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "test_pb00701_piecewise_product",
+      "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_piecewise_product.py",
+      "line": 7,
+      "imported_module": "sys",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "test_pb00701_piecewise_product",
+      "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_piecewise_product.py",
+      "line": 8,
+      "imported_module": "unittest",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "test_pb00701_piecewise_product",
+      "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_piecewise_product.py",
+      "line": 10,
+      "imported_module": "pb00701_piecewise_product_model",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "RECOVERED_REPOSITORY_FILE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_piecewise_product_model.py"
+    },
+    {
+      "from_module": "verify_pb00701_v53",
+      "repository_path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py",
+      "line": 3,
+      "imported_module": "argparse",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "verify_pb00701_v53",
+      "repository_path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py",
+      "line": 4,
+      "imported_module": "ast",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "verify_pb00701_v53",
+      "repository_path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py",
+      "line": 5,
+      "imported_module": "copy",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "verify_pb00701_v53",
+      "repository_path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py",
+      "line": 6,
+      "imported_module": "json",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "verify_pb00701_v53",
+      "repository_path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py",
+      "line": 7,
+      "imported_module": "pathlib",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "verify_pb00701_v53",
+      "repository_path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py",
+      "line": 8,
+      "imported_module": "subprocess",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "verify_pb00701_v53",
+      "repository_path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py",
+      "line": 9,
+      "imported_module": "sys",
+      "phase": "MODULE_EXECUTION",
+      "function_scopes": [],
+      "classification": "PYTHON_STANDARD_LIBRARY",
+      "target_repository_path": null
+    },
+    {
+      "from_module": "verify_pb00701_v53",
+      "repository_path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py",
+      "line": 63,
+      "imported_module": "verify_pb00701_v51",
+      "phase": "FUNCTION_SCOPED_DEFERRED",
+      "function_scopes": [
+        "expected_boundary"
+      ],
+      "classification": "MISSING_REPOSITORY_SOURCE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v51.py"
+    },
+    {
+      "from_module": "verify_pb00701_v53",
+      "repository_path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py",
+      "line": 85,
+      "imported_module": "verify_pb00701_v52",
+      "phase": "FUNCTION_SCOPED_DEFERRED",
+      "function_scopes": [
+        "contract"
+      ],
+      "classification": "MISSING_REPOSITORY_SOURCE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v52.py"
+    },
+    {
+      "from_module": "verify_pb00701_v53",
+      "repository_path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py",
+      "line": 127,
+      "imported_module": "test_pb00701_mixed_owner_span",
+      "phase": "FUNCTION_SCOPED_DEFERRED",
+      "function_scopes": [
+        "self_test"
+      ],
+      "classification": "RECOVERED_REPOSITORY_FILE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py"
+    },
+    {
+      "from_module": "verify_pb00701_v53",
+      "repository_path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py",
+      "line": 128,
+      "imported_module": "test_pb00701_mixed_owner_span_integration",
+      "phase": "FUNCTION_SCOPED_DEFERRED",
+      "function_scopes": [
+        "self_test"
+      ],
+      "classification": "RECOVERED_REPOSITORY_FILE",
+      "target_repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py"
+    }
+  ],
+  "dynamic_source_loads": [
+    {
+      "from_module": "pb00701_algebraic_child_map_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+      "line": 22,
+      "phase": "MODULE_EXECUTION",
+      "path_expression": "HERE.parent / \"MC-032\" / \"event_engine.py\"",
+      "target_repository_path": "research/machining-completeness/tasks/MC-032/event_engine.py",
+      "imported_module": "event_engine",
+      "classification": "RECOVERED_REPOSITORY_FILE",
+      "resolution": "Literal relative-path expression manually confirmed; not an external package."
+    }
+  ],
+  "unresolved_dynamic_source_loads": [],
+  "third_party_imports_observed": [],
+  "source_dependency_closure_complete": false,
+  "complete_git_tree": false,
+  "caveat": "Function-scoped imports may be used later. Transitive imports within unavailable files are unknown. Counts are source nodes/sites, not proof owners."
+}

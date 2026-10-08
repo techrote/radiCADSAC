@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "archive_sha256": "074e172c6c7995d3022b985a0a06ae1542a0c01b8fb6d06b62210fca3738309d",
+  "file_count": 53,
+  "manifest_entries": 52,
+  "exact_file_set": true,
+  "all_member_sha256_matched": true,
+  "zip_crc": "PASS",
+  "checked_at_utc": "2026-10-04T16:23:13.620485+00:00",
+  "complete_repository_snapshot": false
+}

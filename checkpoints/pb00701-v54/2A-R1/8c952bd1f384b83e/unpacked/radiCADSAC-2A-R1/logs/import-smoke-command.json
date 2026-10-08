@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/opt/pyvenv/bin/python",
+    "-I",
+    "-B",
+    "/mnt/data/radiCADSAC-2A-R1-sfro00ye/packet/tools/import_only.py"
+  ],
+  "cwd": "/mnt/data/radiCADSAC-2A-R1-sfro00ye/packet",
+  "timeout_seconds": 15,
+  "started_at": "2026-10-04T16:41:37.795694+00:00",
+  "attempt": 1,
+  "returncode": 1,
+  "timed_out": false,
+  "elapsed_seconds": 0.7546036149999509
+}

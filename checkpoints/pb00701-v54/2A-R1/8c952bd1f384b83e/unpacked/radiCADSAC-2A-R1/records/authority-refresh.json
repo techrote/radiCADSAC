@@ -1,0 +1,86 @@
+{
+  "observed_at_utc": "2026-10-04T16:28:59.376054+00:00",
+  "selected_source_commit": "9734776b3cef3d7039be9623e8872df2c2a85174",
+  "refs": [
+    {
+      "name": "main",
+      "commit": "9734776b3cef3d7039be9623e8872df2c2a85174",
+      "tree": "b0240e4d02a6165f8799d7af432ea36416009667",
+      "delta": "UNCHANGED",
+      "tree_evidence": "REUSED_IMMUTABLE_IDENTITY_FROM_VERIFIED_2A_PACKET"
+    },
+    {
+      "name": "mc038/pb00701-v54-recovery",
+      "commit": "823a8624739c337aeb41470cfebebd2ea2a931ca",
+      "tree": "99f93a6c2dcc5e60965ceefc9a5e9ec25409f4bd",
+      "delta": "UNCHANGED",
+      "tree_evidence": "REUSED_IMMUTABLE_IDENTITY_FROM_VERIFIED_2A_PACKET"
+    },
+    {
+      "name": "mc038/pb00701-v54-finite-owner-coverage",
+      "commit": "8cec4953dc898e70270c654f5453b108bb80d47b",
+      "tree": "6afc28d6b83f5c631b63c67d3e9b1ad93188e6a2",
+      "delta": "UNCHANGED",
+      "tree_evidence": "REUSED_IMMUTABLE_IDENTITY_FROM_VERIFIED_2A_PACKET"
+    }
+  ],
+  "issue275": {
+    "state": "open",
+    "comments": 5,
+    "updated_at": "2026-10-03T10:10:22Z",
+    "delta": "metadata agrees with prior recorded latest comment",
+    "body": "read completely in R1; no newly published implementation identified",
+    "comments_reread": false,
+    "previous_complete_comment_read": "prior/2A/records/issue275-claims.json"
+  },
+  "instructions": {
+    "AGENTS.md": {
+      "blob": "d7a3a2d9277d03306704227e9db9399beef042b6",
+      "reading": "R1 complete re-read, not newly retained file"
+    },
+    "docs/machining-completeness/07-EXECUTION-PROTOCOL.md": {
+      "blob": "9e79ce30e7e57138e4a594e19df73b9935b391b4",
+      "reading": "R1 complete re-read, not newly retained file"
+    },
+    "handoffs/current-authority.json": {
+      "reading": "reused full bytes; blob rechecked; MC-1 NOT_ESTABLISHED"
+    }
+  },
+  "evidence_resources": [
+    "/response/turn66",
+    "/response/turn67",
+    "/response/turn68",
+    "/response/turn69",
+    "/response/turn71"
+  ],
+  "coverage_limit": "One read of main and v54-prefix matching refs and issue 275; not a global repository/PR audit or a final ref lock",
+  "remote_writes": 0,
+  "expired_archives_retried": false,
+  "read_endpoints": [
+    {
+      "resource": "/response/turn66",
+      "url": "https://api.github.com/repos/techrote/radiCADSAC/git/ref/heads/main",
+      "method": "GET"
+    },
+    {
+      "resource": "/response/turn67",
+      "url": "https://api.github.com/repos/techrote/radiCADSAC/git/matching-refs/heads/mc038/pb00701-v54",
+      "method": "GET"
+    },
+    {
+      "resource": "/response/turn68",
+      "url": "https://github.com/techrote/radiCADSAC/issues/275",
+      "method": "GitHub.fetch_issue; full body"
+    },
+    {
+      "resource": "/response/turn69",
+      "url": "https://github.com/techrote/radiCADSAC/blob/9734776b3cef3d7039be9623e8872df2c2a85174/AGENTS.md",
+      "method": "GitHub.fetch_file; full read; no new export"
+    },
+    {
+      "resource": "/response/turn71",
+      "url": "https://github.com/techrote/radiCADSAC/blob/9734776b3cef3d7039be9623e8872df2c2a85174/docs/machining-completeness/07-EXECUTION-PROTOCOL.md",
+      "method": "GitHub.fetch_file; full read; no new export"
+    }
+  ]
+}

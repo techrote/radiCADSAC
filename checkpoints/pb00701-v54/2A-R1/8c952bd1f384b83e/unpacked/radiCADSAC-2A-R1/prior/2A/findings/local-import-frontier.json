@@ -1,0 +1,55 @@
+{
+  "scope": "Direct imports appearing in the four retained Python files only; not the complete dependency closure",
+  "repository_code_executed": false,
+  "files": {
+    "pb00701_rational_turn_model.py": [
+      {
+        "from": "pb00701_coupled_bspline_model.py",
+        "line": 10
+      }
+    ],
+    "pb00701_piecewise_product_model.py": [
+      {
+        "from": "pb00701_mixed_owner_span_model.py",
+        "line": 13
+      }
+    ],
+    "pb00701_ordered_product_model.py": [
+      {
+        "from": "pb00701_mixed_owner_span_model.py",
+        "line": 14
+      }
+    ],
+    "pb00701_ordered_product_certificate.py": [
+      {
+        "from": "pb00701_mixed_owner_span_model.py",
+        "line": 15
+      }
+    ],
+    "verify_pb00701_v51.py": [
+      {
+        "from": "verify_pb00701_v53.py",
+        "line": 63
+      }
+    ],
+    "verify_pb00701_v52.py": [
+      {
+        "from": "verify_pb00701_v53.py",
+        "line": 85
+      }
+    ],
+    "test_pb00701_mixed_owner_span.py": [
+      {
+        "from": "verify_pb00701_v53.py",
+        "line": 127
+      }
+    ],
+    "test_pb00701_mixed_owner_span_integration.py": [
+      {
+        "from": "verify_pb00701_v53.py",
+        "line": 128
+      }
+    ]
+  },
+  "transitive_closure_complete": false
+}

@@ -1,0 +1,87 @@
+{
+  "assessed_base_commit": "9734776b3cef3d7039be9623e8872df2c2a85174",
+  "assessed_base_tree": "b0240e4d02a6165f8799d7af432ea36416009667",
+  "base_compare": {
+    "ahead_by": 1,
+    "all_changed_paths_under_checkpoint_directory": true,
+    "behind_by": 0,
+    "changed_files": 25
+  },
+  "canonical_partial_branch": "checkpoint/radicadsac-2a-r1-8c952bd1f384b83e-partial",
+  "canonical_partial_commit": "ef4addd2f671a9a7491838b0218441186809b954",
+  "canonical_partial_tree": "32ed6e9868df801d8b624fb8b7620ddc322b7c1c",
+  "checkpoint_directory": "checkpoints/pb00701-v54/2A-R1/8c952bd1f384b83e/",
+  "chunk": "2A-R1",
+  "commit_parent": "9734776b3cef3d7039be9623e8872df2c2a85174",
+  "commit_parent_verified": true,
+  "commit_tree_verified": true,
+  "existing_v54_branches_after_save": {
+    "mc038/pb00701-v54-finite-owner-coverage": "8cec4953dc898e70270c654f5453b108bb80d47b",
+    "mc038/pb00701-v54-recovery": "823a8624739c337aeb41470cfebebd2ea2a931ca"
+  },
+  "failed_first_attempt": {
+    "branch": "checkpoint/radicadsac-2a-r1-8c952bd1f384b83e",
+    "canonical": false,
+    "commit": "e10c0d79e5001b81d1a115c7c2950bba4aaa2d1e",
+    "left_untouched": true,
+    "reason": "Readback found Git-blob identity mismatches for attempted ORIGINAL-PACKET.zip and SOURCE_DEPENDENCY_MAP.md; no force-push/replacement performed."
+  },
+  "fallback_packet": {
+    "bytes": 218929,
+    "members": 106,
+    "original_manifest_entries": 105,
+    "path": "/mnt/data/radiCADSAC-2A-R1-git-checkpoint-fallback.zip",
+    "sha256": "72eaa52c10be6951ec4ca68a8813fab6bb920da575b437a9bb82ea35762272d2",
+    "zip_crc": "PASS"
+  },
+  "issue": 275,
+  "live_main_after_save": "9734776b3cef3d7039be9623e8872df2c2a85174",
+  "no_research_execution_during_save": true,
+  "no_workflow_dispatch_or_rerun": true,
+  "notes": "No PR, issue/comment, review, merge, workflow dispatch/rerun, settings, deployment, active implementation branch mutation, or shared hardware use was performed.",
+  "payload_id": "8c952bd1f384b83e",
+  "payload_manifest_sha256": "8c952bd1f384b83eae3200fc7a944010ac00a4218115f79ac5acb06c89b450d7",
+  "remote_exact_blob_checks": {
+    "CHECKPOINT.md": "d6343ef699f27d751f2054f85579cb0c937189f6",
+    "ORIGINAL-PACKET-VERIFICATION.json": "9f48c29c22e7908408446ca27f25c8dc150141b0",
+    "all_20_exact_payload_or_source_blob_identities_match": true,
+    "source_entries": {
+      "recovered-source/source/forensic/.github/workflows/mc1-pb00701-v54.yml": "bb0fbd6a766bb06f3f68bb282a76d444f4c62c4b",
+      "recovered-source/source/main/handoffs/current-authority.json": "fa0233323a0804d8a5d3eb7cd892a274a6173fab",
+      "recovered-source/source/main/research/machining-completeness/tasks/MC-032/event_engine.py": "789a709c5141479a343035d1b7055dd4e53534e1",
+      "recovered-source/source/main/research/machining-completeness/tasks/MC-038/pb00701-mixed-owner-spans-v53.json": "006ceb86365616462de3b77689950e9b849d349d",
+      "recovered-source/source/main/research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py": "c055e7f392a921b386a1a99cc70b5004121ae7f6",
+      "recovered-source/source/main/research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py": "a086b625e1a6dea8bd202699d161167bb69cc9e7",
+      "recovered-source/source/main/research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py": "4c4c9697b2237790d2e7ac8b96ec1dcdf2398303",
+      "recovered-source/source/main/research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_certificate.py": "91bfc606539d05f054a86ee381af59926502c167",
+      "recovered-source/source/main/research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py": "0d7b334accaec307ef2016a1bec2fa22cb115920",
+      "recovered-source/source/main/research/machining-completeness/tasks/MC-038/pb00701_ordered_product_certificate.py": "81af2b07cb800a1e0636a8c737b9a492d774bb34",
+      "recovered-source/source/main/research/machining-completeness/tasks/MC-038/pb00701_ordered_product_model.py": "d36c5f5ce3b12840273d8483c467ff41a6e9ae01",
+      "recovered-source/source/main/research/machining-completeness/tasks/MC-038/pb00701_piecewise_product_model.py": "6ca7a321bd027f3ed2a22059e9aa856c76485f8a",
+      "recovered-source/source/main/research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py": "dfd554bf9ee41c96f9009f8ed8ceae485e134a5d",
+      "recovered-source/source/main/research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py": "f25e76dab22e47b6573a4c2fd8c1170677c887fb",
+      "recovered-source/source/main/research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py": "050e6b2110d9d706a9cf96006b79e069adb7beac",
+      "recovered-source/source/main/research/machining-completeness/tasks/MC-038/test_pb00701_piecewise_product.py": "c847b27a8981aa3743291a60e267ee8d91d5b5d5",
+      "recovered-source/source/main/research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py": "7995627b8ff784c17947b2db746a588b5ed18d7b",
+      "recovered-source/source/recovery/.github/workflows/mc1-pb00701-v54-recovery-bootstrap.yml": "849bdbbbaf9a2a1e569bb199e2414c909eaa4776"
+    }
+  },
+  "remote_omissions": [
+    "Exact 218,929-byte packet ZIP was not remotely verified as one Git blob; use fallback packet.",
+    "Loose SOURCE_DEPENDENCY_MAP.md was omitted from canonical partial branch because the first transport attempt did not match its expected Git blob identity.",
+    "Generated command/output logs, residual queue JSON, and retained earlier 2A packet material are not all loose on the canonical partial branch; they remain inside the exact fallback packet."
+  ],
+  "remote_ref_verified": true,
+  "remote_tree_blob_count_under_checkpoint_directory": 25,
+  "repository": "techrote/radiCADSAC",
+  "research_state_preserved": {
+    "MC-1": "NOT_ESTABLISHED",
+    "MC-B": "NOT_ESTABLISHED",
+    "PB-007-01": "OPEN",
+    "next_readiness": "MORE_NAMED_SOURCE_RECOVERY_NEEDED",
+    "operation_denominator": 26,
+    "source_recovery_status": "PARTIAL",
+    "v54_acceptance": "UNESTABLISHED"
+  },
+  "status": "PARTIALLY_SAVED"
+}

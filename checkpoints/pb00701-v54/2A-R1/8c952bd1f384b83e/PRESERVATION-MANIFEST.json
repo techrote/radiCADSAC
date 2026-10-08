@@ -1,0 +1,1635 @@
+{
+  "format": "radicadsac-2ar1-preservation-manifest/1",
+  "repository": "techrote/radiCADSAC",
+  "issue": 275,
+  "research_task": "PB-007-01 v54 / 2A-R1",
+  "canonical_directory": "checkpoints/pb00701-v54/2A-R1/8c952bd1f384b83e",
+  "payload_id": "8c952bd1f384b83e",
+  "payload_identity_kind": "Normalized 105-record original checksum mapping, not raw checksum-file hash.",
+  "intended_archive_branch": "checkpoint/radicadsac-2a-r1-8c952bd1f384b83e-complete",
+  "assessed_commit": "9734776b3cef3d7039be9623e8872df2c2a85174",
+  "assessed_tree": "b0240e4d02a6165f8799d7af432ea36416009667",
+  "requested_historical_parent": "9734776b3cef3d7039be9623e8872df2c2a85174",
+  "remote_publication_and_ancestry": "Verify the actual durable ref, ancestry and all remote bytes separately after publication.",
+  "source_originals": [
+    {
+      "path": "originals/radiCADSAC-2A-R1-git-checkpoint-fallback.zip",
+      "mode": "100644",
+      "sha256": "72eaa52c10be6951ec4ca68a8813fab6bb920da575b437a9bb82ea35762272d2",
+      "git_blob_sha1": "41895aa1ef91f8a6fc36c8cd877e42182f338521",
+      "bytes": 218929,
+      "library_file_id": "libfile_9311c4efff108191a3196b9dd40155e3",
+      "library_file_version": "1",
+      "hash_provenance": "Matches supplied historical size and SHA-256."
+    },
+    {
+      "path": "originals/radiCADSAC-2A-R1-git-save-verification.json",
+      "mode": "100644",
+      "sha256": "27e47034d029a9ca76cc750d9e84cf65b7aa1e7430f310711c7828990490e495",
+      "git_blob_sha1": "2edcd2c8166542fc66e56fdd512a247ecffb437a",
+      "bytes": 6104,
+      "library_file_id": "libfile_d70b55e2a7008191b2fc3064302f2fd8",
+      "library_file_version": "0",
+      "hash_provenance": "Observed from the original materialized file; historical receipt bytes are preserved unchanged."
+    },
+    {
+      "path": "originals/radiCADSAC-2A-R1-packet-verification.json",
+      "mode": "100644",
+      "sha256": "619cd6e192c499c111dd74efb3ad5ca31f058bf2e38f1087a83c3e8b825e72ce",
+      "git_blob_sha1": "9f48c29c22e7908408446ca27f25c8dc150141b0",
+      "bytes": 1175,
+      "library_file_id": "libfile_e50f0ce3e280819193c52bc8f944d872",
+      "library_file_version": "0",
+      "hash_provenance": "Observed from the original materialized file; historical receipt bytes are preserved unchanged."
+    },
+    {
+      "path": "originals/radiCADSAC-2A-R1-packet.zip",
+      "mode": "100644",
+      "sha256": "72eaa52c10be6951ec4ca68a8813fab6bb920da575b437a9bb82ea35762272d2",
+      "git_blob_sha1": "41895aa1ef91f8a6fc36c8cd877e42182f338521",
+      "bytes": 218929,
+      "library_file_id": "libfile_b214313614408191989fe1815d8d925c",
+      "library_file_version": "0",
+      "hash_provenance": "Matches supplied historical size and SHA-256."
+    },
+    {
+      "path": "originals/radiCADSAC-2A-R1-partial-write-handoff.md",
+      "mode": "100644",
+      "sha256": "367a34a0664654363e5490740648b3ad1e089af0a935938195edfce0a334eab9",
+      "git_blob_sha1": "8a3eac09b2644e8e742946ae39096820cc4b1658",
+      "bytes": 1815,
+      "library_file_id": "libfile_ef3e65cae6f88191aebf901a578b06db",
+      "library_file_version": "1",
+      "hash_provenance": "Observed from the original materialized file; historical receipt bytes are preserved unchanged."
+    },
+    {
+      "path": "originals/radiCADSAC-2A-packet.zip",
+      "mode": "100644",
+      "sha256": "074e172c6c7995d3022b985a0a06ae1542a0c01b8fb6d06b62210fca3738309d",
+      "git_blob_sha1": "c536468535b80cc923fa2aefb10f73288a6fed08",
+      "bytes": 82825,
+      "library_file_id": "libfile_ceec19dc9270819191bcb088cf81e322",
+      "library_file_version": "0",
+      "hash_provenance": "Matches supplied historical size and SHA-256."
+    }
+  ],
+  "original_member_mapping": {
+    "r1_zip_member": "<path>",
+    "staged_path": "unpacked/<path>",
+    "original_r1_root_prefix_retained": "radiCADSAC-2A-R1/",
+    "prior_member": "radiCADSAC-2A/<path>",
+    "prior_staged_path": "unpacked/radiCADSAC-2A-R1/prior/2A/<path>",
+    "bytes_and_original_modes_preserved": true
+  },
+  "manifest_path": "PRESERVATION-MANIFEST.json",
+  "entry_path_root": "canonical_directory",
+  "self_excluded": true,
+  "entry_count": 113,
+  "verification": {
+    "scope": "Authentication and local archival staging of supplied originals only.",
+    "verified_utc": "2026-10-08T23:10:06Z",
+    "original_and_fallback_byte_identical": true,
+    "r1": {
+      "regular_members": 106,
+      "directory_members": 0,
+      "manifest_entries": 105,
+      "crc": "pass",
+      "safe_unique_paths": "pass",
+      "all_manifest_hashes": "pass",
+      "raw_manifest_sha256": "d85536f434634f29b1ac61d8861f061524b4c0b6d0d45951fe664f36bdabc894",
+      "raw_manifest_bytes": 11797,
+      "unique_git_blobs": 98,
+      "total_uncompressed_bytes": 658950,
+      "original_modes": {
+        "100644": 106
+      }
+    },
+    "normalized_payload_identity": {
+      "sha256": "8c952bd1f384b83eae3200fc7a944010ac00a4218115f79ac5acb06c89b450d7",
+      "bytes": 11692,
+      "id": "8c952bd1f384b83e",
+      "records": 105,
+      "algorithm": "Parse original SHA256SUMS; sort by relative path; concatenate UTF-8 path + NUL + lowercase ASCII digest + LF.",
+      "algorithm_source": "https://github.com/techrote/radiCADSAC/blob/e10c0d79e5001b81d1a115c7c2950bba4aaa2d1e/checkpoints/pb00701-v54/2A-R1/8c952bd1f384b83e/SAVE-README.md",
+      "raw_manifest_hash_source": "https://github.com/techrote/radiCADSAC/blob/e10c0d79e5001b81d1a115c7c2950bba4aaa2d1e/checkpoints/pb00701-v54/2A-R1/8c952bd1f384b83e/RESTORE-MAP.json",
+      "brief_correction": "8c952... identifies this normalized record serialization, not the original SHA256SUMS bytes."
+    },
+    "prior_2a": {
+      "regular_members": 53,
+      "directory_members": 0,
+      "manifest_entries": 52,
+      "crc": "pass",
+      "safe_unique_paths": "pass",
+      "all_manifest_hashes": "pass",
+      "raw_manifest_sha256": "aa14bb0536d161d0fcf349d910029fc76725e050720b5275462818f9b7f1e139",
+      "correspondence_count": 53,
+      "all_corresponding_bytes_and_modes_match": true,
+      "duplicate_extraction_created": false,
+      "mapping": [
+        {
+          "prior_archive_member": "radiCADSAC-2A/ARTIFACT_INVENTORY.md",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/ARTIFACT_INVENTORY.md",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/ARTIFACT_INVENTORY.md",
+          "sha256": "bd64926cc19644140ec57c932750ef090ed4b380ba52cd825c58b31ad8ee865f",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/AUTHORITY_LEDGER.md",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/AUTHORITY_LEDGER.md",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/AUTHORITY_LEDGER.md",
+          "sha256": "a32e0b2a5a8b16643616b0a493c2aba440e3340a488be357d459f42f942d84f4",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/CHECKPOINT.md",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/CHECKPOINT.md",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/CHECKPOINT.md",
+          "sha256": "7c5f035636b1c60c287102a3b9d808b21c82fb9ee617a1a2f59a1f0427a0a2a8",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/CLAIMS_RECONCILIATION.md",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/CLAIMS_RECONCILIATION.md",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/CLAIMS_RECONCILIATION.md",
+          "sha256": "e669ced178cadae419804442f5312bc17b78be65fd4538c4ec39dbc7dd5af34a",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/COMMANDS_RESULTS.md",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/COMMANDS_RESULTS.md",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/COMMANDS_RESULTS.md",
+          "sha256": "d842da9d5910681caa7123ec3949c6d95459bb9725570ef87a9359a75d6a1728",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/PACKET_VERIFICATION.json",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/PACKET_VERIFICATION.json",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/PACKET_VERIFICATION.json",
+          "sha256": "55c3bc8c3cbca488d7d6e814a8bc7d8d8a67838a9a4db64f177c4d739c4eda73",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/README.md",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/README.md",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/README.md",
+          "sha256": "2a25a893804d84fb5f04ce74e9720c5fe214aee32b01e979d5b2e0511f914be9",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/SHA256SUMS",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/SHA256SUMS",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/SHA256SUMS",
+          "sha256": "aa14bb0536d161d0fcf349d910029fc76725e050720b5275462818f9b7f1e139",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/SOURCE_DEPENDENCY_MAP.md",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/SOURCE_DEPENDENCY_MAP.md",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/SOURCE_DEPENDENCY_MAP.md",
+          "sha256": "abca297be139c1c4450aaf83c1f34b2a9422e628e9b2d5fbe83119cb7fca2196",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/SOURCE_MANIFEST.md",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/SOURCE_MANIFEST.md",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/SOURCE_MANIFEST.md",
+          "sha256": "b044c3e8bcb67c89bbfa9b2c14c5edcd06c28a83e1ae4d03c5d03a5f1ea5babd",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/findings/early-reconciliation.md",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/findings/early-reconciliation.md",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/findings/early-reconciliation.md",
+          "sha256": "d2af8a8c342562963ea703078d67f9453ff00542882aed30c568c259940511cf",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/findings/local-import-frontier.json",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/findings/local-import-frontier.json",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/findings/local-import-frontier.json",
+          "sha256": "f4712c00868719c78c7c23b4dfb1c8148e41e4282daf46cb54e270e0a401924f",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/findings/source-symbol-index.json",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/findings/source-symbol-index.json",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/findings/source-symbol-index.json",
+          "sha256": "2b9ff0c0c49e021972b981ebddb47d7c6a5fa5a170359684be6b71342ad7d30d",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/logs/direct-main-probe.log",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/logs/direct-main-probe.log",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/logs/direct-main-probe.log",
+          "sha256": "08d2ad452ea30fd2d7dcaa1f4c1ccfdf961238a71d1677ce743d15d6116a0e32",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/logs/finished-work-at.json",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/logs/finished-work-at.json",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/logs/finished-work-at.json",
+          "sha256": "7a8b256dea29b1a671b2741f57f19cfa2f6bd2ecd7872cde2f7a9b1e959f2235",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/logs/import-smoke.json",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/logs/import-smoke.json",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/logs/import-smoke.json",
+          "sha256": "ba0c28d4d688d5961ac27e77ea67557437637bba94013b597c89c694a902cc24",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/logs/local-facility-discovery.txt",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/logs/local-facility-discovery.txt",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/logs/local-facility-discovery.txt",
+          "sha256": "dece60f4892443bee98dcd3d1d89c68c36bb0ae4137748118dce1be28de7a9e5",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/logs/recovery-job-111159336398-excerpt.txt",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/logs/recovery-job-111159336398-excerpt.txt",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/logs/recovery-job-111159336398-excerpt.txt",
+          "sha256": "790db97ae5520346172bd980461f96a5ff7bd8c7eb77c557e03bb31b459dd6ad",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/logs/retain-contract-sources.log",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/logs/retain-contract-sources.log",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/logs/retain-contract-sources.log",
+          "sha256": "3a0b2486de9b04d2385adfe143ee8960169407de5b1e2079d029f42bb240f81c",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/logs/source-blob-check-final.json",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/logs/source-blob-check-final.json",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/logs/source-blob-check-final.json",
+          "sha256": "860056d942aafb056531b421390bf78574ab1107f88268a3ee7ce7c05c7b57b3",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/logs/source-blob-check-initial.json",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/logs/source-blob-check-initial.json",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/logs/source-blob-check-initial.json",
+          "sha256": "dd48e484c71add1178f0b6ee6d636b794e8177701da69fdabc31af3a32a323bb",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/logs/source-blob-check-stage2.json",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/logs/source-blob-check-stage2.json",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/logs/source-blob-check-stage2.json",
+          "sha256": "4f3639e4a5e58f1e999aea0823cb748490170ab338730ecab7cdf5d433c3954f",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/logs/source-blob-check-stage3.json",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/logs/source-blob-check-stage3.json",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/logs/source-blob-check-stage3.json",
+          "sha256": "06d755e295266bd4bba04fb13891ac6a7eb74c49edd059831cfc2856a198044e",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/logs/source-blob-check-stage4.json",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/logs/source-blob-check-stage4.json",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/logs/source-blob-check-stage4.json",
+          "sha256": "abeb3da0203d2b195edca970a02d48b027ebab03f57dd72df600938850206815",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/logs/started_at.txt",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/logs/started_at.txt",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/logs/started_at.txt",
+          "sha256": "c3339dfed2890168b39575fb1e8486becb98d39f18aba211aca145582b4d9e1f",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/logs/static-source-index.json",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/logs/static-source-index.json",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/logs/static-source-index.json",
+          "sha256": "cbbe3f4218bb868612a4bfae479ca4ef0a46a3d2cff541c37b3a129392a94be6",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/logs/v7-export-validation.json",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/logs/v7-export-validation.json",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/logs/v7-export-validation.json",
+          "sha256": "a7f6a4dc021936bf8e175a73eadb498d7c3b5d27cd15245ffcf3af4778566227",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/logs/write-records.log",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/logs/write-records.log",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/logs/write-records.log",
+          "sha256": "7a3270193c73c901f7dc72a5c09682e022e9ca47691d06c01e2493d9e9a17af9",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/records/authority-ledger.json",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/records/authority-ledger.json",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/records/authority-ledger.json",
+          "sha256": "09426593c22d7a95487ae06a3dc07718c07d677bae2c8641e63f968b10502f17",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/records/branch-comparisons.json",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/records/branch-comparisons.json",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/records/branch-comparisons.json",
+          "sha256": "1405e18756ad06996d8eadb7061df6ee7c09c6d2e802a72106caa79e5075f1c6",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/records/coverage-and-limitations.json",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/records/coverage-and-limitations.json",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/records/coverage-and-limitations.json",
+          "sha256": "9703bf6f35438430ac5cfc843a49ba30d6e9f083352b720483e27bd75a651ce8",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/records/evidence-runs.json",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/records/evidence-runs.json",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/records/evidence-runs.json",
+          "sha256": "269089dadeee200419d9d6413656d607438d88c47865ac81b83a192bc0f31dc0",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/records/exported-blobs.json",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/records/exported-blobs.json",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/records/exported-blobs.json",
+          "sha256": "3c7383eca01259a425fb32000233b6861a3c873303429ea9c510505eb99f101b",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/records/issue275-claims.json",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/records/issue275-claims.json",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/records/issue275-claims.json",
+          "sha256": "13788e16771eced024a4bc358f05e822fee47b9545bd7efd67a752fe9d94fa6d",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/records/issues-and-acceptance.json",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/records/issues-and-acceptance.json",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/records/issues-and-acceptance.json",
+          "sha256": "acfea27a431c9553d5d43fa96f4654dfc71808849646947905921810b552ddad",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/records/pr-evidence.json",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/records/pr-evidence.json",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/records/pr-evidence.json",
+          "sha256": "e00c484128b4a51b9ba22be2f480fbf140dc3417abded0d49019f60edf1b0b17",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/records/source-reading-manifest.csv",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/records/source-reading-manifest.csv",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/records/source-reading-manifest.csv",
+          "sha256": "f8eee174f9253f7aa6fdd59239197851d6bcb636592787ba6b217cdff0be25af",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/records/source-reading-manifest.json",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/records/source-reading-manifest.json",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/records/source-reading-manifest.json",
+          "sha256": "c1ff4b6db6f4ed74e63f179c1e29e942819aaa85a4a16916726bc63d8a0c9545",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/records/staging-tree.json",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/records/staging-tree.json",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/records/staging-tree.json",
+          "sha256": "06a9da3161689a2dbae7691a52040f014fb3cba641cc98ca8eb4bfc76f82f0a5",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/source/forensic/.github/workflows/mc1-pb00701-v54.yml",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/source/forensic/.github/workflows/mc1-pb00701-v54.yml",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/source/forensic/.github/workflows/mc1-pb00701-v54.yml",
+          "sha256": "f589dd111de28ae22ac9cf8efa5e02c27b2962220232393d8bb9a3d79dc068ed",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/source/main/handoffs/current-authority.json",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/source/main/handoffs/current-authority.json",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/source/main/handoffs/current-authority.json",
+          "sha256": "33f50d4305755cb6c19421dacc287d52ca64e669478fecc195cde1640adb1133",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/source/main/research/machining-completeness/tasks/MC-038/pb00701-mixed-owner-spans-v53.json",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/source/main/research/machining-completeness/tasks/MC-038/pb00701-mixed-owner-spans-v53.json",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/source/main/research/machining-completeness/tasks/MC-038/pb00701-mixed-owner-spans-v53.json",
+          "sha256": "01c2bf35ac5e0ab93cea299efb3cd6aa0bfa932f4b4a37c0984414f6dbf5e9ab",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/source/main/research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/source/main/research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/source/main/research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+          "sha256": "2813a99ecc2bc179bf31f6c9166f9c3564516e67f2f256c0a984deee4ed0f692",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/source/main/research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_certificate.py",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/source/main/research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_certificate.py",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/source/main/research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_certificate.py",
+          "sha256": "c61f60b2b490bbe2f1a6c277dcd8c42e51ea1cbcd011dc953d3c4efe30d636eb",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/source/main/research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/source/main/research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/source/main/research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py",
+          "sha256": "58d8ee85794da693e0ad6677ba1d960e849292f5dc976def6ae1c6e7001e54a1",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/source/main/research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/source/main/research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/source/main/research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py",
+          "sha256": "7e110ca5c10d7623da2d55c7ed559aed53f2f18118cb48cd57b0c38044011cbd",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/source/recovery/.github/workflows/mc1-pb00701-v54-recovery-bootstrap.yml",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/source/recovery/.github/workflows/mc1-pb00701-v54-recovery-bootstrap.yml",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/source/recovery/.github/workflows/mc1-pb00701-v54-recovery-bootstrap.yml",
+          "sha256": "25969bc2d1c2d41fcea45bddb927cf74b74ca92aea44645bce0f6d7d5abbbc4e",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/tools/check_source_blobs.py",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/tools/check_source_blobs.py",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/tools/check_source_blobs.py",
+          "sha256": "3d336e1d8bbc7c65bd67f0f6543b7babdbbf9db962b19571b428d8b6e0cfa0bb",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/tools/import_smoke.py",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/tools/import_smoke.py",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/tools/import_smoke.py",
+          "sha256": "71ada2dc631c1c8b2ca00aee08b536d1e3d7bf08606d7e3ef3ce2d429718baab",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/tools/index_recovered_source.py",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/tools/index_recovered_source.py",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/tools/index_recovered_source.py",
+          "sha256": "66cd01440ef4a5256c89a5807a2f24e4a6e57342345976bafb18dc1d14372606",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/tools/retain_contract_sources.py",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/tools/retain_contract_sources.py",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/tools/retain_contract_sources.py",
+          "sha256": "e4dbfd621838909c3c63446170c773e4bc685e81f8c66c0c4a52a4a17dd072ff",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/tools/verify_packet.py",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/tools/verify_packet.py",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/tools/verify_packet.py",
+          "sha256": "75007a94737870cdddbc3e9dc84a92501d031e73d2f2267d4725c210c432acf8",
+          "mode": "100644"
+        },
+        {
+          "prior_archive_member": "radiCADSAC-2A/tools/write_reconciliation_records.py",
+          "r1_archive_member": "radiCADSAC-2A-R1/prior/2A/tools/write_reconciliation_records.py",
+          "preserved_path": "unpacked/radiCADSAC-2A-R1/prior/2A/tools/write_reconciliation_records.py",
+          "sha256": "3c8a3f9dd291a6336e5c819108d5af604044e2b4fec157c971556e1b27f0bf5d",
+          "mode": "100644"
+        }
+      ]
+    },
+    "retained_source_identities": {
+      "entries_verified": 18,
+      "python_files": 14,
+      "basis": "Local retained bytes compared against original source-manifest SHA-256 and Git blob IDs. No new remote source recovery or complete tree verification.",
+      "status": "pass"
+    },
+    "historical_execution": {
+      "new_source_files_in_r1": 10,
+      "retained_source_entries": 18,
+      "import_smoke_exit": 1,
+      "factory_called": false,
+      "residual_case_run": false,
+      "owner_inventory_created": false,
+      "visible_missing_module_references": 15,
+      "complete_transitive_closure": false,
+      "current_recovery_status": "PARTIAL",
+      "source": "unpacked/radiCADSAC-2A-R1/records/readiness.json"
+    },
+    "earlier_checkpoint_comparison": {
+      "provenance": "Independent read-only remote-tree/byte comparison supplied by the parallel archival reviewer; no research continuation.",
+      "result": {
+        "repository": "techrote/radiCADSAC",
+        "original_zip": {
+          "bytes": 218929,
+          "sha256": "72eaa52c10be6951ec4ca68a8813fab6bb920da575b437a9bb82ea35762272d2",
+          "git_blob_sha1": "41895aa1ef91f8a6fc36c8cd877e42182f338521",
+          "fallback_byte_identical": true,
+          "members": 106,
+          "original_checksum_records": 105,
+          "prior_2A_members_exactly_retained": 53
+        },
+        "identity_distinction": {
+          "original_checksum_file_path": "radiCADSAC-2A-R1/SHA256SUMS",
+          "original_checksum_file_bytes": 11797,
+          "original_checksum_file_sha256": "d85536f434634f29b1ac61d8861f061524b4c0b6d0d45951fe664f36bdabc894",
+          "historical_payload_id": "8c952bd1f384b83e",
+          "normalized_payload_sha256": "8c952bd1f384b83eae3200fc7a944010ac00a4218115f79ac5acb06c89b450d7",
+          "normalized_bytes": 11692,
+          "normalized_records": 105,
+          "normalization": "Parse SHA256SUMS; sort records by relative path; UTF-8 serialize each as path + NUL + sha256 + LF.",
+          "authoritative_description": "Noncanonical SAVE-README.md describes this algorithm; its RESTORE-MAP.json separately records the original checksum file digest."
+        },
+        "archives": {
+          "partial": {
+            "commit": "ef4addd2f671a9a7491838b0218441186809b954",
+            "branch": "refs/heads/checkpoint/radicadsac-2a-r1-8c952bd1f384b83e-partial",
+            "parent": "9734776b3cef3d7039be9623e8872df2c2a85174",
+            "root_tree": "32ed6e9868df801d8b624fb8b7620ddc322b7c1c",
+            "checkpoints_tree": "9e2cdc99d049827a2f49416f0b87b6deff88cf17",
+            "archive_file_count": 25,
+            "exact_original_packet_members_mapped": 19,
+            "exact_external_receipts": 1,
+            "total_exact_original_payloads_plus_external_receipt": 20,
+            "original_mapped_content_mismatches": [],
+            "original_mapped_mode_mismatches": [],
+            "packet_member_paths_not_represented_by_original_mapping": [
+              "AUTHORITY_LEDGER.md",
+              "COMMANDS_RESULTS.md",
+              "FINDINGS.md",
+              "README.md",
+              "SHA256SUMS",
+              "SOURCE_DEPENDENCY_MAP.md",
+              "SOURCE_MANIFEST.md",
+              "findings/recovery-progress.md",
+              "logs/available-v53-pin-intersection.json",
+              "logs/child-map-range-completeness.json",
+              "logs/immutable-byte-transport-probe.txt",
+              "logs/import-smoke-command.json",
+              "logs/import-smoke.stderr.txt",
+              "logs/import-smoke.stdout.txt",
+              "logs/post-smoke-source-integrity.json",
+              "logs/prior-packet-restoration.json",
+              "logs/residual-case-disposition.json",
+              "logs/retained-blob-verification.json",
+              "logs/static-dependency-map.txt",
+              "prior/2A-archive-verification.json",
+              "prior/2A/ARTIFACT_INVENTORY.md",
+              "prior/2A/AUTHORITY_LEDGER.md",
+              "prior/2A/CHECKPOINT.md",
+              "prior/2A/CLAIMS_RECONCILIATION.md",
+              "prior/2A/COMMANDS_RESULTS.md",
+              "prior/2A/PACKET_VERIFICATION.json",
+              "prior/2A/README.md",
+              "prior/2A/SHA256SUMS",
+              "prior/2A/SOURCE_DEPENDENCY_MAP.md",
+              "prior/2A/SOURCE_MANIFEST.md",
+              "prior/2A/findings/early-reconciliation.md",
+              "prior/2A/findings/local-import-frontier.json",
+              "prior/2A/findings/source-symbol-index.json",
+              "prior/2A/logs/direct-main-probe.log",
+              "prior/2A/logs/finished-work-at.json",
+              "prior/2A/logs/import-smoke.json",
+              "prior/2A/logs/local-facility-discovery.txt",
+              "prior/2A/logs/recovery-job-111159336398-excerpt.txt",
+              "prior/2A/logs/retain-contract-sources.log",
+              "prior/2A/logs/source-blob-check-final.json",
+              "prior/2A/logs/source-blob-check-initial.json",
+              "prior/2A/logs/source-blob-check-stage2.json",
+              "prior/2A/logs/source-blob-check-stage3.json",
+              "prior/2A/logs/source-blob-check-stage4.json",
+              "prior/2A/logs/started_at.txt",
+              "prior/2A/logs/static-source-index.json",
+              "prior/2A/logs/v7-export-validation.json",
+              "prior/2A/logs/write-records.log",
+              "prior/2A/records/authority-ledger.json",
+              "prior/2A/records/branch-comparisons.json",
+              "prior/2A/records/coverage-and-limitations.json",
+              "prior/2A/records/evidence-runs.json",
+              "prior/2A/records/exported-blobs.json",
+              "prior/2A/records/issue275-claims.json",
+              "prior/2A/records/issues-and-acceptance.json",
+              "prior/2A/records/pr-evidence.json",
+              "prior/2A/records/source-reading-manifest.csv",
+              "prior/2A/records/source-reading-manifest.json",
+              "prior/2A/records/staging-tree.json",
+              "prior/2A/source/forensic/.github/workflows/mc1-pb00701-v54.yml",
+              "prior/2A/source/main/handoffs/current-authority.json",
+              "prior/2A/source/main/research/machining-completeness/tasks/MC-038/pb00701-mixed-owner-spans-v53.json",
+              "prior/2A/source/main/research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+              "prior/2A/source/main/research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_certificate.py",
+              "prior/2A/source/main/research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py",
+              "prior/2A/source/main/research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py",
+              "prior/2A/source/recovery/.github/workflows/mc1-pb00701-v54-recovery-bootstrap.yml",
+              "prior/2A/tools/check_source_blobs.py",
+              "prior/2A/tools/import_smoke.py",
+              "prior/2A/tools/index_recovered_source.py",
+              "prior/2A/tools/retain_contract_sources.py",
+              "prior/2A/tools/verify_packet.py",
+              "prior/2A/tools/write_reconciliation_records.py",
+              "records/authority-refresh.json",
+              "records/dependency-map.json",
+              "records/execution-scope.json",
+              "records/readiness.json",
+              "records/residual-recovery-queue.json",
+              "records/source-manifest.json",
+              "records/source-symbol-locations.json",
+              "tools/import_only.py",
+              "tools/map_dependencies.py",
+              "tools/package_packet.py",
+              "tools/register_source.py",
+              "tools/run_import_smoke.py",
+              "tools/verify_packet.py",
+              "tools/write_checkpoint.py"
+            ],
+            "original_packet_member_bytes_found_anywhere_in_checkpoint": 27,
+            "shared_prior_source_copies_among_anywhere_hits": [
+              "prior/2A/source/forensic/.github/workflows/mc1-pb00701-v54.yml",
+              "prior/2A/source/main/handoffs/current-authority.json",
+              "prior/2A/source/main/research/machining-completeness/tasks/MC-038/pb00701-mixed-owner-spans-v53.json",
+              "prior/2A/source/main/research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+              "prior/2A/source/main/research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_certificate.py",
+              "prior/2A/source/main/research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py",
+              "prior/2A/source/main/research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py",
+              "prior/2A/source/recovery/.github/workflows/mc1-pb00701-v54-recovery-bootstrap.yml"
+            ],
+            "base_outside_checkpoint_unchanged": true,
+            "full_original_zip_blob_present": false,
+            "incorrect_direct_artifacts": []
+          },
+          "noncanonical": {
+            "commit": "e10c0d79e5001b81d1a115c7c2950bba4aaa2d1e",
+            "branch": "refs/heads/checkpoint/radicadsac-2a-r1-8c952bd1f384b83e",
+            "parent": "9734776b3cef3d7039be9623e8872df2c2a85174",
+            "root_tree": "27867ee7c8299e270a2cbf7f3608fa18f65dc9d3",
+            "checkpoints_tree": "78c7d0dc676ee1e5a9c481fd896307166384114e",
+            "archive_file_count": 25,
+            "exact_original_packet_members_mapped": 19,
+            "exact_external_receipts": 1,
+            "total_exact_original_payloads_plus_external_receipt": 20,
+            "original_mapped_content_mismatches": [],
+            "original_mapped_mode_mismatches": [],
+            "packet_member_paths_not_represented_by_original_mapping": [
+              "AUTHORITY_LEDGER.md",
+              "COMMANDS_RESULTS.md",
+              "FINDINGS.md",
+              "README.md",
+              "SHA256SUMS",
+              "SOURCE_DEPENDENCY_MAP.md",
+              "SOURCE_MANIFEST.md",
+              "findings/recovery-progress.md",
+              "logs/available-v53-pin-intersection.json",
+              "logs/child-map-range-completeness.json",
+              "logs/immutable-byte-transport-probe.txt",
+              "logs/import-smoke-command.json",
+              "logs/import-smoke.stderr.txt",
+              "logs/import-smoke.stdout.txt",
+              "logs/post-smoke-source-integrity.json",
+              "logs/prior-packet-restoration.json",
+              "logs/residual-case-disposition.json",
+              "logs/retained-blob-verification.json",
+              "logs/static-dependency-map.txt",
+              "prior/2A-archive-verification.json",
+              "prior/2A/ARTIFACT_INVENTORY.md",
+              "prior/2A/AUTHORITY_LEDGER.md",
+              "prior/2A/CHECKPOINT.md",
+              "prior/2A/CLAIMS_RECONCILIATION.md",
+              "prior/2A/COMMANDS_RESULTS.md",
+              "prior/2A/PACKET_VERIFICATION.json",
+              "prior/2A/README.md",
+              "prior/2A/SHA256SUMS",
+              "prior/2A/SOURCE_DEPENDENCY_MAP.md",
+              "prior/2A/SOURCE_MANIFEST.md",
+              "prior/2A/findings/early-reconciliation.md",
+              "prior/2A/findings/local-import-frontier.json",
+              "prior/2A/findings/source-symbol-index.json",
+              "prior/2A/logs/direct-main-probe.log",
+              "prior/2A/logs/finished-work-at.json",
+              "prior/2A/logs/import-smoke.json",
+              "prior/2A/logs/local-facility-discovery.txt",
+              "prior/2A/logs/recovery-job-111159336398-excerpt.txt",
+              "prior/2A/logs/retain-contract-sources.log",
+              "prior/2A/logs/source-blob-check-final.json",
+              "prior/2A/logs/source-blob-check-initial.json",
+              "prior/2A/logs/source-blob-check-stage2.json",
+              "prior/2A/logs/source-blob-check-stage3.json",
+              "prior/2A/logs/source-blob-check-stage4.json",
+              "prior/2A/logs/started_at.txt",
+              "prior/2A/logs/static-source-index.json",
+              "prior/2A/logs/v7-export-validation.json",
+              "prior/2A/logs/write-records.log",
+              "prior/2A/records/authority-ledger.json",
+              "prior/2A/records/branch-comparisons.json",
+              "prior/2A/records/coverage-and-limitations.json",
+              "prior/2A/records/evidence-runs.json",
+              "prior/2A/records/exported-blobs.json",
+              "prior/2A/records/issue275-claims.json",
+              "prior/2A/records/issues-and-acceptance.json",
+              "prior/2A/records/pr-evidence.json",
+              "prior/2A/records/source-reading-manifest.csv",
+              "prior/2A/records/source-reading-manifest.json",
+              "prior/2A/records/staging-tree.json",
+              "prior/2A/source/forensic/.github/workflows/mc1-pb00701-v54.yml",
+              "prior/2A/source/main/handoffs/current-authority.json",
+              "prior/2A/source/main/research/machining-completeness/tasks/MC-038/pb00701-mixed-owner-spans-v53.json",
+              "prior/2A/source/main/research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+              "prior/2A/source/main/research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_certificate.py",
+              "prior/2A/source/main/research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py",
+              "prior/2A/source/main/research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py",
+              "prior/2A/source/recovery/.github/workflows/mc1-pb00701-v54-recovery-bootstrap.yml",
+              "prior/2A/tools/check_source_blobs.py",
+              "prior/2A/tools/import_smoke.py",
+              "prior/2A/tools/index_recovered_source.py",
+              "prior/2A/tools/retain_contract_sources.py",
+              "prior/2A/tools/verify_packet.py",
+              "prior/2A/tools/write_reconciliation_records.py",
+              "records/authority-refresh.json",
+              "records/dependency-map.json",
+              "records/execution-scope.json",
+              "records/readiness.json",
+              "records/residual-recovery-queue.json",
+              "records/source-manifest.json",
+              "records/source-symbol-locations.json",
+              "tools/import_only.py",
+              "tools/map_dependencies.py",
+              "tools/package_packet.py",
+              "tools/register_source.py",
+              "tools/run_import_smoke.py",
+              "tools/verify_packet.py",
+              "tools/write_checkpoint.py"
+            ],
+            "original_packet_member_bytes_found_anywhere_in_checkpoint": 27,
+            "shared_prior_source_copies_among_anywhere_hits": [
+              "prior/2A/source/forensic/.github/workflows/mc1-pb00701-v54.yml",
+              "prior/2A/source/main/handoffs/current-authority.json",
+              "prior/2A/source/main/research/machining-completeness/tasks/MC-038/pb00701-mixed-owner-spans-v53.json",
+              "prior/2A/source/main/research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+              "prior/2A/source/main/research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_certificate.py",
+              "prior/2A/source/main/research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py",
+              "prior/2A/source/main/research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py",
+              "prior/2A/source/recovery/.github/workflows/mc1-pb00701-v54-recovery-bootstrap.yml"
+            ],
+            "base_outside_checkpoint_unchanged": true,
+            "full_original_zip_blob_present": false,
+            "incorrect_direct_artifacts": [
+              {
+                "path": "ORIGINAL-PACKET.zip",
+                "expected_git_blob": "41895aa1ef91f8a6fc36c8cd877e42182f338521",
+                "observed_git_blob": "21df60c9d3985407dde51581241ca03824b0e65e",
+                "expected_bytes": 218929,
+                "observed_bytes": 8853,
+                "expected_sha256": "72eaa52c10be6951ec4ca68a8813fab6bb920da575b437a9bb82ea35762272d2",
+                "verification_scope": "Wrong identity and size verified from immutable Git tree; wrong binary was not parsed or executed."
+              },
+              {
+                "path": "SOURCE_DEPENDENCY_MAP.md",
+                "expected_git_blob": "b42cccee03b98ee3bdba8daae0f42cd038e6ed08",
+                "observed_git_blob": "bf271d15a9f85d4218899d20e8ed18fd21aa1db5",
+                "expected_bytes": 8503,
+                "observed_bytes": 8503,
+                "expected_sha256": "12d3c10caa567c7fa00cd74ecaccf3900f1dbfa7539c1a2c57448428910e6d3d",
+                "observed_sha256": "05c4439b4f0dfcaa8a4488e459dea0359a37cd232551f4de79bc4c81a8ac7990",
+                "bytes_differ": 172
+              }
+            ]
+          }
+        },
+        "forensic_refs": {
+          "v54_coverage": {
+            "ref": "refs/heads/mc038/pb00701-v54-finite-owner-coverage",
+            "sha": "8cec4953dc898e70270c654f5453b108bb80d47b",
+            "tree": "6afc28d6b83f5c631b63c67d3e9b1ad93188e6a2",
+            "reachable": true,
+            "inspection": "Commit/ref identity only; no decoding, bootstrap retry or source recovery."
+          },
+          "v54_recovery": {
+            "ref": "refs/heads/mc038/pb00701-v54-recovery",
+            "sha": "823a8624739c337aeb41470cfebebd2ea2a931ca",
+            "tree": "99f93a6c2dcc5e60965ceefc9a5e9ec25409f4bd",
+            "reachable": true,
+            "inspection": "Commit/ref identity only; no decoding, bootstrap retry or source recovery."
+          }
+        },
+        "scope": "Read-only metadata and exact byte/hash comparison; no archived instructions or workflows executed.",
+        "verified_wrapper_text_blobs": 10,
+        "material_missing_from_verified_partial": [
+          "Exact R1 ZIP and exact prior 2A ZIP",
+          "Original R1 checksum file and normalized payload records",
+          "Correct complete SOURCE_DEPENDENCY_MAP.md",
+          "COMMANDS_RESULTS.md and command/output logs",
+          "Residual queue and recovery/status/provenance records",
+          "Prior 2A complete logical hierarchy; eight source-content duplicates were already reachable under retained R1 source paths"
+        ]
+      }
+    },
+    "screen": {
+      "scope": "Bounded common credential-marker scan of all uncompressed original R1 members and external receipt/handoff bytes; not an exhaustive privacy audit.",
+      "marker_classes": [
+        "aws_access_key",
+        "github_classic_token",
+        "github_fine_grained_token",
+        "openai_project_key",
+        "private_key_header",
+        "slack_token"
+      ],
+      "findings": []
+    },
+    "archived_code_executed": false,
+    "new_research_performed": false,
+    "remote_writes": 0
+  },
+  "entries": [
+    {
+      "path": "PRESERVATION.md",
+      "mode": "100644",
+      "sha256": "c31897cf80e8e1e87a1799ec16b50d3957be228b32c04be9981a9bd4a9f613dd",
+      "git_blob_sha1": "65fc5fe1edfe08c830e28942f165a2bce28bd097",
+      "bytes": 10161
+    },
+    {
+      "path": "originals/radiCADSAC-2A-R1-git-checkpoint-fallback.zip",
+      "mode": "100644",
+      "sha256": "72eaa52c10be6951ec4ca68a8813fab6bb920da575b437a9bb82ea35762272d2",
+      "git_blob_sha1": "41895aa1ef91f8a6fc36c8cd877e42182f338521",
+      "bytes": 218929
+    },
+    {
+      "path": "originals/radiCADSAC-2A-R1-git-save-verification.json",
+      "mode": "100644",
+      "sha256": "27e47034d029a9ca76cc750d9e84cf65b7aa1e7430f310711c7828990490e495",
+      "git_blob_sha1": "2edcd2c8166542fc66e56fdd512a247ecffb437a",
+      "bytes": 6104
+    },
+    {
+      "path": "originals/radiCADSAC-2A-R1-packet-verification.json",
+      "mode": "100644",
+      "sha256": "619cd6e192c499c111dd74efb3ad5ca31f058bf2e38f1087a83c3e8b825e72ce",
+      "git_blob_sha1": "9f48c29c22e7908408446ca27f25c8dc150141b0",
+      "bytes": 1175
+    },
+    {
+      "path": "originals/radiCADSAC-2A-R1-packet.zip",
+      "mode": "100644",
+      "sha256": "72eaa52c10be6951ec4ca68a8813fab6bb920da575b437a9bb82ea35762272d2",
+      "git_blob_sha1": "41895aa1ef91f8a6fc36c8cd877e42182f338521",
+      "bytes": 218929
+    },
+    {
+      "path": "originals/radiCADSAC-2A-R1-partial-write-handoff.md",
+      "mode": "100644",
+      "sha256": "367a34a0664654363e5490740648b3ad1e089af0a935938195edfce0a334eab9",
+      "git_blob_sha1": "8a3eac09b2644e8e742946ae39096820cc4b1658",
+      "bytes": 1815
+    },
+    {
+      "path": "originals/radiCADSAC-2A-packet.zip",
+      "mode": "100644",
+      "sha256": "074e172c6c7995d3022b985a0a06ae1542a0c01b8fb6d06b62210fca3738309d",
+      "git_blob_sha1": "c536468535b80cc923fa2aefb10f73288a6fed08",
+      "bytes": 82825
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/AUTHORITY_LEDGER.md",
+      "mode": "100644",
+      "sha256": "6d3079b4f11aa23716cf29637fc2ff285f8a6772666ef049b695ffbcbab6d78a",
+      "git_blob_sha1": "39b78ab98a5199e487eaf4ed413a26fce18dcddb",
+      "bytes": 3341
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/CHECKPOINT.md",
+      "mode": "100644",
+      "sha256": "d58da7cdd1a65d814d11ee18759f2d9136c9ab5af690d0960fb797cc6d7e5568",
+      "git_blob_sha1": "d6343ef699f27d751f2054f85579cb0c937189f6",
+      "bytes": 4698
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/COMMANDS_RESULTS.md",
+      "mode": "100644",
+      "sha256": "6795b0318e72f1db1f5273291253ee1476dc0344f3484f09539e432230acd130",
+      "git_blob_sha1": "3fa8d6aae1f8b6eca47fb755bfe6738164a2a555",
+      "bytes": 6615
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/FINDINGS.md",
+      "mode": "100644",
+      "sha256": "58d12e4e1c948e8f19064b7c238fc710bb52b6c3e725aadb6211fcd59f505e8d",
+      "git_blob_sha1": "bfd31d57644b207c828f3d2db7aa2ddc7096d070",
+      "bytes": 3037
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/README.md",
+      "mode": "100644",
+      "sha256": "4d7fdfa755cfeb8487a8f05d0da03c39b5298095086fa990ea114b1d28f8d43a",
+      "git_blob_sha1": "b21e48d28b2fa129840eb9af7969c9912cef5a64",
+      "bytes": 1481
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/SHA256SUMS",
+      "mode": "100644",
+      "sha256": "d85536f434634f29b1ac61d8861f061524b4c0b6d0d45951fe664f36bdabc894",
+      "git_blob_sha1": "65f27e4f68077327645bbb6a887c07aacc4bafcd",
+      "bytes": 11797
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/SOURCE_DEPENDENCY_MAP.md",
+      "mode": "100644",
+      "sha256": "12d3c10caa567c7fa00cd74ecaccf3900f1dbfa7539c1a2c57448428910e6d3d",
+      "git_blob_sha1": "b42cccee03b98ee3bdba8daae0f42cd038e6ed08",
+      "bytes": 8503
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/SOURCE_MANIFEST.md",
+      "mode": "100644",
+      "sha256": "0a1f1fae36b02644dfb151506697637137b5ff7078e6d5dff9fb20806cfd69a3",
+      "git_blob_sha1": "8e6bb5d173165336baf29cfed6b401e1fbd046b8",
+      "bytes": 4482
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/findings/recovery-progress.md",
+      "mode": "100644",
+      "sha256": "93661f0ff2e3e7dbdb7c886c028b0bf2a81768d7348993fdebcc73356f6ec16b",
+      "git_blob_sha1": "9cb4a4ed937bcd144f7ee96d8ffb2e0592942be0",
+      "bytes": 1616
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/logs/available-v53-pin-intersection.json",
+      "mode": "100644",
+      "sha256": "63cd2068405619f7432a31e870cc8ae22a5c628696f933e0e2b58fc76bdbfb6f",
+      "git_blob_sha1": "3200efae32482aef324b143822426befaac0503a",
+      "bytes": 907
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/logs/child-map-range-completeness.json",
+      "mode": "100644",
+      "sha256": "86fcbf8e7403516ddadd56ab273f5e11ea1fcea88815c4933e213a276f7429e3",
+      "git_blob_sha1": "47a2da68b45173353505ff52062e3ef3f9a83960",
+      "bytes": 464
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/logs/immutable-byte-transport-probe.txt",
+      "mode": "100644",
+      "sha256": "7219aea7c3a7e7cce75e373aee51e2bf2052ffef04fa9a5b42f265038a6825eb",
+      "git_blob_sha1": "67cb68adc60af8531707a52ecdd70c6784d4964c",
+      "bytes": 72
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/logs/import-smoke-command.json",
+      "mode": "100644",
+      "sha256": "cfd82ac8547e04410664ebcc0a15d77e365bfb78454ed57457c1f073d573ecdb",
+      "git_blob_sha1": "c65e11d9436b752ef4eb9ef2da915adb0119f011",
+      "bytes": 373
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/logs/import-smoke.stderr.txt",
+      "mode": "100644",
+      "sha256": "cb227952312ee0bbe08bdd886a929b646c25841bdeaa301a5d99874298b3560f",
+      "git_blob_sha1": "1c075108edf408540cd6c552e1786494f241e97d",
+      "bytes": 1990
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/logs/import-smoke.stdout.txt",
+      "mode": "100644",
+      "sha256": "ed05e8c4964e87a0f2f6e716175a29fb5ceccf4c0b5908b98981293b585d9e97",
+      "git_blob_sha1": "872e54c0805624c4f2375de6d4bde0e8fc574822",
+      "bytes": 3278
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/logs/post-smoke-source-integrity.json",
+      "mode": "100644",
+      "sha256": "cba54b141db780c243d041e03910a2d00531ceef395c99d0f162273f076df2e4",
+      "git_blob_sha1": "29e8fcbe10a52649aa670932683c579ac3eeea14",
+      "bytes": 5629
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/logs/prior-packet-restoration.json",
+      "mode": "100644",
+      "sha256": "26e31bca08d52cf3315c4a4b67055f0d2229f3fd25f2fb0ac73f8066668bc750",
+      "git_blob_sha1": "e8c5c6e9ffc8070b10898309ce3ff9971c3b3ecc",
+      "bytes": 338
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/logs/residual-case-disposition.json",
+      "mode": "100644",
+      "sha256": "83625c9f8cc3f6d85b2f39c3c7469b650be0019257f8ed8ac3973fa5dae975bd",
+      "git_blob_sha1": "62fe1508f7fe6bd01863e307801f7c87df6f719c",
+      "bytes": 467
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/logs/retained-blob-verification.json",
+      "mode": "100644",
+      "sha256": "27f81be0df26c3a7d7d76d05922e526bb142901b369c05f71a9fd76ff47c95f3",
+      "git_blob_sha1": "5067e95804513183c51df607599fe89be7ca2884",
+      "bytes": 39
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/logs/static-dependency-map.txt",
+      "mode": "100644",
+      "sha256": "0e4e9e4e93d2df1c3db1c8130087db570955acaada6605acfde49766596463c0",
+      "git_blob_sha1": "811e5d179fdac2de3c0614b367cbf0bb582a9ad9",
+      "bytes": 1320
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A-archive-verification.json",
+      "mode": "100644",
+      "sha256": "560223bb9ef73172902b1d4459525396bb22d636b89af9a0e0746c969df7dd26",
+      "git_blob_sha1": "ef349689bfc058c9b8aab28e99d46aaadfd5dff2",
+      "bytes": 1103
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/ARTIFACT_INVENTORY.md",
+      "mode": "100644",
+      "sha256": "bd64926cc19644140ec57c932750ef090ed4b380ba52cd825c58b31ad8ee865f",
+      "git_blob_sha1": "5a4fc1a2bf7e6ada40794c5a2c020d6c516c66f9",
+      "bytes": 5026
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/AUTHORITY_LEDGER.md",
+      "mode": "100644",
+      "sha256": "a32e0b2a5a8b16643616b0a493c2aba440e3340a488be357d459f42f942d84f4",
+      "git_blob_sha1": "aa1639a354a258bd94e136ac0c8ff1a7e552b9b5",
+      "bytes": 8665
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/CHECKPOINT.md",
+      "mode": "100644",
+      "sha256": "7c5f035636b1c60c287102a3b9d808b21c82fb9ee617a1a2f59a1f0427a0a2a8",
+      "git_blob_sha1": "112765b71ebad7bead5e2e6c2c6cce0d981fe01e",
+      "bytes": 7325
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/CLAIMS_RECONCILIATION.md",
+      "mode": "100644",
+      "sha256": "e669ced178cadae419804442f5312bc17b78be65fd4538c4ec39dbc7dd5af34a",
+      "git_blob_sha1": "7a109bd15ddd929a1b5b164a2108b9bdb6bf1b5c",
+      "bytes": 3987
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/COMMANDS_RESULTS.md",
+      "mode": "100644",
+      "sha256": "d842da9d5910681caa7123ec3949c6d95459bb9725570ef87a9359a75d6a1728",
+      "git_blob_sha1": "f6c13f1c36222aadf681de2538b654227132fe46",
+      "bytes": 5195
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/PACKET_VERIFICATION.json",
+      "mode": "100644",
+      "sha256": "55c3bc8c3cbca488d7d6e814a8bc7d8d8a67838a9a4db64f177c4d739c4eda73",
+      "git_blob_sha1": "a0a70bdbb25e24302548a668e3dd76779f1bdd37",
+      "bytes": 640
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/README.md",
+      "mode": "100644",
+      "sha256": "2a25a893804d84fb5f04ce74e9720c5fe214aee32b01e979d5b2e0511f914be9",
+      "git_blob_sha1": "9728a1cb009e7810480ec17e91c47d3bb0108093",
+      "bytes": 1942
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/SHA256SUMS",
+      "mode": "100644",
+      "sha256": "aa14bb0536d161d0fcf349d910029fc76725e050720b5275462818f9b7f1e139",
+      "git_blob_sha1": "eb337c5b0c862b98d699c3bc11e3dc6afbe74f5d",
+      "bytes": 5320
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/SOURCE_DEPENDENCY_MAP.md",
+      "mode": "100644",
+      "sha256": "abca297be139c1c4450aaf83c1f34b2a9422e628e9b2d5fbe83119cb7fca2196",
+      "git_blob_sha1": "6dd2887af776f81b488b27d91675848fef9b3d70",
+      "bytes": 9640
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/SOURCE_MANIFEST.md",
+      "mode": "100644",
+      "sha256": "b044c3e8bcb67c89bbfa9b2c14c5edcd06c28a83e1ae4d03c5d03a5f1ea5babd",
+      "git_blob_sha1": "18b62ce4e617663c630693570639a512b243182b",
+      "bytes": 2677
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/findings/early-reconciliation.md",
+      "mode": "100644",
+      "sha256": "d2af8a8c342562963ea703078d67f9453ff00542882aed30c568c259940511cf",
+      "git_blob_sha1": "40bcecbe2bf0468afcbfa6e1803090a85d98fdfc",
+      "bytes": 2265
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/findings/local-import-frontier.json",
+      "mode": "100644",
+      "sha256": "f4712c00868719c78c7c23b4dfb1c8148e41e4282daf46cb54e270e0a401924f",
+      "git_blob_sha1": "f31fa729be8acbd71a7ce72077018e987dbbc6f6",
+      "bytes": 1257
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/findings/source-symbol-index.json",
+      "mode": "100644",
+      "sha256": "2b9ff0c0c49e021972b981ebddb47d7c6a5fa5a170359684be6b71342ad7d30d",
+      "git_blob_sha1": "ef6a470bf26d4d792b1c6d4ba4045f7db95351ae",
+      "bytes": 6778
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/logs/direct-main-probe.log",
+      "mode": "100644",
+      "sha256": "08d2ad452ea30fd2d7dcaa1f4c1ccfdf961238a71d1677ce743d15d6116a0e32",
+      "git_blob_sha1": "ebecdb37a1f074a874cc34dd82e134e8f7fdd984",
+      "bytes": 66
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/logs/finished-work-at.json",
+      "mode": "100644",
+      "sha256": "7a8b256dea29b1a671b2741f57f19cfa2f6bd2ecd7872cde2f7a9b1e959f2235",
+      "git_blob_sha1": "0c1dfa555592c1a6f690a4eb06f5f4be83b7bb14",
+      "bytes": 316
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/logs/import-smoke.json",
+      "mode": "100644",
+      "sha256": "ba0c28d4d688d5961ac27e77ea67557437637bba94013b597c89c694a902cc24",
+      "git_blob_sha1": "31cf3db1db7c3a45c6f4934412a7157871029302",
+      "bytes": 259
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/logs/local-facility-discovery.txt",
+      "mode": "100644",
+      "sha256": "dece60f4892443bee98dcd3d1d89c68c36bb0ae4137748118dce1be28de7a9e5",
+      "git_blob_sha1": "29c0ece855f719bae65e18bcad30f1b806d2df5a",
+      "bytes": 454
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/logs/recovery-job-111159336398-excerpt.txt",
+      "mode": "100644",
+      "sha256": "790db97ae5520346172bd980461f96a5ff7bd8c7eb77c557e03bb31b459dd6ad",
+      "git_blob_sha1": "c064b2e4eb674c025245f67284fbc52c93690eca",
+      "bytes": 605
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/logs/retain-contract-sources.log",
+      "mode": "100644",
+      "sha256": "3a0b2486de9b04d2385adfe143ee8960169407de5b1e2079d029f42bb240f81c",
+      "git_blob_sha1": "7e372c0522f8561220b5948193ebc0121e468281",
+      "bytes": 83
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/logs/source-blob-check-final.json",
+      "mode": "100644",
+      "sha256": "860056d942aafb056531b421390bf78574ab1107f88268a3ee7ce7c05c7b57b3",
+      "git_blob_sha1": "a1eb88ce9d698315db91b7feef53ed26d2b5381c",
+      "bytes": 3093
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/logs/source-blob-check-initial.json",
+      "mode": "100644",
+      "sha256": "dd48e484c71add1178f0b6ee6d636b794e8177701da69fdabc31af3a32a323bb",
+      "git_blob_sha1": "290fd178a836a231d4760d7b80dd4c458381e5e3",
+      "bytes": 829
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/logs/source-blob-check-stage2.json",
+      "mode": "100644",
+      "sha256": "4f3639e4a5e58f1e999aea0823cb748490170ab338730ecab7cdf5d433c3954f",
+      "git_blob_sha1": "77c31738fe99a6404bf2d9b0884af2ae7c620130",
+      "bytes": 1595
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/logs/source-blob-check-stage3.json",
+      "mode": "100644",
+      "sha256": "06d755e295266bd4bba04fb13891ac6a7eb74c49edd059831cfc2856a198044e",
+      "git_blob_sha1": "f8fc0cffe6fe0f87cf4b6019864cc7bbe6c4105c",
+      "bytes": 1982
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/logs/source-blob-check-stage4.json",
+      "mode": "100644",
+      "sha256": "abeb3da0203d2b195edca970a02d48b027ebab03f57dd72df600938850206815",
+      "git_blob_sha1": "e8d576409be79d8782a6281df50322c06e668459",
+      "bytes": 2707
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/logs/started_at.txt",
+      "mode": "100644",
+      "sha256": "c3339dfed2890168b39575fb1e8486becb98d39f18aba211aca145582b4d9e1f",
+      "git_blob_sha1": "cdfb7bc1a5da2b3b74ff382ba6f955ee573935e6",
+      "bytes": 21
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/logs/static-source-index.json",
+      "mode": "100644",
+      "sha256": "cbbe3f4218bb868612a4bfae479ca4ef0a46a3d2cff541c37b3a129392a94be6",
+      "git_blob_sha1": "50943145cec05a377b150c7ec23ba755347c44d5",
+      "bytes": 433
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/logs/v7-export-validation.json",
+      "mode": "100644",
+      "sha256": "a7f6a4dc021936bf8e175a73eadb498d7c3b5d27cd15245ffcf3af4778566227",
+      "git_blob_sha1": "2ab445cdfad6f9e54ecd4421838bcb026ab0cea8",
+      "bytes": 339
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/logs/write-records.log",
+      "mode": "100644",
+      "sha256": "7a3270193c73c901f7dc72a5c09682e022e9ca47691d06c01e2493d9e9a17af9",
+      "git_blob_sha1": "15f403ebd161ee62135ea6491a61dccce3b31de4",
+      "bytes": 84
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/records/authority-ledger.json",
+      "mode": "100644",
+      "sha256": "09426593c22d7a95487ae06a3dc07718c07d677bae2c8641e63f968b10502f17",
+      "git_blob_sha1": "cfbe74a80b6af6d6f454d85a3c9170f9007f1f79",
+      "bytes": 3210
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/records/branch-comparisons.json",
+      "mode": "100644",
+      "sha256": "1405e18756ad06996d8eadb7061df6ee7c09c6d2e802a72106caa79e5075f1c6",
+      "git_blob_sha1": "a328bdd1d56c52446bfba29b8df6ad4502a42b1f",
+      "bytes": 2162
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/records/coverage-and-limitations.json",
+      "mode": "100644",
+      "sha256": "9703bf6f35438430ac5cfc843a49ba30d6e9f083352b720483e27bd75a651ce8",
+      "git_blob_sha1": "c4162ad61afd2fdce840a9c97f17b84f7928b407",
+      "bytes": 2054
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/records/evidence-runs.json",
+      "mode": "100644",
+      "sha256": "269089dadeee200419d9d6413656d607438d88c47865ac81b83a192bc0f31dc0",
+      "git_blob_sha1": "9c4d9d325123770a35d9eab32dc017db29528e45",
+      "bytes": 2496
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/records/exported-blobs.json",
+      "mode": "100644",
+      "sha256": "3c7383eca01259a425fb32000233b6861a3c873303429ea9c510505eb99f101b",
+      "git_blob_sha1": "fe72458a8ef2bc512e3ca0fa91125536e68460a5",
+      "bytes": 3414
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/records/issue275-claims.json",
+      "mode": "100644",
+      "sha256": "13788e16771eced024a4bc358f05e822fee47b9545bd7efd67a752fe9d94fa6d",
+      "git_blob_sha1": "3212d053c5035c17636fb6ad9a06c743427fb3ec",
+      "bytes": 2276
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/records/issues-and-acceptance.json",
+      "mode": "100644",
+      "sha256": "acfea27a431c9553d5d43fa96f4654dfc71808849646947905921810b552ddad",
+      "git_blob_sha1": "68d1c24db43823d63bc8bfa20c35cd849d383f49",
+      "bytes": 839
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/records/pr-evidence.json",
+      "mode": "100644",
+      "sha256": "e00c484128b4a51b9ba22be2f480fbf140dc3417abded0d49019f60edf1b0b17",
+      "git_blob_sha1": "a5baa8be4e0ee9e2906142d096bdc5fe67c3fd39",
+      "bytes": 908
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/records/source-reading-manifest.csv",
+      "mode": "100644",
+      "sha256": "f8eee174f9253f7aa6fdd59239197851d6bcb636592787ba6b217cdff0be25af",
+      "git_blob_sha1": "c00a6545420fff279b815b685a08bff7c3cd661a",
+      "bytes": 9765
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/records/source-reading-manifest.json",
+      "mode": "100644",
+      "sha256": "c1ff4b6db6f4ed74e63f179c1e29e942819aaa85a4a16916726bc63d8a0c9545",
+      "git_blob_sha1": "465013c4b63b285eb4061980bd4b3ace7b28e036",
+      "bytes": 14128
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/records/staging-tree.json",
+      "mode": "100644",
+      "sha256": "06a9da3161689a2dbae7691a52040f014fb3cba641cc98ca8eb4bfc76f82f0a5",
+      "git_blob_sha1": "0d22850f93db18795a4d8d4b65f9d53f7e4f134a",
+      "bytes": 1331
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/source/forensic/.github/workflows/mc1-pb00701-v54.yml",
+      "mode": "100644",
+      "sha256": "f589dd111de28ae22ac9cf8efa5e02c27b2962220232393d8bb9a3d79dc068ed",
+      "git_blob_sha1": "bb0fbd6a766bb06f3f68bb282a76d444f4c62c4b",
+      "bytes": 1200
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/source/main/handoffs/current-authority.json",
+      "mode": "100644",
+      "sha256": "33f50d4305755cb6c19421dacc287d52ca64e669478fecc195cde1640adb1133",
+      "git_blob_sha1": "fa0233323a0804d8a5d3eb7cd892a274a6173fab",
+      "bytes": 796
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/source/main/research/machining-completeness/tasks/MC-038/pb00701-mixed-owner-spans-v53.json",
+      "mode": "100644",
+      "sha256": "01c2bf35ac5e0ab93cea299efb3cd6aa0bfa932f4b4a37c0984414f6dbf5e9ab",
+      "git_blob_sha1": "006ceb86365616462de3b77689950e9b849d349d",
+      "bytes": 5375
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/source/main/research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+      "mode": "100644",
+      "sha256": "2813a99ecc2bc179bf31f6c9166f9c3564516e67f2f256c0a984deee4ed0f692",
+      "git_blob_sha1": "a086b625e1a6dea8bd202699d161167bb69cc9e7",
+      "bytes": 18701
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/source/main/research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_certificate.py",
+      "mode": "100644",
+      "sha256": "c61f60b2b490bbe2f1a6c277dcd8c42e51ea1cbcd011dc953d3c4efe30d636eb",
+      "git_blob_sha1": "91bfc606539d05f054a86ee381af59926502c167",
+      "bytes": 2113
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/source/main/research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py",
+      "mode": "100644",
+      "sha256": "58d8ee85794da693e0ad6677ba1d960e849292f5dc976def6ae1c6e7001e54a1",
+      "git_blob_sha1": "0d7b334accaec307ef2016a1bec2fa22cb115920",
+      "bytes": 15914
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/source/main/research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py",
+      "mode": "100644",
+      "sha256": "7e110ca5c10d7623da2d55c7ed559aed53f2f18118cb48cd57b0c38044011cbd",
+      "git_blob_sha1": "7995627b8ff784c17947b2db746a588b5ed18d7b",
+      "bytes": 9323
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/source/recovery/.github/workflows/mc1-pb00701-v54-recovery-bootstrap.yml",
+      "mode": "100644",
+      "sha256": "25969bc2d1c2d41fcea45bddb927cf74b74ca92aea44645bce0f6d7d5abbbc4e",
+      "git_blob_sha1": "849bdbbbaf9a2a1e569bb199e2414c909eaa4776",
+      "bytes": 1278
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/tools/check_source_blobs.py",
+      "mode": "100644",
+      "sha256": "3d336e1d8bbc7c65bd67f0f6543b7babdbbf9db962b19571b428d8b6e0cfa0bb",
+      "git_blob_sha1": "4a657bea4fc7fa483a9acc8c34251c4459af2388",
+      "bytes": 1280
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/tools/import_smoke.py",
+      "mode": "100644",
+      "sha256": "71ada2dc631c1c8b2ca00aee08b536d1e3d7bf08606d7e3ef3ce2d429718baab",
+      "git_blob_sha1": "fab77e0e13da85be4588a4fc3d423b5a7c91335b",
+      "bytes": 1139
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/tools/index_recovered_source.py",
+      "mode": "100644",
+      "sha256": "66cd01440ef4a5256c89a5807a2f24e4a6e57342345976bafb18dc1d14372606",
+      "git_blob_sha1": "c424a791ba295f44366a967d120d5950c92d6c88",
+      "bytes": 1734
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/tools/retain_contract_sources.py",
+      "mode": "100644",
+      "sha256": "e4dbfd621838909c3c63446170c773e4bc685e81f8c66c0c4a52a4a17dd072ff",
+      "git_blob_sha1": "5b4647cbaae8049b7fae7f59e81084035cbdc8f8",
+      "bytes": 4537
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/tools/verify_packet.py",
+      "mode": "100644",
+      "sha256": "75007a94737870cdddbc3e9dc84a92501d031e73d2f2267d4725c210c432acf8",
+      "git_blob_sha1": "c49a6e8179f06669535865bcb63021828ac5ffa1",
+      "bytes": 2134
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/prior/2A/tools/write_reconciliation_records.py",
+      "mode": "100644",
+      "sha256": "3c8a3f9dd291a6336e5c819108d5af604044e2b4fec157c971556e1b27f0bf5d",
+      "git_blob_sha1": "ab28830da3d9c3a030c9506d1293603a94b8d6f1",
+      "bytes": 14033
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/records/authority-refresh.json",
+      "mode": "100644",
+      "sha256": "78897a0c1b315b56dd02713a9d46205177a43ce82a70de6c64577d264e90181d",
+      "git_blob_sha1": "0cc77dd90dcb5a8b773b8f518b53d1d725591ada",
+      "bytes": 3185
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/records/dependency-map.json",
+      "mode": "100644",
+      "sha256": "8fbbc9e676b14b7c119a196b117da3f12224aed830aa622dc08122ff52934361",
+      "git_blob_sha1": "d0fe46708ab2b0f1422f88759b36963adb902935",
+      "bytes": 53771
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/records/execution-scope.json",
+      "mode": "100644",
+      "sha256": "486af1f204376bac990cb8126eaa35628ece1cd560ab438ee919946f63c785f6",
+      "git_blob_sha1": "54dbb71005312820e15d2f9876e40d17d80101c6",
+      "bytes": 629
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/records/readiness.json",
+      "mode": "100644",
+      "sha256": "b90e87a0de1f909fc2d439c7adc1a976a0addcf54a0b147221e583c007f95b2a",
+      "git_blob_sha1": "46983de59dad3fdea4700be5f02754c6a56c50fa",
+      "bytes": 1310
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/records/residual-recovery-queue.json",
+      "mode": "100644",
+      "sha256": "0e7f24169c12676b96f6ef1d045e6baa45991c7306340b3811b472b719242bd6",
+      "git_blob_sha1": "70ed55d01a8287816f786618463b820d9f7e49c8",
+      "bytes": 20031
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/records/source-manifest.json",
+      "mode": "100644",
+      "sha256": "bc21b122f94d7ae13f59b3129b8edd1bfecbd42d2f4c0c8389a012bc1c9900a6",
+      "git_blob_sha1": "a91b9305053eeee9ab6241ece2493cc6e0453685",
+      "bytes": 19930
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/records/source-symbol-locations.json",
+      "mode": "100644",
+      "sha256": "002d18d0ec37303288aebe8e1bf45bc0f7f63b201a45eb4e9a7b2702b7dc8636",
+      "git_blob_sha1": "199e952e7b89b6e75ea09096b1e92b18ecbc7f85",
+      "bytes": 42173
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/source/forensic/.github/workflows/mc1-pb00701-v54.yml",
+      "mode": "100644",
+      "sha256": "f589dd111de28ae22ac9cf8efa5e02c27b2962220232393d8bb9a3d79dc068ed",
+      "git_blob_sha1": "bb0fbd6a766bb06f3f68bb282a76d444f4c62c4b",
+      "bytes": 1200
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/source/main/handoffs/current-authority.json",
+      "mode": "100644",
+      "sha256": "33f50d4305755cb6c19421dacc287d52ca64e669478fecc195cde1640adb1133",
+      "git_blob_sha1": "fa0233323a0804d8a5d3eb7cd892a274a6173fab",
+      "bytes": 796
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/source/main/research/machining-completeness/tasks/MC-032/event_engine.py",
+      "mode": "100644",
+      "sha256": "0463db3b5d3ada72c40ca5aa3025f4234fd120887714416d2b39b790cb27fac8",
+      "git_blob_sha1": "789a709c5141479a343035d1b7055dd4e53534e1",
+      "bytes": 10017
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/source/main/research/machining-completeness/tasks/MC-038/pb00701-mixed-owner-spans-v53.json",
+      "mode": "100644",
+      "sha256": "01c2bf35ac5e0ab93cea299efb3cd6aa0bfa932f4b4a37c0984414f6dbf5e9ab",
+      "git_blob_sha1": "006ceb86365616462de3b77689950e9b849d349d",
+      "bytes": 5375
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/source/main/research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+      "mode": "100644",
+      "sha256": "357b2986869a22adbf96ce2fd9a84afe8485c52a9fe34f1d150b5a99faa54052",
+      "git_blob_sha1": "c055e7f392a921b386a1a99cc70b5004121ae7f6",
+      "bytes": 21857
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/source/main/research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+      "mode": "100644",
+      "sha256": "2813a99ecc2bc179bf31f6c9166f9c3564516e67f2f256c0a984deee4ed0f692",
+      "git_blob_sha1": "a086b625e1a6dea8bd202699d161167bb69cc9e7",
+      "bytes": 18701
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/source/main/research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py",
+      "mode": "100644",
+      "sha256": "21ff04f19e11df983c94969a24421d60766f836c7e4e6e4b9e18adb2ceb74ee7",
+      "git_blob_sha1": "4c4c9697b2237790d2e7ac8b96ec1dcdf2398303",
+      "bytes": 15678
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/source/main/research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_certificate.py",
+      "mode": "100644",
+      "sha256": "c61f60b2b490bbe2f1a6c277dcd8c42e51ea1cbcd011dc953d3c4efe30d636eb",
+      "git_blob_sha1": "91bfc606539d05f054a86ee381af59926502c167",
+      "bytes": 2113
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/source/main/research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py",
+      "mode": "100644",
+      "sha256": "58d8ee85794da693e0ad6677ba1d960e849292f5dc976def6ae1c6e7001e54a1",
+      "git_blob_sha1": "0d7b334accaec307ef2016a1bec2fa22cb115920",
+      "bytes": 15914
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/source/main/research/machining-completeness/tasks/MC-038/pb00701_ordered_product_certificate.py",
+      "mode": "100644",
+      "sha256": "4f1619956f49d98156215e78b70d6c3be708e3ed66e4547011b6c36b8236dc94",
+      "git_blob_sha1": "81af2b07cb800a1e0636a8c737b9a492d774bb34",
+      "bytes": 2401
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/source/main/research/machining-completeness/tasks/MC-038/pb00701_ordered_product_model.py",
+      "mode": "100644",
+      "sha256": "09c730a0b1db8df359b625b60520a35f62feb7a1bdbbc244710c66acc18ab14e",
+      "git_blob_sha1": "d36c5f5ce3b12840273d8483c467ff41a6e9ae01",
+      "bytes": 24279
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/source/main/research/machining-completeness/tasks/MC-038/pb00701_piecewise_product_model.py",
+      "mode": "100644",
+      "sha256": "0d744985ec52e86ba6cbc3a3ed587d5057462a768ee62c39650b316571d883a0",
+      "git_blob_sha1": "6ca7a321bd027f3ed2a22059e9aa856c76485f8a",
+      "bytes": 19289
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/source/main/research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+      "mode": "100644",
+      "sha256": "315fa68101d6e0e4b497570d5048812d90952b0d224b83f4c9aba3acfd3cbea9",
+      "git_blob_sha1": "dfd554bf9ee41c96f9009f8ed8ceae485e134a5d",
+      "bytes": 21736
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/source/main/research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+      "mode": "100644",
+      "sha256": "9a442dd083a41c50ccd99f4cb83ff87b501d545d7b24b237556c5d63a3b84a17",
+      "git_blob_sha1": "f25e76dab22e47b6573a4c2fd8c1170677c887fb",
+      "bytes": 11725
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/source/main/research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py",
+      "mode": "100644",
+      "sha256": "a67e06612728430ea200ead124e7cb4373f6d8537ea005be885fea534b6a8f5a",
+      "git_blob_sha1": "050e6b2110d9d706a9cf96006b79e069adb7beac",
+      "bytes": 23909
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/source/main/research/machining-completeness/tasks/MC-038/test_pb00701_piecewise_product.py",
+      "mode": "100644",
+      "sha256": "231a4b59665d3f95e61fb835f35c7901295d0b8f674e5786e9955978da644ae6",
+      "git_blob_sha1": "c847b27a8981aa3743291a60e267ee8d91d5b5d5",
+      "bytes": 9566
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/source/main/research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py",
+      "mode": "100644",
+      "sha256": "7e110ca5c10d7623da2d55c7ed559aed53f2f18118cb48cd57b0c38044011cbd",
+      "git_blob_sha1": "7995627b8ff784c17947b2db746a588b5ed18d7b",
+      "bytes": 9323
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/source/recovery/.github/workflows/mc1-pb00701-v54-recovery-bootstrap.yml",
+      "mode": "100644",
+      "sha256": "25969bc2d1c2d41fcea45bddb927cf74b74ca92aea44645bce0f6d7d5abbbc4e",
+      "git_blob_sha1": "849bdbbbaf9a2a1e569bb199e2414c909eaa4776",
+      "bytes": 1278
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/tools/import_only.py",
+      "mode": "100644",
+      "sha256": "0cb5ce61eaa67c0bbb6aaa49f86a0196c17afa5a9756a30126413d301a7ac309",
+      "git_blob_sha1": "3e84c71c83f05c5a6313f41fb71011f69e53933a",
+      "bytes": 1714
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/tools/map_dependencies.py",
+      "mode": "100644",
+      "sha256": "a57f97b8879701788c1ef32f21e61308ad954ca6072d7dce2ec2041af0a66ac3",
+      "git_blob_sha1": "4c91e868b4260d3dc05e9f421147dbf3b3fadd3c",
+      "bytes": 6660
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/tools/package_packet.py",
+      "mode": "100644",
+      "sha256": "d68fe1068f879ecb335d00de316ef83b90c7ed2b8f337f32110d6be5ccc16883",
+      "git_blob_sha1": "25c3777b403fa2ab7df89f9c1a8d06c8419692f6",
+      "bytes": 3563
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/tools/register_source.py",
+      "mode": "100644",
+      "sha256": "0d3180a2b8e1b9d75b42655ad763cdb0e6c361e16f7d5de63a89dee22dd664ed",
+      "git_blob_sha1": "5b3e6379f62d9d2e2b3f484e47a66d5686876268",
+      "bytes": 1819
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/tools/run_import_smoke.py",
+      "mode": "100644",
+      "sha256": "28716182080a1530d44e2736f03de933d2819142032e41c1c0624f7afc881bc8",
+      "git_blob_sha1": "66fb664de5438615ade8d5bef5d18a40665ad70f",
+      "bytes": 1439
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/tools/verify_packet.py",
+      "mode": "100644",
+      "sha256": "e4dcee2c2289b1f0b7b9400f40cc844315947ad7b55144f9007e3917ea8df757",
+      "git_blob_sha1": "e2d2dd22aa19463abb5aa79ba30567700f43bf4b",
+      "bytes": 3158
+    },
+    {
+      "path": "unpacked/radiCADSAC-2A-R1/tools/write_checkpoint.py",
+      "mode": "100644",
+      "sha256": "ab42849153febb47319c8ea54ccf5ebcd8d54bde38b81c18c529601207d6f76b",
+      "git_blob_sha1": "9c5ec505526439efa5014d976cf15d09345d4000",
+      "bytes": 27138
+    }
+  ]
+}

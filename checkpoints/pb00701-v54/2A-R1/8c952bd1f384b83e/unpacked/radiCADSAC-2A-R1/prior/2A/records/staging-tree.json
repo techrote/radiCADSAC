@@ -1,0 +1,53 @@
+{
+  "commit": "8cec4953dc898e70270c654f5453b108bb80d47b",
+  "path": ".v54-bootstrap",
+  "tree_sha": "a8ea1728d54bc7c0b00f5bfca7e0694b7500c960",
+  "truncated": false,
+  "entries": [
+    {
+      "path": "part00",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bbb8821beba15fb44d3c047efa7a9fa4778fb01e",
+      "size": 8000
+    },
+    {
+      "path": "part01",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2e446b6ae5b6558274dc486e6635ba99a66ccf5a",
+      "size": 8000
+    },
+    {
+      "path": "part02",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "581a9e550862b8255372f713fb2b4afbac047605",
+      "size": 8000
+    },
+    {
+      "path": "part03",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "86f88a77e2f284c2e08a1875dd430491bf6b3e4d",
+      "size": 8000
+    },
+    {
+      "path": "part04",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1249799b312e2db4f085345721744df1dc31e5b4",
+      "size": 8000
+    },
+    {
+      "path": "part05",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "26da27e08cbffc925533d65c39415c9e6b9822d6",
+      "size": 8000
+    }
+  ],
+  "local_tree_object_hash_verified": true,
+  "blob_contents_downloaded": false,
+  "scope": "complete tree-entry metadata for this directory only, not a recovered payload or full repository"
+}

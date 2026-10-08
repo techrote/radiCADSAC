@@ -1,0 +1,13 @@
+{
+  "scope": "Portable chunk 2A packet, not a complete Git tree",
+  "source_exports": 8,
+  "source_git_blob_matches": true,
+  "staging_tree_entry_hash_matches": true,
+  "source_runtime_dependency_closure_complete": false,
+  "single_import_smoke": "PASS; verifier definitions only",
+  "complete_predecessor_tests_run": false,
+  "v54_accepted": false,
+  "file_hash_manifest": "SHA256SUMS",
+  "hash_manifest_self_exclusion": "SHA256SUMS is the only excluded file",
+  "archive_verification": "See outer radiCADSAC-2A-packet-verification.json for actual ZIP CRC, exact file-set, full readability, extracted hashes and archive SHA-256 results"
+}

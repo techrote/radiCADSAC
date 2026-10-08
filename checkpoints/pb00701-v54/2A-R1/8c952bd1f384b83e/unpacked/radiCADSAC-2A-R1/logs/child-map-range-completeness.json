@@ -1,0 +1,8 @@
+{
+  "first_attempt": "FAIL_GIT_BLOB_MISMATCH",
+  "cause": "Initial selected ranges covered lines 1-440, not the full file. They were not admitted to the manifest.",
+  "negative_control": "Final-LF variants also failed; discarded.",
+  "resolution": "Fetched actual lines 441-EOF at the same immutable commit; appended original text; complete Git blob matches.",
+  "final_blob": "c055e7f392a921b386a1a99cc70b5004121ae7f6",
+  "modified_repository_semantics": false
+}

@@ -1,0 +1,62 @@
+{
+  "scope": "individual fetched blobs only; NOT a complete Git tree",
+  "results": [
+    {
+      "path": "source/forensic/.github/workflows/mc1-pb00701-v54.yml",
+      "bytes": 1200,
+      "expected_git_blob": "bb0fbd6a766bb06f3f68bb282a76d444f4c62c4b",
+      "actual_git_blob": "bb0fbd6a766bb06f3f68bb282a76d444f4c62c4b",
+      "sha256": "f589dd111de28ae22ac9cf8efa5e02c27b2962220232393d8bb9a3d79dc068ed",
+      "match": true
+    },
+    {
+      "path": "source/recovery/.github/workflows/mc1-pb00701-v54-recovery-bootstrap.yml",
+      "bytes": 1278,
+      "expected_git_blob": "849bdbbbaf9a2a1e569bb199e2414c909eaa4776",
+      "actual_git_blob": "849bdbbbaf9a2a1e569bb199e2414c909eaa4776",
+      "sha256": "25969bc2d1c2d41fcea45bddb927cf74b74ca92aea44645bce0f6d7d5abbbc4e",
+      "match": true
+    },
+    {
+      "path": "source/main/research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_certificate.py",
+      "bytes": 2113,
+      "expected_git_blob": "91bfc606539d05f054a86ee381af59926502c167",
+      "actual_git_blob": "91bfc606539d05f054a86ee381af59926502c167",
+      "sha256": "c61f60b2b490bbe2f1a6c277dcd8c42e51ea1cbcd011dc953d3c4efe30d636eb",
+      "match": true
+    },
+    {
+      "path": "source/main/research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py",
+      "bytes": 9323,
+      "expected_git_blob": "7995627b8ff784c17947b2db746a588b5ed18d7b",
+      "actual_git_blob": "7995627b8ff784c17947b2db746a588b5ed18d7b",
+      "sha256": "7e110ca5c10d7623da2d55c7ed559aed53f2f18118cb48cd57b0c38044011cbd",
+      "match": true
+    },
+    {
+      "path": "source/main/research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py",
+      "bytes": 15914,
+      "expected_git_blob": "0d7b334accaec307ef2016a1bec2fa22cb115920",
+      "actual_git_blob": "0d7b334accaec307ef2016a1bec2fa22cb115920",
+      "sha256": "58d8ee85794da693e0ad6677ba1d960e849292f5dc976def6ae1c6e7001e54a1",
+      "match": true
+    },
+    {
+      "path": "source/main/handoffs/current-authority.json",
+      "bytes": 796,
+      "expected_git_blob": "fa0233323a0804d8a5d3eb7cd892a274a6173fab",
+      "actual_git_blob": "fa0233323a0804d8a5d3eb7cd892a274a6173fab",
+      "sha256": "33f50d4305755cb6c19421dacc287d52ca64e669478fecc195cde1640adb1133",
+      "match": true
+    },
+    {
+      "path": "source/main/research/machining-completeness/tasks/MC-038/pb00701-mixed-owner-spans-v53.json",
+      "bytes": 5375,
+      "expected_git_blob": "006ceb86365616462de3b77689950e9b849d349d",
+      "actual_git_blob": "006ceb86365616462de3b77689950e9b849d349d",
+      "sha256": "01c2bf35ac5e0ab93cea299efb3cd6aa0bfa932f4b4a37c0984414f6dbf5e9ab",
+      "match": true
+    }
+  ],
+  "all_match": true
+}

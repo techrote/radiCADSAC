@@ -1,0 +1,7 @@
+{
+  "initial_transcription_match": false,
+  "final_git_blob": "a086b625e1a6dea8bd202699d161167bb69cc9e7",
+  "expected_git_blob": "a086b625e1a6dea8bd202699d161167bb69cc9e7",
+  "final_match": true,
+  "note": "A local text-transfer parenthesis error was corrected strictly against the fetched source; no repository implementation changed."
+}

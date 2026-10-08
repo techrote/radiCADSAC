@@ -1,0 +1,32 @@
+name: mc1-pb00701-v54-baseline
+on:
+  push:
+    branches: [mc038/pb00701-v54-finite-owner-coverage]
+    paths: ['.github/workflows/mc1-pb00701-v54.yml']
+permissions:
+  contents: read
+jobs:
+  baseline:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 9734776b3cef3d7039be9623e8872df2c2a85174
+          persist-credentials: false
+      - name: Export exact unchanged main source for local proof inspection
+        run: |
+          git archive --format=tar --output="$RUNNER_TEMP/v54-base-source.tar" HEAD
+          git rev-parse HEAD HEAD^{tree} > "$RUNNER_TEMP/v54-base-identities.txt"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v54-base-9734776b3cef3d7039be9623e8872df2c2a85174
+          path: |
+            ${{ runner.temp }}/v54-base-source.tar
+            ${{ runner.temp }}/v54-base-identities.txt
+          retention-days: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Execute complete unchanged v53 once before implementation
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py --contract --self-test

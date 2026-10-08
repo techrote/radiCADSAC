@@ -1,0 +1,9 @@
+{
+  "started_at_utc": "2026-10-04T14:59:15+00:00",
+  "substantive_work_checkpoint_utc": "2026-10-04T15:24:39.673352+00:00",
+  "elapsed_minutes_before_packaging": 25.41,
+  "status": "PARTIAL",
+  "next_direction": "SOURCE_RECOVERY",
+  "remote_writes": 0,
+  "scope_stopped_at": "2A; integrity packaging only remains"
+}

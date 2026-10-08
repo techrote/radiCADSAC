@@ -1,0 +1,30 @@
+{
+  "check": "IMPORT_ONLY",
+  "module": "test_pb00701_mixed_owner_span_integration",
+  "factory_called": false,
+  "residual_case_run": false,
+  "full_verifier_run": false,
+  "python_version": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "bytecode_write_enabled": false,
+  "isolated_mode": true,
+  "source_search_path": "/mnt/data/radiCADSAC-2A-R1-sfro00ye/packet/source/main/research/machining-completeness/tasks/MC-038",
+  "status": "IMPORT_FAILED",
+  "exception_type": "ModuleNotFoundError",
+  "exception_message": "No module named 'pb00701_algebraic_endpoint_model'",
+  "missing_module": "pb00701_algebraic_endpoint_model",
+  "traceback": "Traceback (most recent call last):\n  File \"/mnt/data/radiCADSAC-2A-R1-sfro00ye/packet/tools/import_only.py\", line 19, in <module>\n    target = importlib.import_module(report['module'])\n  File \"/usr/lib/python3.13/importlib/__init__.py\", line 88, in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<frozen importlib._bootstrap>\", line 1387, in _gcd_import\n  File \"<frozen importlib._bootstrap>\", line 1360, in _find_and_load\n  File \"<frozen importlib._bootstrap>\", line 1331, in _find_and_load_unlocked\n  File \"<frozen importlib._bootstrap>\", line 935, in _load_unlocked\n  File \"<frozen importlib._bootstrap_external>\", line 1026, in exec_module\n  File \"<frozen importlib._bootstrap>\", line 488, in _call_with_frames_removed\n  File \"/mnt/data/radiCADSAC-2A-R1-sfro00ye/packet/source/main/research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span_integration.py\", line 11, in <module>\n    import test_pb00701_mixed_owner_span as core\n  File \"/mnt/data/radiCADSAC-2A-R1-sfro00ye/packet/source/main/research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py\", line 11, in <module>\n    import pb00701_mixed_owner_span_model as m\n  File \"/mnt/data/radiCADSAC-2A-R1-sfro00ye/packet/source/main/research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py\", line 14, in <module>\n    import pb00701_ordered_product_model as v51\n  File \"/mnt/data/radiCADSAC-2A-R1-sfro00ye/packet/source/main/research/machining-completeness/tasks/MC-038/pb00701_ordered_product_model.py\", line 13, in <module>\n    import pb00701_vanishing_source_factor_model as v50\n  File \"/mnt/data/radiCADSAC-2A-R1-sfro00ye/packet/source/main/research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py\", line 18, in <module>\n    import pb00701_algebraic_endpoint_model as v46\nModuleNotFoundError: No module named 'pb00701_algebraic_endpoint_model'\n",
+  "successfully_loaded_source_modules_remaining_in_sys_modules": [
+    {
+      "module": "pb00701_algebraic_child_map_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py"
+    },
+    {
+      "module": "pb00701_mixed_boundary_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_boundary_model.py"
+    },
+    {
+      "module": "pb00701_piecewise_product_model",
+      "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_piecewise_product_model.py"
+    }
+  ]
+}

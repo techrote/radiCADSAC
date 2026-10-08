@@ -1,0 +1,334 @@
+[
+  {
+    "path": "source/main/research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+    "functions_and_classes": [
+      {
+        "name": "CoupledAnalyticRefusal",
+        "start_line": 16,
+        "end_line": 17
+      },
+      {
+        "name": "_trim",
+        "start_line": 20,
+        "end_line": 24
+      },
+      {
+        "name": "_padd",
+        "start_line": 27,
+        "end_line": 35
+      },
+      {
+        "name": "_pscale",
+        "start_line": 38,
+        "end_line": 40
+      },
+      {
+        "name": "_pmul",
+        "start_line": 43,
+        "end_line": 50
+      },
+      {
+        "name": "_peval",
+        "start_line": 53,
+        "end_line": 58
+      },
+      {
+        "name": "_is_constant",
+        "start_line": 61,
+        "end_line": 62
+      },
+      {
+        "name": "_normalise_bspline",
+        "start_line": 65,
+        "end_line": 104
+      },
+      {
+        "name": "_basis_piece",
+        "start_line": 107,
+        "end_line": 143
+      },
+      {
+        "name": "bspline_piece",
+        "start_line": 146,
+        "end_line": 176
+      },
+      {
+        "name": "lower_bspline",
+        "start_line": 179,
+        "end_line": 192
+      },
+      {
+        "name": "_normalise_harmonic_splines",
+        "start_line": 195,
+        "end_line": 215
+      },
+      {
+        "name": "_canonical_bspline_spec",
+        "start_line": 218,
+        "end_line": 223
+      },
+      {
+        "name": "_master_boundaries",
+        "start_line": 226,
+        "end_line": 233
+      },
+      {
+        "name": "_piece_from_normal",
+        "start_line": 236,
+        "end_line": 237
+      },
+      {
+        "name": "_quarter_turn_index",
+        "start_line": 240,
+        "end_line": 245
+      },
+      {
+        "name": "_cardinal_cos_sin",
+        "start_line": 248,
+        "end_line": 258
+      },
+      {
+        "name": "_event_summary",
+        "start_line": 261,
+        "end_line": 266
+      },
+      {
+        "name": "_stationary_cardinal_result",
+        "start_line": 269,
+        "end_line": 304
+      },
+      {
+        "name": "_dominance_certificate",
+        "start_line": 307,
+        "end_line": 329
+      },
+      {
+        "name": "_constant_modulation_result",
+        "start_line": 332,
+        "end_line": 355
+      },
+      {
+        "name": "analyze_coupled_bspline_event",
+        "start_line": 358,
+        "end_line": 477
+      },
+      {
+        "name": "classify_required_analytic_event",
+        "start_line": 480,
+        "end_line": 516
+      },
+      {
+        "name": "resource_refusal",
+        "start_line": 519,
+        "end_line": 520
+      }
+    ],
+    "imports_at_any_scope": [
+      {
+        "module": "__future__",
+        "line": 2
+      },
+      {
+        "module": "fractions",
+        "line": 4
+      },
+      {
+        "module": "pathlib",
+        "line": 5
+      },
+      {
+        "module": "sys",
+        "line": 6
+      },
+      {
+        "module": "pb00701_rational_turn_model",
+        "line": 10
+      }
+    ]
+  },
+  {
+    "path": "source/main/research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_certificate.py",
+    "functions_and_classes": [
+      {
+        "name": "validate_ordered_span_view",
+        "start_line": 13,
+        "end_line": 22
+      },
+      {
+        "name": "validate_mixed_certificate",
+        "start_line": 25,
+        "end_line": 47
+      }
+    ],
+    "imports_at_any_scope": [
+      {
+        "module": "pathlib",
+        "line": 7
+      },
+      {
+        "module": "sys",
+        "line": 8
+      },
+      {
+        "module": "pb00701_mixed_owner_span_model",
+        "line": 10
+      }
+    ]
+  },
+  {
+    "path": "source/main/research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py",
+    "functions_and_classes": [
+      {
+        "name": "refusal",
+        "start_line": 27,
+        "end_line": 29
+      },
+      {
+        "name": "strict_components",
+        "start_line": 32,
+        "end_line": 130
+      },
+      {
+        "name": "regenerate_view",
+        "start_line": 133,
+        "end_line": 155
+      },
+      {
+        "name": "build_ordered_span_view",
+        "start_line": 158,
+        "end_line": 162
+      },
+      {
+        "name": "check_views",
+        "start_line": 165,
+        "end_line": 173
+      },
+      {
+        "name": "assemble",
+        "start_line": 176,
+        "end_line": 183
+      },
+      {
+        "name": "build_mixed_certificate",
+        "start_line": 186,
+        "end_line": 203
+      },
+      {
+        "name": "retained_failure",
+        "start_line": 206,
+        "end_line": 207
+      },
+      {
+        "name": "build_mixed_source_evidence",
+        "start_line": 210,
+        "end_line": 280
+      }
+    ],
+    "imports_at_any_scope": [
+      {
+        "module": "fractions",
+        "line": 8
+      },
+      {
+        "module": "pathlib",
+        "line": 9
+      },
+      {
+        "module": "sys",
+        "line": 10
+      },
+      {
+        "module": "pb00701_piecewise_product_model",
+        "line": 13
+      },
+      {
+        "module": "pb00701_ordered_product_model",
+        "line": 14
+      },
+      {
+        "module": "pb00701_ordered_product_certificate",
+        "line": 15
+      },
+      {
+        "module": "pb00701_mixed_owner_span_certificate",
+        "line": 166
+      }
+    ]
+  },
+  {
+    "path": "source/main/research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py",
+    "functions_and_classes": [
+      {
+        "name": "expected_boundary",
+        "start_line": 62,
+        "end_line": 81
+      },
+      {
+        "name": "contract",
+        "start_line": 84,
+        "end_line": 115
+      },
+      {
+        "name": "rejected",
+        "start_line": 118,
+        "end_line": 123
+      },
+      {
+        "name": "self_test",
+        "start_line": 126,
+        "end_line": 148
+      },
+      {
+        "name": "main",
+        "start_line": 151,
+        "end_line": 163
+      }
+    ],
+    "imports_at_any_scope": [
+      {
+        "module": "argparse",
+        "line": 3
+      },
+      {
+        "module": "ast",
+        "line": 4
+      },
+      {
+        "module": "copy",
+        "line": 5
+      },
+      {
+        "module": "json",
+        "line": 6
+      },
+      {
+        "module": "pathlib",
+        "line": 7
+      },
+      {
+        "module": "subprocess",
+        "line": 8
+      },
+      {
+        "module": "sys",
+        "line": 9
+      },
+      {
+        "module": "verify_pb00701_v51",
+        "line": 63
+      },
+      {
+        "module": "verify_pb00701_v52",
+        "line": 85
+      },
+      {
+        "module": "test_pb00701_mixed_owner_span",
+        "line": 127
+      },
+      {
+        "module": "test_pb00701_mixed_owner_span_integration",
+        "line": 128
+      }
+    ]
+  }
+]

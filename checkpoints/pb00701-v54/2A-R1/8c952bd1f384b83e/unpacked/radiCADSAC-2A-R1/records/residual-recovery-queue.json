@@ -1,0 +1,434 @@
+[
+  {
+    "module": "pb00701_algebraic_endpoint_certificate",
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_endpoint_certificate.py",
+    "priority": "IMPORT_TIME_FIXTURE_FRONTIER",
+    "observed_import_sites": [
+      {
+        "from_module": "pb00701_ordered_product_model",
+        "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_model.py",
+        "line": 14,
+        "imported_module": "pb00701_algebraic_endpoint_certificate",
+        "phase": "MODULE_EXECUTION",
+        "function_scopes": [],
+        "classification": "MISSING_REPOSITORY_SOURCE",
+        "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_endpoint_certificate.py"
+      }
+    ],
+    "file_bytes_recovered": false,
+    "own_imports_known": false,
+    "reachability_limit": "Literal import reference only; actual branch use and deeper dependencies not established."
+  },
+  {
+    "module": "pb00701_algebraic_endpoint_model",
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_endpoint_model.py",
+    "priority": "IMPORT_TIME_FIXTURE_FRONTIER",
+    "observed_import_sites": [
+      {
+        "from_module": "pb00701_vanishing_source_factor_model",
+        "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+        "line": 18,
+        "imported_module": "pb00701_algebraic_endpoint_model",
+        "phase": "MODULE_EXECUTION",
+        "function_scopes": [],
+        "classification": "MISSING_REPOSITORY_SOURCE",
+        "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_endpoint_model.py"
+      }
+    ],
+    "file_bytes_recovered": false,
+    "own_imports_known": false,
+    "reachability_limit": "Literal import reference only; actual branch use and deeper dependencies not established."
+  },
+  {
+    "module": "pb00701_algebraic_monotone_cut_certificate",
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_monotone_cut_certificate.py",
+    "priority": "SOURCE_OR_PROOF_RUNTIME_FRONTIER",
+    "observed_import_sites": [
+      {
+        "from_module": "pb00701_vanishing_source_factor_model",
+        "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+        "line": 144,
+        "imported_module": "pb00701_algebraic_monotone_cut_certificate",
+        "phase": "FUNCTION_SCOPED_DEFERRED",
+        "function_scopes": [
+          "validate_carrier"
+        ],
+        "classification": "MISSING_REPOSITORY_SOURCE",
+        "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_monotone_cut_certificate.py"
+      }
+    ],
+    "file_bytes_recovered": false,
+    "own_imports_known": false,
+    "reachability_limit": "Literal import reference only; actual branch use and deeper dependencies not established."
+  },
+  {
+    "module": "pb00701_algebraic_monotone_cut_model",
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_monotone_cut_model.py",
+    "priority": "SOURCE_OR_PROOF_RUNTIME_FRONTIER",
+    "observed_import_sites": [
+      {
+        "from_module": "test_pb00701_mixed_owner_span",
+        "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+        "line": 58,
+        "imported_module": "pb00701_algebraic_monotone_cut_model",
+        "phase": "FUNCTION_SCOPED_DEFERRED",
+        "function_scopes": [
+          "no_search"
+        ],
+        "classification": "MISSING_REPOSITORY_SOURCE",
+        "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_monotone_cut_model.py"
+      }
+    ],
+    "file_bytes_recovered": false,
+    "own_imports_known": false,
+    "reachability_limit": "Literal import reference only; actual branch use and deeper dependencies not established."
+  },
+  {
+    "module": "pb00701_algebraic_orientation_cut_model",
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_orientation_cut_model.py",
+    "priority": "SOURCE_OR_PROOF_RUNTIME_FRONTIER",
+    "observed_import_sites": [
+      {
+        "from_module": "pb00701_algebraic_child_map_model",
+        "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+        "line": 445,
+        "imported_module": "pb00701_algebraic_orientation_cut_model",
+        "phase": "FUNCTION_SCOPED_DEFERRED",
+        "function_scopes": [
+          "classify_required_analytic_event"
+        ],
+        "classification": "MISSING_REPOSITORY_SOURCE",
+        "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_orientation_cut_model.py"
+      },
+      {
+        "from_module": "pb00701_algebraic_child_map_model",
+        "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+        "line": 455,
+        "imported_module": "pb00701_algebraic_orientation_cut_model",
+        "phase": "FUNCTION_SCOPED_DEFERRED",
+        "function_scopes": [
+          "represent_required_event_children"
+        ],
+        "classification": "MISSING_REPOSITORY_SOURCE",
+        "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_orientation_cut_model.py"
+      },
+      {
+        "from_module": "pb00701_algebraic_child_map_model",
+        "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py",
+        "line": 418,
+        "imported_module": "pb00701_algebraic_orientation_cut_model",
+        "phase": "FUNCTION_SCOPED_DEFERRED",
+        "function_scopes": [
+          "build_orientation_child_maps"
+        ],
+        "classification": "MISSING_REPOSITORY_SOURCE",
+        "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_orientation_cut_model.py"
+      }
+    ],
+    "file_bytes_recovered": false,
+    "own_imports_known": false,
+    "reachability_limit": "Literal import reference only; actual branch use and deeper dependencies not established."
+  },
+  {
+    "module": "pb00701_mixed_multicut_certificate",
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_multicut_certificate.py",
+    "priority": "SOURCE_OR_PROOF_RUNTIME_FRONTIER",
+    "observed_import_sites": [
+      {
+        "from_module": "pb00701_vanishing_source_factor_model",
+        "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+        "line": 138,
+        "imported_module": "pb00701_mixed_multicut_certificate",
+        "phase": "FUNCTION_SCOPED_DEFERRED",
+        "function_scopes": [
+          "validate_carrier"
+        ],
+        "classification": "MISSING_REPOSITORY_SOURCE",
+        "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_multicut_certificate.py"
+      }
+    ],
+    "file_bytes_recovered": false,
+    "own_imports_known": false,
+    "reachability_limit": "Literal import reference only; actual branch use and deeper dependencies not established."
+  },
+  {
+    "module": "pb00701_mixed_multicut_model",
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_multicut_model.py",
+    "priority": "SOURCE_OR_PROOF_RUNTIME_FRONTIER",
+    "observed_import_sites": [
+      {
+        "from_module": "test_pb00701_mixed_owner_span",
+        "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+        "line": 56,
+        "imported_module": "pb00701_mixed_multicut_model",
+        "phase": "FUNCTION_SCOPED_DEFERRED",
+        "function_scopes": [
+          "no_search"
+        ],
+        "classification": "MISSING_REPOSITORY_SOURCE",
+        "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_multicut_model.py"
+      },
+      {
+        "from_module": "pb00701_vanishing_source_factor_model",
+        "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+        "line": 111,
+        "imported_module": "pb00701_mixed_multicut_model",
+        "phase": "FUNCTION_SCOPED_DEFERRED",
+        "function_scopes": [
+          "carrier_proof"
+        ],
+        "classification": "MISSING_REPOSITORY_SOURCE",
+        "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_multicut_model.py"
+      },
+      {
+        "from_module": "pb00701_vanishing_source_factor_model",
+        "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+        "line": 354,
+        "imported_module": "pb00701_mixed_multicut_model",
+        "phase": "FUNCTION_SCOPED_DEFERRED",
+        "function_scopes": [
+          "classify_required_analytic_event"
+        ],
+        "classification": "MISSING_REPOSITORY_SOURCE",
+        "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_multicut_model.py"
+      }
+    ],
+    "file_bytes_recovered": false,
+    "own_imports_known": false,
+    "reachability_limit": "Literal import reference only; actual branch use and deeper dependencies not established."
+  },
+  {
+    "module": "pb00701_mixed_orientation_consumer",
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_orientation_consumer.py",
+    "priority": "SOURCE_OR_PROOF_RUNTIME_FRONTIER",
+    "observed_import_sites": [
+      {
+        "from_module": "test_pb00701_mixed_owner_span",
+        "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+        "line": 57,
+        "imported_module": "pb00701_mixed_orientation_consumer",
+        "phase": "FUNCTION_SCOPED_DEFERRED",
+        "function_scopes": [
+          "no_search"
+        ],
+        "classification": "MISSING_REPOSITORY_SOURCE",
+        "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_orientation_consumer.py"
+      },
+      {
+        "from_module": "pb00701_vanishing_source_factor_model",
+        "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+        "line": 141,
+        "imported_module": "pb00701_mixed_orientation_consumer",
+        "phase": "FUNCTION_SCOPED_DEFERRED",
+        "function_scopes": [
+          "validate_carrier"
+        ],
+        "classification": "MISSING_REPOSITORY_SOURCE",
+        "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_orientation_consumer.py"
+      }
+    ],
+    "file_bytes_recovered": false,
+    "own_imports_known": false,
+    "reachability_limit": "Literal import reference only; actual branch use and deeper dependencies not established."
+  },
+  {
+    "module": "pb00701_mixed_orientation_roots_model",
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_orientation_roots_model.py",
+    "priority": "SOURCE_OR_PROOF_RUNTIME_FRONTIER",
+    "observed_import_sites": [
+      {
+        "from_module": "pb00701_vanishing_source_factor_model",
+        "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+        "line": 212,
+        "imported_module": "pb00701_mixed_orientation_roots_model",
+        "phase": "FUNCTION_SCOPED_DEFERRED",
+        "function_scopes": [
+          "factor_root_events"
+        ],
+        "classification": "MISSING_REPOSITORY_SOURCE",
+        "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_orientation_roots_model.py"
+      }
+    ],
+    "file_bytes_recovered": false,
+    "own_imports_known": false,
+    "reachability_limit": "Literal import reference only; actual branch use and deeper dependencies not established."
+  },
+  {
+    "module": "pb00701_multiharmonic_monotone_anchor_model",
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_multiharmonic_monotone_anchor_model.py",
+    "priority": "SOURCE_OR_PROOF_RUNTIME_FRONTIER",
+    "observed_import_sites": [
+      {
+        "from_module": "test_pb00701_mixed_owner_span",
+        "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+        "line": 60,
+        "imported_module": "pb00701_multiharmonic_monotone_anchor_model",
+        "phase": "FUNCTION_SCOPED_DEFERRED",
+        "function_scopes": [
+          "no_search"
+        ],
+        "classification": "MISSING_REPOSITORY_SOURCE",
+        "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_multiharmonic_monotone_anchor_model.py"
+      },
+      {
+        "from_module": "pb00701_piecewise_product_model",
+        "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_piecewise_product_model.py",
+        "line": 96,
+        "imported_module": "pb00701_multiharmonic_monotone_anchor_model",
+        "phase": "FUNCTION_SCOPED_DEFERRED",
+        "function_scopes": [
+          "knot_continuity"
+        ],
+        "classification": "MISSING_REPOSITORY_SOURCE",
+        "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_multiharmonic_monotone_anchor_model.py"
+      },
+      {
+        "from_module": "pb00701_vanishing_source_factor_model",
+        "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+        "line": 171,
+        "imported_module": "pb00701_multiharmonic_monotone_anchor_model",
+        "phase": "FUNCTION_SCOPED_DEFERRED",
+        "function_scopes": [
+          "rational_event"
+        ],
+        "classification": "MISSING_REPOSITORY_SOURCE",
+        "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_multiharmonic_monotone_anchor_model.py"
+      },
+      {
+        "from_module": "pb00701_vanishing_source_factor_model",
+        "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_model.py",
+        "line": 147,
+        "imported_module": "pb00701_multiharmonic_monotone_anchor_model",
+        "phase": "FUNCTION_SCOPED_DEFERRED",
+        "function_scopes": [
+          "validate_carrier"
+        ],
+        "classification": "MISSING_REPOSITORY_SOURCE",
+        "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_multiharmonic_monotone_anchor_model.py"
+      }
+    ],
+    "file_bytes_recovered": false,
+    "own_imports_known": false,
+    "reachability_limit": "Literal import reference only; actual branch use and deeper dependencies not established."
+  },
+  {
+    "module": "pb00701_rational_turn_model",
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_rational_turn_model.py",
+    "priority": "SOURCE_OR_PROOF_RUNTIME_FRONTIER",
+    "observed_import_sites": [
+      {
+        "from_module": "pb00701_coupled_bspline_model",
+        "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+        "line": 10,
+        "imported_module": "pb00701_rational_turn_model",
+        "phase": "MODULE_EXECUTION",
+        "function_scopes": [],
+        "classification": "MISSING_REPOSITORY_SOURCE",
+        "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_rational_turn_model.py"
+      }
+    ],
+    "file_bytes_recovered": false,
+    "own_imports_known": false,
+    "reachability_limit": "Literal import reference only; actual branch use and deeper dependencies not established."
+  },
+  {
+    "module": "pb00701_vanishing_source_factor_certificate",
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_certificate.py",
+    "priority": "SOURCE_OR_PROOF_RUNTIME_FRONTIER",
+    "observed_import_sites": [
+      {
+        "from_module": "pb00701_ordered_product_certificate",
+        "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_certificate.py",
+        "line": 23,
+        "imported_module": "pb00701_vanishing_source_factor_certificate",
+        "phase": "FUNCTION_SCOPED_DEFERRED",
+        "function_scopes": [
+          "validate_ordered_product_event"
+        ],
+        "classification": "MISSING_REPOSITORY_SOURCE",
+        "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_certificate.py"
+      },
+      {
+        "from_module": "pb00701_ordered_product_model",
+        "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_product_model.py",
+        "line": 360,
+        "imported_module": "pb00701_vanishing_source_factor_certificate",
+        "phase": "FUNCTION_SCOPED_DEFERRED",
+        "function_scopes": [
+          "build_ordered_product_event"
+        ],
+        "classification": "MISSING_REPOSITORY_SOURCE",
+        "target_repository_path": "research/machining-completeness/tasks/MC-038/pb00701_vanishing_source_factor_certificate.py"
+      }
+    ],
+    "file_bytes_recovered": false,
+    "own_imports_known": false,
+    "reachability_limit": "Literal import reference only; actual branch use and deeper dependencies not established."
+  },
+  {
+    "module": "test_pb00701_mixed_boundary",
+    "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_boundary.py",
+    "priority": "DEFERRED_OTHER_TEST_OR_FULL_VERIFIER",
+    "observed_import_sites": [
+      {
+        "from_module": "test_pb00701_mixed_owner_span",
+        "repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_owner_span.py",
+        "line": 31,
+        "imported_module": "test_pb00701_mixed_boundary",
+        "phase": "FUNCTION_SCOPED_DEFERRED",
+        "function_scopes": [
+          "strict_args"
+        ],
+        "classification": "MISSING_REPOSITORY_SOURCE",
+        "target_repository_path": "research/machining-completeness/tasks/MC-038/test_pb00701_mixed_boundary.py"
+      }
+    ],
+    "file_bytes_recovered": false,
+    "own_imports_known": false,
+    "reachability_limit": "Literal import reference only; actual branch use and deeper dependencies not established."
+  },
+  {
+    "module": "verify_pb00701_v51",
+    "repository_path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v51.py",
+    "priority": "DEFERRED_OTHER_TEST_OR_FULL_VERIFIER",
+    "observed_import_sites": [
+      {
+        "from_module": "verify_pb00701_v53",
+        "repository_path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py",
+        "line": 63,
+        "imported_module": "verify_pb00701_v51",
+        "phase": "FUNCTION_SCOPED_DEFERRED",
+        "function_scopes": [
+          "expected_boundary"
+        ],
+        "classification": "MISSING_REPOSITORY_SOURCE",
+        "target_repository_path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v51.py"
+      }
+    ],
+    "file_bytes_recovered": false,
+    "own_imports_known": false,
+    "reachability_limit": "Literal import reference only; actual branch use and deeper dependencies not established."
+  },
+  {
+    "module": "verify_pb00701_v52",
+    "repository_path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v52.py",
+    "priority": "DEFERRED_OTHER_TEST_OR_FULL_VERIFIER",
+    "observed_import_sites": [
+      {
+        "from_module": "verify_pb00701_v53",
+        "repository_path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py",
+        "line": 85,
+        "imported_module": "verify_pb00701_v52",
+        "phase": "FUNCTION_SCOPED_DEFERRED",
+        "function_scopes": [
+          "contract"
+        ],
+        "classification": "MISSING_REPOSITORY_SOURCE",
+        "target_repository_path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v52.py"
+      }
+    ],
+    "file_bytes_recovered": false,
+    "own_imports_known": false,
+    "reachability_limit": "Literal import reference only; actual branch use and deeper dependencies not established."
+  }
+]

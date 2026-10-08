@@ -1,0 +1,29 @@
+{
+  "scope": "Only pins whose source bytes are in this partial export. No contract or inherited verifier executed.",
+  "matched": [
+    {
+      "name": "pb00701_piecewise_product_model.py",
+      "git_blob": "6ca7a321bd027f3ed2a22059e9aa856c76485f8a",
+      "matched": true
+    },
+    {
+      "name": "test_pb00701_piecewise_product.py",
+      "git_blob": "c847b27a8981aa3743291a60e267ee8d91d5b5d5",
+      "matched": true
+    },
+    {
+      "name": "pb00701_vanishing_source_factor_model.py",
+      "git_blob": "dfd554bf9ee41c96f9009f8ed8ceae485e134a5d",
+      "matched": true
+    }
+  ],
+  "not_recovered": [
+    "pb00701_piecewise_product_certificate.py",
+    "test_pb00701_piecewise_product_integration.py",
+    "verify_pb00701_v52.py",
+    "pb00701-piecewise-product-v52.json",
+    "pb00701-report-v52.md",
+    "pb00701_multiharmonic_monotone_anchor_model.py"
+  ],
+  "full_pin_closure_verified": false
+}

@@ -1,0 +1,35 @@
+{
+  "status": "PASS",
+  "verified_at_utc": "2026-10-04T15:25:17.425766+00:00",
+  "archive": "radiCADSAC-2A-packet.zip",
+  "archive_bytes": 82825,
+  "archive_sha256": "074e172c6c7995d3022b985a0a06ae1542a0c01b8fb6d06b62210fca3738309d",
+  "zip_crc_check": "PASS",
+  "all_members_readable": true,
+  "safe_member_paths": true,
+  "exact_file_set": true,
+  "archive_files": 53,
+  "preflight": {
+    "status": "PASS",
+    "manifest_entries": 52,
+    "total_files": 53,
+    "exact_file_set": true,
+    "all_contents_readable": true,
+    "all_sha256_match": true,
+    "full_git_tree_or_proof_acceptance_implied": false
+  },
+  "independent_extraction": {
+    "status": "PASS",
+    "manifest_entries": 52,
+    "total_files": 53,
+    "exact_file_set": true,
+    "all_contents_readable": true,
+    "all_sha256_match": true,
+    "full_git_tree_or_proof_acceptance_implied": false
+  },
+  "extracted_original_git_blobs_matched": 8,
+  "repository_snapshot_complete": false,
+  "v54_acceptance": false,
+  "chunk_status": "PARTIAL",
+  "scope": "Portable packet integrity only, not a complete Git tree or proof acceptance"
+}

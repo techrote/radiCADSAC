@@ -1,0 +1,20 @@
+{
+  "chunk": "2A-R1",
+  "status": "PARTIAL",
+  "scope_closed_at": "2026-10-04T16:46:22.069167+00:00",
+  "substantive_start_observed_utc": "2026-10-04T16:22:29Z",
+  "source_retrieval_stopped_at_utc": "2026-10-04T16:40:43Z",
+  "new_files_limit": 10,
+  "new_files_recovered": 10,
+  "import_only_smokes": 1,
+  "residual_cases_run": 0,
+  "owner_enumerations": 0,
+  "adapters_implemented": 0,
+  "source_modifications": 0,
+  "full_verifier_runs": 0,
+  "workflow_dispatches": 0,
+  "remote_writes": 0,
+  "native_shared_resource_calls": 0,
+  "archive_or_workflow_recovery_retries": 0,
+  "substantive_work_continues_automatically": false
+}

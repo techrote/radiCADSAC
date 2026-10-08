@@ -1,0 +1,72 @@
+[
+  {
+    "base": "9734776b3cef3d7039be9623e8872df2c2a85174",
+    "head": "823a8624739c337aeb41470cfebebd2ea2a931ca",
+    "ahead": 1,
+    "behind": 0,
+    "files": [
+      {
+        "path": ".github/workflows/mc1-pb00701-v54-recovery-bootstrap.yml",
+        "status": "added"
+      }
+    ],
+    "source_url": "https://api.github.com/repos/techrote/radiCADSAC/compare/9734776b3cef3d7039be9623e8872df2c2a85174...823a8624739c337aeb41470cfebebd2ea2a931ca",
+    "complete_changed_file_list_returned": true
+  },
+  {
+    "base": "9734776b3cef3d7039be9623e8872df2c2a85174",
+    "head": "8cec4953dc898e70270c654f5453b108bb80d47b",
+    "ahead": 7,
+    "behind": 0,
+    "files": [
+      {
+        "path": ".github/workflows/mc1-pb00701-v54.yml",
+        "status": "added"
+      },
+      {
+        "path": ".v54-bootstrap/part00",
+        "status": "added"
+      },
+      {
+        "path": ".v54-bootstrap/part01",
+        "status": "added"
+      },
+      {
+        "path": ".v54-bootstrap/part02",
+        "status": "added"
+      },
+      {
+        "path": ".v54-bootstrap/part03",
+        "status": "added"
+      },
+      {
+        "path": ".v54-bootstrap/part04",
+        "status": "added"
+      },
+      {
+        "path": ".v54-bootstrap/part05",
+        "status": "added"
+      }
+    ],
+    "source_url": "https://api.github.com/repos/techrote/radiCADSAC/compare/9734776b3cef3d7039be9623e8872df2c2a85174...8cec4953dc898e70270c654f5453b108bb80d47b",
+    "complete_changed_file_list_returned": true
+  },
+  {
+    "base": "a13702b28fcc349442e78cfb1e971eb94991a69e",
+    "head": "9734776b3cef3d7039be9623e8872df2c2a85174",
+    "ahead": 1,
+    "behind": 0,
+    "files": [
+      {
+        "path": "docs/machining-completeness/77-MC038-CURRENT-IMPLEMENTATION-STATE.md",
+        "status": "modified"
+      },
+      {
+        "path": "research/machining-completeness/tasks/MC-038/current-implementation-state-v1.json",
+        "status": "modified"
+      }
+    ],
+    "source_url": "https://api.github.com/repos/techrote/radiCADSAC/compare/a13702b28fcc349442e78cfb1e971eb94991a69e...9734776b3cef3d7039be9623e8872df2c2a85174",
+    "complete_changed_file_list_returned": true
+  }
+]

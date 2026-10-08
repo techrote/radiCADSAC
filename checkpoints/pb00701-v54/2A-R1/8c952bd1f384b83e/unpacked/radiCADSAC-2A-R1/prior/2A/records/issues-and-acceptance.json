@@ -1,0 +1,29 @@
+{
+  "275": {
+    "state": "open",
+    "comment_count": 5,
+    "body_read": "complete",
+    "all_comment_bodies_read": true,
+    "url": "https://github.com/techrote/radiCADSAC/issues/275"
+  },
+  "271": {
+    "state": "closed",
+    "state_reason": "completed",
+    "comment_count": 5,
+    "body_read": "complete",
+    "all_comment_bodies_read": true,
+    "acceptance_comment": 5958928408,
+    "url": "https://github.com/techrote/radiCADSAC/issues/271#issuecomment-5958928408"
+  },
+  "100": {
+    "state": "open",
+    "comment_count": 67,
+    "body_read": "complete",
+    "comments_read": [
+      5958929084
+    ],
+    "other_66_comments_not_read": true,
+    "url": "https://github.com/techrote/radiCADSAC/issues/100#issuecomment-5958929084"
+  },
+  "record_kind": "Normalized observations and citations; not verbatim API response archival"
+}

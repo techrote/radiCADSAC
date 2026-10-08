@@ -1,0 +1,22 @@
+{
+  "scope": "individual fetched blobs only; NOT a complete Git tree",
+  "results": [
+    {
+      "path": "source/forensic/.github/workflows/mc1-pb00701-v54.yml",
+      "bytes": 1200,
+      "expected_git_blob": "bb0fbd6a766bb06f3f68bb282a76d444f4c62c4b",
+      "actual_git_blob": "bb0fbd6a766bb06f3f68bb282a76d444f4c62c4b",
+      "sha256": "f589dd111de28ae22ac9cf8efa5e02c27b2962220232393d8bb9a3d79dc068ed",
+      "match": true
+    },
+    {
+      "path": "source/recovery/.github/workflows/mc1-pb00701-v54-recovery-bootstrap.yml",
+      "bytes": 1278,
+      "expected_git_blob": "849bdbbbaf9a2a1e569bb199e2414c909eaa4776",
+      "actual_git_blob": "849bdbbbaf9a2a1e569bb199e2414c909eaa4776",
+      "sha256": "25969bc2d1c2d41fcea45bddb927cf74b74ca92aea44645bce0f6d7d5abbbc4e",
+      "match": true
+    }
+  ],
+  "all_match": true
+}

@@ -1,0 +1,33 @@
+{
+  "prs": [
+    {
+      "pr": 273,
+      "merged": true,
+      "head": "e4d5646fd3b16e0f152c70fd817904df74426a8b",
+      "merge": "a13702b28fcc349442e78cfb1e971eb94991a69e",
+      "base": "7126dabf013ef95b0965b74008466e12f0650ef8",
+      "changed_files": 9
+    },
+    {
+      "pr": 274,
+      "merged": true,
+      "head": "eb7b94500a3fc216a1834566364add8e6093aa5e",
+      "merge": "9734776b3cef3d7039be9623e8872df2c2a85174",
+      "base": "a13702b28fcc349442e78cfb1e971eb94991a69e",
+      "changed_files": 2
+    }
+  ],
+  "named_v54_branch_pr_queries": [
+    {
+      "branch": "mc038/pb00701-v54-recovery",
+      "state": "all",
+      "result": []
+    },
+    {
+      "branch": "mc038/pb00701-v54-finite-owner-coverage",
+      "state": "all",
+      "result": []
+    }
+  ],
+  "limit": "Branch-specific absence only. Global issue search with is:pr returned a plain issue and was not used as negative proof."
+}

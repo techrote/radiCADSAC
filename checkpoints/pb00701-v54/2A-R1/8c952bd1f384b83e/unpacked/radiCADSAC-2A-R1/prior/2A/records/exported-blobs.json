@@ -1,0 +1,58 @@
+[
+  {
+    "local_path": "source/forensic/.github/workflows/mc1-pb00701-v54.yml",
+    "repository_path": ".github/workflows/mc1-pb00701-v54.yml",
+    "commit": "8cec4953dc898e70270c654f5453b108bb80d47b",
+    "git_blob": "bb0fbd6a766bb06f3f68bb282a76d444f4c62c4b",
+    "method": "GitHub.fetch_file complete UTF-8 text, locally persisted then Git blob hash checked"
+  },
+  {
+    "local_path": "source/recovery/.github/workflows/mc1-pb00701-v54-recovery-bootstrap.yml",
+    "repository_path": ".github/workflows/mc1-pb00701-v54-recovery-bootstrap.yml",
+    "commit": "823a8624739c337aeb41470cfebebd2ea2a931ca",
+    "git_blob": "849bdbbbaf9a2a1e569bb199e2414c909eaa4776",
+    "method": "GitHub.fetch_file complete UTF-8 text, locally persisted then Git blob hash checked"
+  },
+  {
+    "local_path": "source/main/research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_certificate.py",
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_certificate.py",
+    "commit": "9734776b3cef3d7039be9623e8872df2c2a85174",
+    "git_blob": "91bfc606539d05f054a86ee381af59926502c167",
+    "method": "GitHub.fetch_file complete UTF-8 text, locally persisted then Git blob hash checked"
+  },
+  {
+    "local_path": "source/main/research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py",
+    "repository_path": "research/machining-completeness/tasks/MC-038/verify_pb00701_v53.py",
+    "commit": "9734776b3cef3d7039be9623e8872df2c2a85174",
+    "git_blob": "7995627b8ff784c17947b2db746a588b5ed18d7b",
+    "method": "GitHub.fetch_file complete UTF-8 text, locally persisted then Git blob hash checked"
+  },
+  {
+    "local_path": "source/main/research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py",
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_mixed_owner_span_model.py",
+    "commit": "9734776b3cef3d7039be9623e8872df2c2a85174",
+    "git_blob": "0d7b334accaec307ef2016a1bec2fa22cb115920",
+    "method": "GitHub.fetch_file ranges 1-240 and 241-EOF, exact file bytes reassembled and Git blob hash checked"
+  },
+  {
+    "local_path": "source/main/handoffs/current-authority.json",
+    "repository_path": "handoffs/current-authority.json",
+    "commit": "9734776b3cef3d7039be9623e8872df2c2a85174",
+    "git_blob": "fa0233323a0804d8a5d3eb7cd892a274a6173fab",
+    "method": "Read full immutable JSON via GitHub.fetch_file; persisted byte-identically with Git blob hash assertion"
+  },
+  {
+    "local_path": "source/main/research/machining-completeness/tasks/MC-038/pb00701-mixed-owner-spans-v53.json",
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701-mixed-owner-spans-v53.json",
+    "commit": "9734776b3cef3d7039be9623e8872df2c2a85174",
+    "git_blob": "006ceb86365616462de3b77689950e9b849d349d",
+    "method": "Read full immutable JSON via GitHub.fetch_file; persisted byte-identically with Git blob hash assertion"
+  },
+  {
+    "local_path": "source/main/research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+    "repository_path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+    "commit": "9734776b3cef3d7039be9623e8872df2c2a85174",
+    "git_blob": "a086b625e1a6dea8bd202699d161167bb69cc9e7",
+    "method": "Full original v7 code read via GitHub.fetch_file plus overlapping tail; persisted bytes match original Git blob"
+  }
+]
