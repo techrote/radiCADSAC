@@ -1,0 +1,552 @@
+{
+ "schema": "radicadsac-pb00701-finite-owner-inventory/54.0",
+ "owner_count": 43,
+ "category_counts": {
+  "1": 5,
+  "2": 20,
+  "3": 16,
+  "4": 2
+ },
+ "category_names": {
+  "1": "ALREADY_SUPPORTED_ORDERED",
+  "2": "FINITE_OWNER_ORDERED_VIEW_ADAPTED",
+  "3": "EXACT_OWNER_LACKING_ORDERED_SPAN_PREMISE",
+  "4": "BLOCKER_REFUSAL_OR_NON_EVENT"
+ },
+ "owners": [
+  {
+   "owner": "PB00701_V19_EXACT_MULTI_HARMONIC_MONOTONE_ANCHOR",
+   "category": 1,
+   "category_name": "ALREADY_SUPPORTED_ORDERED",
+   "emitter_modules": [
+    "pb00701_multiharmonic_monotone_anchor_model.py"
+   ],
+   "version": 19,
+   "view_kind": "STRICT_SPAN",
+   "adapter": null
+  },
+  {
+   "owner": "PB00701_V47_EXACT_ALGEBRAIC_SINGLE_CUT",
+   "category": 1,
+   "category_name": "ALREADY_SUPPORTED_ORDERED",
+   "emitter_modules": [
+    "pb00701_algebraic_monotone_cut_model.py"
+   ],
+   "version": 47,
+   "view_kind": "STRICT_SPAN",
+   "adapter": null
+  },
+  {
+   "owner": "PB00701_V48_MIXED_ROOT_SINGLE_CUT",
+   "category": 1,
+   "category_name": "ALREADY_SUPPORTED_ORDERED",
+   "emitter_modules": [
+    "pb00701_mixed_orientation_consumer.py"
+   ],
+   "version": 48,
+   "view_kind": "STRICT_SPAN",
+   "adapter": null
+  },
+  {
+   "owner": "PB00701_V49_MIXED_BOUNDARY_MULTICUT",
+   "category": 1,
+   "category_name": "ALREADY_SUPPORTED_ORDERED",
+   "emitter_modules": [
+    "pb00701_mixed_multicut_model.py"
+   ],
+   "version": 49,
+   "view_kind": "STRICT_SPAN",
+   "adapter": null
+  },
+  {
+   "owner": "PB00701_V50_VANISHING_SOURCE_FACTOR",
+   "category": 1,
+   "category_name": "ALREADY_SUPPORTED_ORDERED",
+   "emitter_modules": [
+    "pb00701_vanishing_source_factor_model.py"
+   ],
+   "version": 50,
+   "view_kind": "V51_PRODUCT",
+   "adapter": null
+  },
+  {
+   "owner": "EXACT_RATIONAL_AMPLITUDE_DOMINANCE",
+   "category": 2,
+   "category_name": "FINITE_OWNER_ORDERED_VIEW_ADAPTED",
+   "emitter_modules": [
+    "pb00701_coupled_bspline_model.py"
+   ],
+   "version": 7,
+   "adapter": "V54_V7_AMPLITUDE_DOMINANCE_ROOT_FREE_SIGN_SPAN",
+   "view_kind": "SIGN_SPAN",
+   "owner_recipe": "pb00701_coupled_bspline_model._dominance_certificate",
+   "ordered_premise": "CLOSED_SPAN_EXACT_RATIONAL_AMPLITUDE_DOMINANCE_ROOT_FREE_SIGN"
+  },
+  {
+   "owner": "PB00701_V20_EXACT_POINTWISE_DERIVATIVE_ENVELOPE",
+   "category": 2,
+   "category_name": "FINITE_OWNER_ORDERED_VIEW_ADAPTED",
+   "emitter_modules": [
+    "pb00701_pointwise_derivative_envelope_model.py"
+   ],
+   "version": 20,
+   "adapter": "V54_V20_WHOLE_SPAN_STRICT_DERIVATIVE",
+   "view_kind": "OWNER_STRICT_SPAN",
+   "owner_recipe": "pb00701_pointwise_derivative_envelope_model._pointwise_envelope_route",
+   "ordered_premise": "WHOLE_CLOSED_SPAN_STRICT_COMPLETE_DERIVATIVE:derivative_certificate"
+  },
+  {
+   "owner": "PB00701_V21_EXACT_SIGN_ORTHANT_L1_DERIVATIVE_ENVELOPE",
+   "category": 2,
+   "category_name": "FINITE_OWNER_ORDERED_VIEW_ADAPTED",
+   "emitter_modules": [
+    "pb00701_l1_sign_orthant_envelope_model.py"
+   ],
+   "version": 21,
+   "adapter": "V54_V21_WHOLE_SPAN_STRICT_DERIVATIVE",
+   "view_kind": "OWNER_STRICT_SPAN",
+   "owner_recipe": "pb00701_l1_sign_orthant_envelope_model._l1_envelope_route",
+   "ordered_premise": "WHOLE_CLOSED_SPAN_STRICT_COMPLETE_DERIVATIVE:derivative_certificate"
+  },
+  {
+   "owner": "PB00701_V22_EXACT_PHASE_SECTOR_PARTIAL_DERIVATIVE_ANCHOR",
+   "category": 2,
+   "category_name": "FINITE_OWNER_ORDERED_VIEW_ADAPTED",
+   "emitter_modules": [
+    "pb00701_phase_sector_anchor_model.py"
+   ],
+   "version": 22,
+   "adapter": "V54_V22_WHOLE_SPAN_STRICT_DERIVATIVE",
+   "view_kind": "OWNER_STRICT_SPAN",
+   "owner_recipe": "pb00701_phase_sector_anchor_model._phase_partial_anchor_route",
+   "ordered_premise": "WHOLE_CLOSED_SPAN_STRICT_COMPLETE_DERIVATIVE:phase_anchor_certificate"
+  },
+  {
+   "owner": "PB00701_V23_EXACT_NONCONSTANT_AMPLITUDE_PHASE_SECTOR_ANCHOR",
+   "category": 2,
+   "category_name": "FINITE_OWNER_ORDERED_VIEW_ADAPTED",
+   "emitter_modules": [
+    "pb00701_nonconstant_phase_anchor_model.py"
+   ],
+   "version": 23,
+   "adapter": "V54_V23_WHOLE_SPAN_STRICT_DERIVATIVE",
+   "view_kind": "OWNER_STRICT_SPAN",
+   "owner_recipe": "pb00701_nonconstant_phase_anchor_model._nonconstant_phase_anchor_route",
+   "ordered_premise": "WHOLE_CLOSED_SPAN_STRICT_COMPLETE_DERIVATIVE:nonconstant_phase_anchor_certificate"
+  },
+  {
+   "owner": "PB00701_V24_EXACT_MIXED_QUADRATURE_PHASE_ANCHOR",
+   "category": 2,
+   "category_name": "FINITE_OWNER_ORDERED_VIEW_ADAPTED",
+   "emitter_modules": [
+    "pb00701_mixed_quadrature_phase_anchor_model.py"
+   ],
+   "version": 24,
+   "adapter": "V54_V24_WHOLE_SPAN_STRICT_DERIVATIVE",
+   "view_kind": "OWNER_STRICT_SPAN",
+   "owner_recipe": "pb00701_mixed_quadrature_phase_anchor_model._mixed_phase_anchor_route",
+   "ordered_premise": "WHOLE_CLOSED_SPAN_STRICT_COMPLETE_DERIVATIVE:mixed_phase_anchor_certificate"
+  },
+  {
+   "owner": "PB00701_V25_EXACT_COMPONENT_CONE_MIXED_PROJECTION_ANCHOR",
+   "category": 2,
+   "category_name": "FINITE_OWNER_ORDERED_VIEW_ADAPTED",
+   "emitter_modules": [
+    "pb00701_component_cone_phase_anchor_model.py"
+   ],
+   "version": 25,
+   "adapter": "V54_V25_WHOLE_SPAN_STRICT_DERIVATIVE",
+   "view_kind": "OWNER_STRICT_SPAN",
+   "owner_recipe": "pb00701_component_cone_phase_anchor_model._component_cone_phase_anchor_route",
+   "ordered_premise": "WHOLE_CLOSED_SPAN_STRICT_COMPLETE_DERIVATIVE:component_cone_phase_anchor_certificate"
+  },
+  {
+   "owner": "PB00701_V26_EXACT_POINTWISE_COMPONENT_CONE_RESIDUAL_ORTHANTS",
+   "category": 2,
+   "category_name": "FINITE_OWNER_ORDERED_VIEW_ADAPTED",
+   "emitter_modules": [
+    "pb00701_pointwise_component_cone_model.py"
+   ],
+   "version": 26,
+   "adapter": "V54_V26_WHOLE_SPAN_STRICT_DERIVATIVE",
+   "view_kind": "OWNER_STRICT_SPAN",
+   "owner_recipe": "pb00701_pointwise_component_cone_model._pointwise_component_cone_route",
+   "ordered_premise": "WHOLE_CLOSED_SPAN_STRICT_COMPLETE_DERIVATIVE:pointwise_component_cone_certificate"
+  },
+  {
+   "owner": "PB00701_V28_EXACT_ALGEBRAIC_RATIONAL_TURN_PHASE_CELL_PROJECTION",
+   "category": 2,
+   "category_name": "FINITE_OWNER_ORDERED_VIEW_ADAPTED",
+   "emitter_modules": [
+    "pb00701_algebraic_phase_cell_model.py"
+   ],
+   "version": 28,
+   "adapter": "V54_V28_WHOLE_SPAN_STRICT_DERIVATIVE",
+   "view_kind": "OWNER_STRICT_SPAN",
+   "owner_recipe": "pb00701_algebraic_phase_cell_model._algebraic_phase_cell_route",
+   "ordered_premise": "WHOLE_CLOSED_SPAN_STRICT_COMPLETE_DERIVATIVE:algebraic_phase_cell_certificate"
+  },
+  {
+   "owner": "PB00701_V29_EXACT_5_12_13_NESTED_ALGEBRAIC_PHASE_CELL_PROJECTION",
+   "category": 2,
+   "category_name": "FINITE_OWNER_ORDERED_VIEW_ADAPTED",
+   "emitter_modules": [
+    "pb00701_pythagorean_phase_cell_model.py"
+   ],
+   "version": 29,
+   "adapter": "V54_V29_WHOLE_SPAN_STRICT_DERIVATIVE",
+   "view_kind": "OWNER_STRICT_SPAN",
+   "owner_recipe": "pb00701_pythagorean_phase_cell_model._phase_cell_route",
+   "ordered_premise": "WHOLE_CLOSED_SPAN_STRICT_COMPLETE_DERIVATIVE:pythagorean_phase_cell_certificate"
+  },
+  {
+   "owner": "PB00701_V30_EXACT_SOURCE_ADAPTIVE_PROJECTIVE_RATIONAL_SEPARATOR",
+   "category": 2,
+   "category_name": "FINITE_OWNER_ORDERED_VIEW_ADAPTED",
+   "emitter_modules": [
+    "pb00701_source_adaptive_separator_model.py"
+   ],
+   "version": 30,
+   "adapter": "V54_V30_WHOLE_SPAN_STRICT_DERIVATIVE",
+   "view_kind": "OWNER_STRICT_SPAN",
+   "owner_recipe": "pb00701_source_adaptive_separator_model._source_adaptive_route",
+   "ordered_premise": "WHOLE_CLOSED_SPAN_STRICT_COMPLETE_DERIVATIVE:source_adaptive_projective_separator_certificate"
+  },
+  {
+   "owner": "PB00701_V34_EXACT_PHASE_CORRELATED_COMMON_FACTOR",
+   "category": 2,
+   "category_name": "FINITE_OWNER_ORDERED_VIEW_ADAPTED",
+   "emitter_modules": [
+    "pb00701_phase_correlated_common_factor_model.py"
+   ],
+   "version": 34,
+   "adapter": "V54_V34_WHOLE_SPAN_STRICT_DERIVATIVE",
+   "view_kind": "OWNER_STRICT_SPAN",
+   "owner_recipe": "pb00701_phase_correlated_common_factor_model._phase_correlated_route",
+   "ordered_premise": "WHOLE_CLOSED_SPAN_STRICT_COMPLETE_DERIVATIVE:phase_correlated_common_factor_certificate"
+  },
+  {
+   "owner": "PB00701_V35_EXACT_PHASE_CORRELATED_PROPORTIONAL_COMMON_FACTOR",
+   "category": 2,
+   "category_name": "FINITE_OWNER_ORDERED_VIEW_ADAPTED",
+   "emitter_modules": [
+    "pb00701_phase_correlated_proportional_common_factor_model.py"
+   ],
+   "version": 35,
+   "adapter": "V54_V35_WHOLE_SPAN_STRICT_DERIVATIVE",
+   "view_kind": "OWNER_STRICT_SPAN",
+   "owner_recipe": "pb00701_phase_correlated_proportional_common_factor_model._phase_correlated_proportional_route",
+   "ordered_premise": "WHOLE_CLOSED_SPAN_STRICT_COMPLETE_DERIVATIVE:phase_correlated_proportional_common_factor_certificate"
+  },
+  {
+   "owner": "PB00701_V36_EXACT_PHASE_CORRELATED_VARYING_RATIO_SHARED_FACTOR",
+   "category": 2,
+   "category_name": "FINITE_OWNER_ORDERED_VIEW_ADAPTED",
+   "emitter_modules": [
+    "pb00701_phase_correlated_varying_ratio_shared_factor_model.py"
+   ],
+   "version": 36,
+   "adapter": "V54_V36_WHOLE_SPAN_STRICT_DERIVATIVE",
+   "view_kind": "OWNER_STRICT_SPAN",
+   "owner_recipe": "pb00701_phase_correlated_varying_ratio_shared_factor_model._phase_correlated_varying_ratio_route",
+   "ordered_premise": "WHOLE_CLOSED_SPAN_STRICT_COMPLETE_DERIVATIVE:phase_correlated_varying_ratio_shared_factor_certificate"
+  },
+  {
+   "owner": "PB00701_V37_EXACT_PHASE_CORRELATED_TWO_POLYNOMIAL_SHARED_FACTOR",
+   "category": 2,
+   "category_name": "FINITE_OWNER_ORDERED_VIEW_ADAPTED",
+   "emitter_modules": [
+    "pb00701_phase_correlated_two_polynomial_shared_factor_model.py"
+   ],
+   "version": 37,
+   "adapter": "V54_V37_WHOLE_SPAN_STRICT_DERIVATIVE",
+   "view_kind": "OWNER_STRICT_SPAN",
+   "owner_recipe": "pb00701_phase_correlated_two_polynomial_shared_factor_model._phase_correlated_two_polynomial_route",
+   "ordered_premise": "WHOLE_CLOSED_SPAN_STRICT_COMPLETE_DERIVATIVE:phase_correlated_two_polynomial_shared_factor_certificate"
+  },
+  {
+   "owner": "PB00701_V38_EXACT_DIRECT_ROTATED_COORDINATE_TWO_QUADRATURE",
+   "category": 2,
+   "category_name": "FINITE_OWNER_ORDERED_VIEW_ADAPTED",
+   "emitter_modules": [
+    "pb00701_direct_rotated_coordinate_model.py"
+   ],
+   "version": 38,
+   "adapter": "V54_V38_WHOLE_SPAN_STRICT_DERIVATIVE",
+   "view_kind": "OWNER_STRICT_SPAN",
+   "owner_recipe": "pb00701_direct_rotated_coordinate_model._phase_correlated_direct_route",
+   "ordered_premise": "WHOLE_CLOSED_SPAN_STRICT_COMPLETE_DERIVATIVE:phase_correlated_direct_rotated_coordinate_certificate"
+  },
+  {
+   "owner": "PB00701_V39_EXACT_SIGNED_A_DIRECT_ROTATED_COORDINATE",
+   "category": 2,
+   "category_name": "FINITE_OWNER_ORDERED_VIEW_ADAPTED",
+   "emitter_modules": [
+    "pb00701_signed_a_direct_rotated_coordinate_model.py"
+   ],
+   "version": 39,
+   "adapter": "V54_V39_WHOLE_SPAN_STRICT_DERIVATIVE",
+   "view_kind": "OWNER_STRICT_SPAN",
+   "owner_recipe": "pb00701_signed_a_direct_rotated_coordinate_model._phase_correlated_signed_direct_route",
+   "ordered_premise": "WHOLE_CLOSED_SPAN_STRICT_COMPLETE_DERIVATIVE:phase_correlated_signed_direct_rotated_coordinate_certificate"
+  },
+  {
+   "owner": "PB00701_V40_EXACT_SIGNED_B_ANTI_DIAGONAL_DIRECT_ROTATED_COORDINATE",
+   "category": 2,
+   "category_name": "FINITE_OWNER_ORDERED_VIEW_ADAPTED",
+   "emitter_modules": [
+    "pb00701_signed_b_anti_diagonal_model.py"
+   ],
+   "version": 40,
+   "adapter": "V54_V40_WHOLE_SPAN_STRICT_DERIVATIVE",
+   "view_kind": "OWNER_STRICT_SPAN",
+   "owner_recipe": "pb00701_signed_b_anti_diagonal_model._phase_correlated_signed_b_route",
+   "ordered_premise": "WHOLE_CLOSED_SPAN_STRICT_COMPLETE_DERIVATIVE:phase_correlated_signed_b_anti_diagonal_certificate"
+  },
+  {
+   "owner": "PB00701_V42_EXACT_ROTATED_COORDINATE_ORIENTATION_TRANSITION_BRIDGE",
+   "category": 2,
+   "category_name": "FINITE_OWNER_ORDERED_VIEW_ADAPTED",
+   "emitter_modules": [
+    "pb00701_orientation_transition_bridge_model.py"
+   ],
+   "version": 42,
+   "adapter": "V54_V42_WHOLE_SPAN_STRICT_DERIVATIVE",
+   "view_kind": "OWNER_STRICT_SPAN",
+   "owner_recipe": "pb00701_orientation_transition_bridge_model._transition_route",
+   "ordered_premise": "WHOLE_CLOSED_SPAN_STRICT_COMPLETE_DERIVATIVE:orientation_transition_bridge_certificate"
+  },
+  {
+   "owner": "PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF",
+   "category": 2,
+   "category_name": "FINITE_OWNER_ORDERED_VIEW_ADAPTED",
+   "emitter_modules": [
+    "pb00701_correlated_closed_handoff_model.py"
+   ],
+   "version": 43,
+   "adapter": "V54_V43_WHOLE_SPAN_STRICT_DERIVATIVE",
+   "view_kind": "OWNER_STRICT_SPAN",
+   "owner_recipe": "pb00701_correlated_closed_handoff_model._correlated_handoff_route",
+   "ordered_premise": "WHOLE_CLOSED_SPAN_STRICT_COMPLETE_DERIVATIVE:correlated_closed_handoff_certificate"
+  },
+  {
+   "owner": "DELEGATED_V6_CONSTANT_MODULATION",
+   "category": 3,
+   "category_name": "EXACT_OWNER_LACKING_ORDERED_SPAN_PREMISE",
+   "emitter_modules": [
+    "pb00701_coupled_bspline_model.py"
+   ],
+   "version": 6,
+   "view_kind": null,
+   "adapter": null,
+   "missing_premise": "TAN_HALF_TURN_WINDOW_ROOT_COUNTS_WITHOUT_SOURCE_ORDERED_ROOTS_OR_SIGN_CELLS"
+  },
+  {
+   "owner": "EXACT_STATIONARY_PHASE_POLYNOMIAL",
+   "category": 3,
+   "category_name": "EXACT_OWNER_LACKING_ORDERED_SPAN_PREMISE",
+   "emitter_modules": [
+    "pb00701_coupled_bspline_model.py"
+   ],
+   "version": 7,
+   "view_kind": null,
+   "adapter": null,
+   "missing_premise": "POLYNOMIAL_ROOT_COUNTS_WITHOUT_ORDERED_ROOT_ISOLATION_OR_PER_ROOT_MULTIPLICITY"
+  },
+  {
+   "owner": "PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO",
+   "category": 3,
+   "category_name": "EXACT_OWNER_LACKING_ORDERED_SPAN_PREMISE",
+   "emitter_modules": [
+    "pb00701_dual_ratio_model.py"
+   ],
+   "version": 10,
+   "view_kind": null,
+   "adapter": null,
+   "missing_premise": "PER_COTANGENT_CHART_AUXILIARY_RATIO_MONOTONICITY_WITHOUT_PHYSICAL_SIGN_OR_CROSS_CHART_ORDER"
+  },
+  {
+   "owner": "PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO",
+   "category": 3,
+   "category_name": "EXACT_OWNER_LACKING_ORDERED_SPAN_PREMISE",
+   "emitter_modules": [
+    "pb00701_phase_dominance_model.py"
+   ],
+   "version": 11,
+   "view_kind": null,
+   "adapter": null,
+   "missing_premise": "PER_CHART_AUXILIARY_RATIO_PHASE_DOMINANCE_WITHOUT_PHYSICAL_SIGN_OR_CROSS_CHART_ORDER"
+  },
+  {
+   "owner": "PB00701_V12_EXACT_COMPONENT_ROOT_PARTITION_SINGLE_HARMONIC",
+   "category": 3,
+   "category_name": "EXACT_OWNER_LACKING_ORDERED_SPAN_PREMISE",
+   "emitter_modules": [
+    "pb00701_component_partition_model.py"
+   ],
+   "version": 12,
+   "view_kind": null,
+   "adapter": null,
+   "missing_premise": "PARTITION_CELL_DECISIONS_COMPOSED_BY_COUNTS_WITHOUT_ORDERED_CELL_VIEWS"
+  },
+  {
+   "owner": "PB00701_V13_EXACT_NONVANISHING_EVEN_MULTIPLIER_MULTIHARMONIC",
+   "category": 3,
+   "category_name": "EXACT_OWNER_LACKING_ORDERED_SPAN_PREMISE",
+   "emitter_modules": [
+    "pb00701_multiharmonic_multiplier_model.py"
+   ],
+   "version": 13,
+   "view_kind": null,
+   "adapter": null,
+   "missing_premise": "NONVANISHING_MULTIPLIER_ZERO_SET_EQUIVALENCE_OVER_V10_V11_V12_CARRIER_WITHOUT_ORDERED_CARRIER_VIEW_OR_PHYSICAL_SIGN_TRANSFER"
+  },
+  {
+   "owner": "PB00701_V14_EXACT_STRICT_DOMINANCE_MULTITERM_MULTIPLIER",
+   "category": 3,
+   "category_name": "EXACT_OWNER_LACKING_ORDERED_SPAN_PREMISE",
+   "emitter_modules": [
+    "pb00701_multiterm_multiplier_model.py"
+   ],
+   "version": 14,
+   "view_kind": null,
+   "adapter": null,
+   "missing_premise": "NONVANISHING_MULTIPLIER_ZERO_SET_EQUIVALENCE_OVER_V10_V11_V12_CARRIER_WITHOUT_ORDERED_CARRIER_VIEW_OR_PHYSICAL_SIGN_TRANSFER"
+  },
+  {
+   "owner": "PB00701_V15_EXACT_FINITE_STRICT_DOMINANCE_MULTIPLIER",
+   "category": 3,
+   "category_name": "EXACT_OWNER_LACKING_ORDERED_SPAN_PREMISE",
+   "emitter_modules": [
+    "pb00701_finite_multiplier_model.py"
+   ],
+   "version": 15,
+   "view_kind": null,
+   "adapter": null,
+   "missing_premise": "NONVANISHING_MULTIPLIER_ZERO_SET_EQUIVALENCE_OVER_V10_V11_V12_CARRIER_WITHOUT_ORDERED_CARRIER_VIEW_OR_PHYSICAL_SIGN_TRANSFER"
+  },
+  {
+   "owner": "PB00701_V16_EXACT_CHEBYSHEV_STURM_MULTIPLIER",
+   "category": 3,
+   "category_name": "EXACT_OWNER_LACKING_ORDERED_SPAN_PREMISE",
+   "emitter_modules": [
+    "pb00701_chebyshev_multiplier_model.py"
+   ],
+   "version": 16,
+   "view_kind": null,
+   "adapter": null,
+   "missing_premise": "NONVANISHING_MULTIPLIER_ZERO_SET_EQUIVALENCE_OVER_V10_V11_V12_CARRIER_WITHOUT_ORDERED_CARRIER_VIEW_OR_PHYSICAL_SIGN_TRANSFER"
+  },
+  {
+   "owner": "PB00701_V17_EXACT_PROJECTIVE_EVEN_TRIG_MULTIPLIER",
+   "category": 3,
+   "category_name": "EXACT_OWNER_LACKING_ORDERED_SPAN_PREMISE",
+   "emitter_modules": [
+    "pb00701_even_trig_multiplier_model.py"
+   ],
+   "version": 17,
+   "view_kind": null,
+   "adapter": null,
+   "missing_premise": "NONVANISHING_MULTIPLIER_ZERO_SET_EQUIVALENCE_OVER_V10_V11_V12_CARRIER_WITHOUT_ORDERED_CARRIER_VIEW_OR_PHYSICAL_SIGN_TRANSFER"
+  },
+  {
+   "owner": "PB00701_V18_EXACT_LAURENT_MODULE_FACTOR",
+   "category": 3,
+   "category_name": "EXACT_OWNER_LACKING_ORDERED_SPAN_PREMISE",
+   "emitter_modules": [
+    "pb00701_source_laurent_factor_model.py"
+   ],
+   "version": 18,
+   "view_kind": null,
+   "adapter": null,
+   "missing_premise": "CLASSIFIER_DELEGATED_RESIDUAL_WITHOUT_ORDERED_RESIDUAL_VIEW_OR_FACTOR_SIGN"
+  },
+  {
+   "owner": "PB00701_V18_EXACT_NONVANISHING_SOURCE_MODULE_FACTOR",
+   "category": 3,
+   "category_name": "EXACT_OWNER_LACKING_ORDERED_SPAN_PREMISE",
+   "emitter_modules": [
+    "pb00701_source_laurent_factor_model.py"
+   ],
+   "version": 18,
+   "view_kind": null,
+   "adapter": null,
+   "missing_premise": "CLASSIFIER_DELEGATED_RESIDUAL_WITHOUT_ORDERED_RESIDUAL_VIEW"
+  },
+  {
+   "owner": "PB00701_V27_EXACT_RATIONAL_PHASE_SECTOR_PARTITION_COMPOSITION",
+   "category": 3,
+   "category_name": "EXACT_OWNER_LACKING_ORDERED_SPAN_PREMISE",
+   "emitter_modules": [
+    "pb00701_phase_sector_partition_model.py"
+   ],
+   "version": 27,
+   "view_kind": null,
+   "adapter": null,
+   "missing_premise": "RECLASSIFIED_CHILDREN_COMPOSED_BY_COUNT_SUMMARY_WITHOUT_ORDERED_CHILD_COMPOSITION"
+  },
+  {
+   "owner": "PB00701_V41_EXACT_ROTATED_COORDINATE_ORIENTATION_ROOT_PARTITION_COMPOSITION",
+   "category": 3,
+   "category_name": "EXACT_OWNER_LACKING_ORDERED_SPAN_PREMISE",
+   "emitter_modules": [
+    "pb00701_orientation_root_partition_model.py"
+   ],
+   "version": 41,
+   "view_kind": null,
+   "adapter": null,
+   "missing_premise": "RECLASSIFIED_CHILDREN_COMPOSED_BY_COUNT_SUMMARY_WITHOUT_ORDERED_CHILD_COMPOSITION"
+  },
+  {
+   "owner": "PB00701_V8_EXACT_COMMON_FACTOR_REDUCTION",
+   "category": 3,
+   "category_name": "EXACT_OWNER_LACKING_ORDERED_SPAN_PREMISE",
+   "emitter_modules": [
+    "pb00701_common_factor_model.py"
+   ],
+   "version": 8,
+   "view_kind": null,
+   "adapter": null,
+   "missing_premise": "FACTOR_AND_TRIG_CHART_ROOT_COUNTS_WITHOUT_CROSS_FACTOR_ROOT_ORDER_OR_SIGN_CELLS"
+  },
+  {
+   "owner": "PB00701_V9_EXACT_MONOTONE_SINGLE_HARMONIC_RATIO",
+   "category": 3,
+   "category_name": "EXACT_OWNER_LACKING_ORDERED_SPAN_PREMISE",
+   "emitter_modules": [
+    "pb00701_monotone_ratio_model.py"
+   ],
+   "version": 9,
+   "view_kind": null,
+   "adapter": null,
+   "missing_premise": "PER_TANGENT_CHART_AUXILIARY_RATIO_MONOTONICITY_WITHOUT_PHYSICAL_SIGN_OR_CROSS_CHART_ORDER"
+  },
+  {
+   "owner": "PB00701_GENERAL_COUPLED_THEOREM_BOUNDARY",
+   "category": 4,
+   "category_name": "BLOCKER_REFUSAL_OR_NON_EVENT",
+   "emitter_modules": [
+    "pb00701_coupled_bspline_model.py"
+   ],
+   "version": 7,
+   "view_kind": null,
+   "adapter": null,
+   "disposition": "GENERAL_POLYNOMIAL_TRIGONOMETRIC_ZERO_THEOREM_BOUNDARY"
+  },
+  {
+   "owner": "PB00701_V44_EXACT_REAL_ALGEBRAIC_ORIENTATION_CUT_BOUNDARY",
+   "category": 4,
+   "category_name": "BLOCKER_REFUSAL_OR_NON_EVENT",
+   "emitter_modules": [
+    "pb00701_algebraic_orientation_cut_model.py"
+   ],
+   "version": 44,
+   "view_kind": null,
+   "adapter": null,
+   "disposition": "ALGEBRAIC_ORIENTATION_CUT_CONSUMPTION_BOUNDARY"
+  }
+ ],
+ "one_category_per_owner": true,
+ "counts_promoted_to_order": false,
+ "unknown_owner_disposition": "SPAN_OWNER_OUTSIDE_FINITE_V54_INVENTORY"
+}

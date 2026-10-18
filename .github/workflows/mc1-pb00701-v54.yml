@@ -1,0 +1,36 @@
+name: mc1-pb00701-v54
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/*finite_owner*'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-*-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-report-v54.md'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v54.py'
+      - 'docs/machining-completeness/79-PB00701-FINITE-OWNER-COVERAGE.md'
+      - '.github/workflows/mc1-pb00701-v54.yml'
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/*finite_owner*'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-*-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-report-v54.md'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v54.py'
+      - 'docs/machining-completeness/79-PB00701-FINITE-OWNER-COVERAGE.md'
+      - '.github/workflows/mc1-pb00701-v54.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify v54 inventory, owner adapters, original-source acceptance and unchanged V53 once
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v54.py --contract --self-test --acceptance
