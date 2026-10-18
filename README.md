@@ -22,6 +22,8 @@ The planning repository may be messy, speculative, contradictory, and research-h
 
 **MC-1 is the current execution authority.** Genesis-v2.1 remains the accepted historical foundation/evidence package, not present production-start permission. Read `handoffs/current-authority.json`, DR-0026 and the MC-1 documents. Do not create/populate production repositories from the historical handoff while MC-1 is `NOT_ESTABLISHED`.
 
+[Preserved PB-007-01 v54 recovery packets](docs/machining-completeness/10-RAG-INDEX.md#preserved-pb-007-01-v54-recovery-packets) distinguish complete packet preservation from the still-partial source recovery; they do not change the current implementation or programme acceptance.
+
 ## Current research foundation and accepted contracts
 
 Start with:
