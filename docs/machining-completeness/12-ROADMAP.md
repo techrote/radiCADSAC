@@ -4,7 +4,7 @@ Status: canonical execution hierarchy for MC-1. Stable task IDs are repository a
 
 ## Current MC-038 / PB-007 checkpoint
 
-The detailed landed implementation frontier is maintained in [77-MC038-CURRENT-IMPLEMENTATION-STATE.md](77-MC038-CURRENT-IMPLEMENTATION-STATE.md). As of 2 October 2026, v52 / #269 / PR #270 is the latest verified bounded PB-007-01 landing on authoritative `main` `59e1b5a3cf28ab3d9f4f799632c290259c284e76`; v53 / #271 is the next dependency-ready owner. PB-007-01 remains OPEN globally and MC-B / MC-1 remain `NOT_ESTABLISHED`. This checkpoint is informational and does not alter the canonical task graph or dependency semantics below.
+The current, independently reconciled bounded implementation frontier is maintained in [77-MC038-CURRENT-IMPLEMENTATION-STATE.md](77-MC038-CURRENT-IMPLEMENTATION-STATE.md), **not in this static task-graph roadmap**. Following the verified v54/#275/PR #277 implementation and separate PR #278 current-state reconciliation (27 October 2026), PB-007-01 remains globally **OPEN**; MC-B and MC-1 remain `NOT_ESTABLISHED`. The [read-only, evidence-pinned post-v54 theorem-frontier audit](../../research/machining-completeness/tasks/MC-038/pb00701-post-v54-frontier-audit.md) distinguishes missing ordered premises from uncertified source-event routes. It proposes **unproved** theorem questions without creating a new adapter/theorem issue. This navigation correction changes no task-graph dependency, gate decision, operation denominator or production authority.
 
 ## Milestone hierarchy
 
