@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """Finite V54 checking from ORIGINAL source and supplied historical owner witnesses.
 
-V51/V53 view kinds are delegated unchanged to the V53 checker. New views are
-regenerated only by the owner's own fixed recipe; checking never classifies,
-selects another owner, or searches for a derivative/sign proof.
+V51/V53 view kinds are delegated unchanged to the V53 checker. For new views,
+the finite checker validates the supplied owner, selected harmonic/quadrature,
+exact derivative/residual witness, endpoints and pinned owner metadata before
+reconstructing the view; it does not run historical selecting route builders
+or classify a replacement proof.
 """
 from pathlib import Path
 import sys

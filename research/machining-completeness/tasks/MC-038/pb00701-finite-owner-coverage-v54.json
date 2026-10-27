@@ -99,7 +99,7 @@
   7,
   44
  ],
- "finite_checking_policy": "OWNER_OWN_FIXED_RECIPE_REGENERATION_ON_ORIGINAL_SPAN_NO_CLASSIFIER_NO_REPLACEMENT",
+ "finite_checking_policy": "SOURCE_BOUND_SELECTED_WITNESS_LEAVES_ENDPOINTS_AND_ROUTE_METADATA_NO_PROOF_RESELECTION",
  "full_original_source_checker": true,
  "global_root_union_claimed": true,
  "physical_continuity_at_every_source_knot_required": true,

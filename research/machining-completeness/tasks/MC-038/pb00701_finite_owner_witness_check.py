@@ -3,8 +3,10 @@
 
 The historical *_route functions are CONSTRUCTORS that select a successful
 anchor/harmonic. Calling them while checking allows replacement proof search.
-Here the supplied certificate fixes the owner, harmonic and quadrature. Only
-that branch's exact source-owned polynomial/sector/orthant arithmetic executes.
+Here the supplied certificate fixes the owner, harmonic and quadrature.
+The selected successful exact leaf is rechecked; when a COS-first proof is
+claimed, one fixed historical SIN-before-COS *failure diagnostic* is also
+validated without selecting a replacement successful proof.
 
 Historical route source is parsed (not executed) for its pinned, literal
 metadata; the mathematical fields are independently rebuilt from the exact

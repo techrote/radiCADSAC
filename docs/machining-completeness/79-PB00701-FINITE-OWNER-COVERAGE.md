@@ -34,9 +34,12 @@ does not change any historical module and does not re-own any span.
 - **OWNER_STRICT_SPAN**: a new V54 view kind for an owner whose own route proves a
   strict nonzero complete derivative on the whole closed span. It is distinct from
   V53's `STRICT_SPAN` and keeps the actual owner and an owner-specific adapter name.
-- **Owner recipe**: the owner's own fixed route builder (for example
-  `_pointwise_envelope_route`) called on the original lowered span. Regenerating it is
-  finite checking; calling a classifier would be proof selection and is forbidden.
+- **Owner recipe**: the historical owner-specific route constructor (for example,
+  `_pointwise_envelope_route`) used to *build* new witnesses from the original
+  lowered span. **Finite checking is different:** it rechecks the supplied
+  harmonic/quadrature using the owner's fixed exact leaf plus any required
+  residual inequalities, endpoints, root summary and pinned literal metadata.
+  Historical selecting-route functions are not invoked by the checker.
 
 ## Finite owner inventory
 
@@ -95,9 +98,11 @@ derivative never vanishes, so every admitted root is simple").
 
 For each, V54 records the owner's module, recipe and the route key holding the
 `direction` (`derivative_certificate` for V20/V21; the owner-named anchor
-certificate otherwise). Checking regenerates the route with that recipe on the
-original span, requires equality, reads `delta` from that certificate, and takes the
-exterior relations from the route's own exact `left_event`/`right_event`. The ordered
+certificate otherwise). The *builder* uses that recipe. The *checker* instead
+recomputes the selected leaf and complete derivative/residual premises on the
+original span, compares the supplied route and exact rational-turn endpoint
+events, reads `delta` from that certificate, and derives the physical exteriors
+without calling an alternative route constructor. The ordered
 construction is the V53 strict one: a zero left endpoint has inward sign `delta`, a
 zero right endpoint `-delta`; opposite signs give one implicit simple root with cells
 `(-delta, delta)`; both endpoints zero is impossible. All three shapes (root-free,

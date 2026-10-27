@@ -108,7 +108,7 @@ def expected_boundary():
         'strict_adapter_owner_versions': sorted(e['version'] for e in m.STRICT_ADAPTERS.values()),
         'lacking_premise_owner_versions': sorted({v for v, _ in m.LACKING_PREMISE.values()}),
         'blocked_owner_versions': sorted(v for v, _ in m.BLOCKED_OWNERS.values()),
-        'finite_checking_policy': 'OWNER_OWN_FIXED_RECIPE_REGENERATION_ON_ORIGINAL_SPAN_NO_CLASSIFIER_NO_REPLACEMENT',
+        'finite_checking_policy': 'SOURCE_BOUND_SELECTED_WITNESS_LEAVES_ENDPOINTS_AND_ROUTE_METADATA_NO_PROOF_RESELECTION',
         **FLAGS, 'boundary_controls': CONTROLS, 'unsupported': UNSUPPORTED,
         'primary_acceptance': {'source': 'test_pb00701_finite_owner_span_integration.candidate',
                                'description': 'reverse_source(v53 principal original B-spline source)',
@@ -200,6 +200,11 @@ def self_test():
     bad = copy.deepcopy(data); bad['owner_category_counts']['3'] = 15
     rejected(lambda: contract(bad, False))
     bad = copy.deepcopy(data); bad['next_theorem_task']['issue_created'] = True
+    rejected(lambda: contract(bad, False))
+    # A green verifier must not advertise the superseded route-regeneration
+    # policy now that the checker validates exactly the submitted witness.
+    bad = copy.deepcopy(data)
+    bad['finite_checking_policy'] = 'OWNER_OWN_FIXED_RECIPE_REGENERATION_ON_ORIGINAL_SPAN_NO_CLASSIFIER_NO_REPLACEMENT'
     rejected(lambda: contract(bad, False))
     bad = copy.deepcopy(data); bad['unknown_authority'] = True
     rejected(lambda: contract(bad, False))

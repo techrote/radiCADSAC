@@ -2,9 +2,10 @@
 """V54: finite historical-owner inventory and owner-specific ordered-span adapters.
 
 Every reachable route_kind of the admitted PB-007-01 B-spline chain is assigned
-exactly one category. Only category-2 owners receive a new view, and each view
-is regenerated from the owner's OWN fixed proof recipe on the unchanged original
-source span. A constant-sign amplitude theorem is a root-free SIGN_SPAN, never a
+exactly one category. Only category-2 owners receive a new view: construction
+uses the historical source-owned recipe, while finite checking validates the
+selected source-bound leaf rather than rerunning a selecting route builder.
+A constant-sign amplitude theorem is a root-free SIGN_SPAN, never a
 derivative or monotonicity certificate. No historical validator is patched and
 no owner is relabelled. See 79-PB00701-FINITE-OWNER-COVERAGE.md.
 """
@@ -219,7 +220,7 @@ def sign_span_components(owner, route, material, *, checked_witness=False):
 
 
 def strict_direction(owner, route):
-    """Read the owner's own whole-span derivative certificate after regeneration."""
+    """Read the owner's strict derivative after source-bound witness checking."""
     entry = STRICT_ADAPTERS[owner]
     key = entry['direction_certificate']
     certificate = route[key]
@@ -324,7 +325,12 @@ def strict_adapter_components(owner, route, material, *, checked_witness=False):
 
 
 def regenerate_view(kind, owner, witness, *source_args, checked_witness=False):
-    """Finite owner-specific view construction; the witness is always checked first."""
+    """Build a view; checked_witness=True is only for the already-checked caller.
+
+    The normal constructor still verifies the historical route. The finite
+    checker checks the supplied leaf witness before using the fast path.
+    The resulting view alone is never an independent truth authority.
+    """
     material = a._material(*source_args)
     if kind == 'SIGN_SPAN':
         require(owner in SIGN_ADAPTERS, 'sign span has a forged or unsupported owner')

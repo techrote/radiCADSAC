@@ -82,6 +82,9 @@ All files are under this directory:
   `build_finite_owner_source_evidence(original_spec)`.
 - `pb00701_finite_owner_span_certificate.py` — `validate_ordered_span_view` and
   `validate_finite_owner_certificate(candidate, original_spec)`.
+- `pb00701_finite_owner_witness_check.py` — original-source leaf, selected-anchor,
+  strict-residual, endpoint and pinned-route-metadata verification without a
+  historical selecting-route invocation.
 - `pb00701_finite_owner_inventory.py` — static/observed inventory and corpus runner.
 
 Every new view (`radicadsac-ordered-span-view/54.0`) keeps the actual owner, owner
