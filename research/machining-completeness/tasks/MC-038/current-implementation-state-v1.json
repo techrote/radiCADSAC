@@ -1,8 +1,8 @@
 {
   "schema": "radicadsac-mc038-current-implementation-state/1.0",
-  "as_of": "2026-10-02",
+  "as_of": "2026-10-27",
   "authority": {
-    "main_sha": "a13702b28fcc349442e78cfb1e971eb94991a69e",
+    "main_sha": "c25e15aa0af74e490393327cf1b5474bddceb4af",
     "mc_b": "NOT_ESTABLISHED",
     "mc_1": "NOT_ESTABLISHED",
     "mc038_issue": 100,
@@ -16,22 +16,22 @@
     "PB-007-04": "OPEN_PROPAGATED"
   },
   "latest_verified_landing": {
-    "version": 53,
-    "issue": 271,
-    "pull_request": 273,
-    "pr_head": "e4d5646fd3b16e0f152c70fd817904df74426a8b",
-    "merge_sha": "a13702b28fcc349442e78cfb1e971eb94991a69e",
-    "direct_parent_sha": "7126dabf013ef95b0965b74008466e12f0650ef8",
-    "tree_sha": "17fe7642600b12edd573e21b57933e5811cea991",
+    "version": 54,
+    "issue": 275,
+    "pull_request": 277,
+    "pr_head": "e6b6d7c77fe4ab33103d151c0c5edf921862248a",
+    "merge_sha": "c25e15aa0af74e490393327cf1b5474bddceb4af",
+    "direct_parent_sha": "7e82d5a21ad5879a497c91ec2b1ca12863e06e9b",
+    "tree_sha": "b55a7a86db20273a14655f0e8b63e1c072baccda",
     "final_head_runs": {
-      "focused": 37040746459,
-      "static": 37040746380
+      "focused": 40591081571,
+      "static": 40591081618
     },
     "merged_main_runs": {
-      "focused": 37041568030,
-      "static": 37041567973
+      "focused": 40597649352,
+      "static": 40597649203
     },
-    "scope": "EXACT_CONTINUOUS_MIXED_V51_PRODUCT_AND_STRICT_OWNER_SPAN_ROOT_AND_SIGN_CELL_COMPOSITION_FROM_ORIGINAL_BSPLINE_SOURCE"
+    "scope": "EXACT_FINITE_HISTORICAL_OWNER_ORIGINAL_BSPLINE_SPAN_ORDERED_ROOT_AND_SIGN_CELL_COMPOSITION_WITH_V7_SIGN_SPAN_AND_NINETEEN_OWNER_STRICT_SPAN_ADAPTERS"
   },
   "landed_chain": [
     {
@@ -124,17 +124,24 @@
       "pr": 273,
       "state": "COMPLETED",
       "scope": "mixed V51 product and strict v19/v47/v48/v49 continuous span composition from original B-spline source"
+    },
+    {
+      "version": 54,
+      "issue": 275,
+      "pr": 277,
+      "state": "COMPLETED",
+      "scope": "43 historical owners inventoried; V7 root-free sign span plus 19 exact owner-strict spans composed from original B-spline sources; 16 ordered-premise gaps and two blocker/non-event dispositions retained"
     }
   ],
   "active_frontier": {
-    "version": 53,
-    "issue": 271,
+    "version": 54,
+    "issue": 275,
     "state": "COMPLETED_NO_SUCCESSOR_SELECTED",
-    "title": "exact mixed-owner continuous spline-span composition",
-    "pull_request": 273,
-    "ownership_gap": "CLOSED_BY_V53_DISTINCT_STRICT_SPAN_AND_V51_PRODUCT_ORDERED_VIEWS",
+    "title": "finite historical-owner inventory and checked ordered-span adapters",
+    "pull_request": 277,
+    "ownership_gap": "CLOSED_BY_V54_SOURCE_BOUND_V7_SIGN_SPAN_AND_19_OWNER_STRICT_SPAN_ADAPTERS",
     "successor_selected": false,
-    "remaining_boundary": "PB-007-01 remains globally open for general noncommon-factor/nonmonotone analytic coverage, unsupported owner families and discontinuous point-value semantics"
+    "remaining_boundary": "PB-007-01 globally OPEN: general noncommon-factor/nonmonotone analytic event theorems, category-3 ordering premises, discontinuous knot-point semantics and native material/topology/STEP qualification remain unresolved"
   },
   "directly_relevant_open_proof_obligations": [
     "PO-02",
@@ -145,7 +152,7 @@
   ],
   "unresolved": [
     "general noncommon-factor/nonmonotone analytic event coverage",
-    "unsupported carrier owners or multiplicity structures",
+    "16 exact category-3 owners lack ordered sign-cell premises; unsupported carrier owners or multiplicity structures remain unresolved",
     "arithmetic on implicit analytic root coordinates beyond checked ordering/brackets",
     "discontinuous source-knot point-value policy",
     "general PB-007-02 coupled phase/motion coverage",
@@ -154,5 +161,5 @@
     "native material/topology/reconstruction/STEP/consumer/scale qualification"
   ],
   "historical_files_are_not_superseded": true,
-  "note": "This snapshot is navigation/current-state metadata, not gate acceptance authority. V53/#271 is the latest verified bounded landing; no successor PB-007-01 child is selected here. PB-007-01 remains globally open and MC-B/MC-1 remain NOT_ESTABLISHED."
+  "note": "This snapshot is navigation/current-state metadata, not gate acceptance authority. V54/#275 is the latest verified bounded landed implementation; the 43-owner inventory includes 42 observed and one static-only theorem boundary. No successor PB-007-01 child is selected. PB-007-01 remains globally open, MC-B/MC-1 remain NOT_ESTABLISHED, and all 26 protected operations are unchanged."
 }
