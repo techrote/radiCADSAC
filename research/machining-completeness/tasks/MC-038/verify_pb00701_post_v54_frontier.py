@@ -81,6 +81,16 @@ def audit(corpus, inventory, boundary):
         require(row["id"] == row["expected"]["id"], "source/observation ID mismatch")
         require(row["kind"] in ("HARVESTED", "COMPOSITE_TAIL"),
                 "unknown provenance kind")
+        prefix = "harvested:" if row["kind"] == "HARVESTED" else "composite:"
+        require(row["id"].startswith(prefix) and
+                isinstance(row["origin"], str) and bool(row["origin"]),
+                "source case ID contradicts observed provenance")
+        source = row["spec"]
+        require(isinstance(source, dict) and
+                source.get("grammar") == "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE" and
+                isinstance(source.get("source_parameter_id"), str) and
+                bool(source["source_parameter_id"]),
+                "missing original source grammar/identity binding")
         provenance[row["kind"]] += 1
         disp = row["expected"]["v54_disposition"]
         require(disp in EXPECTED, "unknown v54 disposition")
@@ -102,6 +112,13 @@ def audit(corpus, inventory, boundary):
                 blocked_here.append(owner + ":" + reason)
                 if owner == V43:
                     v43_kinds[row["kind"]] += 1
+        # Count reconciliations alone cannot detect a forged parent observation
+        # status while the individual span statuses remain unchanged.
+        observed_status = row["expected"]["observed"]["status"]
+        require(observed_status == ("BLOCKED" if blocked_here else "CERTIFIED"),
+                "observed source status contradicts original span statuses")
+        require((disp == "BLOCKED") == bool(blocked_here),
+                "v54 source disposition contradicts historical route refusal")
         if disp == "BLOCKED":
             require(len(blocked_here) == 1, "ambiguous preserved blocked case")
             failures[blocked_here[0]] += 1
@@ -179,7 +196,21 @@ def self_test(corpus, inventory, boundary):
                 return
         raise AssertionError("no V43 tail fixture")
     reject(lambda: mutate(change_tail))
-    print("PB-007-01 post-v54 adversarial census: PASS (7 negative controls)")
+    # These controls cannot be discharged merely by recomputing unchanged
+    # global counts; each independently challenges one source-level contract.
+    reject(lambda: mutate(lambda c, i, b: c["cases"][0]["expected"]["observed"].update(
+        status="BLOCKED")))
+    reject(lambda: mutate(lambda c, i, b: c["cases"][0]["spec"].update(
+        grammar="FORGED_GRAMMAR")))
+    reject(lambda: mutate(lambda c, i, b: c["cases"][0]["spec"].update(
+        source_parameter_id="")))
+    def swap_provenance(c, i, b):
+        harvested = next(row for row in c["cases"] if row["kind"] == "HARVESTED")
+        composite = next(row for row in c["cases"] if row["kind"] == "COMPOSITE_TAIL")
+        harvested["kind"] = "COMPOSITE_TAIL"
+        composite["kind"] = "HARVESTED"
+    reject(lambda: mutate(swap_provenance))
+    print("PB-007-01 post-v54 adversarial census: PASS (11 negative controls)")
 
 
 def main():

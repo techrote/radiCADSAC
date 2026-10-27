@@ -8,7 +8,7 @@ This is **not** a theorem, an adapter, a successor issue, a research-capability 
 
 **Evidence-only hypothesis:** the exact frozen v54 owner inventory and 121-case original-source corpus can be read without executing any historical route/classifier and independently re-counted to separate *missing ordered-span premises* from *uncertified source-event routes*. The result is a descriptive research-admission census, **not** a recalculation of the underlying mathematical truth.
 
-Falsify the census if the pinned Git blobs drift, the 43 owners lose their unique category, case IDs or route statuses disagree, 121 dispositions differ, an observed owner is mislabeled static-only, a blocker is laundered into success, or a theorem/native/MC-B claim appears. The accompanying Python standard-library verifier rejects seven mutations on in-memory copies and never modifies the frozen historical evidence.
+Falsify the census if the pinned Git blobs drift, the 43 owners lose their unique category, case IDs or route statuses disagree, 121 dispositions differ, an observed owner is mislabeled static-only, a blocker is laundered into success, or a theorem/native/MC-B claim appears. The accompanying Python standard-library verifier rejects **11** mutations on in-memory copies and never modifies the frozen historical evidence. In addition to aggregate counts, it checks each observed whole-source status against all recorded span statuses, ensures v54 BLOCKED dispositions correspond to actual historical route refusals, and binds harvested/composite case IDs to their provenance labels and admitted source grammar/identity. A count-preserving provenance-label swap is rejected.
 
 ## Reproduction and frozen evidence identity
 
