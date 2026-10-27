@@ -303,6 +303,40 @@ class OwnerStrictTests(unittest.TestCase):
                 with self.assertRaises(BAD):
                     checker.validate_ordered_span_view(bad, *args)
 
+    def test_selected_residual_cannot_silently_drop_amplitude_derivative_terms(self):
+        import pb00701_finite_owner_witness_check as witness_check
+        # V23: the selected nonconstant anchor amplitude derivative is
+        # explicitly part of the independently certified residual.
+        owner = next(k for k, e in m.STRICT_ADAPTERS.items() if e['version'] == 23)
+        good, args = view(owner)
+        route = copy.deepcopy(good['underlying_witness'])
+        route['residual_l1_certificate']['terms'] = []
+        module = __import__(m.STRICT_ADAPTERS[owner]['module'])
+        with patch.object(module.v22, '_residual_l1_certificate',
+                          return_value=route['residual_l1_certificate']):
+            with self.assertRaises(BAD):
+                witness_check.validate_owner_witness(owner, route, a._material(*args))
+
+        # V26: both nonconstant selected amplitudes must remain in the
+        # pointwise orthant proof. Poisoning the claimed leaf itself must
+        # not bypass the route-level source-term-accounting invariant.
+        owner = next(k for k, e in m.STRICT_ADAPTERS.items() if e['version'] == 26)
+        good, args = view(owner)
+        route = copy.deepcopy(good['underlying_witness'])
+        selected_key = m.STRICT_ADAPTERS[owner]['direction_certificate']
+        route[selected_key]['pointwise_cone_residual_certificate']['residual_terms'] = []
+        module = __import__(m.STRICT_ADAPTERS[owner]['module'])
+        original = getattr(module, witness_check.LEAVES[26])
+        def poisoned(*call_args):
+            outcome = original(*call_args)
+            if isinstance(outcome, dict) and outcome.get('status') == 'CERTIFIED':
+                outcome = copy.deepcopy(outcome)
+                outcome['pointwise_cone_residual_certificate']['residual_terms'] = []
+            return outcome
+        with patch.object(module, witness_check.LEAVES[26], side_effect=poisoned):
+            with self.assertRaises(BAD):
+                witness_check.validate_owner_witness(owner, route, a._material(*args))
+
     def test_resource_refusal_is_not_truth_and_unrelated_errors_propagate(self):
         owner = 'PB00701_V20_EXACT_POINTWISE_DERIVATIVE_ENVELOPE'
         v, args = view(owner)

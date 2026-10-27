@@ -106,6 +106,41 @@ def _static_route_shape(owner):
     return static
 
 
+def _check_complete_residual_terms(version, leaf, residual, c, s):
+    """Recheck the historical route's source-term coverage assertions.
+
+    An exact positivity result for a *partial* derivative is not authority for
+    the complete source derivative. These term-inclusion/exclusion predicates
+    are source-derived and do not enumerate alternative proof selections.
+    """
+    if version == 23:
+        harmonic = leaf['harmonic']
+        kind = 'S_prime' if leaf['component'] == 'SIN' else 'C_prime'
+        m.require(any(t['harmonic'] == harmonic and t['kind'] == kind
+                      for t in residual['terms']),
+                  'nonconstant anchor amplitude derivative omitted from residual')
+        return
+
+    if version in (24, 25):
+        terms = residual['terms']
+    elif version in (26, 28, 29, 30):
+        key = ('pointwise_cone_residual_certificate' if version == 26
+               else 'projection_residual_certificate')
+        terms = leaf[key]['residual_terms']
+    else:
+        return
+
+    harmonic = leaf['harmonic']
+    for mapping, kind in ((c, 'C_prime'), (s, 'S_prime')):
+        poly = m.a.trim(mapping[harmonic])
+        m.require(len(poly) == 1 or
+                  any(t['harmonic'] == harmonic and t['kind'] == kind for t in terms),
+                  'selected nonconstant amplitude derivative omitted from residual')
+    m.require(not any(t['harmonic'] == harmonic and
+                      t['kind'] in ('phase_C', 'phase_S') for t in terms),
+              'selected phase contribution is double-counted as residual')
+
+
 def _selected_certificate(owner, route, c, s, offset, rate):
     entry = m.STRICT_ADAPTERS[owner]
     version = entry['version']
@@ -148,6 +183,8 @@ def _selected_certificate(owner, route, c, s, offset, rate):
     m.require(isinstance(produced, dict) and produced.get('status') == 'CERTIFIED',
               'selected witness leaf did not certify the original source')
     m.require(m.b.same(selected, produced), 'supplied selected strict certificate differs from exact leaf')
+    if version in (26, 28, 29, 30):
+        _check_complete_residual_terms(version, produced, None, c, s)
     if version == 39:
         m.require(selected.get('sigma_A') == -1,
                   'signed-A V39 owner requires the source-derived negative orientation')
@@ -222,6 +259,8 @@ def validate_owner_witness(owner, route, material):
             return residual
         m.require(isinstance(residual, dict) and residual.get('status') == 'CERTIFIED',
                   'selected anchor lacks exact whole-derivative residual dominance')
+        if version in (23, 24, 25):
+            _check_complete_residual_terms(version, leaf, residual, c, s)
         expected['residual_l1_certificate'] = residual
 
     m.require(m.b.same(route, expected),
