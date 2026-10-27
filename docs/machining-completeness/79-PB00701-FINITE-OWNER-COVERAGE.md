@@ -129,7 +129,8 @@ isolation or nested-composition theorem, not a check of an existing proof.
 
 ## Category 4: dispositions
 
-`PB00701_GENERAL_COUPLED_THEOREM_BOUNDARY` is the residual blocker for nonconstant
+`PB00701_GENERAL_COUPLED_THEOREM_BOUNDARY` is a statically emitted historical
+boundary (not observed as a final owner in the frozen corpus) for nonconstant
 modulation with nonzero phase; V44's route is always a BLOCKED consumption boundary.
 Sources containing them never reach V53/V54 composition; the complete predecessor
 result is returned unchanged.
@@ -145,9 +146,11 @@ and maximal-cell formulas. A shared zero knot keeps two one-sided orders; no glo
 analytic multiplicity is invented at a nonsmooth knot.
 
 `pb00701_finite_owner_span_certificate.py` checks V53 kinds through the V53 checker and
-new kinds by owner-recipe regeneration plus whole-record equality, then regenerates
-lowering, joins and composition. Tests disable every loaded classifier, builder,
-carrier/residual delegate, derivative selector and sign search while checking. Memory,
+new kinds by supplied-witness-guided historical leaf checking, exact endpoints,
+root-summary regeneration and source-pinned literal metadata (without invoking
+historical selecting _route functions), then reconstructs the entire typed view,
+lowering, joins and composition. Tests disable the actual historical _route
+selection loops as well as classifiers, builders and other selectors while checking. Memory,
 overflow and recursion failures are non-truth refusals retaining the V53 predecessor;
 unrelated exceptions propagate.
 
@@ -180,8 +183,10 @@ from every historical verifier run (plus continuous-tail composites). It observe
 such corpus span. Rerunning it after all category-2 adapters gives 26 new V54
 certificates, 5 preserved V53 results, 40 single-span certificates, 30 category-3 premise
 gaps and 20 unchanged blocked chains — 11 of those on
-`V43 CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED` nonmonotone, noncommon-factor spans. The first genuine
-remaining PB-007-01 family is **general noncommon-factor/nonmonotone analytic event
+`V43 CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED` sources not certified by
+the existing strict-derivative and common-factor routes. An unsuccessful
+monotonicity certificate does not prove that a function is nonmonotone.
+The next research family is **general noncommon-factor/nonmonotone analytic event
 coverage** (the `BOUNDED_POLYNOMIAL_TRIGONOMETRIC_EXPONENTIAL_ZERO_PROBLEM` behind the
 general coupled boundary). It is routed as a theorem task in the evidence/current-state
 handoff; V54 creates no automatic adapter issue. Ordered root isolation for count-only

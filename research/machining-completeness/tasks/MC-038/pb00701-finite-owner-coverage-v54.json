@@ -185,10 +185,10 @@
  "next_theorem_task": {
   "routing": "THEOREM_TASK_IN_EVIDENCE_AND_CURRENT_STATE_HANDOFF_NOT_AN_ADAPTER_ISSUE",
   "family": "PB00701_GENERAL_NONCOMMON_FACTOR_NONMONOTONE_ANALYTIC_EVENT_COVERAGE",
-  "observed_boundary_owner": "PB00701_GENERAL_COUPLED_THEOREM_BOUNDARY",
   "theorem_boundary": "BOUNDED_POLYNOMIAL_TRIGONOMETRIC_EXPONENTIAL_ZERO_PROBLEM",
   "secondary_frontier": "ORDERED_ROOT_ISOLATION_FOR_COUNT_ONLY_CATEGORY_THREE_OWNERS",
-  "issue_created": false
+  "issue_created": false,
+  "static_only_boundary_owner": "PB00701_GENERAL_COUPLED_THEOREM_BOUNDARY"
  },
  "programme_effect": {
   "PB-007-01": "OPEN",

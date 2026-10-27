@@ -79,6 +79,13 @@ def no_search():
                 if hasattr(module, attr):
                     stack.enter_context(patch.object(module, attr,
                                                      side_effect=AssertionError('replacement search: ' + attr)))
+        # Crucially disable each historical route's *internal* candidate loop.
+        # Checking must use the selected leaf from the supplied certificate.
+        for owner, entry in m.STRICT_ADAPTERS.items():
+            module = sys.modules[entry['module']]
+            stack.enter_context(patch.object(
+                module, entry['recipe'],
+                side_effect=AssertionError('historical anchor selection: ' + entry['recipe'])))
         yield
 
 
@@ -253,16 +260,34 @@ class OwnerStrictTests(unittest.TestCase):
                 self.assertIs(checker.validate_ordered_span_view(v, *view_args), True, v['owner'])
             self.assertIs(checker.validate_ordered_span_view(sign_view, *args), True)
 
+    def test_corrupt_selected_proof_is_not_rescued_by_historical_route_selection(self):
+        # Two owners with internal SIN/COS or harmonic searches.
+        for version in (25, 43):
+            owner = next(k for k, item in m.STRICT_ADAPTERS.items()
+                         if item['version'] == version)
+            good, args = view(owner)
+            with no_search():
+                self.assertIs(checker.validate_ordered_span_view(good, *args), True)
+                bad = copy.deepcopy(good)
+                key = m.STRICT_ADAPTERS[owner]['direction_certificate']
+                direction = bad['underlying_witness'][key]['direction']
+                bad['underlying_witness'][key]['direction'] = (
+                    'DECREASING' if direction == 'INCREASING' else 'INCREASING')
+                with self.assertRaises(BAD):
+                    checker.validate_ordered_span_view(bad, *args)
+
     def test_resource_refusal_is_not_truth_and_unrelated_errors_propagate(self):
         owner = 'PB00701_V20_EXACT_POINTWISE_DERIVATIVE_ENVELOPE'
         v, args = view(owner)
         module = sys.modules[m.STRICT_ADAPTERS[owner]['module']]
         recipe = m.STRICT_ADAPTERS[owner]['recipe']
-        with patch.object(module, recipe, side_effect=MemoryError):
+        # The checker must no longer call the old route-level selector.
+        selected_leaf = '_pointwise_derivative_envelope_certificate'
+        with patch.object(module, selected_leaf, side_effect=MemoryError):
             refused = checker.validate_ordered_span_view(v, *args)
         self.assertEqual(refused['status'], 'RESOURCE_REFUSAL')
         self.assertIs(refused['is_truth_value'], False)
-        with patch.object(module, recipe, side_effect=ZeroDivisionError('unrelated')):
+        with patch.object(module, selected_leaf, side_effect=ZeroDivisionError('unrelated')):
             with self.assertRaises(ZeroDivisionError):
                 checker.validate_ordered_span_view(v, *args)
         refusal = {'status': 'RESOURCE_REFUSAL', 'reason': 'X', 'is_truth_value': False}

@@ -86,8 +86,11 @@ All files are under this directory:
 
 Every new view (`radicadsac-ordered-span-view/54.0`) keeps the actual owner, owner
 version, owner-specific adapter name, recipe, original material binding, positive
-affine map and complete underlying witness. Checking regenerates the witness with the
-owner's own recipe on the original lowered span and compares the entire typed view.
+affine map and complete underlying witness. Construction regenerates the route with the owner's historical recipe. Checking
+does not call that selecting route: it validates the supplied harmonic/quadrature
+through the historical exact leaf certificate, independently rechecks any selected
+residual inequality, rational-turn endpoints, root summary and pinned literal
+route metadata, and then compares the complete typed view.
 
 `SIGN_SPAN`: one positive-width open cell of sign `sign(a0)`, two NONZERO exteriors with
 that relation and inward sign, zero roots, `endpoint_roots_possible: false`,
@@ -183,9 +186,12 @@ from the CI corpus; V21's single-span adapter is still exercised by the direct t
 Uncertified span reasons behind the 20 blocked cases: 11
 `V43 CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED`, 5 V27 child failures, one each of V23
 anchor not certified, V41 child not composable, V44 consumption authority missing and V6
-identity-zero semantics. The dominant residual is therefore a nonmonotone span with no
-common factor on which every derivative/anchor certificate fails: the general
-noncommon-factor/nonmonotone analytic family, not an ordering-interface gap.
+identity-zero semantics. The observed residual lacks a successful complete derivative/anchor certificate
+and a usable common-factor reduction in the implemented routes. Failure to
+certify strict monotonicity is NOT a proof of nonmonotonicity. This motivates
+investigation of the broader noncommon-factor/nonmonotone analytic family, not
+a claim that the observed source is mathematically nonmonotone and not an
+ordering-interface gap.
 
 ## Recorded negative attempts and corrections
 

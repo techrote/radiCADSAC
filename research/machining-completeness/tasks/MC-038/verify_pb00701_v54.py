@@ -81,7 +81,7 @@ UNSUPPORTED = [
 NEXT_THEOREM = {
     'routing': 'THEOREM_TASK_IN_EVIDENCE_AND_CURRENT_STATE_HANDOFF_NOT_AN_ADAPTER_ISSUE',
     'family': 'PB00701_GENERAL_NONCOMMON_FACTOR_NONMONOTONE_ANALYTIC_EVENT_COVERAGE',
-    'observed_boundary_owner': 'PB00701_GENERAL_COUPLED_THEOREM_BOUNDARY',
+    'static_only_boundary_owner': 'PB00701_GENERAL_COUPLED_THEOREM_BOUNDARY',
     'theorem_boundary': 'BOUNDED_POLYNOMIAL_TRIGONOMETRIC_EXPONENTIAL_ZERO_PROBLEM',
     'secondary_frontier': 'ORDERED_ROOT_ISOLATION_FOR_COUNT_ONLY_CATEGORY_THREE_OWNERS',
     'issue_created': False,
@@ -149,7 +149,7 @@ def contract(data, check_repo=True):
                  'certify_derivative', '_decide_factor_sign', '_decide_endpoint', '_delegate_carrier',
                  '_delegate_residual'}
     for name in ('pb00701_finite_owner_span_model.py', 'pb00701_finite_owner_span_certificate.py',
-                 'pb00701_finite_owner_inventory.py'):
+                 'pb00701_finite_owner_inventory.py', 'pb00701_finite_owner_witness_check.py'):
         tree = ast.parse((TASK / name).read_text())
         for node in ast.walk(tree):
             if isinstance(node, ast.Constant):
@@ -157,9 +157,9 @@ def contract(data, check_repo=True):
             if isinstance(node, (ast.Import, ast.ImportFrom)):
                 names = [node.module or ''] if isinstance(node, ast.ImportFrom) else [x.name for x in node.names]
                 assert all(not n.startswith(('numpy', 'sympy', 'mpmath', 'decimal')) for n in names)
-            if name.endswith('certificate.py') and isinstance(node, ast.Call):
+            if (name.endswith('certificate.py') or name.endswith('witness_check.py')) and isinstance(node, ast.Call):
                 called = node.func.attr if isinstance(node.func, ast.Attribute) else ''
-                assert called not in forbidden, called
+                assert called not in forbidden | {'regenerate_owner_route', 'owner_recipe'}, called
     workflow = (ROOT / '.github/workflows/mc1-pb00701-v54.yml').read_text()
     assert workflow.count('verify_pb00701_v54.py --contract --self-test --acceptance') == 1
     assert 'github.event.pull_request.head.sha || github.sha' in workflow

@@ -181,12 +181,13 @@ def _cell(index, left, right, sign, order, material, source_hash):
             'distinct_roots_open': 0, 'open_interval': True, 'normalized_mixed_field_map': None}
 
 
-def sign_span_components(owner, route, material):
+def sign_span_components(owner, route, material, *, checked_witness=False):
     """Closed-span amplitude dominance: |F| >= margin > 0 on [0,1]; no root, no direction."""
     require(owner == SIGN_OWNER, 'unsupported sign-span owner')
-    expected = regenerate_owner_route(owner, material)
-    require(expected is not None and expected.get('status') == 'CERTIFIED' and b.same(route, expected),
-            'amplitude-dominance witness does not regenerate from original source span')
+    if not checked_witness:
+        expected = regenerate_owner_route(owner, material)
+        require(expected is not None and expected.get('status') == 'CERTIFIED' and b.same(route, expected),
+                'amplitude-dominance witness does not regenerate from original source span')
     c, _ = _fraction_maps(material)
     constant = a.trim(c.get(0, [Q(0)]))[0]
     sign = {'POSITIVE': 1, 'NEGATIVE': -1}[route['sign']]
@@ -233,14 +234,15 @@ def strict_direction(owner, route):
             'consistent_strict_direction_on_complete_smooth_span': True}
 
 
-def strict_adapter_components(owner, route, material):
+def strict_adapter_components(owner, route, material, *, checked_witness=False):
     """Whole-span strict derivative owner; endpoint relations are the route's own exact events."""
     require(owner in STRICT_ADAPTERS, 'unsupported owner-specific strict adapter')
-    expected = regenerate_owner_route(owner, material)
-    if isinstance(expected, dict) and expected.get('status') == 'RESOURCE_REFUSAL':
-        return expected
-    require(expected is not None and expected.get('status') == 'CERTIFIED' and b.same(route, expected),
-            'owner-specific strict witness does not regenerate from original source span')
+    if not checked_witness:
+        expected = regenerate_owner_route(owner, material)
+        if isinstance(expected, dict) and expected.get('status') == 'RESOURCE_REFUSAL':
+            return expected
+        require(expected is not None and expected.get('status') == 'CERTIFIED' and b.same(route, expected),
+                'owner-specific strict witness does not regenerate from original source span')
     direction = strict_direction(owner, route)
     delta = direction['delta']
     endpoints = [route['left_event'], route['right_event']]
@@ -321,17 +323,17 @@ def strict_adapter_components(owner, route, material):
                                 'physical_source_replaced_by_carrier': False}}
 
 
-def regenerate_view(kind, owner, witness, *source_args):
+def regenerate_view(kind, owner, witness, *source_args, checked_witness=False):
     """Finite owner-specific view construction; the witness is always checked first."""
     material = a._material(*source_args)
     if kind == 'SIGN_SPAN':
         require(owner in SIGN_ADAPTERS, 'sign span has a forged or unsupported owner')
-        components = sign_span_components(owner, witness, material)
+        components = sign_span_components(owner, witness, material, checked_witness=checked_witness)
         entry = SIGN_ADAPTERS[owner]
     else:
         require(kind == 'OWNER_STRICT_SPAN' and owner in STRICT_ADAPTERS,
                 'unsupported V54 ordered span evidence kind/owner')
-        components = strict_adapter_components(owner, witness, material)
+        components = strict_adapter_components(owner, witness, material, checked_witness=checked_witness)
         if 'ordered_boundaries' not in components:
             return components
         entry = STRICT_ADAPTERS[owner]

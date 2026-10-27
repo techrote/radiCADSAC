@@ -18,7 +18,17 @@ def validate_ordered_span_view(candidate, *source_args):
             import pb00701_mixed_owner_span_certificate as v53_checker
             return v53_checker.validate_ordered_span_view(candidate, *source_args)
         m.require(kind in m.V54_KINDS, 'unknown ordered span view kind')
-        expected = m.regenerate_view(kind, candidate['owner'], candidate['underlying_witness'], *source_args)
+        # The constructor's historical _route recipes select anchors. Finite
+        # checking instead validates exactly the supplied owner/anchor witness.
+        import pb00701_finite_owner_witness_check as witness_check
+        material = m.a._material(*source_args)
+        verdict = witness_check.validate_owner_witness(
+            candidate['owner'], candidate['underlying_witness'], material)
+        if verdict is not True:
+            return verdict
+        expected = m.regenerate_view(
+            kind, candidate['owner'], candidate['underlying_witness'],
+            *source_args, checked_witness=True)
         if expected.get('status') != 'ORDERED_SPAN_VIEW_CERTIFIED':
             return expected
         m.require(m.b.same(candidate, expected), 'normalized span view/source/owner/witness mismatch')
