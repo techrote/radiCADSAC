@@ -91,9 +91,10 @@ Every new view (`radicadsac-ordered-span-view/54.0`) keeps the actual owner, own
 version, owner-specific adapter name, recipe, original material binding, positive
 affine map and complete underlying witness. Construction regenerates the route with the owner's historical recipe. Checking
 does not call that selecting route: it validates the supplied harmonic/quadrature
-through the historical exact leaf certificate, independently rechecks any selected
-residual inequality, rational-turn endpoints, root summary and pinned literal
-route metadata, and then compares the complete typed view.
+through the historical exact leaf certificate, independently rechecks V20–V30's
+two-active-harmonic source admission without selecting a replacement anchor,
+any required residual inequality, rational-turn endpoints, root summary and
+pinned literal route metadata, then compares the complete typed view.
 
 `SIGN_SPAN`: one positive-width open cell of sign `sign(a0)`, two NONZERO exteriors with
 that relation and inward sign, zero roots, `endpoint_roots_possible: false`,

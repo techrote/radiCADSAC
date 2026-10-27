@@ -174,6 +174,15 @@ def validate_owner_witness(owner, route, material):
     static = _static_route_shape(owner)
     offset, rate = m.b.local_phase(material)
     m.require(rate != 0, 'strict historical owner requires nonzero source phase rate')
+    active = sorted(int(h) for h in set(c) | set(s) if int(h) > 0
+                    and (m.a.trim(c.get(h, [0])) != [0]
+                         or m.a.trim(s.get(h, [0])) != [0]))
+    if entry['version'] <= 30:
+        # Pinned V20–V30 route-level admission requires multiple active positive
+        # harmonics. Enforce this static source predicate without enumerating
+        # possible proof anchors or calling the historical selecting _route.
+        m.require(len(active) >= 2,
+                  'historical multiharmonic owner requires two active harmonics')
     leaf = _selected_certificate(owner, route, c, s, offset, rate)
     if isinstance(leaf, dict) and leaf.get('status') == 'RESOURCE_REFUSAL':
         return leaf
@@ -189,9 +198,6 @@ def validate_owner_witness(owner, route, material):
     summary = v19._root_summary(leaf['direction'], left, right)
     m.require(summary.get('status') == 'CERTIFIED',
               'supplied selected strict derivative contradicts exact endpoints')
-    active = sorted(int(h) for h in set(c) | set(s) if int(h) > 0
-                    and (m.a.trim(c.get(h, [0])) != [0]
-                         or m.a.trim(s.get(h, [0])) != [0]))
     expected = {
         **static,
         'source_parameter_id': material['source_parameter_id'],

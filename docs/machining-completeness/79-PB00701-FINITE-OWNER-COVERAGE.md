@@ -99,7 +99,8 @@ derivative never vanishes, so every admitted root is simple").
 For each, V54 records the owner's module, recipe and the route key holding the
 `direction` (`derivative_certificate` for V20/V21; the owner-named anchor
 certificate otherwise). The *builder* uses that recipe. The *checker* instead
-recomputes the selected leaf and complete derivative/residual premises on the
+enforces V20–V30's route-level two-active-harmonic source admission, recomputes
+the selected leaf and complete derivative/residual premises on the
 original span, compares the supplied route and exact rational-turn endpoint
 events, reads `delta` from that certificate, and derives the physical exteriors
 without calling an alternative route constructor. The ordered

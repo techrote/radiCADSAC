@@ -264,6 +264,29 @@ class OwnerStrictTests(unittest.TestCase):
                 self.assertIs(checker.validate_ordered_span_view(v, *view_args), True, v['owner'])
             self.assertIs(checker.validate_ordered_span_view(sign_view, *args), True)
 
+    def test_historical_multiharmonic_route_admission_is_checked_without_selection(self):
+        import pb00701_finite_owner_witness_check as witness_check
+        # Every V20–V30 owner route explicitly requires >=2 active positive
+        # harmonics. A selected leaf is not proof that its owner was eligible.
+        for owner, entry in sorted(m.STRICT_ADAPTERS.items()):
+            if entry['version'] > 30:
+                continue
+            _, args = fixtures(owner)[0]
+            c, s, ident, interval, offset, rate = args
+            harmonics = sorted(h for h in set(c) | set(s) if h > 0)
+            self.assertGreaterEqual(len(harmonics), 2, owner)
+            selected = harmonics[0]
+            only_c = {h: p for h, p in c.items() if h in (0, selected)}
+            only_s = {h: p for h, p in s.items() if h in (0, selected)}
+            source = a._material(only_c, only_s, ident, interval, offset, rate)
+            module = __import__(entry['module'])
+            # If the leaf runs before admission, this RuntimeError must escape
+            # rather than being mistaken for a source eligibility refusal.
+            with patch.object(module, witness_check.LEAVES[entry['version']],
+                              side_effect=RuntimeError('unchecked owner eligibility')):
+                with self.assertRaises(BAD):
+                    witness_check.validate_owner_witness(owner, {}, source)
+
     def test_corrupt_selected_proof_is_not_rescued_by_historical_route_selection(self):
         # Two owners with internal SIN/COS or harmonic searches.
         for version in (25, 43):
