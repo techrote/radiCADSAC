@@ -119,6 +119,21 @@ def audit(corpus, inventory, boundary):
                 "observed source status contradicts original span statuses")
         require((disp == "BLOCKED") == bool(blocked_here),
                 "v54 source disposition contradicts historical route refusal")
+        # A count-preserving swap of source dispositions must not relabel a
+        # one-span result as a multi-span composition, or give a V53-only
+        # category-1 composite a V54 category-2 promotion (and vice versa).
+        classes = {table[owner] for owner in owners_here}
+        if disp == "CERTIFIED":
+            require(len(spans) == 1, "single-span certification has multiple spans")
+        elif disp == "MIXED_OWNER_SOURCE_EVIDENCE_CERTIFIED":
+            require(len(spans) >= 2 and classes == {1},
+                    "preserved V53 composition lacks category-1-only ownership")
+        elif disp == "FINITE_OWNER_SOURCE_EVIDENCE_CERTIFIED":
+            require(len(spans) >= 2 and 2 in classes and classes <= {1, 2},
+                    "new V54 composition lacks eligible category-2 span authority")
+        elif disp == "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE":
+            require(len(spans) >= 2 and 3 in classes,
+                    "ordered-premise gap lacks multi-span category-3 ownership")
         if disp == "BLOCKED":
             require(len(blocked_here) == 1, "ambiguous preserved blocked case")
             failures[blocked_here[0]] += 1
@@ -164,28 +179,31 @@ def audit(corpus, inventory, boundary):
             "general_theorem_established": False, "native_or_MC_B_established": False}
 
 
-def reject(fn):
+
+def reject_mutation(corpus, inventory, boundary, change):
+    """Only the *audit* may reject; malformed test setup must propagate."""
+    c, i, b = copy.deepcopy(corpus), copy.deepcopy(inventory), copy.deepcopy(boundary)
+    change(c, i, b)
     try:
-        fn()
-    except (AssertionError, TypeError, KeyError, ValueError):
+        audit(c, i, b)
+    except AssertionError:
         return
     raise AssertionError("corrupted frontier evidence accepted")
 
 
 def self_test(corpus, inventory, boundary):
-    def mutate(change):
-        c, i, b = copy.deepcopy(corpus), copy.deepcopy(inventory), copy.deepcopy(boundary)
-        change(c, i, b)
-        audit(c, i, b)
+    def reject(change):
+        reject_mutation(corpus, inventory, boundary, change)
 
-    reject(lambda: mutate(lambda c, i, b: c["cases"][0]["expected"].update(
-        v54_disposition="BLOCKED")))
-    reject(lambda: mutate(lambda c, i, b: c["cases"][0]["expected"]["observed"]["spans"][0].__setitem__(
-        0, "FORGED_OWNER")))
-    reject(lambda: mutate(lambda c, i, b: i["owners"].pop()))
-    reject(lambda: mutate(lambda c, i, b: c["cases"][0]["expected"].update(id="OTHER")))
-    reject(lambda: mutate(lambda c, i, b: b["next_theorem_task"].update(issue_created=True)))
-    reject(lambda: mutate(lambda c, i, b: b.update(general_nonmonotone_solver_claimed=True)))
+    reject(lambda c, i, b: c["cases"][0]["expected"].update(
+        v54_disposition="BLOCKED"))
+    reject(lambda c, i, b: c["cases"][0]["expected"]["observed"]["spans"][0].__setitem__(
+        0, "FORGED_OWNER"))
+    reject(lambda c, i, b: i["owners"].pop())
+    reject(lambda c, i, b: c["cases"][0]["expected"].update(id="OTHER"))
+    reject(lambda c, i, b: b["next_theorem_task"].update(issue_created=True))
+    reject(lambda c, i, b: b.update(general_nonmonotone_solver_claimed=True))
+
     def change_tail(c, i, b):
         for row in c["cases"]:
             if row["kind"] == "COMPOSITE_TAIL" and any(
@@ -195,22 +213,52 @@ def self_test(corpus, inventory, boundary):
                 row["kind"] = "HARVESTED"
                 return
         raise AssertionError("no V43 tail fixture")
-    reject(lambda: mutate(change_tail))
-    # These controls cannot be discharged merely by recomputing unchanged
-    # global counts; each independently challenges one source-level contract.
-    reject(lambda: mutate(lambda c, i, b: c["cases"][0]["expected"]["observed"].update(
-        status="BLOCKED")))
-    reject(lambda: mutate(lambda c, i, b: c["cases"][0]["spec"].update(
-        grammar="FORGED_GRAMMAR")))
-    reject(lambda: mutate(lambda c, i, b: c["cases"][0]["spec"].update(
-        source_parameter_id="")))
+    reject(change_tail)
+
+    reject(lambda c, i, b: c["cases"][0]["expected"]["observed"].update(
+        status="BLOCKED"))
+    reject(lambda c, i, b: c["cases"][0]["spec"].update(
+        grammar="FORGED_GRAMMAR"))
+    reject(lambda c, i, b: c["cases"][0]["spec"].update(
+        source_parameter_id=""))
+
     def swap_provenance(c, i, b):
         harvested = next(row for row in c["cases"] if row["kind"] == "HARVESTED")
         composite = next(row for row in c["cases"] if row["kind"] == "COMPOSITE_TAIL")
         harvested["kind"] = "COMPOSITE_TAIL"
         composite["kind"] = "HARVESTED"
-    reject(lambda: mutate(swap_provenance))
-    print("PB-007-01 post-v54 adversarial census: PASS (11 negative controls)")
+    reject(swap_provenance)
+
+    # Each swaps two different genuine dispositions, leaving their total
+    # histogram untouched. Per-case source-shape/owner checks must reject.
+    def swap_dispositions(c, left, right):
+        a = next(row for row in c["cases"]
+                 if row["expected"]["v54_disposition"] == left)
+        b = next(row for row in c["cases"]
+                 if row["expected"]["v54_disposition"] == right)
+        a["expected"]["v54_disposition"], b["expected"]["v54_disposition"] = (
+            b["expected"]["v54_disposition"], a["expected"]["v54_disposition"])
+
+    finite = "FINITE_OWNER_SOURCE_EVIDENCE_CERTIFIED"
+    reject(lambda c, i, b: swap_dispositions(c, "CERTIFIED", finite))
+    reject(lambda c, i, b: swap_dispositions(
+        c, "MIXED_OWNER_SOURCE_EVIDENCE_CERTIFIED", finite))
+    reject(lambda c, i, b: swap_dispositions(
+        c, "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE", finite))
+
+    # The rejection helper must not silently count an exception from the
+    # mutation helper itself as a mathematically relevant audit refusal.
+    def defective_setup(c, i, b):
+        raise AssertionError("intentional mutation setup error")
+    try:
+        reject(defective_setup)
+    except AssertionError as exc:
+        require(str(exc) == "intentional mutation setup error",
+                "the test harness masked a mutation setup failure")
+    else:
+        raise AssertionError("the test harness swallowed a mutation setup failure")
+    print("PB-007-01 post-v54 adversarial census: PASS "
+          "(14 negative controls; mutation setup errors propagate)")
 
 
 def main():
