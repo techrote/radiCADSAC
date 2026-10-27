@@ -66,6 +66,10 @@ def dominance_args(constant=Q(1), slope=Q(1, 10), osc=Q(1, 10), ident='v54-domin
 @contextmanager
 def no_search():
     """Disable every classifier/builder/selector; finite checking must not need them."""
+    # Each test is independently runnable: do not rely on prior fixtures having
+    # imported every historical owner module before their selectors are guarded.
+    for entry in m.STRICT_ADAPTERS.values():
+        __import__(entry['module'])
     with ExitStack() as stack:
         for name, module in list(sys.modules.items()):
             if not name.startswith('pb00701_') or module is None:
