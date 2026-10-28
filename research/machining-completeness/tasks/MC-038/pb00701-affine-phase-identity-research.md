@@ -1,0 +1,48 @@
+# MC-038 / PB-007-01 — affine-phase analytic identity branch (research candidate)
+
+**Status:** 28 October 2026. **Evidence class:** deterministic exact-arithmetic research, **unreviewed candidate**, not an accepted PB-007-01 certificate. **Parent:** [MC-038 / #100](https://github.com/techrote/radiCADSAC/issues/100). **Base:** `b261e6ecc1a4534430203bc4570c43d388c9ee1f`. **Scope lock:** `proof-registry` / `programme-registry` not modified; only isolated MC-038 research files and focused CI.
+
+## Why this investigation is distinct
+
+The accepted [post-v54 audit](pb00701-post-v54-frontier-audit.md) establishes 30 frozen cases with missing *ordered* premises and 20 historical route failures. It explicitly leaves the general analytic equality/identity/root-isolation theorem open. Historical V6 refuses a trigonometric-identity-zero numerator; historical V7 refuses stationary identity zero. This candidate addresses **only the identity-zero versus nonidentity question on the open interior of each exact original-source B-spline span**, using the unchanged V7 source-lowering primitives. It does **not** produce or order a root when the expression is not identically zero, decide one-sided knots, or change any historical V6–V54 route.
+
+## Source grammar, authority and falsifiers
+
+For the existing `RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE` grammar, exact per-channel B-spline lowering gives rational power-basis polynomials `C_h(s), S_h(s)` on an open knot-free source piece and an exact rational affine phase `alpha + beta*s`, with `s=(u-left)/(right-left)`, `left < right`. All channels share the original `source_parameter_id`; the sinusoidal `h=0` channel is forbidden. The physical scalar is
+
+`F(s) = C_0(s) + sum_{h>=1} [ C_h(s) cos(2*pi*h*(alpha+beta*s)) + S_h(s) sin(2*pi*h*(alpha+beta*s)) ]`.
+
+The source lowerer `pb00701_coupled_bspline_model.py` is pinned to Git blob `a086b625e1a6dea8bd202699d161167bb69cc9e7`. The checker never invokes its historical `analyze_coupled_bspline_event`, any subsequent classifier, proof-owner selection, V54 view generator, or native kernel. A `source_sha256` field identifies the exact supplied source *record*, not an equivalence class of mathematically identical encodings. Shared use of the historical lowerer is **not an independently proven source-codec refinement**.
+
+**Falsifiers:** a nonzero-rate expression that vanishes identically despite a nonzero rational Fourier polynomial; a stationary noncardinal phase where a rational cosine/sine cancellation is mishandled; phase aliasing across different harmonics; lost source parameter / affine reparametrization; suppressed genuine B-spline knot boundaries; a false real-algebraic equality due to floating-point evaluation; cap exhaustion classified as a mathematical truth; or `NOT_IDENTITY` interpreted as `NO_ROOTS`.
+
+## Lemma A — nonzero affine phase rate
+
+If `beta != 0`, then `F` vanishes identically on the open span **if and only if** every `C_h` and every `S_h` with `h>=1`, and `C_0`, are the zero rational polynomials. This includes any rational offset `alpha` and arbitrarily many *finite* distinct harmonics. Proof: rewrite each trigonometric term in the complex exponential basis. Its distinct frequencies are `0, +2*pi*i*h*beta, -2*pi*i*h*beta` for positive integer `h`. Exponential polynomials `P_j(s) exp(lambda_j*s)` with pairwise distinct complex `lambda_j` are linearly independent over complex polynomials. One direct proof applies to a hypothetical vanishing sum the differential operator `prod_{k != j}(D-lambda_k)^(deg(P_k)+1)`: every other term is annihilated; on the remaining polynomial factor each `(D+lambda_j-lambda_k)` is invertible on bounded-degree polynomials because its diagonal constant is nonzero. Thus `P_j=0`, all `j`. The two complex coefficients for each nonzero frequency are `(C_h - i S_h)*exp(+2*pi*i*h*alpha)/2` and `(C_h + i S_h)*exp(-2*pi*i*h*alpha)/2`; neither phase multiplier vanishes. Therefore `C_h=S_h=0` and also `C_0=0`. No root count or sign follows when `F` is nonidentical.
+
+## Lemma B — stationary rational phase
+
+If `beta = 0` and `alpha=p/q` is rational in lowest terms, `F` is a polynomial in `s` with coefficients in `Q(zeta_N)`, where `N=lcm(4,q)` and `zeta_N` is a primitive `N`th root of unity. Exact equality of all power-basis coefficients to zero is therefore decidable by reduction modulo the cyclotomic polynomial `Phi_N(X)` over the rationals. For a harmonic with `k=h*p*(N/q)`, encode
+
+- `cos(2*pi*h*alpha) = (zeta_N^k + zeta_N^(-k))/2`;
+- `sin(2*pi*h*alpha) = -(zeta_N^(k+N/4) - zeta_N^(-k+N/4))/2`.
+
+The second formula uses `1/i=-i` and `i=zeta_N^(N/4)`. Exact residues modulo the monic `Phi_N` give unique field representations using the standard irreducibility theorem for cyclotomic polynomials. The prototype constructs `Phi_N` by exact division of `X^d-1` by the previously constructed `Phi_e` for all proper divisors `e|d`, and uses only integer/rational arithmetic. **A resource cap `N<=256` is an experiment limit**: larger stationary phases produce `RESOURCE_REFUSAL`, not a nonzero/zero verdict. There is no claim of practical uniform complexity for unbounded `q`.
+
+## Knots, statuses and trust boundary
+
+For multiple source pieces, return a per-piece identity status with the actual source interval and affine phase; an all-piece identity verdict applies only to the *open interiors*. Do not identify distinct source knots, assume knot continuity, infer endpoint derivatives, or treat an identically zero span as a finite list of isolated zero events. A nonidentical analytic function **may still have one or many isolated roots or tangencies**. For example, `cos(pi*s)` has one open root on `(0,1)` yet is `NOT_IDENTITY`. Identity status has no implication for one-sided signs, multiplicities, body topology, journal replay, material subtraction, output reconstruction, or STEP.
+
+Executable probe (from repository root):
+
+```sh
+python3 research/machining-completeness/tasks/MC-038/verify_pb00701_affine_identity_frontier.py --contract --self-test
+```
+
+The fixed exact-arithmetic controls include zero and nonzero moving-phase sources, stationary quarter/eighth/third/sixth-turn identities and nonidentities, mixed cosine/sine cancellation, a genuine degree-zero discontinuous two-piece original source, typed semantic refusals, a phase-order resource refusal, and independently known `Phi_4/Phi_6/Phi_8/Phi_12` coefficients. These are **model tests**, not a frozen held-out original-source or independently checked V54 corpus qualification. A follow-on reviewer should challenge the source lowerer, cyclotomic irreducibility dependency, fixed controls, cap behavior, phase-sign conventions and any proposed promotion to source-authoritative certificates.
+
+## Explicit unresolved boundaries
+
+This does **not** discharge the general bounded polynomial-trigonometric/exponential zero problem, exact *nonidentity* root isolation, ordering/cross-chart sign transfer for V6–V18, V27/V41 nested child composition, V43 failed correlation certificates, original-source identity semantics at discontinuous knots, or topology/production obligations. It has no integration with V54 proof owners and does not alter the 121-case census, the 43-owner table, the 26-operation domain, historical negative evidence, MC-038 gate report/outcome, task graph, authority/production status, or source/provenance/journal/material/body/lineage/refusal semantics.
+
+**Required before landing:** focused exact-head checks, `mc1-static`, and a distinct read-only source/mathematics review. No merge from implementation-session self-review. **MC-B / MC-1 remain `NOT_ESTABLISHED`**, PB-007-01/02/03/04 remain open, and no native/paid/production/STEP work is authorized.
