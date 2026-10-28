@@ -5,6 +5,7 @@ from collections import Counter
 import copy
 import hashlib
 import json
+from fractions import Fraction
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
@@ -48,6 +49,44 @@ def inputs():
         require(git_blob(path) == digest, "frozen v54 Git blob identity drift: " + name)
         data.append(json.loads(path.read_text(encoding="utf-8")))
     return data
+
+
+def check_composite_tail(row):
+    """Validate the frozen tail0/tail100 source constructor from source bytes."""
+    spec = row["spec"]
+    lo, hi = Fraction(spec["parameter_lo"]), Fraction(spec["parameter_hi"])
+    require(hi > lo, "composite source interval is not positive")
+    mid = (lo + hi) / 2
+    tail100 = row["id"].endswith(":tail100")
+    if tail100:
+        require("0" in spec["cos_splines"],
+                "tail100 lacks harmonic-zero cosine ramp")
+    for trig, splines in (("cos", spec["cos_splines"]),
+                          ("sin", spec["sin_splines"])):
+        for harmonic, bs in splines.items():
+            degree = bs["degree"]
+            require(type(degree) is int and degree >= 0,
+                    "composite spline degree is invalid")
+            width = degree + 1
+            controls = [Fraction(value) for value in bs["controls"]]
+            knots = [Fraction(value) for value in bs["knots"]]
+            require(len(controls) == 2 * width,
+                    "composite spline does not contain exactly two full pieces")
+            require(knots == ([lo] * width + [mid] * width + [hi] * width),
+                    "composite spline is not fully clamped at the exact midpoint")
+            left, tail = controls[:width], controls[width:]
+            require(left[-1] == tail[0],
+                    "composite tail is not source-continuous at midpoint")
+            if tail100 and trig == "cos" and harmonic == "0":
+                require(degree > 0 and tail[-1] - tail[0] == 100,
+                        "tail100 harmonic-zero ramp does not end at join+100")
+                step = tail[1] - tail[0]
+                require(all(tail[index] - tail[index - 1] == step
+                            for index in range(1, len(tail))),
+                        "tail100 harmonic-zero Bernstein controls are not linear")
+            else:
+                require(all(value == tail[0] for value in tail),
+                        "tail0/nonzero-harmonic tail is not constant")
 
 
 def audit(corpus, inventory, boundary):
@@ -112,6 +151,7 @@ def audit(corpus, inventory, boundary):
             label = row["id"][len("composite:"):].rsplit(":", 1)[0]
             require(label == spans[0][0],
                     "composite case ID owner label differs from first observed owner")
+            check_composite_tail(row)
         for span in spans:
             require(isinstance(span, list) and len(span) == 3,
                     "malformed (owner,status,reason) observation")
@@ -272,6 +312,39 @@ def self_test(corpus, inventory, boundary):
         row["expected"]["id"] = row["id"]
     reject(relabel_composite_owner)
 
+    def break_tail100_ramp(c, i, b):
+        row = next(x for x in c["cases"]
+                   if x["kind"] == "COMPOSITE_TAIL" and
+                   x["id"].endswith(":tail100"))
+        c0 = row["spec"]["cos_splines"]["0"]
+        width = c0["degree"] + 1
+        c0["controls"][-1] = c0["controls"][width]
+    reject(break_tail100_ramp)
+
+    def break_constant_tail(c, i, b):
+        row = next(x for x in c["cases"]
+                   if x["kind"] == "COMPOSITE_TAIL" and
+                   any((trig != "cos" or h != "0")
+                       for trig, splines in (("cos", x["spec"]["cos_splines"]),
+                                             ("sin", x["spec"]["sin_splines"]))
+                       for h in splines))
+        for trig, splines in (("cos", row["spec"]["cos_splines"]),
+                              ("sin", row["spec"]["sin_splines"])):
+            for h, bs in splines.items():
+                if trig == "cos" and h == "0":
+                    continue
+                bs["controls"][-1] = "999"
+                return
+        raise AssertionError("no nonzero-harmonic composite tail")
+    reject(break_constant_tail)
+
+    def break_midpoint_clamp(c, i, b):
+        row = next(x for x in c["cases"] if x["kind"] == "COMPOSITE_TAIL")
+        bs = next(iter(row["spec"]["cos_splines"].values()))
+        width = bs["degree"] + 1
+        bs["knots"][width] = row["spec"]["parameter_lo"]
+    reject(break_midpoint_clamp)
+
     # The rejection helper must not silently count an exception from the
     # mutation helper itself as a mathematically relevant audit refusal.
     def defective_setup(c, i, b):
@@ -284,7 +357,7 @@ def self_test(corpus, inventory, boundary):
     else:
         raise AssertionError("the test harness swallowed a mutation setup failure")
     print("PB-007-01 post-v54 adversarial census: PASS "
-          "(17 negative controls; mutation setup errors propagate)")
+          "(20 negative controls; mutation setup errors propagate)")
 
 
 def main():
