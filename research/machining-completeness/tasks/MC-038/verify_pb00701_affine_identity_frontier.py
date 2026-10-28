@@ -14,10 +14,16 @@ from fractions import Fraction as Q
 from math import gcd
 from pathlib import Path
 import sys
+import tempfile
 
 HERE = Path(__file__).resolve().parent
 V7 = HERE / 'pb00701_coupled_bspline_model.py'
-V7_BLOB = 'a086b625e1a6dea8bd202699d161167bb69cc9e7'
+PINNED_SOURCE_BLOBS = {
+    'pb00701_coupled_bspline_model.py': 'a086b625e1a6dea8bd202699d161167bb69cc9e7',
+    'pb00701_rational_turn_model.py': 'a1316ff0f71b2d7aa80807843a74fd8280779cb2',
+    'pb00701_event_model.py': '104c0e7a459cd7da5025853b246faff244a5948e',
+    '../MC-032/event_engine.py': '789a709c5141479a343035d1b7055dd4e53534e1',
+}
 SCHEMA = 'radicadsac-pb00701-affine-identity-research/1.0'
 MAX_STATIONARY_CYCLOTOMIC_ORDER = 256
 
@@ -26,11 +32,29 @@ def git_blob(raw: bytes) -> str:
     return hashlib.sha1(b'blob ' + str(len(raw)).encode() + b'\0' + raw).hexdigest()
 
 
+def verify_pinned_sources(*, root=HERE):
+    """Fail closed on any historical source/transitive rational-parser drift."""
+    for relative, expected in PINNED_SOURCE_BLOBS.items():
+        if git_blob((root / relative).read_bytes()) != expected:
+            raise ValueError(f'historical source dependency blob mismatch: {relative}')
+    return True
+
+
 def original_lowerer():
-    if git_blob(V7.read_bytes()) != V7_BLOB:
-        raise ValueError('historical V7 original-source lowering drifted')
+    verify_pinned_sources()
     sys.path.insert(0, str(HERE))
     import pb00701_coupled_bspline_model as v7
+    # Reject a preloaded same-named module from a different source path.
+    modules = (
+        (v7, 'pb00701_coupled_bspline_model.py'),
+        (v7.v6, 'pb00701_rational_turn_model.py'),
+        (v7.v6.base, 'pb00701_event_model.py'),
+        (v7.v6.base.EE, '../MC-032/event_engine.py'),
+    )
+    for module, relative in modules:
+        if Path(module.__file__).resolve() != (HERE / relative).resolve():
+            raise ValueError(f'historical source dependency import mismatch: {relative}')
+    verify_pinned_sources()
     return v7
 
 
@@ -227,6 +251,20 @@ def self_test():
     expect(fixture(cos={'1': one}, offset='1/6', rate='0'), 'NOT_IDENTITY_ON_SOME_OPEN_SPAN')
     expect(fixture(sin={'1': one}, offset='1/4', rate='0'), 'NOT_IDENTITY_ON_SOME_OPEN_SPAN')
     expect(fixture(sin={'1': one}, offset='1/2', rate='0'), 'IDENTITY_ZERO_ON_ALL_OPEN_SPANS')
+    # At 1/12 turn, sin(theta) == cos(2*theta) == 1/2 exactly.
+    # Moving the same source destroys the stationary cross-harmonic identity.
+    expect(fixture(cos={'2': spline(-1)}, sin={'1': one},
+                   offset='1/12', rate='0'), 'IDENTITY_ZERO_ON_ALL_OPEN_SPANS')
+    expect(fixture(cos={'2': spline(-1)}, sin={'1': one},
+                   offset='1/12', rate='1/7'), 'NOT_IDENTITY_ON_SOME_OPEN_SPAN')
+    # Exact affine reparametrization under a negative global phase slope.
+    reversed_phase = expect(fixture(cos={'1': spline(1, 2, knots=[2, 2, 4, 4])},
+                                    lo='2', hi='4', offset='1/6', rate='-1/3'),
+                            'NOT_IDENTITY_ON_SOME_OPEN_SPAN')
+    assert reversed_phase['spans'][0]['phase_turn_offset'] == '-1/2'
+    assert reversed_phase['spans'][0]['phase_turn_rate'] == '-2/3'
+    expect(fixture(cos={'1': zero}, offset='1/12', rate='-5/7'),
+           'IDENTITY_ZERO_ON_ALL_OPEN_SPANS')
     cap = expect(fixture(cos={'0': one}, offset='1/257', rate='0'), 'RESOURCE_REFUSAL')
     assert cap['is_truth_value'] is False
     expect(fixture(cos={'0': one}, offset='1/257', rate='1/9'), 'NOT_IDENTITY_ON_SOME_OPEN_SPAN')
@@ -246,6 +284,26 @@ def self_test():
     assert cyclotomic(6) == [1, -1, 1]
     assert cyclotomic(8) == [1, 0, 0, 0, 1]
     assert cyclotomic(12) == [1, 0, -1, 0, 1]
+    # Isolated scratch-copy mutation controls: historical source remains immutable.
+    with tempfile.TemporaryDirectory(prefix='pb00701-affine-pin-') as scratch:
+        copied_root = Path(scratch) / 'MC-038'
+        for relative in PINNED_SOURCE_BLOBS:
+            target = copied_root / relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes((HERE / relative).read_bytes())
+        assert verify_pinned_sources(root=copied_root)
+        for relative in PINNED_SOURCE_BLOBS:
+            target = copied_root / relative
+            pristine = target.read_bytes()
+            target.write_bytes(pristine + b'\n# adversarial dependency drift\n')
+            try:
+                verify_pinned_sources(root=copied_root)
+            except ValueError as exc:
+                assert 'blob mismatch' in str(exc), (relative, str(exc))
+            else:
+                raise AssertionError(f'dependency drift not refused: {relative}')
+            target.write_bytes(pristine)
+        assert verify_pinned_sources(root=copied_root)
     # Simulate arithmetic limits without substituting refusal for mathematical truth.
     class ExhaustingLowerer:
         def __init__(self, error):
@@ -257,7 +315,7 @@ def self_test():
         assert refused['status'] == 'RESOURCE_REFUSAL', refused
         assert refused['exception_type'] == error.__name__
         assert refused['is_truth_value'] is False
-    print('PASS: 16 exact original-source statuses + 4 cyclotomic + 3 resource-refusal controls')
+    print('PASS: 20 exact original-source statuses + 4 cyclotomic + 3 resource-refusal + 4 dependency-drift controls')
 
 
 def main():
@@ -267,7 +325,7 @@ def main():
     args = parser.parse_args()
     if args.contract:
         original_lowerer()
-        print('PASS: pinned exact V7 original-source lowerer; no route selection invoked')
+        print('PASS: pinned four-module original-source/parser chain; no route selection invoked')
     if args.self_test:
         self_test()
     if not args.contract and not args.self_test:

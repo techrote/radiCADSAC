@@ -12,7 +12,18 @@ For the existing `RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE` grammar, exact p
 
 `F(s) = C_0(s) + sum_{h>=1} [ C_h(s) cos(2*pi*h*(alpha+beta*s)) + S_h(s) sin(2*pi*h*(alpha+beta*s)) ]`.
 
-The source lowerer `pb00701_coupled_bspline_model.py` is pinned to Git blob `a086b625e1a6dea8bd202699d161167bb69cc9e7`. The checker never invokes its historical `analyze_coupled_bspline_event`, any subsequent classifier, proof-owner selection, V54 view generator, or native kernel. A `source_sha256` field identifies the exact supplied source *record*, not an equivalence class of mathematically identical encodings. Shared use of the historical lowerer is **not an independently proven source-codec refinement**.
+The historical V7 source lowerer and its transitive exact-rational parser/loading chain are pinned to the following Git blobs, verified **before and after import** and checked against imported module source paths:
+
+| Historical source file | Expected Git blob |
+|---|---|
+| `MC-038/pb00701_coupled_bspline_model.py` | `a086b625e1a6dea8bd202699d161167bb69cc9e7` |
+| `MC-038/pb00701_rational_turn_model.py` | `a1316ff0f71b2d7aa80807843a74fd8280779cb2` |
+| `MC-038/pb00701_event_model.py` | `104c0e7a459cd7da5025853b246faff244a5948e` |
+| `MC-032/event_engine.py` | `789a709c5141479a343035d1b7055dd4e53534e1` |
+
+Four scratch-copy corruption controls independently mutate each listed file and require fail-closed refusal. Original source files and frozen v54 evidence are read-only. This closes the transitive **file/blob identity** gap noted in the separate [PR #280 review](https://github.com/techrote/radiCADSAC/pull/280#pullrequestreview-5679799680) for a normal fresh CLI process; it does **not** constitute arbitrary Python runtime attestation (e.g. malicious monkeypatching or bytecode cache poisoning), independent source-codec equivalence, or a source-authoritative held-out qualification.
+
+The checker never invokes V7's `analyze_coupled_bspline_event`, any subsequent classifier, proof-owner selection, V54 view generator, or native kernel. A `source_sha256` field identifies the exact supplied source *record*, not an equivalence class of mathematically identical encodings. Shared use of the historical lowerer is **not an independently proven source-codec refinement**.
 
 **Falsifiers:** a nonzero-rate expression that vanishes identically despite a nonzero rational Fourier polynomial; a stationary noncardinal phase where a rational cosine/sine cancellation is mishandled; phase aliasing across different harmonics; lost source parameter / affine reparametrization; suppressed genuine B-spline knot boundaries; a false real-algebraic equality due to floating-point evaluation; cap exhaustion classified as a mathematical truth; or `NOT_IDENTITY` interpreted as `NO_ROOTS`.
 
@@ -39,7 +50,7 @@ Executable probe (from repository root):
 python3 research/machining-completeness/tasks/MC-038/verify_pb00701_affine_identity_frontier.py --contract --self-test
 ```
 
-The fixed exact-arithmetic controls include zero and nonzero moving-phase sources, stationary quarter/eighth/third/sixth-turn identities and nonidentities, mixed cosine/sine cancellation, a genuine degree-zero discontinuous two-piece original source, typed semantic refusals, a phase-order resource refusal, and independently known `Phi_4/Phi_6/Phi_8/Phi_12` coefficients. These are **model tests**, not a frozen held-out original-source or independently checked V54 corpus qualification. A follow-on reviewer should challenge the source lowerer, cyclotomic irreducibility dependency, fixed controls, cap behavior, phase-sign conventions and any proposed promotion to source-authoritative certificates.
+The fixed exact-arithmetic controls include zero and nonzero moving-phase sources, stationary quarter/eighth/third/sixth/twelfth-turn identities and nonidentities, a twelfth-turn cross-harmonic sine/cosine cancellation and its moving-phase counterexample, negative affine phase rate with an independently asserted non-unit source-coordinate transform, a genuine degree-zero discontinuous two-piece original source, typed semantic refusals, a phase-order resource refusal, four isolated dependency-drift refusals, and independently known `Phi_4/Phi_6/Phi_8/Phi_12` coefficients. These are **model tests**, not a frozen held-out original-source or independently checked V54 corpus qualification. A follow-on reviewer should challenge the source lowerer, cyclotomic irreducibility dependency, fixed controls, cap behavior, phase-sign conventions and any proposed promotion to source-authoritative certificates.
 
 ## Explicit unresolved boundaries
 
