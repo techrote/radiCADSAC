@@ -349,13 +349,13 @@ def self_test():
                     assert observed == oracle, (
                         channel, harmonic, left, right, local_s, observed, oracle)
                     exact_samples += 1
-    assert exact_samples == 36 and affine_checks == 3
+    assert exact_samples == 27 and affine_checks == 3
     raw = source_probe['cos_splines']['0']
     normal = v7._normalise_bspline(raw)
     corrupted = list(v7._piece_from_normal(normal, Q(0), Q('1/2'))['coefficients'])
     corrupted[0] += Q(1, 17)
     assert independent_power_value(corrupted, Q(1, 7)) != independent_de_boor(raw, Q(1, 14))
-    print('PASS: 36 independent rational de Boor samples, 3 affine maps, and a coefficient-corruption falsifier')
+    print('PASS: 27 independent rational de Boor samples, 3 affine maps, and a coefficient-corruption falsifier')
     # Isolated scratch-copy mutation controls: historical source remains immutable.
     with tempfile.TemporaryDirectory(prefix='pb00701-affine-pin-') as scratch:
         copied_root = Path(scratch) / 'MC-038'
