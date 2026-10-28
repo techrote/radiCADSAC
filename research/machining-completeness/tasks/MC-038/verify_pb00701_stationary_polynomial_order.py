@@ -536,6 +536,13 @@ def validate_polynomial_view(candidate, poly, *, source_left=Q(0), source_right=
     require(candidate["left_endpoint"]["multiplicity"] == left_mult and
             candidate["right_endpoint"]["multiplicity"] == right_mult,
             "endpoint multiplicity mismatch")
+    expected_left_relation = (
+        "ZERO" if left_mult else sign_name(EE.peval(poly, Q(0))))
+    expected_right_relation = (
+        "ZERO" if right_mult else sign_name(EE.peval(poly, Q(1))))
+    require(candidate["left_endpoint"]["relation"] == expected_left_relation and
+            candidate["right_endpoint"]["relation"] == expected_right_relation,
+            "endpoint relation mismatch")
     require(candidate["left_endpoint"]["inward_sign"] ==
             one_sided_rational_sign(poly, Q(0), "right"),
             "left inward sign mismatch")
@@ -543,11 +550,22 @@ def validate_polynomial_view(candidate, poly, *, source_left=Q(0), source_right=
             one_sided_rational_sign(poly, Q(1), "left"),
             "right inward sign mismatch")
     summary = candidate.get("summary", {})
+    expected_multiple = sum(root["multiplicity"] > 1 for root in roots)
+    expected_crossings = sum(root["multiplicity"] % 2 == 1 for root in roots)
+    expected_tangencies = sum(root["multiplicity"] % 2 == 0 for root in roots)
     require(summary.get("distinct_roots_open") == expected_count,
             "summary root count mismatch")
-    require(summary.get("multiple_roots_open") ==
-            sum(root["multiplicity"] > 1 for root in roots),
+    require(summary.get("multiple_roots_open") == expected_multiple,
             "summary multiple-root count mismatch")
+    require(summary.get("crossings_open") == expected_crossings and
+            summary.get("tangencies_open") == expected_tangencies,
+            "summary crossing/tangency count mismatch")
+    require(summary.get("left_endpoint_root") is bool(left_mult) and
+            summary.get("right_endpoint_root") is bool(right_mult),
+            "summary endpoint-root flags mismatch")
+    require(summary.get("total_distinct_roots_closed") ==
+            expected_count + int(bool(left_mult)) + int(bool(right_mult)),
+            "summary closed-root count mismatch")
     require(candidate.get("identity_zero_claimed") is False and
             candidate.get("general_nonstationary_solver_claimed") is False,
             "candidate broadened the research claim")
@@ -645,11 +663,24 @@ def validate_source_candidate(candidate, spec):
         validate_polynomial_view(
             item["ordered_view"], span["polynomial"],
             source_left=left, source_right=right)
-    require(candidate.get("stationary_span_count") == len(views),
+    expected_stationary = {
+        index for index, span in enumerate(reconstructed)
+        if span.get("owner") == OWNER
+    }
+    require(seen == expected_stationary,
+            "candidate omitted or invented a stationary-polynomial span")
+    require(candidate.get("historical_span_count") == len(reconstructed),
+            "historical span count mismatch")
+    require(candidate.get("stationary_span_count") == len(expected_stationary),
             "stationary span count mismatch")
     require(candidate.get("all_historical_spans_stationary") ==
-            (candidate.get("historical_span_count") == len(views)),
+            (len(expected_stationary) == len(reconstructed)),
             "all-spans scope flag mismatch")
+    require(candidate.get("source_parameter_id") == spec.get("source_parameter_id"),
+            "source parameter identity changed")
+    require(candidate.get("scope") ==
+            "ORDERED_ROOTS_FOR_ACTUAL_NONIDENTITY_STATIONARY_CARDINAL_POLYNOMIAL_OWNER_ONLY",
+            "candidate scope changed")
     require(candidate.get("mc_b_or_native_claimed") is False,
             "candidate promoted programme/native capability")
     return True
@@ -726,6 +757,25 @@ def frozen_corpus_controls():
             pass
         else:
             raise AssertionError("forged ordered-view source affine map was accepted")
+        if len(candidate["views"]) > 1:
+            forged = copy.deepcopy(candidate)
+            forged["views"].pop()
+            forged["stationary_span_count"] -= 1
+            forged["all_historical_spans_stationary"] = False
+            try:
+                validate_source_candidate(forged, row["spec"])
+            except ValueError:
+                pass
+            else:
+                raise AssertionError("omitted stationary span was accepted")
+        forged = copy.deepcopy(candidate)
+        forged["source_parameter_id"] = "forged-source-id"
+        try:
+            validate_source_candidate(forged, row["spec"])
+        except ValueError:
+            pass
+        else:
+            raise AssertionError("forged source parameter identity was accepted")
         require(candidate["all_historical_spans_stationary"] is True,
                 f"frozen stationary case has an unexpected nonstationary owner: {row['id']}")
         expected_spans = row["expected"]["observed"]["spans"]
@@ -754,6 +804,9 @@ def mutation_controls():
         lambda c: c.__setitem__("source_affine_map", ["9", "10"]),
         lambda c: c["sign_cells"][0].__setitem__("right_boundary", {"kind": "RIGHT_ENDPOINT"}),
         lambda c: c["sign_cells"][0].__setitem__("complete_open_cell", False),
+        lambda c: c["left_endpoint"].__setitem__("relation", "POSITIVE"),
+        lambda c: c["summary"].__setitem__("crossings_open", 99),
+        lambda c: c["summary"].__setitem__("total_distinct_roots_closed", 99),
     ):
         candidate = copy.deepcopy(base)
         mutate(candidate)

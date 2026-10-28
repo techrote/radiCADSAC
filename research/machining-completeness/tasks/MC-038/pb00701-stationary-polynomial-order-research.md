@@ -38,7 +38,7 @@ For checking, the source is re-lowered without invoking the historical selecting
 - every active harmonic is cardinal at the stationary rational phase;
 - the resulting physical polynomial is nonzero.
 
-The builder may call the historical V7 route to retain the exact owner witness. The checker compares that supplied witness against an independently re-lowered stationary polynomial summary, requires the source interval and affine map to match the original source piece, validates every rational/algebraic root's source-coordinate mapping, and validates complete sign cells against the exact root/endpoint sequence.
+The builder may call the historical V7 route to retain the exact owner witness. The checker compares that supplied witness against an independently re-lowered stationary polynomial summary, requires the source parameter, source interval and affine map to match the original source piece, validates every rational/algebraic root's source-coordinate mapping, validates complete sign cells against the exact root/endpoint sequence, and proves that the submitted view set contains **exactly every** reconstructed stationary-polynomial span rather than merely validating whichever spans the candidate supplied.
 
 Identity-zero stationary spans remain a different continuum-zero semantic case. Stationary noncardinal sources and preceding dominance-owned spans remain outside this candidate.
 
@@ -64,7 +64,7 @@ The executable checks:
 - two very close rational roots and typed resource refusal under an intentionally exhausted bisection budget;
 - a nonzero constant polynomial;
 - identity-zero refusal;
-- wrong multiplicity, wrong event parity, wrong sign cell, omitted/reversed roots, forged source intervals/affine maps and corrupted exact cell-boundary references;
+- wrong multiplicity, endpoint relation, summary parity/counts, wrong sign cell, omitted/reversed roots, omitted stationary spans, forged source parameter/interval/affine-map identities and corrupted exact cell-boundary references;
 - preceding amplitude-dominance ownership, stationary identity-zero and stationary noncardinal boundaries;
 - all three pinned frozen stationary-owner cases.
 
