@@ -311,6 +311,57 @@ def self_test():
     expect(altered, 'SEMANTIC_BLOCKER')
     altered = fixture(cos={'0': one}, sin={'0': one})
     expect(altered, 'SEMANTIC_BLOCKER')
+    # A prime-5 rational stationary phase has a nonquadratic field relation:
+    # 1 + 2*cos(2*pi/5) + 2*cos(4*pi/5) == 0. This is NOT a
+    # componentwise-zero expression; the same polynomials with moving phase
+    # are linearly independent exponential polynomials.
+    fifth = fixture(cos={'0': spline(1), '1': spline(2), '2': spline(2)},
+                    offset='1/5', rate='0')
+    fifth_result = expect(fifth, 'IDENTITY_ZERO_ON_ALL_OPEN_SPANS')
+    assert fifth_result['spans'][0]['cyclotomic_order'] == 20
+    expect(dict(fifth, phase_turn_rate='1/9'), 'NOT_IDENTITY_ON_SOME_OPEN_SPAN')
+    # For prime 7, the sum of all six nontrivial seventh roots is -1,
+    # giving 1 + 2*sum_{h=1..3} cos(2*pi*h/7) == 0.
+    seventh = fixture(cos={'0': spline(1), '1': spline(2), '2': spline(2),
+                           '3': spline(2)}, offset='1/7', rate='0')
+    seventh_result = expect(seventh, 'IDENTITY_ZERO_ON_ALL_OPEN_SPANS')
+    assert seventh_result['spans'][0]['cyclotomic_order'] == 28
+    # Stationary phase aliases harmonics separated by five, but this alias
+    # is not a moving-phase identity. Preserve both original owner channels.
+    harmonic_alias = fixture(cos={'1': spline(1, 2), '6': spline(-1, -2)},
+                             offset='1/5', rate='0')
+    expect(harmonic_alias, 'IDENTITY_ZERO_ON_ALL_OPEN_SPANS')
+    expect(dict(harmonic_alias, phase_turn_rate='1/9'),
+           'NOT_IDENTITY_ON_SOME_OPEN_SPAN')
+    # Distinct degree/knot encodings describe the same affine amplitude
+    # 1+u versus -(1+u), so cos(pi/4)==sin(pi/4) cancels across both
+    # original knot-free spans. No knot may disappear through lowering.
+    affine_cancel = fixture(
+        cos={'1': spline(1, 2, 3, degree=2, knots=[0, 0, 0, 2, 2, 2])},
+        sin={'1': spline(-1, -2, -3, degree=1, knots=[0, 0, 1, 2, 2])},
+        lo='0', hi='2', offset='1/8', rate='0')
+    cancelled = expect(affine_cancel, 'IDENTITY_ZERO_ON_ALL_OPEN_SPANS')
+    assert [p['source_interval'] for p in cancelled['spans']] == [
+        ['0', '1'], ['1', '2']]
+    expect(dict(affine_cancel, phase_turn_rate='1/8'),
+           'NOT_IDENTITY_ON_SOME_OPEN_SPAN')
+    perturbed = fixture(
+        cos=affine_cancel['cos_splines'],
+        sin={'1': spline(-1, '-7/3', -3, degree=1,
+                         knots=[0, 0, 1, 2, 2])},
+        lo='0', hi='2', offset='1/8', rate='0')
+    expect(perturbed, 'NOT_IDENTITY_ON_SOME_OPEN_SPAN')
+    # A nonidentical analytic expression can still have an isolated
+    # interior root: cos(pi*u) vanishes at u=1/2.
+    rooted_nonidentity = expect(
+        fixture(cos={'1': one}, offset='0', rate='1/2'),
+        'NOT_IDENTITY_ON_SOME_OPEN_SPAN')
+    assert rooted_nonidentity['event_root_count_claimed'] is False
+    # A cap exactly below an admissible stationary cyclotomic order is
+    # typed nontruth refusal, not proof of zero or nonzero.
+    seventh_cap = expect(seventh, 'RESOURCE_REFUSAL', max_order=27)
+    assert seventh_cap['is_truth_value'] is False
+    print('PASS: prime-5/7 cyclotomic identities, harmonic alias, mixed-degree source cancellation, nonidentity root and typed cap falsifiers')
     # Known cyclotomic minimal polynomials independently checked against definitions.
     assert cyclotomic(4) == [1, 0, 1]
     assert cyclotomic(6) == [1, -1, 1]
@@ -387,7 +438,7 @@ def self_test():
         assert refused['status'] == 'RESOURCE_REFUSAL', refused
         assert refused['exception_type'] == error.__name__
         assert refused['is_truth_value'] is False
-    print('PASS: 20 exact original-source statuses + 4 cyclotomic + 3 resource-refusal + 4 dependency-drift controls')
+    print('PASS: 30 original-source status controls + 4 cyclotomic + 3 synthetic exhaustion + 4 dependency-drift controls')
 
 
 def main():
