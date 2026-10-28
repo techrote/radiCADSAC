@@ -69,6 +69,10 @@ def audit(corpus, inventory, boundary):
     summary = corpus["summary"]
     require(len(cases) == summary["cases"] == 121, "frozen corpus size mismatch")
     require(len(set(row["id"] for row in cases)) == 121, "duplicate source IDs")
+    canonical_sources = [json.dumps(row["spec"], sort_keys=True, separators=(",", ":"))
+                         for row in cases]
+    require(len(set(canonical_sources)) == 121,
+            "distinct case IDs do not bind distinct original source specifications")
     dispositions = Counter()
     provenance = Counter()
     failures = Counter()
@@ -85,6 +89,10 @@ def audit(corpus, inventory, boundary):
         require(row["id"].startswith(prefix) and
                 isinstance(row["origin"], str) and bool(row["origin"]),
                 "source case ID contradicts observed provenance")
+        if row["kind"] == "HARVESTED":
+            require(row["id"].startswith("harvested:" + row["origin"] + ":") and
+                    len(row["id"].rsplit(":", 1)[-1]) > 0,
+                    "harvested case ID is not bound to its producing verifier origin")
         source = row["spec"]
         require(isinstance(source, dict) and
                 source.get("grammar") == "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE" and
@@ -98,6 +106,12 @@ def audit(corpus, inventory, boundary):
         spans = row["expected"]["observed"]["spans"]
         require(isinstance(spans, list) and bool(spans), "missing observed source spans")
         owners_here, blocked_here = set(), []
+        if row["kind"] == "COMPOSITE_TAIL":
+            require(row["id"].endswith(":tail0") or row["id"].endswith(":tail100"),
+                    "composite case ID has unknown tail constructor")
+            label = row["id"][len("composite:"):].rsplit(":", 1)[0]
+            require(label == spans[0][0],
+                    "composite case ID owner label differs from first observed owner")
         for span in spans:
             require(isinstance(span, list) and len(span) == 3,
                     "malformed (owner,status,reason) observation")
@@ -246,6 +260,18 @@ def self_test(corpus, inventory, boundary):
     reject(lambda c, i, b: swap_dispositions(
         c, "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE", finite))
 
+    # Aggregate-neutral source-provenance corruption controls.
+    def duplicate_source_spec(c, i, b):
+        c["cases"][1]["spec"] = copy.deepcopy(c["cases"][0]["spec"])
+    reject(duplicate_source_spec)
+    reject(lambda c, i, b: c["cases"][0].update(origin="FORGED_ORIGIN"))
+    def relabel_composite_owner(c, i, b):
+        row = next(x for x in c["cases"] if x["kind"] == "COMPOSITE_TAIL")
+        suffix = row["id"].rsplit(":", 1)[-1]
+        row["id"] = "composite:FORGED_OWNER:" + suffix
+        row["expected"]["id"] = row["id"]
+    reject(relabel_composite_owner)
+
     # The rejection helper must not silently count an exception from the
     # mutation helper itself as a mathematically relevant audit refusal.
     def defective_setup(c, i, b):
@@ -258,7 +284,7 @@ def self_test(corpus, inventory, boundary):
     else:
         raise AssertionError("the test harness swallowed a mutation setup failure")
     print("PB-007-01 post-v54 adversarial census: PASS "
-          "(14 negative controls; mutation setup errors propagate)")
+          "(17 negative controls; mutation setup errors propagate)")
 
 
 def main():
