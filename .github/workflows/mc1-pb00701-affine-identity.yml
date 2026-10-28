@@ -1,10 +1,24 @@
 name: mc1-pb00701-affine-identity
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_affine_identity_frontier.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-affine-phase-identity-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_rational_turn_model.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_event_model.py'
+      - 'research/machining-completeness/tasks/MC-032/event_engine.py'
+      - '.github/workflows/mc1-pb00701-affine-identity.yml'
   pull_request:
     paths:
       - 'research/machining-completeness/tasks/MC-038/verify_pb00701_affine_identity_frontier.py'
       - 'research/machining-completeness/tasks/MC-038/pb00701-affine-phase-identity-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_rational_turn_model.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_event_model.py'
+      - 'research/machining-completeness/tasks/MC-032/event_engine.py'
       - '.github/workflows/mc1-pb00701-affine-identity.yml'
 permissions:
   contents: read

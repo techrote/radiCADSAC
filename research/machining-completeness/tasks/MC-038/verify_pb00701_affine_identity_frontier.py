@@ -212,8 +212,12 @@ def independent_stationary_trace_zero(cos_polys, sin_polys, offset):
     polynomials, polynomial division, residue reduction or V7 lowering.
     This checks finite stationarity arithmetic, not a source codec.
     """
-    order = offset.denominator * 4 // gcd(offset.denominator, 4)
-    quarter = order // 4
+    # Deliberately use the generally non-minimal 4q-th root field rather than
+    # the candidate's N=lcm(4,q). This removes the candidate's order/embedding
+    # choice from the differential oracle while preserving exact equality.
+    q_denominator = offset.denominator
+    order = 4 * q_denominator
+    quarter = q_denominator
 
     def mobius(value):
         remaining = value
@@ -247,12 +251,12 @@ def independent_stationary_trace_zero(cos_polys, sin_polys, offset):
 
         for harmonic, poly in cos_polys.items():
             if power < len(poly):
-                exponent = harmonic * offset.numerator * (order // offset.denominator)
+                exponent = 4 * harmonic * offset.numerator
                 add(exponent, Q(poly[power]) / 2)
                 add(-exponent, Q(poly[power]) / 2)
         for harmonic, poly in sin_polys.items():
             if power < len(poly):
-                exponent = harmonic * offset.numerator * (order // offset.denominator)
+                exponent = 4 * harmonic * offset.numerator
                 add(exponent + quarter, -Q(poly[power]) / 2)
                 add(-exponent + quarter, Q(poly[power]) / 2)
         trace_norm = sum(left * right * ramanujan(k - ell)
@@ -559,10 +563,17 @@ def self_test():
     assert not independent_stationary_trace_zero(
         {2: [Q(1)]}, {1: [Q(1)]}, Q(1, 12))
     stationary_comparisons = 0
+    constructed_nontrivial_identities = 0
     for denominator in range(1, 33):
         for numerator in (-2, -1, 0, 1, 2, 3):
             alpha = Q(numerator, denominator)
             period = alpha.denominator
+            # Genuine cyclotomic identity for every reduced denominator q>1:
+            # sum_{h=0}^{q-1} cos(2*pi*h*p/q) = 0.
+            constructed_identity = (
+                {harmonic: [Q(1)] for harmonic in range(period)}
+                if period > 1 else {0: [Q(0)]}
+            )
             families = (
                 ({0: [Q(2), Q(1)], 1: [Q(-3), Q(1), Q(2)], 3: [Q(1)]},
                  {2: [Q(5), Q(-1)], 7: [Q(2)]}),
@@ -570,8 +581,9 @@ def self_test():
                  {2: [Q(3), Q(-1)], 2 + period: [Q(-3), Q(1)]}),
                 ({0: [Q(0)], 2: [Q(1)]}, {1: [Q(1)]}),
                 ({1: [Q(0)]}, {}),
+                (constructed_identity, {}),
             )
-            for cos_polys, sin_polys in families:
+            for family_index, (cos_polys, sin_polys) in enumerate(families):
                 candidate, order = stationary_identity(
                     cos_polys, sin_polys, alpha,
                     MAX_STATIONARY_CYCLOTOMIC_ORDER)
@@ -581,8 +593,12 @@ def self_test():
                     alpha, cos_polys, sin_polys, candidate, independent)
                 assert order <= MAX_STATIONARY_CYCLOTOMIC_ORDER
                 stationary_comparisons += 1
-    assert stationary_comparisons == 768
-    print('PASS: 768 exact stationary differential checks against independent Ramanujan trace-norm oracle')
+                if family_index == 4 and period > 1:
+                    assert candidate is True and independent is True
+                    constructed_nontrivial_identities += 1
+    assert stationary_comparisons == 960
+    assert constructed_nontrivial_identities == 152
+    print('PASS: 960 exact stationary differential checks against independent 4q Ramanujan trace-norm oracle; 152 constructed nontrivial root-of-unity identities')
     # Independent source-space oracle: nonconstant degree 3/2/1 controls,
     # nonuniform knots, a repeated interior knot, and merged channel cuts.
     # The reference evaluates raw source control points by exact de Boor,
