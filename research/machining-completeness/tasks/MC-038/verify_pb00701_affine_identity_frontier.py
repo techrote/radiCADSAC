@@ -202,6 +202,68 @@ def stationary_identity(cos_polys, sin_polys, offset, max_order):
     return not any(any(v for v in row) for row in accum), n
 
 
+def independent_stationary_trace_zero(cos_polys, sin_polys, offset):
+    """Test-only independent exact algebraic oracle via cyclotomic trace norm.
+
+    For E=sum_k a_k*zeta_N**k with rational a_k, E=0 iff
+    Tr(E*conjugate(E))=sum_{k,l} a_k*a_l*c_N(k-l) vanishes.
+    Every Galois conjugate contributes a nonnegative squared magnitude.
+    Ramanujan sums c_N use the divisor/Mobius formula, not cyclotomic
+    polynomials, polynomial division, residue reduction or V7 lowering.
+    This checks finite stationarity arithmetic, not a source codec.
+    """
+    order = offset.denominator * 4 // gcd(offset.denominator, 4)
+    quarter = order // 4
+
+    def mobius(value):
+        remaining = value
+        distinct = 0
+        factor = 2
+        while factor * factor <= remaining:
+            if remaining % factor == 0:
+                remaining //= factor
+                if remaining % factor == 0:
+                    return 0
+                distinct += 1
+            factor += 1
+        if remaining > 1:
+            distinct += 1
+        return -1 if distinct % 2 else 1
+
+    def ramanujan(exponent):
+        common = gcd(order, exponent)
+        return sum(divisor * mobius(order // divisor)
+                   for divisor in range(1, common + 1)
+                   if common % divisor == 0)
+
+    degree_count = max(len(poly) for poly in
+                       list(cos_polys.values()) + list(sin_polys.values()))
+    for power in range(degree_count):
+        terms = {}
+
+        def add(exponent, coefficient):
+            residue = exponent % order
+            terms[residue] = terms.get(residue, Q(0)) + coefficient
+
+        for harmonic, poly in cos_polys.items():
+            if power < len(poly):
+                exponent = harmonic * offset.numerator * (order // offset.denominator)
+                add(exponent, Q(poly[power]) / 2)
+                add(-exponent, Q(poly[power]) / 2)
+        for harmonic, poly in sin_polys.items():
+            if power < len(poly):
+                exponent = harmonic * offset.numerator * (order // offset.denominator)
+                add(exponent + quarter, -Q(poly[power]) / 2)
+                add(-exponent + quarter, Q(poly[power]) / 2)
+        trace_norm = sum(left * right * ramanujan(k - ell)
+                         for k, left in terms.items()
+                         for ell, right in terms.items())
+        assert trace_norm >= 0, ('negative exact trace norm', trace_norm)
+        if trace_norm:
+            return False
+    return True
+
+
 def independent_de_boor(raw_spline, u):
     """Test-only exact de Boor value; no V7 normalization/basis/codec helpers.
 
@@ -483,6 +545,44 @@ def self_test():
     assert cyclotomic(6) == [1, -1, 1]
     assert cyclotomic(8) == [1, 0, 0, 0, 1]
     assert cyclotomic(12) == [1, 0, -1, 0, 1]
+    # Independent stationary exact-algebraic oracle: Ramanujan trace norm,
+    # not the candidate cyclotomic polynomial division/residue algorithm.
+    # 32 rational denominators x 6 signed numerators x 4 polynomial families.
+    # Includes forced stationary aliases, mixed cosine/sine, identically
+    # zero polynomial channels and nonzero polynomial coefficients.
+    assert independent_stationary_trace_zero(
+        {0: [Q(1)], 1: [Q(2)], 2: [Q(2)]}, {}, Q(1, 5))
+    assert independent_stationary_trace_zero(
+        {0: [Q(1)], 1: [Q(2)], 2: [Q(2)], 3: [Q(2)]}, {}, Q(1, 7))
+    assert independent_stationary_trace_zero(
+        {2: [Q(-1)]}, {1: [Q(1)]}, Q(1, 12))
+    assert not independent_stationary_trace_zero(
+        {2: [Q(1)]}, {1: [Q(1)]}, Q(1, 12))
+    stationary_comparisons = 0
+    for denominator in range(1, 33):
+        for numerator in (-2, -1, 0, 1, 2, 3):
+            alpha = Q(numerator, denominator)
+            period = alpha.denominator
+            families = (
+                ({0: [Q(2), Q(1)], 1: [Q(-3), Q(1), Q(2)], 3: [Q(1)]},
+                 {2: [Q(5), Q(-1)], 7: [Q(2)]}),
+                ({1: [Q(1), Q(2)], 1 + period: [Q(-1), Q(-2)]},
+                 {2: [Q(3), Q(-1)], 2 + period: [Q(-3), Q(1)]}),
+                ({0: [Q(0)], 2: [Q(1)]}, {1: [Q(1)]}),
+                ({1: [Q(0)]}, {}),
+            )
+            for cos_polys, sin_polys in families:
+                candidate, order = stationary_identity(
+                    cos_polys, sin_polys, alpha,
+                    MAX_STATIONARY_CYCLOTOMIC_ORDER)
+                independent = independent_stationary_trace_zero(
+                    cos_polys, sin_polys, alpha)
+                assert candidate is independent, (
+                    alpha, cos_polys, sin_polys, candidate, independent)
+                assert order <= MAX_STATIONARY_CYCLOTOMIC_ORDER
+                stationary_comparisons += 1
+    assert stationary_comparisons == 768
+    print('PASS: 768 exact stationary differential checks against independent Ramanujan trace-norm oracle')
     # Independent source-space oracle: nonconstant degree 3/2/1 controls,
     # nonuniform knots, a repeated interior knot, and merged channel cuts.
     # The reference evaluates raw source control points by exact de Boor,
