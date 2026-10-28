@@ -169,16 +169,22 @@ def inspect_original_source(spec, *, max_order=MAX_STATIONARY_CYCLOTOMIC_ORDER, 
                            'phase_turn_rate': str(rate * (right - left)),
                            'identity_status': 'RESOURCE_REFUSAL' if identical is None else 'IDENTITY_ZERO' if identical else 'NOT_IDENTITY',
                            'cyclotomic_order': order})
-    except (KeyError, TypeError, ValueError, ZeroDivisionError, OverflowError) as exc:
+    except (MemoryError, OverflowError, RecursionError) as exc:
+        return {'status': 'RESOURCE_REFUSAL', 'reason': 'AFFINE_IDENTITY_RESOURCE_EXHAUSTED',
+                'exception_type': type(exc).__name__, 'is_truth_value': False}
+    except (KeyError, TypeError, ValueError, ZeroDivisionError) as exc:
         return {'status': 'SEMANTIC_BLOCKER', 'reason': 'INVALID_EXACT_ORIGINAL_SOURCE', 'detail': str(exc)}
     if any(p['identity_status'] == 'RESOURCE_REFUSAL' for p in pieces):
         status = 'RESOURCE_REFUSAL'
     else:
         status = 'IDENTITY_ZERO_ON_ALL_OPEN_SPANS' if all(p['identity_status'] == 'IDENTITY_ZERO' for p in pieces) else 'NOT_IDENTITY_ON_SOME_OPEN_SPAN'
-    return {'schema': SCHEMA, 'status': status, 'source_sha256': source_digest,
-            'source_parameter_id': source_id, 'spans': pieces,
-            'scope': 'ANALYTIC_IDENTITY_ONLY_NO_ORDERED_ROOT_OR_PHYSICAL_KNOT_CONSTRUCTION',
-            'event_root_count_claimed': False, 'mc_b_or_native_claimed': False}
+    result = {'schema': SCHEMA, 'status': status, 'source_sha256': source_digest,
+              'source_parameter_id': source_id, 'spans': pieces,
+              'scope': 'ANALYTIC_IDENTITY_ONLY_NO_ORDERED_ROOT_OR_PHYSICAL_KNOT_CONSTRUCTION',
+              'event_root_count_claimed': False, 'mc_b_or_native_claimed': False}
+    if status == 'RESOURCE_REFUSAL':
+        result['is_truth_value'] = False
+    return result
 
 
 def spline(*controls, degree=None, knots=None):
@@ -221,7 +227,8 @@ def self_test():
     expect(fixture(cos={'1': one}, offset='1/6', rate='0'), 'NOT_IDENTITY_ON_SOME_OPEN_SPAN')
     expect(fixture(sin={'1': one}, offset='1/4', rate='0'), 'NOT_IDENTITY_ON_SOME_OPEN_SPAN')
     expect(fixture(sin={'1': one}, offset='1/2', rate='0'), 'IDENTITY_ZERO_ON_ALL_OPEN_SPANS')
-    expect(fixture(cos={'0': one}, offset='1/257', rate='0'), 'RESOURCE_REFUSAL')
+    cap = expect(fixture(cos={'0': one}, offset='1/257', rate='0'), 'RESOURCE_REFUSAL')
+    assert cap['is_truth_value'] is False
     expect(fixture(cos={'0': one}, offset='1/257', rate='1/9'), 'NOT_IDENTITY_ON_SOME_OPEN_SPAN')
     discontinuous = fixture(cos={'0': spline(0, 1, degree=0, knots=[0, 1, 2])}, lo='0', hi='2', rate='0')
     result = expect(discontinuous, 'NOT_IDENTITY_ON_SOME_OPEN_SPAN')
@@ -239,7 +246,18 @@ def self_test():
     assert cyclotomic(6) == [1, -1, 1]
     assert cyclotomic(8) == [1, 0, 0, 0, 1]
     assert cyclotomic(12) == [1, 0, -1, 0, 1]
-    print('PASS: 16 exact original-source statuses + 4 cyclotomic polynomial controls')
+    # Simulate arithmetic limits without substituting refusal for mathematical truth.
+    class ExhaustingLowerer:
+        def __init__(self, error):
+            self.error = error
+        def _normalise_harmonic_splines(self, *_):
+            raise self.error('synthetic computation limit')
+    for error in (MemoryError, OverflowError, RecursionError):
+        refused = inspect_original_source(fixture(cos={'0': one}), lowerer=ExhaustingLowerer(error))
+        assert refused['status'] == 'RESOURCE_REFUSAL', refused
+        assert refused['exception_type'] == error.__name__
+        assert refused['is_truth_value'] is False
+    print('PASS: 16 exact original-source statuses + 4 cyclotomic + 3 resource-refusal controls')
 
 
 def main():
