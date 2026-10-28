@@ -347,28 +347,42 @@ def build_polynomial_view(poly, *, source_left=Q(0), source_right=Q(1),
     for index in range(len(roots) + 1):
         if index == 0:
             gap_left = Q(0)
+            left_boundary = {"kind": "LEFT_ENDPOINT"}
         else:
             prev = roots[index - 1]
             gap_left = (Q(prev["local_value"]) if prev["kind"] == "RATIONAL_ROOT"
                         else Q(prev["local_isolating_interval"][1]))
+            left_boundary = {"kind": "ROOT", "root_index": index - 1}
         if index == len(roots):
             gap_right = Q(1)
+            right_boundary = {"kind": "RIGHT_ENDPOINT"}
         else:
             nxt = roots[index]
             gap_right = (Q(nxt["local_value"]) if nxt["kind"] == "RATIONAL_ROOT"
                          else Q(nxt["local_isolating_interval"][0]))
-        require(gap_left < gap_right, "ordered root descriptors leave no root-free gap")
+            right_boundary = {"kind": "ROOT", "root_index": index}
+        require(gap_left < gap_right, "ordered root descriptors leave no root-free witness gap")
         sample = (gap_left + gap_right) / 2
         value = EE.peval(poly, sample)
         require(value != 0, "cell sample unexpectedly landed on a root")
         require(EE.distinct_roots_open(poly, gap_left, gap_right) == 0,
-                "claimed sign cell contains an unrepresented root")
+                "claimed sign-cell witness gap contains an unrepresented root")
         cells.append({
             "index": index,
+            "left_boundary": left_boundary,
+            "right_boundary": right_boundary,
             "sample": str(sample),
             "sign": sign_name(value),
-            "local_gap": [str(gap_left), str(gap_right)],
-            "proof": "STURM_ZERO_ROOT_COUNT_PLUS_EXACT_RATIONAL_SAMPLE",
+            "rational_witness_gap": [str(gap_left), str(gap_right)],
+            "source_witness_gap": [
+                str(source_left + width * gap_left),
+                str(source_left + width * gap_right),
+            ],
+            "complete_open_cell": True,
+            "proof": (
+                "COMPLETE_ORDERED_ROOT_LIST_PLUS_STURM_ZERO_ROOT_WITNESS_GAP_"
+                "AND_EXACT_RATIONAL_SAMPLE"
+            ),
         })
 
     left_inward = one_sided_rational_sign(poly, Q(0), "right")
@@ -404,13 +418,19 @@ def build_polynomial_view(poly, *, source_left=Q(0), source_right=Q(1),
     }
 
 
-def validate_polynomial_view(candidate, poly):
+def validate_polynomial_view(candidate, poly, *, source_left=Q(0), source_right=Q(1)):
     require(isinstance(candidate, dict), "candidate view must be an object")
     poly = trim(poly)
+    source_left = IDENTITY.q_exact(source_left)
+    source_right = IDENTITY.q_exact(source_right)
+    require(source_left < source_right, "source affine map must have positive width")
+    width = source_right - source_left
     require(candidate.get("schema") == "radicadsac-stationary-polynomial-ordered-span/1.0",
             "wrong ordered-span schema")
     require([str(x) for x in poly] == candidate.get("polynomial_coefficients"),
             "candidate polynomial changed")
+    require(candidate.get("source_affine_map") == [str(source_left), str(source_right)],
+            "candidate source affine map changed")
     roots = candidate.get("ordered_open_roots")
     require(isinstance(roots, list), "missing ordered roots")
     expected_count = EE.distinct_roots_open(poly, Q(0), Q(1))
@@ -423,6 +443,8 @@ def validate_polynomial_view(candidate, poly):
             value = IDENTITY.q_exact(root["local_value"])
             require(Q(0) < value < Q(1) and EE.peval(poly, value) == 0,
                     "rational descriptor is not an open root")
+            require(root.get("source_value") == str(source_left + width * value),
+                    "rational root source mapping changed")
             left, right = value, value
             multiplicity = EE.multiplicity_at(poly, value)
             left_sign = one_sided_rational_sign(poly, value, "left")
@@ -442,6 +464,10 @@ def validate_polynomial_view(candidate, poly):
             right_sign = 1 if EE.peval(poly, right) > 0 else -1
             require(root.get("defining_polynomial") == [str(x) for x in EE.square_free(poly)],
                     "defining polynomial changed")
+            require(root.get("source_isolating_interval") == [
+                        str(source_left + width * left),
+                        str(source_left + width * right),
+                    ], "algebraic root source mapping changed")
             require(root.get("minimal_polynomial_claimed") is False,
                     "candidate invented a minimal polynomial")
         require(previous_right < left, "root descriptors overlap or are not strictly ordered")
@@ -467,13 +493,44 @@ def validate_polynomial_view(candidate, poly):
             if roots[index]["kind"] == "RATIONAL_ROOT"
             else IDENTITY.q_exact(roots[index]["local_isolating_interval"][0])
         )
+        expected_left_boundary = (
+            {"kind": "LEFT_ENDPOINT"} if index == 0
+            else {"kind": "ROOT", "root_index": index - 1}
+        )
+        expected_right_boundary = (
+            {"kind": "RIGHT_ENDPOINT"} if index == len(roots)
+            else {"kind": "ROOT", "root_index": index}
+        )
+        require(cell.get("left_boundary") == expected_left_boundary and
+                cell.get("right_boundary") == expected_right_boundary,
+                "sign cell is not bounded by the exact ordered root/endpoint sequence")
+        require(cell.get("complete_open_cell") is True,
+                "sign cell was downgraded to a rational witness subinterval")
+        require(cell.get("rational_witness_gap") == [str(left), str(right)],
+                "sign-cell rational witness gap changed")
+        require(cell.get("source_witness_gap") == [
+                    str(source_left + width * left),
+                    str(source_left + width * right),
+                ], "sign-cell source witness mapping changed")
         sample = IDENTITY.q_exact(cell["sample"])
-        require(left < sample < right, "sign-cell sample is not inside its ordered gap")
+        require(left < sample < right, "sign-cell sample is not inside its witness gap")
         require(EE.distinct_roots_open(poly, left, right) == 0,
-                "sign-cell gap contains an omitted root")
+                "sign-cell witness gap contains an omitted root")
         value = EE.peval(poly, sample)
         require(value != 0 and cell.get("sign") == sign_name(value),
                 "sign-cell relation mismatch")
+        expected_sign = (
+            candidate["left_endpoint"]["inward_sign"] if index == 0
+            else roots[index - 1]["right_sign"]
+        )
+        if index < len(roots):
+            require(expected_sign == roots[index]["left_sign"],
+                    "adjacent root signs disagree across a claimed complete open cell")
+        else:
+            require(expected_sign == candidate["right_endpoint"]["inward_sign"],
+                    "right endpoint inward sign disagrees with final complete open cell")
+        require(cell.get("sign") == ("POSITIVE" if expected_sign > 0 else "NEGATIVE"),
+                "complete open-cell sign disagrees with adjacent exact boundary signs")
     left_mult = EE.multiplicity_at(poly, Q(0))
     right_mult = EE.multiplicity_at(poly, Q(1))
     require(candidate["left_endpoint"]["multiplicity"] == left_mult and
@@ -582,7 +639,12 @@ def validate_source_candidate(candidate, spec):
         require(item.get("historical_owner") == OWNER, "historical owner relabelled")
         require(item.get("historical_route") == span["historical_summary"],
                 "historical stationary witness changed")
-        validate_polynomial_view(item["ordered_view"], span["polynomial"])
+        left, right = span["source_interval"]
+        require(item.get("source_interval") == [str(left), str(right)],
+                "candidate stationary source interval changed")
+        validate_polynomial_view(
+            item["ordered_view"], span["polynomial"],
+            source_left=left, source_right=right)
     require(candidate.get("stationary_span_count") == len(views),
             "stationary span count mismatch")
     require(candidate.get("all_historical_spans_stationary") ==
@@ -648,6 +710,22 @@ def frozen_corpus_controls():
         require(candidate["status"] == "STATIONARY_POLYNOMIAL_ORDERED_VIEWS_CERTIFIED",
                 f"frozen stationary case did not certify: {row['id']}")
         validate_source_candidate(candidate, row["spec"])
+        forged = copy.deepcopy(candidate)
+        forged["views"][0]["source_interval"] = ["99", "100"]
+        try:
+            validate_source_candidate(forged, row["spec"])
+        except ValueError:
+            pass
+        else:
+            raise AssertionError("forged stationary source interval was accepted")
+        forged = copy.deepcopy(candidate)
+        forged["views"][0]["ordered_view"]["source_affine_map"] = ["99", "100"]
+        try:
+            validate_source_candidate(forged, row["spec"])
+        except ValueError:
+            pass
+        else:
+            raise AssertionError("forged ordered-view source affine map was accepted")
         require(candidate["all_historical_spans_stationary"] is True,
                 f"frozen stationary case has an unexpected nonstationary owner: {row['id']}")
         expected_spans = row["expected"]["observed"]["spans"]
@@ -673,6 +751,9 @@ def mutation_controls():
             "sign", "POSITIVE" if c["sign_cells"][0]["sign"] == "NEGATIVE" else "NEGATIVE"),
         lambda c: c["ordered_open_roots"].pop(),
         lambda c: c["ordered_open_roots"].reverse(),
+        lambda c: c.__setitem__("source_affine_map", ["9", "10"]),
+        lambda c: c["sign_cells"][0].__setitem__("right_boundary", {"kind": "RIGHT_ENDPOINT"}),
+        lambda c: c["sign_cells"][0].__setitem__("complete_open_cell", False),
     ):
         candidate = copy.deepcopy(base)
         mutate(candidate)

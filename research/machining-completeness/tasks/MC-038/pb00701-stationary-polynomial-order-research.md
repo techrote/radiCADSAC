@@ -19,7 +19,7 @@ The research hypothesis is that this premise is completely recoverable for the e
 3. recursively bisect over Q until every open root is either an exact rational root or a rational interval containing exactly one real algebraic root;
 4. recover that root's multiplicity with the repeated GCD/derivative chain;
 5. use exact endpoint/interval signs and parity to classify crossings versus tangencies;
-6. certify every intervening open sign cell with zero Sturm root count plus an exact rational sample.
+6. represent each physical sign cell by the exact ordered root/endpoint descriptors, with a rational witness subinterval used only to establish its sign; completeness follows from the complete ordered root list, not from truncating the physical cell to the isolating interval endpoints.
 
 An algebraic root is represented by a square-free defining polynomial plus a unique rational isolating interval. No minimal-polynomial claim is made.
 
@@ -38,7 +38,7 @@ For checking, the source is re-lowered without invoking the historical selecting
 - every active harmonic is cardinal at the stationary rational phase;
 - the resulting physical polynomial is nonzero.
 
-The builder may call the historical V7 route to retain the exact owner witness. The checker compares that supplied witness against an independently re-lowered stationary polynomial summary and validates the ordered roots/sign cells from the polynomial itself.
+The builder may call the historical V7 route to retain the exact owner witness. The checker compares that supplied witness against an independently re-lowered stationary polynomial summary, requires the source interval and affine map to match the original source piece, validates every rational/algebraic root's source-coordinate mapping, and validates complete sign cells against the exact root/endpoint sequence.
 
 Identity-zero stationary spans remain a different continuum-zero semantic case. Stationary noncardinal sources and preceding dominance-owned spans remain outside this candidate.
 
@@ -64,7 +64,7 @@ The executable checks:
 - two very close rational roots and typed resource refusal under an intentionally exhausted bisection budget;
 - a nonzero constant polynomial;
 - identity-zero refusal;
-- wrong multiplicity, wrong event parity, wrong sign cell, omitted root and reversed-root mutations;
+- wrong multiplicity, wrong event parity, wrong sign cell, omitted/reversed roots, forged source intervals/affine maps and corrupted exact cell-boundary references;
 - preceding amplitude-dominance ownership, stationary identity-zero and stationary noncardinal boundaries;
 - all three pinned frozen stationary-owner cases.
 
