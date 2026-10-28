@@ -112,6 +112,19 @@ def audit(corpus, inventory, boundary):
                          for row in cases]
     require(len(set(canonical_sources)) == 121,
             "distinct case IDs do not bind distinct original source specifications")
+    normalized_sources = []
+    ignored_projection_annotations = 0
+    for row in cases:
+        normalized = dict(row["spec"])
+        if "parameter_projection" in normalized:
+            ignored_projection_annotations += 1
+            normalized.pop("parameter_projection")
+        normalized_sources.append(json.dumps(
+            normalized, sort_keys=True, separators=(",", ":")))
+    require(ignored_projection_annotations == 1,
+            "historical ignored parameter_projection annotation count changed")
+    require(len(set(normalized_sources)) == 121,
+            "source uniqueness depends only on ignored parameter_projection annotation")
     dispositions = Counter()
     provenance = Counter()
     failures = Counter()
@@ -230,6 +243,8 @@ def audit(corpus, inventory, boundary):
             "V43_blocked_case_provenance": dict(v43_kinds),
             "category3_cases_containing_V6": missing_v6,
             "category3_cases_containing_V27": missing_v27,
+            "ignored_parameter_projection_annotations": ignored_projection_annotations,
+            "distinct_sources_after_ignored_projection": len(set(normalized_sources)),
             "general_theorem_established": False, "native_or_MC_B_established": False}
 
 
@@ -312,6 +327,11 @@ def self_test(corpus, inventory, boundary):
         row["expected"]["id"] = row["id"]
     reject(relabel_composite_owner)
 
+    def duplicate_only_by_ignored_annotation(c, i, b):
+        c["cases"][1]["spec"] = copy.deepcopy(c["cases"][0]["spec"])
+        c["cases"][1]["spec"]["parameter_projection"] = "FORGED_IGNORED_ANNOTATION"
+    reject(duplicate_only_by_ignored_annotation)
+
     def break_tail100_ramp(c, i, b):
         row = next(x for x in c["cases"]
                    if x["kind"] == "COMPOSITE_TAIL" and
@@ -357,7 +377,7 @@ def self_test(corpus, inventory, boundary):
     else:
         raise AssertionError("the test harness swallowed a mutation setup failure")
     print("PB-007-01 post-v54 adversarial census: PASS "
-          "(20 negative controls; mutation setup errors propagate)")
+          "(21 negative controls; mutation setup errors propagate)")
 
 
 def main():
