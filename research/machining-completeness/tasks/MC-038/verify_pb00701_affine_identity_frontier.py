@@ -66,29 +66,51 @@ def q_exact(raw):
 
 
 def hash_exact_source_record(spec):
-    """Hash raw exact source forms without silently aliasing typed Python values.
+    """Hash supplied source records, disjointly encoding in-process exact types.
 
-    JSON-only records retain their original canonical JSON hash. In-process
-    Fraction scalars and non-string harmonic keys require explicit type tags.
-    Preserve typed-mapping insertion order: legacy V7 accepts both integer
-    and string harmonic keys, and duplicate-alias precedence matters.
-    This is input-record identity, not independent source-codec equivalence.
+    Preserve the historical sorted-key SHA-256 for ordinary JSON-only records.
+    In-process Fraction scalars and non-string mapping keys use a versioned,
+    fully type-framed syntax tree with a separate hash domain. In particular,
+    typed values must NOT collide with user-supplied JSON dictionaries whose
+    keys resemble the former __radicadsac_*__ marker names. Typed mapping
+    insertion order remains significant because original V7 resolves aliases
+    by last assignment. This is raw-record attribution, not codec equivalence.
     """
-    def encode(value):
-        if isinstance(value, Q):
-            return {'__radicadsac_fraction__': [str(value.numerator), str(value.denominator)]}
+    def is_plain_json(value):
+        if type(value) in (str, int, float, bool, type(None)):
+            return True
         if isinstance(value, list):
-            return [encode(part) for part in value]
+            return all(is_plain_json(item) for item in value)
         if isinstance(value, dict):
-            if all(isinstance(key, str) for key in value):
-                return {key: encode(part) for key, part in value.items()}
-            return {'__radicadsac_typed_mapping__': [
-                [type(key).__name__, str(key), encode(part)]
-                for key, part in value.items()
-            ]}
-        return value
+            return all(type(key) is str and is_plain_json(item)
+                       for key, item in value.items())
+        return False
 
-    packed = json.dumps(encode(spec), sort_keys=True, separators=(',', ':'))
+    def typed_tree(value):
+        if isinstance(value, Q):
+            return ['Fraction', str(value.numerator), str(value.denominator)]
+        if value is None:
+            return ['None']
+        if isinstance(value, bool):
+            return ['bool', value]
+        if isinstance(value, int):
+            return ['int', str(value)]
+        if isinstance(value, str):
+            return ['str', value]
+        if isinstance(value, float):
+            return ['float', value.hex()]
+        if isinstance(value, list):
+            return ['list', [typed_tree(item) for item in value]]
+        if isinstance(value, dict):
+            return ['dict', [[typed_tree(key), typed_tree(item)]
+                             for key, item in value.items()]]
+        raise TypeError(f'unsupported source record type: {type(value).__name__}')
+
+    if is_plain_json(spec):
+        packed = json.dumps(spec, sort_keys=True, separators=(',', ':'))
+    else:
+        packed = 'radicadsac-pb00701-typed-source-v1\0' + json.dumps(
+            typed_tree(spec), separators=(',', ':'))
     return hashlib.sha256(packed.encode()).hexdigest()
 
 
@@ -372,6 +394,34 @@ def self_test():
     alias_reverse = expect(fixture(cos={'1': one, 1: zero}),
                            'IDENTITY_ZERO_ON_ALL_OPEN_SPANS')
     assert alias_forward['source_sha256'] != alias_reverse['source_sha256']
+    # Prior type-marker serialization had real provenance collisions: these
+    # malformed JSON-only records produced exactly the same SHA-256 as valid
+    # typed inputs. Distinct source records must never share that encoding.
+    spoofed_fraction = fixture(
+        cos={'1': spline({'__radicadsac_fraction__': ['1', '2']})},
+        offset={'__radicadsac_fraction__': ['1', '8']},
+        rate={'__radicadsac_fraction__': ['0', '1']})
+    forged_fraction = expect(spoofed_fraction, 'SEMANTIC_BLOCKER')
+    assert forged_fraction['source_sha256'] != fraction_result['source_sha256']
+    spoofed_mapping = fixture(
+        cos={'__radicadsac_typed_mapping__': [
+            ['int', '0', one], ['str', '1', one]]},
+        offset='1/4', rate='0')
+    forged_mapping = expect(spoofed_mapping, 'SEMANTIC_BLOCKER')
+    assert forged_mapping['source_sha256'] != mixed_source['source_sha256']
+    # A plain domain prefix alone would not separate nested typed/sentinel
+    # collisions when both records have a genuine Fraction in another field.
+    nested_typed = expect(fixture(cos={1: one}, offset=Q(1, 8), rate='0'),
+                          'NOT_IDENTITY_ON_SOME_OPEN_SPAN')
+    nested_spoof = expect(fixture(
+        cos={'__radicadsac_typed_mapping__': [['int', '1', one]]},
+        offset=Q(1, 8), rate='0'), 'SEMANTIC_BLOCKER')
+    assert nested_typed['source_sha256'] != nested_spoof['source_sha256']
+    # Unmodified JSON-only source hashes remain historically reproducible.
+    canonical_json = fixture(cos={'1': spline('1/2')}, offset='1/8', rate='0')
+    assert string_result['source_sha256'] == hashlib.sha256(json.dumps(
+        canonical_json, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+    print('PASS: typed/JSON marker-spoof collision and nested typed-tree provenance falsifiers')
     print('PASS: Fraction input, mixed harmonic keys and alias-order provenance falsifiers')
     # A prime-5 rational stationary phase has a nonquadratic field relation:
     # 1 + 2*cos(2*pi/5) + 2*cos(4*pi/5) == 0. This is NOT a
@@ -508,7 +558,7 @@ def self_test():
     assert refused['status'] == 'SEMANTIC_BLOCKER', refused
     assert refused['source_sha256'] == hash_exact_source_record(malformed_source)
     assert refused['source_parameter_id'] == malformed_source['source_parameter_id']
-    print('PASS: 36 original-source status controls + 4 cyclotomic + 3 synthetic exhaustion + 4 dependency-drift controls; refusal source-provenance checks')
+    print('PASS: 40 original-source status controls + 4 cyclotomic + 3 synthetic exhaustion + 4 dependency-drift controls; refusal source-provenance checks')
 
 
 def main():
