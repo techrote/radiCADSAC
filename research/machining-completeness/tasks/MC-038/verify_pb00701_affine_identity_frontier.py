@@ -231,7 +231,11 @@ def inspect_original_source(spec, *, max_order=MAX_STATIONARY_CYCLOTOMIC_ORDER, 
     source_id = spec.get('source_parameter_id')
     if not isinstance(source_id, str) or not source_id or spec.get('parameter_projection') not in (None, source_id):
         return {'status': 'SEMANTIC_BLOCKER', 'reason': 'INVALID_SHARED_SOURCE_PARAMETER'}
+    # Bind source provenance before any parser/lowering work can fail or exhaust
+    # resources; a refusal is not a truth value, but should remain attributable.
+    source_digest = None
     try:
+        source_digest = hash_exact_source_record(spec)
         lo, hi = q_exact(spec['parameter_lo']), q_exact(spec['parameter_hi'])
         offset, rate = q_exact(spec['phase_turn_offset']), q_exact(spec['phase_turn_rate'])
         if lo >= hi or max_order < 4:
@@ -241,7 +245,6 @@ def inspect_original_source(spec, *, max_order=MAX_STATIONARY_CYCLOTOMIC_ORDER, 
         if not cos_norm and not sin_norm:
             raise ValueError('empty original expression')
         boundaries = lowerer._master_boundaries(list(cos_norm.values()) + list(sin_norm.values()), lo, hi)
-        source_digest = hash_exact_source_record(spec)
         pieces = []
         for left, right in zip(boundaries, boundaries[1:]):
             cos_poly = {h: trimmed(lowerer._piece_from_normal(normal, left, right)['coefficients']) for h, normal in cos_norm.items()}
@@ -254,10 +257,17 @@ def inspect_original_source(spec, *, max_order=MAX_STATIONARY_CYCLOTOMIC_ORDER, 
                            'identity_status': 'RESOURCE_REFUSAL' if identical is None else 'IDENTITY_ZERO' if identical else 'NOT_IDENTITY',
                            'cyclotomic_order': order})
     except (MemoryError, OverflowError, RecursionError) as exc:
-        return {'status': 'RESOURCE_REFUSAL', 'reason': 'AFFINE_IDENTITY_RESOURCE_EXHAUSTED',
-                'exception_type': type(exc).__name__, 'is_truth_value': False}
+        refused = {'status': 'RESOURCE_REFUSAL', 'reason': 'AFFINE_IDENTITY_RESOURCE_EXHAUSTED',
+                   'exception_type': type(exc).__name__, 'is_truth_value': False}
+        if source_digest is not None:
+            refused.update(source_sha256=source_digest, source_parameter_id=source_id)
+        return refused
     except (KeyError, TypeError, ValueError, ZeroDivisionError) as exc:
-        return {'status': 'SEMANTIC_BLOCKER', 'reason': 'INVALID_EXACT_ORIGINAL_SOURCE', 'detail': str(exc)}
+        refused = {'status': 'SEMANTIC_BLOCKER', 'reason': 'INVALID_EXACT_ORIGINAL_SOURCE',
+                   'detail': str(exc)}
+        if source_digest is not None:
+            refused.update(source_sha256=source_digest, source_parameter_id=source_id)
+        return refused
     if any(p['identity_status'] == 'RESOURCE_REFUSAL' for p in pieces):
         status = 'RESOURCE_REFUSAL'
     else:
@@ -485,12 +495,20 @@ def self_test():
             self.error = error
         def _normalise_harmonic_splines(self, *_):
             raise self.error('synthetic computation limit')
+    exhausted_source = fixture(cos={'0': one})
     for error in (MemoryError, OverflowError, RecursionError):
-        refused = inspect_original_source(fixture(cos={'0': one}), lowerer=ExhaustingLowerer(error))
+        refused = inspect_original_source(exhausted_source, lowerer=ExhaustingLowerer(error))
         assert refused['status'] == 'RESOURCE_REFUSAL', refused
         assert refused['exception_type'] == error.__name__
         assert refused['is_truth_value'] is False
-    print('PASS: 36 original-source status controls + 4 cyclotomic + 3 synthetic exhaustion + 4 dependency-drift controls')
+        assert refused['source_sha256'] == hash_exact_source_record(exhausted_source)
+        assert refused['source_parameter_id'] == exhausted_source['source_parameter_id']
+    malformed_source = fixture(cos={'0': one}, rate=0.25)
+    refused = inspect_original_source(malformed_source, lowerer=v7)
+    assert refused['status'] == 'SEMANTIC_BLOCKER', refused
+    assert refused['source_sha256'] == hash_exact_source_record(malformed_source)
+    assert refused['source_parameter_id'] == malformed_source['source_parameter_id']
+    print('PASS: 36 original-source status controls + 4 cyclotomic + 3 synthetic exhaustion + 4 dependency-drift controls; refusal source-provenance checks')
 
 
 def main():
