@@ -152,6 +152,38 @@ def stationary_identity(cos_polys, sin_polys, offset, max_order):
     return not any(any(v for v in row) for row in accum), n
 
 
+def independent_de_boor(raw_spline, u):
+    """Test-only exact de Boor value; no V7 normalization/basis/codec helpers.
+
+    This samples a source spline in its original u coordinate, independently
+    of the proposed local power-basis identity implementation. It is a finite
+    falsifier, not a general source-codec refinement proof.
+    """
+    degree = raw_spline['degree']
+    knots = [Q(value) for value in raw_spline['knots']]
+    controls = [Q(value) for value in raw_spline['controls']]
+    u = Q(u)
+    span = next((k for k in range(degree, len(controls))
+                 if knots[k] <= u < knots[k + 1]), None)
+    if span is None:
+        raise AssertionError('independent de Boor sample outside source support')
+    work = [controls[span - degree + j] for j in range(degree + 1)]
+    for level in range(1, degree + 1):
+        for j in range(degree, level - 1, -1):
+            i = span - degree + j
+            denominator = knots[i + degree - level + 1] - knots[i]
+            if denominator <= 0:
+                raise AssertionError('invalid de Boor interior denominator')
+            weight = (u - knots[i]) / denominator
+            work[j] = (1 - weight) * work[j - 1] + weight * work[j]
+    return work[degree]
+
+
+def independent_power_value(coefficients, local_s):
+    """Test-only direct power sum, independent of V7 polynomial evaluation."""
+    return sum((Q(c) * local_s**i for i, c in enumerate(coefficients)), Q(0))
+
+
 def span_identity(cos_polys, sin_polys, alpha, beta, max_order):
     if beta:
         # Independence of {s^j exp(2*pi*i*k*beta*s)} for distinct integer k.
@@ -284,6 +316,46 @@ def self_test():
     assert cyclotomic(6) == [1, -1, 1]
     assert cyclotomic(8) == [1, 0, 0, 0, 1]
     assert cyclotomic(12) == [1, 0, -1, 0, 1]
+    # Independent source-space oracle: nonconstant degree 3/2/1 controls,
+    # nonuniform knots, a repeated interior knot, and merged channel cuts.
+    # The reference evaluates raw source control points by exact de Boor,
+    # never calling V7's basis/lowering/polynomial-evaluation helpers.
+    source_probe = fixture(
+        cos={'0': spline(2, -1, 3, 1, 4, degree=3,
+                         knots=[0, 0, 0, 0, 1, 2, 2, 2, 2]),
+             '1': spline(1, 2, -3, 2, degree=2,
+                         knots=[0, 0, 0, 1, 2, 2, 2])},
+        sin={'2': spline(3, -2, 5, 1, degree=1,
+                         knots=[0, 0, '1/2', '1/2', 2, 2])},
+        lo='0', hi='2', offset='1/7', rate='-2/9')
+    probe_report = expect(source_probe, 'NOT_IDENTITY_ON_SOME_OPEN_SPAN')
+    assert [p['source_interval'] for p in probe_report['spans']] == [
+        ['0', '1/2'], ['1/2', '1'], ['1', '2']]
+    exact_samples = 0
+    affine_checks = 0
+    for piece in probe_report['spans']:
+        left, right = map(Q, piece['source_interval'])
+        assert Q(piece['phase_turn_offset']) == Q('1/7') - Q('2/9') * left
+        assert Q(piece['phase_turn_rate']) == -Q('2/9') * (right - left)
+        affine_checks += 1
+        for channel in ('cos_splines', 'sin_splines'):
+            for harmonic, raw_spline in source_probe[channel].items():
+                normal = v7._normalise_bspline(raw_spline)
+                coefficients = v7._piece_from_normal(normal, left, right)['coefficients']
+                for local_s in (Q(1, 7), Q(1, 2), Q(5, 6)):
+                    global_u = left + (right - left) * local_s
+                    observed = independent_power_value(coefficients, local_s)
+                    oracle = independent_de_boor(raw_spline, global_u)
+                    assert observed == oracle, (
+                        channel, harmonic, left, right, local_s, observed, oracle)
+                    exact_samples += 1
+    assert exact_samples == 36 and affine_checks == 3
+    raw = source_probe['cos_splines']['0']
+    normal = v7._normalise_bspline(raw)
+    corrupted = list(v7._piece_from_normal(normal, Q(0), Q('1/2'))['coefficients'])
+    corrupted[0] += Q(1, 17)
+    assert independent_power_value(corrupted, Q(1, 7)) != independent_de_boor(raw, Q(1, 14))
+    print('PASS: 36 independent rational de Boor samples, 3 affine maps, and a coefficient-corruption falsifier')
     # Isolated scratch-copy mutation controls: historical source remains immutable.
     with tempfile.TemporaryDirectory(prefix='pb00701-affine-pin-') as scratch:
         copied_root = Path(scratch) / 'MC-038'
