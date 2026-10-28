@@ -398,9 +398,13 @@ def self_test():
     # malformed JSON-only records produced exactly the same SHA-256 as valid
     # typed inputs. Distinct source records must never share that encoding.
     spoofed_fraction = fixture(
-        cos={'1': spline({'__radicadsac_fraction__': ['1', '2']})},
+        cos={'1': spline('1/2')},
         offset={'__radicadsac_fraction__': ['1', '8']},
         rate={'__radicadsac_fraction__': ['0', '1']})
+    # fixture/spline format controls as strings; replace with the literal
+    # JSON marker object to reproduce the original raw-encoding collision.
+    spoofed_fraction['cos_splines']['1']['controls'][0] = {
+        '__radicadsac_fraction__': ['1', '2']}
     forged_fraction = expect(spoofed_fraction, 'SEMANTIC_BLOCKER')
     assert forged_fraction['source_sha256'] != fraction_result['source_sha256']
     spoofed_mapping = fixture(
@@ -558,7 +562,7 @@ def self_test():
     assert refused['status'] == 'SEMANTIC_BLOCKER', refused
     assert refused['source_sha256'] == hash_exact_source_record(malformed_source)
     assert refused['source_parameter_id'] == malformed_source['source_parameter_id']
-    print('PASS: 40 original-source status controls + 4 cyclotomic + 3 synthetic exhaustion + 4 dependency-drift controls; refusal source-provenance checks')
+    print('PASS: 41 original-source status controls + 4 cyclotomic + 3 synthetic exhaustion + 4 dependency-drift controls; refusal source-provenance checks')
 
 
 def main():
