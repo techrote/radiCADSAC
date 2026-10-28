@@ -64,6 +64,34 @@ def q_exact(raw):
     return Q(raw)
 
 
+
+def hash_exact_source_record(spec):
+    """Hash raw exact source forms without silently aliasing typed Python values.
+
+    JSON-only records retain their original canonical JSON hash. In-process
+    Fraction scalars and non-string harmonic keys require explicit type tags.
+    Preserve typed-mapping insertion order: legacy V7 accepts both integer
+    and string harmonic keys, and duplicate-alias precedence matters.
+    This is input-record identity, not independent source-codec equivalence.
+    """
+    def encode(value):
+        if isinstance(value, Q):
+            return {'__radicadsac_fraction__': [str(value.numerator), str(value.denominator)]}
+        if isinstance(value, list):
+            return [encode(part) for part in value]
+        if isinstance(value, dict):
+            if all(isinstance(key, str) for key in value):
+                return {key: encode(part) for key, part in value.items()}
+            return {'__radicadsac_typed_mapping__': [
+                [type(key).__name__, str(key), encode(part)]
+                for key, part in value.items()
+            ]}
+        return value
+
+    packed = json.dumps(encode(spec), sort_keys=True, separators=(',', ':'))
+    return hashlib.sha256(packed.encode()).hexdigest()
+
+
 def trimmed(poly):
     result = list(poly)
     while len(result) > 1 and not result[-1]:
@@ -213,7 +241,7 @@ def inspect_original_source(spec, *, max_order=MAX_STATIONARY_CYCLOTOMIC_ORDER, 
         if not cos_norm and not sin_norm:
             raise ValueError('empty original expression')
         boundaries = lowerer._master_boundaries(list(cos_norm.values()) + list(sin_norm.values()), lo, hi)
-        source_digest = hashlib.sha256(json.dumps(spec, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+        source_digest = hash_exact_source_record(spec)
         pieces = []
         for left, right in zip(boundaries, boundaries[1:]):
             cos_poly = {h: trimmed(lowerer._piece_from_normal(normal, left, right)['coefficients']) for h, normal in cos_norm.items()}
@@ -311,6 +339,30 @@ def self_test():
     expect(altered, 'SEMANTIC_BLOCKER')
     altered = fixture(cos={'0': one}, sin={'0': one})
     expect(altered, 'SEMANTIC_BLOCKER')
+    # V7's original parser admits Fraction-valued in-process exact source
+    # records; standard JSON hashing must not misclassify them as invalid.
+    fraction_source = fixture(cos={'1': spline('1/2')}, offset=Q(1, 8), rate=Q(0))
+    fraction_source['cos_splines']['1']['controls'][0] = Q(1, 2)
+    fraction_result = expect(fraction_source, 'NOT_IDENTITY_ON_SOME_OPEN_SPAN')
+    string_result = expect(fixture(cos={'1': spline('1/2')}, offset='1/8', rate='0'),
+                           'NOT_IDENTITY_ON_SOME_OPEN_SPAN')
+    assert fraction_result['source_sha256'] != string_result['source_sha256']
+    # Numeric and string harmonic keys are separately admitted by V7.
+    mixed_source = expect(fixture(cos={0: one, '1': one},
+                                  offset='1/4', rate='0'),
+                          'NOT_IDENTITY_ON_SOME_OPEN_SPAN')
+    string_source = expect(fixture(cos={'0': one, '1': one},
+                                   offset='1/4', rate='0'),
+                           'NOT_IDENTITY_ON_SOME_OPEN_SPAN')
+    assert mixed_source['source_sha256'] != string_source['source_sha256']
+    # V7 resolves same-number int/string aliases by last assignment. Preserve
+    # raw input identity and insertion order; do not fabricate codec equivalence.
+    alias_forward = expect(fixture(cos={1: zero, '1': one}),
+                           'NOT_IDENTITY_ON_SOME_OPEN_SPAN')
+    alias_reverse = expect(fixture(cos={'1': one, 1: zero}),
+                           'IDENTITY_ZERO_ON_ALL_OPEN_SPANS')
+    assert alias_forward['source_sha256'] != alias_reverse['source_sha256']
+    print('PASS: Fraction input, mixed harmonic keys and alias-order provenance falsifiers')
     # A prime-5 rational stationary phase has a nonquadratic field relation:
     # 1 + 2*cos(2*pi/5) + 2*cos(4*pi/5) == 0. This is NOT a
     # componentwise-zero expression; the same polynomials with moving phase
@@ -438,7 +490,7 @@ def self_test():
         assert refused['status'] == 'RESOURCE_REFUSAL', refused
         assert refused['exception_type'] == error.__name__
         assert refused['is_truth_value'] is False
-    print('PASS: 30 original-source status controls + 4 cyclotomic + 3 synthetic exhaustion + 4 dependency-drift controls')
+    print('PASS: 36 original-source status controls + 4 cyclotomic + 3 synthetic exhaustion + 4 dependency-drift controls')
 
 
 def main():
