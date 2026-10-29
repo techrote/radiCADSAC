@@ -176,6 +176,18 @@ def analyze(corpus):
     # 100(s-1)>=0, cos(theta)>=0, sin(theta)>2/3.
     tail_margin = Q(2, 3)
     require(tail_margin > 0, "composite tail sign margin is not positive")
+    # Distinguish actual derivative turning from insufficient V43 proof authority.
+    # Use only the classical exact inequality 3 < pi < 22/7.
+    # Harvested: F'_H(0)=-pi/8<0; F'_H(1)=sqrt(1/2)*(1-pi/8)>0.
+    pi_upper = Q(22, 7)
+    require(Q(3) < pi_upper < Q(8),
+            "invalid Archimedean pi bound for endpoint derivative signs")
+    # Tail: F'_T(s)=100+(pi/4)*cos(theta)-(pi/8)*sin(theta)
+    # >100-(22/7)/8, since 0<=sin<=1 and cos>=0 on [pi/4,pi/2].
+    tail_derivative_margin = Q(100) - pi_upper / 8
+    require(tail_derivative_margin == Q(2789, 28) and
+            tail_derivative_margin > 0,
+            "composite tail derivative margin not strictly positive")
     return {
         "schema": SCHEMA,
         "evidence_class": "DETERMINISTIC_SOURCE_BOUND_SIGN_PROBE_ONLY",
@@ -184,11 +196,15 @@ def analyze(corpus):
             {"id": HARVESTED, "historical_disposition": "BLOCKED",
              "source_interval": ["0", "1"],
              "strict_lower_bound": str(harvested_margin),
-             "sign": "POSITIVE_ON_CLOSED_SOURCE_SPAN"},
+             "sign": "POSITIVE_ON_CLOSED_SOURCE_SPAN",
+             "derivative_endpoint_signs": ["NEGATIVE", "POSITIVE"],
+             "monotonicity": "FALSIFIED_BY_OPPOSITE_ENDPOINT_DERIVATIVE_SIGNS"},
             {"id": COMPOSITE, "historical_disposition": "BLOCKED",
              "source_interval": ["1", "2"],
              "strict_lower_bound": str(tail_margin),
-             "sign": "POSITIVE_ON_CLOSED_SOURCE_SPAN"},
+             "sign": "POSITIVE_ON_CLOSED_SOURCE_SPAN",
+             "strict_derivative_lower_bound": str(tail_derivative_margin),
+             "monotonicity": "STRICTLY_INCREASING_ON_CLOSED_SOURCE_SPAN"},
         ],
         "v54_dispositions_changed": False,
         "general_v43_or_ordered_event_theorem_claimed": False,
@@ -220,6 +236,8 @@ def self_test():
     report = analyze(corpus)
     assert report["probe_cases"][0]["strict_lower_bound"] == "7/24"
     assert report["probe_cases"][1]["strict_lower_bound"] == "2/3"
+    assert report["probe_cases"][0]["derivative_endpoint_signs"] == ["NEGATIVE", "POSITIVE"]
+    assert report["probe_cases"][1]["strict_derivative_lower_bound"] == "2789/28"
 
     def rejects(mutator, label):
         changed = copy.deepcopy(corpus)
@@ -255,7 +273,7 @@ def self_test():
     rejects(lambda h, c: c["spec"]["sin_splines"]["1"]["controls"].__setitem__(0, "0.5"),
             "binary/decimal source notation")
     print("PASS: 11 frozen V43 refusals retained, 1 harvested and 10 tail cases")
-    print("PASS: source-bound exact positive sign on two historical V43-blocked spans")
+    print("PASS: positive signs plus actual harvested turning and strict tail monotonicity")
     print("PASS: adversarial source, phase, continuity, harmonic and refusal controls")
     print(json.dumps(report, sort_keys=True))
 
