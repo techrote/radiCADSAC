@@ -121,15 +121,31 @@ def isolate_x_roots(poly, left_endpoint, right_endpoint, *,
     budget = BisectionBudget(max_bisections)
 
     def refine_unique(left, right):
+        # Shrink away from the parent partition boundaries. Without this,
+        # two valid unique-root isolators may consume the whole partition and
+        # leave no nonempty rational witness gap for the adjacent sign cell.
+        base_left = copy.deepcopy(left)
+        base_right = copy.deepcopy(right)
+        base_left_value = (
+            IDENTITY.q_exact(base_left["value"])
+            if base_left["kind"] == "RATIONAL" else None)
+        base_right_value = (
+            IDENTITY.q_exact(base_right["value"])
+            if base_right["kind"] == "RATIONAL" else None)
         while True:
             if left["kind"] == "RATIONAL" and right["kind"] == "RATIONAL":
                 lo = IDENTITY.q_exact(left["value"])
                 hi = IDENTITY.q_exact(right["value"])
-                require(lo < hi and EE.peval(poly, lo) != 0 and EE.peval(poly, hi) != 0,
-                        "invalid rational tan-half isolating interval")
-                require(EE.distinct_roots_open(EE.square_free(poly), lo, hi) == 1,
-                        "rational tan-half interval lost its unique root")
-                return {"kind": "UNIQUE_TAN_HALF_ROOT", "x_interval": (lo, hi)}
+                strictly_inside_left = (
+                    base_left_value is None or lo > base_left_value)
+                strictly_inside_right = (
+                    base_right_value is None or hi < base_right_value)
+                if strictly_inside_left and strictly_inside_right:
+                    require(lo < hi and EE.peval(poly, lo) != 0 and EE.peval(poly, hi) != 0,
+                            "invalid rational tan-half isolating interval")
+                    require(EE.distinct_roots_open(EE.square_free(poly), lo, hi) == 1,
+                            "rational tan-half interval lost its unique root")
+                    return {"kind": "UNIQUE_TAN_HALF_ROOT", "x_interval": (lo, hi)}
             budget.spend()
             mid, left, right = rational_between(left, right, budget)
             if EE.peval(poly, mid) == 0:
