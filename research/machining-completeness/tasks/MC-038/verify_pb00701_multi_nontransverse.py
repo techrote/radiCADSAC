@@ -6,6 +6,7 @@ import argparse
 import copy
 import json
 import unittest
+from fractions import Fraction as Q
 
 import pb00701_multi_nontransverse as model
 
@@ -85,7 +86,27 @@ class Qualification(unittest.TestCase):
             "0", "-1/32", "3/8", "-1"]
         extra = model.attempt(altered, ROOTS, GUARDS)
         self.assertNotEqual(extra["status"], self.good["status"],
-                            "unlisted double simple roots falsely admitted")
+                            "unlisted two simple roots falsely admitted")
+        # Independently check BOTH omitted zeros in the *exact same* source,
+        # not merely that an unrelated budget/guard check rejected.
+        span = model.single.source_span(altered)
+        for missing in (Q(1, 8), Q(1, 4)):
+            event = model.single.point.point(span, missing, max_order=4)
+            self.assertEqual(event["status"], "EXACT_RATIONAL_POINT_EVENT")
+            self.assertEqual(event["one_sided_order"], 1)
+        # The claimed positive central-to-right gap includes BOTH actual
+        # simple zeros and cannot admit any strictly signed complete cover.
+        with self.assertRaises((model.single.Refusal,
+                                model.single.interval.Refusal)):
+            model.single.no_root_cover(
+                span, Q(1, 128), Q(63, 128), 1,
+                model.single.derivative_limit(span, 1),
+                {"max_nodes": 5000, "max_depth": 12})
+        one_extra = copy.deepcopy(SOURCE)
+        one_extra["harmonics"]["0"]["cos"] = ["0", "-1/4", "1"]
+        one_extra["harmonics"]["2"]["cos"] = ["0", "1/4", "-1"]
+        self.assertNotEqual(model.attempt(
+            one_extra, ROOTS, GUARDS)["status"], self.good["status"])
 
     def test_05_forged_root_and_out_of_order_guards_refuse(self):
         fabricated_roots = ["-1/2", "0", "1/8", "1/2"]
