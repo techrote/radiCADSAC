@@ -1,0 +1,48 @@
+name: mc1-pb00701-dual-implicit-roots
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_dual_implicit_roots.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_dual_implicit_roots.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-dual-implicit-root-reconciliation-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_pinned_trig_child_views.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_transverse_original_source.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_transverse_trig_interval.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v27_fixed_source_order.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v41_v13_fixed_source_order.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'handoffs/current-authority.json'
+      - '.github/workflows/mc1-pb00701-dual-implicit-roots.yml'
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_dual_implicit_roots.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_dual_implicit_roots.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-dual-implicit-root-reconciliation-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_pinned_trig_child_views.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_transverse_original_source.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_transverse_trig_interval.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v27_fixed_source_order.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v41_v13_fixed_source_order.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'handoffs/current-authority.json'
+      - '.github/workflows/mc1-pb00701-dual-implicit-roots.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Reconcile exact source-root ranks from two complete proof paths
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_dual_implicit_roots.py --contract --self-test
