@@ -1,0 +1,42 @@
+name: mc1-pb00701-jet-guarded-nontransverse
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_jet_guarded_nontransverse.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_jet_guarded_nontransverse.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-jet-guarded-nontransverse-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_rational_phase_point.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_transverse_trig_interval.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'handoffs/current-authority.json'
+      - '.github/workflows/mc1-pb00701-jet-guarded-nontransverse.yml'
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_jet_guarded_nontransverse.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_jet_guarded_nontransverse.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-jet-guarded-nontransverse-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_rational_phase_point.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_transverse_trig_interval.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'handoffs/current-authority.json'
+      - '.github/workflows/mc1-pb00701-jet-guarded-nontransverse.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify exact jets and complete rational root-free outer covers
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_jet_guarded_nontransverse.py --contract --self-test
