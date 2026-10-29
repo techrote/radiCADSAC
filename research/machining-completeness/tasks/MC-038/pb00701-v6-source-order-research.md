@@ -73,6 +73,8 @@ The validator independently replays root counts, endpoint events, multiplicities
 
 The executable controls include:
 
+- mixed rational/algebraic chart roots at `x = -1/sqrt(5), 0, +1/sqrt(5)`, verifying exact ranks `0,1,2` where the positive irrational root's isolating interval inherits the rational split root `x=0` as its left boundary; a prior open-interval rank check omitted that boundary root;
+- certificate mutations omitting an open root while adjusting summary/cell cardinalities, duplicating an `x_order_index`, and forging an `x_order_index`, all required to fail source-bound validation;
 - the same two non-rational roots of `cos(theta)=1/3` under positive and negative phase rate, requiring the source-order sequence to reverse while the exact tan-half roots remain the same;
 - exact left source-endpoint and negative-rate right source-endpoint roots with **zero open roots**, checking endpoint multiplicity, flags and inward-sign handling;
 - the double-root identity
