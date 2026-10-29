@@ -287,7 +287,7 @@ def self_test():
         raise AssertionError("forged source accepted: " + name)
     for name, mutation in (
         ("lost root", lambda r: r.__setitem__("simple_open_roots", 1)),
-        ("reversed signs", lambda r: r["sign_cells"].reverse()),
+        ("reversed sign", lambda r: r["sign_cells"].__setitem__(0, "POSITIVE")),
         ("forged bracket", lambda r: r["root_brackets"][0].__setitem__(0, "0")),
         ("lost strictness", lambda r: r["zones"][0].__setitem__("strict", False)),
         ("general theorem", lambda r: r.__setitem__(
