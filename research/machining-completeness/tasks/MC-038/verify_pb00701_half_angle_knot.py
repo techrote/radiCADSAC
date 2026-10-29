@@ -100,6 +100,17 @@ class T(unittest.TestCase):
         domain=json.loads((root/'research/machining-completeness/tasks/MC-002/domain-contract-v1.json').read_text())
         self.assertEqual(len(domain['coverage_rule']['required_operation_ids']),26)
 
+    def test_explicit_resource_limit_refuses(self):
+        old=p.MAX_SPLITS
+        try:
+            p.MAX_SPLITS=1
+            refusal=p.attempt(spec(COS,COS))
+            self.assertEqual(refusal['status'],'RESOURCE_REFUSAL')
+            self.assertIs(refusal['is_truth_value'],False)
+            self.assertIs(refusal['production_authorized'],False)
+        finally:
+            p.MAX_SPLITS=old
+
     def test_generic_higher_harmonic(self):
         t=harmonics(**{'0':('1','0'),'3':('-1','0')})
         r=p.contract(spec(t,t))
