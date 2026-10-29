@@ -177,7 +177,9 @@ if __name__ == "__main__":
             "COMPLETE_ORDERED_MULTIPLE_NONTRANSVERSE_ROOTS_RESEARCH"):
             raise SystemExit(1)
     if args.self_test:
-        unittest.main(argv=[__file__], exit=False, verbosity=2,
-                      failfast=True)
+        outcome = unittest.main(argv=[__file__], exit=False, verbosity=2,
+                                failfast=True)
+        if not outcome.result.wasSuccessful():
+            raise SystemExit(1)
     elif not args.contract:
         ap.error("provide --contract and/or --self-test")
