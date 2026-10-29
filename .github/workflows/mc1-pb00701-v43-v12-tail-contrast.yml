@@ -1,0 +1,40 @@
+name: mc1-pb00701-v43-v12-tail-contrast
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v43_v12_tail_contrast.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v43-v12-tail-contrast-research.md'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v43_refusal_cone.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/programme-v1.json'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'handoffs/current-authority.json'
+      - '.github/workflows/mc1-pb00701-v43-v12-tail-contrast.yml'
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v43_v12_tail_contrast.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v43-v12-tail-contrast-research.md'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v43_refusal_cone.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/programme-v1.json'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'handoffs/current-authority.json'
+      - '.github/workflows/mc1-pb00701-v43-v12-tail-contrast.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Original-source exact V12 V43-refused tail contrast
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v43_v12_tail_contrast.py --contract --self-test
