@@ -39,7 +39,7 @@ The first prototype attempted to bisect directly in source coordinate. That is e
 
 The corrected candidate isolates roots in V6's **tan-half coordinate using rational x-bisection**, where the numerator polynomial degree is fixed. The tan-half chart remains internal. Because the certified phase window is pole-free and the affine phase slope is nonzero, each exact tan-half root has one and only one source preimage, and tan-half order transfers to source order (reversed when phase rate is negative).
 
-A non-rational source root is represented by its unique exact tan-half algebraic root descriptor plus the original source span and affine phase map. No algebraic polynomial, rational isolating interval, or transcendental closed form for the source coordinate itself is claimed. Source sign cells are bounded symbolically by the exact source-ordered root sequence; rational tan-half witnesses certify their signs.
+A non-rational source root is represented by a unique exact tan-half **bracket** whose endpoints may include the certified algebraic V6 window endpoint plus an internal rational cut, together with the original source span and affine phase map. The bracket need not be shrunk away from the window endpoint: completeness comes from exact root rank and the full ordered root set. No algebraic polynomial, rational isolating interval, or transcendental closed form for the source coordinate itself is claimed. Source sign cells are bounded symbolically by the exact source-ordered root sequence and receive their signs from exact one-sided root/endpoint signs; no arbitrary witness gap is promoted to a physical cell boundary.
 
 ## Source and provenance binding
 
@@ -60,11 +60,11 @@ For each certified V6 span, the candidate records:
 - exact original source interval and affine phase map;
 - historical tan-half numerator;
 - source endpoint relation, multiplicity and inward sign;
-- exact tan-half root descriptors (rational value or unique rational isolating interval) with a source identity defined as the unique preimage under the pole-free monotone chart;
+- exact tan-half root descriptors (rational value or unique exact bracket) with a source identity defined as the unique preimage under the pole-free monotone chart;
 - source-order indices obtained from tan-half order, explicitly reversed for negative phase rate;
 - per-root multiplicity from the repeated GCD/derivative chain;
 - crossing/tangency parity and adjacent source-order signs;
-- complete open source sign cells bounded symbolically by source endpoints/root descriptors, with exact rational tan-half witnesses;
+- complete open source sign cells bounded symbolically by source endpoints/root descriptors, with signs established from the complete root order and exact one-sided signs;
 - typed resource refusal when the fixed-degree tan-half isolation budget is exhausted.
 
 The validator independently replays root counts, endpoint events, multiplicities, phase/source mappings, root order, sign-cell witnesses, summary counts, and exact completeness of the submitted V6 span set.
