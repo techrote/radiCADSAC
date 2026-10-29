@@ -577,10 +577,19 @@ def source_bound_view(spec, *,
         for h, values in span["sin_polynomials"].items()
     }
 
+    active_harmonics, orientation_harmonics, orientation_records, endpoints, isolation_used = (
+        _orientation_records(
+            cos_polys, sin_polys, source_left, source_right,
+            max_isolation_bisections,
+        )
+    )
+    require(orientation_records,
+            "NO_INTERIOR_ORIENTATION_ROOTS_FOR_ALGEBRAIC_ORDER_RESEARCH")
+
     # Admission is tied to the live V41 boundary, not merely to our choice of
-    # descriptor representation. A rational-but-nondyadic root may be emitted
-    # by #281 as an isolating interval, yet the existing rational-root theorem
-    # can still enumerate it exactly. Such a source is not this research gap.
+    # descriptor representation. Do this after exact orientation validation so
+    # malformed/identity coordinates keep their more specific fail-closed
+    # refusal instead of being relabelled as a boundary mismatch.
     current_v41 = v41._orientation_cut_certificate(
         cos_polys, sin_polys, local_offset, local_rate
     )
@@ -590,15 +599,6 @@ def source_bound_view(spec, *,
         in current_v41.get("reason", ""),
         "SOURCE_NOT_AT_CURRENT_V41_ALGEBRAIC_ROOT_BOUNDARY",
     )
-
-    active_harmonics, orientation_harmonics, orientation_records, endpoints, isolation_used = (
-        _orientation_records(
-            cos_polys, sin_polys, source_left, source_right,
-            max_isolation_bisections,
-        )
-    )
-    require(orientation_records,
-            "NO_INTERIOR_ORIENTATION_ROOTS_FOR_ALGEBRAIC_ORDER_RESEARCH")
 
     rational_records = _existing_rational_certificate_cuts(
         local_offset, local_rate, active_harmonics, source_left, source_right
