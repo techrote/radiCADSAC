@@ -61,6 +61,7 @@ def rational(x):
         y = Q(x)
     except (ValueError, TypeError, ZeroDivisionError, OverflowError) as exc:
         raise Refusal("INVALID_EXACT_RATIONAL") from exc
+    need(type(x) is not str or str(y) == x, "NONCANONICAL_RATIONAL")
     need(y.numerator.bit_length() <= 128 and
          y.denominator.bit_length() <= 128, "RATIONAL_RESOURCE_LIMIT")
     return y
@@ -237,7 +238,9 @@ def refusal(reason, status="BLOCKED"):
 def attempt():
     try:
         return checked_result()
-    except (Refusal, original.InvalidOriginal, dual.Refusal, ValueError,
+    except Refusal as exc:
+        return refusal(str(exc), "RESOURCE_REFUSAL" if "RESOURCE" in str(exc) else "BLOCKED")
+    except (original.InvalidOriginal, dual.Refusal, ValueError,
             TypeError, KeyError, IndexError, OverflowError) as exc:
         return refusal(str(exc))
     except (MemoryError, RecursionError):
@@ -252,7 +255,9 @@ def validate_claim(candidate):
         actual = checked_result()
         need(data == canonical(actual), "UNVERIFIED_OR_FORGED_CONTRAST_CLAIM")
         return actual
-    except (Refusal, original.InvalidOriginal, dual.Refusal, ValueError,
+    except Refusal as exc:
+        return refusal(str(exc), "RESOURCE_REFUSAL" if "RESOURCE" in str(exc) else "BLOCKED")
+    except (original.InvalidOriginal, dual.Refusal, ValueError,
             TypeError, KeyError, IndexError, OverflowError) as exc:
         return refusal(str(exc))
     except (MemoryError, RecursionError):
