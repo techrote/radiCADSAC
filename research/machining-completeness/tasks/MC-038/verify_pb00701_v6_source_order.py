@@ -920,6 +920,41 @@ def mutation_controls():
             return
         raise AssertionError(reason)
 
+    # Even-multiplicity endpoint alias challenge. The exact tan-half
+    # numerator is x^2*(x+1)^2, with a double root at the open window's
+    # left endpoint x=-1 and a *distinct* double root inside at x=0.
+    # Their signs/parities agree; root rank must still reject substitution.
+    endpoint_alias = fixture(
+        cos={"0": spline_constant("1/2"), "1": spline_constant("-1/2")},
+        sin={"1": spline_constant("1/2"), "2": spline_constant("-1/4")},
+        offset="-1/4", rate="1/2")
+    alias_candidate = build_source_candidate(endpoint_alias)
+    require(alias_candidate["status"] == "V6_SOURCE_ORDERED_VIEWS_CERTIFIED",
+            "endpoint-alias challenge did not certify its original source")
+    validate_source_candidate(alias_candidate, endpoint_alias)
+    alias_view = alias_candidate["views"][0]["ordered_view"]
+    require(alias_view["summary"]["distinct_roots_open"] == 1 and
+            alias_view["left_endpoint"]["relation"] == "ZERO" and
+            alias_view["left_endpoint"]["multiplicity"] == 2 and
+            alias_view["ordered_open_roots"][0]["tan_half_kind"] == "RATIONAL" and
+            alias_view["ordered_open_roots"][0]["tan_half_value"] == "0" and
+            alias_view["ordered_open_roots"][0]["multiplicity"] == 2,
+            "endpoint-alias challenge is not a double/double boundary case")
+    require(V6._distinct_roots_open(
+                trim(alias_view["tan_half_numerator"]),
+                V6.rational_turn_endpoint(Q(-1, 4)), x_rational(Q(-1))) == -1,
+            "one-sided open Sturm count lost its endpoint-root exclusion")
+    forged_alias = copy.deepcopy(alias_candidate)
+    forged_alias["views"][0]["ordered_view"]["ordered_open_roots"][0][
+        "tan_half_value"] = "-1"
+    try:
+        validate_source_candidate(forged_alias, endpoint_alias)
+    except ValueError as exc:
+        require(str(exc) == "tan-half root rank disagrees with exact left root count",
+                f"endpoint alias rejected for a different reason: {exc}")
+    else:
+        raise AssertionError("source endpoint double tangency accepted as open root")
+
     rejected(lambda c: c["views"].pop(), "omitted V6 span was accepted")
     rejected(lambda c: c.__setitem__("source_parameter_id", "forged"),
              "forged V6 source parameter was accepted")
