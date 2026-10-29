@@ -244,7 +244,7 @@ def exact_proof(c, sn, p):
     # on [5/4,3/2], and z(7/4)=cos²(pi/8) in (3/4,7/8).
     require(Q(7, 5)**2 < 2 < Q(3, 2)**2 and
             Q(23, 16)**2 > 2 and
-            (Q(3, 8)**2 < (2 - Q(23, 16)) / 4) and
+            (Q(3, 8)**2 == (2 - Q(23, 16)) / 4) and
             Q(7, 10)**2 < Q(1, 2) and
             (2 + Q(3, 2)) / 4 == Q(7, 8),
             "rational eighth-angle interval guards failed")
