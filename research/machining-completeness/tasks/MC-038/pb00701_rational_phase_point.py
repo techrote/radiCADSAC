@@ -144,6 +144,9 @@ def interval_shift(cos, sin, order):
 
 def validate(span,x,max_order):
     need(type(span) is interval.Span, "UNSUPPORTED_SOURCE_SPAN")
+    # Span objects are mutable. Reconstruct a fresh exact source instead of
+    # treating a previously validated or caller-mutated object as authority.
+    span = interval.Span(span.left,span.right,span.offset,span.rate,span.terms)
     x = interval.formal_rational(x)
     need(span.left <= x <= span.right, "POINT_OUTSIDE_ORIGINAL_SOURCE_SPAN")
     need(type(max_order) is int and 0 <= max_order <= MAX_JET_ORDER,
@@ -153,7 +156,7 @@ def validate(span,x,max_order):
     for h in span.terms:
         n = lcm(n,(h*phase).denominator)
     need(n <= MAX_CYCLOTOMIC_ORDER, "CYCLOTOMIC_ORDER_RESOURCE_LIMIT")
-    return x,phase,n,cyclotomic(n)
+    return span,x,phase,n,cyclotomic(n)
 
 
 def jet(span,x,order,n,modulus):
@@ -207,7 +210,7 @@ def span_binding(span):
 
 
 def point(span,x,max_order=MAX_JET_ORDER):
-    x,phase,n,modulus = validate(span,x,max_order)
+    span,x,phase,n,modulus = validate(span,x,max_order)
     for order in range(max_order+1):
         coefficients = jet(span,x,order,n,modulus)
         if not coefficients:
@@ -255,8 +258,8 @@ def compose_knot(left,right,x,max_order=MAX_JET_ORDER):
     need(left.right == x == right.left and
          (left.offset,left.rate)==(right.offset,right.rate),
          "SOURCE_KNOT_PHASE_OR_COORDINATE_MISMATCH")
-    _,_,n,modulus = validate(left,x,max_order)
-    _,_,n2,_ = validate(right,x,max_order)
+    left,_,_,n,modulus = validate(left,x,max_order)
+    right,_,_,n2,_ = validate(right,x,max_order)
     need(n==n2, "SOURCE_KNOT_CYCLOTOMIC_MISMATCH")
     # Do not confuse equal point signs with actual continuity. Exact F_L=F_R
     # is required in the same cyclotomic number field.
