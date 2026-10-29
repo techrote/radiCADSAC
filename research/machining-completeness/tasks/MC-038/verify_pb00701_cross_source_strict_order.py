@@ -143,7 +143,7 @@ class CrossSourceStrictOrderTests(unittest.TestCase):
             ("relation", "SAME"),
             ("physical_temporal_sequence_claimed", True),
             ("mc_b_established", True),
-            ("source_phase_turns", ["0", "0"]),
+            ("left_phase_turns", ["0", "0"]),
             ("left_case_id", "forged"),
             ("left_strict_bracket", ["0", "1"]),
         ):
