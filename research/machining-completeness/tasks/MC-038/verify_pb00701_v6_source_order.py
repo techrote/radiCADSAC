@@ -285,9 +285,17 @@ def source_v6_spans(spec):
 
 
 def root_x_bounds(root):
-    if root["kind"] == "RATIONAL_TAN_HALF_ROOT":
+    """Return rational x bounds for either a raw isolator or certificate root."""
+    if root.get("kind") == "RATIONAL_TAN_HALF_ROOT":
+        value = IDENTITY.q_exact(root["x_value"])
+        return value, value
+    if root.get("kind") == "UNIQUE_TAN_HALF_ROOT":
+        return tuple(map(IDENTITY.q_exact, root["x_interval"]))
+    if root.get("tan_half_kind") == "RATIONAL":
         value = IDENTITY.q_exact(root["tan_half_value"])
         return value, value
+    require(root.get("tan_half_kind") == "UNIQUE_REAL_ALGEBRAIC",
+            "unknown tan-half root representation")
     return tuple(map(IDENTITY.q_exact, root["tan_half_isolating_interval"]))
 
 
