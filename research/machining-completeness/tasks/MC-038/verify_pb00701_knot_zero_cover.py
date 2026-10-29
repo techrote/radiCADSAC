@@ -138,15 +138,36 @@ class KnotZeroCoverTests(unittest.TestCase):
         self.assertFalse(self.cross["production_authorized"])
 
     def test_two_omitted_remote_tangencies_with_same_endpoint_sign_refuse(self):
-        # Keep the local order-2 knot guard deliberately narrow so this
-        # adversary reaches the global outer-cover obligation. The two exact
-        # remote tangencies at 1/4 and 3/4 must then make that cover refuse.
+        # This source has an exact smooth order-2 zero at the knot AND two
+        # remote order-2 zeros. A failed whole-source attempt alone would be
+        # vacuous if it refused at the derivative guard before reaching the
+        # crucial exhaustive outer-cover obligation.
         refused = core.attempt(
-            EXTRA_LEFT_ROOTS, RIGHT_CROSS, "1", ["255/256", "9/8"])
-        self.assertEqual(refused["status"], "RESOURCE_REFUSAL", refused)
-        self.assertIn("OUTER_ROOT_FREE_COVER_DEPTH_EXHAUSTED",
-                      refused["reason"])
+            EXTRA_LEFT_ROOTS, RIGHT_CROSS, "1", ["7/8", "9/8"])
+        self.assertNotEqual(
+            refused["status"], "COMPLETE_SINGLE_SOURCE_KNOT_ZERO_UNION_RESEARCH")
         self.assertFalse(refused["is_truth_value"])
+
+        span = core.guarded.source_span(EXTRA_LEFT_ROOTS)
+        for root in ("1/4", "3/4"):
+            event = point.point(span, core.guarded.rat(root), max_order=4)
+            self.assertEqual(event["status"], "EXACT_RATIONAL_POINT_EVENT")
+            self.assertEqual(event["first_nonzero_derivative_order"], 2)
+            self.assertEqual((event["left_sign"], event["right_sign"]),
+                             (1, 1))
+
+        # A direct, source-bound outer-region challenge MUST reject the
+        # strictly-positive complete-cover claim on either closed interval
+        # containing its independently established interior tangency.
+        m1 = core.guarded.derivative_limit(span, 1)
+        for a, b in (("1/8", "3/8"), ("5/8", "7/8")):
+            with self.subTest(source_interval=(a, b)):
+                with self.assertRaises(core.guarded.Refusal) as exc:
+                    core.guarded.no_root_cover(
+                        span, core.guarded.rat(a), core.guarded.rat(b),
+                        1, m1, {"max_nodes": 20000, "max_depth": 12})
+                self.assertIn("OUTER_ROOT_FREE_COVER_DEPTH_EXHAUSTED",
+                              str(exc.exception))
 
     def test_discontinuous_phase_mismatched_and_coordinate_mismatched_knots_refuse(self):
         discontinuous = copy.deepcopy(RIGHT_CROSS)
