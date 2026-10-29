@@ -57,7 +57,12 @@ def stationary():
 
 
 def sign(s):
-    need(s in ('POSITIVE', 'NEGATIVE'), 'missing exact physical side sign')
+    # The pinned Sturm root descriptors use strict integer +/-1 while
+    # endpoint witnesses use POSITIVE/NEGATIVE; reject bool/float coercions.
+    if type(s) is int and s in (-1, 1):
+        return 'POSITIVE' if s > 0 else 'NEGATIVE'
+    need(type(s) is str and s in ('POSITIVE', 'NEGATIVE'),
+         'missing exact physical side sign')
     return s
 
 
