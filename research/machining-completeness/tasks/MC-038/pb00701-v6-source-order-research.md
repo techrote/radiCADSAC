@@ -51,6 +51,8 @@ The frozen v54 corpus is independently pinned at Git blob
 
 The candidate independently re-lowers the original B-spline source to identify the constant-modulation spans, reconstructs the exact V6 call from constant channel coefficients and the phase endpoints, and requires exact equality with the historical V7 V6 route before building an ordered view.
 
+Inherited algebraic tan-half bracket endpoints must have canonical turn, principal-turn, denominator, defining polynomial and rank metadata and **must be contained in the certified original endpoint's isolating interval**. Exact Sturm checks establish that a contained refinement still isolates the same unique tangent root. A wider interval that happens to contain that root is not accepted as a source-bound refinement.
+
 This reconstruction shares the historical V7 B-spline lowering/dominance primitives and V6 algebraic endpoint/Sturm predicates. It is therefore a source-bound refinement/falsifier, **not an independent ownership theorem or independent source-codec implementation**.
 
 ## Exact ordered view
@@ -75,6 +77,7 @@ The executable controls include:
 
 - mixed rational/algebraic chart roots at `x = -1/sqrt(5), 0, +1/sqrt(5)`, verifying exact ranks `0,1,2` where the positive irrational root's isolating interval inherits the rational split root `x=0` as its left boundary; a prior open-interval rank check omitted that boundary root;
 - certificate mutations omitting an open root while adjusting summary/cell cardinalities, duplicating an `x_order_index`, and forging an `x_order_index`, all required to fail source-bound validation;
+- a widened algebraic endpoint bracket that still isolates the original tangent root but extends outside the canonical source-phase certificate, which must be rejected as a non-refinement;
 - the same two non-rational roots of `cos(theta)=1/3` under positive and negative phase rate, requiring the source-order sequence to reverse while the exact tan-half roots remain the same;
 - exact left source-endpoint and negative-rate right source-endpoint roots with **zero open roots**, checking endpoint multiplicity, flags and inward-sign handling;
 - the double-root identity
