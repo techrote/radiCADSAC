@@ -360,15 +360,23 @@ def _orientation_records(cos_polys, sin_polys, source_left, source_right,
             "INVALID_ISOLATION_BUDGET")
     records = []
     endpoint_records = []
-    harmonics = sorted(
+    active_harmonics = sorted(
         h for h in set(cos_polys) | set(sin_polys)
-        if int(h) > 0 and
-        algebraic.trim(cos_polys.get(h, [0])) != [0] and
-        algebraic.trim(sin_polys.get(h, [0])) != [0]
+        if int(h) > 0 and (
+            algebraic.trim(cos_polys.get(h, [0])) != [0]
+            or algebraic.trim(sin_polys.get(h, [0])) != [0]
+        )
     )
-    for harmonic in harmonics:
-        c = algebraic.trim(cos_polys[harmonic])
-        s = algebraic.trim(sin_polys[harmonic])
+    orientation_harmonics = []
+    for harmonic in active_harmonics:
+        c = algebraic.trim(cos_polys.get(harmonic, [0]))
+        s = algebraic.trim(sin_polys.get(harmonic, [0]))
+        # Match landed V41 exactly: a one-channel harmonic still contributes
+        # historical phase/certificate proof cuts, but it does not create an
+        # A/B orientation-root partition in the current route.
+        if c == [0] or s == [0]:
+            continue
+        orientation_harmonics.append(harmonic)
         a, b = v41._rotated_polynomials(c, s)
         for coordinate, orientation_poly in (("A", a), ("B", b)):
             if algebraic.trim(orientation_poly) == [0]:
@@ -404,7 +412,7 @@ def _orientation_records(cos_polys, sin_polys, source_left, source_right,
                         "multiplicity": int(multiplicity),
                         "proof_cut_is_physical_event": False,
                     })
-    return harmonics, records, endpoint_records, (
+    return active_harmonics, orientation_harmonics, records, endpoint_records, (
         max_isolation_bisections - remaining
     )
 
@@ -568,7 +576,7 @@ def source_bound_view(spec, *,
         int(h): poly(values)
         for h, values in span["sin_polynomials"].items()
     }
-    harmonics, orientation_records, endpoints, isolation_used = (
+    active_harmonics, orientation_harmonics, orientation_records, endpoints, isolation_used = (
         _orientation_records(
             cos_polys, sin_polys, source_left, source_right,
             max_isolation_bisections,
@@ -578,7 +586,7 @@ def source_bound_view(spec, *,
             "NO_INTERIOR_ORIENTATION_ROOTS_FOR_ALGEBRAIC_ORDER_RESEARCH")
 
     rational_records = _existing_rational_certificate_cuts(
-        local_offset, local_rate, harmonics, source_left, source_right
+        local_offset, local_rate, active_harmonics, source_left, source_right
     )
     ordered, comparison_used = _canonical_cut_partition(
         orientation_records, rational_records,
@@ -608,7 +616,8 @@ def source_bound_view(spec, *,
             "IRRATIONAL_ALGEBRAIC_ORIENTATION_ROOT_NOT_REPRESENTABLE_"
             "BY_CURRENT_RATIONAL_CHILD_PARAMETER_MODEL"
         ),
-        "active_orientation_harmonics": harmonics,
+        "active_positive_harmonics": active_harmonics,
+        "orientation_harmonics": orientation_harmonics,
         "orientation_root_causes": orientation_records,
         "endpoint_orientation_root_causes": endpoints,
         "existing_rational_certificate_cut_count": len(rational_records),
