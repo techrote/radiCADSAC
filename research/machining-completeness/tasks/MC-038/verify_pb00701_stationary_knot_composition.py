@@ -127,8 +127,13 @@ class StationaryCompositionTests(unittest.TestCase):
                     core.compose_polynomial_spans(x, P)
 
     def test_identity_zero_and_resource_budget_are_nontruth(self):
+        # Exercise the composition's identity-zero refusal directly: the
+        # upstream view constructor already rejects zero-polynomial intervals.
+        with self.assertRaises(ValueError):
+            P.build_polynomial_view([0])
         with self.assertRaises(core.InvalidComposition):
-            core.compose_polynomial_spans(test_spans((['0','1'], [0])), P)
+            core.compose_polynomial_spans([
+                {'interval': ['0','1'], 'polynomial': [0], 'view': None}], P)
         with self.assertRaises(core.ResourceRefusal):
             core.compose_polynomial_spans([{}]*(core.MAX_SPANS+1), P)
         resource = core.no_truth('RESOURCE_REFUSAL','bounded')
