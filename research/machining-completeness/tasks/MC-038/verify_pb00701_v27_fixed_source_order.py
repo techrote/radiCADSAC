@@ -121,7 +121,7 @@ def select(corpus):
             c0 = lowerer.linear_piece(src, "cos_splines", "0", left, right)
             c2 = lowerer.linear_piece(src, "cos_splines", "2", left, right)
             s1 = lowerer.linear_piece(src, "sin_splines", "1", left, right)
-            assert c2 == (Q(1, 100), Q(0))
+            require(c2 == (Q(1, 100), Q(0)), "original second harmonic mismatch")
             if left == 0:
                 require(c0 == (Q(5), Q(0)) and s1 == (Q(2), Q(4)),
                         "original first source span lowering mismatch")
@@ -161,7 +161,7 @@ def exact_inequalities():
     require(Q(27) > Q(999, 200) ** 2,
             "shared-knot negative sign not established")
     # At 9/8, tail0 F=-101/100, tail100 adds 25/2.
-    require(Q(-101, 100) < 0 and Q(25, 2) - Q(101, 100) > 0,
+    require(Q(-101, 100) < 0 and Q(25, 2) - Q(101, 100) == Q(1149, 100) > 0,
             "second-source root isolation signs changed")
     return str(derivative_lower)
 
@@ -197,6 +197,11 @@ def analyze(corpus):
     }
 
 
+def validate_report(report, corpus):
+    require(report == analyze(corpus),
+            "forged source-order certificate, wrong root count, sign, or capability")
+
+
 def authority_contract(auth, programme, domain):
     require(auth["programme"] == "MC-1" and
             auth["capability_status"] == "NOT_ESTABLISHED" and
@@ -220,6 +225,7 @@ def contract():
 def self_test():
     corpus = load(CORPUS)
     report = analyze(corpus)
+    validate_report(report, corpus)
     require(report["tail0"]["whole_source_open_roots"] == 2 and
             report["tail100"]["full_second_span_derivative_lower"] == "45856/525",
             "source-specific V27 ordering report drift")
@@ -253,7 +259,11 @@ def self_test():
     ):
         forged = copy.deepcopy(report)
         mutation(forged)
-        require(forged != analyze(corpus), "forged report escaped comparison: " + label)
+        try:
+            validate_report(forged, corpus)
+        except ValueError:
+            continue
+        raise AssertionError("forged report accepted: " + label)
     auth, programme, domain = load(AUTH), load(PROGRAMME), load(DOMAIN)
     for label, obj, mutate in (
         ("production", auth, lambda r: r.__setitem__("production_authorized", True)),
