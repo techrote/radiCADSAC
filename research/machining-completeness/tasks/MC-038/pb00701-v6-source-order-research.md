@@ -67,19 +67,20 @@ For each certified V6 span, the candidate records:
 - complete open source sign cells bounded symbolically by source endpoints/root descriptors, with signs established from the complete root order and exact one-sided signs;
 - typed resource refusal when the fixed-degree tan-half isolation budget is exhausted.
 
-The validator independently replays root counts, endpoint events, multiplicities, phase/source mappings, root order, sign-cell witnesses, summary counts, and exact completeness of the submitted V6 span set.
+The validator independently replays root counts, endpoint events, multiplicities, phase/source mappings, root order, exact one-sided sign evidence for the **symbolic** sign-cell boundaries, summary counts, and exact completeness of the submitted V6 span set. Interior chart samples are not physical cell boundaries.
 
 ## Falsification controls
 
 The executable controls include:
 
 - the same two non-rational roots of `cos(theta)=1/3` under positive and negative phase rate, requiring the source-order sequence to reverse while the exact tan-half roots remain the same;
+- exact left source-endpoint and negative-rate right source-endpoint roots with **zero open roots**, checking endpoint multiplicity, flags and inward-sign handling;
 - the double-root identity
   `(cos(theta)-1/3)^2 = 11/18 - 2/3 cos(theta) + 1/2 cos(2theta)`,
   requiring two multiplicity-2 tangencies;
 - explicit isolation-budget exhaustion returning `RESOURCE_REFUSAL`, never mathematical truth;
 - identity-zero and tangent-pole windows remaining outside certified isolated-root scope;
-- omitted V6 span, forged source identity, multiplicity, parity, complete-cell flag, affine phase map and summary mutation attacks;
+- a nonvacuous two-span omission with adjusted declared count; forged source identity, multiplicity, parity, complete-cell flag, affine phase map and summary attacks; and algebraic endpoint turn/principal-turn/rank/denominator/polynomial/interval provenance mutations;
 - replay of every frozen v54 V6 owner case.
 
 ## Frozen v54 target
