@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """MC-038 / PB-007-01: source-ordered roots for delegated V6 constant modulation.
 
-Research-only. Uses the historical exact tan-half route as a monotone internal
-chart, but isolates/labels roots in the original rational source coordinate.
-Does not modify V6/V7, frozen v54 evidence, or establish PB-007-01 / MC-B / MC-1.
+Research-only. Isolates exact roots in V6's rational tan-half chart and transfers
+their order/sign/multiplicity to the original source through the certified
+pole-free monotone phase map. No source-coordinate algebraic closed form is
+invented, and historical V6-V54 evidence is read-only.
 """
 from __future__ import annotations
 
@@ -20,9 +21,9 @@ IDENTITY_HELPER = HERE / "verify_pb00701_affine_identity_frontier.py"
 CORPUS = HERE / "pb00701-finite-owner-corpus-v54.json"
 IDENTITY_HELPER_BLOB = "9fd150e97bce84fdb3c4bad075c9938f4df9136c"
 CORPUS_BLOB = "5841c331579489b25caef38cd412bdbf286f9134"
-SCHEMA = "radicadsac-pb00701-v6-source-order-research/1.0"
+SCHEMA = "radicadsac-pb00701-v6-source-order-research/1.1"
 OWNER = "DELEGATED_V6_CONSTANT_MODULATION"
-MAX_BISECTIONS = 768
+MAX_BISECTIONS = 512
 RESOURCE_ERRORS = (MemoryError, OverflowError, RecursionError)
 
 
@@ -64,54 +65,147 @@ def trim(poly):
     return out or [Q(0)]
 
 
-def relation_sign(event):
-    relation = event.get("relation")
-    require(relation in ("POSITIVE", "NEGATIVE"), "expected nonzero endpoint event")
-    return 1 if relation == "POSITIVE" else -1
+def x_rational(value):
+    return {"kind": "RATIONAL", "value": IDENTITY.q_exact(value)}
 
 
-def source_phase(offset, rate, source_u):
-    return IDENTITY.q_exact(offset) + IDENTITY.q_exact(rate) * IDENTITY.q_exact(source_u)
+def endpoint_bounds(endpoint):
+    if endpoint["kind"] == "RATIONAL":
+        value = IDENTITY.q_exact(endpoint["value"])
+        return value, value
+    return IDENTITY.q_exact(endpoint["lo"]), IDENTITY.q_exact(endpoint["hi"])
 
 
-def phase_endpoint(turn):
-    return V6.rational_turn_endpoint(IDENTITY.q_exact(turn))
+class BisectionBudget:
+    def __init__(self, limit):
+        self.limit = int(limit)
+        self.used = 0
+
+    def spend(self):
+        if self.used >= self.limit:
+            raise IsolationRefusal("V6_TAN_HALF_ISOLATION_BUDGET_EXHAUSTED")
+        self.used += 1
 
 
-def ordered_phase_endpoints(turn_a, turn_b):
-    turn_a = IDENTITY.q_exact(turn_a)
-    turn_b = IDENTITY.q_exact(turn_b)
-    require(turn_a != turn_b, "phase interval collapsed")
-    if turn_a < turn_b:
-        return phase_endpoint(turn_a), phase_endpoint(turn_b)
-    return phase_endpoint(turn_b), phase_endpoint(turn_a)
+def rational_between(left_endpoint, right_endpoint, budget):
+    """Return an exact rational strictly between two exact ordered endpoints.
+
+    Algebraic V6 phase endpoints are refined only as algebraic numbers in x;
+    their defining-polynomial degree stays fixed. This avoids constructing
+    tan(pi*t) at successively finer rational source turns.
+    """
+    left = copy.deepcopy(left_endpoint)
+    right = copy.deepcopy(right_endpoint)
+    while True:
+        left_lo, left_hi = endpoint_bounds(left)
+        right_lo, right_hi = endpoint_bounds(right)
+        if left_hi < right_lo:
+            return (left_hi + right_lo) / 2, left, right
+        budget.spend()
+        changed = False
+        if left["kind"] != "RATIONAL":
+            left = V6._refine_endpoint(left)
+            changed = True
+        if right["kind"] != "RATIONAL":
+            right = V6._refine_endpoint(right)
+            changed = True
+        require(changed, "ordered endpoints could not be separated")
 
 
-def count_source_roots(poly, offset, rate, source_left, source_right):
-    source_left = IDENTITY.q_exact(source_left)
-    source_right = IDENTITY.q_exact(source_right)
-    require(source_left < source_right, "source root count requires increasing interval")
-    turn_left = source_phase(offset, rate, source_left)
-    turn_right = source_phase(offset, rate, source_right)
-    left_endpoint, right_endpoint = ordered_phase_endpoints(turn_left, turn_right)
-    return V6._distinct_roots_open(trim(poly), left_endpoint, right_endpoint)
+def isolate_x_roots(poly, left_endpoint, right_endpoint, *,
+                    max_bisections=MAX_BISECTIONS):
+    poly = trim(poly)
+    require(poly != [Q(0)], "identity tan-half numerator has continuum semantics")
+    total = V6._distinct_roots_open(poly, left_endpoint, right_endpoint)
+    roots = []
+    budget = BisectionBudget(max_bisections)
+
+    def refine_unique(left, right):
+        while True:
+            if left["kind"] == "RATIONAL" and right["kind"] == "RATIONAL":
+                lo = IDENTITY.q_exact(left["value"])
+                hi = IDENTITY.q_exact(right["value"])
+                require(lo < hi and EE.peval(poly, lo) != 0 and EE.peval(poly, hi) != 0,
+                        "invalid rational tan-half isolating interval")
+                require(EE.distinct_roots_open(EE.square_free(poly), lo, hi) == 1,
+                        "rational tan-half interval lost its unique root")
+                return {"kind": "UNIQUE_TAN_HALF_ROOT", "x_interval": (lo, hi)}
+            budget.spend()
+            mid, left, right = rational_between(left, right, budget)
+            if EE.peval(poly, mid) == 0:
+                return {"kind": "RATIONAL_TAN_HALF_ROOT", "x_value": mid}
+            mid_endpoint = x_rational(mid)
+            left_count = V6._distinct_roots_open(poly, left, mid_endpoint)
+            right_count = V6._distinct_roots_open(poly, mid_endpoint, right)
+            require(left_count + right_count == 1,
+                    "unique tan-half refinement lost root count")
+            if left_count:
+                right = mid_endpoint
+            else:
+                left = mid_endpoint
+
+    def walk(left, right, count):
+        if not count:
+            return
+        budget.spend()
+        mid, left, right = rational_between(left, right, budget)
+        mid_endpoint = x_rational(mid)
+        if EE.peval(poly, mid) == 0:
+            left_count = V6._distinct_roots_open(poly, left, mid_endpoint)
+            right_count = V6._distinct_roots_open(poly, mid_endpoint, right)
+            require(left_count + right_count + 1 == count,
+                    "rational tan-half split lost a root")
+            walk(left, mid_endpoint, left_count)
+            roots.append({"kind": "RATIONAL_TAN_HALF_ROOT", "x_value": mid})
+            walk(mid_endpoint, right, right_count)
+            return
+        left_count = V6._distinct_roots_open(poly, left, mid_endpoint)
+        right_count = V6._distinct_roots_open(poly, mid_endpoint, right)
+        require(left_count + right_count == count, "tan-half split lost a root")
+        if count == 1:
+            roots.append(refine_unique(left, right))
+            return
+        walk(left, mid_endpoint, left_count)
+        walk(mid_endpoint, right, right_count)
+
+    walk(copy.deepcopy(left_endpoint), copy.deepcopy(right_endpoint), total)
+    require(len(roots) == total, "tan-half isolation did not return every open root")
+    roots.sort(key=lambda root: (
+        root["x_value"] if root["kind"] == "RATIONAL_TAN_HALF_ROOT"
+        else root["x_interval"][0]))
+    return roots, budget.used
 
 
-def event_at_source(poly, offset, rate, source_u):
-    return V6._event_at_endpoint(trim(poly), phase_endpoint(source_phase(offset, rate, source_u)))
+def x_root_multiplicity(poly, root):
+    poly = trim(poly)
+    if root["kind"] == "RATIONAL_TAN_HALF_ROOT":
+        return EE.multiplicity_at(poly, root["x_value"])
+    lo, hi = root["x_interval"]
+    multiplicity = 1
+    repeated = EE.pgcd(poly, EE.deriv(poly))
+    while EE.degree(repeated) > 0:
+        count = EE.distinct_roots_open(repeated, lo, hi)
+        require(count in (0, 1), "repeated-factor isolator contains multiple roots")
+        if not count:
+            break
+        multiplicity += 1
+        repeated = EE.pgcd(repeated, EE.deriv(repeated))
+    return multiplicity
 
 
-def source_one_sided_sign(poly, offset, rate, source_u, side):
-    require(side in ("left", "right"), "invalid source side")
-    rate = IDENTITY.q_exact(rate)
-    require(rate != 0, "V6 source ordering requires nonzero phase rate")
-    phase_side = side if rate > 0 else ("right" if side == "left" else "left")
-    return V6._one_sided_sign_at_endpoint(
-        trim(poly), phase_endpoint(source_phase(offset, rate, source_u)), phase_side)
+def x_root_signs(poly, root):
+    if root["kind"] == "RATIONAL_TAN_HALF_ROOT":
+        value = root["x_value"]
+        return EE._one_sided_sign(poly, value, "left"), EE._one_sided_sign(poly, value, "right")
+    lo, hi = root["x_interval"]
+    left_value = EE.peval(poly, lo)
+    right_value = EE.peval(poly, hi)
+    require(left_value != 0 and right_value != 0, "tan-half isolator endpoint is a root")
+    return EE.sign(left_value), EE.sign(right_value)
 
 
 def source_v6_spans(spec):
-    """Reconstruct V6-owner spans from the exact original source."""
+    """Reconstruct certified V6-owner spans from the exact original source."""
     require(isinstance(spec, dict), "source must be an object")
     allowed = {
         "grammar", "cos_splines", "sin_splines", "parameter_lo", "parameter_hi",
@@ -133,9 +227,9 @@ def source_v6_spans(spec):
     cos_norm = V7._normalise_harmonic_splines(spec.get("cos_splines"), "cos_splines")
     sin_norm = V7._normalise_harmonic_splines(spec.get("sin_splines"), "sin_splines")
     require(cos_norm or sin_norm, "empty source expression")
-
     boundaries = V7._master_boundaries(
         list(cos_norm.values()) + list(sin_norm.values()), lo, hi)
+
     spans = []
     for index, (left, right) in enumerate(zip(boundaries, boundaries[1:])):
         if not left < right:
@@ -150,295 +244,199 @@ def source_v6_spans(spec):
         }
         turn_left = offset + rate * left
         turn_right = offset + rate * right
-
-        dominance = V7._dominance_certificate(cos_polys, sin_polys)
-        if dominance is not None:
-            spans.append({
-                "span_index": index, "source_interval": (left, right),
-                "phase_turn_interval": (turn_left, turn_right),
-                "owner": "PRECEDING_AMPLITUDE_DOMINANCE",
-            })
-            continue
-        if rate == 0:
-            spans.append({
-                "span_index": index, "source_interval": (left, right),
-                "phase_turn_interval": (turn_left, turn_right),
-                "owner": "STATIONARY_OWNER_BOUNDARY",
-            })
-            continue
-        if not all(V7._is_constant(poly)
-                   for poly in list(cos_polys.values()) + list(sin_polys.values())):
-            spans.append({
-                "span_index": index, "source_interval": (left, right),
-                "phase_turn_interval": (turn_left, turn_right),
-                "owner": "NONCONSTANT_MODULATION_BOUNDARY",
-            })
-            continue
-
-        cos_coefficients = {
-            str(h): str(trim(poly)[0])
-            for h, poly in cos_polys.items()
-            if trim(poly)[0] != 0
-        }
-        sin_coefficients = {
-            str(h): str(trim(poly)[0])
-            for h, poly in sin_polys.items()
-            if trim(poly)[0] != 0
-        }
-        route = V6.analyze_rational_turn_window(
-            cos_coefficients=cos_coefficients,
-            sin_coefficients=sin_coefficients,
-            turn_lo=min(turn_left, turn_right),
-            turn_hi=max(turn_left, turn_right),
-            source_parameter_id=source_id,
-            parameter_projection=source_id,
-        )
-        route = dict(route)
-        route["delegated_route"] = "PB00701_V6_CONSTANT_COEFFICIENT_RATIONAL_TURN"
+        if V7._dominance_certificate(cos_polys, sin_polys) is not None:
+            owner = "PRECEDING_AMPLITUDE_DOMINANCE"
+            route = None
+        elif rate == 0:
+            owner = "STATIONARY_OWNER_BOUNDARY"
+            route = None
+        elif not all(V7._is_constant(poly)
+                     for poly in list(cos_polys.values()) + list(sin_polys.values())):
+            owner = "NONCONSTANT_MODULATION_BOUNDARY"
+            route = None
+        else:
+            cos_coefficients = {
+                str(h): str(trim(poly)[0])
+                for h, poly in cos_polys.items() if trim(poly)[0] != 0}
+            sin_coefficients = {
+                str(h): str(trim(poly)[0])
+                for h, poly in sin_polys.items() if trim(poly)[0] != 0}
+            route = V6.analyze_rational_turn_window(
+                cos_coefficients=cos_coefficients,
+                sin_coefficients=sin_coefficients,
+                turn_lo=min(turn_left, turn_right),
+                turn_hi=max(turn_left, turn_right),
+                source_parameter_id=source_id,
+                parameter_projection=source_id,
+            )
+            route = dict(route)
+            route["delegated_route"] = "PB00701_V6_CONSTANT_COEFFICIENT_RATIONAL_TURN"
+            owner = OWNER if route.get("status") == "CERTIFIED" else "V6_NONCERTIFIED_BOUNDARY"
         spans.append({
             "span_index": index,
             "source_interval": (left, right),
             "phase_turn_interval": (turn_left, turn_right),
-            "owner": OWNER if route.get("status") == "CERTIFIED" else "V6_NONCERTIFIED_BOUNDARY",
-            "route": route,
             "phase_offset": offset,
             "phase_rate": rate,
+            "owner": owner,
+            "route": route,
         })
     return spans
 
 
-class BisectionBudget:
-    def __init__(self, limit):
-        self.limit = int(limit)
-        self.used = 0
-
-    def spend(self):
-        if self.used >= self.limit:
-            raise IsolationRefusal("V6_SOURCE_ORDER_ISOLATION_BUDGET_EXHAUSTED")
-        self.used += 1
-
-
-def refine_unique_source(poly, offset, rate, left, right, base_left, base_right, budget):
-    while True:
-        budget.spend()
-        mid = (left + right) / 2
-        event = event_at_source(poly, offset, rate, mid)
-        if event.get("relation") == "ZERO":
-            return {"kind": "RATIONAL_SOURCE_ROOT", "source_value": mid}
-        left_count = count_source_roots(poly, offset, rate, left, mid)
-        right_count = count_source_roots(poly, offset, rate, mid, right)
-        require(left_count + right_count == 1, "unique source-root refinement lost count")
-        if left_count:
-            right = mid
-        else:
-            left = mid
-        if left > base_left and right < base_right:
-            require(event_at_source(poly, offset, rate, left).get("relation") != "ZERO" and
-                    event_at_source(poly, offset, rate, right).get("relation") != "ZERO",
-                    "source isolating interval endpoint is a root")
-            return {"kind": "UNIQUE_SOURCE_ROOT", "source_interval": (left, right)}
-
-
-def isolate_source_roots(poly, offset, rate, source_left, source_right,
-                         max_bisections=MAX_BISECTIONS):
-    poly = trim(poly)
-    offset = IDENTITY.q_exact(offset)
-    rate = IDENTITY.q_exact(rate)
-    source_left = IDENTITY.q_exact(source_left)
-    source_right = IDENTITY.q_exact(source_right)
-    require(poly != [Q(0)], "identity tan-half numerator has continuum semantics")
-    require(rate != 0 and source_left < source_right, "invalid V6 source map")
-
-    total = count_source_roots(poly, offset, rate, source_left, source_right)
-    roots = []
-    budget = BisectionBudget(max_bisections)
-
-    def walk(left, right, count):
-        if not count:
-            return
-        budget.spend()
-        mid = (left + right) / 2
-        event = event_at_source(poly, offset, rate, mid)
-        if event.get("relation") == "ZERO":
-            left_count = count_source_roots(poly, offset, rate, left, mid)
-            right_count = count_source_roots(poly, offset, rate, mid, right)
-            require(left_count + right_count + 1 == count,
-                    "rational source split lost a distinct root")
-            walk(left, mid, left_count)
-            roots.append({"kind": "RATIONAL_SOURCE_ROOT", "source_value": mid})
-            walk(mid, right, right_count)
-            return
-        left_count = count_source_roots(poly, offset, rate, left, mid)
-        right_count = count_source_roots(poly, offset, rate, mid, right)
-        require(left_count + right_count == count, "source split lost a distinct root")
-        if count == 1:
-            roots.append(refine_unique_source(
-                poly, offset, rate, left, right, source_left, source_right, budget))
-            return
-        walk(left, mid, left_count)
-        walk(mid, right, right_count)
-
-    walk(source_left, source_right, total)
-    require(len(roots) == total, "source isolation did not return every open root")
-    roots.sort(key=lambda item: (
-        item["source_value"] if item["kind"] == "RATIONAL_SOURCE_ROOT"
-        else item["source_interval"][0]))
-    return roots, budget.used
-
-
-def multiplicity_in_source_interval(poly, offset, rate, root):
-    if root["kind"] == "RATIONAL_SOURCE_ROOT":
-        event = event_at_source(poly, offset, rate, root["source_value"])
-        require(event.get("relation") == "ZERO", "rational source descriptor is not a root")
-        return int(event["multiplicity"])
-    left, right = root["source_interval"]
-    multiplicity = 1
-    repeated = EE.pgcd(trim(poly), EE.deriv(trim(poly)))
-    while EE.degree(repeated) > 0 and count_source_roots(
-            repeated, offset, rate, left, right):
-        require(count_source_roots(repeated, offset, rate, left, right) == 1,
-                "repeated-factor interval contains multiple roots")
-        multiplicity += 1
-        repeated = EE.pgcd(repeated, EE.deriv(repeated))
-    return multiplicity
+def root_x_bounds(root):
+    if root["kind"] == "RATIONAL_TAN_HALF_ROOT":
+        value = IDENTITY.q_exact(root["tan_half_value"])
+        return value, value
+    return tuple(map(IDENTITY.q_exact, root["tan_half_isolating_interval"]))
 
 
 def build_v6_view(route, *, source_left, source_right, phase_offset, phase_rate,
                   max_bisections=MAX_BISECTIONS):
     require(route.get("status") == "CERTIFIED", "V6 route is not certified")
     poly = trim(route["numerator_coefficients"])
-    require(poly != [Q(0)], "identity V6 route cannot have isolated root view")
+    require(poly != [Q(0)], "identity V6 route cannot have isolated roots")
     source_left = IDENTITY.q_exact(source_left)
     source_right = IDENTITY.q_exact(source_right)
     phase_offset = IDENTITY.q_exact(phase_offset)
     phase_rate = IDENTITY.q_exact(phase_rate)
     require(source_left < source_right and phase_rate != 0, "invalid source/phase map")
 
-    roots_raw, used = isolate_source_roots(
-        poly, phase_offset, phase_rate, source_left, source_right, max_bisections)
-    roots = []
-    for index, raw in enumerate(roots_raw):
-        multiplicity = multiplicity_in_source_interval(
-            poly, phase_offset, phase_rate, raw)
-        if raw["kind"] == "RATIONAL_SOURCE_ROOT":
-            value = raw["source_value"]
-            left_sign = source_one_sided_sign(
-                poly, phase_offset, phase_rate, value, "left")
-            right_sign = source_one_sided_sign(
-                poly, phase_offset, phase_rate, value, "right")
+    turn_source_left = phase_offset + phase_rate * source_left
+    turn_source_right = phase_offset + phase_rate * source_right
+    phase_lo = min(turn_source_left, turn_source_right)
+    phase_hi = max(turn_source_left, turn_source_right)
+    require(route.get("turn_interval") == [str(phase_lo), str(phase_hi)],
+            "historical V6 turn interval does not match source phase map")
+    left_x_endpoint = V6.rational_turn_endpoint(phase_lo)
+    right_x_endpoint = V6.rational_turn_endpoint(phase_hi)
+
+    x_roots, used = isolate_x_roots(
+        poly, left_x_endpoint, right_x_endpoint, max_bisections=max_bisections)
+    require(len(x_roots) == route["distinct_roots_open"],
+            "isolated tan-half root count disagrees with V6 route")
+
+    x_descriptors = []
+    for x_index, raw in enumerate(x_roots):
+        multiplicity = x_root_multiplicity(poly, raw)
+        x_left_sign, x_right_sign = x_root_signs(poly, raw)
+        if raw["kind"] == "RATIONAL_TAN_HALF_ROOT":
             descriptor = {
-                "index": index,
-                "kind": "RATIONAL_SOURCE_ROOT",
-                "source_value": str(value),
-                "phase_turn": str(source_phase(phase_offset, phase_rate, value)),
-                "tan_half_endpoint": V6._endpoint_description(
-                    phase_endpoint(source_phase(phase_offset, phase_rate, value))),
+                "tan_half_kind": "RATIONAL",
+                "tan_half_value": str(raw["x_value"]),
             }
         else:
-            left, right = raw["source_interval"]
-            left_event = event_at_source(poly, phase_offset, phase_rate, left)
-            right_event = event_at_source(poly, phase_offset, phase_rate, right)
-            left_sign = relation_sign(left_event)
-            right_sign = relation_sign(right_event)
             descriptor = {
-                "index": index,
-                "kind": "UNIQUE_SOURCE_ROOT",
-                "source_isolating_interval": [str(left), str(right)],
-                "phase_turn_isolating_interval": [
-                    str(source_phase(phase_offset, phase_rate, left)),
-                    str(source_phase(phase_offset, phase_rate, right)),
-                ],
+                "tan_half_kind": "UNIQUE_REAL_ALGEBRAIC",
+                "tan_half_isolating_interval": [
+                    str(raw["x_interval"][0]), str(raw["x_interval"][1])],
                 "tan_half_defining_polynomial": [str(x) for x in EE.square_free(poly)],
-                "minimal_source_polynomial_claimed": False,
-                "transcendental_source_closed_form_claimed": False,
             }
-        require((left_sign != right_sign) == bool(multiplicity % 2),
-                "source root parity disagrees with adjacent signs")
         descriptor.update({
+            "x_order_index": x_index,
             "multiplicity": multiplicity,
-            "event_kind": "CROSSING" if multiplicity % 2 else "TANGENCY",
-            "left_sign": left_sign,
-            "right_sign": right_sign,
+            "x_left_sign": x_left_sign,
+            "x_right_sign": x_right_sign,
+            "source_identity": (
+                "UNIQUE_PREIMAGE_UNDER_AFFINE_PHASE_AND_POLE_FREE_MONOTONE_TAN_HALF"),
+            "minimal_source_polynomial_claimed": False,
+            "source_closed_form_claimed": False,
         })
-        roots.append(descriptor)
+        x_descriptors.append(descriptor)
 
-    left_event = event_at_source(poly, phase_offset, phase_rate, source_left)
-    right_event = event_at_source(poly, phase_offset, phase_rate, source_right)
-    left_mult = int(left_event.get("multiplicity", 0)) if left_event.get("relation") == "ZERO" else 0
-    right_mult = int(right_event.get("multiplicity", 0)) if right_event.get("relation") == "ZERO" else 0
-    left_inward = source_one_sided_sign(
-        poly, phase_offset, phase_rate, source_left, "right")
-    right_inward = source_one_sided_sign(
-        poly, phase_offset, phase_rate, source_right, "left")
+    source_roots = x_descriptors if phase_rate > 0 else list(reversed(x_descriptors))
+    roots = []
+    for source_index, raw in enumerate(source_roots):
+        item = copy.deepcopy(raw)
+        item["source_order_index"] = source_index
+        if phase_rate > 0:
+            source_left_sign = item["x_left_sign"]
+            source_right_sign = item["x_right_sign"]
+        else:
+            source_left_sign = item["x_right_sign"]
+            source_right_sign = item["x_left_sign"]
+        item["source_left_sign"] = source_left_sign
+        item["source_right_sign"] = source_right_sign
+        item["event_kind"] = "CROSSING" if item["multiplicity"] % 2 else "TANGENCY"
+        require((source_left_sign != source_right_sign) == bool(item["multiplicity"] % 2),
+                "source parity disagrees with tan-half multiplicity")
+        roots.append(item)
+
+    source_left_endpoint = V6.rational_turn_endpoint(turn_source_left)
+    source_right_endpoint = V6.rational_turn_endpoint(turn_source_right)
+    source_left_event = V6._event_at_endpoint(poly, source_left_endpoint)
+    source_right_event = V6._event_at_endpoint(poly, source_right_endpoint)
+    left_mult = int(source_left_event.get("multiplicity", 0))         if source_left_event.get("relation") == "ZERO" else 0
+    right_mult = int(source_right_event.get("multiplicity", 0))         if source_right_event.get("relation") == "ZERO" else 0
+    left_phase_side = "right" if phase_rate > 0 else "left"
+    right_phase_side = "left" if phase_rate > 0 else "right"
+    left_inward = V6._one_sided_sign_at_endpoint(poly, source_left_endpoint, left_phase_side)
+    right_inward = V6._one_sided_sign_at_endpoint(poly, source_right_endpoint, right_phase_side)
+
+    def root_boundary_x(root, source_side):
+        lo, hi = root_x_bounds(root)
+        if lo == hi:
+            return x_rational(lo)
+        if phase_rate > 0:
+            value = lo if source_side == "left" else hi
+        else:
+            value = hi if source_side == "left" else lo
+        return x_rational(value)
 
     cells = []
     for index in range(len(roots) + 1):
         if index == 0:
-            witness_left = source_left
-            left_boundary = {"kind": "LEFT_SOURCE_ENDPOINT"}
+            source_left_boundary = {"kind": "LEFT_SOURCE_ENDPOINT"}
+            x_a = source_left_endpoint
             expected_sign = left_inward
         else:
-            prev = roots[index - 1]
-            witness_left = (
-                IDENTITY.q_exact(prev["source_value"])
-                if prev["kind"] == "RATIONAL_SOURCE_ROOT"
-                else IDENTITY.q_exact(prev["source_isolating_interval"][1])
-            )
-            left_boundary = {"kind": "ROOT", "root_index": index - 1}
-            expected_sign = prev["right_sign"]
+            source_left_boundary = {"kind": "ROOT", "root_index": index - 1}
+            x_a = root_boundary_x(roots[index - 1], "right")
+            expected_sign = roots[index - 1]["source_right_sign"]
         if index == len(roots):
-            witness_right = source_right
-            right_boundary = {"kind": "RIGHT_SOURCE_ENDPOINT"}
+            source_right_boundary = {"kind": "RIGHT_SOURCE_ENDPOINT"}
+            x_b = source_right_endpoint
             require(expected_sign == right_inward,
-                    "final cell sign disagrees with right source endpoint")
+                    "final source cell disagrees with right endpoint inward sign")
         else:
-            nxt = roots[index]
-            witness_right = (
-                IDENTITY.q_exact(nxt["source_value"])
-                if nxt["kind"] == "RATIONAL_SOURCE_ROOT"
-                else IDENTITY.q_exact(nxt["source_isolating_interval"][0])
-            )
-            right_boundary = {"kind": "ROOT", "root_index": index}
-            require(expected_sign == nxt["left_sign"],
-                    "cell sign disagrees across adjacent source roots")
-        require(witness_left < witness_right, "source witness gap collapsed")
-        require(count_source_roots(
-            poly, phase_offset, phase_rate, witness_left, witness_right) == 0,
-            "source sign-cell witness gap contains an omitted root")
-        sample = (witness_left + witness_right) / 2
-        sample_event = event_at_source(poly, phase_offset, phase_rate, sample)
-        sample_sign = relation_sign(sample_event)
-        require(sample_sign == expected_sign, "source cell sample sign mismatch")
+            source_right_boundary = {"kind": "ROOT", "root_index": index}
+            x_b = root_boundary_x(roots[index], "left")
+            require(expected_sign == roots[index]["source_left_sign"],
+                    "source cell sign disagrees across adjacent root")
+
+        x_low, x_high = (x_a, x_b) if phase_rate > 0 else (x_b, x_a)
+        sample_x, x_low, x_high = rational_between(
+            x_low, x_high, BisectionBudget(max_bisections))
+        require(V6._distinct_roots_open(poly, x_low, x_high) == 0,
+                "source sign cell contains an unrepresented tan-half root")
+        sample_sign = EE.sign(EE.peval(poly, sample_x))
+        require(sample_sign == expected_sign, "source sign-cell chart sample mismatch")
         cells.append({
             "index": index,
-            "left_boundary": left_boundary,
-            "right_boundary": right_boundary,
-            "source_witness_gap": [str(witness_left), str(witness_right)],
-            "source_sample": str(sample),
+            "left_boundary": source_left_boundary,
+            "right_boundary": source_right_boundary,
+            "tan_half_witness": str(sample_x),
             "sign": "POSITIVE" if sample_sign > 0 else "NEGATIVE",
-            "complete_open_cell": True,
+            "complete_open_source_cell": True,
             "proof": (
-                "COMPLETE_SOURCE_ORDER_PLUS_EXACT_V6_STURM_ZERO_ROOT_WITNESS_"
-                "AND_EXACT_ALGEBRAIC_ENDPOINT_SIGN"
-            ),
+                "COMPLETE_SOURCE_ORDER_FROM_MONOTONE_POLE_FREE_CHART_PLUS_"
+                "EXACT_TAN_HALF_ROOT_ORDER_AND_SIGN"),
         })
 
     return {
-        "schema": "radicadsac-v6-source-ordered-span/1.0",
+        "schema": "radicadsac-v6-source-ordered-span/1.1",
         "source_interval": [str(source_left), str(source_right)],
         "phase_affine_map": [str(phase_offset), str(phase_rate)],
-        "phase_turn_interval": [
-            str(source_phase(phase_offset, phase_rate, source_left)),
-            str(source_phase(phase_offset, phase_rate, source_right)),
-        ],
+        "phase_turn_interval_source_order": [str(turn_source_left), str(turn_source_right)],
+        "phase_turn_window_sorted": [str(phase_lo), str(phase_hi)],
         "tan_half_numerator": [str(x) for x in poly],
         "left_endpoint": {
-            "relation": left_event["relation"],
+            "relation": source_left_event["relation"],
             "multiplicity": left_mult,
             "inward_sign": left_inward,
         },
         "right_endpoint": {
-            "relation": right_event["relation"],
+            "relation": source_right_event["relation"],
             "multiplicity": right_mult,
             "inward_sign": right_inward,
         },
@@ -455,154 +453,162 @@ def build_v6_view(route, *, source_left, source_right, phase_offset, phase_rate,
         },
         "bisections_used": used,
         "tan_half_chart_is_internal_only": True,
-        "source_order_claimed": True,
+        "source_root_coordinates_closed_form_claimed": False,
         "mc_b_or_native_claimed": False,
     }
 
 
 def validate_v6_view(candidate, route, *, source_left, source_right,
                      phase_offset, phase_rate):
-    require(candidate.get("schema") == "radicadsac-v6-source-ordered-span/1.0",
+    require(candidate.get("schema") == "radicadsac-v6-source-ordered-span/1.1",
             "wrong V6 source-order schema")
     source_left = IDENTITY.q_exact(source_left)
     source_right = IDENTITY.q_exact(source_right)
     phase_offset = IDENTITY.q_exact(phase_offset)
     phase_rate = IDENTITY.q_exact(phase_rate)
     poly = trim(route["numerator_coefficients"])
+    turn_left = phase_offset + phase_rate * source_left
+    turn_right = phase_offset + phase_rate * source_right
+    phase_lo, phase_hi = min(turn_left, turn_right), max(turn_left, turn_right)
     require(candidate.get("source_interval") == [str(source_left), str(source_right)],
-            "source interval changed")
+            "V6 source interval changed")
     require(candidate.get("phase_affine_map") == [str(phase_offset), str(phase_rate)],
-            "phase affine map changed")
-    require(candidate.get("phase_turn_interval") == [
-                str(source_phase(phase_offset, phase_rate, source_left)),
-                str(source_phase(phase_offset, phase_rate, source_right)),
-            ], "phase-turn interval changed")
+            "V6 phase affine map changed")
+    require(candidate.get("phase_turn_interval_source_order") ==
+            [str(turn_left), str(turn_right)], "V6 source-order phase interval changed")
+    require(candidate.get("phase_turn_window_sorted") ==
+            [str(phase_lo), str(phase_hi)], "V6 sorted phase window changed")
     require(candidate.get("tan_half_numerator") == [str(x) for x in poly],
-            "tan-half numerator changed")
+            "V6 tan-half numerator changed")
 
+    left_endpoint = V6.rational_turn_endpoint(phase_lo)
+    right_endpoint = V6.rational_turn_endpoint(phase_hi)
+    expected_count = V6._distinct_roots_open(poly, left_endpoint, right_endpoint)
     roots = candidate.get("ordered_open_roots")
-    require(isinstance(roots, list), "missing ordered source roots")
-    expected_count = count_source_roots(
-        poly, phase_offset, phase_rate, source_left, source_right)
-    require(len(roots) == expected_count, "ordered source root list is incomplete")
-    previous_right = source_left
+    require(isinstance(roots, list) and len(roots) == expected_count,
+            "V6 ordered source-root list incomplete")
+
+    previous_x = None
     for index, root in enumerate(roots):
-        require(root.get("index") == index, "source root index mismatch")
-        kind = root.get("kind")
-        if kind == "RATIONAL_SOURCE_ROOT":
-            value = IDENTITY.q_exact(root["source_value"])
-            event = event_at_source(poly, phase_offset, phase_rate, value)
-            require(source_left < value < source_right and event.get("relation") == "ZERO",
-                    "rational source descriptor is not an open root")
-            require(root.get("phase_turn") ==
-                    str(source_phase(phase_offset, phase_rate, value)),
-                    "rational source-root phase binding changed")
-            left = right = value
-            multiplicity = int(event["multiplicity"])
-            left_sign = source_one_sided_sign(
-                poly, phase_offset, phase_rate, value, "left")
-            right_sign = source_one_sided_sign(
-                poly, phase_offset, phase_rate, value, "right")
+        require(root.get("source_order_index") == index, "source root index changed")
+        require(root.get("source_identity") ==
+                "UNIQUE_PREIMAGE_UNDER_AFFINE_PHASE_AND_POLE_FREE_MONOTONE_TAN_HALF",
+                "source-root identity changed")
+        kind = root.get("tan_half_kind")
+        if kind == "RATIONAL":
+            x = IDENTITY.q_exact(root["tan_half_value"])
+            require(EE.peval(poly, x) == 0, "rational tan-half descriptor is not a root")
+            raw = {"kind": "RATIONAL_TAN_HALF_ROOT", "x_value": x}
+            lo = hi = x
         else:
-            require(kind == "UNIQUE_SOURCE_ROOT", "unknown source-root descriptor")
-            left, right = map(IDENTITY.q_exact, root["source_isolating_interval"])
-            require(source_left < left < right < source_right,
-                    "bad rational source isolating interval")
-            require(event_at_source(poly, phase_offset, phase_rate, left).get("relation") != "ZERO" and
-                    event_at_source(poly, phase_offset, phase_rate, right).get("relation") != "ZERO",
-                    "source isolating interval endpoint is a root")
-            require(count_source_roots(
-                EE.square_free(poly), phase_offset, phase_rate, left, right) == 1,
-                "source interval does not isolate exactly one physical root")
-            require(root.get("phase_turn_isolating_interval") == [
-                        str(source_phase(phase_offset, phase_rate, left)),
-                        str(source_phase(phase_offset, phase_rate, right)),
-                    ], "source root phase interval changed")
+            require(kind == "UNIQUE_REAL_ALGEBRAIC", "unknown tan-half root kind")
+            lo, hi = map(IDENTITY.q_exact, root["tan_half_isolating_interval"])
+            require(lo < hi and EE.peval(poly, lo) != 0 and EE.peval(poly, hi) != 0,
+                    "invalid tan-half isolating interval")
+            require(EE.distinct_roots_open(EE.square_free(poly), lo, hi) == 1,
+                    "tan-half interval does not isolate one root")
             require(root.get("tan_half_defining_polynomial") ==
                     [str(x) for x in EE.square_free(poly)],
                     "tan-half defining polynomial changed")
-            require(root.get("minimal_source_polynomial_claimed") is False and
-                    root.get("transcendental_source_closed_form_claimed") is False,
-                    "candidate invented source algebraic/closed-form authority")
-            multiplicity = multiplicity_in_source_interval(
-                poly, phase_offset, phase_rate,
-                {"kind": "UNIQUE_SOURCE_ROOT", "source_interval": (left, right)})
-            left_sign = relation_sign(event_at_source(poly, phase_offset, phase_rate, left))
-            right_sign = relation_sign(event_at_source(poly, phase_offset, phase_rate, right))
-        require(previous_right < left, "source root descriptors overlap or are not ordered")
-        previous_right = right
-        require(root.get("multiplicity") == multiplicity, "source root multiplicity mismatch")
-        require(root.get("left_sign") == left_sign and root.get("right_sign") == right_sign,
-                "source root adjacent sign mismatch")
-        require(root.get("event_kind") == ("CROSSING" if multiplicity % 2 else "TANGENCY"),
-                "source root parity/event-kind mismatch")
-    require(previous_right < source_right, "last source root is not interior")
+            raw = {"kind": "UNIQUE_TAN_HALF_ROOT", "x_interval": (lo, hi)}
 
-    left_event = event_at_source(poly, phase_offset, phase_rate, source_left)
-    right_event = event_at_source(poly, phase_offset, phase_rate, source_right)
+        multiplicity = x_root_multiplicity(poly, raw)
+        x_left_sign, x_right_sign = x_root_signs(poly, raw)
+        require(root.get("multiplicity") == multiplicity,
+                "V6 root multiplicity changed")
+        require(root.get("x_left_sign") == x_left_sign and
+                root.get("x_right_sign") == x_right_sign,
+                "V6 tan-half adjacent sign changed")
+        expected_source_left = x_left_sign if phase_rate > 0 else x_right_sign
+        expected_source_right = x_right_sign if phase_rate > 0 else x_left_sign
+        require(root.get("source_left_sign") == expected_source_left and
+                root.get("source_right_sign") == expected_source_right,
+                "V6 source-order adjacent sign changed")
+        require(root.get("event_kind") == ("CROSSING" if multiplicity % 2 else "TANGENCY"),
+                "V6 root parity/event kind changed")
+        require(root.get("minimal_source_polynomial_claimed") is False and
+                root.get("source_closed_form_claimed") is False,
+                "candidate invented source-coordinate algebraic authority")
+
+        order_key = lo if phase_rate > 0 else -hi
+        if previous_x is not None:
+            require(previous_x < order_key, "V6 roots are not strictly source ordered")
+        previous_x = hi if phase_rate > 0 else -lo
+
+    source_left_endpoint = V6.rational_turn_endpoint(turn_left)
+    source_right_endpoint = V6.rational_turn_endpoint(turn_right)
+    left_event = V6._event_at_endpoint(poly, source_left_endpoint)
+    right_event = V6._event_at_endpoint(poly, source_right_endpoint)
     left_mult = int(left_event.get("multiplicity", 0)) if left_event.get("relation") == "ZERO" else 0
     right_mult = int(right_event.get("multiplicity", 0)) if right_event.get("relation") == "ZERO" else 0
-    require(candidate["left_endpoint"]["relation"] == left_event["relation"] and
-            candidate["right_endpoint"]["relation"] == right_event["relation"],
-            "source endpoint relation mismatch")
-    require(candidate["left_endpoint"]["multiplicity"] == left_mult and
-            candidate["right_endpoint"]["multiplicity"] == right_mult,
-            "source endpoint multiplicity mismatch")
-    require(candidate["left_endpoint"]["inward_sign"] ==
-            source_one_sided_sign(poly, phase_offset, phase_rate, source_left, "right"),
-            "left source inward sign mismatch")
-    require(candidate["right_endpoint"]["inward_sign"] ==
-            source_one_sided_sign(poly, phase_offset, phase_rate, source_right, "left"),
-            "right source inward sign mismatch")
+    left_phase_side = "right" if phase_rate > 0 else "left"
+    right_phase_side = "left" if phase_rate > 0 else "right"
+    left_inward = V6._one_sided_sign_at_endpoint(poly, source_left_endpoint, left_phase_side)
+    right_inward = V6._one_sided_sign_at_endpoint(poly, source_right_endpoint, right_phase_side)
+    require(candidate["left_endpoint"] == {
+                "relation": left_event["relation"],
+                "multiplicity": left_mult,
+                "inward_sign": left_inward,
+            }, "V6 left source endpoint changed")
+    require(candidate["right_endpoint"] == {
+                "relation": right_event["relation"],
+                "multiplicity": right_mult,
+                "inward_sign": right_inward,
+            }, "V6 right source endpoint changed")
 
     cells = candidate.get("sign_cells")
     require(isinstance(cells, list) and len(cells) == len(roots) + 1,
-            "source sign-cell cardinality mismatch")
+            "V6 source sign-cell cardinality mismatch")
     for index, cell in enumerate(cells):
-        expected_left = (
+        require(cell.get("index") == index and
+                cell.get("complete_open_source_cell") is True,
+                "V6 source cell index/completeness changed")
+        expected_left_boundary = (
             {"kind": "LEFT_SOURCE_ENDPOINT"} if index == 0
             else {"kind": "ROOT", "root_index": index - 1})
-        expected_right = (
+        expected_right_boundary = (
             {"kind": "RIGHT_SOURCE_ENDPOINT"} if index == len(roots)
             else {"kind": "ROOT", "root_index": index})
-        require(cell.get("left_boundary") == expected_left and
-                cell.get("right_boundary") == expected_right and
-                cell.get("complete_open_cell") is True,
-                "source sign cell lost exact boundary/completeness")
-        witness_left, witness_right = map(
-            IDENTITY.q_exact, cell["source_witness_gap"])
-        sample = IDENTITY.q_exact(cell["source_sample"])
-        require(witness_left < sample < witness_right,
-                "source sign sample outside witness gap")
-        require(count_source_roots(
-            poly, phase_offset, phase_rate, witness_left, witness_right) == 0,
-            "source sign witness contains an omitted root")
-        sample_sign = relation_sign(event_at_source(
-            poly, phase_offset, phase_rate, sample))
-        require(cell.get("sign") == ("POSITIVE" if sample_sign > 0 else "NEGATIVE"),
-                "source sign-cell relation mismatch")
+        require(cell.get("left_boundary") == expected_left_boundary and
+                cell.get("right_boundary") == expected_right_boundary,
+                "V6 source cell exact boundaries changed")
+        sample_x = IDENTITY.q_exact(cell["tan_half_witness"])
+        sample_value = EE.peval(poly, sample_x)
+        require(sample_value != 0, "V6 source-cell witness is a root")
+        sample_sign = EE.sign(sample_value)
+        expected_sign = (
+            left_inward if index == 0 else roots[index - 1]["source_right_sign"])
+        if index < len(roots):
+            require(expected_sign == roots[index]["source_left_sign"],
+                    "V6 adjacent source-root signs disagree")
+        else:
+            require(expected_sign == right_inward,
+                    "V6 final source-cell sign disagrees with endpoint")
+        require(cell.get("sign") == ("POSITIVE" if sample_sign > 0 else "NEGATIVE") and
+                sample_sign == expected_sign,
+                "V6 source-cell sign witness changed")
 
     summary = candidate.get("summary", {})
     expected_multiple = sum(root["multiplicity"] > 1 for root in roots)
     expected_crossings = sum(root["multiplicity"] % 2 == 1 for root in roots)
     expected_tangencies = sum(root["multiplicity"] % 2 == 0 for root in roots)
     require(summary.get("distinct_roots_open") == expected_count,
-            "source summary distinct-root count mismatch")
+            "V6 summary distinct-root count changed")
     require(summary.get("multiple_roots_open") == expected_multiple,
-            "source summary multiple-root count mismatch")
+            "V6 summary multiple-root count changed")
     require(summary.get("crossings_open") == expected_crossings and
             summary.get("tangencies_open") == expected_tangencies,
-            "source summary parity counts mismatch")
+            "V6 summary parity counts changed")
     require(summary.get("left_endpoint_root") is bool(left_mult) and
             summary.get("right_endpoint_root") is bool(right_mult),
-            "source summary endpoint-root flags mismatch")
+            "V6 summary endpoint-root flags changed")
     require(summary.get("total_distinct_roots_closed") ==
             expected_count + int(bool(left_mult)) + int(bool(right_mult)),
-            "source summary closed-root count mismatch")
+            "V6 summary closed-root count changed")
     require(candidate.get("tan_half_chart_is_internal_only") is True and
-            candidate.get("source_order_claimed") is True and
+            candidate.get("source_root_coordinates_closed_form_claimed") is False and
             candidate.get("mc_b_or_native_claimed") is False,
-            "candidate broadened chart/programme authority")
+            "V6 candidate broadened chart/programme authority")
     return True
 
 
@@ -668,22 +674,16 @@ def build_source_candidate(spec, max_bisections=MAX_BISECTIONS):
         }
     except (IsolationRefusal, V6.EndpointIsolationRefusal) as exc:
         return {
-            "schema": SCHEMA,
-            "status": "RESOURCE_REFUSAL",
-            "reason": str(exc),
-            "source_sha256": source_digest,
-            "is_truth_value": False,
-            "mc_b_or_native_claimed": False,
+            "schema": SCHEMA, "status": "RESOURCE_REFUSAL",
+            "reason": str(exc), "source_sha256": source_digest,
+            "is_truth_value": False, "mc_b_or_native_claimed": False,
         }
     except RESOURCE_ERRORS as exc:
         return {
-            "schema": SCHEMA,
-            "status": "RESOURCE_REFUSAL",
+            "schema": SCHEMA, "status": "RESOURCE_REFUSAL",
             "reason": "V6_SOURCE_ORDER_RUNTIME_RESOURCE_LIMIT",
-            "exception_type": type(exc).__name__,
-            "source_sha256": source_digest,
-            "is_truth_value": False,
-            "mc_b_or_native_claimed": False,
+            "exception_type": type(exc).__name__, "source_sha256": source_digest,
+            "is_truth_value": False, "mc_b_or_native_claimed": False,
         }
 
 
@@ -715,9 +715,7 @@ def validate_source_candidate(candidate, spec):
             source_left=left, source_right=right,
             phase_offset=span["phase_offset"], phase_rate=span["phase_rate"])
     expected = {
-        index for index, span in enumerate(reconstructed)
-        if span.get("owner") == OWNER
-    }
+        index for index, span in enumerate(reconstructed) if span.get("owner") == OWNER}
     require(seen == expected, "candidate omitted or invented a certified V6 span")
     require(candidate.get("historical_span_count") == len(reconstructed),
             "historical span count mismatch")
@@ -740,42 +738,39 @@ def spline_constant(value, *, lo="0", hi="1"):
 def fixture(*, cos=None, sin=None, offset="0", rate="1/4", lo="0", hi="1"):
     return {
         "grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
-        "cos_splines": cos or {},
-        "sin_splines": sin or {},
-        "parameter_lo": lo,
-        "parameter_hi": hi,
-        "phase_turn_offset": offset,
-        "phase_turn_rate": rate,
+        "cos_splines": cos or {}, "sin_splines": sin or {},
+        "parameter_lo": lo, "parameter_hi": hi,
+        "phase_turn_offset": offset, "phase_turn_rate": rate,
         "source_parameter_id": "v6-source-u",
     }
 
 
-def synthetic_controls():
-    # Negative phase slope: sin(2*pi*phase) crosses zero at source u=1/2.
-    negative = fixture(
-        sin={"1": spline_constant(1)}, offset="1/8", rate="-1/4")
-    result = build_source_candidate(negative)
-    require(result["status"] == "V6_SOURCE_ORDERED_VIEWS_CERTIFIED",
-            "negative-rate V6 control did not certify")
-    validate_source_candidate(result, negative)
-    roots = result["views"][0]["ordered_view"]["ordered_open_roots"]
-    require(len(roots) == 1 and roots[0]["kind"] == "RATIONAL_SOURCE_ROOT" and
-            roots[0]["source_value"] == "1/2" and roots[0]["multiplicity"] == 1,
-            "negative-rate source ordering/root binding failed")
+def root_midpoint(root):
+    lo, hi = root_x_bounds(root)
+    return (lo + hi) / 2
 
-    # cos(theta)=1/3 has two nonrational source roots on [-1/4,+1/4].
-    irrational = fixture(
+
+def synthetic_controls():
+    positive = fixture(
         cos={"0": spline_constant("-1/3"), "1": spline_constant(1)},
         offset="-1/4", rate="1/2")
-    result = build_source_candidate(irrational)
-    require(result["status"] == "V6_SOURCE_ORDERED_VIEWS_CERTIFIED",
-            "nonrational V6 source control did not certify")
-    validate_source_candidate(result, irrational)
-    roots = result["views"][0]["ordered_view"]["ordered_open_roots"]
-    require(len(roots) == 2 and all(root["kind"] == "UNIQUE_SOURCE_ROOT" for root in roots),
-            "nonrational source roots were not rationally isolated in source order")
+    negative = fixture(
+        cos={"0": spline_constant("-1/3"), "1": spline_constant(1)},
+        offset="1/4", rate="-1/2")
+    p = build_source_candidate(positive)
+    n = build_source_candidate(negative)
+    require(p["status"] == n["status"] == "V6_SOURCE_ORDERED_VIEWS_CERTIFIED",
+            "positive/negative V6 order controls did not certify")
+    validate_source_candidate(p, positive)
+    validate_source_candidate(n, negative)
+    p_roots = p["views"][0]["ordered_view"]["ordered_open_roots"]
+    n_roots = n["views"][0]["ordered_view"]["ordered_open_roots"]
+    require(len(p_roots) == len(n_roots) == 2, "expected two nonrational V6 roots")
+    require(root_midpoint(p_roots[0]) < root_midpoint(p_roots[1]),
+            "positive-rate source order does not follow tan-half order")
+    require(root_midpoint(n_roots[0]) > root_midpoint(n_roots[1]),
+            "negative-rate source order was not reversed")
 
-    # (cos(theta)-1/3)^2 = 11/18 - 2/3 cos(theta) + 1/2 cos(2theta).
     repeated = fixture(
         cos={
             "0": spline_constant("11/18"),
@@ -785,33 +780,34 @@ def synthetic_controls():
         offset="-1/4", rate="1/2")
     result = build_source_candidate(repeated)
     require(result["status"] == "V6_SOURCE_ORDERED_VIEWS_CERTIFIED",
-            "repeated V6 source control did not certify")
+            "repeated V6 control did not certify")
     validate_source_candidate(result, repeated)
     roots = result["views"][0]["ordered_view"]["ordered_open_roots"]
-    require(len(roots) == 2 and [root["multiplicity"] for root in roots] == [2, 2] and
+    require([root["multiplicity"] for root in roots] == [2, 2] and
             all(root["event_kind"] == "TANGENCY" for root in roots),
-            "V6 source multiplicity/parity transfer failed")
+            "V6 multiplicity/parity transfer failed")
 
-    refused = build_source_candidate(irrational, max_bisections=1)
+    refused = build_source_candidate(positive, max_bisections=1)
     require(refused["status"] == "RESOURCE_REFUSAL" and
             refused["is_truth_value"] is False,
-            "V6 source isolation budget was treated as truth")
+            "V6 isolation budget was treated as mathematical truth")
 
     identity = fixture(cos={"0": spline_constant(0)}, offset="0", rate="1/4")
     require(build_source_candidate(identity)["status"] ==
             "OUTSIDE_CERTIFIED_V6_CONSTANT_MODULATION_SCOPE",
-            "identity-zero V6 route was treated as isolated roots")
+            "V6 identity-zero route was treated as isolated roots")
 
     pole = fixture(cos={"1": spline_constant(1)}, offset="1/4", rate="1/2")
     require(build_source_candidate(pole)["status"] ==
             "OUTSIDE_CERTIFIED_V6_CONSTANT_MODULATION_SCOPE",
-            "tan-half pole-crossing route was treated as ordered source roots")
+            "V6 pole-crossing route was treated as source ordered")
     return True
 
 
 def mutation_controls():
     spec = fixture(
-        sin={"1": spline_constant(1)}, offset="1/8", rate="-1/4")
+        cos={"0": spline_constant("-1/3"), "1": spline_constant(1)},
+        offset="-1/4", rate="1/2")
     candidate = build_source_candidate(spec)
     validate_source_candidate(candidate, spec)
 
@@ -832,7 +828,7 @@ def mutation_controls():
     rejected(lambda c: c["views"][0]["ordered_view"]["ordered_open_roots"][0].__setitem__(
         "event_kind", "TANGENCY"), "forged V6 parity was accepted")
     rejected(lambda c: c["views"][0]["ordered_view"]["sign_cells"][0].__setitem__(
-        "complete_open_cell", False), "downgraded V6 sign cell was accepted")
+        "complete_open_source_cell", False), "downgraded V6 source cell was accepted")
     rejected(lambda c: c["views"][0]["ordered_view"].__setitem__(
         "phase_affine_map", ["0", "999"]), "forged V6 phase map was accepted")
     rejected(lambda c: c["views"][0]["ordered_view"]["summary"].__setitem__(
@@ -845,8 +841,7 @@ def frozen_corpus_controls():
     corpus = json.loads(CORPUS.read_text())
     mentioned = [
         row for row in corpus["cases"]
-        if OWNER in json.dumps(row.get("expected", {}), sort_keys=True)
-    ]
+        if OWNER in json.dumps(row.get("expected", {}), sort_keys=True)]
     require(len(mentioned) == 22, "unexpected frozen V6 owner case count")
 
     certified = 0
@@ -885,7 +880,7 @@ def self_test():
     synthetic_controls()
     mutation_controls()
     rows = frozen_corpus_controls()
-    print("PASS: negative-rate source order, nonrational source isolation, repeated-root parity and typed refusal controls")
+    print("PASS: monotone-chart source order including negative phase rate, repeated-root parity and typed refusal")
     print("PASS: V6 source-order mutation controls")
     print("PASS: frozen v54 V6 cases:", json.dumps(rows))
     print("PASS: 18 frozen v54 V6 ordered-premise spans receive complete source-ordered views; historical dispositions unchanged")
