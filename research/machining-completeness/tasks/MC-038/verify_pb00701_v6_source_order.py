@@ -81,9 +81,11 @@ class BisectionBudget:
         self.limit = int(limit)
         self.used = 0
 
-    def spend(self):
+    def spend(self, stage="unspecified"):
         if self.used >= self.limit:
-            raise IsolationRefusal("V6_TAN_HALF_ISOLATION_BUDGET_EXHAUSTED")
+            raise IsolationRefusal(
+                f"V6_TAN_HALF_ISOLATION_BUDGET_EXHAUSTED:"
+                f"stage={stage}:used={self.used}:limit={self.limit}")
         self.used += 1
 
 
@@ -101,7 +103,7 @@ def rational_between(left_endpoint, right_endpoint, budget):
         right_lo, right_hi = endpoint_bounds(right)
         if left_hi < right_lo:
             return (left_hi + right_lo) / 2, left, right
-        budget.spend()
+        budget.spend("separate-exact-endpoints")
         changed = False
         if left["kind"] != "RATIONAL":
             left = V6._refine_endpoint(left)
@@ -146,7 +148,7 @@ def isolate_x_roots(poly, left_endpoint, right_endpoint, *,
                     require(EE.distinct_roots_open(EE.square_free(poly), lo, hi) == 1,
                             "rational tan-half interval lost its unique root")
                     return {"kind": "UNIQUE_TAN_HALF_ROOT", "x_interval": (lo, hi)}
-            budget.spend()
+            budget.spend("refine-unique-root")
             mid, left, right = rational_between(left, right, budget)
             if EE.peval(poly, mid) == 0:
                 return {"kind": "RATIONAL_TAN_HALF_ROOT", "x_value": mid}
@@ -163,7 +165,7 @@ def isolate_x_roots(poly, left_endpoint, right_endpoint, *,
     def walk(left, right, count):
         if not count:
             return
-        budget.spend()
+        budget.spend("split-root-set")
         mid, left, right = rational_between(left, right, budget)
         mid_endpoint = x_rational(mid)
         if EE.peval(poly, mid) == 0:
