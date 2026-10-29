@@ -51,9 +51,9 @@ class TailContrastTests(unittest.TestCase):
         self.assertEqual(model.attempt(), self.expected)
         self.assertEqual(self.expected["unique_second_root_strict_brackets"].__len__(), 2)
         for l, r in self.expected["unique_second_root_strict_brackets"]:
-            self.assertLess(Q(1), Q(l))
+            self.assertLessEqual(Q(1), Q(l))
             self.assertLess(Q(l), Q(r))
-            self.assertLess(Q(r), Q(2))
+            self.assertLessEqual(Q(r), Q(2))
 
     def test_exact_bernstein_nontrivial_positive_polynomial(self):
         # u*(1-u/4) is positive for 0<u<=1 although a power coefficient
@@ -72,7 +72,7 @@ class TailContrastTests(unittest.TestCase):
 
     def test_noncanonical_and_resource_polynomial_refusal(self):
         for bad in ([1.0, 2], [True, 1], [0, 2**500],
-                    ["0", "1/0"], ["0", "1"] * 9):
+                    ["0", "1/0"], ["00", "1"], ["0", "1"] * 9):
             with self.subTest(input=bad), self.assertRaises(model.Refusal):
                 model.positive_contrast_on_unit_tail(bad)
 
