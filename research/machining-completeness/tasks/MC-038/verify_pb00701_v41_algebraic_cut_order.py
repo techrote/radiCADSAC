@@ -49,6 +49,8 @@ CLOSE_DISTINCT = _spec_from_ab(
     A_SQRT_HALF,
     [-(Q(1) + Q(1, 2**20)), Q(0), Q(2)],
 )
+ONE_CHANNEL_EXTRA = copy.deepcopy(SAME_ROOT)
+ONE_CHANNEL_EXTRA["cos_splines"]["2"] = core.v41.v27._power_spline([Q(1)])
 
 
 def _cut_with_causes(report, required):
@@ -180,6 +182,13 @@ class V41AlgebraicCutOrderTests(unittest.TestCase):
                 "EXACT_POLYNOMIAL_EVALUATION_AT_RATIONAL_CUT",
             }
         )
+
+    def test_one_channel_harmonic_keeps_historical_certificate_cuts(self):
+        report = core.source_bound_view(ONE_CHANNEL_EXTRA)
+        self.assertEqual(report["active_positive_harmonics"], [1, 2])
+        self.assertEqual(report["orientation_harmonics"], [1])
+        encoded = json.dumps(report["ordered_proof_cuts"], sort_keys=True)
+        self.assertIn('"harmonic": 2', encoded)
 
     def test_source_binding_and_replay_validation(self):
         checked = core.validate_report(SAME_ROOT, self.same)
