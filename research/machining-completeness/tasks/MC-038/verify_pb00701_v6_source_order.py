@@ -128,14 +128,27 @@ def endpoint_descriptor(endpoint):
     }
 
 
-def endpoint_from_descriptor(description):
+def endpoint_from_descriptor(description, *, certified_phase_endpoints):
+    """Bind inherited algebraic brackets to the actual original V6 endpoint.
+
+    Exact root/sign predicates consume polynomial and interval, not descriptive
+    phase/turn metadata. Recheck that metadata and prove the candidate bracket
+    isolates the *same* tangent root as the canonical source-phase endpoint.
+    A refined interval is allowed; a different root/turn is not.
+    """
     kind = description.get("kind")
     if kind == "RATIONAL_X":
         return x_rational(description["value"])
     require(kind == "ALGEBRAIC_X", "unknown tan-half endpoint descriptor")
-    return {
+    turn = IDENTITY.q_exact(description["turn"])
+    require(turn in certified_phase_endpoints,
+            "algebraic tan-half endpoint is not a source phase-window endpoint")
+    canonical = certified_phase_endpoints[turn]
+    require(canonical["kind"] == "ALGEBRAIC_TAN_RATIONAL_TURN",
+            "algebraic descriptor contradicts exact rational-turn endpoint")
+    candidate = {
         "kind": "ALGEBRAIC",
-        "turn": IDENTITY.q_exact(description["turn"]),
+        "turn": turn,
         "principal_turn": IDENTITY.q_exact(description["principal_turn"]),
         "defining_polynomial": [
             IDENTITY.q_exact(x) for x in description["defining_polynomial"]],
@@ -144,6 +157,20 @@ def endpoint_from_descriptor(description):
         "root_rank_abs": int(description["root_rank_abs"]),
         "denominator": int(description["denominator"]),
     }
+    for field in ("principal_turn", "defining_polynomial", "root_rank_abs", "denominator"):
+        require(candidate[field] == canonical[field],
+                f"algebraic tan-half endpoint {field} disagrees with source")
+    lo, hi = candidate["lo"], candidate["hi"]
+    require(lo < hi, "algebraic tan-half bracket is empty or reversed")
+    poly = canonical["defining_polynomial"]
+    require(EE.distinct_roots_open(poly, lo, hi) == 1,
+            "algebraic tan-half bracket is not a one-root interval")
+    overlap_lo = max(lo, canonical["lo"])
+    overlap_hi = min(hi, canonical["hi"])
+    require(overlap_lo < overlap_hi and
+            EE.distinct_roots_open(poly, overlap_lo, overlap_hi) == 1,
+            "algebraic tan-half bracket does not identify the source-phase endpoint root")
+    return candidate
 
 
 def isolate_x_roots(poly, left_endpoint, right_endpoint, *,
@@ -496,6 +523,7 @@ def validate_v6_view(candidate, route, *, source_left, source_right,
     require(isinstance(roots, list) and len(roots) == expected_count,
             "V6 ordered source-root list incomplete")
 
+    certified_phase_endpoints = {phase_lo: left_endpoint, phase_hi: right_endpoint}
     seen_x_ranks = set()
     for index, root in enumerate(roots):
         require(root.get("source_order_index") == index, "source root index changed")
@@ -512,8 +540,10 @@ def validate_v6_view(candidate, route, *, source_left, source_right,
             require(kind == "UNIQUE_REAL_ALGEBRAIC", "unknown tan-half root kind")
             bracket = root.get("tan_half_bracket")
             require(isinstance(bracket, dict), "missing exact tan-half root bracket")
-            root_left = endpoint_from_descriptor(bracket["left"])
-            root_right = endpoint_from_descriptor(bracket["right"])
+            root_left = endpoint_from_descriptor(
+                bracket["left"], certified_phase_endpoints=certified_phase_endpoints)
+            root_right = endpoint_from_descriptor(
+                bracket["right"], certified_phase_endpoints=certified_phase_endpoints)
             require(V6._distinct_roots_open(
                 EE.square_free(poly), root_left, root_right) == 1,
                 "exact tan-half bracket does not isolate one root")
@@ -821,11 +851,11 @@ def mutation_controls():
     candidate = build_source_candidate(spec)
     validate_source_candidate(candidate, spec)
 
-    def rejected(mutator, reason):
-        forged = copy.deepcopy(candidate)
+    def rejected(mutator, reason, *, original=candidate, source=spec):
+        forged = copy.deepcopy(original)
         mutator(forged)
         try:
-            validate_source_candidate(forged, spec)
+            validate_source_candidate(forged, source)
         except (ValueError, KeyError, IndexError):
             return
         raise AssertionError(reason)
@@ -843,6 +873,42 @@ def mutation_controls():
         "phase_affine_map", ["0", "999"]), "forged V6 phase map was accepted")
     rejected(lambda c: c["views"][0]["ordered_view"]["summary"].__setitem__(
         "crossings_open", 99), "forged V6 summary was accepted")
+
+    # Phase +/-1/5 has genuine algebraic tangent window endpoints; the roots
+    # cos(2*pi*t)=1/3 lie strictly within that window and near its boundaries.
+    # Changing only a serialized turn or root-rank metadata used to pass the
+    # numerical root/sign checks despite falsifying the physical source claim.
+    boundary_spec = fixture(
+        cos={"0": spline_constant("-1/3"), "1": spline_constant(1)},
+        offset="-1/5", rate="2/5")
+    boundary_candidate = build_source_candidate(boundary_spec)
+    require(boundary_candidate["status"] == "V6_SOURCE_ORDERED_VIEWS_CERTIFIED",
+            "algebraic endpoint provenance control did not certify")
+    validate_source_candidate(boundary_candidate, boundary_spec)
+
+    def algebraic_boundaries(candidate):
+        return [
+            end
+            for view in candidate["views"]
+            for root in view["ordered_view"]["ordered_open_roots"]
+            if root["tan_half_kind"] == "UNIQUE_REAL_ALGEBRAIC"
+            for end in root["tan_half_bracket"].values()
+            if end["kind"] == "ALGEBRAIC_X"
+        ]
+
+    require(algebraic_boundaries(boundary_candidate),
+            "algebraic endpoint provenance mutation control is vacuous")
+
+    def wrong_turn(candidate):
+        algebraic_boundaries(candidate)[0]["turn"] = "7/9"
+
+    def wrong_rank(candidate):
+        algebraic_boundaries(candidate)[0]["root_rank_abs"] += 1
+
+    rejected(wrong_turn, "forged algebraic endpoint source turn was accepted",
+             original=boundary_candidate, source=boundary_spec)
+    rejected(wrong_rank, "forged algebraic endpoint root rank was accepted",
+             original=boundary_candidate, source=boundary_spec)
     return True
 
 
