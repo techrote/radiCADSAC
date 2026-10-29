@@ -576,6 +576,21 @@ def source_bound_view(spec, *,
         int(h): poly(values)
         for h, values in span["sin_polynomials"].items()
     }
+
+    # Admission is tied to the live V41 boundary, not merely to our choice of
+    # descriptor representation. A rational-but-nondyadic root may be emitted
+    # by #281 as an isolating interval, yet the existing rational-root theorem
+    # can still enumerate it exactly. Such a source is not this research gap.
+    current_v41 = v41._orientation_cut_certificate(
+        cos_polys, sin_polys, local_offset, local_rate
+    )
+    require(
+        current_v41.get("status") == "BLOCKED"
+        and "IRRATIONAL_ALGEBRAIC_ORIENTATION_ROOT_NOT_REPRESENTABLE"
+        in current_v41.get("reason", ""),
+        "SOURCE_NOT_AT_CURRENT_V41_ALGEBRAIC_ROOT_BOUNDARY",
+    )
+
     active_harmonics, orientation_harmonics, orientation_records, endpoints, isolation_used = (
         _orientation_records(
             cos_polys, sin_polys, source_left, source_right,
@@ -616,6 +631,15 @@ def source_bound_view(spec, *,
             "IRRATIONAL_ALGEBRAIC_ORIENTATION_ROOT_NOT_REPRESENTABLE_"
             "BY_CURRENT_RATIONAL_CHILD_PARAMETER_MODEL"
         ),
+        "current_v41_boundary_evidence": {
+            key: copy.deepcopy(current_v41[key])
+            for key in (
+                "reason", "label", "distinct_open_root_count",
+                "exact_rational_open_roots_found", "missing_exact_root_count",
+                "correctness_weakened",
+            )
+            if key in current_v41
+        },
         "active_positive_harmonics": active_harmonics,
         "orientation_harmonics": orientation_harmonics,
         "orientation_root_causes": orientation_records,
