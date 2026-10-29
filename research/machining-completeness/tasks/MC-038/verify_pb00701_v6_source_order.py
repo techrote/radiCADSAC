@@ -557,6 +557,15 @@ def validate_v6_view(candidate, route, *, source_left, source_right,
             }
 
         x_rank = V6._distinct_roots_open(poly, left_endpoint, root_left)
+        # The open count excludes a rational root at the isolating left
+        # boundary. Include it when this is a later nonrational root, but
+        # never include the original (open) source-window endpoint.
+        if kind == "UNIQUE_REAL_ALGEBRAIC" and root_left["kind"] == "RATIONAL":
+            boundary = root_left["value"]
+            if not (left_endpoint["kind"] == "RATIONAL" and
+                    left_endpoint["value"] == boundary):
+                if EE.peval(poly, boundary) == 0:
+                    x_rank += 1
         require(x_rank not in seen_x_ranks, "duplicate tan-half root rank")
         seen_x_ranks.add(x_rank)
         require(root.get("x_order_index") == x_rank,
@@ -810,6 +819,23 @@ def synthetic_controls():
             "positive-rate source order does not follow tan-half order")
     require([root["x_order_index"] for root in n_roots] == [1, 0],
             "negative-rate source order was not reversed")
+
+    # x*(1-5*x*x) has a rational split root at x=0 and irrational
+    # roots at +/-1/sqrt(5). The right root retains x=0 as its initial
+    # open isolating boundary; its rank must still include that root.
+    mixed = fixture(
+        sin={"1": spline_constant("1"), "2": spline_constant("-3/4")},
+        offset="-1/4", rate="1/2")
+    mixed_candidate = build_source_candidate(mixed)
+    require(mixed_candidate["status"] == "V6_SOURCE_ORDERED_VIEWS_CERTIFIED",
+            "mixed rational/algebraic V6 control did not certify")
+    validate_source_candidate(mixed_candidate, mixed)
+    mixed_roots = mixed_candidate["views"][0]["ordered_view"]["ordered_open_roots"]
+    require(len(mixed_roots) == 3 and
+            [root["x_order_index"] for root in mixed_roots] == [0, 1, 2] and
+            [root["tan_half_kind"] for root in mixed_roots] ==
+            ["UNIQUE_REAL_ALGEBRAIC", "RATIONAL", "UNIQUE_REAL_ALGEBRAIC"],
+            "mixed rational/algebraic root ranks are incomplete or misordered")
 
     repeated = fixture(
         cos={
