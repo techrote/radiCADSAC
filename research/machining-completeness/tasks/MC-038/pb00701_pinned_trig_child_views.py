@@ -151,7 +151,7 @@ def nontruth(status, reason):
             "historical_child_certified": False, "production_authorized": False}
 
 
-def compose(candidate, proofs=None):
+def compose(candidate):
     """Validate complete fixed-case views, then compose physical sign cells.
 
     The caller's counts, coordinates and event claims are NEVER authority.
@@ -164,7 +164,7 @@ def compose(candidate, proofs=None):
     case_id = candidate.get("source_case_id")
     if case_id not in CASES:
         return nontruth("BLOCKED", "UNSUPPORTED_ORIGINAL_TRIGONOMETRIC_SOURCE")
-    proof_data = replay_original_proofs() if proofs is None else proofs
+    proof_data = replay_original_proofs()
     expected = reference_view(case_id, proof_data)
     need(packed == canonical(expected),
          "child view disagrees with independently replayed pinned source/proof")
@@ -209,13 +209,6 @@ def compose(candidate, proofs=None):
     physical_cells = [
         {"left": endpoints[i], "right": endpoints[i + 1], "sign": signs[i]}
         for i in range(3)
-    ]
-    witnessed_events = [
-        {"root_ref": f"IMPLICIT_ROOT_{i+1}",
-         "source_case_id": case_id,
-         "source_span": child["interval"], **root}
-        for child in spans for root in child["roots"]
-        for i in []  # replaced by indexed construction below
     ]
     witnessed_events = []
     for child in spans:
