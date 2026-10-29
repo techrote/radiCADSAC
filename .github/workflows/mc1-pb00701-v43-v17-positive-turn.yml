@@ -1,0 +1,40 @@
+name: mc1-pb00701-v43-v17-positive-turn
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v43_v17_positive_turn.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v43-v17-positive-turn-research.md'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v43_refusal_cone.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/programme-v1.json'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'handoffs/current-authority.json'
+      - '.github/workflows/mc1-pb00701-v43-v17-positive-turn.yml'
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v43_v17_positive_turn.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v43-v17-positive-turn-research.md'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v43_refusal_cone.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/programme-v1.json'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'handoffs/current-authority.json'
+      - '.github/workflows/mc1-pb00701-v43-v17-positive-turn.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: V17 exact positive original-source sign, zero roots, and turning
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v43_v17_positive_turn.py --contract --self-test
