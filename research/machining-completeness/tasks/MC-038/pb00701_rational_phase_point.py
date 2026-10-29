@@ -119,9 +119,7 @@ def ring_trig(turn, n, modulus):
 
 
 def point_derivative(poly, x, order):
-    return sum((coef * (comb(i,order) if i>=order else 0)
-                * (1 if order == 0 else 1)
-                * product_range(i-order+1,i) * x**(i-order))
+    return sum((coef * product_range(i-order+1,i) * x**(i-order))
                for i,coef in enumerate(poly) if i>=order)
 
 
