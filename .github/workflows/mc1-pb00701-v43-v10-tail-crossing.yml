@@ -1,0 +1,40 @@
+name: mc1-pb00701-v43-v10-tail-crossing
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v43_v10_tail_crossing.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v43-v10-tail-crossing-research.md'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v43_refusal_cone.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/programme-v1.json'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'handoffs/current-authority.json'
+      - '.github/workflows/mc1-pb00701-v43-v10-tail-crossing.yml'
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v43_v10_tail_crossing.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v43-v10-tail-crossing-research.md'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v43_refusal_cone.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/programme-v1.json'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'handoffs/current-authority.json'
+      - '.github/workflows/mc1-pb00701-v43-v10-tail-crossing.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Exact V43-refused V10 tail original-source crossing proof
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v43_v10_tail_crossing.py --contract --self-test
