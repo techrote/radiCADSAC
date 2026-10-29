@@ -919,6 +919,29 @@ def mutation_controls():
     rejected(lambda c: c["views"].pop(), "omitted V6 span was accepted")
     rejected(lambda c: c.__setitem__("source_parameter_id", "forged"),
              "forged V6 source parameter was accepted")
+    # A source-order certificate cannot omit an open root even if its
+    # declared summary and cell count are adjusted consistently.
+    def omit_open_root(candidate):
+        view = candidate["views"][0]["ordered_view"]
+        view["ordered_open_roots"].pop()
+        view["sign_cells"].pop()
+        view["summary"]["distinct_roots_open"] -= 1
+        view["summary"]["total_distinct_roots_closed"] -= 1
+
+    forged_omission = copy.deepcopy(candidate)
+    omit_open_root(forged_omission)
+    try:
+        validate_source_candidate(forged_omission, spec)
+    except ValueError as exc:
+        require(str(exc) == "V6 ordered source-root list incomplete",
+                f"omitted exact V6 root rejected for the wrong reason: {exc}")
+    else:
+        raise AssertionError("omitted V6 root with adjusted summary was accepted")
+
+    rejected(lambda c: c["views"][0]["ordered_view"]["ordered_open_roots"][1].__setitem__(
+        "x_order_index", 0), "duplicate exact tan-half root rank was accepted")
+    rejected(lambda c: c["views"][0]["ordered_view"]["ordered_open_roots"][0].__setitem__(
+        "x_order_index", 7), "forged exact tan-half root rank was accepted")
     rejected(lambda c: c["views"][0]["ordered_view"]["ordered_open_roots"][0].__setitem__(
         "multiplicity", 9), "forged V6 multiplicity was accepted")
     rejected(lambda c: c["views"][0]["ordered_view"]["ordered_open_roots"][0].__setitem__(
