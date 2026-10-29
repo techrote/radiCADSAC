@@ -162,6 +162,10 @@ def endpoint_from_descriptor(description, *, certified_phase_endpoints):
                 f"algebraic tan-half endpoint {field} disagrees with source")
     lo, hi = candidate["lo"], candidate["hi"]
     require(lo < hi, "algebraic tan-half bracket is empty or reversed")
+    # A submitted endpoint is permitted to refine the certified original
+    # isolating bracket, never to widen it beyond the source-bound interval.
+    require(canonical["lo"] <= lo and hi <= canonical["hi"],
+            "algebraic tan-half bracket is not a certified refinement")
     poly = canonical["defining_polynomial"]
     require(EE.distinct_roots_open(poly, lo, hi) == 1,
             "algebraic tan-half bracket is not a one-root interval")
@@ -998,6 +1002,21 @@ def mutation_controls():
     def wrong_interval(candidate):
         algebraic_boundaries(candidate)[0]["isolating_interval"] = ["0", "1/100"]
 
+    def widened_interval(candidate):
+        endpoint = algebraic_boundaries(candidate)[0]
+        canonical = V6.rational_turn_endpoint(IDENTITY.q_exact(endpoint["turn"]))
+        require(canonical["kind"] == "ALGEBRAIC_TAN_RATIONAL_TURN",
+                "widening control did not find algebraic source endpoint")
+        # Extend outside the canonical bracket while still isolating its
+        # identical tangent root: same-root overlap alone is insufficient.
+        delta = (canonical["hi"] - canonical["lo"]) / 65536
+        lo = canonical["lo"] - delta
+        hi = IDENTITY.q_exact(endpoint["isolating_interval"][1])
+        require(EE.distinct_roots_open(canonical["defining_polynomial"], lo, hi) == 1,
+                "widening control accidentally lost its unique tangent root")
+        endpoint["isolating_interval"][0] = str(lo)
+
+
     rejected(wrong_turn, "forged algebraic endpoint source turn was accepted",
              original=boundary_candidate, source=boundary_spec)
     rejected(wrong_rank, "forged algebraic endpoint root rank was accepted",
@@ -1009,6 +1028,8 @@ def mutation_controls():
     rejected(wrong_polynomial, "forged algebraic endpoint polynomial was accepted",
              original=boundary_candidate, source=boundary_spec)
     rejected(wrong_interval, "forged algebraic endpoint interval was accepted",
+             original=boundary_candidate, source=boundary_spec)
+    rejected(widened_interval, "widened non-refining algebraic endpoint was accepted",
              original=boundary_candidate, source=boundary_spec)
 
     # Nonvacuous omitted-span attack: preserve a valid remaining view and
