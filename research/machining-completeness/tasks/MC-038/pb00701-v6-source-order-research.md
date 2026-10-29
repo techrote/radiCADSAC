@@ -35,11 +35,11 @@ For a V7 constant-modulation span, phase is the exact affine map
 
 `t(u) = offset + rate*u`, with rational `offset`, nonzero rational `rate`, and rational source span endpoints.
 
-The candidate deliberately isolates roots **in source coordinate `u`**, not in tan-half coordinate. It recursively bisects rational source intervals. Each rational source endpoint maps to a rational turn, for which V6 constructs an exact rational/algebraic tan-half endpoint. V6's existing exact Sturm predicate then decides how many roots lie between the two source endpoints.
+The first prototype attempted to bisect directly in source coordinate. That is exact but unsuitable: each finer rational source turn can increase the degree of the exact tangent-endpoint polynomial, so endpoint construction cost grows with the bisection denominator. The preserved first CI attempt is therefore treated as a negative implementation result, not as a route to optimize around.
 
-A non-rational source root is represented only by a rational source interval containing exactly one physical root. No algebraic polynomial or transcendental closed form for the source coordinate is claimed. Exact tan-half algebra is an internal chart witness.
+The corrected candidate isolates roots in V6's **tan-half coordinate using rational x-bisection**, where the numerator polynomial degree is fixed. The tan-half chart remains internal. Because the certified phase window is pole-free and the affine phase slope is nonzero, each exact tan-half root has one and only one source preimage, and tan-half order transfers to source order (reversed when phase rate is negative).
 
-Negative phase rate is handled in source order: the tan-half/turn interval is reversed internally while the ordered root sequence and sign cells remain increasing in the original source parameter.
+A non-rational source root is represented by its unique exact tan-half algebraic root descriptor plus the original source span and affine phase map. No algebraic polynomial, rational isolating interval, or transcendental closed form for the source coordinate itself is claimed. Source sign cells are bounded symbolically by the exact source-ordered root sequence; rational tan-half witnesses certify their signs.
 
 ## Source and provenance binding
 
@@ -60,13 +60,12 @@ For each certified V6 span, the candidate records:
 - exact original source interval and affine phase map;
 - historical tan-half numerator;
 - source endpoint relation, multiplicity and inward sign;
-- ordered open roots:
-  - exact rational source root where rational bisection lands on the root, or
-  - rational source isolating interval containing exactly one physical root;
+- exact tan-half root descriptors (rational value or unique rational isolating interval) with a source identity defined as the unique preimage under the pole-free monotone chart;
+- source-order indices obtained from tan-half order, explicitly reversed for negative phase rate;
 - per-root multiplicity from the repeated GCD/derivative chain;
 - crossing/tangency parity and adjacent source-order signs;
-- complete open sign cells bounded symbolically by source endpoints/root descriptors, with root-free rational witness intervals and exact signs;
-- typed resource refusal when the explicit bisection budget is exhausted.
+- complete open source sign cells bounded symbolically by source endpoints/root descriptors, with exact rational tan-half witnesses;
+- typed resource refusal when the fixed-degree tan-half isolation budget is exhausted.
 
 The validator independently replays root counts, endpoint events, multiplicities, phase/source mappings, root order, sign-cell witnesses, summary counts, and exact completeness of the submitted V6 span set.
 
@@ -74,8 +73,7 @@ The validator independently replays root counts, endpoint events, multiplicities
 
 The executable controls include:
 
-- **negative phase rate** with a rational source crossing at `u=1/2`, proving source order is not silently replaced by turn/tan order;
-- two non-rational source roots of `cos(theta)=1/3`, isolated only by rational source intervals;
+- the same two non-rational roots of `cos(theta)=1/3` under positive and negative phase rate, requiring the source-order sequence to reverse while the exact tan-half roots remain the same;
 - the double-root identity
   `(cos(theta)-1/3)^2 = 11/18 - 2/3 cos(theta) + 1/2 cos(2theta)`,
   requiring two multiplicity-2 tangencies;
