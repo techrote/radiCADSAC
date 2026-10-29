@@ -87,6 +87,16 @@ at the root. Its sign alternates with \(k\), agreeing with the five exact sign c
 
 This is a source-specific closed-form trigonometric argument supported by exact rational controls and standard inequalities; it is **not** a generic certified analytic-event solver, general polynomial root isolation or algebraic defining polynomial for the source coordinate. The script checks source identities and rational proof invariants rather than evaluating \(\arctan\) numerically.
 
+## Independent fixed-degree tan-half chart cross-check
+
+The exact second-span coefficients also yield the identity, where \(x=\tan(\theta/2)\),
+
+\[
+(1+x^2)F=1-x-x^2.
+\]
+
+The polynomial has discriminant \(5>0\) and hence two distinct real \(x\)-roots per full \(2\pi\) phase cycle. Over the original \(4\pi\) phase sweep there are two cycles, consistent with four physical crossings. This exact quadratic identity is checked using the separately lowered rational source coefficients. The phase window **crosses tan-half chart poles**, so the polynomial is only an independent analytic sanity check on the source-specific proof: it does not make the historical V6 pole-free certificate applicable across the entire interval or establish a new general composition route. Explicit report fields prohibit claiming such a cross-pole certificate.
+
 ## Reproduction and negative controls
 
 Run from repository root:
