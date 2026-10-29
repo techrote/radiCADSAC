@@ -138,8 +138,11 @@ class KnotZeroCoverTests(unittest.TestCase):
         self.assertFalse(self.cross["production_authorized"])
 
     def test_two_omitted_remote_tangencies_with_same_endpoint_sign_refuse(self):
+        # Keep the local order-2 knot guard deliberately narrow so this
+        # adversary reaches the global outer-cover obligation. The two exact
+        # remote tangencies at 1/4 and 3/4 must then make that cover refuse.
         refused = core.attempt(
-            EXTRA_LEFT_ROOTS, RIGHT_CROSS, "1", ["7/8", "9/8"])
+            EXTRA_LEFT_ROOTS, RIGHT_CROSS, "1", ["255/256", "9/8"])
         self.assertEqual(refused["status"], "RESOURCE_REFUSAL", refused)
         self.assertIn("OUTER_ROOT_FREE_COVER_DEPTH_EXHAUSTED",
                       refused["reason"])
