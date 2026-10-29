@@ -170,7 +170,18 @@ def no_root_cover(span, left, right, sign, m1, budget):
         "maximum_depth": max_seen_depth,
         "full_cell_certificate_sha256":
             hashlib.sha256(canonical(cells).encode("ascii")).hexdigest(),
-        "first_cell": cells[0], "last_cell": cells[-1],
+        # Full rational cell enclosures remain in the hashed, reproducible
+        # complete witness. Only the interval/sign metadata is transmitted:
+        # huge Taylor fraction denominators are not copied redundantly into
+        # the bounded untrusted report.
+        "first_cell": {
+            "source_interval": cells[0]["source_interval"],
+            "strict_sign": cells[0]["strict_sign"],
+        },
+        "last_cell": {
+            "source_interval": cells[-1]["source_interval"],
+            "strict_sign": cells[-1]["strict_sign"],
+        },
     }
 
 def prove(source, root, guard, *, max_order=4, max_depth=18, max_nodes=20000):
