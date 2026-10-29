@@ -92,7 +92,7 @@ class TailContrastTests(unittest.TestCase):
         index = model.original.custody()
         a, b = index[model.LEFT], index[model.RIGHT]
         bad = copy.deepcopy(b)
-        bad["spec"]["cos_splines"]["2"]["controls"][1] = "1/50"
+        bad["spec"]["cos_splines"]["2"]["controls"] = ["1/50", "1/50"]
         with self.assertRaises(model.Refusal):
             model.source_tail_contrast(a, bad)
         bad = copy.deepcopy(b)
