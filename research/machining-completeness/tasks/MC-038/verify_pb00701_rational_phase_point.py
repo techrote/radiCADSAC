@@ -112,6 +112,13 @@ class RationalPointResearchTests(unittest.TestCase):
         self.assertEqual(refusal["reason"],"CYCLOTOMIC_ORDER_RESOURCE_LIMIT")
         self.assertIs(refusal["is_truth_value"],False)
 
+    def test_mutated_span_cannot_bypass_source_grammar(self):
+        s=span(0,1,1,{1:((1,),(0,))})
+        s.terms[1]=((1.0,),(0,))
+        failure=point.attempt(point.point,s,Q(1,4))
+        self.assertEqual(failure["status"],"BLOCKED")
+        self.assertEqual(failure["reason"],"NONEXACT_COEFFICIENT_TYPE")
+
     def test_forged_or_count_only_point_witness_rejected(self):
         s=span(0,1,1,{1:((1,),(0,))})
         good=point.point(s,Q(1,4))
