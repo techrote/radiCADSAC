@@ -76,6 +76,7 @@ The validator independently replays root counts, endpoint events, multiplicities
 The executable controls include:
 
 - mixed rational/algebraic chart roots at `x = -1/sqrt(5), 0, +1/sqrt(5)`, verifying exact ranks `0,1,2` where the positive irrational root's isolating interval inherits the rational split root `x=0` as its left boundary; a prior open-interval rank check omitted that boundary root;
+- a **source-endpoint alias falsifier** using the exact tan-half numerator `x^2(x+1)^2` on `x in [-1,1]`: the left source endpoint and unique open root are both double tangencies with matching signs, but substituting `x=-1` for the valid open root `x=0` must be rejected specifically by the one-sided Sturm rank check (`-1`, not `0` at an equal root boundary);
 - certificate mutations omitting an open root while adjusting summary/cell cardinalities, duplicating an `x_order_index`, and forging an `x_order_index`, all required to fail source-bound validation;
 - a widened algebraic endpoint bracket that still isolates the original tangent root but extends outside the canonical source-phase certificate, which must be rejected as a non-refinement;
 - the same two non-rational roots of `cos(theta)=1/3` under positive and negative phase rate, requiring the source-order sequence to reverse while the exact tan-half roots remain the same;
