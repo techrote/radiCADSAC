@@ -124,9 +124,11 @@ def prove(source, roots, guards, *, max_order=4, max_depth=18,
         require(single.interval.strict_sign(span.evaluate(a)) == sign and
                 single.interval.strict_sign(span.evaluate(b)) == sign,
                 "GAP_ENDPOINT_SIGN_UNPROVED")
+        remaining = max_nodes - cumulative_nodes
+        require(remaining > 0, "TOTAL_COMPLEMENT_COVER_NODE_RESOURCE_LIMIT")
         part = single.no_root_cover(
             span, a, b, sign, m1,
-            {"max_nodes": max_nodes, "max_depth": max_depth})
+            {"max_nodes": remaining, "max_depth": max_depth})
         cumulative_nodes += part["nodes"]
         require(cumulative_nodes <= max_nodes,
                 "TOTAL_COMPLEMENT_COVER_NODE_RESOURCE_LIMIT")
