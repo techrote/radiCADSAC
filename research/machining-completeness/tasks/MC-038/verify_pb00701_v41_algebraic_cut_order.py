@@ -51,6 +51,9 @@ CLOSE_DISTINCT = _spec_from_ab(
 )
 ONE_CHANNEL_EXTRA = copy.deepcopy(SAME_ROOT)
 ONE_CHANNEL_EXTRA["cos_splines"]["2"] = core.v41.v27._power_spline([Q(1)])
+RATIONAL_ONLY = _spec_from_ab(
+    [Q(-1, 3), Q(1)], [Q(-2, 3), Q(1)]
+)
 
 
 def _cut_with_causes(report, required):
@@ -248,6 +251,15 @@ class V41AlgebraicCutOrderTests(unittest.TestCase):
         self.assertEqual(relation, "RIGHT_BEFORE_LEFT")
         self.assertEqual(method, "DISJOINT_EXACT_RATIONAL_BOUNDS")
         self.assertGreater(budget.used, 0)
+
+    def test_rational_only_source_is_not_mislabelled_as_algebraic_boundary(self):
+        refused = core.attempt(RATIONAL_ONLY)
+        self.assertEqual(refused["status"], "BLOCKED", refused)
+        self.assertIn(
+            "SOURCE_NOT_AT_CURRENT_V41_ALGEBRAIC_ROOT_BOUNDARY",
+            refused["reason"],
+        )
+        self.assertFalse(refused["is_truth_value"])
 
     def test_identity_orientation_coordinate_refuses(self):
         spec = _spec_from_ab([Q(0)], A_SQRT_HALF)
