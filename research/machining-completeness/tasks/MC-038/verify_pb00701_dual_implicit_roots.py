@@ -64,6 +64,30 @@ class DualImplicitRootTests(unittest.TestCase):
             first["root_matches"][0]["transverse_bracket"])
         self.assertEqual(core.validate(first)["status"], "BLOCKED")
 
+    def test_nonvacuous_different_owner_root_comparison(self):
+        # V27 tail100 has different physical child owners across its knot.
+        report = self.reports[core.fixed.v27.TAIL100]
+        owners = [root["owner"] for root in report["root_matches"]]
+        self.assertNotEqual(owners[0], owners[1])
+        self.assertEqual(core.compare(report, 0, report, 1)["relation"], "LESS")
+
+    def test_different_hash_serializations_are_bound_not_equated(self):
+        for report in self.reports.values():
+            self.assertNotEqual(report["fixed_source_sha256"],
+                                report["transverse_source_sha256"])
+            self.assertEqual(len(report["fixed_source_sha256"]), 64)
+            self.assertEqual(len(report["transverse_source_sha256"]), 64)
+
+    def test_strictly_overlapping_intervals_can_contain_distinct_roots(self):
+        # For (x-1/4)(x-7/4), each interval isolates a different root,
+        # yet the intervals overlap: intersection alone is NOT equality.
+        a, b = Q(1, 4), Q(7, 4)
+        i1, i2 = (Q(0), Q(3, 2)), (Q(1), Q(2))
+        self.assertTrue(i1[0] < a < i1[1] < b)
+        self.assertTrue(a < i2[0] < b < i2[1])
+        self.assertLess(max(i1[0], i2[0]), min(i1[1], i2[1]))
+        self.assertNotEqual(a, b)
+
     def test_forged_counts_source_owners_roots_events_and_gates_refuse(self):
         report = self.reports[list(core.CASES)[0]]
         changes = {
