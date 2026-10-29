@@ -38,7 +38,7 @@ ODD = source({
 })
 # The second exact rational root lies outside the guarded event.
 SECOND_ROOT = source({
-    "0": {"cos": ["-1/4", "3/2", "-9/4", "1"], "sin": ["0"]},
+    "0": {"cos": ["-3/4", "5/2", "-11/4", "1"], "sin": ["0"]},
 })
 
 class NontransverseRootTests(unittest.TestCase):
