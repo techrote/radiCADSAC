@@ -879,7 +879,8 @@ def frozen_corpus_controls():
         candidate = build_source_candidate(row["spec"])
         if has_certified:
             require(candidate["status"] == "V6_SOURCE_ORDERED_VIEWS_CERTIFIED",
-                    f"frozen certified V6 case failed: {row['id']}")
+                    f"frozen certified V6 case failed: {row['id']} "
+                    f"status={candidate.get('status')} reason={candidate.get('reason')}")
             validate_source_candidate(candidate, row["spec"])
             certified += 1
             if row["expected"]["v54_disposition"] ==                     "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE":
