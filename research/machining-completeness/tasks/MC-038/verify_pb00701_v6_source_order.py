@@ -827,6 +827,36 @@ def synthetic_controls():
             all(root["event_kind"] == "TANGENCY" for root in roots),
             "V6 multiplicity/parity transfer failed")
 
+    # Exact source-endpoint roots with no open roots. The second case uses
+    # negative phase rate so source-right maps to the lower phase endpoint.
+    left_endpoint_root = fixture(
+        sin={"1": spline_constant(1)}, offset="0", rate="1/4")
+    left_result = build_source_candidate(left_endpoint_root)
+    require(left_result["status"] == "V6_SOURCE_ORDERED_VIEWS_CERTIFIED",
+            "left source-endpoint root control did not certify")
+    validate_source_candidate(left_result, left_endpoint_root)
+    left_view = left_result["views"][0]["ordered_view"]
+    require(left_view["summary"]["distinct_roots_open"] == 0 and
+            left_view["left_endpoint"]["relation"] == "ZERO" and
+            left_view["left_endpoint"]["multiplicity"] == 1 and
+            left_view["summary"]["left_endpoint_root"] is True and
+            left_view["summary"]["right_endpoint_root"] is False,
+            "left source-endpoint root evidence mismatch")
+
+    right_endpoint_root_negative = fixture(
+        sin={"1": spline_constant(1)}, offset="1/4", rate="-1/4")
+    right_result = build_source_candidate(right_endpoint_root_negative)
+    require(right_result["status"] == "V6_SOURCE_ORDERED_VIEWS_CERTIFIED",
+            "negative-rate right source-endpoint root control did not certify")
+    validate_source_candidate(right_result, right_endpoint_root_negative)
+    right_view = right_result["views"][0]["ordered_view"]
+    require(right_view["summary"]["distinct_roots_open"] == 0 and
+            right_view["right_endpoint"]["relation"] == "ZERO" and
+            right_view["right_endpoint"]["multiplicity"] == 1 and
+            right_view["summary"]["right_endpoint_root"] is True and
+            right_view["summary"]["left_endpoint_root"] is False,
+            "negative-rate right source-endpoint root evidence mismatch")
+
     refused = build_source_candidate(positive, max_bisections=0)
     require(refused["status"] == "RESOURCE_REFUSAL" and
             refused["is_truth_value"] is False,
@@ -905,10 +935,57 @@ def mutation_controls():
     def wrong_rank(candidate):
         algebraic_boundaries(candidate)[0]["root_rank_abs"] += 1
 
+    def wrong_principal(candidate):
+        algebraic_boundaries(candidate)[0]["principal_turn"] = "7/9"
+
+    def wrong_denominator(candidate):
+        algebraic_boundaries(candidate)[0]["denominator"] += 1
+
+    def wrong_polynomial(candidate):
+        endpoint = algebraic_boundaries(candidate)[0]
+        endpoint["defining_polynomial"][0] = str(
+            IDENTITY.q_exact(endpoint["defining_polynomial"][0]) + 1)
+
+    def wrong_interval(candidate):
+        algebraic_boundaries(candidate)[0]["isolating_interval"] = ["0", "1/100"]
+
     rejected(wrong_turn, "forged algebraic endpoint source turn was accepted",
              original=boundary_candidate, source=boundary_spec)
     rejected(wrong_rank, "forged algebraic endpoint root rank was accepted",
              original=boundary_candidate, source=boundary_spec)
+    rejected(wrong_principal, "forged algebraic endpoint principal turn was accepted",
+             original=boundary_candidate, source=boundary_spec)
+    rejected(wrong_denominator, "forged algebraic endpoint denominator was accepted",
+             original=boundary_candidate, source=boundary_spec)
+    rejected(wrong_polynomial, "forged algebraic endpoint polynomial was accepted",
+             original=boundary_candidate, source=boundary_spec)
+    rejected(wrong_interval, "forged algebraic endpoint interval was accepted",
+             original=boundary_candidate, source=boundary_spec)
+
+    # Nonvacuous omitted-span attack: preserve a valid remaining view and
+    # adjust the declared count so only exact set-equality can reject it.
+    two_span_spec = fixture(
+        cos={"1": {
+            "degree": 0,
+            "knots": ["0", "1", "2"],
+            "controls": ["1", "1"],
+        }},
+        offset="0", rate="1/8", lo="0", hi="2")
+    two_span_candidate = build_source_candidate(two_span_spec)
+    require(two_span_candidate["status"] == "V6_SOURCE_ORDERED_VIEWS_CERTIFIED" and
+            two_span_candidate["v6_span_count"] == 2 and
+            len(two_span_candidate["views"]) == 2,
+            "two-span omission control did not construct two V6 views")
+    forged = copy.deepcopy(two_span_candidate)
+    forged["views"].pop()
+    forged["v6_span_count"] = 1
+    try:
+        validate_source_candidate(forged, two_span_spec)
+    except ValueError as exc:
+        require(str(exc) == "candidate omitted or invented a certified V6 span",
+                f"two-span omission rejected for the wrong reason: {exc}")
+    else:
+        raise AssertionError("multi-span V6 omission with adjusted count was accepted")
     return True
 
 
