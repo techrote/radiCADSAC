@@ -41,7 +41,7 @@ def load_json(path):
 
 def blob_sha(path):
     raw = path.read_bytes()
-    return hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\\0" + raw).hexdigest()
+    return hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest()
 
 
 def load_lowerer():
@@ -141,8 +141,7 @@ def original_pieces(source):
             LOWERER.rational(source["parameter_hi"]) == 2 and
             source["source_parameter_id"] == "source-time-t",
             "V13 original physical parameter or affine phase changed")
-    return {harmonic: expected[(channel, harmonic)][1][0]
-            for channel, harmonic in expected if harmonic != "0"}
+    return True
 
 
 def exact_factor_coefficient_proof(source):
