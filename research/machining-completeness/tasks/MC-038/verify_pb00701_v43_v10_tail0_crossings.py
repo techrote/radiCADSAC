@@ -168,7 +168,20 @@ def phase_turn(source, s):
 def analyze(corpus):
     case = frozen_case(corpus)
     source = case["spec"]
-    exact_source_channels(source)
+    pieces = exact_source_channels(source)
+
+    # Independent exact tan-half chart cross-check on the constant second
+    # span. For x=tan(theta/2), (1+x*x)*F = C1*(1-x*x)+2*S1*x.
+    # This fixed quadratic has two simple x roots (discriminant 5).
+    # The original phase crosses chart poles, so this is NOT a V6
+    # pole-free-window certificate or a general cross-pole owner route.
+    c1 = pieces["cos_splines", "1"][1][0]
+    s1 = pieces["sin_splines", "1"][1][0]
+    chart_poly = (c1, 2 * s1, -c1)
+    chart_discriminant = chart_poly[1] ** 2 - 4 * chart_poly[0] * chart_poly[2]
+    require(chart_poly == (Q(1), Q(-1), Q(-1)) and
+            chart_discriminant == Q(5) and chart_discriminant > 0,
+            "exact two-root tan-half quadratic changed")
 
     # On the original V43-refused second physical span [1,2]:
     #   F(s) = cos(theta(s)) - (1/2) sin(theta(s)),
@@ -211,7 +224,7 @@ def analyze(corpus):
         roots.append({
             "source_order_index": i,
             "source_identity": "1+k/4+atan(2)/(4*pi), k=source_order_index",
-            "tan_half_angle_identity": "theta=3*pi+atan(2)+k*pi",
+            "phase_angle_identity": "theta=3*pi+atan(2)+k*pi",
             "strict_source_bracket": [str(bound_lo), str(bound_hi)],
             "half_cycle_open_source_interval": [
                 str(source_left), str(source_right)],
@@ -239,6 +252,9 @@ def analyze(corpus):
         "phase_turns": [str(t) for t in turns],
         "exact_endpoint_values": [str(x) for x in endpoint_values],
         "exact_open_roots": 4,
+        "internal_tan_half_numerator": [str(x) for x in chart_poly],
+        "internal_tan_half_discriminant": str(chart_discriminant),
+        "cross_pole_v6_certificate_claimed": False,
         "ordered_open_roots": roots,
         "all_roots_simple_crossings": True,
         "complete_sign_cells": [
@@ -339,6 +355,10 @@ def self_test():
 
     reject_report(lambda x: x.__setitem__("exact_open_roots", 3),
                   "missing crossing count")
+    reject_report(lambda x: x.__setitem__("internal_tan_half_discriminant", "4"),
+                  "forged chart discriminant")
+    reject_report(lambda x: x.__setitem__("cross_pole_v6_certificate_claimed", True),
+                  "unearned cross-pole V6 certificate")
     reject_report(lambda x: x["ordered_open_roots"].pop(2),
                   "omitted root")
     reject_report(lambda x: x["ordered_open_roots"][1].__setitem__(
