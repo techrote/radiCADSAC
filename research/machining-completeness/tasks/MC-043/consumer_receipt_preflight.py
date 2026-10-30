@@ -137,10 +137,14 @@ def check(manifest: dict[str, Any], receipt: dict[str, Any], manifest_bytes: byt
             expected_items[item_id] = body_id
     require(set(expected_items.values()) == bodies, "durable body omitted from STEP item inventory")
     piece_ids = unique_ids(pieces, "piece_id")
+    seen_piece_items: set[str] = set()
     for piece in pieces:
         require(piece.get("item_id") in expected_items and
                 piece.get("durable_body_id") == expected_items[piece["item_id"]],
                 "piece lacks source body/item binding")
+        require(piece["item_id"] not in seen_piece_items,
+                "multiple representation pieces share one STEP item")
+        seen_piece_items.add(piece["item_id"])
         require(piece.get("seam_kind") in ("NONE", "NON_MATERIAL_PARTITION"),
                 "unqualified material seam")
     require(len(piece_ids) == len(pieces), "duplicate decomposition piece")
