@@ -91,6 +91,31 @@ class V44ProofCutRootPartitionTests(unittest.TestCase):
                 for x in r["proof_cut_relations"])
         )
 
+    def test_v46_endpoint_and_v41_cut_identity_uses_exact_gcd_sturm(self):
+        self.assertEqual(
+            self.report["algebraic_cut_identity_method"],
+            "EXACT_POLYNOMIAL_GCD_PLUS_STURM_COMMON_ROOT",
+        )
+        # Overlapping rational intervals are not root identity. Replace the
+        # V46 minimal factor with a distinct polynomial while retaining the
+        # same interval; the candidate must refuse rather than merge by overlap.
+        endpoint_report, endpoint = core._algebraic_endpoint(
+            core.frozen_row()["spec"]
+        )
+        forged_endpoint = copy.deepcopy(endpoint)
+        forged_endpoint["field"]["minimal_polynomial"] = [-1, 0, 3]
+        with patch.object(
+            core, "_algebraic_endpoint",
+            return_value=(endpoint_report, forged_endpoint),
+        ):
+            refused = core.attempt()
+        self.assertEqual(refused["status"], "BLOCKED", refused)
+        self.assertIn(
+            "V46_ENDPOINT_AND_V41_CUT_EXACT_ROOT_IDENTITY_NOT_ESTABLISHED",
+            refused["reason"],
+        )
+        self.assertFalse(refused["is_truth_value"])
+
     def test_current_v47_sufficient_derivative_route_still_does_not_own_source(self):
         self.assertFalse(self.report["v47_still_certifies_this_frozen_source"])
         self.assertFalse(self.report["closed_child_derivative_theorem_claimed"])
@@ -210,6 +235,7 @@ def contract():
         "proof_cell_root_counts": r["proof_cell_open_root_counts"],
         "root_cell_index": r["root_occupying_proof_cell_index"],
         "algebraic_cut_relation": r["algebraic_cut_endpoint_relation"],
+        "algebraic_cut_identity_method": r["algebraic_cut_identity_method"],
         "historical_v54_admitted": False,
         "pb00701_certified": False,
         "production_authorized": False,
