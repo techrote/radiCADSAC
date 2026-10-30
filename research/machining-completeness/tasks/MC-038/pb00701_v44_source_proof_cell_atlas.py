@@ -150,6 +150,7 @@ def _checked_source_snapshot(source):
     return original, r, cuts, counts, before
 
 def compose(source):
+    """Produce a source-coordinate sign atlas, not an analytic child solver."""
     # The input is a report, not an unforgeable capability. A plausible cut
     # descriptor (or a rearranged one) can pass local cardinality/sign checks
     # while naming a DIFFERENT exact source coordinate. Require the reviewed
@@ -162,7 +163,6 @@ def compose(source):
             previous.canonical(replayed) == previous.canonical(source),
             "SOURCE_PROOF_CUT_REPORT_NOT_EXACTLY_REPLAY_VERIFIED")
 
-    """Produce a *source-coordinate* sign atlas, not an analytic child solver."""
     sid = original["source_parameter_id"]
     signs = source["physical_endpoint_signs"]
     boundaries = [{
