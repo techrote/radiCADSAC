@@ -37,6 +37,12 @@ PINS = {
         "9fc344e045fa800fb24d30902a641e534a1e197b",
     HERE / "pb00701_rational_turn_model.py":
         "a1316ff0f71b2d7aa80807843a74fd8280779cb2",
+    HERE / "pb00701_transverse_trig_interval.py":
+        "2320f92efe4316d865a89f6d848737e2c000ca4d",
+    HERE / "pb00701_event_model.py":
+        "104c0e7a459cd7da5025853b246faff244a5948e",
+    ROOT / "research/machining-completeness/tasks/MC-032/event_engine.py":
+        "789a709c5141479a343035d1b7055dd4e53534e1",
     HERE / "pb00701-finite-owner-corpus-v54.json":
         "5841c331579489b25caef38cd412bdbf286f9134",
     ROOT / "research/machining-completeness/tasks/MC-002/domain-contract-v1.json":
