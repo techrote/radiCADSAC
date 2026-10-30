@@ -307,6 +307,30 @@ class TestOriginalSource(unittest.TestCase):
         self.assertEqual(x["gates"]["MC-B"],"NOT_ESTABLISHED")
         self.assertFalse(x["gates"]["production_authorized"])
 
+    def test_synthetic_tangencies_and_very_close_roots_are_not_proven_by_sign_sampling(self):
+        # These are exact rational NEGATIVE controls, deliberately NOT original
+        # V9/V43 source certificates. Equal exterior signs do not prove no
+        # interior event: an even-multiplicity root can touch without crossing.
+        q = lambda t: (t-Q(1,2))**2
+        self.assertGreater(q(Q(0)),0)
+        self.assertGreater(q(Q(1)),0)
+        self.assertEqual(q(Q(1,2)),0)
+        self.assertEqual(q(Q(1,4)),Q(1,16))
+
+        # Two arbitrarily close DISTINCT simple roots can hide between
+        # coarse rational probes. A finite scan/refinement cap is not a
+        # semantic root-completeness theorem or a proof of exact zero.
+        eps=Q(1,2**100)
+        g=lambda t: (t-Q(1,2))**2-eps**2
+        roots=[Q(1,2)-eps,Q(1,2)+eps]
+        self.assertEqual(roots[1]-roots[0],Q(1,2**99))
+        self.assertEqual([g(t) for t in roots],[Q(0),Q(0)])
+        for probe in [Q(0),Q(1,4),Q(3,4),Q(1)]:
+            self.assertGreater(g(probe),0)
+        self.assertLess(g(Q(1,2)),0)
+        self.assertEqual(self.report["proof"]["whole_source_open_root_count"],1)
+        self.assertFalse(self.report["proof"]["general_V43_route_proved"])
+
     def test_machine_report_and_forged_claims_fail_closed(self):
         canonical=json.loads(REPORT.read_text())
         self.assertTrue(validate_report(canonical))
