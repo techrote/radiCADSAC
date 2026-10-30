@@ -235,7 +235,8 @@ def prove(*, supplied_atlas=None):
         "closed_mixed_cut_qalpha_children": children,
         "complete_open_simple_physical_root_counts": root_counts,
         "root_counts_derived_from_new_signs_and_global_monotonicity": True,
-        "source_proof_atlas_used_only_as_afterward_crosscheck": True,
+        "atlas_cut_coordinates_used_as_replayed_premises": True,
+        "atlas_signs_and_cell_counts_checked_only_after_new_derivation": True,
         "proof_cut_physical_events": 0,
         "independent_irrational_cut_sign_source_proof":
             source_report["source_proof"],
