@@ -147,7 +147,39 @@ class ContinuumTests(unittest.TestCase):
         unclamped=source({"0":bezier("0","0",knots=["0","1","2"])})
         self.assertEqual(core.attempt(unclamped)["status"],"BLOCKED")
 
-    def test_08_resource_budget_and_typed_nontruth(self):
+    def test_08_excess_clamp_and_internal_knot_multiplicity_refused(self):
+        # These vectors pass a superficial prefix/suffix clamp check but
+        # exceed valid degree+1 knot multiplicity. Original B-spline validity
+        # must be decided BEFORE promoting any identity-zero interval.
+        excessive_endpoint = source({
+            "0": bezier("0","0","0",degree=1,
+                        knots=["0","0","0","1","1"])})
+        self.assertEqual(core.attempt(excessive_endpoint)["status"],"BLOCKED")
+        excessive_interior = source({
+            "0": bezier("0","0","0","0","0",degree=1,
+                        knots=["0","0","1","1","1","2","2"])},hi="2")
+        self.assertEqual(core.attempt(excessive_interior)["status"],"BLOCKED")
+        for bad in (excessive_endpoint, excessive_interior):
+            with self.assertRaises(core.Refusal):
+                core.guard_original_source(bad)
+
+    def test_09_lowerer_untrusted_exceptions_are_typed_nontruth(self):
+        # A malformed source which escapes a future preflight should still
+        # produce a deterministic BLOCKED result, not raise to the consumer.
+        original = core.original_piece_channel_continuity
+        try:
+            def parser_fails(*args, **kwargs):
+                raise ValueError("simulated historical B-spline parser refusal")
+            core.original_piece_channel_continuity = parser_fails
+            result = core.attempt(source())
+            self.assertEqual(result["status"], "BLOCKED")
+            self.assertEqual(
+                result["reason"], "INVALID_EXACT_ORIGINAL_SOURCE_LOWERER_OR_INPUT")
+            self.assertFalse(result["is_truth_value"])
+        finally:
+            core.original_piece_channel_continuity = original
+
+    def test_10_resource_budget_and_typed_nontruth(self):
         identity=source({"0":bezier("0")},offset="1/257",rate="0")
         result=core.attempt(identity)
         self.assertEqual(result["status"],"RESOURCE_REFUSAL")
@@ -167,7 +199,7 @@ class ContinuumTests(unittest.TestCase):
         with self.assertRaises(core.Refusal):
             core.bounded_json({"binary":0.2})
 
-    def test_09_six_case_union_preserves_prior_five_original_sources(self):
+    def test_11_six_case_union_preserves_prior_five_original_sources(self):
         rec=self.report
         sel=rec["separate_source_zero_set_views"]
         self.assertEqual(sel["kind"],"DISJOINT_FINITE_OR_CONTINUUM_ZERO_SET")
@@ -187,7 +219,7 @@ class ContinuumTests(unittest.TestCase):
                           "missing_ordered_span_premises":30,
                           "original_route_dispositions_unchanged":True})
 
-    def test_10_forged_root_cardinality_source_identity_and_gate_refuse(self):
+    def test_12_forged_root_cardinality_source_identity_and_gate_refuse(self):
         for mutation in [
             lambda x:x["separate_source_zero_set_views"]["continuum"][
                 "zero_set"].update(isolated_root_count=0),
