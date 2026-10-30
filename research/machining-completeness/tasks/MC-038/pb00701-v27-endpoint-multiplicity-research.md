@@ -146,8 +146,10 @@ This is a **shadow composition theorem**, not a modification of V6/V27
 production code. It does not rewrite or admit historical v54 dispositions,
 certify arbitrary V27/V41 children, solve algebraic V41 child boundaries,
 establish a general interior-pole/window-partition theorem, establish a global
-smooth multiplicity across separate B-spline spans, or double-count a shared
-source-knot zero.
+smooth multiplicity across separate B-spline spans, or establish any global
+multi-span root count/deduplication. The shared physical source-knot zero
+therefore remains represented by two span-local endpoint records in this
+research view; cross-span deduplication is explicitly unclaimed.
 
 PB-007-01 remains uncertified; MC-B and MC-1 remain `NOT_ESTABLISHED`;
 native material/topology/lineage, B-rep, usable conventional STEP and
