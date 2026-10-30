@@ -99,11 +99,11 @@ This proof does not address V27 child-consumption interfaces generally, other V2
 
 On a checked-out full source tree:
 
-\`\`\`sh
+```sh
 python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v27_three_frozen_refusals.py --contract --self-test
 python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py --contract --self-test
 python3 tools/validate_machining_completeness.py --self-test
-\`\`\`
+```
 
 Require literal final PR-head focused Actions proof and mc1-static checks, current-head source/mathematics review, preservation of all negative evidence and verified source-tree identity for any later merge. Do not infer final review/merge from a green earlier head. No shared current-state/77 ledger, frozen audits or proof/programme registries have been modified.
 
