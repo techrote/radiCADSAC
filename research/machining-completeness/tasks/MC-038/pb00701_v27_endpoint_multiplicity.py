@@ -737,7 +737,9 @@ def analyze_source(spec):
             for evidence in item["route"]["endpoint_pole_normalizations"]
         ],
         "all_shadow_span_routes_certified": True,
-        "shared_source_knot_double_counted": False,
+        "global_multispan_root_count_claimed": False,
+        "global_source_knot_deduplication_claimed": False,
+        "shared_source_knot_has_two_span_local_endpoint_records": True,
         "global_cross_span_multiplicity_claimed": False,
         "historical_v54_admitted": False,
         "historical_v54_dispositions_changed": False,
