@@ -216,6 +216,9 @@ def prove_bound_source(source):
                         "one_sided_order": 1, "kind": "SIMPLE_BOUNDARY",
                         "right_sign": "POSITIVE"}],
             "strict_span_open_root_counts": [0],
+            "closed_source_root_count": 1,
+            "source_interior_root_count": 0,
+            "ordered_physical_root_coordinates": ["0"],
             "maximal_open_signs": ["POSITIVE"],
             "source_endpoint_values": {"0": "0", "1": "1+sqrt(2)/2"},
             "physical_formula": ["t + sin(pi*t/4) on 0<=t<=1"],
@@ -243,6 +246,9 @@ def prove_bound_source(source):
                        "left_sign": "POSITIVE", "right_sign": "NEGATIVE"})
         return {
             "events": events, "strict_span_open_root_counts": [1, 1],
+            "closed_source_root_count": 2,
+            "source_interior_root_count": 2,
+            "ordered_physical_root_coordinates": ["1/2", "3/2"],
             "maximal_open_signs": ["POSITIVE", "POSITIVE", "NEGATIVE"],
             "source_endpoint_values": {"0": "1/2", "1": "1/2", "2": "-1/2"},
             "physical_formula": [
@@ -264,6 +270,9 @@ def prove_bound_source(source):
     # F'(u)>=100-pi/2>98>0; F(0)=1/2>0, hence no tail root.
     return {
         "events": events, "strict_span_open_root_counts": [1, 0],
+        "closed_source_root_count": 1,
+        "source_interior_root_count": 1,
+        "ordered_physical_root_coordinates": ["1/2"],
         "maximal_open_signs": ["POSITIVE", "POSITIVE"],
         "source_endpoint_values": {"0": "1/2", "1": "1/2", "2": "199/2"},
         "physical_formula": [
@@ -503,6 +512,31 @@ class Tests(unittest.TestCase):
         for obj in samples:
             with self.assertRaises(ValueError):
                 verify_report(obj, self.rows)
+
+    def test_15_explicit_ordered_root_coordinates(self):
+        expected = {
+            H: (["0"], 1, 0),
+            T0: (["1/2", "3/2"], 2, 2),
+            T100: (["1/2"], 1, 1),
+        }
+        for name, (coords, closed, interior) in expected.items():
+            p = self.proofs["sources"][name]["physical_event_proof"]
+            self.assertEqual(p["ordered_physical_root_coordinates"], coords)
+            self.assertEqual(p["closed_source_root_count"], closed)
+            self.assertEqual(p["source_interior_root_count"], interior)
+            self.assertEqual(sum(p["strict_span_open_root_counts"]), interior)
+        self.assertNotEqual(CASES[T0]["source_sha256"], CASES[T100]["source_sha256"])
+
+    def test_16_reject_false_source_knot_or_endpoint_as_open_root(self):
+        for name in (T0, T100):
+            changed = copy.deepcopy(self.proofs)
+            changed["sources"][name]["physical_event_proof"]["source_knot"]["zero"] = True
+            with self.assertRaises(ValueError):
+                verify_report(changed, self.rows)
+        changed = copy.deepcopy(self.proofs)
+        changed["sources"][H]["physical_event_proof"]["source_interior_root_count"] = 1
+        with self.assertRaises(ValueError):
+            verify_report(changed, self.rows)
 
     def test_14_exact_quarter_turn_boundary_semantics(self):
         src = inspect_original(self.rows[T0])
