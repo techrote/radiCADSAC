@@ -1,0 +1,34 @@
+name: mc1-pb00701-algebraic-cut-comparison
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_algebraic_cut_comparator.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_algebraic_cut_comparator.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-algebraic-cut-comparison-research.md'
+      - '.github/workflows/mc1-pb00701-algebraic-cut-comparison.yml'
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_algebraic_cut_comparator.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_algebraic_cut_comparator.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-algebraic-cut-comparison-research.md'
+      - '.github/workflows/mc1-pb00701-algebraic-cut-comparison.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Literal source commit
+        run: git rev-parse HEAD
+      - name: Exact real-algebraic cut order, equality, adversarial replay and source custody
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_algebraic_cut_comparator.py --contract --self-test
