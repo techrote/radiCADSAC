@@ -132,6 +132,76 @@ class TwoSpanSourceKnotRootSetTests(unittest.TestCase):
         ):
             core._exact_join(left, right, Q(0))
 
+    def test_optional_local_phase_must_equal_source_affine_law(self):
+        # The first frozen V6 span legitimately omits this optional field.
+        # Both absent and present/correct paths must represent exactly the
+        # same analytic original-source function, not a new phase authority.
+        baseline = core.local307.v27.classify_required_analytic_event(self.spec)
+        self.assertEqual(len(baseline["spans"]), 2)
+        offset = core.q(self.spec["phase_turn_offset"])
+        rate = core.q(self.spec["phase_turn_rate"])
+        for original in baseline["spans"]:
+            unannotated = copy.deepcopy(original)
+            unannotated.pop("local_phase_turn_law", None)
+            no_local_phase = core._baseline_source_span(
+                unannotated, offset, rate
+            )
+            lo, hi = map(core.q, original["source_interval"])
+            expected = {
+                "offset": str(offset + rate * lo),
+                "rate": str(rate * (hi - lo)),
+            }
+            annotated = copy.deepcopy(unannotated)
+            annotated["local_phase_turn_law"] = expected
+            correct_local_phase = core._baseline_source_span(
+                annotated, offset, rate
+            )
+            self.assertEqual(
+                core.point.span_binding(no_local_phase),
+                core.point.span_binding(correct_local_phase),
+            )
+            for field in ("offset", "rate"):
+                inconsistent = copy.deepcopy(annotated)
+                inconsistent["local_phase_turn_law"][field] = str(
+                    core.q(expected[field]) + Q(1, 16)
+                )
+                with self.assertRaisesRegex(
+                    core.ResearchRefusal,
+                    "LOWERED_SPAN_PHASE_NOT_SOURCE_BOUND",
+                ):
+                    core._baseline_source_span(inconsistent, offset, rate)
+
+    def test_supplied_noncanonical_or_float_local_phase_refuses(self):
+        baseline = core.local307.v27.classify_required_analytic_event(self.spec)
+        original = copy.deepcopy(baseline["spans"][0])
+        original["local_phase_turn_law"] = {
+            "offset": "0", "rate": "1/4",
+        }
+        bad_fraction = copy.deepcopy(original)
+        bad_fraction["local_phase_turn_law"]["rate"] = "1/04"
+        with self.assertRaisesRegex(
+            core.ResearchRefusal, "NONCANONICAL_RATIONAL"
+        ):
+            core._baseline_source_span(bad_fraction, Q(0), Q(1, 4))
+        bad_float = copy.deepcopy(original)
+        bad_float["local_phase_turn_law"]["rate"] = 0.25
+        with self.assertRaisesRegex(
+            core.ResearchRefusal, "NONCANONICAL_RATIONAL"
+        ):
+            core._baseline_source_span(bad_float, Q(0), Q(1, 4))
+
+    def test_continuous_nonzero_knot_is_not_a_root_event(self):
+        left = _span(-1, 0, [2])
+        right = _span(0, 1, [2])
+        checked = core.point.compose_knot(left, right, Q(0))
+        self.assertEqual(checked["status"], "EXACT_NONZERO_SOURCE_KNOT")
+        self.assertEqual(checked["physical_zero_events"], 0)
+        self.assertEqual(checked["sign"], 1)
+        with self.assertRaisesRegex(
+            core.ResearchRefusal, "SHARED_SOURCE_KNOT_NOT_EXACT_SINGLE_ZERO"
+        ):
+            core._exact_join(left, right, Q(0))
+
     def test_missing_or_negative_span_open_root_count_refuses(self):
         with self.assertRaisesRegex(
             core.ResearchRefusal, "SPAN_LOCAL_EXACT_OPEN_ROOT_COUNT_MISSING"
