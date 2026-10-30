@@ -226,6 +226,10 @@ def validate_report(submitted, *, steps=8, supplied_atlas=None):
         require(claimed == atlas.previous.canonical(replay),
                 "FORGED_OR_INCONSISTENT_REFINED_SOURCE_ROOT_BRACKET")
         return replay
+    except (MemoryError, RecursionError) as exc:
+        # An untrusted nested JSON report may exceed encoder recursion limits
+        # *before* a byte-length check is possible. It is never proof truth.
+        return nontruth(type(exc).__name__, "RESOURCE_REFUSAL")
     except (Refusal, atlas.previous.ResearchRefusal,
             ValueError, TypeError, OverflowError) as exc:
         return nontruth(str(exc))
