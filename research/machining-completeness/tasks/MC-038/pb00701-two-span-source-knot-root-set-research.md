@@ -139,3 +139,32 @@ Landing requires literal final-head focused success, `mc1-static`, distinct
 technical/source review of that exact head, expected-head-protected merge,
 reviewed/synthetic/landed tree identity, and actual merged-main focused/static
 push success.
+
+## Post-landing adversarial hardening (30 October 2026)
+
+The independent final-source review of #308 identified an unexercised negative
+path in the corrected source-coordinate reparameterizer. The earlier failed
+candidate treated a legitimately absent optional `local_phase_turn_law` as a
+required field. Its correction derives the phase from the authoritative global
+original source and checks any explicitly supplied local phase law.
+
+A later **test-only** branch at the previously reviewed #308 main source adds
+the following adversarial checks without changing this model or its theorem:
+
+- For **each** of the two genuine frozen lowered spans, an absent optional
+  local phase and the mathematically matching explicit local phase yield the
+  identical exact point-span source binding.
+- Altering either the explicit offset or the explicit rate by a rational
+  nonzero amount refuses as `LOWERED_SPAN_PHASE_NOT_SOURCE_BOUND`; a noncanonical
+  rational or binary float in that optional phase field also refuses.
+- Two continuous **nonzero** polynomial spans with an identical positive
+  shared-knot value produce `EXACT_NONZERO_SOURCE_KNOT` with zero physical root
+  events from the pinned #298 primitive, and cannot enter #308's stricter
+  single-zero root-set join. A same-sign nonzero knot is not a deduplicated zero.
+
+These cases are integrity regressions, **not a new source/theorem claim**.
+The existing frozen v54 witness and all prior tests still run. The accepted
+two-span ZERO-knot result, reviewed source pins, 26-operation domain, historical
+v54 `BLOCKED`, `NOT_ESTABLISHED` MC-B/MC-1 and `production_authorized=false`
+remain unchanged. The broader general nested V27/V41 child-completeness proof
+and native material/B-rep/STEP gates remain OPEN.
