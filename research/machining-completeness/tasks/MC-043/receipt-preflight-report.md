@@ -16,7 +16,7 @@ The hypothesis is falsified if the checker accepts any of those controlled mutat
 ## Executable artifact
 
 - **consumer_receipt_preflight.py**: checks an MC-054-profile-inspired manifest and provisional consumer receipt against exact raw manifest SHA-256 and streamed on-disk STEP artifact SHA-256, enforces nonempty source-body/STEP-item inventory consistency and strict/no-repair receipt flags, and applies the manifest-only EMPTY_MATERIAL branch with exhausted lineage, zero STEP artifacts, zero importer calls and EMPTY_NO_GEOMETRY follow-on.
-- **verify.py**: constructs two deliberately **synthetic, non-STEP-byte** positive structural controls (two-body exact-zero-contact grouped case and exhausted empty case) and demands rejection of 33 adversarial mutations. No real producer, importer or geometry operation participates.
+- **verify.py**: constructs two deliberately **synthetic, non-STEP-byte** positive structural controls (two-body exact-zero-contact grouped case and exhausted empty case) and demands rejection of 34 adversarial mutations. No real producer, importer or geometry operation participates.
 
 Both scripts use only the Python standard library. They do not modify existing proof/toolchain/source or shared programme files.
 
@@ -31,15 +31,15 @@ Commands executed locally using Python 3 on the exact bytes later submitted to t
 
 Observed output:
 
-    MC-043 PROVISIONAL STRUCTURAL_PREFLIGHT_ONLY: 2 positive synthetic controls; 33 rejected corruptions
+    MC-043 PROVISIONAL STRUCTURAL_PREFLIGHT_ONLY: 2 positive synthetic controls; 34 rejected corruptions
     No real STEP file, independent consumer process, native permit or MC-E capability qualified
 
 Submitted Git blob SHA-1 identities (rechecked against locally tested exact bytes):
 
-- consumer_receipt_preflight.py: 7f7798249120edfe8d32f58161f6e4c08fd7e856
-- verify.py: a8f88cc6620d8988f4f3873655e34d553cb77251
+- consumer_receipt_preflight.py: 2333c2050fbad0c3f1a6f987240265f4e7a78ab9
+- verify.py: 5cdf9dcf3d8c12873dae7f623101522ba6652ae9
 
-Negative controls cover source/manifest binding drift; missing/duplicated/fused or invented STEP/body items; path traversal, symlink and raw-byte alteration; partial, repair, non-strict, invalid-preserved and nonzero-exit imports; producer replay and dropped/duplicated downstream operands; uncertified material seam/contact binding; empty fake geometry, importer/follow-on invocation, lineage loss; false capability claims; and duplicate JSON object keys. Negative test definitions are retained in verify.py.
+Negative controls cover source/manifest binding drift; missing/duplicated/fused or invented STEP/body items; path traversal, symlink and raw-byte alteration; partial, repair, non-strict, invalid-preserved and nonzero-exit imports; producer replay and dropped/duplicated downstream operands; duplicate representation-piece/STEP-item ownership, uncertified material seam/contact binding; empty fake geometry, importer/follow-on invocation, lineage loss; false capability claims; and duplicate JSON object keys. Negative test definitions are retained in verify.py.
 
 ## What this does NOT establish
 
