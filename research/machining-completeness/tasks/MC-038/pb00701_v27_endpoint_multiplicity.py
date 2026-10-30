@@ -343,12 +343,26 @@ def _shadow_partition_route(
                 + str(child_result.get("reason"))
             )
         if child_result.get("status") != "CERTIFIED":
+            route_brief = [
+                {
+                    "route_kind": span.get("route_kind"),
+                    "status": span.get("route", {}).get("status"),
+                    "reason": span.get("route", {}).get("reason"),
+                    "relation": span.get("route", {}).get("relation"),
+                    "source_interval": span.get("source_interval"),
+                }
+                for span in child_result.get("spans", [])
+            ]
             raise ResearchRefusal(
                 "V27_SHADOW_REACHED_DEEPER_UNCERTIFIED_CHILD:"
                 + str(left) + ":" + str(right) + ":"
-                + str(child_result.get("status")) + ":"
-                + str(child_result.get("reason")) + ":"
-                + str(child_result.get("blocker"))
+                + canonical({
+                    "status": child_result.get("status"),
+                    "reason": child_result.get("reason"),
+                    "relation": child_result.get("relation"),
+                    "blocker": child_result.get("blocker"),
+                    "spans": route_brief,
+                })
             )
         child_offset = q(offset) + q(rate) * left
         child_rate = q(rate) * (right - left)
