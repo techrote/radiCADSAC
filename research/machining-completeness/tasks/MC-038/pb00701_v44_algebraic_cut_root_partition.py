@@ -42,8 +42,14 @@ PINS = {
     AUTH: "fa0233323a0804d8a5d3eb7cd892a274a6173fab",
     TASK / "pb00701_transverse_trig_interval.py":
         "2320f92efe4316d865a89f6d848737e2c000ca4d",
+    TASK / "pb00701_coupled_bspline_model.py":
+        "a086b625e1a6dea8bd202699d161167bb69cc9e7",
     TASK / "pb00701_v41_algebraic_cut_order.py":
         "e15944ee0fd7819b818c8c556f2c079039d042b7",
+    TASK / "pb00701_algebraic_child_map_model.py":
+        "c055e7f392a921b386a1a99cc70b5004121ae7f6",
+    ROOT / "research/machining-completeness/tasks/MC-032/event_engine.py":
+        "789a709c5141479a343035d1b7055dd4e53534e1",
     TASK / "pb00701_algebraic_orientation_cut_model.py":
         "a56d6487963d269405ab82f3db4cce58a0165520",
     TASK / "pb00701_algebraic_endpoint_model.py":
