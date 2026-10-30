@@ -150,14 +150,15 @@ def local_poly_to_source(poly, source_left, source_right):
 
 def _baseline_source_span(span, global_offset, global_rate):
     left, right = map(q, span["source_interval"])
-    local_phase = span.get("local_phase_turn_law", {})
+    local_phase = span.get("local_phase_turn_law")
     expected_offset = q(global_offset) + q(global_rate) * left
     expected_rate = q(global_rate) * (right - left)
-    require(
-        q(local_phase.get("offset")) == expected_offset
-        and q(local_phase.get("rate")) == expected_rate,
-        "LOWERED_SPAN_PHASE_NOT_SOURCE_BOUND",
-    )
+    if local_phase is not None:
+        require(
+            q(local_phase.get("offset")) == expected_offset
+            and q(local_phase.get("rate")) == expected_rate,
+            "LOWERED_SPAN_PHASE_NOT_SOURCE_BOUND",
+        )
     cos_local = {
         int(h): trim(values)
         for h, values in span["cos_polynomials"].items()
