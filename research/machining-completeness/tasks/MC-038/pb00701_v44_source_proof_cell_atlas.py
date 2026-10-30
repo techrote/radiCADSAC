@@ -150,8 +150,19 @@ def _checked_source_snapshot(source):
     return original, r, cuts, counts, before
 
 def compose(source):
-    """Produce a *source-coordinate* sign atlas, not an analytic child solver."""
+    # The input is a report, not an unforgeable capability. A plausible cut
+    # descriptor (or a rearranged one) can pass local cardinality/sign checks
+    # while naming a DIFFERENT exact source coordinate. Require the reviewed
+    # producer to reproduce the ENTIRE source report before exporting any
+    # boundary as a consumer-visible source-coordinate descriptor.
     original, root, cuts, counts, root_cell = _checked_source_snapshot(source)
+    replayed = previous.validate_report(source)
+    require(replayed.get("status") ==
+            "EXACT_FROZEN_V44_PROOF_CUT_ROOT_SET_PARTITION_RESEARCH" and
+            previous.canonical(replayed) == previous.canonical(source),
+            "SOURCE_PROOF_CUT_REPORT_NOT_EXACTLY_REPLAY_VERIFIED")
+
+    """Produce a *source-coordinate* sign atlas, not an analytic child solver."""
     sid = original["source_parameter_id"]
     signs = source["physical_endpoint_signs"]
     boundaries = [{
