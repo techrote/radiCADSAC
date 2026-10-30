@@ -18,7 +18,7 @@ The hypothesis is falsified if the checker accepts any of those controlled mutat
 - **consumer_receipt_preflight.py**: checks an MC-054-profile-inspired manifest and provisional consumer receipt against exact raw manifest SHA-256 and streamed on-disk STEP artifact SHA-256, enforces nonempty source-body/STEP-item inventory consistency and strict/no-repair receipt flags, and applies the manifest-only EMPTY_MATERIAL branch with exhausted lineage, zero STEP artifacts, zero importer calls and EMPTY_NO_GEOMETRY follow-on.
 - **verify.py**: constructs two deliberately **synthetic, non-STEP-byte** positive structural controls (two-body exact-zero-contact grouped case and exhausted empty case) and demands rejection of 34 adversarial mutations. No real producer, importer or geometry operation participates.
 
-Both scripts use only the Python standard library. They do not modify existing proof/toolchain/source or shared programme files.
+Both scripts use only the Python standard library. The scoped cheap-only GitHub Actions workflow **mc1-mc043-receipt-preflight.yml** runs exact-head Python 3.12 py_compile and verify.py --contract --self-test on relevant pull requests and main pushes. It does not dispatch native/paid campaigns, modify an existing workflow or change project-wide authority.
 
 For a future receipt package, run the consumer_receipt_preflight.py script with --manifest, --receipt and --artifact-root pointing respectively to the raw JSON manifest, raw JSON receipt and STEP artifact directory. It returns STRUCTURAL_PREFLIGHT_ONLY on structurally acceptable metadata; exit 2 means rejection. Its receipt representation is **a provisional preflight interchange**, not a promoted global MC-054 output schema. Future MC-042/MC-043 real-run adapters must preserve the invariants and independently supply verified producer/consumer provenance.
 
@@ -55,4 +55,4 @@ Formal MC-043 artifact dependencies: MC-017 (reviewed source-level route), MC-04
 
 Next distinct useful independent readiness step: adapt a source-bound MC-043 consumer process/evidence adapter to supply immutable importer logs and actual process exit/report bytes to this preflight, while keeping all capability claims blocked until MC-040/MC-042 provide real source-matched inputs. Alternatively construct an independent valid-but-materially-wrong imported-object negative control. No actual native qualification is implied until a separately permitted, source-bound experiment runs.
 
-These new isolated MC-043 files cannot race RAD-PROOF's MC-038/PB-007/V27 proof write set. Shared policy/proof/programme/authority/roadmap registries are untouched.
+These new isolated MC-043 files and one narrowly scoped cheap verification workflow were claimed after RAD-PROOF released its separate workflow-config write lock; they cannot race RAD-PROOF's MC-038/PB-007/V27 proof write set. Shared policy/proof/programme/authority/roadmap registries are untouched.
