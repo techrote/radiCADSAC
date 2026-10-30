@@ -238,8 +238,8 @@ def validate_report(submitted, *, steps=8, supplied_atlas=None):
     try:
         _bound_untrusted_report_structure(submitted)
         claimed = atlas.previous.canonical(submitted)
-        require(len(claimed) <= MAX_REPORT_BYTES,
-                "SUBMITTED_REFINEMENT_REPORT_TOO_LARGE")
+        if len(claimed) > MAX_REPORT_BYTES:
+            raise ResourceRefusal("SUBMITTED_REFINEMENT_REPORT_SIZE_LIMIT")
         replay = attempt(steps=steps, supplied_atlas=supplied_atlas)
         require(replay.get("status") == SUCCESS,
                 "EXACT_ORIGINAL_SOURCE_REFINEMENT_NOT_ESTABLISHED")
