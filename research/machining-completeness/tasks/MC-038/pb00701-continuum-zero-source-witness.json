@@ -1,0 +1,120 @@
+{
+  "schema": "radicadsac-mc038-finite-and-continuum-original-source-union/1.0",
+  "task": "MC-038",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "historical_v54_corpus_blob": "5841c331579489b25caef38cd412bdbf286f9134",
+  "historical_v54": {
+    "source_cases": 121,
+    "route_refusals": 20,
+    "missing_ordered_span_premises": 30,
+    "original_route_dispositions_unchanged": true
+  },
+  "separate_source_zero_set_views": {
+    "kind": "DISJOINT_FINITE_OR_CONTINUUM_ZERO_SET",
+    "selected_prior_finite_case_ids": [
+      "composite:DELEGATED_V6_CONSTANT_MODULATION:tail100",
+      "composite:PB00701_V8_EXACT_COMMON_FACTOR_REDUCTION:tail0",
+      "composite:PB00701_V8_EXACT_COMMON_FACTOR_REDUCTION:tail100",
+      "composite:PB00701_V9_EXACT_MONOTONE_SINGLE_HARMONIC_RATIO:tail100",
+      "harvested:verify_pb00701_v9:1a5fd052a155"
+    ],
+    "selected_continuum_original_case_id": "harvested:verify_pb00701_v53:cb01c327d5f1",
+    "selected_continuum_source_sha256": "a02ab8d83473f81d47b20c205083403babfc07059ca82303f1e6c92ab7481423",
+    "finite_event_semantics_never_used_for_continuum": true,
+    "continuum": {
+      "schema": "radicadsac-pb00701-closed-continuum-zero-source/1.0",
+      "status": "COMPLETE_CLOSED_CONTINUUM_ZERO_SOURCE_RESEARCH",
+      "evidence_class": "DETERMINISTIC_MODEL",
+      "source_sha256": "a02ab8d83473f81d47b20c205083403babfc07059ca82303f1e6c92ab7481423",
+      "source_parameter_id": "v52-original-source",
+      "source_interval": [
+        "0",
+        "1"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/4"
+      },
+      "original_source_edges": [
+        "0",
+        "1"
+      ],
+      "original_open_span_identity": [
+        {
+          "source_interval": [
+            "0",
+            "1"
+          ],
+          "identity_status": "IDENTITY_ZERO",
+          "cyclotomic_order": null
+        }
+      ],
+      "original_amplitude_channel_continuity": [
+        {
+          "channel": "COS",
+          "harmonic": 0,
+          "source_knots_exactly_continuous": [],
+          "original_piece_endpoint_values": [
+            {
+              "at_left": "0",
+              "at_right": "0"
+            }
+          ]
+        }
+      ],
+      "zero_set": {
+        "kind": "CLOSED_CONTINUUM_ZERO_COMPONENT",
+        "closed_source_interval": [
+          "0",
+          "1"
+        ],
+        "every_closed_source_point_is_zero": true,
+        "cardinality": "UNCOUNTABLY_INFINITE",
+        "isolated_finite_root_list_applicable": false,
+        "isolated_root_count": null,
+        "ordered_sign_cells_applicable": false,
+        "source_knot_isolating_root_multiplicity_applicable": false
+      },
+      "analytic_nonidentity_root_solver_proved": false,
+      "general_PB00701_closed": false,
+      "native_or_STEP_qualified": false,
+      "production_authorized": false
+    }
+  },
+  "selected_six_source_only_overlay": {
+    "distinct_historical_original_source_witnesses": 6,
+    "finite_source_witnesses": 5,
+    "continuum_zero_source_witnesses": 1,
+    "historical_route_refusals_not_in_these_six": 14,
+    "remaining_historical_case_ids": [
+      "composite:DELEGATED_V6_CONSTANT_MODULATION:tail0",
+      "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail0",
+      "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail100",
+      "composite:PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO:tail0",
+      "composite:PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO:tail100",
+      "composite:PB00701_V12_EXACT_COMPONENT_ROOT_PARTITION_SINGLE_HARMONIC:tail0",
+      "composite:PB00701_V12_EXACT_COMPONENT_ROOT_PARTITION_SINGLE_HARMONIC:tail100",
+      "composite:PB00701_V13_EXACT_NONVANISHING_EVEN_MULTIPLIER_MULTIHARMONIC:tail0",
+      "composite:PB00701_V16_EXACT_CHEBYSHEV_STURM_MULTIPLIER:tail100",
+      "composite:PB00701_V17_EXACT_PROJECTIVE_EVEN_TRIG_MULTIPLIER:tail0",
+      "harvested:verify_pb00701_v13:c426f65b5c10",
+      "harvested:verify_pb00701_v44:ffaea08e30c9",
+      "harvested:verify_pb00701_v52:2250401ce435",
+      "harvested:verify_pb00701_v9:4e7b85fa122a"
+    ],
+    "missing_ordered_span_premises": 30,
+    "original_source_denominator": 121,
+    "not_a_global_reconciled_post_v54_census": true,
+    "general_analytic_event_or_V6_route_proved": false
+  },
+  "gates": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN",
+    "PB-007-03": "OPEN_PROPAGATED",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "native_geometry_STEP_qualified": false,
+    "production_authorized": false
+  }
+}
