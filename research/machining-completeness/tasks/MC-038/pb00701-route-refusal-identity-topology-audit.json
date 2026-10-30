@@ -1,0 +1,930 @@
+{
+  "claims": {
+    "MC1_established": false,
+    "MC_B_established": false,
+    "PB00701_closed": false,
+    "historical_v54_dispositions_modified": false,
+    "mixed_segmentation_historical_delta_claimed": false,
+    "production_authorized": false
+  },
+  "evidence_class": "DETERMINISTIC_MODEL_DESCRIPTIVE_AUDIT",
+  "frozen_original_corpus_git_blob": "5841c331579489b25caef38cd412bdbf286f9134",
+  "full_frozen_source_denominator": 121,
+  "missing_ordered_premise_denominator_separate": 30,
+  "route_refused_original_source_denominator": 20,
+  "route_refused_sources": [
+    {
+      "case_id": "composite:DELEGATED_V6_CONSTANT_MODULATION:tail0",
+      "global_phase_turn_law": {
+        "offset": "0",
+        "rate": "1/4"
+      },
+      "historical_blocked_owner_reasons": [
+        {
+          "owner": "PB00701_V27_EXACT_RATIONAL_PHASE_SECTOR_PARTITION_COMPOSITION",
+          "reason": "V27_CHILD_LEFT_ENDPOINT_MULTIPLICITY_NOT_COMPOSABLE"
+        }
+      ],
+      "historical_status_modified": false,
+      "historical_v54_disposition": "BLOCKED",
+      "identity_checker_status": "NOT_IDENTITY_ON_SOME_OPEN_SPAN",
+      "identity_topology": "ALL_NONIDENTITY",
+      "kind": "COMPOSITE_TAIL",
+      "open_piece_identity_records": [
+        {
+          "cyclotomic_order": null,
+          "identity_status": "NOT_IDENTITY",
+          "phase_turn_offset": "0",
+          "phase_turn_rate": "1/4",
+          "source_interval": [
+            "0",
+            "1"
+          ]
+        },
+        {
+          "cyclotomic_order": null,
+          "identity_status": "NOT_IDENTITY",
+          "phase_turn_offset": "1/4",
+          "phase_turn_rate": "1/4",
+          "source_interval": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "origin": "verify_pb00701_v7",
+      "original_open_piece_count": 2,
+      "original_source_sha256": "9eb6f08a44882adffa919529247c40190c70e8d7599ee2b1a0f7978ef2569eb1",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "source_parameter_id": "source-time-t"
+    },
+    {
+      "case_id": "composite:DELEGATED_V6_CONSTANT_MODULATION:tail100",
+      "global_phase_turn_law": {
+        "offset": "0",
+        "rate": "1/4"
+      },
+      "historical_blocked_owner_reasons": [
+        {
+          "owner": "PB00701_V27_EXACT_RATIONAL_PHASE_SECTOR_PARTITION_COMPOSITION",
+          "reason": "V27_CHILD_NOT_CERTIFIED"
+        }
+      ],
+      "historical_status_modified": false,
+      "historical_v54_disposition": "BLOCKED",
+      "identity_checker_status": "NOT_IDENTITY_ON_SOME_OPEN_SPAN",
+      "identity_topology": "ALL_NONIDENTITY",
+      "kind": "COMPOSITE_TAIL",
+      "open_piece_identity_records": [
+        {
+          "cyclotomic_order": null,
+          "identity_status": "NOT_IDENTITY",
+          "phase_turn_offset": "0",
+          "phase_turn_rate": "1/4",
+          "source_interval": [
+            "0",
+            "1"
+          ]
+        },
+        {
+          "cyclotomic_order": null,
+          "identity_status": "NOT_IDENTITY",
+          "phase_turn_offset": "1/4",
+          "phase_turn_rate": "1/4",
+          "source_interval": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "origin": "verify_pb00701_v7",
+      "original_open_piece_count": 2,
+      "original_source_sha256": "f6a0eb06c66af415fbb8abdfe62f9b36a2a2bf154e535d83307a80228e044ad5",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "source_parameter_id": "source-time-t"
+    },
+    {
+      "case_id": "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail0",
+      "global_phase_turn_law": {
+        "offset": "-1/2",
+        "rate": "2"
+      },
+      "historical_blocked_owner_reasons": [
+        {
+          "owner": "PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF",
+          "reason": "CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED"
+        }
+      ],
+      "historical_status_modified": false,
+      "historical_v54_disposition": "BLOCKED",
+      "identity_checker_status": "NOT_IDENTITY_ON_SOME_OPEN_SPAN",
+      "identity_topology": "ALL_NONIDENTITY",
+      "kind": "COMPOSITE_TAIL",
+      "open_piece_identity_records": [
+        {
+          "cyclotomic_order": null,
+          "identity_status": "NOT_IDENTITY",
+          "phase_turn_offset": "-1/2",
+          "phase_turn_rate": "2",
+          "source_interval": [
+            "0",
+            "1"
+          ]
+        },
+        {
+          "cyclotomic_order": null,
+          "identity_status": "NOT_IDENTITY",
+          "phase_turn_offset": "3/2",
+          "phase_turn_rate": "2",
+          "source_interval": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "origin": "verify_pb00701_v10",
+      "original_open_piece_count": 2,
+      "original_source_sha256": "57d3c14096ccedfb7faea5023f5a09bada2ca274748f2207c36d77bbc790927c",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "source_parameter_id": "source-time-t"
+    },
+    {
+      "case_id": "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail100",
+      "global_phase_turn_law": {
+        "offset": "-1/2",
+        "rate": "2"
+      },
+      "historical_blocked_owner_reasons": [
+        {
+          "owner": "PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF",
+          "reason": "CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED"
+        }
+      ],
+      "historical_status_modified": false,
+      "historical_v54_disposition": "BLOCKED",
+      "identity_checker_status": "NOT_IDENTITY_ON_SOME_OPEN_SPAN",
+      "identity_topology": "ALL_NONIDENTITY",
+      "kind": "COMPOSITE_TAIL",
+      "open_piece_identity_records": [
+        {
+          "cyclotomic_order": null,
+          "identity_status": "NOT_IDENTITY",
+          "phase_turn_offset": "-1/2",
+          "phase_turn_rate": "2",
+          "source_interval": [
+            "0",
+            "1"
+          ]
+        },
+        {
+          "cyclotomic_order": null,
+          "identity_status": "NOT_IDENTITY",
+          "phase_turn_offset": "3/2",
+          "phase_turn_rate": "2",
+          "source_interval": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "origin": "verify_pb00701_v10",
+      "original_open_piece_count": 2,
+      "original_source_sha256": "21a0dde2ee6783f4465ab0c23dbef08fc400a4c8f2169cc5b851a3b0c3f5e23b",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "source_parameter_id": "source-time-t"
+    },
+    {
+      "case_id": "composite:PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO:tail0",
+      "global_phase_turn_law": {
+        "offset": "0",
+        "rate": "2"
+      },
+      "historical_blocked_owner_reasons": [
+        {
+          "owner": "PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF",
+          "reason": "CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED"
+        }
+      ],
+      "historical_status_modified": false,
+      "historical_v54_disposition": "BLOCKED",
+      "identity_checker_status": "NOT_IDENTITY_ON_SOME_OPEN_SPAN",
+      "identity_topology": "ALL_NONIDENTITY",
+      "kind": "COMPOSITE_TAIL",
+      "open_piece_identity_records": [
+        {
+          "cyclotomic_order": null,
+          "identity_status": "NOT_IDENTITY",
+          "phase_turn_offset": "0",
+          "phase_turn_rate": "2",
+          "source_interval": [
+            "0",
+            "1"
+          ]
+        },
+        {
+          "cyclotomic_order": null,
+          "identity_status": "NOT_IDENTITY",
+          "phase_turn_offset": "2",
+          "phase_turn_rate": "2",
+          "source_interval": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "origin": "verify_pb00701_v11",
+      "original_open_piece_count": 2,
+      "original_source_sha256": "1535f364cd4d3c1a3bf34f57f394ad70a17ad1327880a0a47f25f3ecff5c7560",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "source_parameter_id": "source-time-t"
+    },
+    {
+      "case_id": "composite:PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO:tail100",
+      "global_phase_turn_law": {
+        "offset": "0",
+        "rate": "2"
+      },
+      "historical_blocked_owner_reasons": [
+        {
+          "owner": "PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF",
+          "reason": "CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED"
+        }
+      ],
+      "historical_status_modified": false,
+      "historical_v54_disposition": "BLOCKED",
+      "identity_checker_status": "NOT_IDENTITY_ON_SOME_OPEN_SPAN",
+      "identity_topology": "ALL_NONIDENTITY",
+      "kind": "COMPOSITE_TAIL",
+      "open_piece_identity_records": [
+        {
+          "cyclotomic_order": null,
+          "identity_status": "NOT_IDENTITY",
+          "phase_turn_offset": "0",
+          "phase_turn_rate": "2",
+          "source_interval": [
+            "0",
+            "1"
+          ]
+        },
+        {
+          "cyclotomic_order": null,
+          "identity_status": "NOT_IDENTITY",
+          "phase_turn_offset": "2",
+          "phase_turn_rate": "2",
+          "source_interval": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "origin": "verify_pb00701_v11",
+      "original_open_piece_count": 2,
+      "original_source_sha256": "f70a884ea00042d46f517577ab598d8c85152ad511d48ea0bb8b2e6d7c55d0d5",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "source_parameter_id": "source-time-t"
+    },
+    {
+      "case_id": "composite:PB00701_V12_EXACT_COMPONENT_ROOT_PARTITION_SINGLE_HARMONIC:tail0",
+      "global_phase_turn_law": {
+        "offset": "0",
+        "rate": "1/4"
+      },
+      "historical_blocked_owner_reasons": [
+        {
+          "owner": "PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF",
+          "reason": "CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED"
+        }
+      ],
+      "historical_status_modified": false,
+      "historical_v54_disposition": "BLOCKED",
+      "identity_checker_status": "NOT_IDENTITY_ON_SOME_OPEN_SPAN",
+      "identity_topology": "ALL_NONIDENTITY",
+      "kind": "COMPOSITE_TAIL",
+      "open_piece_identity_records": [
+        {
+          "cyclotomic_order": null,
+          "identity_status": "NOT_IDENTITY",
+          "phase_turn_offset": "0",
+          "phase_turn_rate": "1/4",
+          "source_interval": [
+            "0",
+            "1"
+          ]
+        },
+        {
+          "cyclotomic_order": null,
+          "identity_status": "NOT_IDENTITY",
+          "phase_turn_offset": "1/4",
+          "phase_turn_rate": "1/4",
+          "source_interval": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "origin": "v19",
+      "original_open_piece_count": 2,
+      "original_source_sha256": "ee15e947924b45640dd16634247a476bb230fdc145fef94407d9a7c219928cd5",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "source_parameter_id": "source-time-t"
+    },
+    {
+      "case_id": "composite:PB00701_V12_EXACT_COMPONENT_ROOT_PARTITION_SINGLE_HARMONIC:tail100",
+      "global_phase_turn_law": {
+        "offset": "0",
+        "rate": "1/4"
+      },
+      "historical_blocked_owner_reasons": [
+        {
+          "owner": "PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF",
+          "reason": "CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED"
+        }
+      ],
+      "historical_status_modified": false,
+      "historical_v54_disposition": "BLOCKED",
+      "identity_checker_status": "NOT_IDENTITY_ON_SOME_OPEN_SPAN",
+      "identity_topology": "ALL_NONIDENTITY",
+      "kind": "COMPOSITE_TAIL",
+      "open_piece_identity_records": [
+        {
+          "cyclotomic_order": null,
+          "identity_status": "NOT_IDENTITY",
+          "phase_turn_offset": "0",
+          "phase_turn_rate": "1/4",
+          "source_interval": [
+            "0",
+            "1"
+          ]
+        },
+        {
+          "cyclotomic_order": null,
+          "identity_status": "NOT_IDENTITY",
+          "phase_turn_offset": "1/4",
+          "phase_turn_rate": "1/4",
+          "source_interval": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "origin": "v19",
+      "original_open_piece_count": 2,
+      "original_source_sha256": "65b71861fed07c4b609364dd79c8c1700abe72ca8bcb8f70aec0a54af90d94f7",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "source_parameter_id": "source-time-t"
+    },
+    {
+      "case_id": "composite:PB00701_V13_EXACT_NONVANISHING_EVEN_MULTIPLIER_MULTIHARMONIC:tail0",
+      "global_phase_turn_law": {
+        "offset": "0",
+        "rate": "1/4"
+      },
+      "historical_blocked_owner_reasons": [
+        {
+          "owner": "PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF",
+          "reason": "CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED"
+        }
+      ],
+      "historical_status_modified": false,
+      "historical_v54_disposition": "BLOCKED",
+      "identity_checker_status": "NOT_IDENTITY_ON_SOME_OPEN_SPAN",
+      "identity_topology": "ALL_NONIDENTITY",
+      "kind": "COMPOSITE_TAIL",
+      "open_piece_identity_records": [
+        {
+          "cyclotomic_order": null,
+          "identity_status": "NOT_IDENTITY",
+          "phase_turn_offset": "0",
+          "phase_turn_rate": "1/4",
+          "source_interval": [
+            "0",
+            "1"
+          ]
+        },
+        {
+          "cyclotomic_order": null,
+          "identity_status": "NOT_IDENTITY",
+          "phase_turn_offset": "1/4",
+          "phase_turn_rate": "1/4",
+          "source_interval": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "origin": "verify_pb00701_v13",
+      "original_open_piece_count": 2,
+      "original_source_sha256": "c7abfbbba43a61fbcfc72fc3833a0dc764b6c0d10a29ee4f6faf178c7db12b9b",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "source_parameter_id": "source-time-t"
+    },
+    {
+      "case_id": "composite:PB00701_V16_EXACT_CHEBYSHEV_STURM_MULTIPLIER:tail100",
+      "global_phase_turn_law": {
+        "offset": "0",
+        "rate": "1/4"
+      },
+      "historical_blocked_owner_reasons": [
+        {
+          "owner": "PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF",
+          "reason": "CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED"
+        }
+      ],
+      "historical_status_modified": false,
+      "historical_v54_disposition": "BLOCKED",
+      "identity_checker_status": "NOT_IDENTITY_ON_SOME_OPEN_SPAN",
+      "identity_topology": "ALL_NONIDENTITY",
+      "kind": "COMPOSITE_TAIL",
+      "open_piece_identity_records": [
+        {
+          "cyclotomic_order": null,
+          "identity_status": "NOT_IDENTITY",
+          "phase_turn_offset": "0",
+          "phase_turn_rate": "1/4",
+          "source_interval": [
+            "0",
+            "1"
+          ]
+        },
+        {
+          "cyclotomic_order": null,
+          "identity_status": "NOT_IDENTITY",
+          "phase_turn_offset": "1/4",
+          "phase_turn_rate": "1/4",
+          "source_interval": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "origin": "verify_pb00701_v16",
+      "original_open_piece_count": 2,
+      "original_source_sha256": "89ff16b64ab62d1b3cd543e3c52c4f0f8c570dc29b3448545b391a8d798da9d6",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "source_parameter_id": "source-time-t"
+    },
+    {
+      "case_id": "composite:PB00701_V17_EXACT_PROJECTIVE_EVEN_TRIG_MULTIPLIER:tail0",
+      "global_phase_turn_law": {
+        "offset": "0",
+        "rate": "1/4"
+      },
+      "historical_blocked_owner_reasons": [
+        {
+          "owner": "PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF",
+          "reason": "CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED"
+        }
+      ],
+      "historical_status_modified": false,
+      "historical_v54_disposition": "BLOCKED",
+      "identity_checker_status": "NOT_IDENTITY_ON_SOME_OPEN_SPAN",
+      "identity_topology": "ALL_NONIDENTITY",
+      "kind": "COMPOSITE_TAIL",
+      "open_piece_identity_records": [
+        {
+          "cyclotomic_order": null,
+          "identity_status": "NOT_IDENTITY",
+          "phase_turn_offset": "0",
+          "phase_turn_rate": "1/4",
+          "source_interval": [
+            "0",
+            "1"
+          ]
+        },
+        {
+          "cyclotomic_order": null,
+          "identity_status": "NOT_IDENTITY",
+          "phase_turn_offset": "1/4",
+          "phase_turn_rate": "1/4",
+          "source_interval": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "origin": "verify_pb00701_v17",
+      "original_open_piece_count": 2,
+      "original_source_sha256": "f4927df0e4db8a02af0905219d07fd1fdf4dfd8a50c0ef426323e633d6880d94",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "source_parameter_id": "source-time-t"
+    },
+    {
+      "case_id": "composite:PB00701_V8_EXACT_COMMON_FACTOR_REDUCTION:tail0",
+      "global_phase_turn_law": {
+        "offset": "-1/4",
+        "rate": "1/2"
+      },
+      "historical_blocked_owner_reasons": [
+        {
+          "owner": "PB00701_V27_EXACT_RATIONAL_PHASE_SECTOR_PARTITION_COMPOSITION",
+          "reason": "V27_CHILD_NOT_CERTIFIED"
+        }
+      ],
+      "historical_status_modified": false,
+      "historical_v54_disposition": "BLOCKED",
+      "identity_checker_status": "NOT_IDENTITY_ON_SOME_OPEN_SPAN",
+      "identity_topology": "ALL_NONIDENTITY",
+      "kind": "COMPOSITE_TAIL",
+      "open_piece_identity_records": [
+        {
+          "cyclotomic_order": null,
+          "identity_status": "NOT_IDENTITY",
+          "phase_turn_offset": "-1/4",
+          "phase_turn_rate": "1/2",
+          "source_interval": [
+            "0",
+            "1"
+          ]
+        },
+        {
+          "cyclotomic_order": null,
+          "identity_status": "NOT_IDENTITY",
+          "phase_turn_offset": "1/4",
+          "phase_turn_rate": "1/2",
+          "source_interval": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "origin": "verify_pb00701_v8",
+      "original_open_piece_count": 2,
+      "original_source_sha256": "9abbed355812241cdef20f3ce3b3522619bdd682c3a73fb01828d8f95c72f0af",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "source_parameter_id": "source-time-t"
+    },
+    {
+      "case_id": "composite:PB00701_V8_EXACT_COMMON_FACTOR_REDUCTION:tail100",
+      "global_phase_turn_law": {
+        "offset": "-1/4",
+        "rate": "1/2"
+      },
+      "historical_blocked_owner_reasons": [
+        {
+          "owner": "PB00701_V27_EXACT_RATIONAL_PHASE_SECTOR_PARTITION_COMPOSITION",
+          "reason": "V27_CHILD_NOT_CERTIFIED"
+        }
+      ],
+      "historical_status_modified": false,
+      "historical_v54_disposition": "BLOCKED",
+      "identity_checker_status": "NOT_IDENTITY_ON_SOME_OPEN_SPAN",
+      "identity_topology": "ALL_NONIDENTITY",
+      "kind": "COMPOSITE_TAIL",
+      "open_piece_identity_records": [
+        {
+          "cyclotomic_order": null,
+          "identity_status": "NOT_IDENTITY",
+          "phase_turn_offset": "-1/4",
+          "phase_turn_rate": "1/2",
+          "source_interval": [
+            "0",
+            "1"
+          ]
+        },
+        {
+          "cyclotomic_order": null,
+          "identity_status": "NOT_IDENTITY",
+          "phase_turn_offset": "1/4",
+          "phase_turn_rate": "1/2",
+          "source_interval": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "origin": "verify_pb00701_v8",
+      "original_open_piece_count": 2,
+      "original_source_sha256": "8e3af5a5e74c3fc3f364607f5c3c4b03cd1adc2e2dd6e16bfc03ddf870de0d2b",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "source_parameter_id": "source-time-t"
+    },
+    {
+      "case_id": "composite:PB00701_V9_EXACT_MONOTONE_SINGLE_HARMONIC_RATIO:tail100",
+      "global_phase_turn_law": {
+        "offset": "0",
+        "rate": "1/8"
+      },
+      "historical_blocked_owner_reasons": [
+        {
+          "owner": "PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF",
+          "reason": "CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED"
+        }
+      ],
+      "historical_status_modified": false,
+      "historical_v54_disposition": "BLOCKED",
+      "identity_checker_status": "NOT_IDENTITY_ON_SOME_OPEN_SPAN",
+      "identity_topology": "ALL_NONIDENTITY",
+      "kind": "COMPOSITE_TAIL",
+      "open_piece_identity_records": [
+        {
+          "cyclotomic_order": null,
+          "identity_status": "NOT_IDENTITY",
+          "phase_turn_offset": "0",
+          "phase_turn_rate": "1/8",
+          "source_interval": [
+            "0",
+            "1"
+          ]
+        },
+        {
+          "cyclotomic_order": null,
+          "identity_status": "NOT_IDENTITY",
+          "phase_turn_offset": "1/8",
+          "phase_turn_rate": "1/8",
+          "source_interval": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "origin": "verify_pb00701_v10",
+      "original_open_piece_count": 2,
+      "original_source_sha256": "cc13a39582060e763c573f2665b3ea3b6dfe8b76a6cb0fb77a7b0ec90cf6253a",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "source_parameter_id": "source-time-t"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v13:c426f65b5c10",
+      "global_phase_turn_law": {
+        "offset": "0",
+        "rate": "1/4"
+      },
+      "historical_blocked_owner_reasons": [
+        {
+          "owner": "PB00701_V41_EXACT_ROTATED_COORDINATE_ORIENTATION_ROOT_PARTITION_COMPOSITION",
+          "reason": "V41_COMPLETE_V43_CHILD_NOT_COMPOSABLE"
+        }
+      ],
+      "historical_status_modified": false,
+      "historical_v54_disposition": "BLOCKED",
+      "identity_checker_status": "NOT_IDENTITY_ON_SOME_OPEN_SPAN",
+      "identity_topology": "ALL_NONIDENTITY",
+      "kind": "HARVESTED",
+      "open_piece_identity_records": [
+        {
+          "cyclotomic_order": null,
+          "identity_status": "NOT_IDENTITY",
+          "phase_turn_offset": "0",
+          "phase_turn_rate": "1/4",
+          "source_interval": [
+            "0",
+            "1"
+          ]
+        }
+      ],
+      "origin": "verify_pb00701_v13",
+      "original_open_piece_count": 1,
+      "original_source_sha256": "e8425a4701f74195d99b91ea345663dbe4bc4d8b69b09dac426370e3ddcd1111",
+      "source_interval": [
+        "0",
+        "1"
+      ],
+      "source_parameter_id": "source-time-t"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v44:ffaea08e30c9",
+      "global_phase_turn_law": {
+        "offset": "-1/8",
+        "rate": "1/16"
+      },
+      "historical_blocked_owner_reasons": [
+        {
+          "owner": "PB00701_V44_EXACT_REAL_ALGEBRAIC_ORIENTATION_CUT_BOUNDARY",
+          "reason": "ALGEBRAIC_ORIENTATION_COORDINATE_CERTIFIED_BUT_EXACT_CONSUMPTION_AUTHORITY_MISSING"
+        }
+      ],
+      "historical_status_modified": false,
+      "historical_v54_disposition": "BLOCKED",
+      "identity_checker_status": "NOT_IDENTITY_ON_SOME_OPEN_SPAN",
+      "identity_topology": "ALL_NONIDENTITY",
+      "kind": "HARVESTED",
+      "open_piece_identity_records": [
+        {
+          "cyclotomic_order": null,
+          "identity_status": "NOT_IDENTITY",
+          "phase_turn_offset": "-1/8",
+          "phase_turn_rate": "1/16",
+          "source_interval": [
+            "0",
+            "1"
+          ]
+        }
+      ],
+      "origin": "verify_pb00701_v44",
+      "original_open_piece_count": 1,
+      "original_source_sha256": "d3b3a90024ea283dfd96811b8fc2b66ceff621b3b48defc44c77f85557adbba2",
+      "source_interval": [
+        "0",
+        "1"
+      ],
+      "source_parameter_id": "pb00701-v44-algebraic-orientation"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v52:2250401ce435",
+      "global_phase_turn_law": {
+        "offset": "1/4",
+        "rate": "-1/24"
+      },
+      "historical_blocked_owner_reasons": [
+        {
+          "owner": "PB00701_V23_EXACT_NONCONSTANT_AMPLITUDE_PHASE_SECTOR_ANCHOR",
+          "reason": "NONCONSTANT_AMPLITUDE_PHASE_DEPENDENT_ANCHOR_NOT_CERTIFIED"
+        }
+      ],
+      "historical_status_modified": false,
+      "historical_v54_disposition": "BLOCKED",
+      "identity_checker_status": "NOT_IDENTITY_ON_SOME_OPEN_SPAN",
+      "identity_topology": "ALL_NONIDENTITY",
+      "kind": "HARVESTED",
+      "open_piece_identity_records": [
+        {
+          "cyclotomic_order": null,
+          "identity_status": "NOT_IDENTITY",
+          "phase_turn_offset": "1/4",
+          "phase_turn_rate": "-1/24",
+          "source_interval": [
+            "0",
+            "1"
+          ]
+        }
+      ],
+      "origin": "verify_pb00701_v52",
+      "original_open_piece_count": 1,
+      "original_source_sha256": "4a3ee3f47b9347429c13830abef382301c7963b0af518f0977390c2d3ffba040",
+      "source_interval": [
+        "0",
+        "1"
+      ],
+      "source_parameter_id": "v52-original-source"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v53:cb01c327d5f1",
+      "global_phase_turn_law": {
+        "offset": "0",
+        "rate": "1/4"
+      },
+      "historical_blocked_owner_reasons": [
+        {
+          "owner": "DELEGATED_V6_CONSTANT_MODULATION",
+          "reason": "TRIGONOMETRIC_IDENTITY_ZERO_REQUIRES_SEPARATE_SEMANTIC_HANDLING"
+        }
+      ],
+      "historical_status_modified": false,
+      "historical_v54_disposition": "BLOCKED",
+      "identity_checker_status": "IDENTITY_ZERO_ON_ALL_OPEN_SPANS",
+      "identity_topology": "ALL_IDENTITY",
+      "kind": "HARVESTED",
+      "open_piece_identity_records": [
+        {
+          "cyclotomic_order": null,
+          "identity_status": "IDENTITY_ZERO",
+          "phase_turn_offset": "0",
+          "phase_turn_rate": "1/4",
+          "source_interval": [
+            "0",
+            "1"
+          ]
+        }
+      ],
+      "origin": "verify_pb00701_v53",
+      "original_open_piece_count": 1,
+      "original_source_sha256": "a02ab8d83473f81d47b20c205083403babfc07059ca82303f1e6c92ab7481423",
+      "source_interval": [
+        "0",
+        "1"
+      ],
+      "source_parameter_id": "v52-original-source"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v9:1a5fd052a155",
+      "global_phase_turn_law": {
+        "offset": "0",
+        "rate": "1/8"
+      },
+      "historical_blocked_owner_reasons": [
+        {
+          "owner": "PB00701_V27_EXACT_RATIONAL_PHASE_SECTOR_PARTITION_COMPOSITION",
+          "reason": "V27_CHILD_NOT_CERTIFIED"
+        }
+      ],
+      "historical_status_modified": false,
+      "historical_v54_disposition": "BLOCKED",
+      "identity_checker_status": "NOT_IDENTITY_ON_SOME_OPEN_SPAN",
+      "identity_topology": "ALL_NONIDENTITY",
+      "kind": "HARVESTED",
+      "open_piece_identity_records": [
+        {
+          "cyclotomic_order": null,
+          "identity_status": "NOT_IDENTITY",
+          "phase_turn_offset": "0",
+          "phase_turn_rate": "1/8",
+          "source_interval": [
+            "0",
+            "1"
+          ]
+        }
+      ],
+      "origin": "verify_pb00701_v9",
+      "original_open_piece_count": 1,
+      "original_source_sha256": "710259612833cfe40e73ae528e0d0e944a87123c9bb4b3f4f76cef33c45bcf4d",
+      "source_interval": [
+        "0",
+        "1"
+      ],
+      "source_parameter_id": "source-time-t"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v9:4e7b85fa122a",
+      "global_phase_turn_law": {
+        "offset": "0",
+        "rate": "1/8"
+      },
+      "historical_blocked_owner_reasons": [
+        {
+          "owner": "PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF",
+          "reason": "CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED"
+        }
+      ],
+      "historical_status_modified": false,
+      "historical_v54_disposition": "BLOCKED",
+      "identity_checker_status": "NOT_IDENTITY_ON_SOME_OPEN_SPAN",
+      "identity_topology": "ALL_NONIDENTITY",
+      "kind": "HARVESTED",
+      "open_piece_identity_records": [
+        {
+          "cyclotomic_order": null,
+          "identity_status": "NOT_IDENTITY",
+          "phase_turn_offset": "0",
+          "phase_turn_rate": "1/8",
+          "source_interval": [
+            "0",
+            "1"
+          ]
+        }
+      ],
+      "origin": "verify_pb00701_v9",
+      "original_open_piece_count": 1,
+      "original_source_sha256": "a83ca0cd16c7822e6525f8f2d2df26a54f45b99807cadebc67f31fc49b066c10",
+      "source_interval": [
+        "0",
+        "1"
+      ],
+      "source_parameter_id": "source-time-t"
+    }
+  ],
+  "schema": "radicadsac-mc038-route-refusal-identity-topology-audit/1.0",
+  "task": "MC-038",
+  "topology_counts": {
+    "ALL_IDENTITY": 1,
+    "ALL_NONIDENTITY": 19,
+    "INCONCLUSIVE": 0,
+    "MIXED_IDENTITY_NONIDENTITY": 0
+  },
+  "observed_first_head": {
+    "git_sha": "6b7351b83afec03b4c58b7b21dab09d695ce5c27",
+    "focused_run_id": 41123308401,
+    "observation_status": "FIRST_HEAD_DESCRIPTIVE_RESULT_REQUIRES_PINNED_REPLAY"
+  }
+}
