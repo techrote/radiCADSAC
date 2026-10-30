@@ -192,8 +192,10 @@ class FrozenV44MixedCutInterfaceTests(unittest.TestCase):
         self.assertEqual(
             core.validate_report(self.good, supplied_atlas=self.atlas)[
                 "status"], core.SUCCESS)
+        self.assertGreater(len(core.bridge.previous.canonical(
+            [0] * 40000)), core.MAX_REPORT_BYTES)
         for value in ("a" * (core.MAX_REPORT_BYTES + 1),
-                      [0] * 15000):
+                      [0] * 40000):
             with self.subTest(oversized_type=type(value).__name__):
                 verdict = core.validate_report(value)
                 self.assertEqual(verdict["status"], "RESOURCE_REFUSAL")
