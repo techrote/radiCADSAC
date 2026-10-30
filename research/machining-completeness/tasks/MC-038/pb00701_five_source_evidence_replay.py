@@ -328,6 +328,34 @@ def validate_view(view, row):
     need(type(view) is dict and view["case_id"] in EXPECTED_SHAPES,
          "UNSUPPORTED_SOURCE: unknown normalized source")
     cid = view["case_id"]
+    need(set(view) == {
+        "case_id", "producer", "source_sha256", "source_parameter_id",
+        "source_interval", "phase_turn_law", "historical_disposition",
+        "historical_refusal", "events", "closed_root_count",
+        "strict_source_open_root_count", "strict_span_open_root_counts",
+        "maximal_open_signs", "generic_route_repaired",
+        "source_specific_mathematics_only",
+    }, "extra/missing normalized proof-contract fields")
+    need(type(row) is dict and row.get("id") == cid and
+         row.get("expected", {}).get("id") == cid,
+         "source row identifier not bound to normalized proof")
+    owners = [key for key, meta in PRODUCERS.items()
+              if cid in meta["cases"]]
+    need(len(owners) == 1 and view["producer"] == owners[0],
+         "cross-producer source proof ownership substituted")
+    source_record = row["spec"]
+    original_bytes = json.dumps(source_record, sort_keys=True,
+                                separators=(",", ":"), allow_nan=False).encode()
+    need(hashlib.sha256(original_bytes).hexdigest() == SOURCE_SHA[cid],
+         "original source record changed under normalized view")
+    expected_refusal = [
+        {"owner": span[0], "reason": span[2]}
+        for span in row["expected"]["observed"]["spans"]
+        if span[1] == "BLOCKED"]
+    need(row["expected"]["v54_disposition"] == "BLOCKED" and
+         len(expected_refusal) == 1 and
+         view["historical_refusal"] == expected_refusal,
+         "missing or forged literal historical V54 refusal authority")
     closed, strict, expected_spans, signs, kinds = EXPECTED_SHAPES[cid]
     need(view["historical_disposition"] == "BLOCKED" and
          view["generic_route_repaired"] is False and
@@ -359,11 +387,21 @@ def validate_view(view, row):
     counted = [0] * (len(bounds) - 1)
     lo, hi = bounds[0], bounds[-1]
     for ev in events:
+        need(type(ev) is dict and set(ev) == {
+            "coordinate", "location", "classification", "order",
+            "left_sign", "right_sign",
+        }, "malformed/extended physical event record")
         position = ev["coordinate"]
+        need(type(position) is dict, "invalid physical root coordinate")
         if position["kind"] == "RATIONAL":
+            need(set(position) == {"kind", "value"},
+                 "rational root record claims unproved source coordinates")
             low = high = rational(position["value"])
         else:
-            need(position["kind"] == "IMPLICIT_STRICT_BRACKET" and
+            need(set(position) == {
+                "kind", "lower", "upper",
+                "source_root_unique_by_producer_theorem"} and
+                 position["kind"] == "IMPLICIT_STRICT_BRACKET" and
                  position["source_root_unique_by_producer_theorem"] is True,
                  "unsupported or invented source root descriptor")
             low, high = rational(position["lower"]), rational(position["upper"])
@@ -388,12 +426,16 @@ def validate_view(view, row):
             need(lo < low <= high < hi,
                  "interior root is an external endpoint")
             if location == "SOURCE_KNOT":
+                need(set(ev["order"]) == {"kind", "left", "right"},
+                     "true source knot requires separate one-sided orders")
                 need(low == high and low in bounds[1:-1] and
                      ev["order"]["kind"] == "ONE_SIDED" and
                      ev["order"].get("left", 0) > 0 and
                      ev["order"].get("right", 0) > 0,
                      "source-knot double-count or false smooth order")
             else:
+                need(set(ev["order"]) == {"kind", "value"},
+                     "span-interior root must carry exact integer order")
                 need(location == "SPAN_OPEN" and
                      ev["order"]["kind"] == "INTEGER" and
                      type(ev["order"]["value"]) is int and
@@ -402,6 +444,9 @@ def validate_view(view, row):
                 owners = [i for i in range(len(bounds) - 1)
                           if bounds[i] < low <= high < bounds[i + 1]]
                 need(len(owners) == 1, "root does not lie in a unique source span")
+                need((ev["order"]["value"] % 2 == 1) ==
+                     (ev["classification"] == "CROSSING"),
+                     "strict interior root multiplicity/parity contradiction")
                 counted[owners[0]] += 1
             need(ev["left_sign"] == signs[interior_index] and
                  ev["right_sign"] == signs[interior_index + 1],
