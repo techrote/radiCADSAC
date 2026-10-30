@@ -58,6 +58,6 @@ The historical initial plan and critique remain under `docs/` for design archaeo
 
 ## Historical genesis handoffs
 
-The handoff index is [`handoffs/README.md`](handoffs/README.md). `handoffs/genesis-release-v2.json`, consistency revision `2.1`, and [`handoffs/evidence-dependencies-v2.1.json`](handoffs/evidence-dependencies-v2.1.json) remain the exact historical Genesis-v2 foundation/evidence package. They are **not current production-bootstrap authorization**.
+The handoff index is [`handoffs/README.md`](handoffs/README.md). The original frozen Genesis-v1 machine-readable manifest remains preserved at [`handoffs/genesis-release-v1.json`](handoffs/genesis-release-v1.json). `handoffs/genesis-release-v2.json`, consistency revision `2.1`, and [`handoffs/evidence-dependencies-v2.1.json`](handoffs/evidence-dependencies-v2.1.json) remain the exact historical Genesis-v2 foundation/evidence package. They are **not current production-bootstrap authorization**.
 
 Current execution authority is [`handoffs/current-authority.json`](handoffs/current-authority.json) → MC-1. Production repository creation requires a genuine MC-1 pass plus separate explicit authorization. Any eventual production repositories must start with fresh Git histories and may reference this repository for archaeology; they must not import radiCADSAC history as their production history.
