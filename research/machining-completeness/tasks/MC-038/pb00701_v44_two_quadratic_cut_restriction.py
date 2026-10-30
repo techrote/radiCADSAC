@@ -115,7 +115,7 @@ def prove():
     require(upstream["status"]==parent.SUCCESS
             and upstream["historical_v54_admitted"] is False,
             "PARENT_SOURCE_NOT_CERTIFIED")
-    atlas,span,_,_=parent.derivative._source_snapshot()
+    atlas,span,_,_=parent.derivative._source_snapshot(None)
     require(span.left==0 and span.right==1
             and span.offset==Q(-1,8) and span.rate==Q(1,16),
             "SOURCE_PHASE_DRIFT")
