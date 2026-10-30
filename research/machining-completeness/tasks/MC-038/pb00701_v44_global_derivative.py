@@ -271,7 +271,8 @@ def validate_report(submitted, *, cells=16, supplied_atlas=None):
         require(claimed == previous.canonical(replay),
                 "FORGED_OR_INCONSISTENT_WHOLE_SOURCE_DERIVATIVE_CERTIFICATE")
         return replay
-    except (ResourceRefusal, MemoryError, RecursionError) as exc:
+    except (ResourceRefusal, predecessor.ResourceRefusal,
+            MemoryError, RecursionError) as exc:
         return nontruth(str(exc), "RESOURCE_REFUSAL")
     except (Refusal, previous.ResearchRefusal, ValueError, TypeError,
             OverflowError) as exc:
