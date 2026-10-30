@@ -135,6 +135,18 @@ class FrozenImplicitRootRefinementTests(unittest.TestCase):
         self.assertEqual(checked["status"], "BLOCKED")
         self.assertIn("FORGED_OR_INCONSISTENT", checked["reason"])
 
+    def test_deeply_nested_submitted_report_is_typed_resource_nontruth(self):
+        # The JSON encoder can exhaust its recursion budget before checking
+        # serialized size; a hostile report must not leak that exception.
+        malicious = []
+        for _ in range(1100):
+            malicious = [malicious]
+        checked = core.validate_report(
+            malicious, steps=0, supplied_atlas=self.view)
+        self.assertEqual(checked["status"], "RESOURCE_REFUSAL", checked)
+        self.assertFalse(checked["is_truth_value"])
+        self.assertFalse(checked["historical_v54_admitted"])
+
     def test_never_promotes_unproved_analytic_child_or_programme(self):
         r = self.refine(0)
         for flag in (
