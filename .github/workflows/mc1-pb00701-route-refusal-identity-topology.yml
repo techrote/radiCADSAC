@@ -4,6 +4,9 @@ on:
   pull_request:
     paths:
       - 'research/machining-completeness/tasks/MC-038/pb00701_route_refusal_identity_topology_audit.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-route-refusal-identity-topology-audit.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-route-refusal-identity-topology-audit.json'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_route_refusal_identity_topology_audit.py'
       - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
       - 'research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py'
       - 'research/machining-completeness/tasks/MC-038/verify_pb00701_affine_identity_frontier.py'
@@ -18,6 +21,9 @@ on:
     branches: [main]
     paths:
       - 'research/machining-completeness/tasks/MC-038/pb00701_route_refusal_identity_topology_audit.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-route-refusal-identity-topology-audit.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-route-refusal-identity-topology-audit.json'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_route_refusal_identity_topology_audit.py'
       - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
       - 'research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py'
       - 'research/machining-completeness/tasks/MC-038/verify_pb00701_affine_identity_frontier.py'
@@ -47,4 +53,5 @@ jobs:
       - name: Classify all 20 frozen route-refused original sources
         run: |
           python3 research/machining-completeness/tasks/MC-038/pb00701_route_refusal_identity_topology_audit.py --contract --self-test
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_route_refusal_identity_topology_audit.py --contract --self-test
           python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py --contract --self-test
