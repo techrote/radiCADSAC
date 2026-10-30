@@ -17,6 +17,8 @@ ATLAS_BLOB = "2028684883f78ceed14ce92865810ef11409b7eb"
 POINT_CONSUMER_BLOB = "6d1805dacdf73f003d7431416d77754635e3f950"
 MAX_REFINEMENT_STEPS = 12
 MAX_REPORT_BYTES = 131072
+MAX_REPORT_NESTING_DEPTH = 48
+MAX_REPORT_VISITED_NODES = 20000
 
 
 class Refusal(ValueError):
@@ -215,8 +217,26 @@ def attempt(*, steps=8, supplied_atlas=None):
         return nontruth(str(exc))
 
 
+def _bound_untrusted_report_structure(submitted):
+    """Iterative, cycle-safe-by-depth budget before JSON report serialization."""
+    todo = [(submitted, 0)]
+    visited = 0
+    while todo:
+        value, depth = todo.pop()
+        visited += 1
+        if depth > MAX_REPORT_NESTING_DEPTH:
+            raise ResourceRefusal("SUBMITTED_REFINEMENT_REPORT_NESTING_LIMIT")
+        if visited > MAX_REPORT_VISITED_NODES:
+            raise ResourceRefusal("SUBMITTED_REFINEMENT_REPORT_NODE_LIMIT")
+        if type(value) is dict:
+            todo.extend((v, depth + 1) for v in value.values())
+        elif type(value) in (list, tuple):
+            todo.extend((v, depth + 1) for v in value)
+
+
 def validate_report(submitted, *, steps=8, supplied_atlas=None):
     try:
+        _bound_untrusted_report_structure(submitted)
         claimed = atlas.previous.canonical(submitted)
         require(len(claimed) <= MAX_REPORT_BYTES,
                 "SUBMITTED_REFINEMENT_REPORT_TOO_LARGE")
@@ -226,10 +246,9 @@ def validate_report(submitted, *, steps=8, supplied_atlas=None):
         require(claimed == atlas.previous.canonical(replay),
                 "FORGED_OR_INCONSISTENT_REFINED_SOURCE_ROOT_BRACKET")
         return replay
-    except (MemoryError, RecursionError) as exc:
-        # An untrusted nested JSON report may exceed encoder recursion limits
-        # *before* a byte-length check is possible. It is never proof truth.
-        return nontruth(type(exc).__name__, "RESOURCE_REFUSAL")
+    except (ResourceRefusal, MemoryError, RecursionError) as exc:
+        # Resource caps and encoder overflow must never become proof truth.
+        return nontruth(str(exc), "RESOURCE_REFUSAL")
     except (Refusal, atlas.previous.ResearchRefusal,
             ValueError, TypeError, OverflowError) as exc:
         return nontruth(str(exc))
