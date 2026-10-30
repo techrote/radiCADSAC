@@ -20,6 +20,7 @@ sys.path.insert(0, str(HERE))
 
 import pb00701_phase_sector_partition_model as v27  # noqa: E402
 import pb00701_rational_phase_point as point  # noqa: E402
+import pb00701_rational_turn_model as v6  # noqa: E402
 
 SCHEMA = "radicadsac-pb00701-v27-endpoint-multiplicity/1.0"
 MAX_REPORT_BYTES = 131072
@@ -34,6 +35,8 @@ PINS = {
         "a303bba600fa83a1b55c8e113ce1ec7d06f68590",
     HERE / "pb00701_rational_phase_point.py":
         "9fc344e045fa800fb24d30902a641e534a1e197b",
+    HERE / "pb00701_rational_turn_model.py":
+        "a1316ff0f71b2d7aa80807843a74fd8280779cb2",
     HERE / "pb00701-finite-owner-corpus-v54.json":
         "5841c331579489b25caef38cd412bdbf286f9134",
     ROOT / "research/machining-completeness/tasks/MC-002/domain-contract-v1.json":
@@ -227,6 +230,159 @@ def _checked_endpoint_multiplicity(
     return order, witness, method
 
 
+def _endpoint_is_tan_half_pole(turn):
+    try:
+        v6.rational_turn_endpoint(q(turn))
+        return False
+    except ValueError as exc:
+        if "TAN_HALF_POLE" in str(exc):
+            return True
+        raise
+
+
+def _constant_harmonic_coefficients(child_cos, child_sin):
+    cos = {}
+    sin = {}
+    for harmonic in sorted(set(child_cos) | set(child_sin)):
+        cp = v27._trim(child_cos.get(harmonic, [0]))
+        sp = v27._trim(child_sin.get(harmonic, [0]))
+        require(
+            len(cp) == 1 and len(sp) == 1,
+            "V6_ENDPOINT_POLE_NORMALIZATION_REQUIRES_CONSTANT_MODULATION",
+        )
+        if cp[0] != 0:
+            cos[int(harmonic)] = cp[0]
+        if sp[0] != 0:
+            sin[int(harmonic)] = sp[0]
+    require(cos or sin, "EMPTY_V6_CONSTANT_MODULATION")
+    return cos, sin
+
+
+def _normalized_v6_endpoint_pole_route(
+        blocked_child_result, child_cos, child_sin,
+        child_offset, child_rate, source_parameter_id):
+    """Normalize one endpoint tan-half pole by an exact half-turn source shift."""
+    spans = blocked_child_result.get("spans", [])
+    require(
+        blocked_child_result.get("status") == "BLOCKED"
+        and len(spans) == 1
+        and spans[0].get("route_kind") == "DELEGATED_V6_CONSTANT_MODULATION"
+        and spans[0].get("route", {}).get("status") == "BLOCKED"
+        and spans[0].get("route", {}).get("reason")
+        == "TAN_HALF_POLE_REQUIRES_EXACT_WINDOW_PARTITION",
+        "CHILD_NOT_AT_EXACT_V6_ENDPOINT_POLE_BLOCKER",
+    )
+    rate = q(child_rate)
+    offset = q(child_offset)
+    require(rate > 0, "V6_ENDPOINT_POLE_NORMALIZATION_REQUIRES_POSITIVE_PHASE_RATE")
+    lo, hi = offset, offset + rate
+    require(
+        Fraction(0) < hi - lo < Fraction(1, 2),
+        "V6_ENDPOINT_POLE_WINDOW_NOT_STRICTLY_SHORTER_THAN_HALF_TURN",
+    )
+    left_pole = _endpoint_is_tan_half_pole(lo)
+    right_pole = _endpoint_is_tan_half_pole(hi)
+    require(
+        left_pole ^ right_pole,
+        "V6_TAN_HALF_POLE_NOT_AT_EXACTLY_ONE_ENDPOINT",
+    )
+    require(
+        v6._pole_in_closed_turn_interval(lo, hi),
+        "V6_REPORTED_POLE_NOT_REPRODUCED_EXACTLY",
+    )
+    pole = lo if left_pole else hi
+    normalized_lo = lo - pole
+    normalized_hi = hi - pole
+    require(
+        normalized_lo < normalized_hi
+        and not v6._pole_in_closed_turn_interval(normalized_lo, normalized_hi),
+        "HALF_TURN_NORMALIZATION_DID_NOT_REMOVE_TAN_POLE",
+    )
+
+    cos, sin = _constant_harmonic_coefficients(child_cos, child_sin)
+    shifted_cos = {
+        harmonic: coefficient * (-1 if harmonic % 2 else 1)
+        for harmonic, coefficient in cos.items()
+    }
+    shifted_sin = {
+        harmonic: coefficient * (-1 if harmonic % 2 else 1)
+        for harmonic, coefficient in sin.items()
+    }
+    normalized_spec = {
+        "grammar": "RATIONAL_TRIG_POLYNOMIAL_RATIONAL_TURN_WINDOW",
+        "cos_coefficients": {
+            harmonic: str(value)
+            for harmonic, value in shifted_cos.items() if value != 0
+        },
+        "sin_coefficients": {
+            harmonic: str(value)
+            for harmonic, value in shifted_sin.items() if value != 0
+        },
+        "turn_lo": str(normalized_lo),
+        "turn_hi": str(normalized_hi),
+        "source_parameter_id": source_parameter_id,
+    }
+    normalized = v6.classify_required_analytic_event(normalized_spec)
+    if normalized.get("status") == "RESOURCE_REFUSAL":
+        raise ResourceRefusal(
+            "NORMALIZED_V6_ENDPOINT_POLE_RESOURCE_REFUSAL:"
+            + str(normalized.get("reason"))
+        )
+    require(
+        normalized.get("status") == "CERTIFIED",
+        "NORMALIZED_V6_ENDPOINT_POLE_WINDOW_NOT_CERTIFIED:"
+        + str(normalized.get("reason")),
+    )
+
+    route = {
+        "status": "CERTIFIED",
+        "relation":
+            "EXACT_V6_ENDPOINT_POLE_HALF_TURN_NORMALIZED_RATIONAL_TURN_WINDOW",
+        "source_parameter_id": source_parameter_id,
+        "original_turn_interval": [str(lo), str(hi)],
+        "pole_endpoint": "left" if left_pole else "right",
+        "pole_turn": str(pole),
+        "normalized_turn_interval": [str(normalized_lo), str(normalized_hi)],
+        "exact_coordinate_map": "t_prime=t-pole_turn",
+        "harmonic_coefficient_transform": "C_h,S_h -> (-1)^h*(C_h,S_h)",
+        "physical_function_identity": (
+            "cos(2*pi*h*(t_prime+n+1/2))=(-1)^h*cos(2*pi*h*t_prime);"
+            "sin(2*pi*h*(t_prime+n+1/2))=(-1)^h*sin(2*pi*h*t_prime)"
+        ),
+        "normalized_v6_result": normalized,
+        "distinct_roots_open": int(normalized["distinct_roots_open"]),
+        "multiple_roots_open": int(normalized["multiple_roots_open"]),
+        "caller_certificate_trusted": False,
+        "interior_pole_partition_claimed": False,
+        "historical_v6_model_modified": False,
+    }
+    adapted = {
+        "status": "CERTIFIED",
+        "relation": "RESEARCH_SHADOW_V6_ENDPOINT_POLE_NORMALIZATION",
+        "source_parameter_id": source_parameter_id,
+        "spans": [{
+            "source_interval": ["0", "1"],
+            "route_kind": "PB00701_RESEARCH_V6_ENDPOINT_POLE_HALF_TURN_NORMALIZATION",
+            "route": route,
+        }],
+    }
+    return adapted, {
+        "original_blocker": copy.deepcopy(spans[0]["route"]),
+        "original_turn_interval": [str(lo), str(hi)],
+        "pole_turn": str(pole),
+        "pole_endpoint": "left" if left_pole else "right",
+        "normalized_turn_interval": [str(normalized_lo), str(normalized_hi)],
+        "shifted_cos_coefficients": {
+            str(h): str(v) for h, v in sorted(shifted_cos.items())
+        },
+        "shifted_sin_coefficients": {
+            str(h): str(v) for h, v in sorted(shifted_sin.items())
+        },
+        "normalized_v6_result": normalized,
+        "interior_pole_partition_claimed": False,
+    }
+
+
 def _single_span_child_summary(
         result, child_cos, child_sin, child_offset, child_rate):
     """Shadow V27 summary with exact point-jet endpoint multiplicity."""
@@ -342,30 +498,40 @@ def _shadow_partition_route(
                 + str(left) + ":" + str(right) + ":"
                 + str(child_result.get("reason"))
             )
-        if child_result.get("status") != "CERTIFIED":
-            route_brief = [
-                {
-                    "route_kind": span.get("route_kind"),
-                    "status": span.get("route", {}).get("status"),
-                    "reason": span.get("route", {}).get("reason"),
-                    "relation": span.get("route", {}).get("relation"),
-                    "source_interval": span.get("source_interval"),
-                }
-                for span in child_result.get("spans", [])
-            ]
-            raise ResearchRefusal(
-                "V27_SHADOW_REACHED_DEEPER_UNCERTIFIED_CHILD:"
-                + str(left) + ":" + str(right) + ":"
-                + canonical({
-                    "status": child_result.get("status"),
-                    "reason": child_result.get("reason"),
-                    "relation": child_result.get("relation"),
-                    "blocker": child_result.get("blocker"),
-                    "spans": route_brief,
-                })
-            )
         child_offset = q(offset) + q(rate) * left
         child_rate = q(rate) * (right - left)
+        historical_child_result = copy.deepcopy(child_result)
+        pole_normalization = None
+        if child_result.get("status") != "CERTIFIED":
+            try:
+                child_result, pole_normalization = (
+                    _normalized_v6_endpoint_pole_route(
+                        child_result, child_cos, child_sin,
+                        child_offset, child_rate, source_parameter_id,
+                    )
+                )
+            except ResearchRefusal:
+                route_brief = [
+                    {
+                        "route_kind": span.get("route_kind"),
+                        "status": span.get("route", {}).get("status"),
+                        "reason": span.get("route", {}).get("reason"),
+                        "relation": span.get("route", {}).get("relation"),
+                        "source_interval": span.get("source_interval"),
+                    }
+                    for span in historical_child_result.get("spans", [])
+                ]
+                raise ResearchRefusal(
+                    "V27_SHADOW_REACHED_DEEPER_UNCERTIFIED_CHILD:"
+                    + str(left) + ":" + str(right) + ":"
+                    + canonical({
+                        "status": historical_child_result.get("status"),
+                        "reason": historical_child_result.get("reason"),
+                        "relation": historical_child_result.get("relation"),
+                        "blocker": historical_child_result.get("blocker"),
+                        "spans": route_brief,
+                    })
+                )
         summary = _single_span_child_summary(
             child_result, child_cos, child_sin,
             child_offset, child_rate,
@@ -382,6 +548,8 @@ def _shadow_partition_route(
                 "rate": str(child_rate),
             },
             "child_spec_sha256": source_sha256(child_spec),
+            "historical_child_result": historical_child_result,
+            "endpoint_pole_normalization": pole_normalization,
             "child_result": child_result,
             "summary": summary,
         })
@@ -426,6 +594,14 @@ def _shadow_partition_route(
         "child_count": len(children),
         "composition": composition,
         "point_jet_supplied_endpoint_multiplicity": supplied,
+        "endpoint_pole_normalizations": [
+            {
+                "child_index": index,
+                **copy.deepcopy(child["endpoint_pole_normalization"]),
+            }
+            for index, child in enumerate(children)
+            if child["endpoint_pole_normalization"] is not None
+        ],
         "multiplicity_invented_from_root_count": False,
         "caller_multiplicity_trusted": False,
         "historical_v27_model_modified": False,
@@ -549,6 +725,11 @@ def analyze_source(spec):
         ],
         "shadow_spans": upgraded,
         "point_jet_supplied_endpoint_multiplicity": supplied,
+        "endpoint_pole_normalizations": [
+            evidence
+            for item in upgraded if item["shadow_upgrade_applied"]
+            for evidence in item["route"]["endpoint_pole_normalizations"]
+        ],
         "all_shadow_span_routes_certified": True,
         "shared_source_knot_double_counted": False,
         "global_cross_span_multiplicity_claimed": False,
