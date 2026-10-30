@@ -20,7 +20,7 @@ M1 = sum_h [||P'_h|| + ||Q'_h|| + (44/7)*|h*r|*(||P_h||+||Q_h||)]
 
 with coefficient l1 norms on a radius covering the original source. The bound follows from 2*pi < 44/7 and absolute sine/cosine bounds of one, then is checked against the independently constructed original-source span m1. No caller-provided derivative bound is trusted.
 
-For the exact Sturm-isolated alpha in (l,u), choose rational q=(l+u)/2. The original rational-phase evaluator supplies an outward rational enclosure [A(q),B(q)] containing F(q). The mean-value theorem certifies
+For the exact Sturm-isolated alpha in (l,u), choose rational q=(l+u)/2. The original rational-phase evaluator supplies an outward rational enclosure [A(q),B(q)] containing F(q). Its exact fractions can have enormous denominators; the already-qualified #314 rational dyadic routine rounds both endpoints **outward** to a 2^-32 grid, checking exact containment before publishing the compact report. The published enclosure still contains F(q). The mean-value theorem certifies
 
 F(alpha) in [A(q)−M1*(u−l)/2, B(q)+M1*(u−l)/2].
 
@@ -39,6 +39,13 @@ Run on exact checkout:
     python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v44_irrational_cut_source_sign.py --contract --self-test
 
 The focused workflow must check out literal PR head and print its SHA; mc1-static, exact-head technical review, source-tree comparison, expected-head merge and merged-main CI remain mandatory.
+
+## Retained failures and resource-contract repair
+
+- [Initial literal-head focused #41020487714](https://github.com/techrote/radiCADSAC/actions/runs/41020487714): **FAILED, 10/12**. One adversarial report was refused with a resource status, and a forged atlas test erroneously required endpoint `coordinate_descriptor` keys that the schema does not supply.
+- [Schema-corrected #41021838535](https://github.com/techrote/radiCADSAC/actions/runs/41021838535): **FAILED, 11/12**; the remaining forged-report classification was traced to excessive nominal report size.
+- [Size-diagnostic #41021926204](https://github.com/techrote/radiCADSAC/actions/runs/41021926204): **FAILED, 11/13**. The actual correct canonical report was **116426 bytes**, exceeding the explicit 65536-byte input cap; this is a real report resource-contract regression, not a physical theorem failure.
+- Corrective approach: preserve the 65536-byte cap, do not loosen adversarial checks, instead produce short exact outward dyadic [A,B] enclosures. The source-level raw rational interval is compared against the compact interval before use. The new nominal self-replay test and per-step outward containment assertions must both pass before merge. These failures are retained and not reclassified as passing CI.
 
 ## Open theorem boundary
 

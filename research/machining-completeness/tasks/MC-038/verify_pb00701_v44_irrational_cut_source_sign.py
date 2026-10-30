@@ -39,6 +39,8 @@ class FrozenIrrationalCutSourceSignTests(unittest.TestCase):
 
     def test_exact_rational_point_and_lipschitz_witness(self):
         r = self.good["source_proof"]
+        self.assertEqual(r["outward_dyadic_grid_bits"],
+                         core.derivative.DYADIC_ENCLOSURE_BITS)
         span = core.derivative._source_snapshot(self.view)[1]
         self.assertEqual(Q(r["source_lipschitz_derivative_upper_bound"]),
                          core.independent_lipschitz_bound(span))
@@ -57,6 +59,11 @@ class FrozenIrrationalCutSourceSignTests(unittest.TestCase):
                 core.v45.engine.distinct_roots_open(
                     self.field.minimal, lo, hi), 1)
             point = tuple(map(Q, item["rational_source_trig_enclosure"]))
+            raw = span.evaluate(mid)
+            self.assertLessEqual(point[0], raw[0])
+            self.assertGreaterEqual(point[1], raw[1])
+            grid = 1 << core.derivative.DYADIC_ENCLOSURE_BITS
+            self.assertTrue(all((x * grid).denominator == 1 for x in point))
             drift = Q(item["global_derivative_lipschitz_radius"])
             transported = tuple(map(
                 Q, item["transported_irrational_cut_value_enclosure"]))

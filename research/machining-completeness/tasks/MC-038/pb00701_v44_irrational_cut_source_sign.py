@@ -110,11 +110,20 @@ def certify_strict_sign(span, field, *, max_refinements=MAX_REFINEMENTS):
     trace = []
     for step in range(max_refinements + 1):
         mid, radius = (lo + hi) / 2, (hi - lo) / 2
-        value = span.evaluate(mid)
-        require(type(value) is tuple and len(value) == 2
-                and all(type(x) is Q for x in value)
-                and value[0] <= value[1],
+        raw = span.evaluate(mid)
+        require(type(raw) is tuple and len(raw) == 2
+                and all(type(x) is Q for x in raw)
+                and raw[0] <= raw[1],
                 "ORIGINAL_RATIONAL_SOURCE_TRIG_ENCLOSURE_INVALID")
+        # Round exact source enclosures *outward* onto the previously
+        # qualified dyadic grid. Large raw Fraction denominators must
+        # not inflate the published report or bypass its resource cap.
+        value = (
+            derivative._outward_dyadic(raw[0], upward=False),
+            derivative._outward_dyadic(raw[1], upward=True),
+        )
+        require(value[0] <= raw[0] <= raw[1] <= value[1],
+                "RATIONAL_SOURCE_TRIG_ENCLOSURE_ROUNDED_INWARD")
         enclosed = (value[0] - m1 * radius,
                     value[1] + m1 * radius)
         strict = 1 if enclosed[0] > 0 else (
@@ -134,6 +143,7 @@ def certify_strict_sign(span, field, *, max_refinements=MAX_REFINEMENTS):
             return {
                 "strict_nonzero_sign": strict,
                 "source_lipschitz_derivative_upper_bound": str(m1),
+                "outward_dyadic_grid_bits": derivative.DYADIC_ENCLOSURE_BITS,
                 "initial_exact_algebraic_isolation":
                     [str(x) for x in initial],
                 "certificate": trace[-1],
