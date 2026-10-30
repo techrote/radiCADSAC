@@ -337,7 +337,19 @@ def _shadow_partition_route(
         )
         child_result = v27.v26.classify_required_analytic_event(child_spec)
         if child_result.get("status") == "RESOURCE_REFUSAL":
-            raise ResourceRefusal("PB00701_V27_CHILD_RESOURCE_REFUSAL")
+            raise ResourceRefusal(
+                "PB00701_V27_CHILD_RESOURCE_REFUSAL:"
+                + str(left) + ":" + str(right) + ":"
+                + str(child_result.get("reason"))
+            )
+        if child_result.get("status") != "CERTIFIED":
+            raise ResearchRefusal(
+                "V27_SHADOW_REACHED_DEEPER_UNCERTIFIED_CHILD:"
+                + str(left) + ":" + str(right) + ":"
+                + str(child_result.get("status")) + ":"
+                + str(child_result.get("reason")) + ":"
+                + str(child_result.get("blocker"))
+            )
         child_offset = q(offset) + q(rate) * left
         child_rate = q(rate) * (right - left)
         summary = _single_span_child_summary(
