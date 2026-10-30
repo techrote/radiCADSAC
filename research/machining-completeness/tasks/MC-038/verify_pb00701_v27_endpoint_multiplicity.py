@@ -82,7 +82,9 @@ class V27EndpointMultiplicityTests(unittest.TestCase):
         self.assertEqual(r["source_parameter_id"], "source-time-t")
         self.assertEqual(r["source_interval"], ["0", "2"])
         self.assertEqual(r["phase_turn_law"], {"offset": "0", "rate": "1/4"})
-        self.assertFalse(r["shared_source_knot_double_counted"])
+        self.assertFalse(r["global_multispan_root_count_claimed"])
+        self.assertFalse(r["global_source_knot_deduplication_claimed"])
+        self.assertTrue(r["shared_source_knot_has_two_span_local_endpoint_records"])
         self.assertFalse(r["global_cross_span_multiplicity_claimed"])
         self.assertFalse(r["historical_v54_admitted"])
         self.assertFalse(r["historical_v54_dispositions_changed"])
@@ -193,6 +195,32 @@ class V27EndpointMultiplicityTests(unittest.TestCase):
                 blocked, {1: [Q(1), Q(1)]}, {},
                 Q(5, 12), Q(1, 12), "source-time-t",
             )
+
+    def test_left_endpoint_pole_and_harmonic_parity_normalize_exactly(self):
+        blocked = {
+            "status": "BLOCKED",
+            "spans": [{
+                "route_kind": "DELEGATED_V6_CONSTANT_MODULATION",
+                "route": {
+                    "status": "BLOCKED",
+                    "reason": "TAN_HALF_POLE_REQUIRES_EXACT_WINDOW_PARTITION",
+                },
+            }],
+        }
+        adapted, evidence = core._normalized_v6_endpoint_pole_route(
+            blocked,
+            {1: [Q(1)], 2: [Q(1)]},
+            {},
+            Q(1, 2), Q(1, 12), "source-time-t",
+        )
+        self.assertEqual(adapted["status"], "CERTIFIED")
+        self.assertEqual(evidence["pole_endpoint"], "left")
+        self.assertEqual(evidence["pole_turn"], "1/2")
+        self.assertEqual(evidence["normalized_turn_interval"], ["0", "1/12"])
+        self.assertEqual(
+            evidence["shifted_cos_coefficients"], {"1": "-1", "2": "1"}
+        )
+        self.assertFalse(evidence["interior_pole_partition_claimed"])
 
     def test_endpoint_order_is_not_hardcoded_to_simple(self):
         # F(u)=u^2*cos(2*pi*u/8) has an exact order-2 endpoint root.
@@ -309,7 +337,9 @@ class V27EndpointMultiplicityTests(unittest.TestCase):
 
     def test_report_forgery_and_capability_promotion_refuse(self):
         mutations = (
-            lambda r: r.__setitem__("shared_source_knot_double_counted", True),
+            lambda r: r.__setitem__("global_multispan_root_count_claimed", True),
+            lambda r: r.__setitem__("global_source_knot_deduplication_claimed", True),
+            lambda r: r.__setitem__("shared_source_knot_has_two_span_local_endpoint_records", False),
             lambda r: r.__setitem__("global_cross_span_multiplicity_claimed", True),
             lambda r: r.__setitem__("historical_v54_admitted", True),
             lambda r: r.__setitem__("historical_v54_dispositions_changed", True),
