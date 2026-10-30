@@ -1,0 +1,67 @@
+name: mc1-pb00701-five-source-evidence-replay
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_five_source_evidence_replay.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_five_source_evidence_replay.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-five-source-evidence-replay.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-five-source-evidence-replay-research.md'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v27_three_frozen_refusals.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v27-three-frozen-refusals-witness.json'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v6_tail100_knot.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v6-tail100-knot-post-v54-witness.json'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v9_v43_full_source.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v9-v43-full-source-witness.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-inventory-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-coverage-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'handoffs/current-authority.json'
+      - '.github/workflows/mc1-pb00701-five-source-evidence-replay.yml'
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_five_source_evidence_replay.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_five_source_evidence_replay.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-five-source-evidence-replay.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-five-source-evidence-replay-research.md'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v27_three_frozen_refusals.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v27-three-frozen-refusals-witness.json'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v6_tail100_knot.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v6-tail100-knot-post-v54-witness.json'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v9_v43_full_source.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v9-v43-full-source-witness.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-inventory-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-coverage-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'handoffs/current-authority.json'
+      - '.github/workflows/mc1-pb00701-five-source-evidence-replay.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Show literal source head
+        run: git rev-parse HEAD
+      - name: Source-pinned five-source integration, adversarial tests and frozen census
+        run: |
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_five_source_evidence_replay.py --contract --self-test
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py --contract --self-test
+      - name: Requalify the three independent prior original-source producer contracts
+        run: |
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v27_three_frozen_refusals.py --contract --self-test
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v6_tail100_knot.py --contract --self-test
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v9_v43_full_source.py --contract --self-test
