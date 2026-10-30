@@ -46,6 +46,10 @@ class FiveSourceTests(unittest.TestCase):
         self.assertEqual(result["qualified_distinct_source_witnesses"], 5)
         self.assertEqual(result["qualified_v27_child_not_certified_frozen_source_cases"], 4)
         self.assertEqual(result["qualified_v43_refusal_frozen_source_cases"], 1)
+        reasons = [r["reason"] for view in self.views.values()
+                   for r in view["historical_refusal"]]
+        self.assertEqual(reasons.count("V27_CHILD_NOT_CERTIFIED"), 4)
+        self.assertEqual(reasons.count("CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED"), 1)
         self.assertEqual(result["historical_route_refusals_without_only_these_five_proofs"], 15)
         self.assertEqual(len(result["other_historical_refused_case_ids"]), 15)
         self.assertTrue(result["not_an_exhaustive_combined_post_v54_census"])
@@ -109,6 +113,11 @@ class FiveSourceTests(unittest.TestCase):
             (core.H, lambda v: v["events"][0].update(location="SPAN_OPEN")),
             (core.V6_100, lambda v: v["events"][0].update(location="SPAN_OPEN")),
             (core.V6_100, lambda v: v["events"][0]["order"].update(right=2)),
+            (core.V6_100, lambda v: v["events"][0]["order"].update(left=True)),
+            (core.H, lambda v: v["events"][0]["order"].update(right=True)),
+            (core.V8_0, lambda v: v.update(closed_root_count=True)),
+            (core.V9_100, lambda v: v.update(strict_source_open_root_count=True)),
+            (core.V8_100, lambda v: v["events"][0]["order"].update(value=True)),
             (core.V9_100, lambda v: v.update(producer="V27_THREE")),
             (core.V9_100, lambda v: v["historical_refusal"][0].update(
                 reason="CERTIFIED")),
