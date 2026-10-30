@@ -1,0 +1,340 @@
+{
+  "schema": "radicadsac-mc038-five-source-evidence-replay/1.0",
+  "task": "MC-038",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "frozen_original_corpus_git_blob": "5841c331579489b25caef38cd412bdbf286f9134",
+  "producer_pins": [
+    {
+      "key": "V27_THREE",
+      "code_blob": "c88bc20500e67d419ab82ea19ba8762434f2aff8",
+      "report_blob": "f4961533fab39d423f01983dd05b70f6a599615b",
+      "case_ids": [
+        "harvested:verify_pb00701_v9:1a5fd052a155",
+        "composite:PB00701_V8_EXACT_COMMON_FACTOR_REDUCTION:tail0",
+        "composite:PB00701_V8_EXACT_COMMON_FACTOR_REDUCTION:tail100"
+      ]
+    },
+    {
+      "key": "V6_KNOT",
+      "code_blob": "73b3f68bb4ecb8b4f69d073ebb0ee4621796d1a5",
+      "report_blob": "6a5763483bda5103f16617ea269360d4eba26c66",
+      "case_ids": [
+        "composite:DELEGATED_V6_CONSTANT_MODULATION:tail100"
+      ]
+    },
+    {
+      "key": "V9_V43",
+      "code_blob": "2cde41b799d5468ad84e7e482580fd4351b1d638",
+      "report_blob": "1882c231f346d0f4622086b6aeee246bb520624b",
+      "case_ids": [
+        "composite:PB00701_V9_EXACT_MONOTONE_SINGLE_HARMONIC_RATIO:tail100"
+      ]
+    }
+  ],
+  "source_attested_views": [
+    {
+      "case_id": "composite:DELEGATED_V6_CONSTANT_MODULATION:tail100",
+      "producer": "V6_KNOT",
+      "source_sha256": "f6a0eb06c66af415fbb8abdfe62f9b36a2a2bf154e535d83307a80228e044ad5",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/4"
+      },
+      "historical_disposition": "BLOCKED",
+      "historical_refusal": [
+        {
+          "owner": "PB00701_V27_EXACT_RATIONAL_PHASE_SECTOR_PARTITION_COMPOSITION",
+          "reason": "V27_CHILD_NOT_CERTIFIED"
+        }
+      ],
+      "events": [
+        {
+          "coordinate": {
+            "kind": "RATIONAL",
+            "value": "1"
+          },
+          "location": "SOURCE_KNOT",
+          "classification": "TOUCHING",
+          "order": {
+            "kind": "ONE_SIDED",
+            "left": 1,
+            "right": 1
+          },
+          "left_sign": "POSITIVE",
+          "right_sign": "POSITIVE"
+        }
+      ],
+      "closed_root_count": 1,
+      "strict_source_open_root_count": 1,
+      "strict_span_open_root_counts": [
+        0,
+        0
+      ],
+      "maximal_open_signs": [
+        "POSITIVE",
+        "POSITIVE"
+      ],
+      "generic_route_repaired": false,
+      "source_specific_mathematics_only": true
+    },
+    {
+      "case_id": "composite:PB00701_V8_EXACT_COMMON_FACTOR_REDUCTION:tail0",
+      "producer": "V27_THREE",
+      "source_sha256": "9abbed355812241cdef20f3ce3b3522619bdd682c3a73fb01828d8f95c72f0af",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "-1/4",
+        "rate": "1/2"
+      },
+      "historical_disposition": "BLOCKED",
+      "historical_refusal": [
+        {
+          "owner": "PB00701_V27_EXACT_RATIONAL_PHASE_SECTOR_PARTITION_COMPOSITION",
+          "reason": "V27_CHILD_NOT_CERTIFIED"
+        }
+      ],
+      "events": [
+        {
+          "coordinate": {
+            "kind": "RATIONAL",
+            "value": "1/2"
+          },
+          "location": "SPAN_OPEN",
+          "classification": "TOUCHING",
+          "order": {
+            "kind": "INTEGER",
+            "value": 2
+          },
+          "left_sign": "POSITIVE",
+          "right_sign": "POSITIVE"
+        },
+        {
+          "coordinate": {
+            "kind": "RATIONAL",
+            "value": "3/2"
+          },
+          "location": "SPAN_OPEN",
+          "classification": "CROSSING",
+          "order": {
+            "kind": "INTEGER",
+            "value": 1
+          },
+          "left_sign": "POSITIVE",
+          "right_sign": "NEGATIVE"
+        }
+      ],
+      "closed_root_count": 2,
+      "strict_source_open_root_count": 2,
+      "strict_span_open_root_counts": [
+        1,
+        1
+      ],
+      "maximal_open_signs": [
+        "POSITIVE",
+        "POSITIVE",
+        "NEGATIVE"
+      ],
+      "generic_route_repaired": false,
+      "source_specific_mathematics_only": true
+    },
+    {
+      "case_id": "composite:PB00701_V8_EXACT_COMMON_FACTOR_REDUCTION:tail100",
+      "producer": "V27_THREE",
+      "source_sha256": "8e3af5a5e74c3fc3f364607f5c3c4b03cd1adc2e2dd6e16bfc03ddf870de0d2b",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "-1/4",
+        "rate": "1/2"
+      },
+      "historical_disposition": "BLOCKED",
+      "historical_refusal": [
+        {
+          "owner": "PB00701_V27_EXACT_RATIONAL_PHASE_SECTOR_PARTITION_COMPOSITION",
+          "reason": "V27_CHILD_NOT_CERTIFIED"
+        }
+      ],
+      "events": [
+        {
+          "coordinate": {
+            "kind": "RATIONAL",
+            "value": "1/2"
+          },
+          "location": "SPAN_OPEN",
+          "classification": "TOUCHING",
+          "order": {
+            "kind": "INTEGER",
+            "value": 2
+          },
+          "left_sign": "POSITIVE",
+          "right_sign": "POSITIVE"
+        }
+      ],
+      "closed_root_count": 1,
+      "strict_source_open_root_count": 1,
+      "strict_span_open_root_counts": [
+        1,
+        0
+      ],
+      "maximal_open_signs": [
+        "POSITIVE",
+        "POSITIVE"
+      ],
+      "generic_route_repaired": false,
+      "source_specific_mathematics_only": true
+    },
+    {
+      "case_id": "composite:PB00701_V9_EXACT_MONOTONE_SINGLE_HARMONIC_RATIO:tail100",
+      "producer": "V9_V43",
+      "source_sha256": "cc13a39582060e763c573f2665b3ea3b6dfe8b76a6cb0fb77a7b0ec90cf6253a",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/8"
+      },
+      "historical_disposition": "BLOCKED",
+      "historical_refusal": [
+        {
+          "owner": "PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF",
+          "reason": "CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED"
+        }
+      ],
+      "events": [
+        {
+          "coordinate": {
+            "kind": "IMPLICIT_STRICT_BRACKET",
+            "lower": "1/4",
+            "upper": "1/3",
+            "source_root_unique_by_producer_theorem": true
+          },
+          "location": "SPAN_OPEN",
+          "classification": "CROSSING",
+          "order": {
+            "kind": "INTEGER",
+            "value": 1
+          },
+          "left_sign": "NEGATIVE",
+          "right_sign": "POSITIVE"
+        }
+      ],
+      "closed_root_count": 1,
+      "strict_source_open_root_count": 1,
+      "strict_span_open_root_counts": [
+        1,
+        0
+      ],
+      "maximal_open_signs": [
+        "NEGATIVE",
+        "POSITIVE"
+      ],
+      "generic_route_repaired": false,
+      "source_specific_mathematics_only": true
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v9:1a5fd052a155",
+      "producer": "V27_THREE",
+      "source_sha256": "710259612833cfe40e73ae528e0d0e944a87123c9bb4b3f4f76cef33c45bcf4d",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "1"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/8"
+      },
+      "historical_disposition": "BLOCKED",
+      "historical_refusal": [
+        {
+          "owner": "PB00701_V27_EXACT_RATIONAL_PHASE_SECTOR_PARTITION_COMPOSITION",
+          "reason": "V27_CHILD_NOT_CERTIFIED"
+        }
+      ],
+      "events": [
+        {
+          "coordinate": {
+            "kind": "RATIONAL",
+            "value": "0"
+          },
+          "location": "SOURCE_LEFT_ENDPOINT",
+          "classification": "BOUNDARY",
+          "order": {
+            "kind": "ONE_SIDED",
+            "right": 1
+          },
+          "left_sign": null,
+          "right_sign": "POSITIVE"
+        }
+      ],
+      "closed_root_count": 1,
+      "strict_source_open_root_count": 0,
+      "strict_span_open_root_counts": [
+        0
+      ],
+      "maximal_open_signs": [
+        "POSITIVE"
+      ],
+      "generic_route_repaired": false,
+      "source_specific_mathematics_only": true
+    }
+  ],
+  "frozen_v54": {
+    "source_case_count": 121,
+    "historical_route_blocked": 20,
+    "historical_missing_order_premises": 30,
+    "frozen_historical_dispositions_modified": false
+  },
+  "selected_five_case_overlay": {
+    "qualified_distinct_source_witnesses": 5,
+    "qualified_v27_child_not_certified_frozen_source_cases": 4,
+    "qualified_v43_refusal_frozen_source_cases": 1,
+    "historical_route_refusals_without_only_these_five_proofs": 15,
+    "historical_missing_order_premises": 30,
+    "frozen_original_denominator": 121,
+    "other_historical_refused_case_ids": [
+      "composite:DELEGATED_V6_CONSTANT_MODULATION:tail0",
+      "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail0",
+      "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail100",
+      "composite:PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO:tail0",
+      "composite:PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO:tail100",
+      "composite:PB00701_V12_EXACT_COMPONENT_ROOT_PARTITION_SINGLE_HARMONIC:tail0",
+      "composite:PB00701_V12_EXACT_COMPONENT_ROOT_PARTITION_SINGLE_HARMONIC:tail100",
+      "composite:PB00701_V13_EXACT_NONVANISHING_EVEN_MULTIPLIER_MULTIHARMONIC:tail0",
+      "composite:PB00701_V16_EXACT_CHEBYSHEV_STURM_MULTIPLIER:tail100",
+      "composite:PB00701_V17_EXACT_PROJECTIVE_EVEN_TRIG_MULTIPLIER:tail0",
+      "harvested:verify_pb00701_v13:c426f65b5c10",
+      "harvested:verify_pb00701_v44:ffaea08e30c9",
+      "harvested:verify_pb00701_v52:2250401ce435",
+      "harvested:verify_pb00701_v53:cb01c327d5f1",
+      "harvested:verify_pb00701_v9:4e7b85fa122a"
+    ],
+    "not_an_exhaustive_combined_post_v54_census": true,
+    "not_a_generic_V27_or_V43_solver": true
+  },
+  "gates": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN",
+    "PB-007-03": "OPEN_PROPAGATED",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "native_geometry_or_STEP_qualified": false,
+    "production_authorized": false
+  }
+}
