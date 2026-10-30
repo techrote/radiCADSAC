@@ -122,6 +122,15 @@ class FrozenIrrationalCutSourceSignTests(unittest.TestCase):
         with self.assertRaises(core.Refusal):
             core.certify_strict_sign(restricted, self.field)
 
+    def test_nominal_report_canonical_size_and_self_replay(self):
+        size = len(core.bridge.previous.canonical(self.good))
+        self.assertLessEqual(
+            size, core.MAX_REPORT_BYTES,
+            f"nominal report bytes={size}, cap={core.MAX_REPORT_BYTES}"
+        )
+        self.assertEqual(core.validate_report(
+            self.good, supplied_atlas=self.view)["status"], core.SUCCESS)
+
     def test_forged_report_sign_interval_bound_and_gate_refuse(self):
         for path, forged_value in (
             (("independently_certified_irrational_cut_sign",), "NEGATIVE"),
