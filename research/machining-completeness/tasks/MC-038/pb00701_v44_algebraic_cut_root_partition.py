@@ -22,7 +22,7 @@ from pathlib import Path
 import pb00701_algebraic_endpoint_model as v46
 import pb00701_algebraic_monotone_cut_model as v47
 import pb00701_algebraic_orientation_cut_model as v44
-import pb00701_transverse_original_source as transverse
+import pb00701_transverse_trig_interval as trig
 import pb00701_v41_algebraic_cut_order as cut_order
 
 ROOT = Path(__file__).resolve().parents[4]
@@ -40,8 +40,6 @@ PINS = {
     CORPUS: "5841c331579489b25caef38cd412bdbf286f9134",
     DOMAIN: "23de82f5240a72509f7afe4acd5948b65bc4ff13",
     AUTH: "fa0233323a0804d8a5d3eb7cd892a274a6173fab",
-    TASK / "pb00701_transverse_original_source.py":
-        "992ad17ddbdf34687bcb59acba46f672b2d4a1c4",
     TASK / "pb00701_transverse_trig_interval.py":
         "2320f92efe4316d865a89f6d848737e2c000ca4d",
     TASK / "pb00701_v41_algebraic_cut_order.py":
@@ -91,7 +89,6 @@ def pins():
     for path, expected in PINS.items():
         require(git_blob(path) == expected,
                 "PINNED_SOURCE_DRIFT:" + path.name)
-    transverse.custody()
     cut_order.pins()
     auth = json.loads(AUTH.read_text())
     domain = json.loads(DOMAIN.read_text())
@@ -151,15 +148,44 @@ def _physical_root_proof(row, *, max_depth=14, max_nodes=20000):
     require(type(max_depth) is int and 0 <= max_depth <= 18 and
             type(max_nodes) is int and 1 <= max_nodes <= 20000,
             "INVALID_PHYSICAL_ROOT_RESOURCE_BUDGET")
-    lowerer = transverse.v27.exact_lowerer()
-    views = transverse.original_spans(row, lowerer)
-    require(len(views) == 1 and views[0]["interval"] == (Q(0), Q(1)),
-            "FROZEN_V44_NOT_ONE_RATIONAL_SOURCE_SPAN")
-    span = views[0]["span"]
+
+    # Use the same pinned general coupled B-spline lowerer as #306.  The older
+    # #296 wrapper's convenience lowerer is intentionally degree-0/1 only and
+    # therefore cannot lower this genuine degree-2 frozen V44 source.  The
+    # physical-root theorem itself is still the unchanged #296 interval engine.
+    lowered = cut_order.lowerer.classify_required_analytic_event(row["spec"])
+    require(
+        lowered.get("status") == "BLOCKED"
+        and lowered.get("relation") ==
+        "FINITE_EXACT_PIECEWISE_LOWERING_WITH_RESIDUAL_COUPLED_THEOREM_BLOCKER",
+        "GENERAL_COUPLED_SOURCE_LOWERING_NOT_REPRODUCED",
+    )
+    spans = lowered.get("spans", [])
+    require(len(spans) == 1, "FROZEN_V44_NOT_ONE_LOWERED_SOURCE_SPAN")
+    source_span = spans[0]
+    left, right = map(cut_order.q, source_span["source_interval"])
+    require((left, right) == (Q(0), Q(1)),
+            "FROZEN_V44_NOT_UNIT_RATIONAL_SOURCE_SPAN")
+    cos = {
+        int(h): tuple(cut_order.q(x) for x in values)
+        for h, values in source_span["cos_polynomials"].items()
+    }
+    sin = {
+        int(h): tuple(cut_order.q(x) for x in values)
+        for h, values in source_span["sin_polynomials"].items()
+    }
+    terms = {}
+    for h in sorted(set(cos) | set(sin)):
+        terms[h] = (cos.get(h, (Q(0),)), sin.get(h, (Q(0),)))
+    phase = lowered["phase_turn_law"]
+    span = trig.Span(
+        left, right, cut_order.q(phase["offset"]),
+        cut_order.q(phase["rate"]), terms,
+    )
     try:
         proof = span.prove(max_depth=max_depth, max_nodes=max_nodes,
                            bracket_width=Q(1, 64))
-    except transverse.trig.Refusal as exc:
+    except trig.Refusal as exc:
         reason = str(exc)
         if "RESOURCE" in reason or "NODE" in reason or "UNDECIDED" in reason:
             raise ResourceRefusal(reason) from exc
@@ -202,7 +228,7 @@ def _algebraic_endpoint(spec):
 
 def _cut_sign_at_rational(span, value):
     enclosure = span.evaluate(value)
-    sign = transverse.trig.strict_sign(enclosure)
+    sign = trig.strict_sign(enclosure)
     require(sign in (-1, 1), "RATIONAL_PROOF_CUT_VALUE_ZERO_OR_UNRESOLVED")
     return sign
 
@@ -426,7 +452,7 @@ def attempt(**budgets):
     except ResourceRefusal as exc:
         return nontruth(exc.reason, "RESOURCE_REFUSAL")
     except (ResearchRefusal, cut_order.ResearchRefusal,
-            transverse.InvalidOriginal, ValueError, KeyError, IndexError,
+            ValueError, KeyError, IndexError,
             TypeError, ZeroDivisionError, AssertionError) as exc:
         reason = str(exc)
         status = (
