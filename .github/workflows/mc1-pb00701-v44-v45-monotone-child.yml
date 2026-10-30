@@ -1,0 +1,52 @@
+name: mc1-pb00701-v44-v45-monotone-child
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_v45_monotone_child_bridge.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v44_v45_monotone_child_bridge.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v44-v45-monotone-child-bridge-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_global_derivative.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_implicit_root_refinement.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_source_proof_cell_atlas.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_algebraic_cut_root_partition.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v41_algebraic_cut_order.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'handoffs/current-authority.json'
+      - '.github/workflows/mc1-pb00701-v44-v45-monotone-child.yml'
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_v45_monotone_child_bridge.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v44_v45_monotone_child_bridge.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v44-v45-monotone-child-bridge-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_global_derivative.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_implicit_root_refinement.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_source_proof_cell_atlas.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_algebraic_cut_root_partition.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v41_algebraic_cut_order.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'handoffs/current-authority.json'
+      - '.github/workflows/mc1-pb00701-v44-v45-monotone-child.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Show exact source checkout
+        run: git rev-parse HEAD
+      - name: Verify V44 physical derivative to real V45 Q(alpha) child bridge
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v44_v45_monotone_child_bridge.py --contract --self-test
