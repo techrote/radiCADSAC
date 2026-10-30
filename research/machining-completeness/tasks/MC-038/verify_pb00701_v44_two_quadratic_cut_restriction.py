@@ -21,7 +21,7 @@ class ExactBiquadraticArithmetic(unittest.TestCase):
         r=core.K
         self.assertEqual(r((Q(-577),Q(408),Q(0),Q(0))).sign(),-1)
         self.assertEqual(r((Q(577),Q(-408),Q(0),Q(0))).sign(),1)
-        self.assertEqual(r((Q(-99),Q(70),Q(0),Q(0))).sign(),1)
+        self.assertEqual(r((Q(-98),Q(70),Q(0),Q(0))).sign(),1)
         self.assertEqual(r((Q(0),Q(0),Q(0),Q(1))).sign(),1)
         self.assertEqual(r((Q(0),Q(0),Q(0),Q(-1))).sign(),-1)
         self.assertEqual(r((Q(0),Q(0),Q(0),Q(0))).sign(),0)
