@@ -123,7 +123,7 @@ def rational_from_record(raw):
     return q
 
 def parse_cut(raw):
-    require(type(raw) is dict and set(raw) == {"polynomial", "lower", "upper"},
+    require(type(raw) is dict and len(raw) == 3 and set(raw) == {"polynomial", "lower", "upper"},
             "INVALID_ALGEBRAIC_CUT_RECORD")
     p = canonical_integer_coefficients(raw["polynomial"])
     lo,hi = rational_from_record(raw["lower"]), rational_from_record(raw["upper"])
@@ -186,9 +186,31 @@ def compare(raw_a,raw_b):
             bounded(endpoint,MAX_WORK_BITS)
     raise ResourceRefusal("ALGEBRAIC_ROOT_SEPARATION_ROUND_BUDGET")
 
+def certificate_preflight(submitted):
+    """Reject untrusted nested/oversized records *before* JSON traversal."""
+    require(type(submitted) is dict and len(submitted) == 6 and
+            set(submitted) == {"schema","status","relation","method","rounds","gcd"},
+            "INVALID_SUBMITTED_CERTIFICATE_SHAPE")
+    require(submitted["schema"] == SCHEMA and submitted["status"] == "CERTIFIED",
+            "INVALID_SUBMITTED_CERTIFICATE_IDENTITY")
+    require(type(submitted["relation"]) is int and submitted["relation"] in (-1,0,1),
+            "INVALID_CERTIFICATE_RELATION")
+    require(submitted["method"] in ("COMMON_ROOT_GCD","STRICT_RATIONAL_SEPARATION")
+            and type(submitted["method"]) is str, "INVALID_CERTIFICATE_METHOD")
+    require(type(submitted["rounds"]) is int and 0 <= submitted["rounds"] <= MAX_ROUNDS,
+            "INVALID_CERTIFICATE_ROUNDS")
+    values=submitted["gcd"]
+    require(type(values) is list and 1 <= len(values) <= MAX_DEGREE+1,
+            "INVALID_CERTIFICATE_GCD_DIMENSION")
+    for item in values:
+        require(type(item) is str, "INVALID_CERTIFICATE_GCD_COEFFICIENT_TYPE")
+        if len(item) > MAX_CERT_BYTES:
+            raise ResourceRefusal("CERTIFICATE_SIZE_BUDGET")
+        require(len(item) <= 8192, "INVALID_CERTIFICATE_GCD_COEFFICIENT_LENGTH")
+
 def verify_comparison(raw_a,raw_b,submitted):
     try:
-        require(type(submitted) is dict, "INVALID_SUBMITTED_CERTIFICATE")
+        certificate_preflight(submitted)
         try:
             blob=json.dumps(submitted, sort_keys=True, separators=(",", ":"))
         except (TypeError,ValueError,RecursionError) as ex:

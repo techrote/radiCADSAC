@@ -90,7 +90,7 @@ class Tests(unittest.TestCase):
         b={"polynomial":[str(-n-4),str(n)],"lower":"0","upper":"2"}
         with self.assertRaisesRegex(m.ResourceRefusal,"SEPARATION_ROUND_BUDGET"):
             m.compare(a,b)
-        self.assertEqual(m.verify_comparison(a,b,{})["status"],"RESOURCE_REFUSAL")
+        self.assertEqual(m.verify_comparison(a,b,m.compare(BETA,ALPHA))["status"],"RESOURCE_REFUSAL")
     def test_independent_rational_order_grid(self):
         # Exact independent Fraction ordering, including equality at q=0.
         roots=[Q(-5,2),Q(-3,2),Q(-1,2),Q(0),Q(1,2),Q(3,2),Q(5,2)]
@@ -123,7 +123,9 @@ class Tests(unittest.TestCase):
         good=m.compare(BETA,ALPHA)
         self.assertEqual(m.verify_comparison(BETA,ALPHA,good)["status"],"CERTIFIED")
         self.assertEqual(m.verify_comparison(BETA,ALPHA,dict(good,relation=0))["status"],"BLOCKED")
-        self.assertEqual(m.verify_comparison(BETA,ALPHA,{"large":"x"*m.MAX_CERT_BYTES})["status"],"RESOURCE_REFUSAL")
+        self.assertEqual(m.verify_comparison(BETA,ALPHA,{"large":"x"*m.MAX_CERT_BYTES})["status"],"BLOCKED")
+        self.assertEqual(m.verify_comparison(BETA,ALPHA,dict(good,gcd=["x"*(m.MAX_CERT_BYTES+1)]))["status"],"RESOURCE_REFUSAL")
+        self.assertEqual(m.verify_comparison(BETA,ALPHA,dict(good,gcd=[{}]))["status"],"BLOCKED")
         big={"polynomial":["1","0",str((1<<97)+1)],"lower":"-1","upper":"1"}
         self.assertEqual(m.verify_comparison(big,ALPHA,good)["status"],"RESOURCE_REFUSAL")
     def test_source_bound_contract(self):
