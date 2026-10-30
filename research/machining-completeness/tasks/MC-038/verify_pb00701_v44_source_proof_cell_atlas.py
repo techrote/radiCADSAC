@@ -137,6 +137,20 @@ class SourceProofCellAtlasTests(unittest.TestCase):
                 with self.assertRaises((atlas.Refusal, IndexError, ValueError)):
                     atlas.compose(changed)
 
+    def test_plausible_but_forged_proof_cut_coordinate_fails_full_replay(self):
+        changed = copy.deepcopy(self.source)
+        # Local shape, positive interior position, root-relative sign and
+        # all historical metadata remain superficially plausible. Yet this
+        # is NOT the source-derived V41 proof-cut coordinate.
+        changed["proof_cut_relations"][0]["coordinate"] = {
+            "kind": "RATIONAL_PROOF_CUT", "local_value": "1/128",
+        }
+        atlas._checked_source_snapshot(changed)  # local checks alone permit it
+        with self.assertRaisesRegex(
+            atlas.Refusal, "SOURCE_PROOF_CUT_REPORT_NOT_EXACTLY_REPLAY_VERIFIED"
+        ):
+            atlas.compose(changed)
+
     def test_uncertified_algebraic_endpoint_and_refused_source_are_nontruth(self):
         changed = copy.deepcopy(self.source)
         changed["algebraic_cut_physical_multiplicity"] = 1
