@@ -1,0 +1,93 @@
+{
+  "schema": "radicadsac-mc038-pb00701-v9-v43-full-original-source/1.0",
+  "task": "MC-038",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "preregistration_issue_324_comment": 6531114353,
+  "frozen_corpus_git_blob": "5841c331579489b25caef38cd412bdbf286f9134",
+  "case_id": "composite:PB00701_V9_EXACT_MONOTONE_SINGLE_HARMONIC_RATIO:tail100",
+  "historical_v54_census": {
+    "total": 121,
+    "blocked_routes": 20,
+    "missing_ordered_premises": 30
+  },
+  "single_source_overlay": {
+    "source_specific_witnesses_added": [
+      "composite:PB00701_V9_EXACT_MONOTONE_SINGLE_HARMONIC_RATIO:tail100"
+    ],
+    "historical_route_cases_without_this_one_new_witness": 19,
+    "missing_ordered_premises": 30,
+    "total_frozen_sources": 121,
+    "historical_v54_changed": false,
+    "exhaustive_combined_post_v54_tally_claimed": false
+  },
+  "proof": {
+    "source_case_id": "composite:PB00701_V9_EXACT_MONOTONE_SINGLE_HARMONIC_RATIO:tail100",
+    "source_sha256": "cc13a39582060e763c573f2665b3ea3b6dfe8b76a6cb0fb77a7b0ec90cf6253a",
+    "status": "COMPLETE_FROZEN_ORIGINAL_SOURCE_SIMPLE_CROSSING_RESEARCH",
+    "original_source_parameter": "source-time-t",
+    "interval": [
+      "0",
+      "2"
+    ],
+    "phase_turn_law": {
+      "offset": "0",
+      "rate": "1/8"
+    },
+    "exact_piecewise_functions": [
+      "(t-1/2)*cos(pi*t/4)+sin(pi*t/4)",
+      "100*(t-1)+(1/2)*cos(pi*t/4)+sin(pi*t/4)"
+    ],
+    "analytic_bounds": {
+      "pi_lower": "3",
+      "pi_upper": "22/7",
+      "quarter_angle_tan_upper": "1232/6151",
+      "first_strict_negative_source_witness": "1/4",
+      "first_strict_positive_source_witness": "1/3",
+      "first_span_derivative": "STRICTLY_POSITIVE",
+      "V43_tail_physical_sign": "STRICTLY_POSITIVE"
+    },
+    "true_source_knot": {
+      "at": "1",
+      "is_physical_zero": false,
+      "is_exactly_continuous": true,
+      "source_sign": "POSITIVE"
+    },
+    "span_open_root_counts": [
+      1,
+      0
+    ],
+    "whole_source_open_root_count": 1,
+    "whole_source_exterior_values": {
+      "at_0": "-1/2",
+      "at_2": "101"
+    },
+    "only_physical_event": {
+      "kind": "IMPLICIT_UNIQUE_SOURCE_ROOT",
+      "strict_bracket": [
+        "1/4",
+        "1/3"
+      ],
+      "multiplicity": 1,
+      "event": "CROSSING",
+      "left_sign": "NEGATIVE",
+      "right_sign": "POSITIVE",
+      "algebraic_or_rational_root_claimed": false
+    },
+    "maximal_source_sign_cells": [
+      "NEGATIVE",
+      "POSITIVE"
+    ],
+    "historical_v54_admitted": false,
+    "general_V43_route_proved": false
+  },
+  "gates": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN",
+    "PB-007-03": "OPEN_PROPAGATED",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "native_material_or_STEP_qualified": false,
+    "production_authorized": false
+  }
+}
