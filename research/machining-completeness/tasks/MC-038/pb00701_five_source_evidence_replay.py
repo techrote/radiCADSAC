@@ -369,6 +369,12 @@ def validate_view(view, row):
              "offset": row["spec"]["phase_turn_offset"],
              "rate": row["spec"]["phase_turn_rate"]},
          "source/phase identity mismatch")
+    need(type(view["closed_root_count"]) is int and
+         type(view["strict_source_open_root_count"]) is int and
+         type(view["strict_span_open_root_counts"]) is list and
+         all(type(value) is int
+             for value in view["strict_span_open_root_counts"]),
+         "untrusted binary/noninteger root count")
     need(view["closed_root_count"] == closed and
          view["strict_source_open_root_count"] == strict and
          view["strict_span_open_root_counts"] == expected_spans and
@@ -412,6 +418,9 @@ def validate_view(view, row):
         prev = high
         location = ev["location"]
         if location == "SOURCE_LEFT_ENDPOINT":
+            need(ev["order"] == {"kind": "ONE_SIDED", "right": 1} and
+                 type(ev["order"]["right"]) is int,
+                 "source endpoint requires integer one-sided order")
             need(low == high == lo and
                  ev["classification"] == "BOUNDARY" and
                  ev["left_sign"] is None and
@@ -430,8 +439,10 @@ def validate_view(view, row):
                      "true source knot requires separate one-sided orders")
                 need(low == high and low in bounds[1:-1] and
                      ev["order"]["kind"] == "ONE_SIDED" and
-                     ev["order"].get("left", 0) > 0 and
-                     ev["order"].get("right", 0) > 0,
+                     type(ev["order"].get("left")) is int and
+                     type(ev["order"].get("right")) is int and
+                     ev["order"]["left"] > 0 and
+                     ev["order"]["right"] > 0,
                      "source-knot double-count or false smooth order")
             else:
                 need(set(ev["order"]) == {"kind", "value"},
@@ -501,6 +512,16 @@ def expected_report():
         view = normalize_one(cid, producers, row)
         need(validate_view(view, row), "failed source-attested normalization")
         admitted.append(view)
+    refusal_reasons = {}
+    for view in admitted:
+        need(len(view["historical_refusal"]) == 1,
+             "one previously refused route required per exact source")
+        reason = view["historical_refusal"][0]["reason"]
+        refusal_reasons[reason] = refusal_reasons.get(reason, 0) + 1
+    need(refusal_reasons == {
+        "V27_CHILD_NOT_CERTIFIED": 4,
+        "CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED": 1,
+    }, "source-specific V27/V43 ownership frequency misclassified")
     leftovers = sorted(set(historical_blocked) - set(all_ids))
     need(len(leftovers) == 15 and len(admitted) == 5,
          "exact five-source historical census miscount")
@@ -520,8 +541,10 @@ def expected_report():
             "frozen_historical_dispositions_modified": False},
         "selected_five_case_overlay": {
             "qualified_distinct_source_witnesses": 5,
-            "qualified_v27_child_not_certified_frozen_source_cases": 4,
-            "qualified_v43_refusal_frozen_source_cases": 1,
+            "qualified_v27_child_not_certified_frozen_source_cases":
+                refusal_reasons["V27_CHILD_NOT_CERTIFIED"],
+            "qualified_v43_refusal_frozen_source_cases":
+                refusal_reasons["CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED"],
             "historical_route_refusals_without_only_these_five_proofs": 15,
             "historical_missing_order_premises": 30,
             "frozen_original_denominator": 121,
