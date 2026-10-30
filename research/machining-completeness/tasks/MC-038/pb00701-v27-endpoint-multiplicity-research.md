@@ -71,6 +71,33 @@ A separate exact control uses
 `F(u)=u^2 cos(2*pi*u/8)` to require order 2, proving the mechanism is not
 hard-coded to simple roots.
 
+## Discovered deeper blocker and bounded correction
+
+The initial endpoint-only implementation was falsified as a complete frozen-case
+closure. Literal-head runs 40977688272 and 40977783727 retained that negative
+result: after the exact left-endpoint order-1 witness, V27 reaches its third
+child `[2/3,1]`, where the predecessor V6 route blocks with
+`TAN_HALF_POLE_REQUIRES_EXACT_WINDOW_PARTITION`.
+
+That child has exact phase window `[5/12,1/2]`. The tan-half coordinate is
+singular at the right endpoint, but the physical trigonometric source is not.
+For this **constant-modulation, shorter-than-half-turn, endpoint-pole-only**
+case, the research shadow uses the exact source-coordinate identity
+
+`t'=t-p`, where `p=n+1/2` is the pole endpoint,
+
+and transforms every harmonic coefficient by `(-1)^h`:
+
+`cos(2πh(t'+p))=(-1)^h cos(2πh t')` and
+`sin(2πh(t'+p))=(-1)^h sin(2πh t')`.
+
+The frozen window therefore becomes `[-1/12,0]`; H1 cosine coefficient 1
+becomes -1. The **unchanged pinned V6 rational-turn classifier** certifies that
+normalized window, and the original child endpoints are still independently
+rechecked by #298. Interior poles, width >= 1/2, multiple pole endpoints and
+nonconstant modulation remain refused. No general pole partition theorem is
+claimed.
+
 ## Falsifiers
 
 The executable rejects/refuses:
@@ -92,6 +119,8 @@ The executable rejects/refuses:
 
 Pinned blobs:
 
+- V6 rational-turn exact classifier:
+  `a1316ff0f71b2d7aa80807843a74fd8280779cb2`;
 - V27 phase-sector compositor:
   `6211e658621af7100c2509dcafdaeaf348e48d46`;
 - complete child classifier:
@@ -107,11 +136,12 @@ Pinned blobs:
 
 ## Nonclaims
 
-This is a **shadow composition theorem**, not a modification of V27 production
-code. It does not rewrite or admit historical v54 dispositions, certify
-arbitrary V27/V41 children, solve algebraic V41 child boundaries, establish a
-global smooth multiplicity across separate B-spline spans, or double-count a
-shared source-knot zero.
+This is a **shadow composition theorem**, not a modification of V6/V27
+production code. It does not rewrite or admit historical v54 dispositions,
+certify arbitrary V27/V41 children, solve algebraic V41 child boundaries,
+establish a general interior-pole/window-partition theorem, establish a global
+smooth multiplicity across separate B-spline spans, or double-count a shared
+source-knot zero.
 
 PB-007-01 remains uncertified; MC-B and MC-1 remain `NOT_ESTABLISHED`;
 native material/topology/lineage, B-rep, usable conventional STEP and
