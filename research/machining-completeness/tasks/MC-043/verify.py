@@ -86,7 +86,7 @@ def run_case(manifest: dict, receipt: dict, root: Path, *, rebind: bool = True) 
 def reject_case(label: str, manifest: dict, receipt: dict, root: Path, *, rebind: bool = True) -> None:
     try:
         run_case(manifest, receipt, root, rebind=rebind)
-    except (Rejected, TypeError, KeyError, OSError):
+    except Rejected:
         return
     raise AssertionError(f"negative mutation was accepted: {label}")
 
@@ -112,7 +112,7 @@ def self_test() -> int:
             rejected += 1
 
         mutate("profile mismatch", mutate_manifest=lambda m: m.update(profile_id="WRONG"))
-        mutate("manifest digest drift", mutate_manifest=lambda m: m.update(profile_id="WRONG"), rebind=False)
+        mutate("manifest digest drift", mutate_manifest=lambda m: m.update(test_nonce="byte-drift"), rebind=False)
         mutate("source certificate binding drift", mutate_receipt=lambda r: r.update(source_material_certificate_digest=D2))
         mutate("nonempty body omitted", mutate_manifest=lambda m: m["durable_bodies"].pop())
         mutate("duplicate STEP item", mutate_manifest=lambda m: m["step_artifacts"][1]["items"].append(
@@ -132,6 +132,7 @@ def self_test() -> int:
         mutate("producer authority replay", mutate_receipt=lambda r: r["follow_on"].update(operand_source="PRODUCER_BREP"))
         mutate("follow-on omitted imported item", mutate_receipt=lambda r: r["follow_on"].update(consumed_item_ids=["a-1"]))
         mutate("follow-on duplicated imported item", mutate_receipt=lambda r: r["follow_on"].update(consumed_item_ids=["a-1", "a-1"]))
+        mutate("two pieces share a single STEP item", mutate_manifest=lambda m: m["representation_pieces"][1].update(item_id="a-1", durable_body_id="body-a"))
         mutate("uncertified seam type", mutate_manifest=lambda m: m["representation_pieces"][0].update(seam_kind="PHYSICAL_MATERIAL_BOUNDARY"))
         mutate("contact certificate drift", mutate_manifest=lambda m: m["contact_relations"][0].update(source_certificate_digest=D2))
         mutate("nonempty has empty transition", mutate_manifest=lambda m: m.update(empty_transition={}))
@@ -173,7 +174,7 @@ def main() -> None:
     if not args.contract and not args.self_test:
         parser.error("select --contract and/or --self-test")
     rejected = self_test()
-    assert rejected >= 32, rejected
+    assert rejected == 34, rejected
     print(f"MC-043 PROVISIONAL STRUCTURAL_PREFLIGHT_ONLY: 2 positive synthetic controls; {rejected} rejected corruptions")
     print("No real STEP file, independent consumer process, native permit or MC-E capability qualified")
 
