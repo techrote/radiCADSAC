@@ -1,0 +1,48 @@
+name: mc1-pb00701-v44-global-derivative
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_global_derivative.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v44_global_derivative.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v44-global-derivative-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_implicit_root_refinement.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_source_proof_cell_atlas.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_algebraic_cut_root_partition.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_transverse_trig_interval.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'handoffs/current-authority.json'
+      - '.github/workflows/mc1-pb00701-v44-global-derivative.yml'
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_global_derivative.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v44_global_derivative.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v44-global-derivative-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_implicit_root_refinement.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_source_proof_cell_atlas.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_algebraic_cut_root_partition.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_transverse_trig_interval.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'handoffs/current-authority.json'
+      - '.github/workflows/mc1-pb00701-v44-global-derivative.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Show exact checkout identity
+        run: git rev-parse HEAD
+      - name: Verify frozen V44 exact global derivative on closed original source
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v44_global_derivative.py --contract --self-test
