@@ -56,6 +56,26 @@ class SourcePointConsumerTests(unittest.TestCase):
             "EXACT_NONPHYSICAL_SOURCE_PROOF_CUT",
         ))
 
+    def test_exact_nonzero_point_signs_on_both_sides_of_unique_root(self):
+        # The complete #310 original-source proof isolates its simple root
+        # strictly inside (9/16,37/64); these are separated rational points.
+        # Both get their PHYSICAL signs from the independent #298 exact jet,
+        # not an inferred atlas position or a sampled trigonometric value.
+        root = self.atlas["source_proof_cells"][1][
+            "one_simple_physical_root_witness"]
+        lo, hi = map(Q, root["strict_isolation"])
+        self.assertLess(Q("1/2"), lo)
+        self.assertGreater(Q("2/3"), hi)
+        for x, expected in (("1/2", "NEGATIVE"), ("2/3", "POSITIVE")):
+            with self.subTest(x=x):
+                result = self.decide(x)
+                self.assertEqual(result["status"], core.SUCCESS)
+                self.assertEqual(result["exact_point_evidence"]["status"],
+                                 "EXACT_NONZERO_RATIONAL_POINT")
+                self.assertEqual(result["physical_point_sign"], expected)
+                self.assertFalse(result["physical_point_is_zero"])
+                self.assertFalse(result["proof_cuts_are_physical_events"])
+
     def test_frozen_proof_cut_equality_is_not_physical_event(self):
         rational = [
             (i, b) for i, b in enumerate(
