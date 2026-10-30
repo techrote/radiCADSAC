@@ -1,0 +1,56 @@
+name: mc1-pb00701-v44-source-point-consumer
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_source_point_consumer.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v44_source_point_consumer.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v44-source-point-consumer-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_source_proof_cell_atlas.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_algebraic_cut_root_partition.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_rational_phase_point.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v41_algebraic_cut_order.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_transverse_trig_interval.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_algebraic_orientation_cut_model.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_algebraic_endpoint_model.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_algebraic_monotone_cut_model.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'handoffs/current-authority.json'
+      - '.github/workflows/mc1-pb00701-v44-source-point-consumer.yml'
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_source_point_consumer.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v44_source_point_consumer.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v44-source-point-consumer-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_source_proof_cell_atlas.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_algebraic_cut_root_partition.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_rational_phase_point.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v41_algebraic_cut_order.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_transverse_trig_interval.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_algebraic_orientation_cut_model.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_algebraic_endpoint_model.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_algebraic_monotone_cut_model.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'handoffs/current-authority.json'
+      - '.github/workflows/mc1-pb00701-v44-source-point-consumer.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify source-bound V44 rational-point consumer (nonpromotion)
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v44_source_point_consumer.py --contract --self-test
