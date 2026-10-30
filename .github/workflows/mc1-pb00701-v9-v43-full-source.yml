@@ -1,0 +1,48 @@
+name: mc1-pb00701-v9-v43-full-source
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v9_v43_full_source.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v9-v43-full-source-witness.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v9-v43-full-source-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-inventory-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-coverage-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'handoffs/current-authority.json'
+      - '.github/workflows/mc1-pb00701-v9-v43-full-source.yml'
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v9_v43_full_source.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v9-v43-full-source-witness.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v9-v43-full-source-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-inventory-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-coverage-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'handoffs/current-authority.json'
+      - '.github/workflows/mc1-pb00701-v9-v43-full-source.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Show literal checkout source
+        run: git rev-parse HEAD
+      - name: Verify exact source and historical census
+        run: |
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v9_v43_full_source.py --contract --self-test
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py --contract --self-test
