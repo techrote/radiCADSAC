@@ -75,7 +75,7 @@ class FrozenSourceContract(unittest.TestCase):
         r=self.good
         children=r["synthetic_closed_children"]
         self.assertEqual(len(children),3)
-        _,span,_,_=core.parent.derivative._source_snapshot()
+        _,span,_,_=core.parent.derivative._source_snapshot(None)
         last=core.K.of(0)
         m=Q(r["source_derivative_lower"])
         for i,child in enumerate(children):
