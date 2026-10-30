@@ -1,0 +1,79 @@
+{
+  "schema": "radicadsac-mc038-v6-tail100-knot-source-witness/1.0",
+  "task": "MC-038",
+  "claim": "PB-007-01 bounded source-specific analytic knot/event proof only",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "original_corpus_git_blob": "5841c331579489b25caef38cd412bdbf286f9134",
+  "original_source_case_id": "composite:DELEGATED_V6_CONSTANT_MODULATION:tail100",
+  "preregistered_issue_comment": 6523853415,
+  "historical_v54_baseline": {
+    "source_count": 121,
+    "uncertified_route_cases": 20,
+    "missing_ordered_span_premise_cases": 30
+  },
+  "supplemental_exact_source_research": {
+    "newly_proved_source_cases": [
+      "composite:DELEGATED_V6_CONSTANT_MODULATION:tail100"
+    ],
+    "unresolved_missing_ordered_span_premise_cases": 30,
+    "total_original_source_cases": 121,
+    "historical_v54_dispositions_mutated": false,
+    "historical_v54_route_pass_claimed": false,
+    "overlay_scope": "historical_v54_20_minus_exactly_this_one_source_not_all_post_v54_research",
+    "remaining_historical_route_refusals_in_this_single_claim_overlay": 19
+  },
+  "proof": {
+    "status": "EXACT_FROZEN_SOURCE_KNOT_TOUCHING_RESEARCH",
+    "original_source_sha256": "f6a0eb06c66af415fbb8abdfe62f9b36a2a2bf154e535d83307a80228e044ad5",
+    "original_source_parameter": "source-time-t",
+    "original_source_interval": [
+      "0",
+      "2"
+    ],
+    "phase_turn_offset": "0",
+    "phase_turn_rate": "1/4",
+    "piecewise_physical_formula": [
+      "cos(pi*t/2) on 0<=t<=1",
+      "100*(t-1)+cos(pi*t/2) on 1<=t<=2"
+    ],
+    "lemma": "0<pi<4; for 0<x<=1, sin(pi*x/2)<=pi*x/2<2*x",
+    "strict_second_span_lower_slope": "98",
+    "exact_exterior_values": {
+      "at_0": "1",
+      "at_2": "99"
+    },
+    "physical_root_count_closed": 1,
+    "physical_root_count_strict_source_interior": 1,
+    "span_open_root_counts": [
+      0,
+      0
+    ],
+    "source_knot": {
+      "coordinate": "1",
+      "exact_zero": true,
+      "distinct_physical_event_count": 1,
+      "left_one_sided_vanishing_order": 1,
+      "right_one_sided_vanishing_order": 1,
+      "left_inward_sign": "POSITIVE",
+      "right_inward_sign": "POSITIVE",
+      "event": "TOUCHING",
+      "global_smooth_multiplicity_claimed": false
+    },
+    "maximal_open_physical_signs": [
+      "POSITIVE",
+      "POSITIVE"
+    ],
+    "historical_v54_route_repaired": false,
+    "general_v27_child_route_proved": false
+  },
+  "global_claims": {
+    "pb00701_closed": false,
+    "pb00702_closed": false,
+    "pb00703_closed": false,
+    "pb00704_closed": false,
+    "mc_b_established": false,
+    "mc1_established": false,
+    "native_material_or_step_qualified": false,
+    "production_authorized": false
+  }
+}
