@@ -18,7 +18,7 @@ The grammar deliberately admits reducible **squarefree** polynomials: this permi
 
 Degree 1–6; canonical primitive integer coefficient list in ascending degree with positive leading coefficient and at most 96 input bits; exact rational strict open isolator with at most 256 endpoint bits; maximum intermediate rational bits 8192; 64 separation refinements; serialized certificate cap 65536 bytes. No arbitrary algebraic compositum, arbitrary input degree, transcendental phase-zero or equality decision, nonmonotone original-source root theorem, native machining material/topology or STEP result is inferred.
 
-A constructed pair of distinct degree-one rational roots separated by approximately `2^-90` and given broad overlapping isolators must end in typed `RESOURCE_REFUSAL` after the bounded steps; it must **never** be identified as equal. Repeated polynomials, nonprimitive sign flips, ambiguous/multiroot intervals, endpoint zeros, forged relations, oversized data and swapped selected embeddings are negative controls.
+A constructed pair of distinct degree-one rational roots separated by exact gap `2^-90 < Δ < 2^-89` and given broad overlapping isolators must end in typed `RESOURCE_REFUSAL` after the bounded steps; it must **never** be identified as equal. Repeated polynomials, nonprimitive sign flips, ambiguous/multiroot intervals, endpoint zeros, forged relations, oversized data and swapped selected embeddings are negative controls.
 
 ## Source binding, verification and custody
 

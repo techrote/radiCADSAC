@@ -86,6 +86,10 @@ class Tests(unittest.TestCase):
         self.assertEqual(m.compare(sqrt2,ONE)["relation"],1)
     def test_very_close_distinct_roots_refuse_boundedly(self):
         n=(1<<90)+1
+        # Exact selected-root gap 2/n lies strictly between 2^-90 and 2^-89.
+        gap=Q(2,n)
+        self.assertLess(Q(1,1<<90),gap)
+        self.assertLess(gap,Q(1,1<<89))
         a={"polynomial":[str(-n-2),str(n)],"lower":"0","upper":"2"}
         b={"polynomial":[str(-n-4),str(n)],"lower":"0","upper":"2"}
         with self.assertRaisesRegex(m.ResourceRefusal,"SEPARATION_ROUND_BUDGET"):
