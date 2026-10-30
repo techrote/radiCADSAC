@@ -115,9 +115,14 @@ def guard_original_source(spec):
             # the one-sided interior limit. Unclamped/extended support refuses.
             need(k[:degree + 1] == [lo] * (degree + 1) and
                  k[-degree - 1:] == [hi] * (degree + 1) and
-                 all(lo <= u <= hi for u in k),
+                 all(lo <= u <= hi for u in k) and
+                 k.count(lo) == degree + 1 and
+                 k.count(hi) == degree + 1,
                  "UNPROVED_CLOSED_SOURCE_ENDPOINT_CLAMPING")
-            original_edges.update(x for x in k if lo < x < hi)
+            interior = [x for x in k if lo < x < hi]
+            need(all(interior.count(x) <= degree + 1 for x in set(interior)),
+                 "EXCESS_INTERIOR_KNOT_MULTIPLICITY")
+            original_edges.update(interior)
     edges = sorted(original_edges)
     need(1 <= len(edges) - 1 <= MAX_PIECES,
          "RESOURCE_REFUSAL: ORIGINAL_SOURCE_PIECE_BUDGET")
@@ -250,6 +255,14 @@ def attempt(spec):
         return {"schema": SCHEMA, "status": "RESOURCE_REFUSAL",
                 "reason": type(exc).__name__, "is_truth_value": False,
                 "production_authorized": False}
+    except (ValueError, TypeError, KeyError, IndexError, ZeroDivisionError):
+        # The independently pinned historical original-source lowerer has
+        # stricter invariants than a finite raw preflight can reproduce.
+        # Its parser or arithmetic errors remain an explicit NONTRUTH refusal;
+        # they cannot become accepted original-source identity evidence.
+        return {"schema": SCHEMA, "status": "BLOCKED",
+                "reason": "INVALID_EXACT_ORIGINAL_SOURCE_LOWERER_OR_INPUT",
+                "is_truth_value": False, "production_authorized": False}
 
 
 def load_original_case():
