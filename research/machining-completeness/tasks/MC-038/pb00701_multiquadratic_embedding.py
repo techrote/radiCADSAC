@@ -171,9 +171,12 @@ class Element:
         if not any(self.coeffs):
             return {"status": "EXACT_ZERO", "sign": 0, "bits": 0,
                     "lower": "0", "upper": "0"}
+        if (type(refinements) not in (tuple, list) or
+                not 1 <= len(refinements) <= len(BITS)):
+            raise ResourceRefusal("REFINEMENT_COUNT_BUDGET")
+        if any(type(bits) is not int or bits not in BITS for bits in refinements):
+            raise ResourceRefusal("REFINEMENT_PRECISION_BUDGET")
         for bits in refinements:
-            if type(bits) is not int or bits < 1 or bits > 1024:
-                raise ResourceRefusal("REFINEMENT_BUDGET_INVALID")
             scale = 1 << bits
             lo = hi = self.coeffs[0]
             for mask in range(1, self.field.degree):
@@ -204,6 +207,9 @@ def parse_record(raw):
             "INVALID_RECORD_SHAPE")
     require(type(raw["generators"]) is list and type(raw["coefficients"]) is list,
             "INVALID_RECORD_TYPES")
+    require(len(raw["generators"]) <= MAX_GENERATORS
+            and len(raw["coefficients"]) <= (1 << MAX_GENERATORS),
+            "UNTRUSTED_RECORD_DIMENSION_BUDGET")
     f = Field(tuple(raw["generators"]))
     require(len(raw["coefficients"]) == f.degree
             and all(type(s) is str and len(s) <= 512 for s in raw["coefficients"]),

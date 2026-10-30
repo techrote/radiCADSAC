@@ -98,6 +98,10 @@ class Contract(unittest.TestCase):
             a.sign_certificate((1,))
         with self.assertRaises(m.ResourceRefusal):
             a.sign_certificate((1025,))
+        with self.assertRaises(m.ResourceRefusal):
+            a.sign_certificate(iter([8]))
+        with self.assertRaises(m.ResourceRefusal):
+            a.sign_certificate((8,)*8)
         with self.assertRaises(m.Refusal):
             z.inverse()
         with self.assertRaises(m.ResourceRefusal):
@@ -116,6 +120,8 @@ class Contract(unittest.TestCase):
         altered=dict(record,coefficients=list(record["coefficients"]))
         altered["coefficients"][1]="01"
         self.assertEqual(m.verify_sign_certificate(altered,witness)["status"],"BLOCKED")
+        self.assertEqual(m.verify_sign_certificate(
+            {"generators":[2]*100, "coefficients": []}, witness)["status"], "BLOCKED")
         gigantic={"items": "!"*m.MAX_CERT_BYTES}
         self.assertEqual(m.verify_sign_certificate(record,gigantic)["status"],"RESOURCE_REFUSAL")
     def test_exact_rank3_algebra(self):
