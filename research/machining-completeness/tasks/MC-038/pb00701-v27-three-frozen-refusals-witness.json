@@ -1,0 +1,164 @@
+{
+  "schema": "radicadsac-mc038-v27-three-frozen-sources/1.0",
+  "task": "MC-038",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "original_corpus_git_blob": "5841c331579489b25caef38cd412bdbf286f9134",
+  "historical_v54": {
+    "total_source_cases": 121,
+    "route_refusals": 20,
+    "missing_ordered_premises": 30,
+    "dispositions_unchanged": true
+  },
+  "supplemental_only": {
+    "source_specific_new_witnesses": 3,
+    "remaining_in_this_three_claim_overlay": {
+      "route_refusals": 17,
+      "missing_ordered_premises": 30,
+      "original_cases": 121
+    },
+    "not_exhaustive_post_v54_census": true,
+    "generic_v27_route_repaired": false
+  },
+  "sources": {
+    "harvested:verify_pb00701_v9:1a5fd052a155": {
+      "original_source_sha256": "710259612833cfe40e73ae528e0d0e944a87123c9bb4b3f4f76cef33c45bcf4d",
+      "historical_v54_status": "BLOCKED:V27_CHILD_NOT_CERTIFIED",
+      "physical_event_proof": {
+        "events": [
+          {
+            "t": "0",
+            "location": "SOURCE_LEFT_ENDPOINT",
+            "one_sided_order": 1,
+            "kind": "SIMPLE_BOUNDARY",
+            "right_sign": "POSITIVE"
+          }
+        ],
+        "strict_span_open_root_counts": [
+          0
+        ],
+        "maximal_open_signs": [
+          "POSITIVE"
+        ],
+        "source_endpoint_values": {
+          "0": "0",
+          "1": "1+sqrt(2)/2"
+        },
+        "physical_formula": [
+          "t + sin(pi*t/4) on 0<=t<=1"
+        ],
+        "closed_source_root_count": 1,
+        "source_interior_root_count": 0,
+        "ordered_physical_root_coordinates": [
+          "0"
+        ]
+      }
+    },
+    "composite:PB00701_V8_EXACT_COMMON_FACTOR_REDUCTION:tail0": {
+      "original_source_sha256": "9abbed355812241cdef20f3ce3b3522619bdd682c3a73fb01828d8f95c72f0af",
+      "historical_v54_status": "BLOCKED:V27_CHILD_NOT_CERTIFIED",
+      "physical_event_proof": {
+        "events": [
+          {
+            "t": "1/2",
+            "location": "SPAN_OPEN",
+            "order": 2,
+            "kind": "TOUCHING",
+            "left_sign": "POSITIVE",
+            "right_sign": "POSITIVE"
+          },
+          {
+            "t": "3/2",
+            "location": "SPAN_OPEN",
+            "order": 1,
+            "kind": "CROSSING",
+            "left_sign": "POSITIVE",
+            "right_sign": "NEGATIVE"
+          }
+        ],
+        "strict_span_open_root_counts": [
+          1,
+          1
+        ],
+        "maximal_open_signs": [
+          "POSITIVE",
+          "POSITIVE",
+          "NEGATIVE"
+        ],
+        "source_endpoint_values": {
+          "0": "1/2",
+          "1": "1/2",
+          "2": "-1/2"
+        },
+        "physical_formula": [
+          "(t-1/2)*sin(pi*(t-1/2)) on 0<=t<=1",
+          "1/2*cos(pi*(t-1)) on 1<=t<=2"
+        ],
+        "source_knot": {
+          "t": "1",
+          "zero": false,
+          "value": "1/2"
+        },
+        "closed_source_root_count": 2,
+        "source_interior_root_count": 2,
+        "ordered_physical_root_coordinates": [
+          "1/2",
+          "3/2"
+        ]
+      }
+    },
+    "composite:PB00701_V8_EXACT_COMMON_FACTOR_REDUCTION:tail100": {
+      "original_source_sha256": "8e3af5a5e74c3fc3f364607f5c3c4b03cd1adc2e2dd6e16bfc03ddf870de0d2b",
+      "historical_v54_status": "BLOCKED:V27_CHILD_NOT_CERTIFIED",
+      "physical_event_proof": {
+        "events": [
+          {
+            "t": "1/2",
+            "location": "SPAN_OPEN",
+            "order": 2,
+            "kind": "TOUCHING",
+            "left_sign": "POSITIVE",
+            "right_sign": "POSITIVE"
+          }
+        ],
+        "strict_span_open_root_counts": [
+          1,
+          0
+        ],
+        "maximal_open_signs": [
+          "POSITIVE",
+          "POSITIVE"
+        ],
+        "source_endpoint_values": {
+          "0": "1/2",
+          "1": "1/2",
+          "2": "199/2"
+        },
+        "physical_formula": [
+          "(t-1/2)*sin(pi*(t-1/2)) on 0<=t<=1",
+          "100*(t-1)+1/2*cos(pi*(t-1)) on 1<=t<=2"
+        ],
+        "strict_tail_derivative_lower": "98",
+        "source_knot": {
+          "t": "1",
+          "zero": false,
+          "value": "1/2"
+        },
+        "closed_source_root_count": 1,
+        "source_interior_root_count": 1,
+        "ordered_physical_root_coordinates": [
+          "1/2"
+        ]
+      }
+    }
+  },
+  "gates": {
+    "pb00701_closed": false,
+    "pb00702_closed": false,
+    "pb00703_closed": false,
+    "pb00704_closed": false,
+    "mc_b_established": false,
+    "mc1_established": false,
+    "native_material_or_step_qualified": false,
+    "production_authorized": false
+  }
+}
