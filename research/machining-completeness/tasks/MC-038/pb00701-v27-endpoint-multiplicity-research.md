@@ -127,6 +127,12 @@ Pinned blobs:
   `a303bba600fa83a1b55c8e113ce1ec7d06f68590`;
 - #298 exact rational-phase point/jet:
   `9fc344e045fa800fb24d30902a641e534a1e197b`;
+- #298 exact rational interval/trigonometric enclosure engine:
+  `2320f92efe4316d865a89f6d848737e2c000ca4d`;
+- V6 exact event-model bridge:
+  `104c0e7a459cd7da5025853b246faff244a5948e`;
+- MC-032 exact Sturm/event engine:
+  `789a709c5141479a343035d1b7055dd4e53534e1`;
 - frozen v54 corpus:
   `5841c331579489b25caef38cd412bdbf286f9134`;
 - 26-operation domain:
