@@ -73,6 +73,10 @@ Reproduce on the precise checked-out repository head:
 
 The dedicated literal-head GitHub Actions workflow plus mc1-static, anchored source review, protected merge, matched Git trees and actual merged-main CI are required before treating the proof as a **qualified research increment**. This document deliberately does not preclaim those outcomes.
 
+## Retained first-head qualification failure and correction (30 October 2026)
+
+First PR #314 literal head `f88cdf9763a97a1d7eed079d166dad6f9ce885b8` ran focused [#41008821431](https://github.com/techrote/radiCADSAC/actions/runs/41008821431): **FAILED** (14 tests passed, one adversarial report-resource test errored). The standalone exact 16-cell proof contract succeeded, including four inherited proof children and strict global derivative lower bound `3402574703095661/10276044800000000`. However, a malicious deeply nested report raised the pinned predecessor model's `predecessor.ResourceRefusal` during the *pre-JSON structural cap*. The new `validate_report` previously caught only its own `ResourceRefusal`, so the test received a raw exception rather than required `RESOURCE_REFUSAL` nontruth. This was an API refusal-custody defect, **not** evidence of a false mathematical proof. The isolated correction adds `predecessor.ResourceRefusal` to the report-validation typed resource handler, retaining both this failure and its cause. Subsequent final-head CI, review and merged-main checks must be separately confirmed; no result is inferred from this failing run.
+
 ## Remaining theorem, production and historical boundary
 
 Historical frozen v54 stays BLOCKED; MC-038/PB-007-01 and relevant PO obligations stay OPEN; **MC-B and MC-1 remain NOT_ESTABLISHED**. A frozen whole-source derivative proof does not deliver general Q(alpha) child source/derivative certificates or resolve all 16 missing owner families, other nested V27/V41 routes, tangencies or identity-zero sources.
