@@ -60,6 +60,10 @@ The original second span is therefore strictly positive and root-free; F(2)=101.
 
 This is a source-specific exact mathematical argument. It does not prove the historical V43 generic closed-handoff certificate or a general algorithm for nonmonotone polynomial-trigonometric functions.
 
+The rational function z/(1-z²/2) is strictly increasing for 0<z<sqrt(2), since its derivative equals (1+z²/2)/(1-z²/2)^2>0. Thus substituting the exact upper z<11/56 into the tangent enclosure is justified without numerical approximation.
+
+**Adversarial scope falsifiers (synthetic only):** The exact polynomial (t-1/2)^2 has strictly positive values at both exteriors of [0,1], yet an interior order-2 touching root at t=1/2. The exact rational polynomial (t-1/2)^2-2^-200 has two distinct simple roots at t=1/2±2^-100 (separation 2^-99), while coarse probes at 0,1/4,3/4,1 are all strictly positive. These are **not additional source cases, proven PB-007 routes or a finite root scanner**. They show why generic endpoint-sign, finite scanning or bounded-refinement heuristics cannot certify complete physical roots. This frozen original V9/V43 theorem succeeds by a genuinely global strict-derivative proof and exact strict root bracket, not by those heuristics.
+
 ## Evidence binding, falsification and reproducibility
 
 The deterministic source-bound verifier checks the entire immutable v54 corpus Git blob, its independently pinned post-v54 121-case/21-mutant audit (blob 12c6efeb667a954ffc5a7e27849ae815d466580a), the MC-002 26-operation domain (blob 23de82f5240a72509f7afe4acd5948b65bc4ff13) and current production-disabled authority (blob fa0233323a0804d8a5d3eb7cd892a274a6173fab). It demands all exact original B-spline knots, degrees, controls, harmonic inventory, phase, source parameter, SHA-256 and V9/V43 historical statuses, with no unreviewed fields. No V54 source or owner is mutated.
