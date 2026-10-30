@@ -109,6 +109,10 @@ class FiveSourceTests(unittest.TestCase):
             (core.H, lambda v: v["events"][0].update(location="SPAN_OPEN")),
             (core.V6_100, lambda v: v["events"][0].update(location="SPAN_OPEN")),
             (core.V6_100, lambda v: v["events"][0]["order"].update(right=2)),
+            (core.V9_100, lambda v: v.update(producer="V27_THREE")),
+            (core.V9_100, lambda v: v["historical_refusal"][0].update(
+                reason="CERTIFIED")),
+            (core.V8_0, lambda v: v["events"][1]["order"].update(value=2)),
             (core.V8_0, lambda v: v["events"].reverse()),
             (core.V8_0, lambda v: v["events"][0].update(classification="CROSSING")),
             (core.V8_0, lambda v: v["events"][1].update(left_sign="NEGATIVE")),
@@ -150,8 +154,32 @@ class FiveSourceTests(unittest.TestCase):
             "phase_turn_rate": "0", "parameter_lo": "0",
             "parameter_hi": "1", "source_parameter_id": "source-time-t"}
         self.assertNotIn(json.dumps(zero, sort_keys=True), str(self.expected))
+        identity_case = "harvested:verify_pb00701_v53:cb01c327d5f1"
+        self.assertEqual(self.rows[identity_case]["expected"]["v54_disposition"],
+                         "BLOCKED")
+        with self.assertRaisesRegex(ValueError, "UNSUPPORTED_SOURCE"):
+            core.normalize_one(identity_case, {}, self.rows[identity_case])
 
-    def test_09_untrusted_report_preflight_and_pin_mutations(self):
+    def test_09_direct_api_rejects_swapped_original_source_and_refusal(self):
+        view = self.views[core.V8_0]
+        for change in [
+            lambda r: r.__setitem__("id", core.V8_100),
+            lambda r: r["expected"].__setitem__("id", core.V8_100),
+            lambda r: r["spec"].__setitem__("phase_turn_rate", "0"),
+            lambda r: r["spec"]["sin_splines"]["1"]["controls"].__setitem__(0,"0"),
+            lambda r: r["expected"]["observed"]["spans"][-1].__setitem__(
+                2, "FORGED_ROUTE_REFUSAL"),
+        ]:
+            row = copy.deepcopy(self.rows[core.V8_0])
+            change(row)
+            with self.subTest(change=str(change)), self.assertRaises(ValueError):
+                core.validate_view(view, row)
+        forged = copy.deepcopy(view)
+        forged["unreviewed_claim"] = "MC-B accepted"
+        with self.assertRaisesRegex(ValueError, "extra/missing"):
+            core.validate_view(forged, self.rows[core.V8_0])
+
+    def test_10_untrusted_report_preflight_and_pin_mutations(self):
         with self.assertRaisesRegex(ValueError, "RESOURCE_REFUSAL"):
             core.bounded_json({"large": "x" * (core.MAX_REPORT_BYTES+100)})
         with self.assertRaisesRegex(ValueError, "RESOURCE_REFUSAL"):
@@ -176,7 +204,7 @@ class FiveSourceTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "pinned original source"):
                 core.pin(p, core.PRODUCERS["V27_THREE"]["code_blob"])
 
-    def test_10_forged_manifest_source_hash_and_gates_refuse(self):
+    def test_11_forged_manifest_source_hash_and_gates_refuse(self):
         attacks = [
             lambda x: x["source_attested_views"].pop(),
             lambda x: x["source_attested_views"].append(
@@ -202,7 +230,7 @@ class FiveSourceTests(unittest.TestCase):
             with self.subTest(attack=str(attack)), self.assertRaises(ValueError):
                 core.validate_report(mutated)
 
-    def test_11_close_roots_and_touching_not_sign_sampling_proofs(self):
+    def test_12_close_roots_and_touching_not_sign_sampling_proofs(self):
         f = lambda t: (t-Q(1, 2))**2
         self.assertTrue(f(Q(0)) > 0 and f(Q(1)) > 0)
         self.assertEqual(f(Q(1, 2)), Q(0))
