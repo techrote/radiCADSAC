@@ -10,6 +10,8 @@ on:
       - 'research/machining-completeness/tasks/MC-038/pb00701_phase_sector_partition_model.py'
       - 'research/machining-completeness/tasks/MC-038/pb00701_pointwise_component_cone_model.py'
       - 'research/machining-completeness/tasks/MC-038/pb00701_rational_phase_point.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_rational_turn_model.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_rational_turn_model.py'
       - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
       - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
       - 'handoffs/current-authority.json'
