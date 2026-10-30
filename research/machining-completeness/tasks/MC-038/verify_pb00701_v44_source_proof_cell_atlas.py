@@ -116,14 +116,15 @@ class SourceProofCellAtlasTests(unittest.TestCase):
             lambda s: s["phase_turn_law"].__setitem__("rate", "1/8"),
             lambda s: s.__setitem__("root_occupying_proof_cell_index", 0),
             lambda s: s["proof_cell_open_root_counts"].__setitem__(1, 0),
-            lambda s: s["physical_endpoint_signs"].__setitem__(0, 1),
+            lambda s: s["physical_endpoint_signs"].__setitem__(
+                0, -s["physical_endpoint_signs"][0]),
             lambda s: s["physical_root"].__setitem__("smooth_multiplicity", 2),
             lambda s: s["proof_cut_relations"][0].__setitem__(
                 "physical_value_sign", 0),
             lambda s: s["proof_cut_relations"][0].__setitem__(
                 "proof_cut_is_physical_event", True),
-            lambda s: s["proof_cut_relations"][1].__setitem__(
-                "relation_to_physical_root", "PHYSICAL_ROOT_BEFORE_CUT"),
+            lambda s: s["proof_cut_relations"][2].__setitem__(
+                "relation_to_physical_root", "CUT_BEFORE_PHYSICAL_ROOT"),
             lambda s: s["proof_cut_relations"].pop(),
             lambda s: s.__setitem__("algebraic_child_reparameterization_claimed",
                                     True),
