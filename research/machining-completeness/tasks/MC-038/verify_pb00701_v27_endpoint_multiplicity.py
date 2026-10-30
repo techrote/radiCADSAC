@@ -115,6 +115,85 @@ class V27EndpointMultiplicityTests(unittest.TestCase):
             route["composition"]["multiplicity_invented_from_root_count"]
         )
 
+    def test_frozen_deeper_v6_endpoint_pole_is_exactly_normalized(self):
+        evidence = self.report["endpoint_pole_normalizations"]
+        self.assertEqual(len(evidence), 1, evidence)
+        item = evidence[0]
+        self.assertEqual(item["child_index"], 2)
+        self.assertEqual(item["original_turn_interval"], ["5/12", "1/2"])
+        self.assertEqual(item["pole_endpoint"], "right")
+        self.assertEqual(item["pole_turn"], "1/2")
+        self.assertEqual(item["normalized_turn_interval"], ["-1/12", "0"])
+        self.assertEqual(item["shifted_cos_coefficients"], {"1": "-1"})
+        self.assertEqual(item["shifted_sin_coefficients"], {})
+        normalized = item["normalized_v6_result"]
+        self.assertEqual(normalized["status"], "CERTIFIED")
+        self.assertEqual(normalized["turn_interval"], ["-1/12", "0"])
+        self.assertEqual(normalized["distinct_roots_open"], 0)
+        self.assertEqual(normalized["multiple_roots_open"], 0)
+        self.assertEqual(normalized["right_event"]["relation"], "NEGATIVE")
+        self.assertFalse(item["interior_pole_partition_claimed"])
+
+    def test_interior_tan_half_pole_still_refuses(self):
+        blocked = {
+            "status": "BLOCKED",
+            "spans": [{
+                "route_kind": "DELEGATED_V6_CONSTANT_MODULATION",
+                "route": {
+                    "status": "BLOCKED",
+                    "reason": "TAN_HALF_POLE_REQUIRES_EXACT_WINDOW_PARTITION",
+                },
+            }],
+        }
+        with self.assertRaisesRegex(
+            core.ResearchRefusal,
+            "V6_TAN_HALF_POLE_NOT_AT_EXACTLY_ONE_ENDPOINT",
+        ):
+            core._normalized_v6_endpoint_pole_route(
+                blocked, {1: [Q(1)]}, {},
+                Q(1, 3), Q(1, 3), "source-time-t",
+            )
+
+    def test_half_turn_or_wider_endpoint_pole_window_refuses(self):
+        blocked = {
+            "status": "BLOCKED",
+            "spans": [{
+                "route_kind": "DELEGATED_V6_CONSTANT_MODULATION",
+                "route": {
+                    "status": "BLOCKED",
+                    "reason": "TAN_HALF_POLE_REQUIRES_EXACT_WINDOW_PARTITION",
+                },
+            }],
+        }
+        with self.assertRaisesRegex(
+            core.ResearchRefusal,
+            "V6_ENDPOINT_POLE_WINDOW_NOT_STRICTLY_SHORTER_THAN_HALF_TURN",
+        ):
+            core._normalized_v6_endpoint_pole_route(
+                blocked, {1: [Q(1)]}, {},
+                Q(0), Q(1, 2), "source-time-t",
+            )
+
+    def test_nonconstant_modulation_cannot_use_v6_pole_normalization(self):
+        blocked = {
+            "status": "BLOCKED",
+            "spans": [{
+                "route_kind": "DELEGATED_V6_CONSTANT_MODULATION",
+                "route": {
+                    "status": "BLOCKED",
+                    "reason": "TAN_HALF_POLE_REQUIRES_EXACT_WINDOW_PARTITION",
+                },
+            }],
+        }
+        with self.assertRaisesRegex(
+            core.ResearchRefusal,
+            "V6_ENDPOINT_POLE_NORMALIZATION_REQUIRES_CONSTANT_MODULATION",
+        ):
+            core._normalized_v6_endpoint_pole_route(
+                blocked, {1: [Q(1), Q(1)]}, {},
+                Q(5, 12), Q(1, 12), "source-time-t",
+            )
+
     def test_endpoint_order_is_not_hardcoded_to_simple(self):
         # F(u)=u^2*cos(2*pi*u/8) has an exact order-2 endpoint root.
         child_cos = {1: [Q(0), Q(0), Q(1)]}
@@ -289,6 +368,12 @@ def contract():
             evidence["witness"]["first_nonzero_derivative_sign"],
         "all_shadow_span_routes_certified":
             report["all_shadow_span_routes_certified"],
+        "endpoint_pole_normalization_count":
+            len(report["endpoint_pole_normalizations"]),
+        "endpoint_pole_original_window":
+            report["endpoint_pole_normalizations"][0]["original_turn_interval"],
+        "endpoint_pole_normalized_window":
+            report["endpoint_pole_normalizations"][0]["normalized_turn_interval"],
         "historical_v54_admitted": False,
         "pb00701_certified": False,
         "production_authorized": False,
