@@ -45,6 +45,11 @@
         },
         "physical_formula": [
           "t + sin(pi*t/4) on 0<=t<=1"
+        ],
+        "closed_source_root_count": 1,
+        "source_interior_root_count": 0,
+        "ordered_physical_root_coordinates": [
+          "0"
         ]
       }
     },
@@ -92,7 +97,13 @@
           "t": "1",
           "zero": false,
           "value": "1/2"
-        }
+        },
+        "closed_source_root_count": 2,
+        "source_interior_root_count": 2,
+        "ordered_physical_root_coordinates": [
+          "1/2",
+          "3/2"
+        ]
       }
     },
     "composite:PB00701_V8_EXACT_COMMON_FACTOR_REDUCTION:tail100": {
@@ -131,7 +142,12 @@
           "t": "1",
           "zero": false,
           "value": "1/2"
-        }
+        },
+        "closed_source_root_count": 1,
+        "source_interior_root_count": 1,
+        "ordered_physical_root_coordinates": [
+          "1/2"
+        ]
       }
     }
   },
