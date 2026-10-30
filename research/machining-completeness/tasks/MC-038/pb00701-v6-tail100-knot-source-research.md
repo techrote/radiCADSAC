@@ -33,6 +33,8 @@ For the fixed phase and H1 grammar, the argument generalizes to a rational H0 se
 
 ## Adversarial and provenance verification
 
+The additional identity-zero mutation control refuses a continuum-zero original source instead of claiming it has one isolated event. A synthetic extremely close rational margin above A=2 challenges the strict slope bound without interpreting a resource limit as a truth value.
+
 The machine report and executable replay independently check the 121-case post-v54 census against the original three Git-blobs (corpus 5841c..., owner inventory 8649c..., coverage 600ba...), the pinned audit verifier 12c6efeb..., MC-002 26-operation contract blob 23de82f..., and current authority blob fa0233... (no production, MC-1 NOT_ESTABLISHED). They reject forged source IDs/producing origin, original interval/phase, knot vectors, harmonics, polynomial controls, appended annotation or noncanonical rational, historical owner/refusal/status, changed source SHA-256, machine-reported zero order/sign/census/gate, and positive-ramp overgeneralization. Synthetic rational slopes and a negative endpoint are *adversarial controls*, not independently added cases to the historical corpus.
 
 Reproduce on the full repository:
@@ -53,7 +55,7 @@ The frozen 121 source statuses remain byte-for-byte unchanged: **20 historical v
 | Missing ordered-span-premise cases without a general integrated proof | 30 | 30 |
 | Total original source cases | 121 | 121 |
 
-The derived 19 is **not** a changed v54 result, generic V27 admission, MC-B numerator or proof of general source grammar. The historically refused V27 route remains refused; the published new proof is an independent source-specific theorem. The one-case delta can be withdrawn if source identity, trigonometric proof, or admission checks fail. Raw v54 baseline and failed historical evidence must remain intact.
+The derived 19 is **only a one-claim overlay**: historical v54's 20 minus exactly the *single new* tail100 source witness. Other independently scoped post-v54 research may also provide source-specific evidence; this record **does not** attempt to compute an exhaustive current cross-research backlog or de-duplicate other witnesses. It is **not** a changed v54 result, generic V27 admission, MC-B numerator or proof of general source grammar. The historically refused V27 route remains refused; the published new proof is an independent source-specific theorem. The one-case delta can be withdrawn if source identity, trigonometric proof, or admission checks fail. Raw v54 baseline and failed historical evidence must remain intact.
 
 ## Scope / downstream implications
 

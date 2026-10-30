@@ -15,11 +15,12 @@
     "newly_proved_source_cases": [
       "composite:DELEGATED_V6_CONSTANT_MODULATION:tail100"
     ],
-    "independently_unsupported_uncertified_route_cases_if_admitted": 19,
     "unresolved_missing_ordered_span_premise_cases": 30,
     "total_original_source_cases": 121,
     "historical_v54_dispositions_mutated": false,
-    "historical_v54_route_pass_claimed": false
+    "historical_v54_route_pass_claimed": false,
+    "overlay_scope": "historical_v54_20_minus_exactly_this_one_source_not_all_post_v54_research",
+    "remaining_historical_route_refusals_in_this_single_claim_overlay": 19
   },
   "proof": {
     "status": "EXACT_FROZEN_SOURCE_KNOT_TOUCHING_RESEARCH",

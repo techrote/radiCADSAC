@@ -222,7 +222,8 @@ def expected_machine_record():
         },
         "supplemental_exact_source_research": {
             "newly_proved_source_cases": [CASE_ID],
-            "independently_unsupported_uncertified_route_cases_if_admitted": 19,
+            "overlay_scope": "historical_v54_20_minus_exactly_this_one_source_not_all_post_v54_research",
+            "remaining_historical_route_refusals_in_this_single_claim_overlay": 19,
             "unresolved_missing_ordered_span_premise_cases": 30,
             "total_original_source_cases": 121,
             "historical_v54_dispositions_mutated": False,
@@ -268,6 +269,8 @@ class Tests(unittest.TestCase):
         self.assertEqual(strict_tail_lower_bound(Fraction(3)), 1)
         self.assertEqual(strict_tail_lower_bound(Fraction(2000001, 1000000)),
                          Fraction(1, 1000000))
+        self.assertEqual(strict_tail_lower_bound(
+            Fraction(2) + Fraction(1, 2**100)), Fraction(1, 2**100))
         self.assertEqual(self.record["proof"]["exact_exterior_values"],
                          {"at_0": "1", "at_2": "99"})
 
@@ -301,6 +304,15 @@ class Tests(unittest.TestCase):
             with self.subTest(change=str(change)), self.assertRaises(ValueError):
                 source_proof(r)
 
+    def test_identity_zero_continuum_is_not_misclassified(self):
+        # Both channels identically zero would describe a continuum of zeros;
+        # it is NOT the isolated touching event proved for the pinned source.
+        r = copy.deepcopy(self.frozen)
+        for bs in r["spec"]["cos_splines"].values():
+            bs["controls"] = ["0"] * len(bs["controls"])
+        with self.assertRaises(ValueError):
+            source_proof(r)
+
     def test_forged_case_owner_and_disposition_rejected(self):
         for mutate in [
             lambda r: r.__setitem__("id", "OTHER"),
@@ -323,7 +335,7 @@ class Tests(unittest.TestCase):
                          {"source_count":121, "uncertified_route_cases":20,
                           "missing_ordered_span_premise_cases":30})
         self.assertEqual(self.record["supplemental_exact_source_research"][
-            "independently_unsupported_uncertified_route_cases_if_admitted"], 19)
+            "remaining_historical_route_refusals_in_this_single_claim_overlay"], 19)
 
     def test_forged_machine_field_rejected(self):
         canonical = self.record
