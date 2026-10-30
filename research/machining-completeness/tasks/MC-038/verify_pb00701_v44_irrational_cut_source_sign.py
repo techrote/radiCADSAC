@@ -140,7 +140,7 @@ class FrozenIrrationalCutSourceSignTests(unittest.TestCase):
                 target = target[key]
             target[path[-1]] = forged_value
             result = core.validate_report(forged, supplied_atlas=self.view)
-            self.assertEqual(result["status"], "BLOCKED", path)
+            self.assertEqual(result["status"], "BLOCKED", (path, result))
             self.assertFalse(result["is_truth_value"])
 
     def test_predecessor_drift_and_atlas_sign_mutation_refuse(self):
@@ -150,7 +150,7 @@ class FrozenIrrationalCutSourceSignTests(unittest.TestCase):
         self.assertEqual(result["status"], "BLOCKED")
         forged = copy.deepcopy(self.view)
         for boundary in forged["proof_boundaries"]:
-            if boundary["coordinate_descriptor"]["kind"] == \
+            if boundary.get("coordinate_descriptor", {}).get("kind") == \
                     "ISOLATED_REAL_ROOT":
                 boundary["physical_value_sign"] = "NEGATIVE"
         result = core.attempt(supplied_atlas=forged)
