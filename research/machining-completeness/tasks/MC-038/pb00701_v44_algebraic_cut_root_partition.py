@@ -343,11 +343,35 @@ def prove(*, max_depth=14, max_nodes=20000, max_cut_refinements=128):
     ]
     require(len(irrational) == 1,
             "FROZEN_V44_EXPECTED_ONE_ALGEBRAIC_ORIENTATION_CUT")
-    defining = tuple(map(cut_order.q,
-                         irrational[0]["coordinate"]["defining_square_free_polynomial"]))
-    endpoint_poly = tuple(map(cut_order.q, endpoint["field"]["minimal_polynomial"]))
-    require(defining == endpoint_poly,
-            "V46_ENDPOINT_AND_V41_CUT_MINIMAL_POLYNOMIAL_MISMATCH")
+    # #306 records the square-free SOURCE orientation polynomial whereas
+    # V46/V45 records the irreducible minimal factor selecting this embedding.
+    # They need not have identical coefficient vectors. Bind them by the exact
+    # rule already reviewed in #306: polynomial GCD plus one common Sturm root
+    # in the overlapping rational isolating intervals. Interval overlap alone
+    # is explicitly insufficient.
+    endpoint_coord = {
+        "kind": "ISOLATED_REAL_ROOT",
+        "local_isolating_interval":
+            copy.deepcopy(endpoint["field"]["isolating_interval"]),
+        "source_isolating_interval":
+            copy.deepcopy(endpoint["field"]["isolating_interval"]),
+        "defining_square_free_polynomial": [
+            str(cut_order.q(x))
+            for x in endpoint["field"]["minimal_polynomial"]
+        ],
+        "minimal_polynomial_claimed": True,
+    }
+    binding_budget = cut_order.ComparisonBudget(max_cut_refinements)
+    identity_relation, identity_method, _, _ = cut_order.compare_coordinates(
+        irrational[0]["coordinate"], endpoint_coord, binding_budget,
+        Q(0), Q(1),
+    )
+    require(
+        identity_relation == "EQUAL"
+        and identity_method ==
+        "EXACT_POLYNOMIAL_GCD_PLUS_STURM_COMMON_ROOT",
+        "V46_ENDPOINT_AND_V41_CUT_EXACT_ROOT_IDENTITY_NOT_ESTABLISHED",
+    )
 
     root = roots[0]
     relations = []
@@ -407,6 +431,8 @@ def prove(*, max_depth=14, max_nodes=20000, max_cut_refinements=128):
         "proof_cell_open_root_counts": cell_counts,
         "root_occupying_proof_cell_index": before_count,
         "algebraic_cut_endpoint_relation": endpoint["relation"],
+        "algebraic_cut_identity_method": identity_method,
+        "algebraic_cut_identity_refinements_used": binding_budget.used,
         "algebraic_cut_physical_multiplicity":
             endpoint["physical_multiplicity"],
         "algebraic_cut_is_physical_event": False,
