@@ -1,0 +1,50 @@
+name: mc1-pb00701-v44-mixed-cut-child-interface
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_mixed_cut_child_interface.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v44_mixed_cut_child_interface.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v44-mixed-cut-child-interface-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_irrational_cut_source_sign.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_v45_monotone_child_bridge.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_global_derivative.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_source_proof_cell_atlas.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'handoffs/current-authority.json'
+      - '.github/workflows/mc1-pb00701-v44-mixed-cut-child-interface.yml'
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_mixed_cut_child_interface.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v44_mixed_cut_child_interface.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v44-mixed-cut-child-interface-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_irrational_cut_source_sign.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_v45_monotone_child_bridge.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_global_derivative.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v44_source_proof_cell_atlas.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_algebraic_child_map_model.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'handoffs/current-authority.json'
+      - '.github/workflows/mc1-pb00701-v44-mixed-cut-child-interface.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Show literal checked-out source SHA
+        run: git rev-parse HEAD
+      - name: Verify four exact Q(alpha) mixed-cut children and adversarial controls
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v44_mixed_cut_child_interface.py --contract --self-test
