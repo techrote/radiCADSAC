@@ -147,6 +147,18 @@ class FrozenImplicitRootRefinementTests(unittest.TestCase):
         self.assertFalse(checked["is_truth_value"])
         self.assertFalse(checked["historical_v54_admitted"])
 
+    def test_oversized_and_excessive_node_reports_are_resource_nontruth(self):
+        # Neither a huge scalar nor a very wide valid JSON list can silently
+        # become an accepted proof report or an untyped decoder failure.
+        examples = ("x" * (core.MAX_REPORT_BYTES + 1),
+                    [0] * (core.MAX_REPORT_VISITED_NODES + 1))
+        for report in examples:
+            with self.subTest(kind=type(report).__name__):
+                result = core.validate_report(
+                    report, steps=0, supplied_atlas=self.view)
+                self.assertEqual(result["status"], "RESOURCE_REFUSAL", result)
+                self.assertFalse(result["is_truth_value"])
+
     def test_never_promotes_unproved_analytic_child_or_programme(self):
         r = self.refine(0)
         for flag in (
