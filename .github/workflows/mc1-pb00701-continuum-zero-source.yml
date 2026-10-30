@@ -1,0 +1,64 @@
+name: mc1-pb00701-continuum-zero-source
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_continuum_zero_source.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_continuum_zero_source.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-continuum-zero-source-witness.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-continuum-zero-source-research.md'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_affine_identity_frontier.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_rational_turn_model.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_event_model.py'
+      - 'research/machining-completeness/tasks/MC-032/event_engine.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_five_source_evidence_replay.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-five-source-evidence-replay.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'handoffs/current-authority.json'
+      - '.github/workflows/mc1-pb00701-continuum-zero-source.yml'
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_continuum_zero_source.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_continuum_zero_source.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-continuum-zero-source-witness.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-continuum-zero-source-research.md'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_affine_identity_frontier.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_rational_turn_model.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_event_model.py'
+      - 'research/machining-completeness/tasks/MC-032/event_engine.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_five_source_evidence_replay.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-five-source-evidence-replay.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'handoffs/current-authority.json'
+      - '.github/workflows/mc1-pb00701-continuum-zero-source.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Literal checked-out source head
+        run: git rev-parse HEAD
+      - name: Certify closed continuum-zero original source and six-case disjoint union
+        run: |
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_continuum_zero_source.py --contract --self-test
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py --contract --self-test
+      - name: Requalify original affine identity and five finite-source producers
+        run: |
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_affine_identity_frontier.py --contract --self-test
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_five_source_evidence_replay.py --contract --self-test
