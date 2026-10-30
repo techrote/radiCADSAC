@@ -244,7 +244,7 @@ def prove(*, supplied_atlas=None):
             "exact_polynomial_roundtrip_replayed": True,
             "original_source_phase_affine_restriction_replayed": True,
             "inherited_physical_child_derivative_lower_bound":
-                "parent_source_strict_bound_times_positive_algebraic_width",
+                "F_child_prime_ge_source_lower_bound_times_positive_algebraic_width",
             "closed_child_physical_derivative_strictly_positive": True,
             "complete_open_physical_root_count": count,
             "new_algebraic_phase_trig_endpoint_evaluation": False,
