@@ -1,0 +1,272 @@
+{
+  "case_id": "harvested:verify_pb00701_v52:2250401ce435",
+  "dependencies": {
+    "MC038_git_blobs": {
+      "pb00701-finite-owner-corpus-v54.json": "5841c331579489b25caef38cd412bdbf286f9134",
+      "pb00701-finite-owner-coverage-v54.json": "600ba29786f50397f29fd435fc5e2c57076088f9",
+      "pb00701-finite-owner-inventory-v54.json": "8649c20ab77e199f9c3fa351b8b6742218f27abb",
+      "verify_pb00701_post_v54_frontier.py": "12c6efeb667a954ffc5a7e27849ae815d466580a"
+    },
+    "authority_git_blob": "fa0233323a0804d8a5d3eb7cd892a274a6173fab",
+    "domain_git_blob": "23de82f5240a72509f7afe4acd5948b65bc4ff13"
+  },
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "frozen_v54_census": {
+    "historical_dispositions_modified": false,
+    "missing_ordered_premises": 30,
+    "original_sources": 121,
+    "route_refusals": 20
+  },
+  "historical_observation": {
+    "id": "harvested:verify_pb00701_v52:2250401ce435",
+    "observed": {
+      "spans": [
+        [
+          "PB00701_V23_EXACT_NONCONSTANT_AMPLITUDE_PHASE_SECTOR_ANCHOR",
+          "BLOCKED",
+          "NONCONSTANT_AMPLITUDE_PHASE_DEPENDENT_ANCHOR_NOT_CERTIFIED"
+        ]
+      ],
+      "status": "BLOCKED"
+    },
+    "v54_disposition": "BLOCKED"
+  },
+  "original_source": {
+    "cos_splines": {
+      "0": {
+        "controls": [
+          "0",
+          "0",
+          "1/1512",
+          "1/756",
+          "13/7560",
+          "37/20412",
+          "13/7776",
+          "49/34992"
+        ],
+        "degree": 7,
+        "knots": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1"
+        ]
+      },
+      "1": {
+        "controls": [
+          "0",
+          "0",
+          "1/54000",
+          "1/27000",
+          "23/486000",
+          "7/145800",
+          "49/1166400"
+        ],
+        "degree": 6,
+        "knots": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1"
+        ]
+      }
+    },
+    "grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+    "parameter_hi": "1",
+    "parameter_lo": "0",
+    "phase_turn_offset": "1/4",
+    "phase_turn_rate": "-1/24",
+    "sin_splines": {
+      "2": {
+        "controls": [
+          "0",
+          "0",
+          "1/108000",
+          "1/54000",
+          "23/972000",
+          "7/291600",
+          "49/2332800"
+        ],
+        "degree": 6,
+        "knots": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1"
+        ]
+      }
+    },
+    "source_parameter_id": "v52-original-source"
+  },
+  "original_source_sha256": "4a3ee3f47b9347429c13830abef382301c7963b0af518f0977390c2d3ffba040",
+  "schema": "radicadsac-mc038-v23-bernstein-source/1.0",
+  "scope": {
+    "MC_1": "NOT_ESTABLISHED",
+    "MC_B": "NOT_ESTABLISHED",
+    "PB00701_closed": false,
+    "complete_source_specific_mathematical_witness": true,
+    "exhaustive_post_v54_census": false,
+    "general_analytic_event_solver": false,
+    "historical_V23_route_repaired": false,
+    "native_material_topology_or_STEP_qualified": false,
+    "production_authorized": false,
+    "protected_operation_count": 26,
+    "selected_source_ids": [
+      "harvested:verify_pb00701_v52:2250401ce435"
+    ]
+  },
+  "source_specific_proof": {
+    "channels": {
+      "C0": {
+        "degree": 7,
+        "original_controls": [
+          "0",
+          "0",
+          "1/1512",
+          "1/756",
+          "13/7560",
+          "37/20412",
+          "13/7776",
+          "49/34992"
+        ],
+        "quotient_lower_bound": "49/34992",
+        "t_squared_quotient_controls": [
+          "1/72",
+          "1/108",
+          "13/2160",
+          "37/9720",
+          "91/38880",
+          "49/34992"
+        ],
+        "t_squared_quotient_degree": 5
+      },
+      "C1": {
+        "degree": 6,
+        "original_controls": [
+          "0",
+          "0",
+          "1/54000",
+          "1/27000",
+          "23/486000",
+          "7/145800",
+          "49/1166400"
+        ],
+        "quotient_lower_bound": "49/1166400",
+        "t_squared_quotient_controls": [
+          "1/3600",
+          "1/5400",
+          "23/194400",
+          "7/97200",
+          "49/1166400"
+        ],
+        "t_squared_quotient_degree": 4
+      },
+      "S2": {
+        "degree": 6,
+        "original_controls": [
+          "0",
+          "0",
+          "1/108000",
+          "1/54000",
+          "23/972000",
+          "7/291600",
+          "49/2332800"
+        ],
+        "quotient_lower_bound": "49/2332800",
+        "t_squared_quotient_controls": [
+          "1/7200",
+          "1/10800",
+          "23/388800",
+          "7/194400",
+          "49/2332800"
+        ],
+        "t_squared_quotient_degree": 4
+      }
+    },
+    "cosine_harmonic_1_nonnegative": true,
+    "kind": "SINGLE_CLAMPED_BERNSTEIN_SECTOR_POSITIVITY",
+    "left_endpoint_first_derivative": "0",
+    "left_endpoint_second_derivative": "1/36",
+    "left_endpoint_value": "0",
+    "phase_turn_interval": [
+      "5/24",
+      "1/4"
+    ],
+    "physical_event_proof": {
+      "closed_distinct_root_count": 1,
+      "complete_for_original_closed_source": true,
+      "continuum_zero_component": false,
+      "events": [
+        {
+          "analytic_order": 2,
+          "coordinate": {
+            "kind": "RATIONAL",
+            "value": "0"
+          },
+          "left_sign": null,
+          "location": "SOURCE_EXTERIOR_LEFT_ENDPOINT",
+          "right_sign": "POSITIVE"
+        }
+      ],
+      "interior_source_knots": [],
+      "open_distinct_root_count": 0,
+      "sign_cells": [
+        {
+          "interval": [
+            "0",
+            "1"
+          ],
+          "left_closed": false,
+          "right_closed": true,
+          "sign": "POSITIVE"
+        }
+      ]
+    },
+    "sine_harmonic_2_nonnegative": true,
+    "source_interval": [
+      "0",
+      "1"
+    ],
+    "source_parameter_id": "v52-original-source",
+    "strict_lower_bound": {
+      "coefficient": "49/34992",
+      "factor": "t^2",
+      "valid_on_closed_interval": [
+        "0",
+        "1"
+      ]
+    }
+  }
+}
