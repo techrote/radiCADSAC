@@ -1,0 +1,2625 @@
+{
+  "schema": "radicadsac-mc038-post-v54-evidence-reconciliation/1.0",
+  "task": "MC-038",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "purpose": "SOURCE_BOUND_REGISTERED_EVIDENCE_RECONCILIATION_NOT_GENERIC_ROUTE_ACCEPTANCE",
+  "source_registry_baseline_main": "f69cf47f011fd22bd48687d963d015328fa69e1a",
+  "source_archaeology_baseline_main": "45d4a10343ec8161e92e8bbed634f0edb5f16d24",
+  "frozen_corpus_git_blob": "5841c331579489b25caef38cd412bdbf286f9134",
+  "historical_v54": {
+    "original_source_cases": 121,
+    "route_refusals": 20,
+    "missing_ordered_span_premises": 30,
+    "dispositions_changed": false
+  },
+  "registry_scope": {
+    "all_50_historical_unresolved_ids_enumerated": true,
+    "all_registered_producers_reexecuted_from_pinned_original_sources": true,
+    "all_possible_post_v54_proofs_exhaustively_discovered": false,
+    "missing_registry_entry_proves_mathematical_impossibility": false,
+    "new_general_root_event_or_composition_theorem": false,
+    "normalized_universal_root_event_consumer": false
+  },
+  "producer_registry": [
+    {
+      "producer": "continuum",
+      "code": "pb00701_continuum_zero_source.py",
+      "code_git_blob": "6fff0737c2f7bf8178dd7437c0981f7f3cd50cd0",
+      "saved_report": {
+        "path": "pb00701-continuum-zero-source-witness.json",
+        "git_blob": "6ce9bc63714695b67fb019bee3ad95430c1ea922"
+      }
+    },
+    {
+      "producer": "five",
+      "code": "pb00701_five_source_evidence_replay.py",
+      "code_git_blob": "a8aedb83772984831d5aa5c3b9b8d1cead04c345",
+      "saved_report": {
+        "path": "pb00701-five-source-evidence-replay.json",
+        "git_blob": "4c619ee7011fa2d7a65f3391ff95cd8e7eecf3b0"
+      }
+    },
+    {
+      "producer": "knot",
+      "code": "pb00701_two_span_source_knot_root_set.py",
+      "code_git_blob": "516591fdbe25f4e0b1da00bc8aa70250de74b42c",
+      "saved_report": null
+    },
+    {
+      "producer": "refusal_cone",
+      "code": "verify_pb00701_v43_refusal_cone.py",
+      "code_git_blob": "2a8079ee2cf012bc2a12794c4c5ff19ebd760007",
+      "saved_report": null
+    },
+    {
+      "producer": "stationary",
+      "code": "pb00701_stationary_knot_composition.py",
+      "code_git_blob": "d0fbe7e189066fd9398958f1b1814b8147a6a64e",
+      "saved_report": null
+    },
+    {
+      "producer": "trig_fixed",
+      "code": "pb00701_pinned_trig_child_views.py",
+      "code_git_blob": "c4a4d865226d01858d93685aa770987b14460e0b",
+      "saved_report": null
+    },
+    {
+      "producer": "v10_tail0_crossings",
+      "code": "verify_pb00701_v43_v10_tail0_crossings.py",
+      "code_git_blob": "5bf6f85f1432b513ba89d17f5e4da17d1bce212d",
+      "saved_report": null
+    },
+    {
+      "producer": "v10_tail_crossing",
+      "code": "verify_pb00701_v43_v10_tail_crossing.py",
+      "code_git_blob": "ada50468fe840625bd652c5a0042e0e3d75607d6",
+      "saved_report": null
+    },
+    {
+      "producer": "v11_tail_contrast",
+      "code": "verify_pb00701_v43_v11_tail_contrast.py",
+      "code_git_blob": "a978284ce2672ce05d0ae45a9e2a9043c227a4f2",
+      "saved_report": null
+    },
+    {
+      "producer": "v12_tail_contrast",
+      "code": "verify_pb00701_v43_v12_tail_contrast.py",
+      "code_git_blob": "2b2e85f662f4cb2a97b82e264e007c38cada69fd",
+      "saved_report": null
+    },
+    {
+      "producer": "v13_even_factor",
+      "code": "verify_pb00701_v43_v13_even_factor.py",
+      "code_git_blob": "998130ba26f553237ac261017f3edc13f5f57700",
+      "saved_report": null
+    },
+    {
+      "producer": "v16_chebyshev_crossing",
+      "code": "verify_pb00701_v43_v16_chebyshev_crossing.py",
+      "code_git_blob": "74bbdb48125f4168308fb6ffcbac4e5a08049c5d",
+      "saved_report": null
+    },
+    {
+      "producer": "v17_positive_turn",
+      "code": "verify_pb00701_v43_v17_positive_turn.py",
+      "code_git_blob": "e245b13045a96f549747baae1b25556da6cc9808",
+      "saved_report": null
+    },
+    {
+      "producer": "v23_bernstein",
+      "code": "pb00701_v23_bernstein_source.py",
+      "code_git_blob": "9b83c4485f8251b0649af6402acc9d777e281a96",
+      "saved_report": {
+        "path": "pb00701-v23-bernstein-source-witness.json",
+        "git_blob": "f5de44d4e7e17d076bc575609d62aeb934d8f4b9"
+      }
+    },
+    {
+      "producer": "v44",
+      "code": "pb00701_v44_algebraic_cut_root_partition.py",
+      "code_git_blob": "5d38a42fd8e23dc7930788e2b0c080caf567e851",
+      "saved_report": null
+    },
+    {
+      "producer": "v6_ordered",
+      "code": "verify_pb00701_v6_source_order.py",
+      "code_git_blob": "6b1e24513146f1cdf1edc2922bc1222dde1efce0",
+      "saved_report": null
+    }
+  ],
+  "summary": {
+    "total_historical_unresolved_source_cases": 50,
+    "by_registered_evidence_level": {
+      "COMPLETE_SOURCE_SPECIFIC": 15,
+      "PARTIAL_REFUSED_TAIL_ONLY": 9,
+      "PARTIAL_ORDERED_CHILD": 18,
+      "NO_REGISTERED_SOURCE_EVENT_OR_ORDER_WITNESS": 8
+    },
+    "historical_route_refusals": {
+      "COMPLETE_SOURCE_SPECIFIC": 11,
+      "PARTIAL_REFUSED_TAIL_ONLY": 9,
+      "PARTIAL_ORDERED_CHILD": 0,
+      "NO_REGISTERED_SOURCE_EVENT_OR_ORDER_WITNESS": 0
+    },
+    "historical_missing_ordered_premises": {
+      "COMPLETE_SOURCE_SPECIFIC": 4,
+      "PARTIAL_REFUSED_TAIL_ONLY": 0,
+      "PARTIAL_ORDERED_CHILD": 18,
+      "NO_REGISTERED_SOURCE_EVENT_OR_ORDER_WITNESS": 8
+    },
+    "complete_continuum_sources": 1
+  },
+  "source_cases": [
+    {
+      "case_id": "composite:DELEGATED_V6_CONSTANT_MODULATION:tail0",
+      "origin": "verify_pb00701_v7",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "9eb6f08a44882adffa919529247c40190c70e8d7599ee2b1a0f7978ef2569eb1",
+      "original_row_sha256": "145ac5ce5b533c447c7356e8dc721dbfa5a44562cdc3a37422278fd7bd0199fc",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/4"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED",
+      "historical_observed_source_status": "BLOCKED",
+      "historical_spans": [
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "PB00701_V27_EXACT_RATIONAL_PHASE_SECTOR_PARTITION_COMPOSITION",
+          "BLOCKED",
+          "V27_CHILD_LEFT_ENDPOINT_MULTIPLICITY_NOT_COMPOSABLE"
+        ]
+      ],
+      "registered_evidence_level": "COMPLETE_SOURCE_SPECIFIC",
+      "evidence": {
+        "producer": "knot",
+        "producer_code": "pb00701_two_span_source_knot_root_set.py",
+        "producer_git_blob": "516591fdbe25f4e0b1da00bc8aa70250de74b42c",
+        "level": "COMPLETE_SOURCE_SPECIFIC",
+        "scope": "COMPLETE_FINITE_SOURCE_ZERO_SET",
+        "covered_original_source_interval": [
+          "0",
+          "2"
+        ],
+        "replayed_result_sha256": "9a7eb0e4527177e339090ef6d4ed4cef3ece725f615fd6515956da38bff462c9",
+        "source_sha256": "9eb6f08a44882adffa919529247c40190c70e8d7599ee2b1a0f7978ef2569eb1",
+        "complete_original_source_zero_set": true
+      },
+      "remaining_requirement": "Selected source-specific zero-set proof exists; historical route and general PB-007 obligations remain unchanged.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:DELEGATED_V6_CONSTANT_MODULATION:tail100",
+      "origin": "verify_pb00701_v7",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "f6a0eb06c66af415fbb8abdfe62f9b36a2a2bf154e535d83307a80228e044ad5",
+      "original_row_sha256": "0801317d3452c77733a129148d58eaac2f06aa9cd26396a44892e82c524e1db2",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/4"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED",
+      "historical_observed_source_status": "BLOCKED",
+      "historical_spans": [
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "PB00701_V27_EXACT_RATIONAL_PHASE_SECTOR_PARTITION_COMPOSITION",
+          "BLOCKED",
+          "V27_CHILD_NOT_CERTIFIED"
+        ]
+      ],
+      "registered_evidence_level": "COMPLETE_SOURCE_SPECIFIC",
+      "evidence": {
+        "producer": "five",
+        "producer_code": "pb00701_five_source_evidence_replay.py",
+        "producer_git_blob": "a8aedb83772984831d5aa5c3b9b8d1cead04c345",
+        "level": "COMPLETE_SOURCE_SPECIFIC",
+        "scope": "COMPLETE_FINITE_SOURCE_ZERO_SET",
+        "covered_original_source_interval": [
+          "0",
+          "2"
+        ],
+        "replayed_result_sha256": "b6fe0f2f960cf495f34ff7a45056367f8b7c67ebaffdb6e43a57d58432853ff5",
+        "source_sha256": "f6a0eb06c66af415fbb8abdfe62f9b36a2a2bf154e535d83307a80228e044ad5",
+        "complete_original_source_zero_set": true
+      },
+      "remaining_requirement": "Selected source-specific zero-set proof exists; historical route and general PB-007 obligations remain unchanged.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:EXACT_STATIONARY_PHASE_POLYNOMIAL:tail0",
+      "origin": "verify_pb00701_v8",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "f4c2d33cc4c5a52f355ff4ecc36ad6ee38af0ff0fa8c5159aaac5923a10125ff",
+      "original_row_sha256": "9ee0aed1b32cb85389f372e291a1eb80b9666d2c480d1bfbfa9fb62254dc78d8",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "0"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_observed_source_status": "CERTIFIED",
+      "historical_spans": [
+        [
+          "EXACT_STATIONARY_PHASE_POLYNOMIAL",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "EXACT_STATIONARY_PHASE_POLYNOMIAL",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "registered_evidence_level": "COMPLETE_SOURCE_SPECIFIC",
+      "evidence": {
+        "producer": "stationary",
+        "producer_code": "pb00701_stationary_knot_composition.py",
+        "producer_git_blob": "d0fbe7e189066fd9398958f1b1814b8147a6a64e",
+        "level": "COMPLETE_SOURCE_SPECIFIC",
+        "scope": "COMPLETE_FINITE_SOURCE_ZERO_SET",
+        "covered_original_source_interval": [
+          "0",
+          "2"
+        ],
+        "replayed_result_sha256": "1eff719e7530d5c6f844ec1da06787ea59159cb6f24087a8079ed2c56703bbfc",
+        "source_sha256": "f4c2d33cc4c5a52f355ff4ecc36ad6ee38af0ff0fa8c5159aaac5923a10125ff",
+        "complete_original_source_zero_set": true
+      },
+      "remaining_requirement": "Selected source-specific zero-set proof exists; historical route and general PB-007 obligations remain unchanged.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:EXACT_STATIONARY_PHASE_POLYNOMIAL:tail100",
+      "origin": "verify_pb00701_v8",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "a49b92bbb74a7e016eed471feb64808eb9109a6a42b3ef874243364981a396fd",
+      "original_row_sha256": "a656298a7843e5dfff9bcf4d6262e18331c12f37cb23381d94bd8487f0ab57ca",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "0"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_observed_source_status": "CERTIFIED",
+      "historical_spans": [
+        [
+          "EXACT_STATIONARY_PHASE_POLYNOMIAL",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "EXACT_STATIONARY_PHASE_POLYNOMIAL",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "registered_evidence_level": "COMPLETE_SOURCE_SPECIFIC",
+      "evidence": {
+        "producer": "stationary",
+        "producer_code": "pb00701_stationary_knot_composition.py",
+        "producer_git_blob": "d0fbe7e189066fd9398958f1b1814b8147a6a64e",
+        "level": "COMPLETE_SOURCE_SPECIFIC",
+        "scope": "COMPLETE_FINITE_SOURCE_ZERO_SET",
+        "covered_original_source_interval": [
+          "0",
+          "2"
+        ],
+        "replayed_result_sha256": "8700563dce4bf8ad603d62d38422457599b249a84af5d4f040af144e13f7de55",
+        "source_sha256": "a49b92bbb74a7e016eed471feb64808eb9109a6a42b3ef874243364981a396fd",
+        "complete_original_source_zero_set": true
+      },
+      "remaining_requirement": "Selected source-specific zero-set proof exists; historical route and general PB-007 obligations remain unchanged.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail0",
+      "origin": "verify_pb00701_v10",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "57d3c14096ccedfb7faea5023f5a09bada2ca274748f2207c36d77bbc790927c",
+      "original_row_sha256": "c5ba85453dc65e0d18675353986394ae5b34af6219a741ce14af0c332ffc47cd",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "-1/2",
+        "rate": "2"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED",
+      "historical_observed_source_status": "BLOCKED",
+      "historical_spans": [
+        [
+          "PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF",
+          "BLOCKED",
+          "CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED"
+        ]
+      ],
+      "registered_evidence_level": "PARTIAL_REFUSED_TAIL_ONLY",
+      "evidence": {
+        "producer": "v10_tail0_crossings",
+        "producer_code": "verify_pb00701_v43_v10_tail0_crossings.py",
+        "producer_git_blob": "5bf6f85f1432b513ba89d17f5e4da17d1bce212d",
+        "level": "PARTIAL_REFUSED_TAIL_ONLY",
+        "scope": "COMPLETE_REFUSED_SECOND_SPAN_ONLY",
+        "covered_original_source_interval": [
+          "1",
+          "2"
+        ],
+        "replayed_result_sha256": "5fd2d417ce4f8313bbb6214622b14bd6d81a24f1d2be8f1b1aee167174f9263f",
+        "source_sha256": "57d3c14096ccedfb7faea5023f5a09bada2ca274748f2207c36d77bbc790927c",
+        "complete_original_source_zero_set": false
+      },
+      "remaining_requirement": "First original source span needs an ordered event/endpoint view and complete source-knot composition; a tail-only proof does not prove the whole source.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail100",
+      "origin": "verify_pb00701_v10",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "21a0dde2ee6783f4465ab0c23dbef08fc400a4c8f2169cc5b851a3b0c3f5e23b",
+      "original_row_sha256": "cdd45c443caa2e240e4b87736b227070371f7d4a94ac69c98987a3bc9d293632",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "-1/2",
+        "rate": "2"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED",
+      "historical_observed_source_status": "BLOCKED",
+      "historical_spans": [
+        [
+          "PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF",
+          "BLOCKED",
+          "CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED"
+        ]
+      ],
+      "registered_evidence_level": "PARTIAL_REFUSED_TAIL_ONLY",
+      "evidence": {
+        "producer": "v10_tail_crossing",
+        "producer_code": "verify_pb00701_v43_v10_tail_crossing.py",
+        "producer_git_blob": "ada50468fe840625bd652c5a0042e0e3d75607d6",
+        "level": "PARTIAL_REFUSED_TAIL_ONLY",
+        "scope": "COMPLETE_REFUSED_SECOND_SPAN_ONLY",
+        "covered_original_source_interval": [
+          "1",
+          "2"
+        ],
+        "replayed_result_sha256": "d7fe2699b430979f84c3f0c9f7b85b1d77087759b5cd5e1e7b3f0b00ae7ff752",
+        "source_sha256": "21a0dde2ee6783f4465ab0c23dbef08fc400a4c8f2169cc5b851a3b0c3f5e23b",
+        "complete_original_source_zero_set": false
+      },
+      "remaining_requirement": "First original source span needs an ordered event/endpoint view and complete source-knot composition; a tail-only proof does not prove the whole source.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO:tail0",
+      "origin": "verify_pb00701_v11",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "1535f364cd4d3c1a3bf34f57f394ad70a17ad1327880a0a47f25f3ecff5c7560",
+      "original_row_sha256": "cf16b962fba955f1bf66b2412beb9c15e10aa263f3197172cc2961737bd6b804",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "2"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED",
+      "historical_observed_source_status": "BLOCKED",
+      "historical_spans": [
+        [
+          "PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF",
+          "BLOCKED",
+          "CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED"
+        ]
+      ],
+      "registered_evidence_level": "PARTIAL_REFUSED_TAIL_ONLY",
+      "evidence": {
+        "producer": "v11_tail_contrast",
+        "producer_code": "verify_pb00701_v43_v11_tail_contrast.py",
+        "producer_git_blob": "a978284ce2672ce05d0ae45a9e2a9043c227a4f2",
+        "level": "PARTIAL_REFUSED_TAIL_ONLY",
+        "scope": "COMPLETE_REFUSED_SECOND_SPAN_ONLY",
+        "covered_original_source_interval": [
+          "1",
+          "2"
+        ],
+        "replayed_result_sha256": "f94ad20bdd7c383255f4bee38294cd67b5ba0f1aac504026f529d62050f9a457",
+        "source_sha256": "1535f364cd4d3c1a3bf34f57f394ad70a17ad1327880a0a47f25f3ecff5c7560",
+        "complete_original_source_zero_set": false
+      },
+      "remaining_requirement": "First original source span needs an ordered event/endpoint view and complete source-knot composition; a tail-only proof does not prove the whole source.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO:tail100",
+      "origin": "verify_pb00701_v11",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "f70a884ea00042d46f517577ab598d8c85152ad511d48ea0bb8b2e6d7c55d0d5",
+      "original_row_sha256": "dd2744103931e0c754809f3db0376aa7a5aa986af2644fc7ae4ba7dd9348fce1",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "2"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED",
+      "historical_observed_source_status": "BLOCKED",
+      "historical_spans": [
+        [
+          "PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF",
+          "BLOCKED",
+          "CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED"
+        ]
+      ],
+      "registered_evidence_level": "PARTIAL_REFUSED_TAIL_ONLY",
+      "evidence": {
+        "producer": "v11_tail_contrast",
+        "producer_code": "verify_pb00701_v43_v11_tail_contrast.py",
+        "producer_git_blob": "a978284ce2672ce05d0ae45a9e2a9043c227a4f2",
+        "level": "PARTIAL_REFUSED_TAIL_ONLY",
+        "scope": "COMPLETE_REFUSED_SECOND_SPAN_ONLY",
+        "covered_original_source_interval": [
+          "1",
+          "2"
+        ],
+        "replayed_result_sha256": "cccc4c6968d4ba40f0f702ac7e97b8994ed7f7815a810a365458a89d1cb669f6",
+        "source_sha256": "f70a884ea00042d46f517577ab598d8c85152ad511d48ea0bb8b2e6d7c55d0d5",
+        "complete_original_source_zero_set": false
+      },
+      "remaining_requirement": "First original source span needs an ordered event/endpoint view and complete source-knot composition; a tail-only proof does not prove the whole source.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V12_EXACT_COMPONENT_ROOT_PARTITION_SINGLE_HARMONIC:tail0",
+      "origin": "v19",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "ee15e947924b45640dd16634247a476bb230fdc145fef94407d9a7c219928cd5",
+      "original_row_sha256": "d0acef7c69cb8ac1ba128b988e83817a91feff78509dd18007d0e56a506336c3",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/4"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED",
+      "historical_observed_source_status": "BLOCKED",
+      "historical_spans": [
+        [
+          "PB00701_V12_EXACT_COMPONENT_ROOT_PARTITION_SINGLE_HARMONIC",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF",
+          "BLOCKED",
+          "CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED"
+        ]
+      ],
+      "registered_evidence_level": "PARTIAL_REFUSED_TAIL_ONLY",
+      "evidence": {
+        "producer": "v12_tail_contrast",
+        "producer_code": "verify_pb00701_v43_v12_tail_contrast.py",
+        "producer_git_blob": "2b2e85f662f4cb2a97b82e264e007c38cada69fd",
+        "level": "PARTIAL_REFUSED_TAIL_ONLY",
+        "scope": "COMPLETE_REFUSED_SECOND_SPAN_ONLY",
+        "covered_original_source_interval": [
+          "1",
+          "2"
+        ],
+        "replayed_result_sha256": "ba5874f4e56e4b76456c8028a891b28d87a896bedcb59ff75716a83a37a6a9ab",
+        "source_sha256": "ee15e947924b45640dd16634247a476bb230fdc145fef94407d9a7c219928cd5",
+        "complete_original_source_zero_set": false
+      },
+      "remaining_requirement": "First original source span needs an ordered event/endpoint view and complete source-knot composition; a tail-only proof does not prove the whole source.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V12_EXACT_COMPONENT_ROOT_PARTITION_SINGLE_HARMONIC:tail100",
+      "origin": "v19",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "65b71861fed07c4b609364dd79c8c1700abe72ca8bcb8f70aec0a54af90d94f7",
+      "original_row_sha256": "748ed522c8a2f7cc3d6bdb17cc2322d4d4fd3121378c3b5a0dc829861f88aa15",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/4"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED",
+      "historical_observed_source_status": "BLOCKED",
+      "historical_spans": [
+        [
+          "PB00701_V12_EXACT_COMPONENT_ROOT_PARTITION_SINGLE_HARMONIC",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF",
+          "BLOCKED",
+          "CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED"
+        ]
+      ],
+      "registered_evidence_level": "PARTIAL_REFUSED_TAIL_ONLY",
+      "evidence": {
+        "producer": "v12_tail_contrast",
+        "producer_code": "verify_pb00701_v43_v12_tail_contrast.py",
+        "producer_git_blob": "2b2e85f662f4cb2a97b82e264e007c38cada69fd",
+        "level": "PARTIAL_REFUSED_TAIL_ONLY",
+        "scope": "COMPLETE_REFUSED_SECOND_SPAN_ONLY",
+        "covered_original_source_interval": [
+          "1",
+          "2"
+        ],
+        "replayed_result_sha256": "b3142318e78b67236a9d4d0c2242996abc7e45518c213e99616a347a8b59ed41",
+        "source_sha256": "65b71861fed07c4b609364dd79c8c1700abe72ca8bcb8f70aec0a54af90d94f7",
+        "complete_original_source_zero_set": false
+      },
+      "remaining_requirement": "First original source span needs an ordered event/endpoint view and complete source-knot composition; a tail-only proof does not prove the whole source.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V13_EXACT_NONVANISHING_EVEN_MULTIPLIER_MULTIHARMONIC:tail0",
+      "origin": "verify_pb00701_v13",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "c7abfbbba43a61fbcfc72fc3833a0dc764b6c0d10a29ee4f6faf178c7db12b9b",
+      "original_row_sha256": "9a69a5d28c6808a54591cb8b72af59d752a1861ae860875fc858388d114c74af",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/4"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED",
+      "historical_observed_source_status": "BLOCKED",
+      "historical_spans": [
+        [
+          "PB00701_V13_EXACT_NONVANISHING_EVEN_MULTIPLIER_MULTIHARMONIC",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF",
+          "BLOCKED",
+          "CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED"
+        ]
+      ],
+      "registered_evidence_level": "PARTIAL_REFUSED_TAIL_ONLY",
+      "evidence": {
+        "producer": "v13_even_factor",
+        "producer_code": "verify_pb00701_v43_v13_even_factor.py",
+        "producer_git_blob": "998130ba26f553237ac261017f3edc13f5f57700",
+        "level": "PARTIAL_REFUSED_TAIL_ONLY",
+        "scope": "COMPLETE_REFUSED_SECOND_SPAN_ONLY",
+        "covered_original_source_interval": [
+          "1",
+          "2"
+        ],
+        "replayed_result_sha256": "22d99b694e7688137b2b156846c55d8635240ac987549a5a535f6172509c3ae0",
+        "source_sha256": "c7abfbbba43a61fbcfc72fc3833a0dc764b6c0d10a29ee4f6faf178c7db12b9b",
+        "complete_original_source_zero_set": false
+      },
+      "remaining_requirement": "First original source span needs an ordered event/endpoint view and complete source-knot composition; a tail-only proof does not prove the whole source.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V13_EXACT_NONVANISHING_EVEN_MULTIPLIER_MULTIHARMONIC:tail100",
+      "origin": "verify_pb00701_v13",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "a7131bea021c5c71d0da2682cd6d4c1a982e8c86196c818ad3f69a926afda2e5",
+      "original_row_sha256": "094b31ab55141488e39589ab6e0deda02b21066f06ba8568110609a23cd0a003",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/4"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_observed_source_status": "CERTIFIED",
+      "historical_spans": [
+        [
+          "PB00701_V13_EXACT_NONVANISHING_EVEN_MULTIPLIER_MULTIHARMONIC",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "PB00701_V19_EXACT_MULTI_HARMONIC_MONOTONE_ANCHOR",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "registered_evidence_level": "NO_REGISTERED_SOURCE_EVENT_OR_ORDER_WITNESS",
+      "evidence": null,
+      "remaining_requirement": "No source event/order witness is registered here; this is not a theorem that no other proof exists.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V14_EXACT_STRICT_DOMINANCE_MULTITERM_MULTIPLIER:tail100",
+      "origin": "verify_pb00701_v14",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "bd10ad1d9503335b2d7f745c09805b82a421b8db7beea67329cf33d0c9d78ff2",
+      "original_row_sha256": "1940ec5f6aafb641a25fcda3f8941ff7dd9f2afc2bf13056da6920159c3f0e18",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/4"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_observed_source_status": "CERTIFIED",
+      "historical_spans": [
+        [
+          "PB00701_V14_EXACT_STRICT_DOMINANCE_MULTITERM_MULTIPLIER",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "PB00701_V19_EXACT_MULTI_HARMONIC_MONOTONE_ANCHOR",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "registered_evidence_level": "NO_REGISTERED_SOURCE_EVENT_OR_ORDER_WITNESS",
+      "evidence": null,
+      "remaining_requirement": "No source event/order witness is registered here; this is not a theorem that no other proof exists.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V15_EXACT_FINITE_STRICT_DOMINANCE_MULTIPLIER:tail100",
+      "origin": "verify_pb00701_v15",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "8e41009417dd65f9a47a04b492dd9a91b88a7682f12f45305ce64ac38dffd7b7",
+      "original_row_sha256": "3954e79fceefbcd6e4b5932197f0314dbd4b90891b8fbad8410f9572f746725d",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/4"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_observed_source_status": "CERTIFIED",
+      "historical_spans": [
+        [
+          "PB00701_V15_EXACT_FINITE_STRICT_DOMINANCE_MULTIPLIER",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "PB00701_V19_EXACT_MULTI_HARMONIC_MONOTONE_ANCHOR",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "registered_evidence_level": "NO_REGISTERED_SOURCE_EVENT_OR_ORDER_WITNESS",
+      "evidence": null,
+      "remaining_requirement": "No source event/order witness is registered here; this is not a theorem that no other proof exists.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V16_EXACT_CHEBYSHEV_STURM_MULTIPLIER:tail100",
+      "origin": "verify_pb00701_v16",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "89ff16b64ab62d1b3cd543e3c52c4f0f8c570dc29b3448545b391a8d798da9d6",
+      "original_row_sha256": "843557d83755db09aedfce1d145d2a41945ebe65accffa0b6077afee8d94c4b0",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/4"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED",
+      "historical_observed_source_status": "BLOCKED",
+      "historical_spans": [
+        [
+          "PB00701_V16_EXACT_CHEBYSHEV_STURM_MULTIPLIER",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF",
+          "BLOCKED",
+          "CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED"
+        ]
+      ],
+      "registered_evidence_level": "PARTIAL_REFUSED_TAIL_ONLY",
+      "evidence": {
+        "producer": "v16_chebyshev_crossing",
+        "producer_code": "verify_pb00701_v43_v16_chebyshev_crossing.py",
+        "producer_git_blob": "74bbdb48125f4168308fb6ffcbac4e5a08049c5d",
+        "level": "PARTIAL_REFUSED_TAIL_ONLY",
+        "scope": "COMPLETE_REFUSED_SECOND_SPAN_ONLY",
+        "covered_original_source_interval": [
+          "1",
+          "2"
+        ],
+        "replayed_result_sha256": "dcbfe941df5960c186e2d7930ef961daf5e757b978a9f8a3d4ebe317f737db32",
+        "source_sha256": "89ff16b64ab62d1b3cd543e3c52c4f0f8c570dc29b3448545b391a8d798da9d6",
+        "complete_original_source_zero_set": false
+      },
+      "remaining_requirement": "First original source span needs an ordered event/endpoint view and complete source-knot composition; a tail-only proof does not prove the whole source.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V17_EXACT_PROJECTIVE_EVEN_TRIG_MULTIPLIER:tail0",
+      "origin": "verify_pb00701_v17",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "f4927df0e4db8a02af0905219d07fd1fdf4dfd8a50c0ef426323e633d6880d94",
+      "original_row_sha256": "a0e6a03211083aea1ad7db4aefd0cf813d9ec13780564d01f8ee8b556ccbc59e",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/4"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED",
+      "historical_observed_source_status": "BLOCKED",
+      "historical_spans": [
+        [
+          "PB00701_V17_EXACT_PROJECTIVE_EVEN_TRIG_MULTIPLIER",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF",
+          "BLOCKED",
+          "CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED"
+        ]
+      ],
+      "registered_evidence_level": "PARTIAL_REFUSED_TAIL_ONLY",
+      "evidence": {
+        "producer": "v17_positive_turn",
+        "producer_code": "verify_pb00701_v43_v17_positive_turn.py",
+        "producer_git_blob": "e245b13045a96f549747baae1b25556da6cc9808",
+        "level": "PARTIAL_REFUSED_TAIL_ONLY",
+        "scope": "COMPLETE_REFUSED_SECOND_SPAN_ONLY",
+        "covered_original_source_interval": [
+          "1",
+          "2"
+        ],
+        "replayed_result_sha256": "8ed5a9bdd2667dda168f387152358316b4317f01cb13488ae8422cd06c6bf5fd",
+        "source_sha256": "f4927df0e4db8a02af0905219d07fd1fdf4dfd8a50c0ef426323e633d6880d94",
+        "complete_original_source_zero_set": false
+      },
+      "remaining_requirement": "First original source span needs an ordered event/endpoint view and complete source-knot composition; a tail-only proof does not prove the whole source.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V17_EXACT_PROJECTIVE_EVEN_TRIG_MULTIPLIER:tail100",
+      "origin": "verify_pb00701_v17",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "e85d997c9f4d828b1b748c964b375c21e4acef1b1e9046e074b1f7e29011d08f",
+      "original_row_sha256": "41e86bc30392515873fb55bdd844d154236a81426fd3639c3bd5491dad30f05a",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/4"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_observed_source_status": "CERTIFIED",
+      "historical_spans": [
+        [
+          "PB00701_V17_EXACT_PROJECTIVE_EVEN_TRIG_MULTIPLIER",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "PB00701_V19_EXACT_MULTI_HARMONIC_MONOTONE_ANCHOR",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "registered_evidence_level": "NO_REGISTERED_SOURCE_EVENT_OR_ORDER_WITNESS",
+      "evidence": null,
+      "remaining_requirement": "No source event/order witness is registered here; this is not a theorem that no other proof exists.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V18_EXACT_LAURENT_MODULE_FACTOR:tail100",
+      "origin": "verify_pb00701_v14",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "ed61c9b827417327b9dda32ec0469ba5f0eab9622fb531d4b1bc959a312aa4a1",
+      "original_row_sha256": "7c1304de8afc41ba322fb653f20a1f8b6c3e0ea27af8a7864e44058d6b4d60d1",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/4"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_observed_source_status": "CERTIFIED",
+      "historical_spans": [
+        [
+          "PB00701_V18_EXACT_LAURENT_MODULE_FACTOR",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "PB00701_V19_EXACT_MULTI_HARMONIC_MONOTONE_ANCHOR",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "registered_evidence_level": "NO_REGISTERED_SOURCE_EVENT_OR_ORDER_WITNESS",
+      "evidence": null,
+      "remaining_requirement": "No source event/order witness is registered here; this is not a theorem that no other proof exists.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V18_EXACT_NONVANISHING_SOURCE_MODULE_FACTOR:tail0",
+      "origin": "verify_pb00701_v53",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "2c0db76bcf217c98b53d8b45ee537aec4da818c649df2436c27860a4d8c17111",
+      "original_row_sha256": "06f88535a67c3d521d831f2205b69c3466ff4a2723cdb53b37c5e430b24c04c8",
+      "source_parameter_id": "v53-simple-repeated-join",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "1/24",
+        "rate": "1/24"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_observed_source_status": "CERTIFIED",
+      "historical_spans": [
+        [
+          "PB00701_V18_EXACT_NONVANISHING_SOURCE_MODULE_FACTOR",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "EXACT_RATIONAL_AMPLITUDE_DOMINANCE",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "registered_evidence_level": "NO_REGISTERED_SOURCE_EVENT_OR_ORDER_WITNESS",
+      "evidence": null,
+      "remaining_requirement": "No source event/order witness is registered here; this is not a theorem that no other proof exists.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V18_EXACT_NONVANISHING_SOURCE_MODULE_FACTOR:tail100",
+      "origin": "verify_pb00701_v53",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "2b1f53109ad708bd6eab37e83529e1001a7cadfa82fe630ddf230d94f2132d29",
+      "original_row_sha256": "fa9de27d0eead12eb2c8cee6e49b4b51ba6508e1b1c9dbc8b6e5620c2d15ddf6",
+      "source_parameter_id": "v53-simple-repeated-join",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "1/24",
+        "rate": "1/24"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_observed_source_status": "CERTIFIED",
+      "historical_spans": [
+        [
+          "PB00701_V18_EXACT_NONVANISHING_SOURCE_MODULE_FACTOR",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "PB00701_V19_EXACT_MULTI_HARMONIC_MONOTONE_ANCHOR",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "registered_evidence_level": "NO_REGISTERED_SOURCE_EVENT_OR_ORDER_WITNESS",
+      "evidence": null,
+      "remaining_requirement": "No source event/order witness is registered here; this is not a theorem that no other proof exists.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V22_EXACT_PHASE_SECTOR_PARTIAL_DERIVATIVE_ANCHOR:tail0",
+      "origin": "verify_pb00701_v22",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "4304ce6d31b385ce3e3c1af3f31e677d91099f244a7befdcff9170367d4aace9",
+      "original_row_sha256": "1b9853fb48e5fe91dab9856c75f43fb3591f1272367f895e7f382d00a58c9edd",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/12"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_observed_source_status": "CERTIFIED",
+      "historical_spans": [
+        [
+          "PB00701_V22_EXACT_PHASE_SECTOR_PARTIAL_DERIVATIVE_ANCHOR",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "registered_evidence_level": "PARTIAL_ORDERED_CHILD",
+      "evidence": {
+        "producer": "v6_ordered",
+        "producer_code": "verify_pb00701_v6_source_order.py",
+        "producer_git_blob": "6b1e24513146f1cdf1edc2922bc1222dde1efce0",
+        "level": "PARTIAL_ORDERED_CHILD",
+        "scope": "ONE_SOURCE_BOUND_V6_ORDERED_CHILD_ONLY",
+        "covered_original_source_interval": [
+          "1",
+          "2"
+        ],
+        "replayed_result_sha256": "d0e24d2ca2c6f0d6edb6b5516eea5c19ac6a4858d86f2670677b3ad211fd9ba5",
+        "source_sha256": "4304ce6d31b385ce3e3c1af3f31e677d91099f244a7befdcff9170367d4aace9",
+        "complete_original_source_zero_set": false
+      },
+      "remaining_requirement": "Only one V6 child has a checked ordered view; the other original span and cross-owner source-knot composition are not supplied by this registered evidence.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V23_EXACT_NONCONSTANT_AMPLITUDE_PHASE_SECTOR_ANCHOR:tail0",
+      "origin": "verify_pb00701_v23",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "e8d2451833854ee7eaf73d4fb70b78b86ba72194b2688876f3bb9ee6ab132ffd",
+      "original_row_sha256": "e52a27e5c3dcdf984919cdcd7bb925c52d2865550035da357cd87178b9fbfc89",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/12"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_observed_source_status": "CERTIFIED",
+      "historical_spans": [
+        [
+          "PB00701_V23_EXACT_NONCONSTANT_AMPLITUDE_PHASE_SECTOR_ANCHOR",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "registered_evidence_level": "PARTIAL_ORDERED_CHILD",
+      "evidence": {
+        "producer": "v6_ordered",
+        "producer_code": "verify_pb00701_v6_source_order.py",
+        "producer_git_blob": "6b1e24513146f1cdf1edc2922bc1222dde1efce0",
+        "level": "PARTIAL_ORDERED_CHILD",
+        "scope": "ONE_SOURCE_BOUND_V6_ORDERED_CHILD_ONLY",
+        "covered_original_source_interval": [
+          "1",
+          "2"
+        ],
+        "replayed_result_sha256": "e1431fbef33de774b2505f1b80a1f7aaff7c64ea9957282451f503d4ef5b3ee6",
+        "source_sha256": "e8d2451833854ee7eaf73d4fb70b78b86ba72194b2688876f3bb9ee6ab132ffd",
+        "complete_original_source_zero_set": false
+      },
+      "remaining_requirement": "Only one V6 child has a checked ordered view; the other original span and cross-owner source-knot composition are not supplied by this registered evidence.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V24_EXACT_MIXED_QUADRATURE_PHASE_ANCHOR:tail0",
+      "origin": "verify_pb00701_v24",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "e565ddf6bb0bab080128aeda16be5ea60466b3b971aa98d0408ea9a96da3d052",
+      "original_row_sha256": "696718a819afa68c7a7122e9fba85eae3b5a8b8be905f94836f666fd74d9298b",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "1/12",
+        "rate": "1/24"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_observed_source_status": "CERTIFIED",
+      "historical_spans": [
+        [
+          "PB00701_V24_EXACT_MIXED_QUADRATURE_PHASE_ANCHOR",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "registered_evidence_level": "PARTIAL_ORDERED_CHILD",
+      "evidence": {
+        "producer": "v6_ordered",
+        "producer_code": "verify_pb00701_v6_source_order.py",
+        "producer_git_blob": "6b1e24513146f1cdf1edc2922bc1222dde1efce0",
+        "level": "PARTIAL_ORDERED_CHILD",
+        "scope": "ONE_SOURCE_BOUND_V6_ORDERED_CHILD_ONLY",
+        "covered_original_source_interval": [
+          "1",
+          "2"
+        ],
+        "replayed_result_sha256": "15a6b758f12da6fa7bdf0eaea943391981741bd7527c6943c337e90f1740c5ba",
+        "source_sha256": "e565ddf6bb0bab080128aeda16be5ea60466b3b971aa98d0408ea9a96da3d052",
+        "complete_original_source_zero_set": false
+      },
+      "remaining_requirement": "Only one V6 child has a checked ordered view; the other original span and cross-owner source-knot composition are not supplied by this registered evidence.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V25_EXACT_COMPONENT_CONE_MIXED_PROJECTION_ANCHOR:tail0",
+      "origin": "verify_pb00701_v25",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "d7bf5969875c5ae44fa83f80d217fe17b02aca4db58545dc943c43e744ef68b6",
+      "original_row_sha256": "90642204b36339c0bea36a1196c4b1045f4b0fa360d25493eb59b23881579ab8",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "-1/12",
+        "rate": "1/12"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_observed_source_status": "CERTIFIED",
+      "historical_spans": [
+        [
+          "PB00701_V25_EXACT_COMPONENT_CONE_MIXED_PROJECTION_ANCHOR",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "registered_evidence_level": "PARTIAL_ORDERED_CHILD",
+      "evidence": {
+        "producer": "v6_ordered",
+        "producer_code": "verify_pb00701_v6_source_order.py",
+        "producer_git_blob": "6b1e24513146f1cdf1edc2922bc1222dde1efce0",
+        "level": "PARTIAL_ORDERED_CHILD",
+        "scope": "ONE_SOURCE_BOUND_V6_ORDERED_CHILD_ONLY",
+        "covered_original_source_interval": [
+          "1",
+          "2"
+        ],
+        "replayed_result_sha256": "abdd9cc078b0555ec368112f0d3ce476399a72de3116a2da9c78c46619cedc91",
+        "source_sha256": "d7bf5969875c5ae44fa83f80d217fe17b02aca4db58545dc943c43e744ef68b6",
+        "complete_original_source_zero_set": false
+      },
+      "remaining_requirement": "Only one V6 child has a checked ordered view; the other original span and cross-owner source-knot composition are not supplied by this registered evidence.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V26_EXACT_POINTWISE_COMPONENT_CONE_RESIDUAL_ORTHANTS:tail0",
+      "origin": "verify_pb00701_v26",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "a9bb78a5415d1c45f54be7838f77739c8854cf329a97b36576f2a2fedf4ed3e4",
+      "original_row_sha256": "333c1bf98905cd41773c7da92efd33f36dc2f1e1bc947b285d9175a4926a25ad",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "1/6",
+        "rate": "-1/3"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_observed_source_status": "CERTIFIED",
+      "historical_spans": [
+        [
+          "PB00701_V26_EXACT_POINTWISE_COMPONENT_CONE_RESIDUAL_ORTHANTS",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "PB00701_V27_EXACT_RATIONAL_PHASE_SECTOR_PARTITION_COMPOSITION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "registered_evidence_level": "NO_REGISTERED_SOURCE_EVENT_OR_ORDER_WITNESS",
+      "evidence": null,
+      "remaining_requirement": "No source event/order witness is registered here; this is not a theorem that no other proof exists.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V27_EXACT_RATIONAL_PHASE_SECTOR_PARTITION_COMPOSITION:tail0",
+      "origin": "verify_pb00701_v27",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "bdefb90689be6c6e29ffcd77611c40add0ee7d05099e94e3916174b6f74048dd",
+      "original_row_sha256": "ec76b07111b15331c2d509b04c66ee209b5ec0a5c508accbf77eabb99454b0ca",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "1/2",
+        "rate": "-2/3"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_observed_source_status": "CERTIFIED",
+      "historical_spans": [
+        [
+          "PB00701_V27_EXACT_RATIONAL_PHASE_SECTOR_PARTITION_COMPOSITION",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "PB00701_V27_EXACT_RATIONAL_PHASE_SECTOR_PARTITION_COMPOSITION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "registered_evidence_level": "COMPLETE_SOURCE_SPECIFIC",
+      "evidence": {
+        "producer": "trig_fixed",
+        "producer_code": "pb00701_pinned_trig_child_views.py",
+        "producer_git_blob": "c4a4d865226d01858d93685aa770987b14460e0b",
+        "level": "COMPLETE_SOURCE_SPECIFIC",
+        "scope": "COMPLETE_FINITE_SOURCE_ZERO_SET",
+        "covered_original_source_interval": [
+          "0",
+          "2"
+        ],
+        "replayed_result_sha256": "e416e58b1c45303fe040df240ee315926479ac908a14f580bff16cc3743dca0b",
+        "source_sha256": "bdefb90689be6c6e29ffcd77611c40add0ee7d05099e94e3916174b6f74048dd",
+        "complete_original_source_zero_set": true
+      },
+      "remaining_requirement": "Selected source-specific zero-set proof exists; historical route and general PB-007 obligations remain unchanged.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V27_EXACT_RATIONAL_PHASE_SECTOR_PARTITION_COMPOSITION:tail100",
+      "origin": "verify_pb00701_v27",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "64b130ec50dbe5ae8a8eb2d2335c4a08d2c652f7e458b0bb88ff2b941603a23a",
+      "original_row_sha256": "a76882b242c1ff03924ea96aa4290ade41b6dc9d6599c0bec06a537eb5c02260",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "1/2",
+        "rate": "-2/3"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_observed_source_status": "CERTIFIED",
+      "historical_spans": [
+        [
+          "PB00701_V27_EXACT_RATIONAL_PHASE_SECTOR_PARTITION_COMPOSITION",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "PB00701_V19_EXACT_MULTI_HARMONIC_MONOTONE_ANCHOR",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "registered_evidence_level": "COMPLETE_SOURCE_SPECIFIC",
+      "evidence": {
+        "producer": "trig_fixed",
+        "producer_code": "pb00701_pinned_trig_child_views.py",
+        "producer_git_blob": "c4a4d865226d01858d93685aa770987b14460e0b",
+        "level": "COMPLETE_SOURCE_SPECIFIC",
+        "scope": "COMPLETE_FINITE_SOURCE_ZERO_SET",
+        "covered_original_source_interval": [
+          "0",
+          "2"
+        ],
+        "replayed_result_sha256": "fc81fc620fb808ec467d5d182240b6540bb3a7eac87c7a039570236692ac9a12",
+        "source_sha256": "64b130ec50dbe5ae8a8eb2d2335c4a08d2c652f7e458b0bb88ff2b941603a23a",
+        "complete_original_source_zero_set": true
+      },
+      "remaining_requirement": "Selected source-specific zero-set proof exists; historical route and general PB-007 obligations remain unchanged.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V28_EXACT_ALGEBRAIC_RATIONAL_TURN_PHASE_CELL_PROJECTION:tail0",
+      "origin": "verify_pb00701_v28",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "7f2984f588215067297eeabe4f5b6c57d993c3ce2c33374e551982ed43de3093",
+      "original_row_sha256": "4bb9b1fd7c9b5e6ae47c3f52cfd1eb6374136c4621ba3220d44b2456c1a0964a",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/12"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_observed_source_status": "CERTIFIED",
+      "historical_spans": [
+        [
+          "PB00701_V28_EXACT_ALGEBRAIC_RATIONAL_TURN_PHASE_CELL_PROJECTION",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "registered_evidence_level": "PARTIAL_ORDERED_CHILD",
+      "evidence": {
+        "producer": "v6_ordered",
+        "producer_code": "verify_pb00701_v6_source_order.py",
+        "producer_git_blob": "6b1e24513146f1cdf1edc2922bc1222dde1efce0",
+        "level": "PARTIAL_ORDERED_CHILD",
+        "scope": "ONE_SOURCE_BOUND_V6_ORDERED_CHILD_ONLY",
+        "covered_original_source_interval": [
+          "1",
+          "2"
+        ],
+        "replayed_result_sha256": "55254b7b4745c37f46052a4255b3d9b1cc21e037b94ae859d24ebac2846009a1",
+        "source_sha256": "7f2984f588215067297eeabe4f5b6c57d993c3ce2c33374e551982ed43de3093",
+        "complete_original_source_zero_set": false
+      },
+      "remaining_requirement": "Only one V6 child has a checked ordered view; the other original span and cross-owner source-knot composition are not supplied by this registered evidence.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V29_EXACT_5_12_13_NESTED_ALGEBRAIC_PHASE_CELL_PROJECTION:tail0",
+      "origin": "verify_pb00701_v29",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "ea2259d594a90d9523a46250e5ed8023dd081a3bf283bf8c2b410f0b18cfa25a",
+      "original_row_sha256": "7312b290c7d1246f15cefe92b5d1694b6dcac5f6143b2dfd270b7cd1920f64a2",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/16"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_observed_source_status": "CERTIFIED",
+      "historical_spans": [
+        [
+          "PB00701_V29_EXACT_5_12_13_NESTED_ALGEBRAIC_PHASE_CELL_PROJECTION",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "registered_evidence_level": "PARTIAL_ORDERED_CHILD",
+      "evidence": {
+        "producer": "v6_ordered",
+        "producer_code": "verify_pb00701_v6_source_order.py",
+        "producer_git_blob": "6b1e24513146f1cdf1edc2922bc1222dde1efce0",
+        "level": "PARTIAL_ORDERED_CHILD",
+        "scope": "ONE_SOURCE_BOUND_V6_ORDERED_CHILD_ONLY",
+        "covered_original_source_interval": [
+          "1",
+          "2"
+        ],
+        "replayed_result_sha256": "04b324cf7c944bb80e921ea801d0353f7363095f9c292508c20a214b5c4d57c5",
+        "source_sha256": "ea2259d594a90d9523a46250e5ed8023dd081a3bf283bf8c2b410f0b18cfa25a",
+        "complete_original_source_zero_set": false
+      },
+      "remaining_requirement": "Only one V6 child has a checked ordered view; the other original span and cross-owner source-knot composition are not supplied by this registered evidence.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V30_EXACT_SOURCE_ADAPTIVE_PROJECTIVE_RATIONAL_SEPARATOR:tail0",
+      "origin": "verify_pb00701_v30",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "7e637ad3528fa5d55ae7cdd9aee3b3d8f2716d089203896a24d80a823f1e969d",
+      "original_row_sha256": "b3df7d07a1386f1e0b64c611d67def143692b95ef10da6a8c6b104ce83a9e1d0",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/16"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_observed_source_status": "CERTIFIED",
+      "historical_spans": [
+        [
+          "PB00701_V30_EXACT_SOURCE_ADAPTIVE_PROJECTIVE_RATIONAL_SEPARATOR",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "registered_evidence_level": "PARTIAL_ORDERED_CHILD",
+      "evidence": {
+        "producer": "v6_ordered",
+        "producer_code": "verify_pb00701_v6_source_order.py",
+        "producer_git_blob": "6b1e24513146f1cdf1edc2922bc1222dde1efce0",
+        "level": "PARTIAL_ORDERED_CHILD",
+        "scope": "ONE_SOURCE_BOUND_V6_ORDERED_CHILD_ONLY",
+        "covered_original_source_interval": [
+          "1",
+          "2"
+        ],
+        "replayed_result_sha256": "e0946b1bce7195294314bde47aa619640ff171c623737d1c698b4707b1042505",
+        "source_sha256": "7e637ad3528fa5d55ae7cdd9aee3b3d8f2716d089203896a24d80a823f1e969d",
+        "complete_original_source_zero_set": false
+      },
+      "remaining_requirement": "Only one V6 child has a checked ordered view; the other original span and cross-owner source-knot composition are not supplied by this registered evidence.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V34_EXACT_PHASE_CORRELATED_COMMON_FACTOR:tail0",
+      "origin": "verify_pb00701_v34",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "404a68c1f2624abb29b700250807b43c466cab18c049c8e78a1049ce5fee10da",
+      "original_row_sha256": "5437a61eaf745a9c5ef5f4405934815db26d147c9d3524a8db66a1146e7d298a",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "-3/16",
+        "rate": "1/48"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_observed_source_status": "CERTIFIED",
+      "historical_spans": [
+        [
+          "PB00701_V34_EXACT_PHASE_CORRELATED_COMMON_FACTOR",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "registered_evidence_level": "PARTIAL_ORDERED_CHILD",
+      "evidence": {
+        "producer": "v6_ordered",
+        "producer_code": "verify_pb00701_v6_source_order.py",
+        "producer_git_blob": "6b1e24513146f1cdf1edc2922bc1222dde1efce0",
+        "level": "PARTIAL_ORDERED_CHILD",
+        "scope": "ONE_SOURCE_BOUND_V6_ORDERED_CHILD_ONLY",
+        "covered_original_source_interval": [
+          "1",
+          "2"
+        ],
+        "replayed_result_sha256": "a227bc0d02a5869d52bafcedcaced180acb5f0b780fe53aa7861af5f84edf79b",
+        "source_sha256": "404a68c1f2624abb29b700250807b43c466cab18c049c8e78a1049ce5fee10da",
+        "complete_original_source_zero_set": false
+      },
+      "remaining_requirement": "Only one V6 child has a checked ordered view; the other original span and cross-owner source-knot composition are not supplied by this registered evidence.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V35_EXACT_PHASE_CORRELATED_PROPORTIONAL_COMMON_FACTOR:tail0",
+      "origin": "verify_pb00701_v35",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "6e7d4ae0dcd4303243772ec7cb1914c590ed91b6b5b27af5262f24ee8e493f19",
+      "original_row_sha256": "0caac73bf90d76a5c83f1faa60c2122959a1ad3109e53318c3e975505db1830d",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "-3/16",
+        "rate": "1/48"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_observed_source_status": "CERTIFIED",
+      "historical_spans": [
+        [
+          "PB00701_V35_EXACT_PHASE_CORRELATED_PROPORTIONAL_COMMON_FACTOR",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "registered_evidence_level": "PARTIAL_ORDERED_CHILD",
+      "evidence": {
+        "producer": "v6_ordered",
+        "producer_code": "verify_pb00701_v6_source_order.py",
+        "producer_git_blob": "6b1e24513146f1cdf1edc2922bc1222dde1efce0",
+        "level": "PARTIAL_ORDERED_CHILD",
+        "scope": "ONE_SOURCE_BOUND_V6_ORDERED_CHILD_ONLY",
+        "covered_original_source_interval": [
+          "1",
+          "2"
+        ],
+        "replayed_result_sha256": "043d58e086d48bb152a073b52cc62c6287834076db0b934a6deb459aedf99f39",
+        "source_sha256": "6e7d4ae0dcd4303243772ec7cb1914c590ed91b6b5b27af5262f24ee8e493f19",
+        "complete_original_source_zero_set": false
+      },
+      "remaining_requirement": "Only one V6 child has a checked ordered view; the other original span and cross-owner source-knot composition are not supplied by this registered evidence.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V36_EXACT_PHASE_CORRELATED_VARYING_RATIO_SHARED_FACTOR:tail0",
+      "origin": "verify_pb00701_v36",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "78cb3259190ca810d825690303e33b69f7a63f6ca7bc4fba7d705e470a90695f",
+      "original_row_sha256": "2a7abe39076a67f824b394913e225054168c7a5e4d8e35cd2fa36a8618b8a2e8",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "-3/16",
+        "rate": "1/48"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_observed_source_status": "CERTIFIED",
+      "historical_spans": [
+        [
+          "PB00701_V36_EXACT_PHASE_CORRELATED_VARYING_RATIO_SHARED_FACTOR",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "registered_evidence_level": "PARTIAL_ORDERED_CHILD",
+      "evidence": {
+        "producer": "v6_ordered",
+        "producer_code": "verify_pb00701_v6_source_order.py",
+        "producer_git_blob": "6b1e24513146f1cdf1edc2922bc1222dde1efce0",
+        "level": "PARTIAL_ORDERED_CHILD",
+        "scope": "ONE_SOURCE_BOUND_V6_ORDERED_CHILD_ONLY",
+        "covered_original_source_interval": [
+          "1",
+          "2"
+        ],
+        "replayed_result_sha256": "3ba428f5cdea543f8738325e4251819921a47794ff9375ef002f9ea11de69406",
+        "source_sha256": "78cb3259190ca810d825690303e33b69f7a63f6ca7bc4fba7d705e470a90695f",
+        "complete_original_source_zero_set": false
+      },
+      "remaining_requirement": "Only one V6 child has a checked ordered view; the other original span and cross-owner source-knot composition are not supplied by this registered evidence.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V37_EXACT_PHASE_CORRELATED_TWO_POLYNOMIAL_SHARED_FACTOR:tail0",
+      "origin": "verify_pb00701_v37",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "cde19c3ac184e59bf8914f130c3e9b1a988b529467e39bc6b8493764a0feb0fa",
+      "original_row_sha256": "a9d612e237f7277daa3d85f4218fc774cdf391a1761da33e1eb980bf4a35f286",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "-3/16",
+        "rate": "1/8"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_observed_source_status": "CERTIFIED",
+      "historical_spans": [
+        [
+          "PB00701_V37_EXACT_PHASE_CORRELATED_TWO_POLYNOMIAL_SHARED_FACTOR",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "registered_evidence_level": "PARTIAL_ORDERED_CHILD",
+      "evidence": {
+        "producer": "v6_ordered",
+        "producer_code": "verify_pb00701_v6_source_order.py",
+        "producer_git_blob": "6b1e24513146f1cdf1edc2922bc1222dde1efce0",
+        "level": "PARTIAL_ORDERED_CHILD",
+        "scope": "ONE_SOURCE_BOUND_V6_ORDERED_CHILD_ONLY",
+        "covered_original_source_interval": [
+          "1",
+          "2"
+        ],
+        "replayed_result_sha256": "80971facdd8c1d2aaffcea8a990c5bd5ec0fa8e361b1fdfdbb5d9faea9036851",
+        "source_sha256": "cde19c3ac184e59bf8914f130c3e9b1a988b529467e39bc6b8493764a0feb0fa",
+        "complete_original_source_zero_set": false
+      },
+      "remaining_requirement": "Only one V6 child has a checked ordered view; the other original span and cross-owner source-knot composition are not supplied by this registered evidence.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V38_EXACT_DIRECT_ROTATED_COORDINATE_TWO_QUADRATURE:tail0",
+      "origin": "verify_pb00701_v38",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "9b7429ae290de259b2990b39740f40495c02b407e4e906e7eece77ea65c43f03",
+      "original_row_sha256": "a8d5801d40c97979d8a49124ddb286c59be91b41bb0cf52c9047e60163e12982",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "-3/16",
+        "rate": "1/48"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_observed_source_status": "CERTIFIED",
+      "historical_spans": [
+        [
+          "PB00701_V38_EXACT_DIRECT_ROTATED_COORDINATE_TWO_QUADRATURE",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "registered_evidence_level": "PARTIAL_ORDERED_CHILD",
+      "evidence": {
+        "producer": "v6_ordered",
+        "producer_code": "verify_pb00701_v6_source_order.py",
+        "producer_git_blob": "6b1e24513146f1cdf1edc2922bc1222dde1efce0",
+        "level": "PARTIAL_ORDERED_CHILD",
+        "scope": "ONE_SOURCE_BOUND_V6_ORDERED_CHILD_ONLY",
+        "covered_original_source_interval": [
+          "1",
+          "2"
+        ],
+        "replayed_result_sha256": "0ff5a76a070d736468b9c529b65202ea3e0c209f8869d5b5f3e4962ad7609206",
+        "source_sha256": "9b7429ae290de259b2990b39740f40495c02b407e4e906e7eece77ea65c43f03",
+        "complete_original_source_zero_set": false
+      },
+      "remaining_requirement": "Only one V6 child has a checked ordered view; the other original span and cross-owner source-knot composition are not supplied by this registered evidence.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V39_EXACT_SIGNED_A_DIRECT_ROTATED_COORDINATE:tail0",
+      "origin": "verify_pb00701_v39",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "daeafb37dd81d27fbba1c97dd09b14767531e37046237449aab3eaa9adfc1061",
+      "original_row_sha256": "7a5ae576818a753fb0b0afb1f09058b58b468da8fc884f528166c05bf1c0b176",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "-3/16",
+        "rate": "1/48"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_observed_source_status": "CERTIFIED",
+      "historical_spans": [
+        [
+          "PB00701_V39_EXACT_SIGNED_A_DIRECT_ROTATED_COORDINATE",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "registered_evidence_level": "PARTIAL_ORDERED_CHILD",
+      "evidence": {
+        "producer": "v6_ordered",
+        "producer_code": "verify_pb00701_v6_source_order.py",
+        "producer_git_blob": "6b1e24513146f1cdf1edc2922bc1222dde1efce0",
+        "level": "PARTIAL_ORDERED_CHILD",
+        "scope": "ONE_SOURCE_BOUND_V6_ORDERED_CHILD_ONLY",
+        "covered_original_source_interval": [
+          "1",
+          "2"
+        ],
+        "replayed_result_sha256": "0da71707254d503a8a49a6decf4244dc007aef649715f19803fab3af80cc2d2a",
+        "source_sha256": "daeafb37dd81d27fbba1c97dd09b14767531e37046237449aab3eaa9adfc1061",
+        "complete_original_source_zero_set": false
+      },
+      "remaining_requirement": "Only one V6 child has a checked ordered view; the other original span and cross-owner source-knot composition are not supplied by this registered evidence.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V40_EXACT_SIGNED_B_ANTI_DIAGONAL_DIRECT_ROTATED_COORDINATE:tail0",
+      "origin": "verify_pb00701_v40",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "90a5df370094bcd8cef37be171f9bb12264c15a32237300b5435dc8871c6c2bf",
+      "original_row_sha256": "8291b11b51d2109451ba852185bf6d9504c9d7e46473bf01be5924508ded5fad",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "1/16",
+        "rate": "1/8"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_observed_source_status": "CERTIFIED",
+      "historical_spans": [
+        [
+          "PB00701_V40_EXACT_SIGNED_B_ANTI_DIAGONAL_DIRECT_ROTATED_COORDINATE",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "registered_evidence_level": "PARTIAL_ORDERED_CHILD",
+      "evidence": {
+        "producer": "v6_ordered",
+        "producer_code": "verify_pb00701_v6_source_order.py",
+        "producer_git_blob": "6b1e24513146f1cdf1edc2922bc1222dde1efce0",
+        "level": "PARTIAL_ORDERED_CHILD",
+        "scope": "ONE_SOURCE_BOUND_V6_ORDERED_CHILD_ONLY",
+        "covered_original_source_interval": [
+          "1",
+          "2"
+        ],
+        "replayed_result_sha256": "bf420fcdabbf2398bee1cccb907627b6fefdd73be854645746782b18143a8ef6",
+        "source_sha256": "90a5df370094bcd8cef37be171f9bb12264c15a32237300b5435dc8871c6c2bf",
+        "complete_original_source_zero_set": false
+      },
+      "remaining_requirement": "Only one V6 child has a checked ordered view; the other original span and cross-owner source-knot composition are not supplied by this registered evidence.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V42_EXACT_ROTATED_COORDINATE_ORIENTATION_TRANSITION_BRIDGE:tail0",
+      "origin": "verify_pb00701_v50",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "95a977a9d300218fa2bd45cd54b752f2bb976b3c73c934d3c1aa715a25d6faed",
+      "original_row_sha256": "c0e0cea514ac59ef80d492b8feb255efd2a7883926a8f95ff9ddb9e472901b97",
+      "source_parameter_id": "preserved-carrier",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "-1/8",
+        "rate": "1/24"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_observed_source_status": "CERTIFIED",
+      "historical_spans": [
+        [
+          "PB00701_V42_EXACT_ROTATED_COORDINATE_ORIENTATION_TRANSITION_BRIDGE",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "registered_evidence_level": "PARTIAL_ORDERED_CHILD",
+      "evidence": {
+        "producer": "v6_ordered",
+        "producer_code": "verify_pb00701_v6_source_order.py",
+        "producer_git_blob": "6b1e24513146f1cdf1edc2922bc1222dde1efce0",
+        "level": "PARTIAL_ORDERED_CHILD",
+        "scope": "ONE_SOURCE_BOUND_V6_ORDERED_CHILD_ONLY",
+        "covered_original_source_interval": [
+          "1",
+          "2"
+        ],
+        "replayed_result_sha256": "edcd9c354176bd4e1ee1a5e636834fe3873c4745a2abd287db3065a1da1c1703",
+        "source_sha256": "95a977a9d300218fa2bd45cd54b752f2bb976b3c73c934d3c1aa715a25d6faed",
+        "complete_original_source_zero_set": false
+      },
+      "remaining_requirement": "Only one V6 child has a checked ordered view; the other original span and cross-owner source-knot composition are not supplied by this registered evidence.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF:tail0",
+      "origin": "verify_pb00701_v41",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "28cd4b4be4c74e6404b1a307d2217b2dc5a8b708b28c5ad75309c35e48092efd",
+      "original_row_sha256": "98057a188fdf320d0238600f3b8a4c10dcb60f9a569010b44cda06a32970a9c4",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "-1/16",
+        "rate": "-1/48"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_observed_source_status": "CERTIFIED",
+      "historical_spans": [
+        [
+          "PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "registered_evidence_level": "PARTIAL_ORDERED_CHILD",
+      "evidence": {
+        "producer": "v6_ordered",
+        "producer_code": "verify_pb00701_v6_source_order.py",
+        "producer_git_blob": "6b1e24513146f1cdf1edc2922bc1222dde1efce0",
+        "level": "PARTIAL_ORDERED_CHILD",
+        "scope": "ONE_SOURCE_BOUND_V6_ORDERED_CHILD_ONLY",
+        "covered_original_source_interval": [
+          "1",
+          "2"
+        ],
+        "replayed_result_sha256": "1fb2ef563bf6b5e97c72cf3f094b7e8daee61d3cc38357646586806d1ada9e94",
+        "source_sha256": "28cd4b4be4c74e6404b1a307d2217b2dc5a8b708b28c5ad75309c35e48092efd",
+        "complete_original_source_zero_set": false
+      },
+      "remaining_requirement": "Only one V6 child has a checked ordered view; the other original span and cross-owner source-knot composition are not supplied by this registered evidence.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V48_MIXED_ROOT_SINGLE_CUT:tail0",
+      "origin": "verify_pb00701_v53",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "0435a131c257bb5d453932f3692a45f787f83c9cc073fb38c879570f1f60ebfd",
+      "original_row_sha256": "90bee5b127f42eca93118f3b5effdb46f305824271cb703e9d990ffa8d956058",
+      "source_parameter_id": "v53-strict-48",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "-1/8",
+        "rate": "1/16"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_observed_source_status": "CERTIFIED",
+      "historical_spans": [
+        [
+          "PB00701_V48_MIXED_ROOT_SINGLE_CUT",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "registered_evidence_level": "PARTIAL_ORDERED_CHILD",
+      "evidence": {
+        "producer": "v6_ordered",
+        "producer_code": "verify_pb00701_v6_source_order.py",
+        "producer_git_blob": "6b1e24513146f1cdf1edc2922bc1222dde1efce0",
+        "level": "PARTIAL_ORDERED_CHILD",
+        "scope": "ONE_SOURCE_BOUND_V6_ORDERED_CHILD_ONLY",
+        "covered_original_source_interval": [
+          "1",
+          "2"
+        ],
+        "replayed_result_sha256": "2ebac7d2445fb7a8c768d7c80a9fbc307fdf067f9b3922cc8168d81194d23056",
+        "source_sha256": "0435a131c257bb5d453932f3692a45f787f83c9cc073fb38c879570f1f60ebfd",
+        "complete_original_source_zero_set": false
+      },
+      "remaining_requirement": "Only one V6 child has a checked ordered view; the other original span and cross-owner source-knot composition are not supplied by this registered evidence.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V8_EXACT_COMMON_FACTOR_REDUCTION:tail0",
+      "origin": "verify_pb00701_v8",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "9abbed355812241cdef20f3ce3b3522619bdd682c3a73fb01828d8f95c72f0af",
+      "original_row_sha256": "2a26a89bcce4070571f41cf377697fc6f258c4c9e04819c14096103f720861cf",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "-1/4",
+        "rate": "1/2"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED",
+      "historical_observed_source_status": "BLOCKED",
+      "historical_spans": [
+        [
+          "PB00701_V8_EXACT_COMMON_FACTOR_REDUCTION",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "PB00701_V27_EXACT_RATIONAL_PHASE_SECTOR_PARTITION_COMPOSITION",
+          "BLOCKED",
+          "V27_CHILD_NOT_CERTIFIED"
+        ]
+      ],
+      "registered_evidence_level": "COMPLETE_SOURCE_SPECIFIC",
+      "evidence": {
+        "producer": "five",
+        "producer_code": "pb00701_five_source_evidence_replay.py",
+        "producer_git_blob": "a8aedb83772984831d5aa5c3b9b8d1cead04c345",
+        "level": "COMPLETE_SOURCE_SPECIFIC",
+        "scope": "COMPLETE_FINITE_SOURCE_ZERO_SET",
+        "covered_original_source_interval": [
+          "0",
+          "2"
+        ],
+        "replayed_result_sha256": "23a6b5058b4195f15fb0896a592e68c7fc45f78764dec1d3caba53401e217a5e",
+        "source_sha256": "9abbed355812241cdef20f3ce3b3522619bdd682c3a73fb01828d8f95c72f0af",
+        "complete_original_source_zero_set": true
+      },
+      "remaining_requirement": "Selected source-specific zero-set proof exists; historical route and general PB-007 obligations remain unchanged.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V8_EXACT_COMMON_FACTOR_REDUCTION:tail100",
+      "origin": "verify_pb00701_v8",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "8e3af5a5e74c3fc3f364607f5c3c4b03cd1adc2e2dd6e16bfc03ddf870de0d2b",
+      "original_row_sha256": "19fe46322a75273920c5bfa1a7874b1d229f74fa43ad1231375aee42fae02c82",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "-1/4",
+        "rate": "1/2"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED",
+      "historical_observed_source_status": "BLOCKED",
+      "historical_spans": [
+        [
+          "PB00701_V8_EXACT_COMMON_FACTOR_REDUCTION",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "PB00701_V27_EXACT_RATIONAL_PHASE_SECTOR_PARTITION_COMPOSITION",
+          "BLOCKED",
+          "V27_CHILD_NOT_CERTIFIED"
+        ]
+      ],
+      "registered_evidence_level": "COMPLETE_SOURCE_SPECIFIC",
+      "evidence": {
+        "producer": "five",
+        "producer_code": "pb00701_five_source_evidence_replay.py",
+        "producer_git_blob": "a8aedb83772984831d5aa5c3b9b8d1cead04c345",
+        "level": "COMPLETE_SOURCE_SPECIFIC",
+        "scope": "COMPLETE_FINITE_SOURCE_ZERO_SET",
+        "covered_original_source_interval": [
+          "0",
+          "2"
+        ],
+        "replayed_result_sha256": "8ec9f756d5a5cfd926a9123eec279308c4db75da701c3fe418f6c87a8131a172",
+        "source_sha256": "8e3af5a5e74c3fc3f364607f5c3c4b03cd1adc2e2dd6e16bfc03ddf870de0d2b",
+        "complete_original_source_zero_set": true
+      },
+      "remaining_requirement": "Selected source-specific zero-set proof exists; historical route and general PB-007 obligations remain unchanged.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V9_EXACT_MONOTONE_SINGLE_HARMONIC_RATIO:tail0",
+      "origin": "verify_pb00701_v10",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "4d1ef1cbecceeb4a43b4e30fd37327fa204164cc9ce25dfe4f1744a052cebcc2",
+      "original_row_sha256": "406ec73609a8213051afd3361478416e496c782b2b89ae2a857b772146059279",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/8"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_observed_source_status": "CERTIFIED",
+      "historical_spans": [
+        [
+          "PB00701_V9_EXACT_MONOTONE_SINGLE_HARMONIC_RATIO",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "registered_evidence_level": "PARTIAL_ORDERED_CHILD",
+      "evidence": {
+        "producer": "v6_ordered",
+        "producer_code": "verify_pb00701_v6_source_order.py",
+        "producer_git_blob": "6b1e24513146f1cdf1edc2922bc1222dde1efce0",
+        "level": "PARTIAL_ORDERED_CHILD",
+        "scope": "ONE_SOURCE_BOUND_V6_ORDERED_CHILD_ONLY",
+        "covered_original_source_interval": [
+          "1",
+          "2"
+        ],
+        "replayed_result_sha256": "77b9283d33964b268bcd3ea0b355000d87878b6f46fa3f864404af01ebe65593",
+        "source_sha256": "4d1ef1cbecceeb4a43b4e30fd37327fa204164cc9ce25dfe4f1744a052cebcc2",
+        "complete_original_source_zero_set": false
+      },
+      "remaining_requirement": "Only one V6 child has a checked ordered view; the other original span and cross-owner source-knot composition are not supplied by this registered evidence.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V9_EXACT_MONOTONE_SINGLE_HARMONIC_RATIO:tail100",
+      "origin": "verify_pb00701_v10",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "cc13a39582060e763c573f2665b3ea3b6dfe8b76a6cb0fb77a7b0ec90cf6253a",
+      "original_row_sha256": "6e122da708ff0c68a339e0bfa5daba1e5321cb79e15af9e27b63712fb1348b63",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/8"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED",
+      "historical_observed_source_status": "BLOCKED",
+      "historical_spans": [
+        [
+          "PB00701_V9_EXACT_MONOTONE_SINGLE_HARMONIC_RATIO",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF",
+          "BLOCKED",
+          "CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED"
+        ]
+      ],
+      "registered_evidence_level": "COMPLETE_SOURCE_SPECIFIC",
+      "evidence": {
+        "producer": "five",
+        "producer_code": "pb00701_five_source_evidence_replay.py",
+        "producer_git_blob": "a8aedb83772984831d5aa5c3b9b8d1cead04c345",
+        "level": "COMPLETE_SOURCE_SPECIFIC",
+        "scope": "COMPLETE_FINITE_SOURCE_ZERO_SET",
+        "covered_original_source_interval": [
+          "0",
+          "2"
+        ],
+        "replayed_result_sha256": "525dbcf4e552c8c5293c86c78ca05436fb8bc03395fb5fbbcd4b77d757e66056",
+        "source_sha256": "cc13a39582060e763c573f2665b3ea3b6dfe8b76a6cb0fb77a7b0ec90cf6253a",
+        "complete_original_source_zero_set": true
+      },
+      "remaining_requirement": "Selected source-specific zero-set proof exists; historical route and general PB-007 obligations remain unchanged.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v13:c426f65b5c10",
+      "origin": "verify_pb00701_v13",
+      "provenance_kind": "HARVESTED",
+      "source_sha256": "e8425a4701f74195d99b91ea345663dbe4bc4d8b69b09dac426370e3ddcd1111",
+      "original_row_sha256": "13097451121a66ee0440091a422bb4845907e7a6fa175d011ca08ae3966fea07",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "1"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/4"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1"
+      ],
+      "historical_v54_disposition": "BLOCKED",
+      "historical_observed_source_status": "BLOCKED",
+      "historical_spans": [
+        [
+          "PB00701_V41_EXACT_ROTATED_COORDINATE_ORIENTATION_ROOT_PARTITION_COMPOSITION",
+          "BLOCKED",
+          "V41_COMPLETE_V43_CHILD_NOT_COMPOSABLE"
+        ]
+      ],
+      "registered_evidence_level": "COMPLETE_SOURCE_SPECIFIC",
+      "evidence": {
+        "producer": "trig_fixed",
+        "producer_code": "pb00701_pinned_trig_child_views.py",
+        "producer_git_blob": "c4a4d865226d01858d93685aa770987b14460e0b",
+        "level": "COMPLETE_SOURCE_SPECIFIC",
+        "scope": "COMPLETE_FINITE_SOURCE_ZERO_SET",
+        "covered_original_source_interval": [
+          "0",
+          "1"
+        ],
+        "replayed_result_sha256": "ab61f1dcaa42fe10d8e3341a74e4aa3e3366b248df3b8ee8d26d3cb670ae9019",
+        "source_sha256": "e8425a4701f74195d99b91ea345663dbe4bc4d8b69b09dac426370e3ddcd1111",
+        "complete_original_source_zero_set": true
+      },
+      "remaining_requirement": "Selected source-specific zero-set proof exists; historical route and general PB-007 obligations remain unchanged.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v44:ffaea08e30c9",
+      "origin": "verify_pb00701_v44",
+      "provenance_kind": "HARVESTED",
+      "source_sha256": "d3b3a90024ea283dfd96811b8fc2b66ceff621b3b48defc44c77f85557adbba2",
+      "original_row_sha256": "7423adadf8c52ff28d47d9f63effbc5a2a7a630bdaf7efe6f8eeb1d2a85c5600",
+      "source_parameter_id": "pb00701-v44-algebraic-orientation",
+      "source_interval": [
+        "0",
+        "1"
+      ],
+      "phase_turn_law": {
+        "offset": "-1/8",
+        "rate": "1/16"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1"
+      ],
+      "historical_v54_disposition": "BLOCKED",
+      "historical_observed_source_status": "BLOCKED",
+      "historical_spans": [
+        [
+          "PB00701_V44_EXACT_REAL_ALGEBRAIC_ORIENTATION_CUT_BOUNDARY",
+          "BLOCKED",
+          "ALGEBRAIC_ORIENTATION_COORDINATE_CERTIFIED_BUT_EXACT_CONSUMPTION_AUTHORITY_MISSING"
+        ]
+      ],
+      "registered_evidence_level": "COMPLETE_SOURCE_SPECIFIC",
+      "evidence": {
+        "producer": "v44",
+        "producer_code": "pb00701_v44_algebraic_cut_root_partition.py",
+        "producer_git_blob": "5d38a42fd8e23dc7930788e2b0c080caf567e851",
+        "level": "COMPLETE_SOURCE_SPECIFIC",
+        "scope": "COMPLETE_FINITE_SOURCE_ZERO_SET",
+        "covered_original_source_interval": [
+          "0",
+          "1"
+        ],
+        "replayed_result_sha256": "1a0a97f0723086e52787fddf60298a272139eae814d3c4259a377a76f8cfbe54",
+        "source_sha256": "d3b3a90024ea283dfd96811b8fc2b66ceff621b3b48defc44c77f85557adbba2",
+        "complete_original_source_zero_set": true
+      },
+      "remaining_requirement": "Selected source-specific zero-set proof exists; historical route and general PB-007 obligations remain unchanged.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v52:2250401ce435",
+      "origin": "verify_pb00701_v52",
+      "provenance_kind": "HARVESTED",
+      "source_sha256": "4a3ee3f47b9347429c13830abef382301c7963b0af518f0977390c2d3ffba040",
+      "original_row_sha256": "545b621c525b85657edfe2191981406f82d5e00a8a0ea11316004e6e466bc153",
+      "source_parameter_id": "v52-original-source",
+      "source_interval": [
+        "0",
+        "1"
+      ],
+      "phase_turn_law": {
+        "offset": "1/4",
+        "rate": "-1/24"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1"
+      ],
+      "historical_v54_disposition": "BLOCKED",
+      "historical_observed_source_status": "BLOCKED",
+      "historical_spans": [
+        [
+          "PB00701_V23_EXACT_NONCONSTANT_AMPLITUDE_PHASE_SECTOR_ANCHOR",
+          "BLOCKED",
+          "NONCONSTANT_AMPLITUDE_PHASE_DEPENDENT_ANCHOR_NOT_CERTIFIED"
+        ]
+      ],
+      "registered_evidence_level": "COMPLETE_SOURCE_SPECIFIC",
+      "evidence": {
+        "producer": "v23_bernstein",
+        "producer_code": "pb00701_v23_bernstein_source.py",
+        "producer_git_blob": "9b83c4485f8251b0649af6402acc9d777e281a96",
+        "level": "COMPLETE_SOURCE_SPECIFIC",
+        "scope": "COMPLETE_FINITE_SOURCE_ZERO_SET",
+        "covered_original_source_interval": [
+          "0",
+          "1"
+        ],
+        "replayed_result_sha256": "94714694e85918438566f5255961e25f2765ffab1412ed8c44e2f3b569632a93",
+        "source_sha256": "4a3ee3f47b9347429c13830abef382301c7963b0af518f0977390c2d3ffba040",
+        "complete_original_source_zero_set": true
+      },
+      "remaining_requirement": "Selected source-specific zero-set proof exists; historical route and general PB-007 obligations remain unchanged.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v53:cb01c327d5f1",
+      "origin": "verify_pb00701_v53",
+      "provenance_kind": "HARVESTED",
+      "source_sha256": "a02ab8d83473f81d47b20c205083403babfc07059ca82303f1e6c92ab7481423",
+      "original_row_sha256": "8ff7c86adc4803c6c284752a746eeedd517e3053aefbcc33b164912edf92cc7c",
+      "source_parameter_id": "v52-original-source",
+      "source_interval": [
+        "0",
+        "1"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/4"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1"
+      ],
+      "historical_v54_disposition": "BLOCKED",
+      "historical_observed_source_status": "BLOCKED",
+      "historical_spans": [
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "BLOCKED",
+          "TRIGONOMETRIC_IDENTITY_ZERO_REQUIRES_SEPARATE_SEMANTIC_HANDLING"
+        ]
+      ],
+      "registered_evidence_level": "COMPLETE_SOURCE_SPECIFIC",
+      "evidence": {
+        "producer": "continuum",
+        "producer_code": "pb00701_continuum_zero_source.py",
+        "producer_git_blob": "6fff0737c2f7bf8178dd7437c0981f7f3cd50cd0",
+        "level": "COMPLETE_SOURCE_SPECIFIC",
+        "scope": "COMPLETE_CLOSED_CONTINUUM_ZERO_SET",
+        "covered_original_source_interval": [
+          "0",
+          "1"
+        ],
+        "replayed_result_sha256": "a673e6793cadfc810a174bb3ed6fd2fa727553b5e60f162bc207743b3be41e54",
+        "source_sha256": "a02ab8d83473f81d47b20c205083403babfc07059ca82303f1e6c92ab7481423",
+        "complete_original_source_zero_set": true
+      },
+      "remaining_requirement": "Selected source-specific zero-set proof exists; historical route and general PB-007 obligations remain unchanged.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v9:1a5fd052a155",
+      "origin": "verify_pb00701_v9",
+      "provenance_kind": "HARVESTED",
+      "source_sha256": "710259612833cfe40e73ae528e0d0e944a87123c9bb4b3f4f76cef33c45bcf4d",
+      "original_row_sha256": "1e43de38d286e69dcd1295def05c2710878e3232da1d49cfea5c95c69822219f",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "1"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/8"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1"
+      ],
+      "historical_v54_disposition": "BLOCKED",
+      "historical_observed_source_status": "BLOCKED",
+      "historical_spans": [
+        [
+          "PB00701_V27_EXACT_RATIONAL_PHASE_SECTOR_PARTITION_COMPOSITION",
+          "BLOCKED",
+          "V27_CHILD_NOT_CERTIFIED"
+        ]
+      ],
+      "registered_evidence_level": "COMPLETE_SOURCE_SPECIFIC",
+      "evidence": {
+        "producer": "five",
+        "producer_code": "pb00701_five_source_evidence_replay.py",
+        "producer_git_blob": "a8aedb83772984831d5aa5c3b9b8d1cead04c345",
+        "level": "COMPLETE_SOURCE_SPECIFIC",
+        "scope": "COMPLETE_FINITE_SOURCE_ZERO_SET",
+        "covered_original_source_interval": [
+          "0",
+          "1"
+        ],
+        "replayed_result_sha256": "901082bce6f79f628cdbef459d1bd51af3dac9ecd38a30b7cc9f109bb82f16e1",
+        "source_sha256": "710259612833cfe40e73ae528e0d0e944a87123c9bb4b3f4f76cef33c45bcf4d",
+        "complete_original_source_zero_set": true
+      },
+      "remaining_requirement": "Selected source-specific zero-set proof exists; historical route and general PB-007 obligations remain unchanged.",
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v9:4e7b85fa122a",
+      "origin": "verify_pb00701_v9",
+      "provenance_kind": "HARVESTED",
+      "source_sha256": "a83ca0cd16c7822e6525f8f2d2df26a54f45b99807cadebc67f31fc49b066c10",
+      "original_row_sha256": "62346bbddca22c4271a14c10aa130327013ac7cf8daa0b0ae515257e8f28cfad",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "1"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/8"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1"
+      ],
+      "historical_v54_disposition": "BLOCKED",
+      "historical_observed_source_status": "BLOCKED",
+      "historical_spans": [
+        [
+          "PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF",
+          "BLOCKED",
+          "CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED"
+        ]
+      ],
+      "registered_evidence_level": "COMPLETE_SOURCE_SPECIFIC",
+      "evidence": {
+        "producer": "refusal_cone",
+        "producer_code": "verify_pb00701_v43_refusal_cone.py",
+        "producer_git_blob": "2a8079ee2cf012bc2a12794c4c5ff19ebd760007",
+        "level": "COMPLETE_SOURCE_SPECIFIC",
+        "scope": "COMPLETE_STRICT_POSITIVE_SOURCE_ZERO_SET_EMPTY",
+        "covered_original_source_interval": [
+          "0",
+          "1"
+        ],
+        "replayed_result_sha256": "342602d37be95529fd76e9bea86cb4b861d7ecb212a02122c25471576caf573f",
+        "source_sha256": "a83ca0cd16c7822e6525f8f2d2df26a54f45b99807cadebc67f31fc49b066c10",
+        "complete_original_source_zero_set": true
+      },
+      "remaining_requirement": "Selected source-specific zero-set proof exists; historical route and general PB-007 obligations remain unchanged.",
+      "historical_disposition_changed": false
+    }
+  ],
+  "gates": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN",
+    "PB-007-03": "OPEN_PROPAGATED",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "native_geometry_or_STEP_qualified": false,
+    "production_authorized": false,
+    "required_machining_operations": 26
+  }
+}
