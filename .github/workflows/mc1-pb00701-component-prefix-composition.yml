@@ -1,0 +1,62 @@
+name: mc1-pb00701-component-prefix-composition
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/mc1-pb00701-component-prefix-composition.yml'
+      - 'handoffs/current-authority.json'
+      - 'research/machining-completeness/programme-v1.json'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-component-prefix-composition-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-component-prefix-composition.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-coverage-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-inventory-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_component_prefix_composition.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_component_prefix_composition.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v43_refusal_cone.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v43_v12_tail_contrast.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v43_v13_even_factor.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v43_v16_chebyshev_crossing.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v43_v17_positive_turn.py'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/mc1-pb00701-component-prefix-composition.yml'
+      - 'handoffs/current-authority.json'
+      - 'research/machining-completeness/programme-v1.json'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-component-prefix-composition-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-component-prefix-composition.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-coverage-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-inventory-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_component_prefix_composition.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_component_prefix_composition.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v43_refusal_cone.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v43_v12_tail_contrast.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v43_v13_even_factor.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v43_v16_chebyshev_crossing.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v43_v17_positive_turn.py'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Record literal source head
+        run: git rev-parse HEAD
+      - name: Verify five original prefix and tail compositions
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_component_prefix_composition.py --contract --self-test
+      - name: Preserve historical denominator and negative controls
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py --contract --self-test
