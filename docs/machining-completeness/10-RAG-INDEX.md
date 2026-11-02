@@ -39,7 +39,7 @@ The generated `authority-map-v1.json` inventories current and historical Markdow
 
 ## Preserved PB-007-01 v54 recovery packets
 
-Evidence class: **SOURCE / archival preservation**. The complete 2A-R1 packet for [issue #275](https://github.com/techrote/radiCADSAC/issues/275) is retained separately from active implementation. Its source recovery remains **PARTIAL**. The [current implementation state](77-MC038-CURRENT-IMPLEMENTATION-STATE.md) remains the v53 authority; this record supplies no v54 acceptance or programme-gate promotion.
+Evidence class: **SOURCE / archival preservation**. The complete 2A-R1 packet for [issue #275](https://github.com/techrote/radiCADSAC/issues/275) is retained separately from active implementation. Its source recovery remains **PARTIAL**. This recovery record preserves the historical v53-era authority and supplies no v54 acceptance or programme-gate promotion. Follow the [current implementation state](77-MC038-CURRENT-IMPLEMENTATION-STATE.md) for subsequently qualified v54 and post-v54 research; the archival packet is not current execution routing.
 
 | Record | Immutable location | Meaning |
 |---|---|---|

@@ -1,12 +1,21 @@
 # MC-038 / PB-007 current implementation state
 
-Status date: **27 October 2026**.  
-Authoritative implementation `main` at reconciliation: `c25e15aa0af74e490393327cf1b5474bddceb4af`.  
-Programme capability: **MC-B NOT_ESTABLISHED; MC-1 NOT_ESTABLISHED**.  
-Primary gate tracker: [MC-038 / #100](https://github.com/techrote/radiCADSAC/issues/100).  
-Latest verified bounded PB-007-01 implementation: [v54 / #275](https://github.com/techrote/radiCADSAC/issues/275), squash-landed through [PR #277](https://github.com/techrote/radiCADSAC/pull/277) after source-bound independent owner-attested review. No successor PB-007-01 child has been selected.
+Status date: **2 November 2026**.
 
-This document is the **navigation and current-state ledger** for the active MC-038 constructive-proof work. It does not replace historical reports, proof artifacts, issue acceptance ledgers, or gate authority. Closed PB-007-01 child issues establish bounded results only; they do not close PB-007-01 globally.
+Qualified research source snapshot: `4eec599abe89041751ba7cb816a63585a59b31b9`.
+
+Programme capability: **MC-B NOT_ESTABLISHED; MC-1 NOT_ESTABLISHED**.
+
+Primary gate tracker: [MC-038 / #100](https://github.com/techrote/radiCADSAC/issues/100).
+
+Latest qualified research: [V23 source proof, PR #334](https://github.com/techrote/radiCADSAC/pull/334) and [registered 50-case evidence reconciliation, PR #335](https://github.com/techrote/radiCADSAC/pull/335). The last versioned historical-owner adapter remains **v54 / PR #277**; later source-specific proofs do not relabel that frozen implementation.
+
+This is navigation and qualified research evidence, not gate authority. The
+machine-readable current snapshot is
+[`current-implementation-state-v2.json`](../../research/machining-completeness/tasks/MC-038/current-implementation-state-v2.json).
+The [27 October v1 snapshot](../../research/machining-completeness/tasks/MC-038/current-implementation-state-v1.json)
+is preserved unchanged as historical navigation. A closed research PR or a
+complete source-specific mathematical witness does not close PB-007 globally.
 
 ## Current gate state
 
@@ -23,9 +32,97 @@ This document is the **navigation and current-state ledger** for the active MC-0
 
 The historical MC-038 `report.md` and `outcome.json` remain correct as the frozen gate-review decision. Their broad PB-007-01 wording predates the bounded implementations below. Read this document for the **current implementation frontier**, and read the historical files for the original gate-review evidence and blocker classification.
 
-## PB-007-01 implementation progression
+## Current registered source-evidence reconciliation
 
-Earlier v3–v40 evidence remains preserved under the existing versioned reports, models, verifiers and RAG documents. The current repair chain from v41 onward is:
+The [executable reconciliation](../../research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation-research.md)
+enumerates **all 50 historically unresolved original source IDs** and reexecutes
+16 pinned registered producers for the evidence attached to those IDs. Each row
+binds the original source/row hashes,
+parameter, phase, source-piece edges, historical owner/refusal and the actual
+proved interval. The historical V54 census is unchanged: **121 sources, 20
+route refusals, 30 missing ordered premises**.
+
+| Registered evidence for the original whole source | Total | Historic route refusals | Historic missing ordered premises |
+|---|---:|---:|---:|
+| Complete source-specific mathematical witness | **15** | 11 | 4 |
+| Only the refused second source span is proved | **9** | 9 | 0 |
+| Only one V6 ordered child span is supplied | **18** | 0 | 18 |
+| No relevant source event/order witness in this registry | **8** | 0 | 8 |
+| Historical unresolved-source denominator | **50** | **20** | **30** |
+
+**35 cases still lack a complete whole-source witness in this registry.** The
+eight-case row is only the group without selected relevant event/order evidence;
+it is not the total remaining work. The complete group contains fourteen finite
+zero-set sources and one typed closed continuum-zero source. A continuum is
+never encoded as a finite isolated-root list. The five-source and six-source
+historical unions are deduplicated by exact original source identity.
+
+The denominator is exhaustive for these 50 frozen cases; the producer registry
+does not claim to have discovered every possible proof. A failed/refused replay
+aborts the reconciliation rather than creating a new mathematical classification.
+This is an evidence inventory, not a universal normalized root-event consumer,
+generic route acceptance, a change to frozen V54 verdicts, or native geometry.
+
+### New qualified V23 mathematical result
+
+For `harvested:verify_pb00701_v52:2250401ce435`, exact original Bernstein controls
+and phase establish `F(t)>=49*t^2/34992` on `[0,1]`, with
+`F(0)=F'(0)=0` and `F''(0)=1/36`. Its complete closed-source zero set is `{0}`:
+one exterior root of order two, no interior roots, and positivity on `(0,1]`.
+The original source SHA-256 is
+`4a3ee3f47b9347429c13830abef382301c7963b0af518f0977390c2d3ffba040`.
+The [proof and custody record](../../research/machining-completeness/tasks/MC-038/pb00701-v23-bernstein-source-research.md)
+includes a bounded sufficient-condition checker and 17 adversarial test methods.
+Independent review found and corrected exponent-string expansion before rational
+validation; the accepted parser validates bounded ASCII integer/ratio syntax
+before fraction construction. The registered complete-source count increases
+from 14 to 15 because of this distinct source proof.
+
+### Qualification identities
+
+| Result | Reviewed head | Landed main | Identical reviewed/synthetic/landed tree |
+|---|---|---|---|
+| PR #334, V23 proof | `4cce67d8f356d0aac5631dbbefc0e645300dbaf3` | `f69cf47f011fd22bd48687d963d015328fa69e1a` | `374342928dc8cf4da70ac140c73fcbc18a68b804` |
+| PR #335, evidence reconciliation | `3681e07a4bce5d22fe6660f448781b6d720da392` | `4eec599abe89041751ba7cb816a63585a59b31b9` | `2dfe867c9aa20730e7657e787539a5aa96bd3f7b` |
+
+V23 final-head [focused](https://github.com/techrote/radiCADSAC/actions/runs/41540643770) and
+[static](https://github.com/techrote/radiCADSAC/actions/runs/41540643690) checks passed; independent merged-main
+[focused](https://github.com/techrote/radiCADSAC/actions/runs/41540871372) and [static](https://github.com/techrote/radiCADSAC/actions/runs/41540871406)
+checks also passed. Reconciliation final-head [focused](https://github.com/techrote/radiCADSAC/actions/runs/41541593127)
+and [static](https://github.com/techrote/radiCADSAC/actions/runs/41541592650) checks passed; merged-main
+[focused](https://github.com/techrote/radiCADSAC/actions/runs/41542011639) and [static](https://github.com/techrote/radiCADSAC/actions/runs/41542011756)
+checks passed on its literal landed source. Both received distinct AI-assisted
+technical review through the owner account, with no claim of independent human
+or separate-account approval.
+
+## Current bounded frontier and corrected routing
+
+Use each machine-report row's actual covered interval and remaining requirement.
+The next useful bounded proof work is full original-source event/endpoint and
+source-knot composition for the nine proved tails, or completing the other span
+and composition for the eighteen checked V6 children. For each of the eight
+unregistered cases, first check for existing unregistered proofs, then register
+sound evidence or establish the missing source-specific event/order witness. Select and preregister
+one exact missing premise under existing issue #100; do not infer acceptance from
+historical `CERTIFIED` child counts or sampled values.
+
+Do not repeat `composite:DELEGATED_V6_CONSTANT_MODULATION:tail0`: its endpoint,
+source-knot deduplication and adversarial checks already landed in PRs #307–#309.
+The later #333 handover's recommendation to prove it was stale. Likewise, #333's
+exact identity-topology audit found 1 all-identity, 19 all-nonidentity, 0 mixed and 0
+inconclusive sources among the 20 route refusals. Mixed identity/nonidentity
+segmentation alone offers no further delta on that historical set; this does not
+exclude mixed sources from the wider admitted grammar.
+
+All source-specific overlays leave generic terminating event coverage, reusable
+complete proof consumption, discontinuous knot semantics, the other PB-007
+obligations, and native material/topology/conventional STEP qualification open.
+No new successor issue, production project, scheduler or campaign follows from
+this navigation update.
+
+## Historical versioned PB-007-01 implementation progression
+
+Earlier v3–v40 evidence remains preserved under the existing versioned reports, models, verifiers and RAG documents. The preserved versioned repair chain from v41 onward is:
 
 | Version | Issue / PR | Landed result | Global effect |
 |---|---|---|---|
@@ -44,11 +141,11 @@ Earlier v3–v40 evidence remains preserved under the existing versioned reports
 | v53 | [#271](https://github.com/techrote/radiCADSAC/issues/271) / [PR #273](https://github.com/techrote/radiCADSAC/pull/273) | Exact mixed-owner continuous spline-span composition using distinct checked `STRICT_SPAN` and `V51_PRODUCT` views. | Strict/simple v19/v47/v48/v49 spans can compose with v51 product spans across proved-continuous original-source knots without fabricated product ownership. |
 | v54 | [#275](https://github.com/techrote/radiCADSAC/issues/275) / [PR #277](https://github.com/techrote/radiCADSAC/pull/277) | 43-owner finite historical-route inventory; V7 exact amplitude-dominance `SIGN_SPAN` plus 19 exact whole-derivative `OWNER_STRICT_SPAN` adapters with source-bound supplied-witness checks. | A root-free nonzero-sign span composes without claiming monotonicity; the 19 strict owners retain their own derivative proofs and identities. Sixteen category-3 exact owners remain explicit ordered-premise gaps and two category-4 owners remain blocked/non-events. |
 
-All v41–v54 bounded implementation issues shown above are explicitly closed **completed**. V53/#271 remains preserved as a historical verified landing; v54/#275 is the latest accepted bounded implementation. There is no open v54 implementation PR; PR #277 is merged.
+All v41–v54 bounded implementation issues shown above are explicitly closed **completed**. V53/#271 remains preserved as a historical verified landing; v54/#275 is the last accepted versioned historical-owner adapter; the subsequent source-specific research is summarized above. There is no open v54 implementation PR; PR #277 is merged.
 
-## Latest verified landed checkpoint: v54
+## Preserved historical landing: versioned v54
 
-The latest landed bounded implementation is v54, accepted only as **deterministic exact-arithmetic model** research:
+The versioned v54 adapter was accepted only as **deterministic exact-arithmetic model** research:
 
 - final checked PR head: `e6b6d7c77fe4ab33103d151c0c5edf921862248a`;
 - final-head focused run: **40591081571 — PASS**;
@@ -67,7 +164,7 @@ For the **newly adapted v54 view kinds**, finite truth checking does not invoke 
 
 The earlier v53 result remains accepted separately: V51 product plus V19 strict across the original-source continuous knot, with the forward maximal signs **(-,+,+)**. V54 does not overwrite that evidence. Neither version establishes native material/topology, usable STEP or MC-B/MC-1.
 
-## What is implemented now
+## Versioned implementation foundation
 
 Within the exact source families admitted by the relevant versioned contracts, the repository now contains executable, checked machinery for:
 
@@ -84,11 +181,11 @@ Within the exact source families admitted by the relevant versioned contracts, t
 
 The versioned artifacts deliberately retain their own proof boundaries. A later success does not rewrite an earlier negative result or expand an earlier theorem’s scope retroactively.
 
-## Current bounded frontier after v54
+## Historical v54 adapter boundary
 
 Issue #275 closes the **finite historical-owner ordered-span adapter** gap, not the general PB-007-01 theorem. V54 classifies all 43 static emitters exactly once and consumes the 20 category-2 existing proof families while preserving the original-source owner identities: V7 is root-free `SIGN_SPAN`; nineteen strict owners receive `OWNER_STRICT_SPAN` via their own complete derivative certificates. The frozen corpus observes 42/43 owners. Counts or delegated zero sets from the 16 category-3 exact owners do not become ordered physical sign-cell evidence; the two category-4 dispositions remain unchanged.
 
-The next genuine analytic investigation concerns **general noncommon-factor/nonmonotone event coverage** and exact ordered isolation/transfer premises for unsupported category-3 families. The lack of a successful strict-derivative certificate is *not* evidence that a particular source is mathematically nonmonotone. The general-coupled theorem boundary is a static-only emitter in this corpus. A theorem task is described in the v54 evidence; no automatic successor issue or new PB-007-01 owner has been created.
+The general proof boundary still concerns **general noncommon-factor/nonmonotone event coverage** and exact ordered isolation/transfer premises for unsupported category-3 families. The lack of a successful strict-derivative certificate is *not* evidence that a particular source is mathematically nonmonotone. The general-coupled theorem boundary is a static-only emitter in this corpus. A theorem task is described in the v54 evidence; no automatic successor issue or new PB-007-01 owner has been created.
 
 PB-007-01 remains globally **OPEN**. The bounded result does not establish general noncommon-factor/nonmonotone analytics, arbitrary root isolation/order, discontinuous point-value semantics, native geometry/topology or engineering STEP qualification. MC-B and MC-1 remain **NOT_ESTABLISHED**.
 
@@ -111,10 +208,10 @@ These are implementation/proof frontiers, not permission to shrink the supported
 ## How to navigate the evidence
 
 - **Gate decision / historical blocker review:** `research/machining-completeness/tasks/MC-038/report.md` and `outcome.json`.
-- **Current-state snapshot:** this document and `research/machining-completeness/tasks/MC-038/current-implementation-state-v1.json`.
+- **Current-state snapshot:** this document and `research/machining-completeness/tasks/MC-038/current-implementation-state-v2.json`; v1 remains the unchanged 27 October historical snapshot.
 - **Per-version exact evidence:** `research/machining-completeness/tasks/MC-038/pb00701-report-v*.md`, matching JSON boundary artifacts, models, tests and verifiers.
 - **RAG documents:** `docs/machining-completeness/27-PB00701-...` through `79-PB00701-FINITE-OWNER-COVERAGE.md`.
-- **Latest bounded implementation contract:** issue #275 / PR #277; prior v53 issue #271 / PR #273 is retained as historical accepted evidence.
+- **Historical versioned adapter contract:** issue #275 / PR #277; prior v53 issue #271 / PR #273 is retained as historical accepted evidence.
 - **Global gate tracker:** issue #100.
 
 Some historical RAG filename prefixes intentionally collide (for example the two `67-` and two `68-` files). They are preserved because they are already referenced by historical evidence. **Do not renumber historical files merely for cosmetic ordering.**

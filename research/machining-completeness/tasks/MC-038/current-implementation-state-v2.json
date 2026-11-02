@@ -1,0 +1,145 @@
+{
+  "schema": "radicadsac-mc038-current-implementation-state/2.0",
+  "as_of": "2026-11-02",
+  "snapshot_kind": "NAVIGATION_AND_QUALIFIED_RESEARCH_EVIDENCE_NOT_GATE_AUTHORITY",
+  "evidence_snapshot_main": "4eec599abe89041751ba7cb816a63585a59b31b9",
+  "authority": {
+    "path": "handoffs/current-authority.json",
+    "git_blob": "fa0233323a0804d8a5d3eb7cd892a274a6173fab",
+    "mc_b": "NOT_ESTABLISHED",
+    "mc_1": "NOT_ESTABLISHED",
+    "mc038_issue": 100,
+    "required_operation_count": 26,
+    "production_authorized": false
+  },
+  "pb007": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT",
+    "PB-007-03": "OPEN_PROPAGATED",
+    "PB-007-04": "OPEN_PROPAGATED"
+  },
+  "preserved_historical_snapshot": {
+    "path": "research/machining-completeness/tasks/MC-038/current-implementation-state-v1.json",
+    "git_blob": "6cf82623b40a2944e97191c7e716c62efa4f001a",
+    "as_of": "2026-10-27",
+    "latest_versioned_adapter": 54,
+    "issue": 275,
+    "pull_request": 277
+  },
+  "historical_v54": {
+    "original_source_cases": 121,
+    "route_refusals": 20,
+    "missing_ordered_span_premises": 30,
+    "dispositions_changed": false
+  },
+  "registered_source_evidence": {
+    "report": "research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation.json",
+    "report_git_blob": "9f62dd6edc37206317eec054b2969bade02d7728",
+    "replay": "research/machining-completeness/tasks/MC-038/pb00701_post_v54_evidence_reconciliation.py",
+    "replay_git_blob": "33efd291bdd9265ca6ecce7124a46f2a003b59f1",
+    "summary": {
+      "total_historical_unresolved_source_cases": 50,
+      "by_registered_evidence_level": {
+        "COMPLETE_SOURCE_SPECIFIC": 15,
+        "PARTIAL_REFUSED_TAIL_ONLY": 9,
+        "PARTIAL_ORDERED_CHILD": 18,
+        "NO_REGISTERED_SOURCE_EVENT_OR_ORDER_WITNESS": 8
+      },
+      "historical_route_refusals": {
+        "COMPLETE_SOURCE_SPECIFIC": 11,
+        "PARTIAL_REFUSED_TAIL_ONLY": 9,
+        "PARTIAL_ORDERED_CHILD": 0,
+        "NO_REGISTERED_SOURCE_EVENT_OR_ORDER_WITNESS": 0
+      },
+      "historical_missing_ordered_premises": {
+        "COMPLETE_SOURCE_SPECIFIC": 4,
+        "PARTIAL_REFUSED_TAIL_ONLY": 0,
+        "PARTIAL_ORDERED_CHILD": 18,
+        "NO_REGISTERED_SOURCE_EVENT_OR_ORDER_WITNESS": 8
+      },
+      "complete_continuum_sources": 1
+    },
+    "historical_cases_still_without_complete_registered_whole_source_witness": 35,
+    "all_50_historical_case_ids_enumerated": true,
+    "all_possible_proofs_exhaustively_discovered": false,
+    "historical_dispositions_changed": false,
+    "universal_root_event_interface_established": false
+  },
+  "verified_research_landings": [
+    {
+      "result": "V23 Bernstein source proof",
+      "pull_request": 334,
+      "reviewed_head": "4cce67d8f356d0aac5631dbbefc0e645300dbaf3",
+      "merge_sha": "f69cf47f011fd22bd48687d963d015328fa69e1a",
+      "tree_sha": "374342928dc8cf4da70ac140c73fcbc18a68b804",
+      "reviewed_synthetic_landed_trees_equal": true,
+      "technical_review_id": 5744552753,
+      "review_attribution": "distinct AI-assisted technical review through owner account; not human or separate-account approval",
+      "final_head_runs": {
+        "focused": 41540643770,
+        "static": 41540643690
+      },
+      "merged_main_runs": {
+        "focused": 41540871372,
+        "static": 41540871406
+      },
+      "all_recorded_runs_conclusion": "success"
+    },
+    {
+      "result": "50-case registered evidence reconciliation",
+      "pull_request": 335,
+      "reviewed_head": "3681e07a4bce5d22fe6660f448781b6d720da392",
+      "merge_sha": "4eec599abe89041751ba7cb816a63585a59b31b9",
+      "tree_sha": "2dfe867c9aa20730e7657e787539a5aa96bd3f7b",
+      "reviewed_synthetic_landed_trees_equal": true,
+      "technical_review_id": 5744640843,
+      "review_attribution": "distinct AI-assisted technical review through owner account; not human or separate-account approval",
+      "final_head_runs": {
+        "focused": 41541593127,
+        "static": 41541592650
+      },
+      "merged_main_runs": {
+        "focused": 41542011639,
+        "static": 41542011756
+      },
+      "all_recorded_runs_conclusion": "success"
+    }
+  ],
+  "active_frontier": {
+    "integration_issue": 100,
+    "state": "OPEN_RESEARCH",
+    "new_successor_issue_selected": false,
+    "next_bounded_candidates": [
+      "Compose original first-span event/endpoint evidence with the nine proved V43 tails, preserving exact source-knot semantics.",
+      "Complete the other span and cross-owner composition for eighteen sources with a checked V6 ordered child.",
+      "For an exact source among the eight without registered event/order evidence, first check existing unregistered proofs, then register sound evidence or establish a named missing premise."
+    ],
+    "do_not_duplicate": [
+      {
+        "case_id": "composite:DELEGATED_V6_CONSTANT_MODULATION:tail0",
+        "reason": "Endpoint and full source-knot result already landed in PRs 307-309."
+      },
+      {
+        "route": "mixed identity/nonidentity segmentation on the frozen 20 route refusals",
+        "reason": "PR #333 found 1 all-identity, 19 all-nonidentity, 0 mixed, 0 inconclusive; no further historical delta from mixed topology alone."
+      }
+    ]
+  },
+  "unresolved": [
+    "General terminating noncommon-factor/nonmonotone analytic root/event coverage and composable source-bound proof consumption.",
+    "Discontinuous source-knot point-value semantics and unsupported source/phase/codec families.",
+    "PB-007-02/03/04 and the relevant open programme proof obligations.",
+    "Native material/body/lineage/topology/reconstruction, conventional usable STEP, independent consumer and practical scale qualification."
+  ],
+  "protected_semantics": [
+    "26-operation domain",
+    "original source and phase",
+    "provenance",
+    "canonical journal",
+    "material bodies and lineage",
+    "refusal",
+    "UNCERTIFIED",
+    "conventional usable engineering STEP"
+  ],
+  "note": "Complete source-specific mathematical witnesses are a registered research overlay. This snapshot does not repair historical routes or accept PB-007, MC-B, MC-1, native geometry, STEP or production."
+}
