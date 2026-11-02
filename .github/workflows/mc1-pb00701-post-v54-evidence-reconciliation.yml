@@ -1,0 +1,40 @@
+name: mc1-pb00701-post-v54-evidence-reconciliation
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/**'
+      - 'research/machining-completeness/tasks/MC-032/event_engine.py'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'research/machining-completeness/programme-v1.json'
+      - 'handoffs/current-authority.json'
+      - '.github/workflows/mc1-pb00701-post-v54-evidence-reconciliation.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/**'
+      - 'research/machining-completeness/tasks/MC-032/event_engine.py'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'research/machining-completeness/programme-v1.json'
+      - 'handoffs/current-authority.json'
+      - '.github/workflows/mc1-pb00701-post-v54-evidence-reconciliation.yml'
+permissions:
+  contents: read
+jobs:
+  reconcile:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Record literal source head
+        run: git rev-parse HEAD
+      - name: Reexecute registered original-source proofs and adversarial reconciliation
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_evidence_reconciliation.py --contract --self-test
+      - name: Preserve the complete historical denominator and negative controls
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py --contract --self-test
