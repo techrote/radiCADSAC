@@ -51,6 +51,8 @@ jobs:
         run: python3 tools/validate_machining_completeness.py --self-test
       - name: Validate planning/native CI impact routing
         run: python3 tools/validate_mc_ci_impact.py --self-test
+      - name: Falsify managed-issue synchronization and apply safety
+        run: python3 tools/mc_workflow.py self-test
       - name: Validate preserved Genesis-v2.1 consistency under MC-1 routing
         run: |
           python3 tools/validate_bootstrap_consistency.py
