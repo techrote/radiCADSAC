@@ -86,7 +86,12 @@ def _static_event_paths(s, event, next_event):
             item = line[8:].strip()
             if len(item) < 3 or item[0] not in ("'", '"') or item[-1] != item[0]:
                 raise AssertionError(f"mc1-static: {event} malformed path entry: {line}")
-            paths.add(item[1:-1])
+            pattern = item[1:-1]
+            # GitHub evaluates ordered positive and negative path globs.
+            # This restricted checker cannot certify exclusions/re-inclusions.
+            if pattern.startswith("!"):
+                raise AssertionError(f"mc1-static: {event} negative path pattern requires ordered evaluation")
+            paths.add(pattern)
         elif not line.strip() or line.lstrip().startswith("#"):
             continue
         elif len(line) - len(line.lstrip(" ")) <= 4:
@@ -123,6 +128,10 @@ def _static_run_commands(s):
                     if subline and not subline.startswith("          "):
                         break
                     statement = subline.strip()
+                    if statement.endswith("\\"):
+                        # The next physical YAML line is a shell argument,
+                        # not an independent executable statement.
+                        raise AssertionError("mc1-static: shell continuation cannot prove commands")
                     if statement and not statement.startswith("#"):
                         commands.add(statement)
             elif value and not value.startswith("#"):
@@ -218,6 +227,10 @@ def self_test():
         # Prefixing # leaves the old substring intact but disables its route.
         reject_static(mc.replace(block, block.replace(marker, "#" + marker, 1), 1),
                       f"{event} commented-out route")
+        # A later negative glob can veto the earlier positive path in GitHub.
+        reject_static(mc.replace(block, block.replace(
+            marker, marker + "      - '!tools/**'\n", 1), 1),
+                      f"{event} negative pattern shadows required path")
         # An identically spelled path under a different event key is not a route.
         reject_static(mc.replace(block, block.replace(marker, "", 1) +
                                  "    branches:\n" + marker, 1),
@@ -231,6 +244,7 @@ def self_test():
         ("guarded validation step", "        if: false\n        run: python3 tools/validate_repo.py"),
         ("multiline shell comment", "        run: |\n          # python3 tools/validate_repo.py"),
         ("folded run echo decoy", "        run: >\n          echo inert\n          python3 tools/validate_repo.py"),
+        ("backslash-continued echo decoy", "        run: |\n          echo inert \\\n          python3 tools/validate_repo.py"),
     ):
         reject_static(mc.replace(baseline_run, decoy, 1), label)
     # MC workflow is inline in the real source. Convert it to a multiline
