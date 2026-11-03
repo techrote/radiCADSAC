@@ -1,0 +1,68 @@
+name: mc1-pb00701-exact-zero-child-source-completion
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/mc1-pb00701-exact-zero-child-source-completion.yml'
+      - 'handoffs/current-authority.json'
+      - 'research/machining-completeness/programme-v1.json'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'research/machining-completeness/tasks/MC-032/event_engine.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-exact-zero-child-source-completion-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-exact-zero-child-source-completion-witness.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-coverage-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-inventory-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_event_model.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_exact_zero_child_source_completion.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_post_v54_evidence_reconciliation.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_rational_phase_point.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_rational_turn_model.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_transverse_trig_interval.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_exact_zero_child_source_completion.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/mc1-pb00701-exact-zero-child-source-completion.yml'
+      - 'handoffs/current-authority.json'
+      - 'research/machining-completeness/programme-v1.json'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'research/machining-completeness/tasks/MC-032/event_engine.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-exact-zero-child-source-completion-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-exact-zero-child-source-completion-witness.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-coverage-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-inventory-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_event_model.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_exact_zero_child_source_completion.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_post_v54_evidence_reconciliation.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_rational_phase_point.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_rational_turn_model.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_transverse_trig_interval.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_exact_zero_child_source_completion.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Record literal source head
+        run: git rev-parse HEAD
+      - name: Reexecute complete exact-zero source proofs and adversarial controls
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_exact_zero_child_source_completion.py --contract --self-test
+      - name: Preserve the frozen historical denominator and negative controls
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py --contract --self-test

@@ -1,0 +1,825 @@
+{
+  "schema": "radicadsac-mc038-exact-zero-child-source-completion/1.0",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "source_authority_main": "e0514500aeca59afa4924dcc2da3ca0c2688d9ac",
+  "claim": "THREE_PINNED_ORIGINAL_SOURCES_COMPLETE_EXACT_ZERO_AND_SIGN_PROOFS",
+  "dependency_git_blobs": {
+    "research/machining-completeness/tasks/MC-038/pb00701_post_v54_evidence_reconciliation.py": "33efd291bdd9265ca6ecce7124a46f2a003b59f1",
+    "research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation.json": "9f62dd6edc37206317eec054b2969bade02d7728",
+    "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py": "a086b625e1a6dea8bd202699d161167bb69cc9e7",
+    "research/machining-completeness/tasks/MC-038/pb00701_rational_turn_model.py": "a1316ff0f71b2d7aa80807843a74fd8280779cb2",
+    "research/machining-completeness/tasks/MC-038/pb00701_event_model.py": "104c0e7a459cd7da5025853b246faff244a5948e",
+    "research/machining-completeness/tasks/MC-038/pb00701_transverse_trig_interval.py": "2320f92efe4316d865a89f6d848737e2c000ca4d",
+    "research/machining-completeness/tasks/MC-038/pb00701_rational_phase_point.py": "9fc344e045fa800fb24d30902a641e534a1e197b",
+    "research/machining-completeness/tasks/MC-032/event_engine.py": "789a709c5141479a343035d1b7055dd4e53534e1",
+    "research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json": "5841c331579489b25caef38cd412bdbf286f9134",
+    "research/machining-completeness/tasks/MC-038/pb00701-finite-owner-inventory-v54.json": "8649c20ab77e199f9c3fa351b8b6742218f27abb",
+    "research/machining-completeness/tasks/MC-038/pb00701-finite-owner-coverage-v54.json": "600ba29786f50397f29fd435fc5e2c57076088f9",
+    "research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py": "12c6efeb667a954ffc5a7e27849ae815d466580a",
+    "research/machining-completeness/tasks/MC-002/domain-contract-v1.json": "23de82f5240a72509f7afe4acd5948b65bc4ff13",
+    "research/machining-completeness/programme-v1.json": "dee7045a1790b2870744df8ae7693429bd1d81a6",
+    "handoffs/current-authority.json": "fa0233323a0804d8a5d3eb7cd892a274a6173fab"
+  },
+  "historical_v54": {
+    "original_source_cases": 121,
+    "route_refusals": 20,
+    "missing_ordered_span_premises": 30,
+    "dispositions_changed": false
+  },
+  "source_specific_proofs": [
+    {
+      "case_id": "composite:PB00701_V23_EXACT_NONCONSTANT_AMPLITUDE_PHASE_SECTOR_ANCHOR:tail0",
+      "source_sha256": "e8d2451833854ee7eaf73d4fb70b78b86ba72194b2688876f3bb9ee6ab132ffd",
+      "original_row_sha256": "e52a27e5c3dcdf984919cdcd7bb925c52d2865550035da357cd87178b9fbfc89",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/12"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_source_and_span_observations": {
+        "status": "CERTIFIED",
+        "spans": [
+          [
+            "PB00701_V23_EXACT_NONCONSTANT_AMPLITUDE_PHASE_SECTOR_ANCHOR",
+            "CERTIFIED",
+            null
+          ],
+          [
+            "DELEGATED_V6_CONSTANT_MODULATION",
+            "CERTIFIED",
+            null
+          ]
+        ]
+      },
+      "historical_disposition_changed": false,
+      "source_spans": [
+        {
+          "interval": [
+            "0",
+            "1"
+          ],
+          "phase_turn_law": [
+            "0",
+            "1/12"
+          ],
+          "source_binding_sha256": "a6f4b4fdb40f7a14b9e2f1145811794e3b943765c95bf5c3470193731b0c339e",
+          "global_parameter_power_coefficients": {
+            "0": [
+              [
+                "-501/1000"
+              ],
+              [
+                "0"
+              ]
+            ],
+            "1": [
+              [
+                "0"
+              ],
+              [
+                "1",
+                "1/1000"
+              ]
+            ],
+            "2": [
+              [
+                "0",
+                "1/1000"
+              ],
+              [
+                "0"
+              ]
+            ]
+          }
+        },
+        {
+          "interval": [
+            "1",
+            "2"
+          ],
+          "phase_turn_law": [
+            "0",
+            "1/12"
+          ],
+          "source_binding_sha256": "2518de7f5396fc1d1204cb107594cfd0d14b38f045b1665b584b56e96adfb107",
+          "global_parameter_power_coefficients": {
+            "0": [
+              [
+                "-501/1000"
+              ],
+              [
+                "0"
+              ]
+            ],
+            "1": [
+              [
+                "0"
+              ],
+              [
+                "1001/1000"
+              ]
+            ],
+            "2": [
+              [
+                "1/1000"
+              ],
+              [
+                "0"
+              ]
+            ]
+          }
+        }
+      ],
+      "exterior_endpoint_receipts": [
+        {
+          "status": "EXACT_NONZERO_RATIONAL_POINT",
+          "source_binding_sha256": "a6f4b4fdb40f7a14b9e2f1145811794e3b943765c95bf5c3470193731b0c339e",
+          "coordinate": "0",
+          "phase_turn": "0",
+          "cyclotomic_order": 4,
+          "exact_vanishing_derivatives": [],
+          "first_nonzero_derivative_order": 0,
+          "first_nonzero_derivative_sign": -1,
+          "exact_zero_decision": "ROOT_OF_UNITY_AND_PI_TRANSCENDENCE",
+          "replayed_point_witness_sha256": "332dbbd90cae8dc5251d4247a58de3a39a2c11d0c6aa90d539ed0ebe80277126",
+          "value_sign": -1
+        },
+        {
+          "status": "EXACT_NONZERO_RATIONAL_POINT",
+          "source_binding_sha256": "2518de7f5396fc1d1204cb107594cfd0d14b38f045b1665b584b56e96adfb107",
+          "coordinate": "2",
+          "phase_turn": "1/6",
+          "cyclotomic_order": 12,
+          "exact_vanishing_derivatives": [],
+          "first_nonzero_derivative_order": 0,
+          "first_nonzero_derivative_sign": 1,
+          "exact_zero_decision": "ROOT_OF_UNITY_AND_PI_TRANSCENDENCE",
+          "replayed_point_witness_sha256": "346866044498baaa5921248df5010324ecf125883168f9382897bdb6363f1557",
+          "value_sign": 1
+        }
+      ],
+      "source_knot_receipt": {
+        "schema": "radicadsac-mc038-rational-phase-point/1.0",
+        "status": "EXACT_SINGLE_SOURCE_KNOT_ZERO",
+        "coordinate": "1",
+        "physical_zero_events": 1,
+        "left_one_sided_order": 1,
+        "right_one_sided_order": 1,
+        "left_sign": -1,
+        "right_sign": 1,
+        "event_kind": "CROSSING",
+        "global_smooth_multiplicity_claimed": false,
+        "source_bindings": [
+          "a6f4b4fdb40f7a14b9e2f1145811794e3b943765c95bf5c3470193731b0c339e",
+          "2518de7f5396fc1d1204cb107594cfd0d14b38f045b1665b584b56e96adfb107"
+        ],
+        "historical_v54_admitted": false,
+        "production_authorized": false
+      },
+      "physical_events": [
+        {
+          "kind": "EXACT_PHYSICAL_SOURCE_KNOT_ZERO",
+          "coordinate": "1",
+          "left_one_sided_order": 1,
+          "right_one_sided_order": 1,
+          "left_sign": -1,
+          "right_sign": 1,
+          "global_smooth_multiplicity_claimed": false,
+          "exact_sided_derivatives_unequal": true,
+          "sided_derivative_expressions": [
+            "1/1000 + 999*pi*sqrt(3)/12000",
+            "999*pi*sqrt(3)/12000"
+          ],
+          "local_point_receipts": [
+            {
+              "status": "EXACT_RATIONAL_POINT_EVENT",
+              "source_binding_sha256": "a6f4b4fdb40f7a14b9e2f1145811794e3b943765c95bf5c3470193731b0c339e",
+              "coordinate": "1",
+              "phase_turn": "1/12",
+              "cyclotomic_order": 12,
+              "exact_vanishing_derivatives": [
+                0
+              ],
+              "first_nonzero_derivative_order": 1,
+              "first_nonzero_derivative_sign": 1,
+              "exact_zero_decision": "ROOT_OF_UNITY_AND_PI_TRANSCENDENCE",
+              "replayed_point_witness_sha256": "641942e0782fd0bca9a02188f7a6fe85e45c137c2d04a6aafb58a4b5edbd6622",
+              "one_sided_order": 1,
+              "left_sign": -1,
+              "right_sign": 1,
+              "event_kind": "CROSSING"
+            },
+            {
+              "status": "EXACT_RATIONAL_POINT_EVENT",
+              "source_binding_sha256": "2518de7f5396fc1d1204cb107594cfd0d14b38f045b1665b584b56e96adfb107",
+              "coordinate": "1",
+              "phase_turn": "1/12",
+              "cyclotomic_order": 12,
+              "exact_vanishing_derivatives": [
+                0
+              ],
+              "first_nonzero_derivative_order": 1,
+              "first_nonzero_derivative_sign": 1,
+              "exact_zero_decision": "ROOT_OF_UNITY_AND_PI_TRANSCENDENCE",
+              "replayed_point_witness_sha256": "51f12f283d6f59c92cad14501a0ebba8b983283b400c949f3e5ee1c6c448725a",
+              "one_sided_order": 1,
+              "left_sign": -1,
+              "right_sign": 1,
+              "event_kind": "CROSSING"
+            }
+          ]
+        }
+      ],
+      "physical_zero_set": [
+        "1"
+      ],
+      "complete_original_source_zero_set": true,
+      "complete_finite_physical_event_count": 1,
+      "ordered_nonzero_signs": [
+        -1,
+        1
+      ],
+      "maximal_nonzero_cells": [
+        {
+          "interval": [
+            "0",
+            "1"
+          ],
+          "open_at_event": "RIGHT",
+          "sign": -1
+        },
+        {
+          "interval": [
+            "1",
+            "2"
+          ],
+          "open_at_event": "LEFT",
+          "sign": 1
+        }
+      ],
+      "whole_source_completeness_proof": {
+        "lemma": "V23_NONCONSTANT_AMPLITUDE_SECTOR_DERIVATIVE",
+        "phase_sectors_in_turns": [
+          [
+            "0",
+            "1/12"
+          ],
+          [
+            "1/12",
+            "1/6"
+          ]
+        ],
+        "strict_derivative_lower_bound_on_each_span": "249/1000",
+        "entire_original_closed_interval_covered": true,
+        "method": "EXACT_ZERO_PLUS_STRICT_INCREASE_ON_BOTH_CONTINUOUS_PIECES"
+      },
+      "retained_transverse_negative_control": {
+        "source_binding_sha256": "a6f4b4fdb40f7a14b9e2f1145811794e3b943765c95bf5c3470193731b0c339e",
+        "budget": {
+          "max_depth": 12,
+          "max_nodes": 2000
+        },
+        "status": "RESOURCE_REFUSAL",
+        "reason": "UNDECIDED_EVENT_OR_TANGENCY",
+        "is_truth_value": false
+      },
+      "evidence_class": "DETERMINISTIC_MODEL",
+      "production_authorized": false
+    },
+    {
+      "case_id": "composite:PB00701_V25_EXACT_COMPONENT_CONE_MIXED_PROJECTION_ANCHOR:tail0",
+      "source_sha256": "d7bf5969875c5ae44fa83f80d217fe17b02aca4db58545dc943c43e744ef68b6",
+      "original_row_sha256": "90642204b36339c0bea36a1196c4b1045f4b0fa360d25493eb59b23881579ab8",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "-1/12",
+        "rate": "1/12"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_source_and_span_observations": {
+        "status": "CERTIFIED",
+        "spans": [
+          [
+            "PB00701_V25_EXACT_COMPONENT_CONE_MIXED_PROJECTION_ANCHOR",
+            "CERTIFIED",
+            null
+          ],
+          [
+            "DELEGATED_V6_CONSTANT_MODULATION",
+            "CERTIFIED",
+            null
+          ]
+        ]
+      },
+      "historical_disposition_changed": false,
+      "source_spans": [
+        {
+          "interval": [
+            "0",
+            "1"
+          ],
+          "phase_turn_law": [
+            "-1/12",
+            "1/12"
+          ],
+          "source_binding_sha256": "9773c56ca5808a6e9a9bcf480931839cdedb03c65d709538e4e2393ed59443a1",
+          "global_parameter_power_coefficients": {
+            "0": [
+              [
+                "-51/1000"
+              ],
+              [
+                "0"
+              ]
+            ],
+            "1": [
+              [
+                "-1/20",
+                "1/10"
+              ],
+              [
+                "4"
+              ]
+            ],
+            "2": [
+              [
+                "1/1000"
+              ],
+              [
+                "0"
+              ]
+            ]
+          }
+        },
+        {
+          "interval": [
+            "1",
+            "2"
+          ],
+          "phase_turn_law": [
+            "-1/12",
+            "1/12"
+          ],
+          "source_binding_sha256": "4303229714be1fc648a0c85c36af626386e6d1e9f7a34270947c8d2edbb1f537",
+          "global_parameter_power_coefficients": {
+            "0": [
+              [
+                "-51/1000"
+              ],
+              [
+                "0"
+              ]
+            ],
+            "1": [
+              [
+                "1/20"
+              ],
+              [
+                "4"
+              ]
+            ],
+            "2": [
+              [
+                "1/1000"
+              ],
+              [
+                "0"
+              ]
+            ]
+          }
+        }
+      ],
+      "exterior_endpoint_receipts": [
+        {
+          "status": "EXACT_NONZERO_RATIONAL_POINT",
+          "source_binding_sha256": "9773c56ca5808a6e9a9bcf480931839cdedb03c65d709538e4e2393ed59443a1",
+          "coordinate": "0",
+          "phase_turn": "-1/12",
+          "cyclotomic_order": 12,
+          "exact_vanishing_derivatives": [],
+          "first_nonzero_derivative_order": 0,
+          "first_nonzero_derivative_sign": -1,
+          "exact_zero_decision": "ROOT_OF_UNITY_AND_PI_TRANSCENDENCE",
+          "replayed_point_witness_sha256": "943e2af01e058faa70b38980069b8b5fd5c8d10abd9b9d1d51ef2c0b3af84d78",
+          "value_sign": -1
+        },
+        {
+          "status": "EXACT_NONZERO_RATIONAL_POINT",
+          "source_binding_sha256": "4303229714be1fc648a0c85c36af626386e6d1e9f7a34270947c8d2edbb1f537",
+          "coordinate": "2",
+          "phase_turn": "1/12",
+          "cyclotomic_order": 12,
+          "exact_vanishing_derivatives": [],
+          "first_nonzero_derivative_order": 0,
+          "first_nonzero_derivative_sign": 1,
+          "exact_zero_decision": "ROOT_OF_UNITY_AND_PI_TRANSCENDENCE",
+          "replayed_point_witness_sha256": "6881fa5eefbe64e316dff0bfe95a67c54e58645699fcba7caf74c072deeed495",
+          "value_sign": 1
+        }
+      ],
+      "source_knot_receipt": {
+        "schema": "radicadsac-mc038-rational-phase-point/1.0",
+        "status": "EXACT_SINGLE_SOURCE_KNOT_ZERO",
+        "coordinate": "1",
+        "physical_zero_events": 1,
+        "left_one_sided_order": 1,
+        "right_one_sided_order": 1,
+        "left_sign": -1,
+        "right_sign": 1,
+        "event_kind": "CROSSING",
+        "global_smooth_multiplicity_claimed": false,
+        "source_bindings": [
+          "9773c56ca5808a6e9a9bcf480931839cdedb03c65d709538e4e2393ed59443a1",
+          "4303229714be1fc648a0c85c36af626386e6d1e9f7a34270947c8d2edbb1f537"
+        ],
+        "historical_v54_admitted": false,
+        "production_authorized": false
+      },
+      "physical_events": [
+        {
+          "kind": "EXACT_PHYSICAL_SOURCE_KNOT_ZERO",
+          "coordinate": "1",
+          "left_one_sided_order": 1,
+          "right_one_sided_order": 1,
+          "left_sign": -1,
+          "right_sign": 1,
+          "global_smooth_multiplicity_claimed": false,
+          "exact_sided_derivatives_unequal": true,
+          "sided_derivative_expressions": [
+            "1/10 + 2*pi/3",
+            "2*pi/3"
+          ],
+          "local_point_receipts": [
+            {
+              "status": "EXACT_RATIONAL_POINT_EVENT",
+              "source_binding_sha256": "9773c56ca5808a6e9a9bcf480931839cdedb03c65d709538e4e2393ed59443a1",
+              "coordinate": "1",
+              "phase_turn": "0",
+              "cyclotomic_order": 4,
+              "exact_vanishing_derivatives": [
+                0
+              ],
+              "first_nonzero_derivative_order": 1,
+              "first_nonzero_derivative_sign": 1,
+              "exact_zero_decision": "ROOT_OF_UNITY_AND_PI_TRANSCENDENCE",
+              "replayed_point_witness_sha256": "034d62c69c2d82df336a1a678169852097db7985b523832bebab3be70a998e55",
+              "one_sided_order": 1,
+              "left_sign": -1,
+              "right_sign": 1,
+              "event_kind": "CROSSING"
+            },
+            {
+              "status": "EXACT_RATIONAL_POINT_EVENT",
+              "source_binding_sha256": "4303229714be1fc648a0c85c36af626386e6d1e9f7a34270947c8d2edbb1f537",
+              "coordinate": "1",
+              "phase_turn": "0",
+              "cyclotomic_order": 4,
+              "exact_vanishing_derivatives": [
+                0
+              ],
+              "first_nonzero_derivative_order": 1,
+              "first_nonzero_derivative_sign": 1,
+              "exact_zero_decision": "ROOT_OF_UNITY_AND_PI_TRANSCENDENCE",
+              "replayed_point_witness_sha256": "e8cd917ed55a4d10057a9e391d3ca5dc3f4498ea2c938965975b4e3f82fb6226",
+              "one_sided_order": 1,
+              "left_sign": -1,
+              "right_sign": 1,
+              "event_kind": "CROSSING"
+            }
+          ]
+        }
+      ],
+      "physical_zero_set": [
+        "1"
+      ],
+      "complete_original_source_zero_set": true,
+      "complete_finite_physical_event_count": 1,
+      "ordered_nonzero_signs": [
+        -1,
+        1
+      ],
+      "maximal_nonzero_cells": [
+        {
+          "interval": [
+            "0",
+            "1"
+          ],
+          "open_at_event": "RIGHT",
+          "sign": -1
+        },
+        {
+          "interval": [
+            "1",
+            "2"
+          ],
+          "open_at_event": "LEFT",
+          "sign": 1
+        }
+      ],
+      "whole_source_completeness_proof": {
+        "lemma": "V25_COMPONENT_CONE_SECTOR_DERIVATIVE",
+        "phase_sectors_in_turns": [
+          [
+            "-1/12",
+            "0"
+          ],
+          [
+            "0",
+            "1/12"
+          ]
+        ],
+        "strict_derivative_lower_bound_on_each_span": "487/500",
+        "entire_original_closed_interval_covered": true,
+        "method": "EXACT_ZERO_PLUS_STRICT_INCREASE_ON_BOTH_CONTINUOUS_PIECES"
+      },
+      "retained_transverse_negative_control": {
+        "source_binding_sha256": "9773c56ca5808a6e9a9bcf480931839cdedb03c65d709538e4e2393ed59443a1",
+        "budget": {
+          "max_depth": 12,
+          "max_nodes": 2000
+        },
+        "status": "RESOURCE_REFUSAL",
+        "reason": "UNDECIDED_EVENT_OR_TANGENCY",
+        "is_truth_value": false
+      },
+      "evidence_class": "DETERMINISTIC_MODEL",
+      "production_authorized": false
+    },
+    {
+      "case_id": "composite:PB00701_V40_EXACT_SIGNED_B_ANTI_DIAGONAL_DIRECT_ROTATED_COORDINATE:tail0",
+      "source_sha256": "90a5df370094bcd8cef37be171f9bb12264c15a32237300b5435dc8871c6c2bf",
+      "original_row_sha256": "8291b11b51d2109451ba852185bf6d9504c9d7e46473bf01be5924508ded5fad",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "1/16",
+        "rate": "1/8"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_source_and_span_observations": {
+        "status": "CERTIFIED",
+        "spans": [
+          [
+            "PB00701_V40_EXACT_SIGNED_B_ANTI_DIAGONAL_DIRECT_ROTATED_COORDINATE",
+            "CERTIFIED",
+            null
+          ],
+          [
+            "DELEGATED_V6_CONSTANT_MODULATION",
+            "CERTIFIED",
+            null
+          ]
+        ]
+      },
+      "historical_disposition_changed": false,
+      "source_spans": [
+        {
+          "interval": [
+            "0",
+            "1"
+          ],
+          "phase_turn_law": [
+            "1/16",
+            "1/8"
+          ],
+          "source_binding_sha256": "9b325919a3146b45d98a5f54f5101321141e57c923e89cb357e4ab1270ff5322",
+          "global_parameter_power_coefficients": {
+            "0": [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            "1": [
+              [
+                "19/20",
+                "1/10"
+              ],
+              [
+                "-21/20",
+                "1/10"
+              ]
+            ],
+            "2": [
+              [
+                "-1/100000000"
+              ],
+              [
+                "0"
+              ]
+            ]
+          }
+        },
+        {
+          "interval": [
+            "1",
+            "2"
+          ],
+          "phase_turn_law": [
+            "1/16",
+            "1/8"
+          ],
+          "source_binding_sha256": "781145281afc69ac6972ba21ba2bb25a6a9784a7c79154c803bb7968bb995558",
+          "global_parameter_power_coefficients": {
+            "0": [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            "1": [
+              [
+                "21/20"
+              ],
+              [
+                "-19/20"
+              ]
+            ],
+            "2": [
+              [
+                "-1/100000000"
+              ],
+              [
+                "0"
+              ]
+            ]
+          }
+        }
+      ],
+      "exterior_endpoint_receipts": [
+        {
+          "status": "EXACT_NONZERO_RATIONAL_POINT",
+          "source_binding_sha256": "9b325919a3146b45d98a5f54f5101321141e57c923e89cb357e4ab1270ff5322",
+          "coordinate": "0",
+          "phase_turn": "1/16",
+          "cyclotomic_order": 16,
+          "exact_vanishing_derivatives": [],
+          "first_nonzero_derivative_order": 0,
+          "first_nonzero_derivative_sign": 1,
+          "exact_zero_decision": "ROOT_OF_UNITY_AND_PI_TRANSCENDENCE",
+          "replayed_point_witness_sha256": "775344f99fe227b069741229b7ac1a548a08950e46aeb4f025598ba32a3e4d9a",
+          "value_sign": 1
+        },
+        {
+          "status": "EXACT_NONZERO_RATIONAL_POINT",
+          "source_binding_sha256": "781145281afc69ac6972ba21ba2bb25a6a9784a7c79154c803bb7968bb995558",
+          "coordinate": "2",
+          "phase_turn": "5/16",
+          "cyclotomic_order": 16,
+          "exact_vanishing_derivatives": [],
+          "first_nonzero_derivative_order": 0,
+          "first_nonzero_derivative_sign": -1,
+          "exact_zero_decision": "ROOT_OF_UNITY_AND_PI_TRANSCENDENCE",
+          "replayed_point_witness_sha256": "cf3d5f43ef80396fe5bcc32218395fbc83912384c335e0d49d474613cda049d0",
+          "value_sign": -1
+        }
+      ],
+      "source_knot_receipt": {
+        "schema": "radicadsac-mc038-rational-phase-point/1.0",
+        "status": "EXACT_NONZERO_SOURCE_KNOT",
+        "coordinate": "1",
+        "sign": -1,
+        "source_bindings": [
+          "9b325919a3146b45d98a5f54f5101321141e57c923e89cb357e4ab1270ff5322",
+          "781145281afc69ac6972ba21ba2bb25a6a9784a7c79154c803bb7968bb995558"
+        ],
+        "physical_zero_events": 0,
+        "production_authorized": false
+      },
+      "physical_events": [
+        {
+          "kind": "EXACT_SMOOTH_INTERIOR_ZERO",
+          "coordinate": "1/2",
+          "source_span": [
+            "0",
+            "1"
+          ],
+          "smooth_multiplicity": 1,
+          "left_sign": 1,
+          "right_sign": -1,
+          "is_original_source_knot": false,
+          "local_point_receipt": {
+            "status": "EXACT_RATIONAL_POINT_EVENT",
+            "source_binding_sha256": "9b325919a3146b45d98a5f54f5101321141e57c923e89cb357e4ab1270ff5322",
+            "coordinate": "1/2",
+            "phase_turn": "1/8",
+            "cyclotomic_order": 8,
+            "exact_vanishing_derivatives": [
+              0
+            ],
+            "first_nonzero_derivative_order": 1,
+            "first_nonzero_derivative_sign": -1,
+            "exact_zero_decision": "ROOT_OF_UNITY_AND_PI_TRANSCENDENCE",
+            "replayed_point_witness_sha256": "30446cd7b0834bd733249c7a3b736f62781a684049f8146c5865a23079898fe0",
+            "one_sided_order": 1,
+            "left_sign": 1,
+            "right_sign": -1,
+            "event_kind": "CROSSING"
+          }
+        }
+      ],
+      "physical_zero_set": [
+        "1/2"
+      ],
+      "complete_original_source_zero_set": true,
+      "complete_finite_physical_event_count": 1,
+      "ordered_nonzero_signs": [
+        1,
+        -1
+      ],
+      "maximal_nonzero_cells": [
+        {
+          "interval": [
+            "0",
+            "1/2"
+          ],
+          "open_at_event": "RIGHT",
+          "sign": 1
+        },
+        {
+          "interval": [
+            "1/2",
+            "2"
+          ],
+          "open_at_event": "LEFT",
+          "sign": -1
+        }
+      ],
+      "whole_source_completeness_proof": {
+        "lemma": "V40_ANTI_DIAGONAL_STRICT_DECREASE_AND_NEGATIVE_TAIL",
+        "first_span_phase_sector_in_turns": [
+          "1/16",
+          "3/16"
+        ],
+        "strict_first_span_derivative_upper_bound": "-428749989/700000000",
+        "tail_phase_sector_in_turns": [
+          "3/16",
+          "5/16"
+        ],
+        "tail_enclosing_sector_in_turns": [
+          "1/6",
+          "1/3"
+        ],
+        "tail_function_upper_bound": "-23499999/100000000",
+        "entire_original_closed_interval_covered": true
+      },
+      "retained_transverse_negative_control": {
+        "source_binding_sha256": "9b325919a3146b45d98a5f54f5101321141e57c923e89cb357e4ab1270ff5322",
+        "budget": {
+          "max_depth": 12,
+          "max_nodes": 2000
+        },
+        "status": "RESOURCE_REFUSAL",
+        "reason": "UNDECIDED_ISOLATION_CUT",
+        "is_truth_value": false
+      },
+      "evidence_class": "DETERMINISTIC_MODEL",
+      "production_authorized": false
+    }
+  ],
+  "summary": {
+    "complete_original_sources": 3,
+    "physical_zero_events": 3,
+    "nonsmooth_source_knot_events": 2,
+    "smooth_interior_events": 1,
+    "exterior_zero_events": 0,
+    "continuum_sources": 0
+  },
+  "generic_transverse_engine_changed": false,
+  "universal_event_interface_established": false,
+  "historical_owner_routes_repaired": false,
+  "mc_b_established": false,
+  "mc1_established": false,
+  "production_authorized": false
+}
