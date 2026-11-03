@@ -30,6 +30,39 @@ def validate_selective(name,s):
         push=event_block(s,"push","pull_request")
         if "paths-ignore:" not in push or "docs/machining-completeness/**" not in push:
             raise AssertionError("rcs013-architecture.yml: MC-only main push would still dispatch")
+MC_STATIC_INPUTS = (
+    "docs/machining-completeness/**",
+    "research/machining-completeness/**",
+    "handoffs/current-authority.json",
+    "tools/validate_repo.py",
+    "tools/validate_machining_completeness.py",
+    "tools/validate_mc_ci_impact.py",
+    "tools/validate_bootstrap_consistency.py",
+    "tools/mc_workflow.py",
+    "tools/mc_evidence_verifier.py",
+    ".github/workflows/mc1-static.yml",
+)
+MC_STATIC_COMMANDS = (
+    "python3 tools/validate_repo.py",
+    "python3 tools/validate_machining_completeness.py --self-test",
+    "python3 tools/validate_mc_ci_impact.py --self-test",
+    "python3 tools/mc_workflow.py self-test",
+)
+
+def validate_mc_static(s):
+    # Running a validator is not enough: edits to each invoked validator
+    # must independently dispatch this workflow on PRs and main pushes.
+    for event, next_event in (("push", "pull_request"), ("pull_request", "permissions")):
+        block = event_block(s, event, next_event)
+        if "\n    paths:\n" not in block:
+            raise AssertionError(f"mc1-static: {event} lost positive paths routing")
+        for path in MC_STATIC_INPUTS:
+            if f"      - '{path}'" not in block:
+                raise AssertionError(f"mc1-static: {event} does not watch {path}")
+    for command in MC_STATIC_COMMANDS:
+        if command not in s:
+            raise AssertionError(f"mc1-static: missing validation command {command}")
+
 def validate():
     for n in sorted(BROAD):
         p=WF/n
@@ -39,11 +72,8 @@ def validate():
         p=WF/n
         if not p.exists(): raise AssertionError(f"missing {n}")
         validate_selective(n,p.read_text(encoding="utf-8"))
-    mc=(WF/"mc1-static.yml").read_text(encoding="utf-8")
-    if mc.count("tools/validate_mc_ci_impact.py") < 3:
-        raise AssertionError("mc1-static must watch the impact validator on push and PR and execute it")
-    for token in ("pull_request:","docs/machining-completeness/**","tools/validate_machining_completeness.py","python3 tools/validate_repo.py"):
-        if token not in mc: raise AssertionError(f"mc1-static missing {token}")
+    mc = (WF/"mc1-static.yml").read_text(encoding="utf-8")
+    validate_mc_static(mc)
 def self_test():
     s=(WF/"quality.yml").read_text(encoding="utf-8").replace("      - 'docs/machining-completeness/**'","      - 'docs/other/**'",1)
     try: validate_broad("mutated-quality",s)
@@ -53,6 +83,30 @@ def self_test():
     try: validate_selective("mutated-rcs018",s)
     except AssertionError: pass
     else: raise AssertionError("failed to reject paths + paths-ignore")
+    mc = (WF/"mc1-static.yml").read_text(encoding="utf-8")
+    validate_mc_static(mc)
+    # Each previously omitted validator must independently route both events.
+    # Drop one event path at a time; every mutated workflow must be rejected.
+    for path in ("tools/validate_repo.py", "tools/validate_bootstrap_consistency.py"):
+        for event, next_event in (("push", "pull_request"), ("pull_request", "permissions")):
+            block = event_block(mc, event, next_event)
+            marker = f"      - '{path}'\n"
+            if marker not in block:
+                raise AssertionError(f"self-test fixture missing {event} {path} path")
+            mutant = mc.replace(block, block.replace(marker, "", 1), 1)
+            try:
+                validate_mc_static(mutant)
+            except AssertionError:
+                pass
+            else:
+                raise AssertionError(f"failed to reject absent {event} {path} route")
+    mutant = mc.replace("python3 tools/validate_repo.py", "python3 -V", 1)
+    try:
+        validate_mc_static(mutant)
+    except AssertionError:
+        pass
+    else:
+        raise AssertionError("failed to reject missing baseline validation step")
     print("MC-1 CI impact self-test passed")
 if __name__=="__main__":
     p=argparse.ArgumentParser(); p.add_argument("--self-test",action="store_true"); a=p.parse_args()
