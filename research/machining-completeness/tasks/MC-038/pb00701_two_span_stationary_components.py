@@ -23,6 +23,15 @@ class Refusal(ValueError):
     pass
 
 
+class ResourceRefusal(Refusal):
+    pass
+
+
+def budget(ok, reason):
+    if not ok:
+        raise ResourceRefusal(reason)
+
+
 def need(ok, reason):
     if not ok:
         raise Refusal(reason)
@@ -35,8 +44,8 @@ def rational(raw):
     except (ValueError, ZeroDivisionError, OverflowError) as exc:
         raise Refusal("NONCANONICAL_RATIONAL") from exc
     need(str(value) == raw, "NONCANONICAL_RATIONAL")
-    need(max(abs(value.numerator).bit_length(), value.denominator.bit_length()) <= MAX_BITS,
-         "RATIONAL_BIT_BUDGET_EXCEEDED")
+    budget(max(abs(value.numerator).bit_length(), value.denominator.bit_length()) <= MAX_BITS,
+           "RATIONAL_BIT_BUDGET_EXCEEDED")
     return value
 
 
@@ -51,7 +60,7 @@ def source(spec):
         "phase_turn_offset", "phase_turn_rate", "cos_splines", "sin_splines"
     }, "ORIGINAL_SOURCE_FIELDS_REQUIRED")
     raw = encode(spec)
-    need(len(raw) <= MAX_SOURCE_BYTES, "SOURCE_BYTE_BUDGET_EXCEEDED")
+    budget(len(raw) <= MAX_SOURCE_BYTES, "SOURCE_BYTE_BUDGET_EXCEEDED")
     need(spec["grammar"] == GRAMMAR, "SOURCE_GRAMMAR_MISMATCH")
     name = spec["source_parameter_id"]
     need(type(name) is str and 0 < len(name) <= 128, "SOURCE_PARAMETER_ID_INVALID")
@@ -167,8 +176,8 @@ def analyze(spec):
         coeff0 = bernstein_global(triple0, a, b)
         coeff1 = bernstein_global(triple1, a, b)
         physical = [x+y for x,y in zip(coeff0, coeff1)]
-        need(max(max(abs(v.numerator).bit_length(), v.denominator.bit_length())
-                 for v in physical) <= 4*MAX_BITS, "INTERMEDIATE_BIT_BUDGET_EXCEEDED")
+        budget(max(max(abs(v.numerator).bit_length(), v.denominator.bit_length())
+                   for v in physical) <= 4*MAX_BITS, "INTERMEDIATE_BIT_BUDGET_EXCEEDED")
         # Exact lower/upper and midpoint tests of the actual Bernstein span.
         for x in (a, (2*a+b)/3, (a+b)/2, (a+2*b)/3, b):
             u = (x-a)/(b-a)
@@ -252,6 +261,11 @@ def analyze(spec):
 def attempt(spec):
     try:
         return analyze(spec)
+    except ResourceRefusal as exc:
+        return {"schema": SCHEMA, "status": "RESOURCE_REFUSAL", "reason": str(exc),
+                "is_truth_value": False, "pb00701_certified": False,
+                "mc_b_established": False, "mc1_established": False,
+                "production_authorized": False}
     except (Refusal, ValueError, TypeError, KeyError, OverflowError) as exc:
         return {"schema": SCHEMA, "status": "BLOCKED", "reason": str(exc),
                 "is_truth_value": False, "pb00701_certified": False,
