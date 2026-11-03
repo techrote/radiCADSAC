@@ -85,20 +85,21 @@ def self_test():
     else: raise AssertionError("failed to reject paths + paths-ignore")
     mc = (WF/"mc1-static.yml").read_text(encoding="utf-8")
     validate_mc_static(mc)
-    # Deliberately drop the executed baseline validator from each event,
-    # independently. Neither missing route may pass the CI impact check.
-    for event, next_event in (("push", "pull_request"), ("pull_request", "permissions")):
-        block = event_block(mc, event, next_event)
-        marker = "      - 'tools/validate_repo.py'\n"
-        if marker not in block:
-            raise AssertionError(f"self-test fixture missing {event} validator path")
-        mutant = mc.replace(block, block.replace(marker, "", 1), 1)
-        try:
-            validate_mc_static(mutant)
-        except AssertionError:
-            pass
-        else:
-            raise AssertionError(f"failed to reject absent {event} validator route")
+    # Each previously omitted validator must independently route both events.
+    # Drop one event path at a time; every mutated workflow must be rejected.
+    for path in ("tools/validate_repo.py", "tools/validate_bootstrap_consistency.py"):
+        for event, next_event in (("push", "pull_request"), ("pull_request", "permissions")):
+            block = event_block(mc, event, next_event)
+            marker = f"      - '{path}'\n"
+            if marker not in block:
+                raise AssertionError(f"self-test fixture missing {event} {path} path")
+            mutant = mc.replace(block, block.replace(marker, "", 1), 1)
+            try:
+                validate_mc_static(mutant)
+            except AssertionError:
+                pass
+            else:
+                raise AssertionError(f"failed to reject absent {event} {path} route")
     mutant = mc.replace("python3 tools/validate_repo.py", "python3 -V", 1)
     try:
         validate_mc_static(mutant)
