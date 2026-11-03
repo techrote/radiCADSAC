@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 import argparse
+import re
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 WF=ROOT/".github"/"workflows"
@@ -49,19 +50,130 @@ MC_STATIC_COMMANDS = (
     "python3 tools/mc_workflow.py self-test",
 )
 
+def _static_trigger_block(s):
+    """Only count events nested below the active root-level YAML on: key."""
+    lines = s.splitlines()
+    roots = [i for i, line in enumerate(lines) if line == "on:"]
+    if len(roots) != 1:
+        raise AssertionError("mc1-static: expected one active root-level on: trigger")
+    start = roots[0]
+    end = next((i for i in range(start + 1, len(lines))
+                if lines[i] and not lines[i][0].isspace()
+                and not lines[i].lstrip().startswith("#")), len(lines))
+    block = lines[start + 1:end]
+    for event in ("push", "pull_request"):
+        if block.count(f"  {event}:") != 1:
+            raise AssertionError(f"mc1-static: expected one active on.{event} event")
+    return "\n".join(block) + "\n"
+
+
+def _static_event_paths(s, event, next_event):
+    """Read active positive paths entries for the checked-in MC static YAML layout.
+
+    Fail closed on unexpected list syntax; this is deliberately not a general
+    YAML parser or an assertion about arbitrary GitHub Actions workflows.
+    """
+    # Do not accept event-looking keys under unrelated root objects.
+    block = event_block(_static_trigger_block(s) + "\npermissions:\n", event, next_event)
+    if "    paths-ignore:" in block:
+        raise AssertionError(f"mc1-static: {event} combines paths with paths-ignore")
+    lines = block.splitlines()
+    headers = [i for i, line in enumerate(lines) if line == "    paths:"]
+    if len(headers) != 1:
+        raise AssertionError(f"mc1-static: {event} requires exactly one positive paths list")
+    paths = set()
+    for line in lines[headers[0] + 1:]:
+        if line.startswith("      - "):
+            item = line[8:].strip()
+            if len(item) < 3 or item[0] not in ("'", '"') or item[-1] != item[0]:
+                raise AssertionError(f"mc1-static: {event} malformed path entry: {line}")
+            pattern = item[1:-1]
+            # GitHub evaluates ordered positive and negative path globs.
+            # This restricted checker cannot certify exclusions/re-inclusions.
+            if pattern.startswith("!"):
+                raise AssertionError(f"mc1-static: {event} negative path pattern requires ordered evaluation")
+            paths.add(pattern)
+        elif not line.strip() or line.lstrip().startswith("#"):
+            continue
+        elif len(line) - len(line.lstrip(" ")) <= 4:
+            break
+        else:
+            raise AssertionError(f"mc1-static: {event} malformed positive paths list: {line}")
+    return paths
+
+
+def _static_run_commands(s):
+    """Find literal commands in unconditional steps[].run fields, not decoy text."""
+    if s.count("\njobs:\n") != 1:
+        raise AssertionError("mc1-static: expected one jobs section")
+    if any(re.match(r"""^(?:defaults|[\'"]defaults[\'"])\s*:""", line)
+           for line in s.splitlines()):
+        # Workflow-level run.shell can replace the executor for all steps.
+        raise AssertionError("mc1-static: workflow-wide shell defaults are not qualified")
+    lines = s.split("\njobs:\n", 1)[1].splitlines()
+    if any(line.startswith("    if:") for line in lines):
+        raise AssertionError("mc1-static: conditional validation job is not qualified")
+    if any(line.startswith(("    continue-on-error:", "    defaults:")) for line in lines):
+        raise AssertionError("mc1-static: non-enforcing or custom validation job is not qualified")
+    commands = set()
+    step = None
+
+    def add_step(step):
+        # Required validation commands must not be hidden behind step guards.
+        if any(line.startswith(("        if:", "        continue-on-error:", "        shell:")) for line in step):
+            # A guarded, failure-tolerant or overridden-shell step cannot
+            # establish the required validation execution contract.
+            return
+        for i, line in enumerate(step):
+            if not line.startswith("        run:"):
+                continue
+            value = line[len("        run:"):].strip()
+            # YAML > folds newlines: a required-looking line may just be
+            # part of a preceding echo command, never an executed command.
+            if value in (">", ">-"):
+                raise AssertionError("mc1-static: folded run block cannot prove commands")
+            if value in ("|", "|-"):
+                # This deliberately does not interpret shell control flow.
+                # A literal block proves execution only with one substantive
+                # statement, never an exit, heredoc or conditional prelude.
+                statements = []
+                for subline in step[i + 1:]:
+                    if subline and not subline.startswith("          "):
+                        break
+                    statement = subline.strip()
+                    if statement.endswith("\\"):
+                        # The next physical YAML line is a shell argument,
+                        # not an independent executable statement.
+                        raise AssertionError("mc1-static: shell continuation cannot prove commands")
+                    if statement and not statement.startswith("#"):
+                        statements.append(statement)
+                if len(statements) == 1:
+                    commands.add(statements[0])
+            elif value and not value.startswith("#"):
+                commands.add(value)
+
+    for line in lines + ["      - __END__"]:
+        if line.startswith("      - "):
+            if step is not None:
+                add_step(step)
+            step = [line]
+        elif step is not None:
+            step.append(line)
+    return commands
+
+
 def validate_mc_static(s):
-    # Running a validator is not enough: edits to each invoked validator
-    # must independently dispatch this workflow on PRs and main pushes.
+    # Paths and actual run commands are independently mandatory: stray text,
+    # comments, echo strings, and conditionally disabled steps cannot satisfy.
     for event, next_event in (("push", "pull_request"), ("pull_request", "permissions")):
-        block = event_block(s, event, next_event)
-        if "\n    paths:\n" not in block:
-            raise AssertionError(f"mc1-static: {event} lost positive paths routing")
+        paths = _static_event_paths(s, event, next_event)
         for path in MC_STATIC_INPUTS:
-            if f"      - '{path}'" not in block:
+            if path not in paths:
                 raise AssertionError(f"mc1-static: {event} does not watch {path}")
+    commands = _static_run_commands(s)
     for command in MC_STATIC_COMMANDS:
-        if command not in s:
-            raise AssertionError(f"mc1-static: missing validation command {command}")
+        if command not in commands:
+            raise AssertionError(f"mc1-static: missing active validation command {command}")
 
 def validate():
     for n in sorted(BROAD):
@@ -107,6 +219,80 @@ def self_test():
         pass
     else:
         raise AssertionError("failed to reject missing baseline validation step")
+    # Active YAML structure matters, not just the presence of a matching substring.
+    def reject_static(mutant, label):
+        if mutant == mc:
+            raise AssertionError(f"self-test did not mutate {label}")
+        try:
+            validate_mc_static(mutant)
+        except AssertionError:
+            pass
+        else:
+            raise AssertionError(f"failed to reject {label}")
+
+    # Event-looking keys are not sufficient without an actual root on:.
+    reject_static(mc.replace("\non:\n", "\nnot_on:\n", 1),
+                  "renamed root on: event")
+    for event, next_event in (("push", "pull_request"), ("pull_request", "permissions")):
+        block = event_block(mc, event, next_event)
+        reject_static(mc.replace(block, block.replace(
+            "    paths:\n", "    paths-ignore:\n      - 'tools/**'\n    paths:\n", 1), 1),
+                      f"{event} invalid paths + paths-ignore")
+        marker = "      - 'tools/validate_repo.py'\n"
+        # Prefixing # leaves the old substring intact but disables its route.
+        reject_static(mc.replace(block, block.replace(marker, "#" + marker, 1), 1),
+                      f"{event} commented-out route")
+        # A later negative glob can veto the earlier positive path in GitHub.
+        reject_static(mc.replace(block, block.replace(
+            marker, marker + "      - '!tools/**'\n", 1), 1),
+                      f"{event} negative pattern shadows required path")
+        # An identically spelled path under a different event key is not a route.
+        reject_static(mc.replace(block, block.replace(marker, "", 1) +
+                                 "    branches:\n" + marker, 1),
+                      f"{event} path under branches")
+
+    baseline_run = "        run: python3 tools/validate_repo.py"
+    for label, decoy in (
+        ("echo decoy", "        run: echo python3 tools/validate_repo.py"),
+        ("quoted comment decoy", "        run: echo '# python3 tools/validate_repo.py'"),
+        ("non-run field", "        with: python3 tools/validate_repo.py"),
+        ("guarded validation step", "        if: false\n        run: python3 tools/validate_repo.py"),
+        ("multiline shell comment", "        run: |\n          # python3 tools/validate_repo.py"),
+        ("folded run echo decoy", "        run: >\n          echo inert\n          python3 tools/validate_repo.py"),
+        ("early-exit shell decoy", "        run: |\n          exit 0\n          python3 tools/validate_repo.py"),
+        ("here-document shell decoy", "        run: |\n          cat <<'EOF'\n          python3 tools/validate_repo.py\n          EOF"),
+        ("false-branch shell decoy", "        run: |\n          if false; then\n          python3 tools/validate_repo.py\n          fi"),
+        ("continue-on-error step", "        continue-on-error: true\n        run: python3 tools/validate_repo.py"),
+        ("custom shell step", "        shell: 'echo {0}'\n        run: python3 tools/validate_repo.py"),
+        ("backslash-continued echo decoy", "        run: |\n          echo inert \\\n          python3 tools/validate_repo.py"),
+    ):
+        reject_static(mc.replace(baseline_run, decoy, 1), label)
+    reject_static(mc.replace("    runs-on: ubuntu-24.04",
+                             "    continue-on-error: true\n    runs-on: ubuntu-24.04", 1),
+                  "continue-on-error job")
+    reject_static(mc.replace("    runs-on: ubuntu-24.04",
+                             "    defaults:\n      run:\n        shell: 'echo {0}'\n    runs-on: ubuntu-24.04", 1),
+                  "custom job default shell")
+    reject_static(mc.replace("permissions:\n",
+                             "defaults:\n  run:\n    shell: 'echo {0}'\npermissions:\n", 1),
+                  "custom workflow default shell")
+    # A comment or quoted YAML key must not evade the root default-shell guard.
+    reject_static(mc.replace("permissions:\n",
+                             "defaults: # valid YAML inline comment\n  run:\n    shell: 'echo {0}'\npermissions:\n", 1),
+                  "commented workflow default shell key")
+    reject_static(mc.replace("permissions:\n",
+                             "'defaults':\n  run:\n    shell: 'echo {0}'\npermissions:\n", 1),
+                  "quoted workflow default shell key")
+    validate_mc_static(mc.replace("permissions:\n",
+                                  "# defaults: harmless commentary\npermissions:\n", 1))
+    # MC workflow is inline in the real source. Convert it to a multiline
+    # step before introducing an inert echo (not a nonexistent source line).
+    workflow_run = "        run: python3 tools/mc_workflow.py self-test"
+    validate_mc_static(mc.replace(workflow_run,
+                                  "        run: |\n          python3 tools/mc_workflow.py self-test", 1))
+    reject_static(mc.replace(workflow_run,
+                             "        run: |\n          echo python3 tools/mc_workflow.py self-test", 1),
+                  "multiline echo decoy")
     print("MC-1 CI impact self-test passed")
 if __name__=="__main__":
     p=argparse.ArgumentParser(); p.add_argument("--self-test",action="store_true"); a=p.parse_args()
