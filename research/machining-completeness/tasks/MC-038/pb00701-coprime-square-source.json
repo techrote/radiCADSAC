@@ -1,0 +1,5328 @@
+{
+  "budgets": {
+    "derived_rational_bits": 4096,
+    "derived_rational_token_characters": 2500,
+    "hint_degree": 3,
+    "input_rational_bits": 128,
+    "input_rational_token_characters": 128,
+    "json_depth": 32,
+    "json_value_nodes": 65536,
+    "maximum_half_integer_phase_candidates": 65,
+    "offset_and_rate_absolute_bound": 8,
+    "original_coefficient_degree": 6,
+    "original_coordinate_absolute_bound": 2,
+    "phase_endpoint_absolute_bound": 16,
+    "report_bytes": 2097152
+  },
+  "cases": [
+    {
+      "P": [
+        "-1",
+        "1"
+      ],
+      "Q": [
+        "1"
+      ],
+      "case_id": "research:pb00701:mtp-irreducible-boundary:quadratic-touch",
+      "certificate": {
+        "bezout_identity": {
+          "A": [
+            "0"
+          ],
+          "B": [
+            "1"
+          ],
+          "common_complex_zero_excluded_by_identity": true,
+          "euclidean_trace": [
+            {
+              "dividend": [
+                "-1",
+                "1"
+              ],
+              "divisor": [
+                "1"
+              ],
+              "quotient": [
+                "-1",
+                "1"
+              ],
+              "remainder": [
+                "0"
+              ]
+            }
+          ],
+          "identity_coefficients": [
+            "1"
+          ],
+          "identity_verified_coefficientwise": true,
+          "normalized_gcd": [
+            "1"
+          ]
+        },
+        "context_references": [
+          {
+            "bytes": 2255,
+            "git_blob": "6005fc55e2d18e71639e6bc31cfbc1597bf4a915",
+            "path": "docs/machining-completeness/31-PB00701-COUPLED-BSPLINE-BOUNDARY.md",
+            "sha256": "7cc6704ee4636e498d4f8575dfaea35462f33effc20fbef6d45d994b416f4515",
+            "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+          },
+          {
+            "bytes": 18930,
+            "git_blob": "4840bbca3847962b537684e0dffa871bd6de82a2",
+            "path": "research/machining-completeness/tasks/MC-038/pb00701-mtp-irreducible-boundary.json",
+            "sha256": "c645a88dc54232de9cf64c542b83c5d38caf835401f4eaec3cedc9744f7a3ff3",
+            "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+          },
+          {
+            "bytes": 18701,
+            "git_blob": "a086b625e1a6dea8bd202699d161167bb69cc9e7",
+            "path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+            "sha256": "2813a99ecc2bc179bf31f6c9166f9c3564516e67f2f256c0a984deee4ed0f692",
+            "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+          },
+          {
+            "bytes": 32020,
+            "git_blob": "4f9000549834c8f9b60ebc9925fadb71e9f96acf",
+            "path": "research/machining-completeness/tasks/MC-038/pb00701_mtp_irreducible_boundary.py",
+            "sha256": "29fb8a0b8ddbece891b31504aa1e661d2471a3a9fea22f1f630d9564da91886d",
+            "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+          }
+        ],
+        "evidence_class": "DETERMINISTIC_MODEL",
+        "normalized_witness": {
+          "P": [
+            "-1",
+            "1"
+          ],
+          "Q": [
+            "1"
+          ]
+        },
+        "original_source": {
+          "cos_splines": {
+            "0": {
+              "controls": [
+                "5/8",
+                "3/8",
+                "5/8"
+              ],
+              "degree": 2,
+              "knots": [
+                "1/2",
+                "1/2",
+                "1/2",
+                "3/2",
+                "3/2",
+                "3/2"
+              ]
+            },
+            "1": {
+              "controls": [
+                "-3/8",
+                "-5/8",
+                "-3/8"
+              ],
+              "degree": 2,
+              "knots": [
+                "1/2",
+                "1/2",
+                "1/2",
+                "3/2",
+                "3/2",
+                "3/2"
+              ]
+            }
+          },
+          "grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+          "parameter_hi": "3/2",
+          "parameter_lo": "1/2",
+          "phase_turn_offset": "0",
+          "phase_turn_rate": "1",
+          "sin_splines": {},
+          "source_parameter_id": "pb00701-mtp-irreducible-boundary-original-t"
+        },
+        "phase_candidates": {
+          "candidates": [
+            {
+              "P_value": "-1/2",
+              "Q_value": "1",
+              "branch": "ODD_HALF_PHASE_Q_ZERO",
+              "coordinate": "1/2",
+              "is_physical_zero": false,
+              "phase_index": 1,
+              "phase_turn": "1/2"
+            },
+            {
+              "P_value": "0",
+              "Q_value": "1",
+              "branch": "INTEGER_PHASE_P_ZERO",
+              "coordinate": "1",
+              "is_physical_zero": true,
+              "phase_index": 2,
+              "phase_turn": "1"
+            },
+            {
+              "P_value": "1/2",
+              "Q_value": "1",
+              "branch": "ODD_HALF_PHASE_Q_ZERO",
+              "coordinate": "3/2",
+              "is_physical_zero": false,
+              "phase_index": 3,
+              "phase_turn": "3/2"
+            }
+          ],
+          "phase_range": {
+            "candidate_count": 3,
+            "closed_phase_range": [
+              "1/2",
+              "3/2"
+            ],
+            "first_phase_index": 1,
+            "last_phase_index": 3,
+            "negative_rate_reverses_phase_order": false,
+            "original_left_phase": "1/2",
+            "original_right_phase": "3/2"
+          }
+        },
+        "phase_turn_law": {
+          "offset": "0",
+          "rate": "1"
+        },
+        "production_authorized": false,
+        "proof_established": true,
+        "root_jets": [
+          {
+            "coordinate": "1",
+            "exact_first_derivative": "0",
+            "exact_function_value": "0",
+            "first_nonzero_order": 2,
+            "opposite_amplitude": "Q",
+            "opposite_amplitude_value": "1",
+            "original_phase_rate": "1",
+            "phase_index": 2,
+            "phase_turn": "1",
+            "pi_irrationality_or_transcendence_used": false,
+            "pi_nonzero_is_sufficient": true,
+            "pi_squared_coefficient_strictly_positive": true,
+            "quadratic_taylor_coefficient": {
+              "pi_squared": "1",
+              "rational": "1"
+            },
+            "vanishing_amplitude": "P",
+            "vanishing_amplitude_first_derivative": "1",
+            "vanishing_amplitude_value": "0"
+          }
+        ],
+        "schema": "radicadsac-mc038-coprime-square-source/1.0/certificate",
+        "scope": {
+          "fixture_allowlist_used_for_admission": false,
+          "frozen_corpus_addition": false,
+          "generic_owner_route_repaired": false,
+          "generic_supplied_source_and_witness_checked": true,
+          "historical_source_completion_claimed": false,
+          "native_geometry_evidence": false,
+          "one_original_clamped_span": true,
+          "original_parameter_and_global_phase_preserved": true,
+          "valid_degree_elevation_admitted": true
+        },
+        "source_identity": {
+          "C0_equals_half_sum_of_squares": [
+            "1",
+            "-1",
+            "1/2"
+          ],
+          "C1_equals_half_difference_of_squares": [
+            "0",
+            "-1",
+            "1/2"
+          ],
+          "P_squared": [
+            "1",
+            "-2",
+            "1"
+          ],
+          "Q_squared": [
+            "1"
+          ],
+          "all_original_channels_reconstructed": true,
+          "identities_verified_coefficientwise": true,
+          "original_source_equals_nonnegative_square_sum": true,
+          "phase_used_in_original_parameter": true
+        },
+        "source_interval": [
+          "1/2",
+          "3/2"
+        ],
+        "source_parameter_id": "pb00701-mtp-irreducible-boundary-original-t",
+        "source_sha256": "8ec9541990fcacf2d2f4e55f5a52082f7b2e900fe21e46cb817a64c3ec9a293d",
+        "source_zero_set": {
+          "all_physical_roots_have_order_two": true,
+          "closed_root_count": 1,
+          "complete_for_original_closed_source": true,
+          "continuum_excluded_by_coprime_and_moving_phase_premises": true,
+          "events": [
+            {
+              "branch": "INTEGER_PHASE_P_ZERO",
+              "classification": "TOUCHING",
+              "coordinate": {
+                "kind": "RATIONAL",
+                "value": "1"
+              },
+              "event_id": "ROOT_0",
+              "left_sign": 1,
+              "location": "SPAN_INTERIOR",
+              "order": {
+                "kind": "SMOOTH",
+                "value": 2
+              },
+              "phase_index": 2,
+              "phase_turn": "1",
+              "quadratic_jet": {
+                "coordinate": "1",
+                "exact_first_derivative": "0",
+                "exact_function_value": "0",
+                "first_nonzero_order": 2,
+                "opposite_amplitude": "Q",
+                "opposite_amplitude_value": "1",
+                "original_phase_rate": "1",
+                "phase_index": 2,
+                "phase_turn": "1",
+                "pi_irrationality_or_transcendence_used": false,
+                "pi_nonzero_is_sufficient": true,
+                "pi_squared_coefficient_strictly_positive": true,
+                "quadratic_taylor_coefficient": {
+                  "pi_squared": "1",
+                  "rational": "1"
+                },
+                "vanishing_amplitude": "P",
+                "vanishing_amplitude_first_derivative": "1",
+                "vanishing_amplitude_value": "0"
+              },
+              "right_sign": 1,
+              "source_parameter_id": "pb00701-mtp-irreducible-boundary-original-t",
+              "source_piece_indices": [
+                0
+              ],
+              "source_sha256": "8ec9541990fcacf2d2f4e55f5a52082f7b2e900fe21e46cb817a64c3ec9a293d"
+            }
+          ],
+          "exterior_points": [
+            {
+              "coordinate": "1/2",
+              "event_ref": null,
+              "exact_value": null,
+              "global_smooth_multiplicity_claimed": false,
+              "inward_order": 0,
+              "inward_sign": 1,
+              "is_zero": false,
+              "nonzero_exact_scalar_value_claimed": false,
+              "outside_order": null,
+              "outside_sign": null,
+              "phase_turn": "1/2",
+              "positive_sign_from_complete_nonnegative_square_proof": true,
+              "side": "LEFT",
+              "value_sign": 1
+            },
+            {
+              "coordinate": "3/2",
+              "event_ref": null,
+              "exact_value": null,
+              "global_smooth_multiplicity_claimed": false,
+              "inward_order": 0,
+              "inward_sign": 1,
+              "is_zero": false,
+              "nonzero_exact_scalar_value_claimed": false,
+              "outside_order": null,
+              "outside_sign": null,
+              "phase_turn": "3/2",
+              "positive_sign_from_complete_nonnegative_square_proof": true,
+              "side": "RIGHT",
+              "value_sign": 1
+            }
+          ],
+          "exterior_root_count": 0,
+          "finite_event_list_applicable": true,
+          "global_cross_source_zero_deduplication_performed": false,
+          "kind": "FINITE_ORIGINAL_SOURCE_ZERO_SET",
+          "maximal_nonzero_cells": [
+            {
+              "cell_id": "CELL_0",
+              "crossed_nonzero_source_knots": [],
+              "interval": [
+                "1/2",
+                "1"
+              ],
+              "left_boundary": {
+                "coordinate": "1/2",
+                "kind": "SOURCE_EXTERIOR",
+                "side": "LEFT"
+              },
+              "left_included": true,
+              "right_boundary": {
+                "coordinate": "1",
+                "event_id": "ROOT_0",
+                "kind": "PHYSICAL_ZERO_EVENT",
+                "source_parameter_id": "pb00701-mtp-irreducible-boundary-original-t",
+                "source_sha256": "8ec9541990fcacf2d2f4e55f5a52082f7b2e900fe21e46cb817a64c3ec9a293d"
+              },
+              "right_included": false,
+              "sign": 1,
+              "source_piece_indices": [
+                0
+              ]
+            },
+            {
+              "cell_id": "CELL_1",
+              "crossed_nonzero_source_knots": [],
+              "interval": [
+                "1",
+                "3/2"
+              ],
+              "left_boundary": {
+                "coordinate": "1",
+                "event_id": "ROOT_0",
+                "kind": "PHYSICAL_ZERO_EVENT",
+                "source_parameter_id": "pb00701-mtp-irreducible-boundary-original-t",
+                "source_sha256": "8ec9541990fcacf2d2f4e55f5a52082f7b2e900fe21e46cb817a64c3ec9a293d"
+              },
+              "left_included": false,
+              "right_boundary": {
+                "coordinate": "3/2",
+                "kind": "SOURCE_EXTERIOR",
+                "side": "RIGHT"
+              },
+              "right_included": true,
+              "sign": 1,
+              "source_piece_indices": [
+                0
+              ]
+            }
+          ],
+          "nonzero_sign_cells_applicable": true,
+          "nonzero_source_points_strictly_positive": true,
+          "source_interval": [
+            "1/2",
+            "3/2"
+          ],
+          "source_open_root_count": 1,
+          "true_source_knots": []
+        },
+        "source_zero_set_established": true,
+        "status": "ESTABLISHED_COPRIME_SQUARE_ORIGINAL_SOURCE",
+        "supplied_witness": {
+          "P": [
+            "-1",
+            "1"
+          ],
+          "Q": [
+            "1"
+          ]
+        },
+        "theorem_premises": {
+          "both_summands_nonnegative": true,
+          "half_integer_phase_candidates_are_exhaustive": true,
+          "no_common_amplitude_zero_from_verified_bezout": true,
+          "nonzero_phase_rate_makes_candidates_finite_and_distinct": true,
+          "numerical_sampling_used_as_completeness_authority": false,
+          "pi_irrationality_or_transcendence_used": false,
+          "pi_nonzero_suffices_for_positive_quadratic_jets": true,
+          "sine_and_cosine_never_vanish_simultaneously": true
+        },
+        "whole_source_lowering": {
+          "C0": [
+            "1",
+            "-1",
+            "1/2"
+          ],
+          "C1": [
+            "0",
+            "-1",
+            "1/2"
+          ],
+          "channels": [
+            {
+              "bernstein_basis_in_original_parameter": [
+                [
+                  "9/4",
+                  "-3",
+                  "1"
+                ],
+                [
+                  "-3/2",
+                  "4",
+                  "-2"
+                ],
+                [
+                  "1/4",
+                  "-1",
+                  "1"
+                ]
+              ],
+              "degree": 2,
+              "global_power_coefficients": [
+                "1",
+                "-1",
+                "1/2"
+              ],
+              "harmonic": 0,
+              "left_endpoint_value": "5/8",
+              "original_controls": [
+                "5/8",
+                "3/8",
+                "5/8"
+              ],
+              "original_knots": [
+                "1/2",
+                "1/2",
+                "1/2",
+                "3/2",
+                "3/2",
+                "3/2"
+              ],
+              "partition_of_unity_verified": true,
+              "right_endpoint_value": "5/8"
+            },
+            {
+              "bernstein_basis_in_original_parameter": [
+                [
+                  "9/4",
+                  "-3",
+                  "1"
+                ],
+                [
+                  "-3/2",
+                  "4",
+                  "-2"
+                ],
+                [
+                  "1/4",
+                  "-1",
+                  "1"
+                ]
+              ],
+              "degree": 2,
+              "global_power_coefficients": [
+                "0",
+                "-1",
+                "1/2"
+              ],
+              "harmonic": 1,
+              "left_endpoint_value": "-3/8",
+              "original_controls": [
+                "-3/8",
+                "-5/8",
+                "-3/8"
+              ],
+              "original_knots": [
+                "1/2",
+                "1/2",
+                "1/2",
+                "3/2",
+                "3/2",
+                "3/2"
+              ],
+              "partition_of_unity_verified": true,
+              "right_endpoint_value": "-3/8"
+            }
+          ],
+          "global_phase_turn_law": {
+            "offset": "0",
+            "rate": "1"
+          },
+          "original_source_interval": [
+            "1/2",
+            "3/2"
+          ],
+          "source_parameter_id": "pb00701-mtp-irreducible-boundary-original-t",
+          "source_sha256": "8ec9541990fcacf2d2f4e55f5a52082f7b2e900fe21e46cb817a64c3ec9a293d"
+        },
+        "witness_sha256": "fb591d04e68ccb1838b4ddb02ce73ea0a262775fc3039569f5fb8d41c79b59d6"
+      },
+      "description": "Qualified MTP quadratic touch, re-proved by the new class",
+      "spec": {
+        "cos_splines": {
+          "0": {
+            "controls": [
+              "5/8",
+              "3/8",
+              "5/8"
+            ],
+            "degree": 2,
+            "knots": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "3/2",
+              "3/2",
+              "3/2"
+            ]
+          },
+          "1": {
+            "controls": [
+              "-3/8",
+              "-5/8",
+              "-3/8"
+            ],
+            "degree": 2,
+            "knots": [
+              "1/2",
+              "1/2",
+              "1/2",
+              "3/2",
+              "3/2",
+              "3/2"
+            ]
+          }
+        },
+        "grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+        "parameter_hi": "3/2",
+        "parameter_lo": "1/2",
+        "phase_turn_offset": "0",
+        "phase_turn_rate": "1",
+        "sin_splines": {},
+        "source_parameter_id": "pb00701-mtp-irreducible-boundary-original-t"
+      }
+    },
+    {
+      "P": [
+        "-1/2",
+        "1"
+      ],
+      "Q": [
+        "1/4",
+        "1"
+      ],
+      "case_id": "research:pb00701:coprime-square:nonmatching-amplitude",
+      "certificate": {
+        "bezout_identity": {
+          "A": [
+            "-4/3"
+          ],
+          "B": [
+            "4/3"
+          ],
+          "common_complex_zero_excluded_by_identity": true,
+          "euclidean_trace": [
+            {
+              "dividend": [
+                "-1/2",
+                "1"
+              ],
+              "divisor": [
+                "1/4",
+                "1"
+              ],
+              "quotient": [
+                "1"
+              ],
+              "remainder": [
+                "-3/4"
+              ]
+            },
+            {
+              "dividend": [
+                "1/4",
+                "1"
+              ],
+              "divisor": [
+                "-3/4"
+              ],
+              "quotient": [
+                "-1/3",
+                "-4/3"
+              ],
+              "remainder": [
+                "0"
+              ]
+            }
+          ],
+          "identity_coefficients": [
+            "1"
+          ],
+          "identity_verified_coefficientwise": true,
+          "normalized_gcd": [
+            "1"
+          ]
+        },
+        "context_references": [
+          {
+            "bytes": 2255,
+            "git_blob": "6005fc55e2d18e71639e6bc31cfbc1597bf4a915",
+            "path": "docs/machining-completeness/31-PB00701-COUPLED-BSPLINE-BOUNDARY.md",
+            "sha256": "7cc6704ee4636e498d4f8575dfaea35462f33effc20fbef6d45d994b416f4515",
+            "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+          },
+          {
+            "bytes": 18930,
+            "git_blob": "4840bbca3847962b537684e0dffa871bd6de82a2",
+            "path": "research/machining-completeness/tasks/MC-038/pb00701-mtp-irreducible-boundary.json",
+            "sha256": "c645a88dc54232de9cf64c542b83c5d38caf835401f4eaec3cedc9744f7a3ff3",
+            "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+          },
+          {
+            "bytes": 18701,
+            "git_blob": "a086b625e1a6dea8bd202699d161167bb69cc9e7",
+            "path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+            "sha256": "2813a99ecc2bc179bf31f6c9166f9c3564516e67f2f256c0a984deee4ed0f692",
+            "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+          },
+          {
+            "bytes": 32020,
+            "git_blob": "4f9000549834c8f9b60ebc9925fadb71e9f96acf",
+            "path": "research/machining-completeness/tasks/MC-038/pb00701_mtp_irreducible_boundary.py",
+            "sha256": "29fb8a0b8ddbece891b31504aa1e661d2471a3a9fea22f1f630d9564da91886d",
+            "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+          }
+        ],
+        "evidence_class": "DETERMINISTIC_MODEL",
+        "normalized_witness": {
+          "P": [
+            "-1/2",
+            "1"
+          ],
+          "Q": [
+            "1/4",
+            "1"
+          ]
+        },
+        "original_source": {
+          "cos_splines": {
+            "0": {
+              "controls": [
+                "5/32",
+                "1/32",
+                "29/32"
+              ],
+              "degree": 2,
+              "knots": [
+                "0",
+                "0",
+                "0",
+                "1",
+                "1",
+                "1"
+              ]
+            },
+            "1": {
+              "controls": [
+                "3/32",
+                "-21/32"
+              ],
+              "degree": 1,
+              "knots": [
+                "0",
+                "0",
+                "1",
+                "1"
+              ]
+            }
+          },
+          "grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+          "parameter_hi": "1",
+          "parameter_lo": "0",
+          "phase_turn_offset": "0",
+          "phase_turn_rate": "1",
+          "sin_splines": {},
+          "source_parameter_id": "pb00701-coprime-square:nonmatching-amplitude-original-t"
+        },
+        "phase_candidates": {
+          "candidates": [
+            {
+              "P_value": "-1/2",
+              "Q_value": "1/4",
+              "branch": "INTEGER_PHASE_P_ZERO",
+              "coordinate": "0",
+              "is_physical_zero": false,
+              "phase_index": 0,
+              "phase_turn": "0"
+            },
+            {
+              "P_value": "0",
+              "Q_value": "3/4",
+              "branch": "ODD_HALF_PHASE_Q_ZERO",
+              "coordinate": "1/2",
+              "is_physical_zero": false,
+              "phase_index": 1,
+              "phase_turn": "1/2"
+            },
+            {
+              "P_value": "1/2",
+              "Q_value": "5/4",
+              "branch": "INTEGER_PHASE_P_ZERO",
+              "coordinate": "1",
+              "is_physical_zero": false,
+              "phase_index": 2,
+              "phase_turn": "1"
+            }
+          ],
+          "phase_range": {
+            "candidate_count": 3,
+            "closed_phase_range": [
+              "0",
+              "1"
+            ],
+            "first_phase_index": 0,
+            "last_phase_index": 2,
+            "negative_rate_reverses_phase_order": false,
+            "original_left_phase": "0",
+            "original_right_phase": "1"
+          }
+        },
+        "phase_turn_law": {
+          "offset": "0",
+          "rate": "1"
+        },
+        "production_authorized": false,
+        "proof_established": true,
+        "root_jets": [],
+        "schema": "radicadsac-mc038-coprime-square-source/1.0/certificate",
+        "scope": {
+          "fixture_allowlist_used_for_admission": false,
+          "frozen_corpus_addition": false,
+          "generic_owner_route_repaired": false,
+          "generic_supplied_source_and_witness_checked": true,
+          "historical_source_completion_claimed": false,
+          "native_geometry_evidence": false,
+          "one_original_clamped_span": true,
+          "original_parameter_and_global_phase_preserved": true,
+          "valid_degree_elevation_admitted": true
+        },
+        "source_identity": {
+          "C0_equals_half_sum_of_squares": [
+            "5/32",
+            "-1/4",
+            "1"
+          ],
+          "C1_equals_half_difference_of_squares": [
+            "3/32",
+            "-3/4"
+          ],
+          "P_squared": [
+            "1/4",
+            "-1",
+            "1"
+          ],
+          "Q_squared": [
+            "1/16",
+            "1/2",
+            "1"
+          ],
+          "all_original_channels_reconstructed": true,
+          "identities_verified_coefficientwise": true,
+          "original_source_equals_nonnegative_square_sum": true,
+          "phase_used_in_original_parameter": true
+        },
+        "source_interval": [
+          "0",
+          "1"
+        ],
+        "source_parameter_id": "pb00701-coprime-square:nonmatching-amplitude-original-t",
+        "source_sha256": "b25a3e704c39b6bc8837e17b8e48a63db5438db244beeaeda292c72cbd3f5184",
+        "source_zero_set": {
+          "all_physical_roots_have_order_two": true,
+          "closed_root_count": 0,
+          "complete_for_original_closed_source": true,
+          "continuum_excluded_by_coprime_and_moving_phase_premises": true,
+          "events": [],
+          "exterior_points": [
+            {
+              "coordinate": "0",
+              "event_ref": null,
+              "exact_value": null,
+              "global_smooth_multiplicity_claimed": false,
+              "inward_order": 0,
+              "inward_sign": 1,
+              "is_zero": false,
+              "nonzero_exact_scalar_value_claimed": false,
+              "outside_order": null,
+              "outside_sign": null,
+              "phase_turn": "0",
+              "positive_sign_from_complete_nonnegative_square_proof": true,
+              "side": "LEFT",
+              "value_sign": 1
+            },
+            {
+              "coordinate": "1",
+              "event_ref": null,
+              "exact_value": null,
+              "global_smooth_multiplicity_claimed": false,
+              "inward_order": 0,
+              "inward_sign": 1,
+              "is_zero": false,
+              "nonzero_exact_scalar_value_claimed": false,
+              "outside_order": null,
+              "outside_sign": null,
+              "phase_turn": "1",
+              "positive_sign_from_complete_nonnegative_square_proof": true,
+              "side": "RIGHT",
+              "value_sign": 1
+            }
+          ],
+          "exterior_root_count": 0,
+          "finite_event_list_applicable": true,
+          "global_cross_source_zero_deduplication_performed": false,
+          "kind": "FINITE_ORIGINAL_SOURCE_ZERO_SET",
+          "maximal_nonzero_cells": [
+            {
+              "cell_id": "CELL_0",
+              "crossed_nonzero_source_knots": [],
+              "interval": [
+                "0",
+                "1"
+              ],
+              "left_boundary": {
+                "coordinate": "0",
+                "kind": "SOURCE_EXTERIOR",
+                "side": "LEFT"
+              },
+              "left_included": true,
+              "right_boundary": {
+                "coordinate": "1",
+                "kind": "SOURCE_EXTERIOR",
+                "side": "RIGHT"
+              },
+              "right_included": true,
+              "sign": 1,
+              "source_piece_indices": [
+                0
+              ]
+            }
+          ],
+          "nonzero_sign_cells_applicable": true,
+          "nonzero_source_points_strictly_positive": true,
+          "source_interval": [
+            "0",
+            "1"
+          ],
+          "source_open_root_count": 0,
+          "true_source_knots": []
+        },
+        "source_zero_set_established": true,
+        "status": "ESTABLISHED_COPRIME_SQUARE_ORIGINAL_SOURCE",
+        "supplied_witness": {
+          "P": [
+            "-1/2",
+            "1"
+          ],
+          "Q": [
+            "1/4",
+            "1"
+          ]
+        },
+        "theorem_premises": {
+          "both_summands_nonnegative": true,
+          "half_integer_phase_candidates_are_exhaustive": true,
+          "no_common_amplitude_zero_from_verified_bezout": true,
+          "nonzero_phase_rate_makes_candidates_finite_and_distinct": true,
+          "numerical_sampling_used_as_completeness_authority": false,
+          "pi_irrationality_or_transcendence_used": false,
+          "pi_nonzero_suffices_for_positive_quadratic_jets": true,
+          "sine_and_cosine_never_vanish_simultaneously": true
+        },
+        "whole_source_lowering": {
+          "C0": [
+            "5/32",
+            "-1/4",
+            "1"
+          ],
+          "C1": [
+            "3/32",
+            "-3/4"
+          ],
+          "channels": [
+            {
+              "bernstein_basis_in_original_parameter": [
+                [
+                  "1",
+                  "-2",
+                  "1"
+                ],
+                [
+                  "0",
+                  "2",
+                  "-2"
+                ],
+                [
+                  "0",
+                  "0",
+                  "1"
+                ]
+              ],
+              "degree": 2,
+              "global_power_coefficients": [
+                "5/32",
+                "-1/4",
+                "1"
+              ],
+              "harmonic": 0,
+              "left_endpoint_value": "5/32",
+              "original_controls": [
+                "5/32",
+                "1/32",
+                "29/32"
+              ],
+              "original_knots": [
+                "0",
+                "0",
+                "0",
+                "1",
+                "1",
+                "1"
+              ],
+              "partition_of_unity_verified": true,
+              "right_endpoint_value": "29/32"
+            },
+            {
+              "bernstein_basis_in_original_parameter": [
+                [
+                  "1",
+                  "-1"
+                ],
+                [
+                  "0",
+                  "1"
+                ]
+              ],
+              "degree": 1,
+              "global_power_coefficients": [
+                "3/32",
+                "-3/4"
+              ],
+              "harmonic": 1,
+              "left_endpoint_value": "3/32",
+              "original_controls": [
+                "3/32",
+                "-21/32"
+              ],
+              "original_knots": [
+                "0",
+                "0",
+                "1",
+                "1"
+              ],
+              "partition_of_unity_verified": true,
+              "right_endpoint_value": "-21/32"
+            }
+          ],
+          "global_phase_turn_law": {
+            "offset": "0",
+            "rate": "1"
+          },
+          "original_source_interval": [
+            "0",
+            "1"
+          ],
+          "source_parameter_id": "pb00701-coprime-square:nonmatching-amplitude-original-t",
+          "source_sha256": "b25a3e704c39b6bc8837e17b8e48a63db5438db244beeaeda292c72cbd3f5184"
+        },
+        "witness_sha256": "b16a2cb1527c86546a694290c43119e2d318237bc57a67f803397b38fe39b61a"
+      },
+      "description": "An amplitude zero at a nonmatching phase is not a source zero",
+      "spec": {
+        "cos_splines": {
+          "0": {
+            "controls": [
+              "5/32",
+              "1/32",
+              "29/32"
+            ],
+            "degree": 2,
+            "knots": [
+              "0",
+              "0",
+              "0",
+              "1",
+              "1",
+              "1"
+            ]
+          },
+          "1": {
+            "controls": [
+              "3/32",
+              "-21/32"
+            ],
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1"
+            ]
+          }
+        },
+        "grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+        "parameter_hi": "1",
+        "parameter_lo": "0",
+        "phase_turn_offset": "0",
+        "phase_turn_rate": "1",
+        "sin_splines": {},
+        "source_parameter_id": "pb00701-coprime-square:nonmatching-amplitude-original-t"
+      }
+    },
+    {
+      "P": [
+        "-1",
+        "1"
+      ],
+      "Q": [
+        "-1/2",
+        "1"
+      ],
+      "case_id": "research:pb00701:coprime-square:interior-exterior",
+      "certificate": {
+        "bezout_identity": {
+          "A": [
+            "-2"
+          ],
+          "B": [
+            "2"
+          ],
+          "common_complex_zero_excluded_by_identity": true,
+          "euclidean_trace": [
+            {
+              "dividend": [
+                "-1",
+                "1"
+              ],
+              "divisor": [
+                "-1/2",
+                "1"
+              ],
+              "quotient": [
+                "1"
+              ],
+              "remainder": [
+                "-1/2"
+              ]
+            },
+            {
+              "dividend": [
+                "-1/2",
+                "1"
+              ],
+              "divisor": [
+                "-1/2"
+              ],
+              "quotient": [
+                "1",
+                "-2"
+              ],
+              "remainder": [
+                "0"
+              ]
+            }
+          ],
+          "identity_coefficients": [
+            "1"
+          ],
+          "identity_verified_coefficientwise": true,
+          "normalized_gcd": [
+            "1"
+          ]
+        },
+        "context_references": [
+          {
+            "bytes": 2255,
+            "git_blob": "6005fc55e2d18e71639e6bc31cfbc1597bf4a915",
+            "path": "docs/machining-completeness/31-PB00701-COUPLED-BSPLINE-BOUNDARY.md",
+            "sha256": "7cc6704ee4636e498d4f8575dfaea35462f33effc20fbef6d45d994b416f4515",
+            "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+          },
+          {
+            "bytes": 18930,
+            "git_blob": "4840bbca3847962b537684e0dffa871bd6de82a2",
+            "path": "research/machining-completeness/tasks/MC-038/pb00701-mtp-irreducible-boundary.json",
+            "sha256": "c645a88dc54232de9cf64c542b83c5d38caf835401f4eaec3cedc9744f7a3ff3",
+            "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+          },
+          {
+            "bytes": 18701,
+            "git_blob": "a086b625e1a6dea8bd202699d161167bb69cc9e7",
+            "path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+            "sha256": "2813a99ecc2bc179bf31f6c9166f9c3564516e67f2f256c0a984deee4ed0f692",
+            "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+          },
+          {
+            "bytes": 32020,
+            "git_blob": "4f9000549834c8f9b60ebc9925fadb71e9f96acf",
+            "path": "research/machining-completeness/tasks/MC-038/pb00701_mtp_irreducible_boundary.py",
+            "sha256": "29fb8a0b8ddbece891b31504aa1e661d2471a3a9fea22f1f630d9564da91886d",
+            "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+          }
+        ],
+        "evidence_class": "DETERMINISTIC_MODEL",
+        "normalized_witness": {
+          "P": [
+            "-1",
+            "1"
+          ],
+          "Q": [
+            "-1/2",
+            "1"
+          ]
+        },
+        "original_source": {
+          "cos_splines": {
+            "0": {
+              "controls": [
+                "5/8",
+                "-1/8",
+                "1/8"
+              ],
+              "degree": 2,
+              "knots": [
+                "0",
+                "0",
+                "0",
+                "1",
+                "1",
+                "1"
+              ]
+            },
+            "1": {
+              "controls": [
+                "3/8",
+                "-1/8"
+              ],
+              "degree": 1,
+              "knots": [
+                "0",
+                "0",
+                "1",
+                "1"
+              ]
+            }
+          },
+          "grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+          "parameter_hi": "1",
+          "parameter_lo": "0",
+          "phase_turn_offset": "0",
+          "phase_turn_rate": "1",
+          "sin_splines": {},
+          "source_parameter_id": "pb00701-coprime-square:interior-exterior-original-t"
+        },
+        "phase_candidates": {
+          "candidates": [
+            {
+              "P_value": "-1",
+              "Q_value": "-1/2",
+              "branch": "INTEGER_PHASE_P_ZERO",
+              "coordinate": "0",
+              "is_physical_zero": false,
+              "phase_index": 0,
+              "phase_turn": "0"
+            },
+            {
+              "P_value": "-1/2",
+              "Q_value": "0",
+              "branch": "ODD_HALF_PHASE_Q_ZERO",
+              "coordinate": "1/2",
+              "is_physical_zero": true,
+              "phase_index": 1,
+              "phase_turn": "1/2"
+            },
+            {
+              "P_value": "0",
+              "Q_value": "1/2",
+              "branch": "INTEGER_PHASE_P_ZERO",
+              "coordinate": "1",
+              "is_physical_zero": true,
+              "phase_index": 2,
+              "phase_turn": "1"
+            }
+          ],
+          "phase_range": {
+            "candidate_count": 3,
+            "closed_phase_range": [
+              "0",
+              "1"
+            ],
+            "first_phase_index": 0,
+            "last_phase_index": 2,
+            "negative_rate_reverses_phase_order": false,
+            "original_left_phase": "0",
+            "original_right_phase": "1"
+          }
+        },
+        "phase_turn_law": {
+          "offset": "0",
+          "rate": "1"
+        },
+        "production_authorized": false,
+        "proof_established": true,
+        "root_jets": [
+          {
+            "coordinate": "1/2",
+            "exact_first_derivative": "0",
+            "exact_function_value": "0",
+            "first_nonzero_order": 2,
+            "opposite_amplitude": "P",
+            "opposite_amplitude_value": "-1/2",
+            "original_phase_rate": "1",
+            "phase_index": 1,
+            "phase_turn": "1/2",
+            "pi_irrationality_or_transcendence_used": false,
+            "pi_nonzero_is_sufficient": true,
+            "pi_squared_coefficient_strictly_positive": true,
+            "quadratic_taylor_coefficient": {
+              "pi_squared": "1/4",
+              "rational": "1"
+            },
+            "vanishing_amplitude": "Q",
+            "vanishing_amplitude_first_derivative": "1",
+            "vanishing_amplitude_value": "0"
+          },
+          {
+            "coordinate": "1",
+            "exact_first_derivative": "0",
+            "exact_function_value": "0",
+            "first_nonzero_order": 2,
+            "opposite_amplitude": "Q",
+            "opposite_amplitude_value": "1/2",
+            "original_phase_rate": "1",
+            "phase_index": 2,
+            "phase_turn": "1",
+            "pi_irrationality_or_transcendence_used": false,
+            "pi_nonzero_is_sufficient": true,
+            "pi_squared_coefficient_strictly_positive": true,
+            "quadratic_taylor_coefficient": {
+              "pi_squared": "1/4",
+              "rational": "1"
+            },
+            "vanishing_amplitude": "P",
+            "vanishing_amplitude_first_derivative": "1",
+            "vanishing_amplitude_value": "0"
+          }
+        ],
+        "schema": "radicadsac-mc038-coprime-square-source/1.0/certificate",
+        "scope": {
+          "fixture_allowlist_used_for_admission": false,
+          "frozen_corpus_addition": false,
+          "generic_owner_route_repaired": false,
+          "generic_supplied_source_and_witness_checked": true,
+          "historical_source_completion_claimed": false,
+          "native_geometry_evidence": false,
+          "one_original_clamped_span": true,
+          "original_parameter_and_global_phase_preserved": true,
+          "valid_degree_elevation_admitted": true
+        },
+        "source_identity": {
+          "C0_equals_half_sum_of_squares": [
+            "5/8",
+            "-3/2",
+            "1"
+          ],
+          "C1_equals_half_difference_of_squares": [
+            "3/8",
+            "-1/2"
+          ],
+          "P_squared": [
+            "1",
+            "-2",
+            "1"
+          ],
+          "Q_squared": [
+            "1/4",
+            "-1",
+            "1"
+          ],
+          "all_original_channels_reconstructed": true,
+          "identities_verified_coefficientwise": true,
+          "original_source_equals_nonnegative_square_sum": true,
+          "phase_used_in_original_parameter": true
+        },
+        "source_interval": [
+          "0",
+          "1"
+        ],
+        "source_parameter_id": "pb00701-coprime-square:interior-exterior-original-t",
+        "source_sha256": "75a6dd09be88dd336f24906a7b15b79d9d192ec4eafdc2e11c14a6b7f5311c78",
+        "source_zero_set": {
+          "all_physical_roots_have_order_two": true,
+          "closed_root_count": 2,
+          "complete_for_original_closed_source": true,
+          "continuum_excluded_by_coprime_and_moving_phase_premises": true,
+          "events": [
+            {
+              "branch": "ODD_HALF_PHASE_Q_ZERO",
+              "classification": "TOUCHING",
+              "coordinate": {
+                "kind": "RATIONAL",
+                "value": "1/2"
+              },
+              "event_id": "ROOT_0",
+              "left_sign": 1,
+              "location": "SPAN_INTERIOR",
+              "order": {
+                "kind": "SMOOTH",
+                "value": 2
+              },
+              "phase_index": 1,
+              "phase_turn": "1/2",
+              "quadratic_jet": {
+                "coordinate": "1/2",
+                "exact_first_derivative": "0",
+                "exact_function_value": "0",
+                "first_nonzero_order": 2,
+                "opposite_amplitude": "P",
+                "opposite_amplitude_value": "-1/2",
+                "original_phase_rate": "1",
+                "phase_index": 1,
+                "phase_turn": "1/2",
+                "pi_irrationality_or_transcendence_used": false,
+                "pi_nonzero_is_sufficient": true,
+                "pi_squared_coefficient_strictly_positive": true,
+                "quadratic_taylor_coefficient": {
+                  "pi_squared": "1/4",
+                  "rational": "1"
+                },
+                "vanishing_amplitude": "Q",
+                "vanishing_amplitude_first_derivative": "1",
+                "vanishing_amplitude_value": "0"
+              },
+              "right_sign": 1,
+              "source_parameter_id": "pb00701-coprime-square:interior-exterior-original-t",
+              "source_piece_indices": [
+                0
+              ],
+              "source_sha256": "75a6dd09be88dd336f24906a7b15b79d9d192ec4eafdc2e11c14a6b7f5311c78"
+            },
+            {
+              "branch": "INTEGER_PHASE_P_ZERO",
+              "classification": "TOUCHING",
+              "coordinate": {
+                "kind": "RATIONAL",
+                "value": "1"
+              },
+              "event_id": "ROOT_1",
+              "left_sign": 1,
+              "location": "RIGHT_EXTERIOR",
+              "order": {
+                "global_smooth_multiplicity_claimed": false,
+                "kind": "ONE_SIDED",
+                "outside_order": null,
+                "side": "LEFT",
+                "value": 2
+              },
+              "phase_index": 2,
+              "phase_turn": "1",
+              "quadratic_jet": {
+                "coordinate": "1",
+                "exact_first_derivative": "0",
+                "exact_function_value": "0",
+                "first_nonzero_order": 2,
+                "opposite_amplitude": "Q",
+                "opposite_amplitude_value": "1/2",
+                "original_phase_rate": "1",
+                "phase_index": 2,
+                "phase_turn": "1",
+                "pi_irrationality_or_transcendence_used": false,
+                "pi_nonzero_is_sufficient": true,
+                "pi_squared_coefficient_strictly_positive": true,
+                "quadratic_taylor_coefficient": {
+                  "pi_squared": "1/4",
+                  "rational": "1"
+                },
+                "vanishing_amplitude": "P",
+                "vanishing_amplitude_first_derivative": "1",
+                "vanishing_amplitude_value": "0"
+              },
+              "right_sign": null,
+              "source_parameter_id": "pb00701-coprime-square:interior-exterior-original-t",
+              "source_piece_indices": [
+                0
+              ],
+              "source_sha256": "75a6dd09be88dd336f24906a7b15b79d9d192ec4eafdc2e11c14a6b7f5311c78"
+            }
+          ],
+          "exterior_points": [
+            {
+              "coordinate": "0",
+              "event_ref": null,
+              "exact_value": null,
+              "global_smooth_multiplicity_claimed": false,
+              "inward_order": 0,
+              "inward_sign": 1,
+              "is_zero": false,
+              "nonzero_exact_scalar_value_claimed": false,
+              "outside_order": null,
+              "outside_sign": null,
+              "phase_turn": "0",
+              "positive_sign_from_complete_nonnegative_square_proof": true,
+              "side": "LEFT",
+              "value_sign": 1
+            },
+            {
+              "coordinate": "1",
+              "event_ref": "ROOT_1",
+              "exact_value": "0",
+              "global_smooth_multiplicity_claimed": false,
+              "inward_order": 2,
+              "inward_sign": 1,
+              "is_zero": true,
+              "nonzero_exact_scalar_value_claimed": false,
+              "outside_order": null,
+              "outside_sign": null,
+              "phase_turn": "1",
+              "positive_sign_from_complete_nonnegative_square_proof": false,
+              "side": "RIGHT",
+              "value_sign": 0
+            }
+          ],
+          "exterior_root_count": 1,
+          "finite_event_list_applicable": true,
+          "global_cross_source_zero_deduplication_performed": false,
+          "kind": "FINITE_ORIGINAL_SOURCE_ZERO_SET",
+          "maximal_nonzero_cells": [
+            {
+              "cell_id": "CELL_0",
+              "crossed_nonzero_source_knots": [],
+              "interval": [
+                "0",
+                "1/2"
+              ],
+              "left_boundary": {
+                "coordinate": "0",
+                "kind": "SOURCE_EXTERIOR",
+                "side": "LEFT"
+              },
+              "left_included": true,
+              "right_boundary": {
+                "coordinate": "1/2",
+                "event_id": "ROOT_0",
+                "kind": "PHYSICAL_ZERO_EVENT",
+                "source_parameter_id": "pb00701-coprime-square:interior-exterior-original-t",
+                "source_sha256": "75a6dd09be88dd336f24906a7b15b79d9d192ec4eafdc2e11c14a6b7f5311c78"
+              },
+              "right_included": false,
+              "sign": 1,
+              "source_piece_indices": [
+                0
+              ]
+            },
+            {
+              "cell_id": "CELL_1",
+              "crossed_nonzero_source_knots": [],
+              "interval": [
+                "1/2",
+                "1"
+              ],
+              "left_boundary": {
+                "coordinate": "1/2",
+                "event_id": "ROOT_0",
+                "kind": "PHYSICAL_ZERO_EVENT",
+                "source_parameter_id": "pb00701-coprime-square:interior-exterior-original-t",
+                "source_sha256": "75a6dd09be88dd336f24906a7b15b79d9d192ec4eafdc2e11c14a6b7f5311c78"
+              },
+              "left_included": false,
+              "right_boundary": {
+                "coordinate": "1",
+                "event_id": "ROOT_1",
+                "kind": "PHYSICAL_ZERO_EVENT",
+                "source_parameter_id": "pb00701-coprime-square:interior-exterior-original-t",
+                "source_sha256": "75a6dd09be88dd336f24906a7b15b79d9d192ec4eafdc2e11c14a6b7f5311c78"
+              },
+              "right_included": false,
+              "sign": 1,
+              "source_piece_indices": [
+                0
+              ]
+            }
+          ],
+          "nonzero_sign_cells_applicable": true,
+          "nonzero_source_points_strictly_positive": true,
+          "source_interval": [
+            "0",
+            "1"
+          ],
+          "source_open_root_count": 1,
+          "true_source_knots": []
+        },
+        "source_zero_set_established": true,
+        "status": "ESTABLISHED_COPRIME_SQUARE_ORIGINAL_SOURCE",
+        "supplied_witness": {
+          "P": [
+            "-1",
+            "1"
+          ],
+          "Q": [
+            "-1/2",
+            "1"
+          ]
+        },
+        "theorem_premises": {
+          "both_summands_nonnegative": true,
+          "half_integer_phase_candidates_are_exhaustive": true,
+          "no_common_amplitude_zero_from_verified_bezout": true,
+          "nonzero_phase_rate_makes_candidates_finite_and_distinct": true,
+          "numerical_sampling_used_as_completeness_authority": false,
+          "pi_irrationality_or_transcendence_used": false,
+          "pi_nonzero_suffices_for_positive_quadratic_jets": true,
+          "sine_and_cosine_never_vanish_simultaneously": true
+        },
+        "whole_source_lowering": {
+          "C0": [
+            "5/8",
+            "-3/2",
+            "1"
+          ],
+          "C1": [
+            "3/8",
+            "-1/2"
+          ],
+          "channels": [
+            {
+              "bernstein_basis_in_original_parameter": [
+                [
+                  "1",
+                  "-2",
+                  "1"
+                ],
+                [
+                  "0",
+                  "2",
+                  "-2"
+                ],
+                [
+                  "0",
+                  "0",
+                  "1"
+                ]
+              ],
+              "degree": 2,
+              "global_power_coefficients": [
+                "5/8",
+                "-3/2",
+                "1"
+              ],
+              "harmonic": 0,
+              "left_endpoint_value": "5/8",
+              "original_controls": [
+                "5/8",
+                "-1/8",
+                "1/8"
+              ],
+              "original_knots": [
+                "0",
+                "0",
+                "0",
+                "1",
+                "1",
+                "1"
+              ],
+              "partition_of_unity_verified": true,
+              "right_endpoint_value": "1/8"
+            },
+            {
+              "bernstein_basis_in_original_parameter": [
+                [
+                  "1",
+                  "-1"
+                ],
+                [
+                  "0",
+                  "1"
+                ]
+              ],
+              "degree": 1,
+              "global_power_coefficients": [
+                "3/8",
+                "-1/2"
+              ],
+              "harmonic": 1,
+              "left_endpoint_value": "3/8",
+              "original_controls": [
+                "3/8",
+                "-1/8"
+              ],
+              "original_knots": [
+                "0",
+                "0",
+                "1",
+                "1"
+              ],
+              "partition_of_unity_verified": true,
+              "right_endpoint_value": "-1/8"
+            }
+          ],
+          "global_phase_turn_law": {
+            "offset": "0",
+            "rate": "1"
+          },
+          "original_source_interval": [
+            "0",
+            "1"
+          ],
+          "source_parameter_id": "pb00701-coprime-square:interior-exterior-original-t",
+          "source_sha256": "75a6dd09be88dd336f24906a7b15b79d9d192ec4eafdc2e11c14a6b7f5311c78"
+        },
+        "witness_sha256": "c1b524f37d5a7d5fdd26abdf0ab5283a36ba41068421c7a8a70fd8669c965be3"
+      },
+      "description": "One interior and one right exterior touch",
+      "spec": {
+        "cos_splines": {
+          "0": {
+            "controls": [
+              "5/8",
+              "-1/8",
+              "1/8"
+            ],
+            "degree": 2,
+            "knots": [
+              "0",
+              "0",
+              "0",
+              "1",
+              "1",
+              "1"
+            ]
+          },
+          "1": {
+            "controls": [
+              "3/8",
+              "-1/8"
+            ],
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1"
+            ]
+          }
+        },
+        "grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+        "parameter_hi": "1",
+        "parameter_lo": "0",
+        "phase_turn_offset": "0",
+        "phase_turn_rate": "1",
+        "sin_splines": {},
+        "source_parameter_id": "pb00701-coprime-square:interior-exterior-original-t"
+      }
+    },
+    {
+      "P": [
+        "0",
+        "-1",
+        "1"
+      ],
+      "Q": [
+        "-1/2",
+        "1"
+      ],
+      "case_id": "research:pb00701:coprime-square:three-closed-touches",
+      "certificate": {
+        "bezout_identity": {
+          "A": [
+            "-4"
+          ],
+          "B": [
+            "-2",
+            "4"
+          ],
+          "common_complex_zero_excluded_by_identity": true,
+          "euclidean_trace": [
+            {
+              "dividend": [
+                "0",
+                "-1",
+                "1"
+              ],
+              "divisor": [
+                "-1/2",
+                "1"
+              ],
+              "quotient": [
+                "-1/2",
+                "1"
+              ],
+              "remainder": [
+                "-1/4"
+              ]
+            },
+            {
+              "dividend": [
+                "-1/2",
+                "1"
+              ],
+              "divisor": [
+                "-1/4"
+              ],
+              "quotient": [
+                "2",
+                "-4"
+              ],
+              "remainder": [
+                "0"
+              ]
+            }
+          ],
+          "identity_coefficients": [
+            "1"
+          ],
+          "identity_verified_coefficientwise": true,
+          "normalized_gcd": [
+            "1"
+          ]
+        },
+        "context_references": [
+          {
+            "bytes": 2255,
+            "git_blob": "6005fc55e2d18e71639e6bc31cfbc1597bf4a915",
+            "path": "docs/machining-completeness/31-PB00701-COUPLED-BSPLINE-BOUNDARY.md",
+            "sha256": "7cc6704ee4636e498d4f8575dfaea35462f33effc20fbef6d45d994b416f4515",
+            "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+          },
+          {
+            "bytes": 18930,
+            "git_blob": "4840bbca3847962b537684e0dffa871bd6de82a2",
+            "path": "research/machining-completeness/tasks/MC-038/pb00701-mtp-irreducible-boundary.json",
+            "sha256": "c645a88dc54232de9cf64c542b83c5d38caf835401f4eaec3cedc9744f7a3ff3",
+            "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+          },
+          {
+            "bytes": 18701,
+            "git_blob": "a086b625e1a6dea8bd202699d161167bb69cc9e7",
+            "path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+            "sha256": "2813a99ecc2bc179bf31f6c9166f9c3564516e67f2f256c0a984deee4ed0f692",
+            "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+          },
+          {
+            "bytes": 32020,
+            "git_blob": "4f9000549834c8f9b60ebc9925fadb71e9f96acf",
+            "path": "research/machining-completeness/tasks/MC-038/pb00701_mtp_irreducible_boundary.py",
+            "sha256": "29fb8a0b8ddbece891b31504aa1e661d2471a3a9fea22f1f630d9564da91886d",
+            "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+          }
+        ],
+        "evidence_class": "DETERMINISTIC_MODEL",
+        "normalized_witness": {
+          "P": [
+            "0",
+            "-1",
+            "1"
+          ],
+          "Q": [
+            "-1/2",
+            "1"
+          ]
+        },
+        "original_source": {
+          "cos_splines": {
+            "0": {
+              "controls": [
+                "1/8",
+                "0",
+                "1/24",
+                "0",
+                "1/8"
+              ],
+              "degree": 4,
+              "knots": [
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "1",
+                "1",
+                "1",
+                "1",
+                "1"
+              ]
+            },
+            "1": {
+              "controls": [
+                "-1/8",
+                "0",
+                "1/8",
+                "0",
+                "-1/8"
+              ],
+              "degree": 4,
+              "knots": [
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "1",
+                "1",
+                "1",
+                "1",
+                "1"
+              ]
+            }
+          },
+          "grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+          "parameter_hi": "1",
+          "parameter_lo": "0",
+          "phase_turn_offset": "0",
+          "phase_turn_rate": "1",
+          "sin_splines": {},
+          "source_parameter_id": "pb00701-coprime-square:three-closed-touches-original-t"
+        },
+        "phase_candidates": {
+          "candidates": [
+            {
+              "P_value": "0",
+              "Q_value": "-1/2",
+              "branch": "INTEGER_PHASE_P_ZERO",
+              "coordinate": "0",
+              "is_physical_zero": true,
+              "phase_index": 0,
+              "phase_turn": "0"
+            },
+            {
+              "P_value": "-1/4",
+              "Q_value": "0",
+              "branch": "ODD_HALF_PHASE_Q_ZERO",
+              "coordinate": "1/2",
+              "is_physical_zero": true,
+              "phase_index": 1,
+              "phase_turn": "1/2"
+            },
+            {
+              "P_value": "0",
+              "Q_value": "1/2",
+              "branch": "INTEGER_PHASE_P_ZERO",
+              "coordinate": "1",
+              "is_physical_zero": true,
+              "phase_index": 2,
+              "phase_turn": "1"
+            }
+          ],
+          "phase_range": {
+            "candidate_count": 3,
+            "closed_phase_range": [
+              "0",
+              "1"
+            ],
+            "first_phase_index": 0,
+            "last_phase_index": 2,
+            "negative_rate_reverses_phase_order": false,
+            "original_left_phase": "0",
+            "original_right_phase": "1"
+          }
+        },
+        "phase_turn_law": {
+          "offset": "0",
+          "rate": "1"
+        },
+        "production_authorized": false,
+        "proof_established": true,
+        "root_jets": [
+          {
+            "coordinate": "0",
+            "exact_first_derivative": "0",
+            "exact_function_value": "0",
+            "first_nonzero_order": 2,
+            "opposite_amplitude": "Q",
+            "opposite_amplitude_value": "-1/2",
+            "original_phase_rate": "1",
+            "phase_index": 0,
+            "phase_turn": "0",
+            "pi_irrationality_or_transcendence_used": false,
+            "pi_nonzero_is_sufficient": true,
+            "pi_squared_coefficient_strictly_positive": true,
+            "quadratic_taylor_coefficient": {
+              "pi_squared": "1/4",
+              "rational": "1"
+            },
+            "vanishing_amplitude": "P",
+            "vanishing_amplitude_first_derivative": "-1",
+            "vanishing_amplitude_value": "0"
+          },
+          {
+            "coordinate": "1/2",
+            "exact_first_derivative": "0",
+            "exact_function_value": "0",
+            "first_nonzero_order": 2,
+            "opposite_amplitude": "P",
+            "opposite_amplitude_value": "-1/4",
+            "original_phase_rate": "1",
+            "phase_index": 1,
+            "phase_turn": "1/2",
+            "pi_irrationality_or_transcendence_used": false,
+            "pi_nonzero_is_sufficient": true,
+            "pi_squared_coefficient_strictly_positive": true,
+            "quadratic_taylor_coefficient": {
+              "pi_squared": "1/16",
+              "rational": "1"
+            },
+            "vanishing_amplitude": "Q",
+            "vanishing_amplitude_first_derivative": "1",
+            "vanishing_amplitude_value": "0"
+          },
+          {
+            "coordinate": "1",
+            "exact_first_derivative": "0",
+            "exact_function_value": "0",
+            "first_nonzero_order": 2,
+            "opposite_amplitude": "Q",
+            "opposite_amplitude_value": "1/2",
+            "original_phase_rate": "1",
+            "phase_index": 2,
+            "phase_turn": "1",
+            "pi_irrationality_or_transcendence_used": false,
+            "pi_nonzero_is_sufficient": true,
+            "pi_squared_coefficient_strictly_positive": true,
+            "quadratic_taylor_coefficient": {
+              "pi_squared": "1/4",
+              "rational": "1"
+            },
+            "vanishing_amplitude": "P",
+            "vanishing_amplitude_first_derivative": "1",
+            "vanishing_amplitude_value": "0"
+          }
+        ],
+        "schema": "radicadsac-mc038-coprime-square-source/1.0/certificate",
+        "scope": {
+          "fixture_allowlist_used_for_admission": false,
+          "frozen_corpus_addition": false,
+          "generic_owner_route_repaired": false,
+          "generic_supplied_source_and_witness_checked": true,
+          "historical_source_completion_claimed": false,
+          "native_geometry_evidence": false,
+          "one_original_clamped_span": true,
+          "original_parameter_and_global_phase_preserved": true,
+          "valid_degree_elevation_admitted": true
+        },
+        "source_identity": {
+          "C0_equals_half_sum_of_squares": [
+            "1/8",
+            "-1/2",
+            "1",
+            "-1",
+            "1/2"
+          ],
+          "C1_equals_half_difference_of_squares": [
+            "-1/8",
+            "1/2",
+            "0",
+            "-1",
+            "1/2"
+          ],
+          "P_squared": [
+            "0",
+            "0",
+            "1",
+            "-2",
+            "1"
+          ],
+          "Q_squared": [
+            "1/4",
+            "-1",
+            "1"
+          ],
+          "all_original_channels_reconstructed": true,
+          "identities_verified_coefficientwise": true,
+          "original_source_equals_nonnegative_square_sum": true,
+          "phase_used_in_original_parameter": true
+        },
+        "source_interval": [
+          "0",
+          "1"
+        ],
+        "source_parameter_id": "pb00701-coprime-square:three-closed-touches-original-t",
+        "source_sha256": "61e31f44ca3d277604e46fbd2c5453a3fa332d0d6ae64e3c5be684e993febcdb",
+        "source_zero_set": {
+          "all_physical_roots_have_order_two": true,
+          "closed_root_count": 3,
+          "complete_for_original_closed_source": true,
+          "continuum_excluded_by_coprime_and_moving_phase_premises": true,
+          "events": [
+            {
+              "branch": "INTEGER_PHASE_P_ZERO",
+              "classification": "TOUCHING",
+              "coordinate": {
+                "kind": "RATIONAL",
+                "value": "0"
+              },
+              "event_id": "ROOT_0",
+              "left_sign": null,
+              "location": "LEFT_EXTERIOR",
+              "order": {
+                "global_smooth_multiplicity_claimed": false,
+                "kind": "ONE_SIDED",
+                "outside_order": null,
+                "side": "RIGHT",
+                "value": 2
+              },
+              "phase_index": 0,
+              "phase_turn": "0",
+              "quadratic_jet": {
+                "coordinate": "0",
+                "exact_first_derivative": "0",
+                "exact_function_value": "0",
+                "first_nonzero_order": 2,
+                "opposite_amplitude": "Q",
+                "opposite_amplitude_value": "-1/2",
+                "original_phase_rate": "1",
+                "phase_index": 0,
+                "phase_turn": "0",
+                "pi_irrationality_or_transcendence_used": false,
+                "pi_nonzero_is_sufficient": true,
+                "pi_squared_coefficient_strictly_positive": true,
+                "quadratic_taylor_coefficient": {
+                  "pi_squared": "1/4",
+                  "rational": "1"
+                },
+                "vanishing_amplitude": "P",
+                "vanishing_amplitude_first_derivative": "-1",
+                "vanishing_amplitude_value": "0"
+              },
+              "right_sign": 1,
+              "source_parameter_id": "pb00701-coprime-square:three-closed-touches-original-t",
+              "source_piece_indices": [
+                0
+              ],
+              "source_sha256": "61e31f44ca3d277604e46fbd2c5453a3fa332d0d6ae64e3c5be684e993febcdb"
+            },
+            {
+              "branch": "ODD_HALF_PHASE_Q_ZERO",
+              "classification": "TOUCHING",
+              "coordinate": {
+                "kind": "RATIONAL",
+                "value": "1/2"
+              },
+              "event_id": "ROOT_1",
+              "left_sign": 1,
+              "location": "SPAN_INTERIOR",
+              "order": {
+                "kind": "SMOOTH",
+                "value": 2
+              },
+              "phase_index": 1,
+              "phase_turn": "1/2",
+              "quadratic_jet": {
+                "coordinate": "1/2",
+                "exact_first_derivative": "0",
+                "exact_function_value": "0",
+                "first_nonzero_order": 2,
+                "opposite_amplitude": "P",
+                "opposite_amplitude_value": "-1/4",
+                "original_phase_rate": "1",
+                "phase_index": 1,
+                "phase_turn": "1/2",
+                "pi_irrationality_or_transcendence_used": false,
+                "pi_nonzero_is_sufficient": true,
+                "pi_squared_coefficient_strictly_positive": true,
+                "quadratic_taylor_coefficient": {
+                  "pi_squared": "1/16",
+                  "rational": "1"
+                },
+                "vanishing_amplitude": "Q",
+                "vanishing_amplitude_first_derivative": "1",
+                "vanishing_amplitude_value": "0"
+              },
+              "right_sign": 1,
+              "source_parameter_id": "pb00701-coprime-square:three-closed-touches-original-t",
+              "source_piece_indices": [
+                0
+              ],
+              "source_sha256": "61e31f44ca3d277604e46fbd2c5453a3fa332d0d6ae64e3c5be684e993febcdb"
+            },
+            {
+              "branch": "INTEGER_PHASE_P_ZERO",
+              "classification": "TOUCHING",
+              "coordinate": {
+                "kind": "RATIONAL",
+                "value": "1"
+              },
+              "event_id": "ROOT_2",
+              "left_sign": 1,
+              "location": "RIGHT_EXTERIOR",
+              "order": {
+                "global_smooth_multiplicity_claimed": false,
+                "kind": "ONE_SIDED",
+                "outside_order": null,
+                "side": "LEFT",
+                "value": 2
+              },
+              "phase_index": 2,
+              "phase_turn": "1",
+              "quadratic_jet": {
+                "coordinate": "1",
+                "exact_first_derivative": "0",
+                "exact_function_value": "0",
+                "first_nonzero_order": 2,
+                "opposite_amplitude": "Q",
+                "opposite_amplitude_value": "1/2",
+                "original_phase_rate": "1",
+                "phase_index": 2,
+                "phase_turn": "1",
+                "pi_irrationality_or_transcendence_used": false,
+                "pi_nonzero_is_sufficient": true,
+                "pi_squared_coefficient_strictly_positive": true,
+                "quadratic_taylor_coefficient": {
+                  "pi_squared": "1/4",
+                  "rational": "1"
+                },
+                "vanishing_amplitude": "P",
+                "vanishing_amplitude_first_derivative": "1",
+                "vanishing_amplitude_value": "0"
+              },
+              "right_sign": null,
+              "source_parameter_id": "pb00701-coprime-square:three-closed-touches-original-t",
+              "source_piece_indices": [
+                0
+              ],
+              "source_sha256": "61e31f44ca3d277604e46fbd2c5453a3fa332d0d6ae64e3c5be684e993febcdb"
+            }
+          ],
+          "exterior_points": [
+            {
+              "coordinate": "0",
+              "event_ref": "ROOT_0",
+              "exact_value": "0",
+              "global_smooth_multiplicity_claimed": false,
+              "inward_order": 2,
+              "inward_sign": 1,
+              "is_zero": true,
+              "nonzero_exact_scalar_value_claimed": false,
+              "outside_order": null,
+              "outside_sign": null,
+              "phase_turn": "0",
+              "positive_sign_from_complete_nonnegative_square_proof": false,
+              "side": "LEFT",
+              "value_sign": 0
+            },
+            {
+              "coordinate": "1",
+              "event_ref": "ROOT_2",
+              "exact_value": "0",
+              "global_smooth_multiplicity_claimed": false,
+              "inward_order": 2,
+              "inward_sign": 1,
+              "is_zero": true,
+              "nonzero_exact_scalar_value_claimed": false,
+              "outside_order": null,
+              "outside_sign": null,
+              "phase_turn": "1",
+              "positive_sign_from_complete_nonnegative_square_proof": false,
+              "side": "RIGHT",
+              "value_sign": 0
+            }
+          ],
+          "exterior_root_count": 2,
+          "finite_event_list_applicable": true,
+          "global_cross_source_zero_deduplication_performed": false,
+          "kind": "FINITE_ORIGINAL_SOURCE_ZERO_SET",
+          "maximal_nonzero_cells": [
+            {
+              "cell_id": "CELL_0",
+              "crossed_nonzero_source_knots": [],
+              "interval": [
+                "0",
+                "1/2"
+              ],
+              "left_boundary": {
+                "coordinate": "0",
+                "event_id": "ROOT_0",
+                "kind": "PHYSICAL_ZERO_EVENT",
+                "source_parameter_id": "pb00701-coprime-square:three-closed-touches-original-t",
+                "source_sha256": "61e31f44ca3d277604e46fbd2c5453a3fa332d0d6ae64e3c5be684e993febcdb"
+              },
+              "left_included": false,
+              "right_boundary": {
+                "coordinate": "1/2",
+                "event_id": "ROOT_1",
+                "kind": "PHYSICAL_ZERO_EVENT",
+                "source_parameter_id": "pb00701-coprime-square:three-closed-touches-original-t",
+                "source_sha256": "61e31f44ca3d277604e46fbd2c5453a3fa332d0d6ae64e3c5be684e993febcdb"
+              },
+              "right_included": false,
+              "sign": 1,
+              "source_piece_indices": [
+                0
+              ]
+            },
+            {
+              "cell_id": "CELL_1",
+              "crossed_nonzero_source_knots": [],
+              "interval": [
+                "1/2",
+                "1"
+              ],
+              "left_boundary": {
+                "coordinate": "1/2",
+                "event_id": "ROOT_1",
+                "kind": "PHYSICAL_ZERO_EVENT",
+                "source_parameter_id": "pb00701-coprime-square:three-closed-touches-original-t",
+                "source_sha256": "61e31f44ca3d277604e46fbd2c5453a3fa332d0d6ae64e3c5be684e993febcdb"
+              },
+              "left_included": false,
+              "right_boundary": {
+                "coordinate": "1",
+                "event_id": "ROOT_2",
+                "kind": "PHYSICAL_ZERO_EVENT",
+                "source_parameter_id": "pb00701-coprime-square:three-closed-touches-original-t",
+                "source_sha256": "61e31f44ca3d277604e46fbd2c5453a3fa332d0d6ae64e3c5be684e993febcdb"
+              },
+              "right_included": false,
+              "sign": 1,
+              "source_piece_indices": [
+                0
+              ]
+            }
+          ],
+          "nonzero_sign_cells_applicable": true,
+          "nonzero_source_points_strictly_positive": true,
+          "source_interval": [
+            "0",
+            "1"
+          ],
+          "source_open_root_count": 1,
+          "true_source_knots": []
+        },
+        "source_zero_set_established": true,
+        "status": "ESTABLISHED_COPRIME_SQUARE_ORIGINAL_SOURCE",
+        "supplied_witness": {
+          "P": [
+            "0",
+            "-1",
+            "1"
+          ],
+          "Q": [
+            "-1/2",
+            "1"
+          ]
+        },
+        "theorem_premises": {
+          "both_summands_nonnegative": true,
+          "half_integer_phase_candidates_are_exhaustive": true,
+          "no_common_amplitude_zero_from_verified_bezout": true,
+          "nonzero_phase_rate_makes_candidates_finite_and_distinct": true,
+          "numerical_sampling_used_as_completeness_authority": false,
+          "pi_irrationality_or_transcendence_used": false,
+          "pi_nonzero_suffices_for_positive_quadratic_jets": true,
+          "sine_and_cosine_never_vanish_simultaneously": true
+        },
+        "whole_source_lowering": {
+          "C0": [
+            "1/8",
+            "-1/2",
+            "1",
+            "-1",
+            "1/2"
+          ],
+          "C1": [
+            "-1/8",
+            "1/2",
+            "0",
+            "-1",
+            "1/2"
+          ],
+          "channels": [
+            {
+              "bernstein_basis_in_original_parameter": [
+                [
+                  "1",
+                  "-4",
+                  "6",
+                  "-4",
+                  "1"
+                ],
+                [
+                  "0",
+                  "4",
+                  "-12",
+                  "12",
+                  "-4"
+                ],
+                [
+                  "0",
+                  "0",
+                  "6",
+                  "-12",
+                  "6"
+                ],
+                [
+                  "0",
+                  "0",
+                  "0",
+                  "4",
+                  "-4"
+                ],
+                [
+                  "0",
+                  "0",
+                  "0",
+                  "0",
+                  "1"
+                ]
+              ],
+              "degree": 4,
+              "global_power_coefficients": [
+                "1/8",
+                "-1/2",
+                "1",
+                "-1",
+                "1/2"
+              ],
+              "harmonic": 0,
+              "left_endpoint_value": "1/8",
+              "original_controls": [
+                "1/8",
+                "0",
+                "1/24",
+                "0",
+                "1/8"
+              ],
+              "original_knots": [
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "1",
+                "1",
+                "1",
+                "1",
+                "1"
+              ],
+              "partition_of_unity_verified": true,
+              "right_endpoint_value": "1/8"
+            },
+            {
+              "bernstein_basis_in_original_parameter": [
+                [
+                  "1",
+                  "-4",
+                  "6",
+                  "-4",
+                  "1"
+                ],
+                [
+                  "0",
+                  "4",
+                  "-12",
+                  "12",
+                  "-4"
+                ],
+                [
+                  "0",
+                  "0",
+                  "6",
+                  "-12",
+                  "6"
+                ],
+                [
+                  "0",
+                  "0",
+                  "0",
+                  "4",
+                  "-4"
+                ],
+                [
+                  "0",
+                  "0",
+                  "0",
+                  "0",
+                  "1"
+                ]
+              ],
+              "degree": 4,
+              "global_power_coefficients": [
+                "-1/8",
+                "1/2",
+                "0",
+                "-1",
+                "1/2"
+              ],
+              "harmonic": 1,
+              "left_endpoint_value": "-1/8",
+              "original_controls": [
+                "-1/8",
+                "0",
+                "1/8",
+                "0",
+                "-1/8"
+              ],
+              "original_knots": [
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "1",
+                "1",
+                "1",
+                "1",
+                "1"
+              ],
+              "partition_of_unity_verified": true,
+              "right_endpoint_value": "-1/8"
+            }
+          ],
+          "global_phase_turn_law": {
+            "offset": "0",
+            "rate": "1"
+          },
+          "original_source_interval": [
+            "0",
+            "1"
+          ],
+          "source_parameter_id": "pb00701-coprime-square:three-closed-touches-original-t",
+          "source_sha256": "61e31f44ca3d277604e46fbd2c5453a3fa332d0d6ae64e3c5be684e993febcdb"
+        },
+        "witness_sha256": "3e8d2e4f7d8c87846ba51f01d83a138167a7b68e7a88c8bf4bb49d9ea72c3282"
+      },
+      "description": "Two exterior touches and one interior touch",
+      "spec": {
+        "cos_splines": {
+          "0": {
+            "controls": [
+              "1/8",
+              "0",
+              "1/24",
+              "0",
+              "1/8"
+            ],
+            "degree": 4,
+            "knots": [
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "1",
+              "1",
+              "1",
+              "1",
+              "1"
+            ]
+          },
+          "1": {
+            "controls": [
+              "-1/8",
+              "0",
+              "1/8",
+              "0",
+              "-1/8"
+            ],
+            "degree": 4,
+            "knots": [
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "1",
+              "1",
+              "1",
+              "1",
+              "1"
+            ]
+          }
+        },
+        "grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+        "parameter_hi": "1",
+        "parameter_lo": "0",
+        "phase_turn_offset": "0",
+        "phase_turn_rate": "1",
+        "sin_splines": {},
+        "source_parameter_id": "pb00701-coprime-square:three-closed-touches-original-t"
+      }
+    },
+    {
+      "P": [
+        "0"
+      ],
+      "Q": [
+        "1"
+      ],
+      "case_id": "research:pb00701:coprime-square:zero-p",
+      "certificate": {
+        "bezout_identity": {
+          "A": [
+            "0"
+          ],
+          "B": [
+            "1"
+          ],
+          "common_complex_zero_excluded_by_identity": true,
+          "euclidean_trace": [
+            {
+              "dividend": [
+                "0"
+              ],
+              "divisor": [
+                "1"
+              ],
+              "quotient": [
+                "0"
+              ],
+              "remainder": [
+                "0"
+              ]
+            }
+          ],
+          "identity_coefficients": [
+            "1"
+          ],
+          "identity_verified_coefficientwise": true,
+          "normalized_gcd": [
+            "1"
+          ]
+        },
+        "context_references": [
+          {
+            "bytes": 2255,
+            "git_blob": "6005fc55e2d18e71639e6bc31cfbc1597bf4a915",
+            "path": "docs/machining-completeness/31-PB00701-COUPLED-BSPLINE-BOUNDARY.md",
+            "sha256": "7cc6704ee4636e498d4f8575dfaea35462f33effc20fbef6d45d994b416f4515",
+            "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+          },
+          {
+            "bytes": 18930,
+            "git_blob": "4840bbca3847962b537684e0dffa871bd6de82a2",
+            "path": "research/machining-completeness/tasks/MC-038/pb00701-mtp-irreducible-boundary.json",
+            "sha256": "c645a88dc54232de9cf64c542b83c5d38caf835401f4eaec3cedc9744f7a3ff3",
+            "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+          },
+          {
+            "bytes": 18701,
+            "git_blob": "a086b625e1a6dea8bd202699d161167bb69cc9e7",
+            "path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+            "sha256": "2813a99ecc2bc179bf31f6c9166f9c3564516e67f2f256c0a984deee4ed0f692",
+            "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+          },
+          {
+            "bytes": 32020,
+            "git_blob": "4f9000549834c8f9b60ebc9925fadb71e9f96acf",
+            "path": "research/machining-completeness/tasks/MC-038/pb00701_mtp_irreducible_boundary.py",
+            "sha256": "29fb8a0b8ddbece891b31504aa1e661d2471a3a9fea22f1f630d9564da91886d",
+            "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+          }
+        ],
+        "evidence_class": "DETERMINISTIC_MODEL",
+        "normalized_witness": {
+          "P": [
+            "0"
+          ],
+          "Q": [
+            "1"
+          ]
+        },
+        "original_source": {
+          "cos_splines": {
+            "0": {
+              "controls": [
+                "1/2"
+              ],
+              "degree": 0,
+              "knots": [
+                "0",
+                "2"
+              ]
+            },
+            "1": {
+              "controls": [
+                "-1/2"
+              ],
+              "degree": 0,
+              "knots": [
+                "0",
+                "2"
+              ]
+            }
+          },
+          "grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+          "parameter_hi": "2",
+          "parameter_lo": "0",
+          "phase_turn_offset": "0",
+          "phase_turn_rate": "1",
+          "sin_splines": {},
+          "source_parameter_id": "pb00701-coprime-square:zero-p-original-t"
+        },
+        "phase_candidates": {
+          "candidates": [
+            {
+              "P_value": "0",
+              "Q_value": "1",
+              "branch": "INTEGER_PHASE_P_ZERO",
+              "coordinate": "0",
+              "is_physical_zero": true,
+              "phase_index": 0,
+              "phase_turn": "0"
+            },
+            {
+              "P_value": "0",
+              "Q_value": "1",
+              "branch": "ODD_HALF_PHASE_Q_ZERO",
+              "coordinate": "1/2",
+              "is_physical_zero": false,
+              "phase_index": 1,
+              "phase_turn": "1/2"
+            },
+            {
+              "P_value": "0",
+              "Q_value": "1",
+              "branch": "INTEGER_PHASE_P_ZERO",
+              "coordinate": "1",
+              "is_physical_zero": true,
+              "phase_index": 2,
+              "phase_turn": "1"
+            },
+            {
+              "P_value": "0",
+              "Q_value": "1",
+              "branch": "ODD_HALF_PHASE_Q_ZERO",
+              "coordinate": "3/2",
+              "is_physical_zero": false,
+              "phase_index": 3,
+              "phase_turn": "3/2"
+            },
+            {
+              "P_value": "0",
+              "Q_value": "1",
+              "branch": "INTEGER_PHASE_P_ZERO",
+              "coordinate": "2",
+              "is_physical_zero": true,
+              "phase_index": 4,
+              "phase_turn": "2"
+            }
+          ],
+          "phase_range": {
+            "candidate_count": 5,
+            "closed_phase_range": [
+              "0",
+              "2"
+            ],
+            "first_phase_index": 0,
+            "last_phase_index": 4,
+            "negative_rate_reverses_phase_order": false,
+            "original_left_phase": "0",
+            "original_right_phase": "2"
+          }
+        },
+        "phase_turn_law": {
+          "offset": "0",
+          "rate": "1"
+        },
+        "production_authorized": false,
+        "proof_established": true,
+        "root_jets": [
+          {
+            "coordinate": "0",
+            "exact_first_derivative": "0",
+            "exact_function_value": "0",
+            "first_nonzero_order": 2,
+            "opposite_amplitude": "Q",
+            "opposite_amplitude_value": "1",
+            "original_phase_rate": "1",
+            "phase_index": 0,
+            "phase_turn": "0",
+            "pi_irrationality_or_transcendence_used": false,
+            "pi_nonzero_is_sufficient": true,
+            "pi_squared_coefficient_strictly_positive": true,
+            "quadratic_taylor_coefficient": {
+              "pi_squared": "1",
+              "rational": "0"
+            },
+            "vanishing_amplitude": "P",
+            "vanishing_amplitude_first_derivative": "0",
+            "vanishing_amplitude_value": "0"
+          },
+          {
+            "coordinate": "1",
+            "exact_first_derivative": "0",
+            "exact_function_value": "0",
+            "first_nonzero_order": 2,
+            "opposite_amplitude": "Q",
+            "opposite_amplitude_value": "1",
+            "original_phase_rate": "1",
+            "phase_index": 2,
+            "phase_turn": "1",
+            "pi_irrationality_or_transcendence_used": false,
+            "pi_nonzero_is_sufficient": true,
+            "pi_squared_coefficient_strictly_positive": true,
+            "quadratic_taylor_coefficient": {
+              "pi_squared": "1",
+              "rational": "0"
+            },
+            "vanishing_amplitude": "P",
+            "vanishing_amplitude_first_derivative": "0",
+            "vanishing_amplitude_value": "0"
+          },
+          {
+            "coordinate": "2",
+            "exact_first_derivative": "0",
+            "exact_function_value": "0",
+            "first_nonzero_order": 2,
+            "opposite_amplitude": "Q",
+            "opposite_amplitude_value": "1",
+            "original_phase_rate": "1",
+            "phase_index": 4,
+            "phase_turn": "2",
+            "pi_irrationality_or_transcendence_used": false,
+            "pi_nonzero_is_sufficient": true,
+            "pi_squared_coefficient_strictly_positive": true,
+            "quadratic_taylor_coefficient": {
+              "pi_squared": "1",
+              "rational": "0"
+            },
+            "vanishing_amplitude": "P",
+            "vanishing_amplitude_first_derivative": "0",
+            "vanishing_amplitude_value": "0"
+          }
+        ],
+        "schema": "radicadsac-mc038-coprime-square-source/1.0/certificate",
+        "scope": {
+          "fixture_allowlist_used_for_admission": false,
+          "frozen_corpus_addition": false,
+          "generic_owner_route_repaired": false,
+          "generic_supplied_source_and_witness_checked": true,
+          "historical_source_completion_claimed": false,
+          "native_geometry_evidence": false,
+          "one_original_clamped_span": true,
+          "original_parameter_and_global_phase_preserved": true,
+          "valid_degree_elevation_admitted": true
+        },
+        "source_identity": {
+          "C0_equals_half_sum_of_squares": [
+            "1/2"
+          ],
+          "C1_equals_half_difference_of_squares": [
+            "-1/2"
+          ],
+          "P_squared": [
+            "0"
+          ],
+          "Q_squared": [
+            "1"
+          ],
+          "all_original_channels_reconstructed": true,
+          "identities_verified_coefficientwise": true,
+          "original_source_equals_nonnegative_square_sum": true,
+          "phase_used_in_original_parameter": true
+        },
+        "source_interval": [
+          "0",
+          "2"
+        ],
+        "source_parameter_id": "pb00701-coprime-square:zero-p-original-t",
+        "source_sha256": "6ee4ea040182bf6e33ac243d90ff8dcdfed58b2e72abc4931cf87cc464350874",
+        "source_zero_set": {
+          "all_physical_roots_have_order_two": true,
+          "closed_root_count": 3,
+          "complete_for_original_closed_source": true,
+          "continuum_excluded_by_coprime_and_moving_phase_premises": true,
+          "events": [
+            {
+              "branch": "INTEGER_PHASE_P_ZERO",
+              "classification": "TOUCHING",
+              "coordinate": {
+                "kind": "RATIONAL",
+                "value": "0"
+              },
+              "event_id": "ROOT_0",
+              "left_sign": null,
+              "location": "LEFT_EXTERIOR",
+              "order": {
+                "global_smooth_multiplicity_claimed": false,
+                "kind": "ONE_SIDED",
+                "outside_order": null,
+                "side": "RIGHT",
+                "value": 2
+              },
+              "phase_index": 0,
+              "phase_turn": "0",
+              "quadratic_jet": {
+                "coordinate": "0",
+                "exact_first_derivative": "0",
+                "exact_function_value": "0",
+                "first_nonzero_order": 2,
+                "opposite_amplitude": "Q",
+                "opposite_amplitude_value": "1",
+                "original_phase_rate": "1",
+                "phase_index": 0,
+                "phase_turn": "0",
+                "pi_irrationality_or_transcendence_used": false,
+                "pi_nonzero_is_sufficient": true,
+                "pi_squared_coefficient_strictly_positive": true,
+                "quadratic_taylor_coefficient": {
+                  "pi_squared": "1",
+                  "rational": "0"
+                },
+                "vanishing_amplitude": "P",
+                "vanishing_amplitude_first_derivative": "0",
+                "vanishing_amplitude_value": "0"
+              },
+              "right_sign": 1,
+              "source_parameter_id": "pb00701-coprime-square:zero-p-original-t",
+              "source_piece_indices": [
+                0
+              ],
+              "source_sha256": "6ee4ea040182bf6e33ac243d90ff8dcdfed58b2e72abc4931cf87cc464350874"
+            },
+            {
+              "branch": "INTEGER_PHASE_P_ZERO",
+              "classification": "TOUCHING",
+              "coordinate": {
+                "kind": "RATIONAL",
+                "value": "1"
+              },
+              "event_id": "ROOT_1",
+              "left_sign": 1,
+              "location": "SPAN_INTERIOR",
+              "order": {
+                "kind": "SMOOTH",
+                "value": 2
+              },
+              "phase_index": 2,
+              "phase_turn": "1",
+              "quadratic_jet": {
+                "coordinate": "1",
+                "exact_first_derivative": "0",
+                "exact_function_value": "0",
+                "first_nonzero_order": 2,
+                "opposite_amplitude": "Q",
+                "opposite_amplitude_value": "1",
+                "original_phase_rate": "1",
+                "phase_index": 2,
+                "phase_turn": "1",
+                "pi_irrationality_or_transcendence_used": false,
+                "pi_nonzero_is_sufficient": true,
+                "pi_squared_coefficient_strictly_positive": true,
+                "quadratic_taylor_coefficient": {
+                  "pi_squared": "1",
+                  "rational": "0"
+                },
+                "vanishing_amplitude": "P",
+                "vanishing_amplitude_first_derivative": "0",
+                "vanishing_amplitude_value": "0"
+              },
+              "right_sign": 1,
+              "source_parameter_id": "pb00701-coprime-square:zero-p-original-t",
+              "source_piece_indices": [
+                0
+              ],
+              "source_sha256": "6ee4ea040182bf6e33ac243d90ff8dcdfed58b2e72abc4931cf87cc464350874"
+            },
+            {
+              "branch": "INTEGER_PHASE_P_ZERO",
+              "classification": "TOUCHING",
+              "coordinate": {
+                "kind": "RATIONAL",
+                "value": "2"
+              },
+              "event_id": "ROOT_2",
+              "left_sign": 1,
+              "location": "RIGHT_EXTERIOR",
+              "order": {
+                "global_smooth_multiplicity_claimed": false,
+                "kind": "ONE_SIDED",
+                "outside_order": null,
+                "side": "LEFT",
+                "value": 2
+              },
+              "phase_index": 4,
+              "phase_turn": "2",
+              "quadratic_jet": {
+                "coordinate": "2",
+                "exact_first_derivative": "0",
+                "exact_function_value": "0",
+                "first_nonzero_order": 2,
+                "opposite_amplitude": "Q",
+                "opposite_amplitude_value": "1",
+                "original_phase_rate": "1",
+                "phase_index": 4,
+                "phase_turn": "2",
+                "pi_irrationality_or_transcendence_used": false,
+                "pi_nonzero_is_sufficient": true,
+                "pi_squared_coefficient_strictly_positive": true,
+                "quadratic_taylor_coefficient": {
+                  "pi_squared": "1",
+                  "rational": "0"
+                },
+                "vanishing_amplitude": "P",
+                "vanishing_amplitude_first_derivative": "0",
+                "vanishing_amplitude_value": "0"
+              },
+              "right_sign": null,
+              "source_parameter_id": "pb00701-coprime-square:zero-p-original-t",
+              "source_piece_indices": [
+                0
+              ],
+              "source_sha256": "6ee4ea040182bf6e33ac243d90ff8dcdfed58b2e72abc4931cf87cc464350874"
+            }
+          ],
+          "exterior_points": [
+            {
+              "coordinate": "0",
+              "event_ref": "ROOT_0",
+              "exact_value": "0",
+              "global_smooth_multiplicity_claimed": false,
+              "inward_order": 2,
+              "inward_sign": 1,
+              "is_zero": true,
+              "nonzero_exact_scalar_value_claimed": false,
+              "outside_order": null,
+              "outside_sign": null,
+              "phase_turn": "0",
+              "positive_sign_from_complete_nonnegative_square_proof": false,
+              "side": "LEFT",
+              "value_sign": 0
+            },
+            {
+              "coordinate": "2",
+              "event_ref": "ROOT_2",
+              "exact_value": "0",
+              "global_smooth_multiplicity_claimed": false,
+              "inward_order": 2,
+              "inward_sign": 1,
+              "is_zero": true,
+              "nonzero_exact_scalar_value_claimed": false,
+              "outside_order": null,
+              "outside_sign": null,
+              "phase_turn": "2",
+              "positive_sign_from_complete_nonnegative_square_proof": false,
+              "side": "RIGHT",
+              "value_sign": 0
+            }
+          ],
+          "exterior_root_count": 2,
+          "finite_event_list_applicable": true,
+          "global_cross_source_zero_deduplication_performed": false,
+          "kind": "FINITE_ORIGINAL_SOURCE_ZERO_SET",
+          "maximal_nonzero_cells": [
+            {
+              "cell_id": "CELL_0",
+              "crossed_nonzero_source_knots": [],
+              "interval": [
+                "0",
+                "1"
+              ],
+              "left_boundary": {
+                "coordinate": "0",
+                "event_id": "ROOT_0",
+                "kind": "PHYSICAL_ZERO_EVENT",
+                "source_parameter_id": "pb00701-coprime-square:zero-p-original-t",
+                "source_sha256": "6ee4ea040182bf6e33ac243d90ff8dcdfed58b2e72abc4931cf87cc464350874"
+              },
+              "left_included": false,
+              "right_boundary": {
+                "coordinate": "1",
+                "event_id": "ROOT_1",
+                "kind": "PHYSICAL_ZERO_EVENT",
+                "source_parameter_id": "pb00701-coprime-square:zero-p-original-t",
+                "source_sha256": "6ee4ea040182bf6e33ac243d90ff8dcdfed58b2e72abc4931cf87cc464350874"
+              },
+              "right_included": false,
+              "sign": 1,
+              "source_piece_indices": [
+                0
+              ]
+            },
+            {
+              "cell_id": "CELL_1",
+              "crossed_nonzero_source_knots": [],
+              "interval": [
+                "1",
+                "2"
+              ],
+              "left_boundary": {
+                "coordinate": "1",
+                "event_id": "ROOT_1",
+                "kind": "PHYSICAL_ZERO_EVENT",
+                "source_parameter_id": "pb00701-coprime-square:zero-p-original-t",
+                "source_sha256": "6ee4ea040182bf6e33ac243d90ff8dcdfed58b2e72abc4931cf87cc464350874"
+              },
+              "left_included": false,
+              "right_boundary": {
+                "coordinate": "2",
+                "event_id": "ROOT_2",
+                "kind": "PHYSICAL_ZERO_EVENT",
+                "source_parameter_id": "pb00701-coprime-square:zero-p-original-t",
+                "source_sha256": "6ee4ea040182bf6e33ac243d90ff8dcdfed58b2e72abc4931cf87cc464350874"
+              },
+              "right_included": false,
+              "sign": 1,
+              "source_piece_indices": [
+                0
+              ]
+            }
+          ],
+          "nonzero_sign_cells_applicable": true,
+          "nonzero_source_points_strictly_positive": true,
+          "source_interval": [
+            "0",
+            "2"
+          ],
+          "source_open_root_count": 1,
+          "true_source_knots": []
+        },
+        "source_zero_set_established": true,
+        "status": "ESTABLISHED_COPRIME_SQUARE_ORIGINAL_SOURCE",
+        "supplied_witness": {
+          "P": [
+            "0"
+          ],
+          "Q": [
+            "1"
+          ]
+        },
+        "theorem_premises": {
+          "both_summands_nonnegative": true,
+          "half_integer_phase_candidates_are_exhaustive": true,
+          "no_common_amplitude_zero_from_verified_bezout": true,
+          "nonzero_phase_rate_makes_candidates_finite_and_distinct": true,
+          "numerical_sampling_used_as_completeness_authority": false,
+          "pi_irrationality_or_transcendence_used": false,
+          "pi_nonzero_suffices_for_positive_quadratic_jets": true,
+          "sine_and_cosine_never_vanish_simultaneously": true
+        },
+        "whole_source_lowering": {
+          "C0": [
+            "1/2"
+          ],
+          "C1": [
+            "-1/2"
+          ],
+          "channels": [
+            {
+              "bernstein_basis_in_original_parameter": [
+                [
+                  "1"
+                ]
+              ],
+              "degree": 0,
+              "global_power_coefficients": [
+                "1/2"
+              ],
+              "harmonic": 0,
+              "left_endpoint_value": "1/2",
+              "original_controls": [
+                "1/2"
+              ],
+              "original_knots": [
+                "0",
+                "2"
+              ],
+              "partition_of_unity_verified": true,
+              "right_endpoint_value": "1/2"
+            },
+            {
+              "bernstein_basis_in_original_parameter": [
+                [
+                  "1"
+                ]
+              ],
+              "degree": 0,
+              "global_power_coefficients": [
+                "-1/2"
+              ],
+              "harmonic": 1,
+              "left_endpoint_value": "-1/2",
+              "original_controls": [
+                "-1/2"
+              ],
+              "original_knots": [
+                "0",
+                "2"
+              ],
+              "partition_of_unity_verified": true,
+              "right_endpoint_value": "-1/2"
+            }
+          ],
+          "global_phase_turn_law": {
+            "offset": "0",
+            "rate": "1"
+          },
+          "original_source_interval": [
+            "0",
+            "2"
+          ],
+          "source_parameter_id": "pb00701-coprime-square:zero-p-original-t",
+          "source_sha256": "6ee4ea040182bf6e33ac243d90ff8dcdfed58b2e72abc4931cf87cc464350874"
+        },
+        "witness_sha256": "e3b964f19a17327184d4c1b8555d639070ef3181a258917f6ed08aa5fb3e3376"
+      },
+      "description": "Zero P and nonzero constant Q",
+      "spec": {
+        "cos_splines": {
+          "0": {
+            "controls": [
+              "1/2"
+            ],
+            "degree": 0,
+            "knots": [
+              "0",
+              "2"
+            ]
+          },
+          "1": {
+            "controls": [
+              "-1/2"
+            ],
+            "degree": 0,
+            "knots": [
+              "0",
+              "2"
+            ]
+          }
+        },
+        "grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+        "parameter_hi": "2",
+        "parameter_lo": "0",
+        "phase_turn_offset": "0",
+        "phase_turn_rate": "1",
+        "sin_splines": {},
+        "source_parameter_id": "pb00701-coprime-square:zero-p-original-t"
+      }
+    },
+    {
+      "P": [
+        "1"
+      ],
+      "Q": [
+        "0"
+      ],
+      "case_id": "research:pb00701:coprime-square:zero-q",
+      "certificate": {
+        "bezout_identity": {
+          "A": [
+            "1"
+          ],
+          "B": [
+            "0"
+          ],
+          "common_complex_zero_excluded_by_identity": true,
+          "euclidean_trace": [],
+          "identity_coefficients": [
+            "1"
+          ],
+          "identity_verified_coefficientwise": true,
+          "normalized_gcd": [
+            "1"
+          ]
+        },
+        "context_references": [
+          {
+            "bytes": 2255,
+            "git_blob": "6005fc55e2d18e71639e6bc31cfbc1597bf4a915",
+            "path": "docs/machining-completeness/31-PB00701-COUPLED-BSPLINE-BOUNDARY.md",
+            "sha256": "7cc6704ee4636e498d4f8575dfaea35462f33effc20fbef6d45d994b416f4515",
+            "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+          },
+          {
+            "bytes": 18930,
+            "git_blob": "4840bbca3847962b537684e0dffa871bd6de82a2",
+            "path": "research/machining-completeness/tasks/MC-038/pb00701-mtp-irreducible-boundary.json",
+            "sha256": "c645a88dc54232de9cf64c542b83c5d38caf835401f4eaec3cedc9744f7a3ff3",
+            "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+          },
+          {
+            "bytes": 18701,
+            "git_blob": "a086b625e1a6dea8bd202699d161167bb69cc9e7",
+            "path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+            "sha256": "2813a99ecc2bc179bf31f6c9166f9c3564516e67f2f256c0a984deee4ed0f692",
+            "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+          },
+          {
+            "bytes": 32020,
+            "git_blob": "4f9000549834c8f9b60ebc9925fadb71e9f96acf",
+            "path": "research/machining-completeness/tasks/MC-038/pb00701_mtp_irreducible_boundary.py",
+            "sha256": "29fb8a0b8ddbece891b31504aa1e661d2471a3a9fea22f1f630d9564da91886d",
+            "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+          }
+        ],
+        "evidence_class": "DETERMINISTIC_MODEL",
+        "normalized_witness": {
+          "P": [
+            "1"
+          ],
+          "Q": [
+            "0"
+          ]
+        },
+        "original_source": {
+          "cos_splines": {
+            "0": {
+              "controls": [
+                "1/2"
+              ],
+              "degree": 0,
+              "knots": [
+                "0",
+                "2"
+              ]
+            },
+            "1": {
+              "controls": [
+                "1/2"
+              ],
+              "degree": 0,
+              "knots": [
+                "0",
+                "2"
+              ]
+            }
+          },
+          "grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+          "parameter_hi": "2",
+          "parameter_lo": "0",
+          "phase_turn_offset": "0",
+          "phase_turn_rate": "1",
+          "sin_splines": {},
+          "source_parameter_id": "pb00701-coprime-square:zero-q-original-t"
+        },
+        "phase_candidates": {
+          "candidates": [
+            {
+              "P_value": "1",
+              "Q_value": "0",
+              "branch": "INTEGER_PHASE_P_ZERO",
+              "coordinate": "0",
+              "is_physical_zero": false,
+              "phase_index": 0,
+              "phase_turn": "0"
+            },
+            {
+              "P_value": "1",
+              "Q_value": "0",
+              "branch": "ODD_HALF_PHASE_Q_ZERO",
+              "coordinate": "1/2",
+              "is_physical_zero": true,
+              "phase_index": 1,
+              "phase_turn": "1/2"
+            },
+            {
+              "P_value": "1",
+              "Q_value": "0",
+              "branch": "INTEGER_PHASE_P_ZERO",
+              "coordinate": "1",
+              "is_physical_zero": false,
+              "phase_index": 2,
+              "phase_turn": "1"
+            },
+            {
+              "P_value": "1",
+              "Q_value": "0",
+              "branch": "ODD_HALF_PHASE_Q_ZERO",
+              "coordinate": "3/2",
+              "is_physical_zero": true,
+              "phase_index": 3,
+              "phase_turn": "3/2"
+            },
+            {
+              "P_value": "1",
+              "Q_value": "0",
+              "branch": "INTEGER_PHASE_P_ZERO",
+              "coordinate": "2",
+              "is_physical_zero": false,
+              "phase_index": 4,
+              "phase_turn": "2"
+            }
+          ],
+          "phase_range": {
+            "candidate_count": 5,
+            "closed_phase_range": [
+              "0",
+              "2"
+            ],
+            "first_phase_index": 0,
+            "last_phase_index": 4,
+            "negative_rate_reverses_phase_order": false,
+            "original_left_phase": "0",
+            "original_right_phase": "2"
+          }
+        },
+        "phase_turn_law": {
+          "offset": "0",
+          "rate": "1"
+        },
+        "production_authorized": false,
+        "proof_established": true,
+        "root_jets": [
+          {
+            "coordinate": "1/2",
+            "exact_first_derivative": "0",
+            "exact_function_value": "0",
+            "first_nonzero_order": 2,
+            "opposite_amplitude": "P",
+            "opposite_amplitude_value": "1",
+            "original_phase_rate": "1",
+            "phase_index": 1,
+            "phase_turn": "1/2",
+            "pi_irrationality_or_transcendence_used": false,
+            "pi_nonzero_is_sufficient": true,
+            "pi_squared_coefficient_strictly_positive": true,
+            "quadratic_taylor_coefficient": {
+              "pi_squared": "1",
+              "rational": "0"
+            },
+            "vanishing_amplitude": "Q",
+            "vanishing_amplitude_first_derivative": "0",
+            "vanishing_amplitude_value": "0"
+          },
+          {
+            "coordinate": "3/2",
+            "exact_first_derivative": "0",
+            "exact_function_value": "0",
+            "first_nonzero_order": 2,
+            "opposite_amplitude": "P",
+            "opposite_amplitude_value": "1",
+            "original_phase_rate": "1",
+            "phase_index": 3,
+            "phase_turn": "3/2",
+            "pi_irrationality_or_transcendence_used": false,
+            "pi_nonzero_is_sufficient": true,
+            "pi_squared_coefficient_strictly_positive": true,
+            "quadratic_taylor_coefficient": {
+              "pi_squared": "1",
+              "rational": "0"
+            },
+            "vanishing_amplitude": "Q",
+            "vanishing_amplitude_first_derivative": "0",
+            "vanishing_amplitude_value": "0"
+          }
+        ],
+        "schema": "radicadsac-mc038-coprime-square-source/1.0/certificate",
+        "scope": {
+          "fixture_allowlist_used_for_admission": false,
+          "frozen_corpus_addition": false,
+          "generic_owner_route_repaired": false,
+          "generic_supplied_source_and_witness_checked": true,
+          "historical_source_completion_claimed": false,
+          "native_geometry_evidence": false,
+          "one_original_clamped_span": true,
+          "original_parameter_and_global_phase_preserved": true,
+          "valid_degree_elevation_admitted": true
+        },
+        "source_identity": {
+          "C0_equals_half_sum_of_squares": [
+            "1/2"
+          ],
+          "C1_equals_half_difference_of_squares": [
+            "1/2"
+          ],
+          "P_squared": [
+            "1"
+          ],
+          "Q_squared": [
+            "0"
+          ],
+          "all_original_channels_reconstructed": true,
+          "identities_verified_coefficientwise": true,
+          "original_source_equals_nonnegative_square_sum": true,
+          "phase_used_in_original_parameter": true
+        },
+        "source_interval": [
+          "0",
+          "2"
+        ],
+        "source_parameter_id": "pb00701-coprime-square:zero-q-original-t",
+        "source_sha256": "b047a2e7076184d6a075087dac6d729a05b972525f9a4ea6fb30ce862b2251ba",
+        "source_zero_set": {
+          "all_physical_roots_have_order_two": true,
+          "closed_root_count": 2,
+          "complete_for_original_closed_source": true,
+          "continuum_excluded_by_coprime_and_moving_phase_premises": true,
+          "events": [
+            {
+              "branch": "ODD_HALF_PHASE_Q_ZERO",
+              "classification": "TOUCHING",
+              "coordinate": {
+                "kind": "RATIONAL",
+                "value": "1/2"
+              },
+              "event_id": "ROOT_0",
+              "left_sign": 1,
+              "location": "SPAN_INTERIOR",
+              "order": {
+                "kind": "SMOOTH",
+                "value": 2
+              },
+              "phase_index": 1,
+              "phase_turn": "1/2",
+              "quadratic_jet": {
+                "coordinate": "1/2",
+                "exact_first_derivative": "0",
+                "exact_function_value": "0",
+                "first_nonzero_order": 2,
+                "opposite_amplitude": "P",
+                "opposite_amplitude_value": "1",
+                "original_phase_rate": "1",
+                "phase_index": 1,
+                "phase_turn": "1/2",
+                "pi_irrationality_or_transcendence_used": false,
+                "pi_nonzero_is_sufficient": true,
+                "pi_squared_coefficient_strictly_positive": true,
+                "quadratic_taylor_coefficient": {
+                  "pi_squared": "1",
+                  "rational": "0"
+                },
+                "vanishing_amplitude": "Q",
+                "vanishing_amplitude_first_derivative": "0",
+                "vanishing_amplitude_value": "0"
+              },
+              "right_sign": 1,
+              "source_parameter_id": "pb00701-coprime-square:zero-q-original-t",
+              "source_piece_indices": [
+                0
+              ],
+              "source_sha256": "b047a2e7076184d6a075087dac6d729a05b972525f9a4ea6fb30ce862b2251ba"
+            },
+            {
+              "branch": "ODD_HALF_PHASE_Q_ZERO",
+              "classification": "TOUCHING",
+              "coordinate": {
+                "kind": "RATIONAL",
+                "value": "3/2"
+              },
+              "event_id": "ROOT_1",
+              "left_sign": 1,
+              "location": "SPAN_INTERIOR",
+              "order": {
+                "kind": "SMOOTH",
+                "value": 2
+              },
+              "phase_index": 3,
+              "phase_turn": "3/2",
+              "quadratic_jet": {
+                "coordinate": "3/2",
+                "exact_first_derivative": "0",
+                "exact_function_value": "0",
+                "first_nonzero_order": 2,
+                "opposite_amplitude": "P",
+                "opposite_amplitude_value": "1",
+                "original_phase_rate": "1",
+                "phase_index": 3,
+                "phase_turn": "3/2",
+                "pi_irrationality_or_transcendence_used": false,
+                "pi_nonzero_is_sufficient": true,
+                "pi_squared_coefficient_strictly_positive": true,
+                "quadratic_taylor_coefficient": {
+                  "pi_squared": "1",
+                  "rational": "0"
+                },
+                "vanishing_amplitude": "Q",
+                "vanishing_amplitude_first_derivative": "0",
+                "vanishing_amplitude_value": "0"
+              },
+              "right_sign": 1,
+              "source_parameter_id": "pb00701-coprime-square:zero-q-original-t",
+              "source_piece_indices": [
+                0
+              ],
+              "source_sha256": "b047a2e7076184d6a075087dac6d729a05b972525f9a4ea6fb30ce862b2251ba"
+            }
+          ],
+          "exterior_points": [
+            {
+              "coordinate": "0",
+              "event_ref": null,
+              "exact_value": null,
+              "global_smooth_multiplicity_claimed": false,
+              "inward_order": 0,
+              "inward_sign": 1,
+              "is_zero": false,
+              "nonzero_exact_scalar_value_claimed": false,
+              "outside_order": null,
+              "outside_sign": null,
+              "phase_turn": "0",
+              "positive_sign_from_complete_nonnegative_square_proof": true,
+              "side": "LEFT",
+              "value_sign": 1
+            },
+            {
+              "coordinate": "2",
+              "event_ref": null,
+              "exact_value": null,
+              "global_smooth_multiplicity_claimed": false,
+              "inward_order": 0,
+              "inward_sign": 1,
+              "is_zero": false,
+              "nonzero_exact_scalar_value_claimed": false,
+              "outside_order": null,
+              "outside_sign": null,
+              "phase_turn": "2",
+              "positive_sign_from_complete_nonnegative_square_proof": true,
+              "side": "RIGHT",
+              "value_sign": 1
+            }
+          ],
+          "exterior_root_count": 0,
+          "finite_event_list_applicable": true,
+          "global_cross_source_zero_deduplication_performed": false,
+          "kind": "FINITE_ORIGINAL_SOURCE_ZERO_SET",
+          "maximal_nonzero_cells": [
+            {
+              "cell_id": "CELL_0",
+              "crossed_nonzero_source_knots": [],
+              "interval": [
+                "0",
+                "1/2"
+              ],
+              "left_boundary": {
+                "coordinate": "0",
+                "kind": "SOURCE_EXTERIOR",
+                "side": "LEFT"
+              },
+              "left_included": true,
+              "right_boundary": {
+                "coordinate": "1/2",
+                "event_id": "ROOT_0",
+                "kind": "PHYSICAL_ZERO_EVENT",
+                "source_parameter_id": "pb00701-coprime-square:zero-q-original-t",
+                "source_sha256": "b047a2e7076184d6a075087dac6d729a05b972525f9a4ea6fb30ce862b2251ba"
+              },
+              "right_included": false,
+              "sign": 1,
+              "source_piece_indices": [
+                0
+              ]
+            },
+            {
+              "cell_id": "CELL_1",
+              "crossed_nonzero_source_knots": [],
+              "interval": [
+                "1/2",
+                "3/2"
+              ],
+              "left_boundary": {
+                "coordinate": "1/2",
+                "event_id": "ROOT_0",
+                "kind": "PHYSICAL_ZERO_EVENT",
+                "source_parameter_id": "pb00701-coprime-square:zero-q-original-t",
+                "source_sha256": "b047a2e7076184d6a075087dac6d729a05b972525f9a4ea6fb30ce862b2251ba"
+              },
+              "left_included": false,
+              "right_boundary": {
+                "coordinate": "3/2",
+                "event_id": "ROOT_1",
+                "kind": "PHYSICAL_ZERO_EVENT",
+                "source_parameter_id": "pb00701-coprime-square:zero-q-original-t",
+                "source_sha256": "b047a2e7076184d6a075087dac6d729a05b972525f9a4ea6fb30ce862b2251ba"
+              },
+              "right_included": false,
+              "sign": 1,
+              "source_piece_indices": [
+                0
+              ]
+            },
+            {
+              "cell_id": "CELL_2",
+              "crossed_nonzero_source_knots": [],
+              "interval": [
+                "3/2",
+                "2"
+              ],
+              "left_boundary": {
+                "coordinate": "3/2",
+                "event_id": "ROOT_1",
+                "kind": "PHYSICAL_ZERO_EVENT",
+                "source_parameter_id": "pb00701-coprime-square:zero-q-original-t",
+                "source_sha256": "b047a2e7076184d6a075087dac6d729a05b972525f9a4ea6fb30ce862b2251ba"
+              },
+              "left_included": false,
+              "right_boundary": {
+                "coordinate": "2",
+                "kind": "SOURCE_EXTERIOR",
+                "side": "RIGHT"
+              },
+              "right_included": true,
+              "sign": 1,
+              "source_piece_indices": [
+                0
+              ]
+            }
+          ],
+          "nonzero_sign_cells_applicable": true,
+          "nonzero_source_points_strictly_positive": true,
+          "source_interval": [
+            "0",
+            "2"
+          ],
+          "source_open_root_count": 2,
+          "true_source_knots": []
+        },
+        "source_zero_set_established": true,
+        "status": "ESTABLISHED_COPRIME_SQUARE_ORIGINAL_SOURCE",
+        "supplied_witness": {
+          "P": [
+            "1"
+          ],
+          "Q": [
+            "0"
+          ]
+        },
+        "theorem_premises": {
+          "both_summands_nonnegative": true,
+          "half_integer_phase_candidates_are_exhaustive": true,
+          "no_common_amplitude_zero_from_verified_bezout": true,
+          "nonzero_phase_rate_makes_candidates_finite_and_distinct": true,
+          "numerical_sampling_used_as_completeness_authority": false,
+          "pi_irrationality_or_transcendence_used": false,
+          "pi_nonzero_suffices_for_positive_quadratic_jets": true,
+          "sine_and_cosine_never_vanish_simultaneously": true
+        },
+        "whole_source_lowering": {
+          "C0": [
+            "1/2"
+          ],
+          "C1": [
+            "1/2"
+          ],
+          "channels": [
+            {
+              "bernstein_basis_in_original_parameter": [
+                [
+                  "1"
+                ]
+              ],
+              "degree": 0,
+              "global_power_coefficients": [
+                "1/2"
+              ],
+              "harmonic": 0,
+              "left_endpoint_value": "1/2",
+              "original_controls": [
+                "1/2"
+              ],
+              "original_knots": [
+                "0",
+                "2"
+              ],
+              "partition_of_unity_verified": true,
+              "right_endpoint_value": "1/2"
+            },
+            {
+              "bernstein_basis_in_original_parameter": [
+                [
+                  "1"
+                ]
+              ],
+              "degree": 0,
+              "global_power_coefficients": [
+                "1/2"
+              ],
+              "harmonic": 1,
+              "left_endpoint_value": "1/2",
+              "original_controls": [
+                "1/2"
+              ],
+              "original_knots": [
+                "0",
+                "2"
+              ],
+              "partition_of_unity_verified": true,
+              "right_endpoint_value": "1/2"
+            }
+          ],
+          "global_phase_turn_law": {
+            "offset": "0",
+            "rate": "1"
+          },
+          "original_source_interval": [
+            "0",
+            "2"
+          ],
+          "source_parameter_id": "pb00701-coprime-square:zero-q-original-t",
+          "source_sha256": "b047a2e7076184d6a075087dac6d729a05b972525f9a4ea6fb30ce862b2251ba"
+        },
+        "witness_sha256": "d0e06df99b6bb720584d9f3a05dd9f6a3b4eb2d2177b4cf844eb3455f6b84b89"
+      },
+      "description": "Nonzero constant P and zero Q",
+      "spec": {
+        "cos_splines": {
+          "0": {
+            "controls": [
+              "1/2"
+            ],
+            "degree": 0,
+            "knots": [
+              "0",
+              "2"
+            ]
+          },
+          "1": {
+            "controls": [
+              "1/2"
+            ],
+            "degree": 0,
+            "knots": [
+              "0",
+              "2"
+            ]
+          }
+        },
+        "grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+        "parameter_hi": "2",
+        "parameter_lo": "0",
+        "phase_turn_offset": "0",
+        "phase_turn_rate": "1",
+        "sin_splines": {},
+        "source_parameter_id": "pb00701-coprime-square:zero-q-original-t"
+      }
+    },
+    {
+      "P": [
+        "0",
+        "-1",
+        "1"
+      ],
+      "Q": [
+        "-1/2",
+        "1"
+      ],
+      "case_id": "research:pb00701:coprime-square:negative-rate",
+      "certificate": {
+        "bezout_identity": {
+          "A": [
+            "-4"
+          ],
+          "B": [
+            "-2",
+            "4"
+          ],
+          "common_complex_zero_excluded_by_identity": true,
+          "euclidean_trace": [
+            {
+              "dividend": [
+                "0",
+                "-1",
+                "1"
+              ],
+              "divisor": [
+                "-1/2",
+                "1"
+              ],
+              "quotient": [
+                "-1/2",
+                "1"
+              ],
+              "remainder": [
+                "-1/4"
+              ]
+            },
+            {
+              "dividend": [
+                "-1/2",
+                "1"
+              ],
+              "divisor": [
+                "-1/4"
+              ],
+              "quotient": [
+                "2",
+                "-4"
+              ],
+              "remainder": [
+                "0"
+              ]
+            }
+          ],
+          "identity_coefficients": [
+            "1"
+          ],
+          "identity_verified_coefficientwise": true,
+          "normalized_gcd": [
+            "1"
+          ]
+        },
+        "context_references": [
+          {
+            "bytes": 2255,
+            "git_blob": "6005fc55e2d18e71639e6bc31cfbc1597bf4a915",
+            "path": "docs/machining-completeness/31-PB00701-COUPLED-BSPLINE-BOUNDARY.md",
+            "sha256": "7cc6704ee4636e498d4f8575dfaea35462f33effc20fbef6d45d994b416f4515",
+            "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+          },
+          {
+            "bytes": 18930,
+            "git_blob": "4840bbca3847962b537684e0dffa871bd6de82a2",
+            "path": "research/machining-completeness/tasks/MC-038/pb00701-mtp-irreducible-boundary.json",
+            "sha256": "c645a88dc54232de9cf64c542b83c5d38caf835401f4eaec3cedc9744f7a3ff3",
+            "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+          },
+          {
+            "bytes": 18701,
+            "git_blob": "a086b625e1a6dea8bd202699d161167bb69cc9e7",
+            "path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+            "sha256": "2813a99ecc2bc179bf31f6c9166f9c3564516e67f2f256c0a984deee4ed0f692",
+            "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+          },
+          {
+            "bytes": 32020,
+            "git_blob": "4f9000549834c8f9b60ebc9925fadb71e9f96acf",
+            "path": "research/machining-completeness/tasks/MC-038/pb00701_mtp_irreducible_boundary.py",
+            "sha256": "29fb8a0b8ddbece891b31504aa1e661d2471a3a9fea22f1f630d9564da91886d",
+            "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+          }
+        ],
+        "evidence_class": "DETERMINISTIC_MODEL",
+        "normalized_witness": {
+          "P": [
+            "0",
+            "-1",
+            "1"
+          ],
+          "Q": [
+            "-1/2",
+            "1"
+          ]
+        },
+        "original_source": {
+          "cos_splines": {
+            "0": {
+              "controls": [
+                "1/8",
+                "0",
+                "1/24",
+                "0",
+                "1/8"
+              ],
+              "degree": 4,
+              "knots": [
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "1",
+                "1",
+                "1",
+                "1",
+                "1"
+              ]
+            },
+            "1": {
+              "controls": [
+                "-1/8",
+                "0",
+                "1/8",
+                "0",
+                "-1/8"
+              ],
+              "degree": 4,
+              "knots": [
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "1",
+                "1",
+                "1",
+                "1",
+                "1"
+              ]
+            }
+          },
+          "grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+          "parameter_hi": "1",
+          "parameter_lo": "0",
+          "phase_turn_offset": "1",
+          "phase_turn_rate": "-1",
+          "sin_splines": {},
+          "source_parameter_id": "pb00701-coprime-square:negative-rate-original-t"
+        },
+        "phase_candidates": {
+          "candidates": [
+            {
+              "P_value": "0",
+              "Q_value": "-1/2",
+              "branch": "INTEGER_PHASE_P_ZERO",
+              "coordinate": "0",
+              "is_physical_zero": true,
+              "phase_index": 2,
+              "phase_turn": "1"
+            },
+            {
+              "P_value": "-1/4",
+              "Q_value": "0",
+              "branch": "ODD_HALF_PHASE_Q_ZERO",
+              "coordinate": "1/2",
+              "is_physical_zero": true,
+              "phase_index": 1,
+              "phase_turn": "1/2"
+            },
+            {
+              "P_value": "0",
+              "Q_value": "1/2",
+              "branch": "INTEGER_PHASE_P_ZERO",
+              "coordinate": "1",
+              "is_physical_zero": true,
+              "phase_index": 0,
+              "phase_turn": "0"
+            }
+          ],
+          "phase_range": {
+            "candidate_count": 3,
+            "closed_phase_range": [
+              "0",
+              "1"
+            ],
+            "first_phase_index": 0,
+            "last_phase_index": 2,
+            "negative_rate_reverses_phase_order": true,
+            "original_left_phase": "1",
+            "original_right_phase": "0"
+          }
+        },
+        "phase_turn_law": {
+          "offset": "1",
+          "rate": "-1"
+        },
+        "production_authorized": false,
+        "proof_established": true,
+        "root_jets": [
+          {
+            "coordinate": "0",
+            "exact_first_derivative": "0",
+            "exact_function_value": "0",
+            "first_nonzero_order": 2,
+            "opposite_amplitude": "Q",
+            "opposite_amplitude_value": "-1/2",
+            "original_phase_rate": "-1",
+            "phase_index": 2,
+            "phase_turn": "1",
+            "pi_irrationality_or_transcendence_used": false,
+            "pi_nonzero_is_sufficient": true,
+            "pi_squared_coefficient_strictly_positive": true,
+            "quadratic_taylor_coefficient": {
+              "pi_squared": "1/4",
+              "rational": "1"
+            },
+            "vanishing_amplitude": "P",
+            "vanishing_amplitude_first_derivative": "-1",
+            "vanishing_amplitude_value": "0"
+          },
+          {
+            "coordinate": "1/2",
+            "exact_first_derivative": "0",
+            "exact_function_value": "0",
+            "first_nonzero_order": 2,
+            "opposite_amplitude": "P",
+            "opposite_amplitude_value": "-1/4",
+            "original_phase_rate": "-1",
+            "phase_index": 1,
+            "phase_turn": "1/2",
+            "pi_irrationality_or_transcendence_used": false,
+            "pi_nonzero_is_sufficient": true,
+            "pi_squared_coefficient_strictly_positive": true,
+            "quadratic_taylor_coefficient": {
+              "pi_squared": "1/16",
+              "rational": "1"
+            },
+            "vanishing_amplitude": "Q",
+            "vanishing_amplitude_first_derivative": "1",
+            "vanishing_amplitude_value": "0"
+          },
+          {
+            "coordinate": "1",
+            "exact_first_derivative": "0",
+            "exact_function_value": "0",
+            "first_nonzero_order": 2,
+            "opposite_amplitude": "Q",
+            "opposite_amplitude_value": "1/2",
+            "original_phase_rate": "-1",
+            "phase_index": 0,
+            "phase_turn": "0",
+            "pi_irrationality_or_transcendence_used": false,
+            "pi_nonzero_is_sufficient": true,
+            "pi_squared_coefficient_strictly_positive": true,
+            "quadratic_taylor_coefficient": {
+              "pi_squared": "1/4",
+              "rational": "1"
+            },
+            "vanishing_amplitude": "P",
+            "vanishing_amplitude_first_derivative": "1",
+            "vanishing_amplitude_value": "0"
+          }
+        ],
+        "schema": "radicadsac-mc038-coprime-square-source/1.0/certificate",
+        "scope": {
+          "fixture_allowlist_used_for_admission": false,
+          "frozen_corpus_addition": false,
+          "generic_owner_route_repaired": false,
+          "generic_supplied_source_and_witness_checked": true,
+          "historical_source_completion_claimed": false,
+          "native_geometry_evidence": false,
+          "one_original_clamped_span": true,
+          "original_parameter_and_global_phase_preserved": true,
+          "valid_degree_elevation_admitted": true
+        },
+        "source_identity": {
+          "C0_equals_half_sum_of_squares": [
+            "1/8",
+            "-1/2",
+            "1",
+            "-1",
+            "1/2"
+          ],
+          "C1_equals_half_difference_of_squares": [
+            "-1/8",
+            "1/2",
+            "0",
+            "-1",
+            "1/2"
+          ],
+          "P_squared": [
+            "0",
+            "0",
+            "1",
+            "-2",
+            "1"
+          ],
+          "Q_squared": [
+            "1/4",
+            "-1",
+            "1"
+          ],
+          "all_original_channels_reconstructed": true,
+          "identities_verified_coefficientwise": true,
+          "original_source_equals_nonnegative_square_sum": true,
+          "phase_used_in_original_parameter": true
+        },
+        "source_interval": [
+          "0",
+          "1"
+        ],
+        "source_parameter_id": "pb00701-coprime-square:negative-rate-original-t",
+        "source_sha256": "f6e48ead07043e24bd217a7f1b398776c630ad0c77ef9879740aec26fe258881",
+        "source_zero_set": {
+          "all_physical_roots_have_order_two": true,
+          "closed_root_count": 3,
+          "complete_for_original_closed_source": true,
+          "continuum_excluded_by_coprime_and_moving_phase_premises": true,
+          "events": [
+            {
+              "branch": "INTEGER_PHASE_P_ZERO",
+              "classification": "TOUCHING",
+              "coordinate": {
+                "kind": "RATIONAL",
+                "value": "0"
+              },
+              "event_id": "ROOT_0",
+              "left_sign": null,
+              "location": "LEFT_EXTERIOR",
+              "order": {
+                "global_smooth_multiplicity_claimed": false,
+                "kind": "ONE_SIDED",
+                "outside_order": null,
+                "side": "RIGHT",
+                "value": 2
+              },
+              "phase_index": 2,
+              "phase_turn": "1",
+              "quadratic_jet": {
+                "coordinate": "0",
+                "exact_first_derivative": "0",
+                "exact_function_value": "0",
+                "first_nonzero_order": 2,
+                "opposite_amplitude": "Q",
+                "opposite_amplitude_value": "-1/2",
+                "original_phase_rate": "-1",
+                "phase_index": 2,
+                "phase_turn": "1",
+                "pi_irrationality_or_transcendence_used": false,
+                "pi_nonzero_is_sufficient": true,
+                "pi_squared_coefficient_strictly_positive": true,
+                "quadratic_taylor_coefficient": {
+                  "pi_squared": "1/4",
+                  "rational": "1"
+                },
+                "vanishing_amplitude": "P",
+                "vanishing_amplitude_first_derivative": "-1",
+                "vanishing_amplitude_value": "0"
+              },
+              "right_sign": 1,
+              "source_parameter_id": "pb00701-coprime-square:negative-rate-original-t",
+              "source_piece_indices": [
+                0
+              ],
+              "source_sha256": "f6e48ead07043e24bd217a7f1b398776c630ad0c77ef9879740aec26fe258881"
+            },
+            {
+              "branch": "ODD_HALF_PHASE_Q_ZERO",
+              "classification": "TOUCHING",
+              "coordinate": {
+                "kind": "RATIONAL",
+                "value": "1/2"
+              },
+              "event_id": "ROOT_1",
+              "left_sign": 1,
+              "location": "SPAN_INTERIOR",
+              "order": {
+                "kind": "SMOOTH",
+                "value": 2
+              },
+              "phase_index": 1,
+              "phase_turn": "1/2",
+              "quadratic_jet": {
+                "coordinate": "1/2",
+                "exact_first_derivative": "0",
+                "exact_function_value": "0",
+                "first_nonzero_order": 2,
+                "opposite_amplitude": "P",
+                "opposite_amplitude_value": "-1/4",
+                "original_phase_rate": "-1",
+                "phase_index": 1,
+                "phase_turn": "1/2",
+                "pi_irrationality_or_transcendence_used": false,
+                "pi_nonzero_is_sufficient": true,
+                "pi_squared_coefficient_strictly_positive": true,
+                "quadratic_taylor_coefficient": {
+                  "pi_squared": "1/16",
+                  "rational": "1"
+                },
+                "vanishing_amplitude": "Q",
+                "vanishing_amplitude_first_derivative": "1",
+                "vanishing_amplitude_value": "0"
+              },
+              "right_sign": 1,
+              "source_parameter_id": "pb00701-coprime-square:negative-rate-original-t",
+              "source_piece_indices": [
+                0
+              ],
+              "source_sha256": "f6e48ead07043e24bd217a7f1b398776c630ad0c77ef9879740aec26fe258881"
+            },
+            {
+              "branch": "INTEGER_PHASE_P_ZERO",
+              "classification": "TOUCHING",
+              "coordinate": {
+                "kind": "RATIONAL",
+                "value": "1"
+              },
+              "event_id": "ROOT_2",
+              "left_sign": 1,
+              "location": "RIGHT_EXTERIOR",
+              "order": {
+                "global_smooth_multiplicity_claimed": false,
+                "kind": "ONE_SIDED",
+                "outside_order": null,
+                "side": "LEFT",
+                "value": 2
+              },
+              "phase_index": 0,
+              "phase_turn": "0",
+              "quadratic_jet": {
+                "coordinate": "1",
+                "exact_first_derivative": "0",
+                "exact_function_value": "0",
+                "first_nonzero_order": 2,
+                "opposite_amplitude": "Q",
+                "opposite_amplitude_value": "1/2",
+                "original_phase_rate": "-1",
+                "phase_index": 0,
+                "phase_turn": "0",
+                "pi_irrationality_or_transcendence_used": false,
+                "pi_nonzero_is_sufficient": true,
+                "pi_squared_coefficient_strictly_positive": true,
+                "quadratic_taylor_coefficient": {
+                  "pi_squared": "1/4",
+                  "rational": "1"
+                },
+                "vanishing_amplitude": "P",
+                "vanishing_amplitude_first_derivative": "1",
+                "vanishing_amplitude_value": "0"
+              },
+              "right_sign": null,
+              "source_parameter_id": "pb00701-coprime-square:negative-rate-original-t",
+              "source_piece_indices": [
+                0
+              ],
+              "source_sha256": "f6e48ead07043e24bd217a7f1b398776c630ad0c77ef9879740aec26fe258881"
+            }
+          ],
+          "exterior_points": [
+            {
+              "coordinate": "0",
+              "event_ref": "ROOT_0",
+              "exact_value": "0",
+              "global_smooth_multiplicity_claimed": false,
+              "inward_order": 2,
+              "inward_sign": 1,
+              "is_zero": true,
+              "nonzero_exact_scalar_value_claimed": false,
+              "outside_order": null,
+              "outside_sign": null,
+              "phase_turn": "1",
+              "positive_sign_from_complete_nonnegative_square_proof": false,
+              "side": "LEFT",
+              "value_sign": 0
+            },
+            {
+              "coordinate": "1",
+              "event_ref": "ROOT_2",
+              "exact_value": "0",
+              "global_smooth_multiplicity_claimed": false,
+              "inward_order": 2,
+              "inward_sign": 1,
+              "is_zero": true,
+              "nonzero_exact_scalar_value_claimed": false,
+              "outside_order": null,
+              "outside_sign": null,
+              "phase_turn": "0",
+              "positive_sign_from_complete_nonnegative_square_proof": false,
+              "side": "RIGHT",
+              "value_sign": 0
+            }
+          ],
+          "exterior_root_count": 2,
+          "finite_event_list_applicable": true,
+          "global_cross_source_zero_deduplication_performed": false,
+          "kind": "FINITE_ORIGINAL_SOURCE_ZERO_SET",
+          "maximal_nonzero_cells": [
+            {
+              "cell_id": "CELL_0",
+              "crossed_nonzero_source_knots": [],
+              "interval": [
+                "0",
+                "1/2"
+              ],
+              "left_boundary": {
+                "coordinate": "0",
+                "event_id": "ROOT_0",
+                "kind": "PHYSICAL_ZERO_EVENT",
+                "source_parameter_id": "pb00701-coprime-square:negative-rate-original-t",
+                "source_sha256": "f6e48ead07043e24bd217a7f1b398776c630ad0c77ef9879740aec26fe258881"
+              },
+              "left_included": false,
+              "right_boundary": {
+                "coordinate": "1/2",
+                "event_id": "ROOT_1",
+                "kind": "PHYSICAL_ZERO_EVENT",
+                "source_parameter_id": "pb00701-coprime-square:negative-rate-original-t",
+                "source_sha256": "f6e48ead07043e24bd217a7f1b398776c630ad0c77ef9879740aec26fe258881"
+              },
+              "right_included": false,
+              "sign": 1,
+              "source_piece_indices": [
+                0
+              ]
+            },
+            {
+              "cell_id": "CELL_1",
+              "crossed_nonzero_source_knots": [],
+              "interval": [
+                "1/2",
+                "1"
+              ],
+              "left_boundary": {
+                "coordinate": "1/2",
+                "event_id": "ROOT_1",
+                "kind": "PHYSICAL_ZERO_EVENT",
+                "source_parameter_id": "pb00701-coprime-square:negative-rate-original-t",
+                "source_sha256": "f6e48ead07043e24bd217a7f1b398776c630ad0c77ef9879740aec26fe258881"
+              },
+              "left_included": false,
+              "right_boundary": {
+                "coordinate": "1",
+                "event_id": "ROOT_2",
+                "kind": "PHYSICAL_ZERO_EVENT",
+                "source_parameter_id": "pb00701-coprime-square:negative-rate-original-t",
+                "source_sha256": "f6e48ead07043e24bd217a7f1b398776c630ad0c77ef9879740aec26fe258881"
+              },
+              "right_included": false,
+              "sign": 1,
+              "source_piece_indices": [
+                0
+              ]
+            }
+          ],
+          "nonzero_sign_cells_applicable": true,
+          "nonzero_source_points_strictly_positive": true,
+          "source_interval": [
+            "0",
+            "1"
+          ],
+          "source_open_root_count": 1,
+          "true_source_knots": []
+        },
+        "source_zero_set_established": true,
+        "status": "ESTABLISHED_COPRIME_SQUARE_ORIGINAL_SOURCE",
+        "supplied_witness": {
+          "P": [
+            "0",
+            "-1",
+            "1"
+          ],
+          "Q": [
+            "-1/2",
+            "1"
+          ]
+        },
+        "theorem_premises": {
+          "both_summands_nonnegative": true,
+          "half_integer_phase_candidates_are_exhaustive": true,
+          "no_common_amplitude_zero_from_verified_bezout": true,
+          "nonzero_phase_rate_makes_candidates_finite_and_distinct": true,
+          "numerical_sampling_used_as_completeness_authority": false,
+          "pi_irrationality_or_transcendence_used": false,
+          "pi_nonzero_suffices_for_positive_quadratic_jets": true,
+          "sine_and_cosine_never_vanish_simultaneously": true
+        },
+        "whole_source_lowering": {
+          "C0": [
+            "1/8",
+            "-1/2",
+            "1",
+            "-1",
+            "1/2"
+          ],
+          "C1": [
+            "-1/8",
+            "1/2",
+            "0",
+            "-1",
+            "1/2"
+          ],
+          "channels": [
+            {
+              "bernstein_basis_in_original_parameter": [
+                [
+                  "1",
+                  "-4",
+                  "6",
+                  "-4",
+                  "1"
+                ],
+                [
+                  "0",
+                  "4",
+                  "-12",
+                  "12",
+                  "-4"
+                ],
+                [
+                  "0",
+                  "0",
+                  "6",
+                  "-12",
+                  "6"
+                ],
+                [
+                  "0",
+                  "0",
+                  "0",
+                  "4",
+                  "-4"
+                ],
+                [
+                  "0",
+                  "0",
+                  "0",
+                  "0",
+                  "1"
+                ]
+              ],
+              "degree": 4,
+              "global_power_coefficients": [
+                "1/8",
+                "-1/2",
+                "1",
+                "-1",
+                "1/2"
+              ],
+              "harmonic": 0,
+              "left_endpoint_value": "1/8",
+              "original_controls": [
+                "1/8",
+                "0",
+                "1/24",
+                "0",
+                "1/8"
+              ],
+              "original_knots": [
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "1",
+                "1",
+                "1",
+                "1",
+                "1"
+              ],
+              "partition_of_unity_verified": true,
+              "right_endpoint_value": "1/8"
+            },
+            {
+              "bernstein_basis_in_original_parameter": [
+                [
+                  "1",
+                  "-4",
+                  "6",
+                  "-4",
+                  "1"
+                ],
+                [
+                  "0",
+                  "4",
+                  "-12",
+                  "12",
+                  "-4"
+                ],
+                [
+                  "0",
+                  "0",
+                  "6",
+                  "-12",
+                  "6"
+                ],
+                [
+                  "0",
+                  "0",
+                  "0",
+                  "4",
+                  "-4"
+                ],
+                [
+                  "0",
+                  "0",
+                  "0",
+                  "0",
+                  "1"
+                ]
+              ],
+              "degree": 4,
+              "global_power_coefficients": [
+                "-1/8",
+                "1/2",
+                "0",
+                "-1",
+                "1/2"
+              ],
+              "harmonic": 1,
+              "left_endpoint_value": "-1/8",
+              "original_controls": [
+                "-1/8",
+                "0",
+                "1/8",
+                "0",
+                "-1/8"
+              ],
+              "original_knots": [
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "1",
+                "1",
+                "1",
+                "1",
+                "1"
+              ],
+              "partition_of_unity_verified": true,
+              "right_endpoint_value": "-1/8"
+            }
+          ],
+          "global_phase_turn_law": {
+            "offset": "1",
+            "rate": "-1"
+          },
+          "original_source_interval": [
+            "0",
+            "1"
+          ],
+          "source_parameter_id": "pb00701-coprime-square:negative-rate-original-t",
+          "source_sha256": "f6e48ead07043e24bd217a7f1b398776c630ad0c77ef9879740aec26fe258881"
+        },
+        "witness_sha256": "3e8d2e4f7d8c87846ba51f01d83a138167a7b68e7a88c8bf4bb49d9ea72c3282"
+      },
+      "description": "Original root order survives reversed phase order",
+      "spec": {
+        "cos_splines": {
+          "0": {
+            "controls": [
+              "1/8",
+              "0",
+              "1/24",
+              "0",
+              "1/8"
+            ],
+            "degree": 4,
+            "knots": [
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "1",
+              "1",
+              "1",
+              "1",
+              "1"
+            ]
+          },
+          "1": {
+            "controls": [
+              "-1/8",
+              "0",
+              "1/8",
+              "0",
+              "-1/8"
+            ],
+            "degree": 4,
+            "knots": [
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "1",
+              "1",
+              "1",
+              "1",
+              "1"
+            ]
+          }
+        },
+        "grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+        "parameter_hi": "1",
+        "parameter_lo": "0",
+        "phase_turn_offset": "1",
+        "phase_turn_rate": "-1",
+        "sin_splines": {},
+        "source_parameter_id": "pb00701-coprime-square:negative-rate-original-t"
+      }
+    },
+    {
+      "P": [
+        "-3/2",
+        "1"
+      ],
+      "Q": [
+        "-1/2",
+        "1"
+      ],
+      "case_id": "research:pb00701:coprime-square:phase-offset",
+      "certificate": {
+        "bezout_identity": {
+          "A": [
+            "-1"
+          ],
+          "B": [
+            "1"
+          ],
+          "common_complex_zero_excluded_by_identity": true,
+          "euclidean_trace": [
+            {
+              "dividend": [
+                "-3/2",
+                "1"
+              ],
+              "divisor": [
+                "-1/2",
+                "1"
+              ],
+              "quotient": [
+                "1"
+              ],
+              "remainder": [
+                "-1"
+              ]
+            },
+            {
+              "dividend": [
+                "-1/2",
+                "1"
+              ],
+              "divisor": [
+                "-1"
+              ],
+              "quotient": [
+                "1/2",
+                "-1"
+              ],
+              "remainder": [
+                "0"
+              ]
+            }
+          ],
+          "identity_coefficients": [
+            "1"
+          ],
+          "identity_verified_coefficientwise": true,
+          "normalized_gcd": [
+            "1"
+          ]
+        },
+        "context_references": [
+          {
+            "bytes": 2255,
+            "git_blob": "6005fc55e2d18e71639e6bc31cfbc1597bf4a915",
+            "path": "docs/machining-completeness/31-PB00701-COUPLED-BSPLINE-BOUNDARY.md",
+            "sha256": "7cc6704ee4636e498d4f8575dfaea35462f33effc20fbef6d45d994b416f4515",
+            "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+          },
+          {
+            "bytes": 18930,
+            "git_blob": "4840bbca3847962b537684e0dffa871bd6de82a2",
+            "path": "research/machining-completeness/tasks/MC-038/pb00701-mtp-irreducible-boundary.json",
+            "sha256": "c645a88dc54232de9cf64c542b83c5d38caf835401f4eaec3cedc9744f7a3ff3",
+            "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+          },
+          {
+            "bytes": 18701,
+            "git_blob": "a086b625e1a6dea8bd202699d161167bb69cc9e7",
+            "path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+            "sha256": "2813a99ecc2bc179bf31f6c9166f9c3564516e67f2f256c0a984deee4ed0f692",
+            "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+          },
+          {
+            "bytes": 32020,
+            "git_blob": "4f9000549834c8f9b60ebc9925fadb71e9f96acf",
+            "path": "research/machining-completeness/tasks/MC-038/pb00701_mtp_irreducible_boundary.py",
+            "sha256": "29fb8a0b8ddbece891b31504aa1e661d2471a3a9fea22f1f630d9564da91886d",
+            "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+          }
+        ],
+        "evidence_class": "DETERMINISTIC_MODEL",
+        "normalized_witness": {
+          "P": [
+            "-3/2",
+            "1"
+          ],
+          "Q": [
+            "-1/2",
+            "1"
+          ]
+        },
+        "original_source": {
+          "cos_splines": {
+            "0": {
+              "controls": [
+                "5/4",
+                "-3/4",
+                "5/4"
+              ],
+              "degree": 2,
+              "knots": [
+                "0",
+                "0",
+                "0",
+                "2",
+                "2",
+                "2"
+              ]
+            },
+            "1": {
+              "controls": [
+                "1",
+                "-1"
+              ],
+              "degree": 1,
+              "knots": [
+                "0",
+                "0",
+                "2",
+                "2"
+              ]
+            }
+          },
+          "grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+          "parameter_hi": "2",
+          "parameter_lo": "0",
+          "phase_turn_offset": "1/4",
+          "phase_turn_rate": "1/2",
+          "sin_splines": {},
+          "source_parameter_id": "pb00701-coprime-square:phase-offset-original-t"
+        },
+        "phase_candidates": {
+          "candidates": [
+            {
+              "P_value": "-1",
+              "Q_value": "0",
+              "branch": "ODD_HALF_PHASE_Q_ZERO",
+              "coordinate": "1/2",
+              "is_physical_zero": true,
+              "phase_index": 1,
+              "phase_turn": "1/2"
+            },
+            {
+              "P_value": "0",
+              "Q_value": "1",
+              "branch": "INTEGER_PHASE_P_ZERO",
+              "coordinate": "3/2",
+              "is_physical_zero": true,
+              "phase_index": 2,
+              "phase_turn": "1"
+            }
+          ],
+          "phase_range": {
+            "candidate_count": 2,
+            "closed_phase_range": [
+              "1/4",
+              "5/4"
+            ],
+            "first_phase_index": 1,
+            "last_phase_index": 2,
+            "negative_rate_reverses_phase_order": false,
+            "original_left_phase": "1/4",
+            "original_right_phase": "5/4"
+          }
+        },
+        "phase_turn_law": {
+          "offset": "1/4",
+          "rate": "1/2"
+        },
+        "production_authorized": false,
+        "proof_established": true,
+        "root_jets": [
+          {
+            "coordinate": "1/2",
+            "exact_first_derivative": "0",
+            "exact_function_value": "0",
+            "first_nonzero_order": 2,
+            "opposite_amplitude": "P",
+            "opposite_amplitude_value": "-1",
+            "original_phase_rate": "1/2",
+            "phase_index": 1,
+            "phase_turn": "1/2",
+            "pi_irrationality_or_transcendence_used": false,
+            "pi_nonzero_is_sufficient": true,
+            "pi_squared_coefficient_strictly_positive": true,
+            "quadratic_taylor_coefficient": {
+              "pi_squared": "1/4",
+              "rational": "1"
+            },
+            "vanishing_amplitude": "Q",
+            "vanishing_amplitude_first_derivative": "1",
+            "vanishing_amplitude_value": "0"
+          },
+          {
+            "coordinate": "3/2",
+            "exact_first_derivative": "0",
+            "exact_function_value": "0",
+            "first_nonzero_order": 2,
+            "opposite_amplitude": "Q",
+            "opposite_amplitude_value": "1",
+            "original_phase_rate": "1/2",
+            "phase_index": 2,
+            "phase_turn": "1",
+            "pi_irrationality_or_transcendence_used": false,
+            "pi_nonzero_is_sufficient": true,
+            "pi_squared_coefficient_strictly_positive": true,
+            "quadratic_taylor_coefficient": {
+              "pi_squared": "1/4",
+              "rational": "1"
+            },
+            "vanishing_amplitude": "P",
+            "vanishing_amplitude_first_derivative": "1",
+            "vanishing_amplitude_value": "0"
+          }
+        ],
+        "schema": "radicadsac-mc038-coprime-square-source/1.0/certificate",
+        "scope": {
+          "fixture_allowlist_used_for_admission": false,
+          "frozen_corpus_addition": false,
+          "generic_owner_route_repaired": false,
+          "generic_supplied_source_and_witness_checked": true,
+          "historical_source_completion_claimed": false,
+          "native_geometry_evidence": false,
+          "one_original_clamped_span": true,
+          "original_parameter_and_global_phase_preserved": true,
+          "valid_degree_elevation_admitted": true
+        },
+        "source_identity": {
+          "C0_equals_half_sum_of_squares": [
+            "5/4",
+            "-2",
+            "1"
+          ],
+          "C1_equals_half_difference_of_squares": [
+            "1",
+            "-1"
+          ],
+          "P_squared": [
+            "9/4",
+            "-3",
+            "1"
+          ],
+          "Q_squared": [
+            "1/4",
+            "-1",
+            "1"
+          ],
+          "all_original_channels_reconstructed": true,
+          "identities_verified_coefficientwise": true,
+          "original_source_equals_nonnegative_square_sum": true,
+          "phase_used_in_original_parameter": true
+        },
+        "source_interval": [
+          "0",
+          "2"
+        ],
+        "source_parameter_id": "pb00701-coprime-square:phase-offset-original-t",
+        "source_sha256": "919ef20dba58bb2c68f034da7ddb3d318f73e62fa64057477a77e5b1e153a6d9",
+        "source_zero_set": {
+          "all_physical_roots_have_order_two": true,
+          "closed_root_count": 2,
+          "complete_for_original_closed_source": true,
+          "continuum_excluded_by_coprime_and_moving_phase_premises": true,
+          "events": [
+            {
+              "branch": "ODD_HALF_PHASE_Q_ZERO",
+              "classification": "TOUCHING",
+              "coordinate": {
+                "kind": "RATIONAL",
+                "value": "1/2"
+              },
+              "event_id": "ROOT_0",
+              "left_sign": 1,
+              "location": "SPAN_INTERIOR",
+              "order": {
+                "kind": "SMOOTH",
+                "value": 2
+              },
+              "phase_index": 1,
+              "phase_turn": "1/2",
+              "quadratic_jet": {
+                "coordinate": "1/2",
+                "exact_first_derivative": "0",
+                "exact_function_value": "0",
+                "first_nonzero_order": 2,
+                "opposite_amplitude": "P",
+                "opposite_amplitude_value": "-1",
+                "original_phase_rate": "1/2",
+                "phase_index": 1,
+                "phase_turn": "1/2",
+                "pi_irrationality_or_transcendence_used": false,
+                "pi_nonzero_is_sufficient": true,
+                "pi_squared_coefficient_strictly_positive": true,
+                "quadratic_taylor_coefficient": {
+                  "pi_squared": "1/4",
+                  "rational": "1"
+                },
+                "vanishing_amplitude": "Q",
+                "vanishing_amplitude_first_derivative": "1",
+                "vanishing_amplitude_value": "0"
+              },
+              "right_sign": 1,
+              "source_parameter_id": "pb00701-coprime-square:phase-offset-original-t",
+              "source_piece_indices": [
+                0
+              ],
+              "source_sha256": "919ef20dba58bb2c68f034da7ddb3d318f73e62fa64057477a77e5b1e153a6d9"
+            },
+            {
+              "branch": "INTEGER_PHASE_P_ZERO",
+              "classification": "TOUCHING",
+              "coordinate": {
+                "kind": "RATIONAL",
+                "value": "3/2"
+              },
+              "event_id": "ROOT_1",
+              "left_sign": 1,
+              "location": "SPAN_INTERIOR",
+              "order": {
+                "kind": "SMOOTH",
+                "value": 2
+              },
+              "phase_index": 2,
+              "phase_turn": "1",
+              "quadratic_jet": {
+                "coordinate": "3/2",
+                "exact_first_derivative": "0",
+                "exact_function_value": "0",
+                "first_nonzero_order": 2,
+                "opposite_amplitude": "Q",
+                "opposite_amplitude_value": "1",
+                "original_phase_rate": "1/2",
+                "phase_index": 2,
+                "phase_turn": "1",
+                "pi_irrationality_or_transcendence_used": false,
+                "pi_nonzero_is_sufficient": true,
+                "pi_squared_coefficient_strictly_positive": true,
+                "quadratic_taylor_coefficient": {
+                  "pi_squared": "1/4",
+                  "rational": "1"
+                },
+                "vanishing_amplitude": "P",
+                "vanishing_amplitude_first_derivative": "1",
+                "vanishing_amplitude_value": "0"
+              },
+              "right_sign": 1,
+              "source_parameter_id": "pb00701-coprime-square:phase-offset-original-t",
+              "source_piece_indices": [
+                0
+              ],
+              "source_sha256": "919ef20dba58bb2c68f034da7ddb3d318f73e62fa64057477a77e5b1e153a6d9"
+            }
+          ],
+          "exterior_points": [
+            {
+              "coordinate": "0",
+              "event_ref": null,
+              "exact_value": null,
+              "global_smooth_multiplicity_claimed": false,
+              "inward_order": 0,
+              "inward_sign": 1,
+              "is_zero": false,
+              "nonzero_exact_scalar_value_claimed": false,
+              "outside_order": null,
+              "outside_sign": null,
+              "phase_turn": "1/4",
+              "positive_sign_from_complete_nonnegative_square_proof": true,
+              "side": "LEFT",
+              "value_sign": 1
+            },
+            {
+              "coordinate": "2",
+              "event_ref": null,
+              "exact_value": null,
+              "global_smooth_multiplicity_claimed": false,
+              "inward_order": 0,
+              "inward_sign": 1,
+              "is_zero": false,
+              "nonzero_exact_scalar_value_claimed": false,
+              "outside_order": null,
+              "outside_sign": null,
+              "phase_turn": "5/4",
+              "positive_sign_from_complete_nonnegative_square_proof": true,
+              "side": "RIGHT",
+              "value_sign": 1
+            }
+          ],
+          "exterior_root_count": 0,
+          "finite_event_list_applicable": true,
+          "global_cross_source_zero_deduplication_performed": false,
+          "kind": "FINITE_ORIGINAL_SOURCE_ZERO_SET",
+          "maximal_nonzero_cells": [
+            {
+              "cell_id": "CELL_0",
+              "crossed_nonzero_source_knots": [],
+              "interval": [
+                "0",
+                "1/2"
+              ],
+              "left_boundary": {
+                "coordinate": "0",
+                "kind": "SOURCE_EXTERIOR",
+                "side": "LEFT"
+              },
+              "left_included": true,
+              "right_boundary": {
+                "coordinate": "1/2",
+                "event_id": "ROOT_0",
+                "kind": "PHYSICAL_ZERO_EVENT",
+                "source_parameter_id": "pb00701-coprime-square:phase-offset-original-t",
+                "source_sha256": "919ef20dba58bb2c68f034da7ddb3d318f73e62fa64057477a77e5b1e153a6d9"
+              },
+              "right_included": false,
+              "sign": 1,
+              "source_piece_indices": [
+                0
+              ]
+            },
+            {
+              "cell_id": "CELL_1",
+              "crossed_nonzero_source_knots": [],
+              "interval": [
+                "1/2",
+                "3/2"
+              ],
+              "left_boundary": {
+                "coordinate": "1/2",
+                "event_id": "ROOT_0",
+                "kind": "PHYSICAL_ZERO_EVENT",
+                "source_parameter_id": "pb00701-coprime-square:phase-offset-original-t",
+                "source_sha256": "919ef20dba58bb2c68f034da7ddb3d318f73e62fa64057477a77e5b1e153a6d9"
+              },
+              "left_included": false,
+              "right_boundary": {
+                "coordinate": "3/2",
+                "event_id": "ROOT_1",
+                "kind": "PHYSICAL_ZERO_EVENT",
+                "source_parameter_id": "pb00701-coprime-square:phase-offset-original-t",
+                "source_sha256": "919ef20dba58bb2c68f034da7ddb3d318f73e62fa64057477a77e5b1e153a6d9"
+              },
+              "right_included": false,
+              "sign": 1,
+              "source_piece_indices": [
+                0
+              ]
+            },
+            {
+              "cell_id": "CELL_2",
+              "crossed_nonzero_source_knots": [],
+              "interval": [
+                "3/2",
+                "2"
+              ],
+              "left_boundary": {
+                "coordinate": "3/2",
+                "event_id": "ROOT_1",
+                "kind": "PHYSICAL_ZERO_EVENT",
+                "source_parameter_id": "pb00701-coprime-square:phase-offset-original-t",
+                "source_sha256": "919ef20dba58bb2c68f034da7ddb3d318f73e62fa64057477a77e5b1e153a6d9"
+              },
+              "left_included": false,
+              "right_boundary": {
+                "coordinate": "2",
+                "kind": "SOURCE_EXTERIOR",
+                "side": "RIGHT"
+              },
+              "right_included": true,
+              "sign": 1,
+              "source_piece_indices": [
+                0
+              ]
+            }
+          ],
+          "nonzero_sign_cells_applicable": true,
+          "nonzero_source_points_strictly_positive": true,
+          "source_interval": [
+            "0",
+            "2"
+          ],
+          "source_open_root_count": 2,
+          "true_source_knots": []
+        },
+        "source_zero_set_established": true,
+        "status": "ESTABLISHED_COPRIME_SQUARE_ORIGINAL_SOURCE",
+        "supplied_witness": {
+          "P": [
+            "-3/2",
+            "1"
+          ],
+          "Q": [
+            "-1/2",
+            "1"
+          ]
+        },
+        "theorem_premises": {
+          "both_summands_nonnegative": true,
+          "half_integer_phase_candidates_are_exhaustive": true,
+          "no_common_amplitude_zero_from_verified_bezout": true,
+          "nonzero_phase_rate_makes_candidates_finite_and_distinct": true,
+          "numerical_sampling_used_as_completeness_authority": false,
+          "pi_irrationality_or_transcendence_used": false,
+          "pi_nonzero_suffices_for_positive_quadratic_jets": true,
+          "sine_and_cosine_never_vanish_simultaneously": true
+        },
+        "whole_source_lowering": {
+          "C0": [
+            "5/4",
+            "-2",
+            "1"
+          ],
+          "C1": [
+            "1",
+            "-1"
+          ],
+          "channels": [
+            {
+              "bernstein_basis_in_original_parameter": [
+                [
+                  "1",
+                  "-1",
+                  "1/4"
+                ],
+                [
+                  "0",
+                  "1",
+                  "-1/2"
+                ],
+                [
+                  "0",
+                  "0",
+                  "1/4"
+                ]
+              ],
+              "degree": 2,
+              "global_power_coefficients": [
+                "5/4",
+                "-2",
+                "1"
+              ],
+              "harmonic": 0,
+              "left_endpoint_value": "5/4",
+              "original_controls": [
+                "5/4",
+                "-3/4",
+                "5/4"
+              ],
+              "original_knots": [
+                "0",
+                "0",
+                "0",
+                "2",
+                "2",
+                "2"
+              ],
+              "partition_of_unity_verified": true,
+              "right_endpoint_value": "5/4"
+            },
+            {
+              "bernstein_basis_in_original_parameter": [
+                [
+                  "1",
+                  "-1/2"
+                ],
+                [
+                  "0",
+                  "1/2"
+                ]
+              ],
+              "degree": 1,
+              "global_power_coefficients": [
+                "1",
+                "-1"
+              ],
+              "harmonic": 1,
+              "left_endpoint_value": "1",
+              "original_controls": [
+                "1",
+                "-1"
+              ],
+              "original_knots": [
+                "0",
+                "0",
+                "2",
+                "2"
+              ],
+              "partition_of_unity_verified": true,
+              "right_endpoint_value": "-1"
+            }
+          ],
+          "global_phase_turn_law": {
+            "offset": "1/4",
+            "rate": "1/2"
+          },
+          "original_source_interval": [
+            "0",
+            "2"
+          ],
+          "source_parameter_id": "pb00701-coprime-square:phase-offset-original-t",
+          "source_sha256": "919ef20dba58bb2c68f034da7ddb3d318f73e62fa64057477a77e5b1e153a6d9"
+        },
+        "witness_sha256": "6b68c577ad8ab14ee7cd733ca63413bdd8c758316cac8115b513e6a956a9ea6d"
+      },
+      "description": "Nonzero phase offset with two interior touches",
+      "spec": {
+        "cos_splines": {
+          "0": {
+            "controls": [
+              "5/4",
+              "-3/4",
+              "5/4"
+            ],
+            "degree": 2,
+            "knots": [
+              "0",
+              "0",
+              "0",
+              "2",
+              "2",
+              "2"
+            ]
+          },
+          "1": {
+            "controls": [
+              "1",
+              "-1"
+            ],
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "2",
+              "2"
+            ]
+          }
+        },
+        "grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+        "parameter_hi": "2",
+        "parameter_lo": "0",
+        "phase_turn_offset": "1/4",
+        "phase_turn_rate": "1/2",
+        "sin_splines": {},
+        "source_parameter_id": "pb00701-coprime-square:phase-offset-original-t"
+      }
+    }
+  ],
+  "context_references": [
+    {
+      "bytes": 2255,
+      "git_blob": "6005fc55e2d18e71639e6bc31cfbc1597bf4a915",
+      "path": "docs/machining-completeness/31-PB00701-COUPLED-BSPLINE-BOUNDARY.md",
+      "sha256": "7cc6704ee4636e498d4f8575dfaea35462f33effc20fbef6d45d994b416f4515",
+      "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+    },
+    {
+      "bytes": 18930,
+      "git_blob": "4840bbca3847962b537684e0dffa871bd6de82a2",
+      "path": "research/machining-completeness/tasks/MC-038/pb00701-mtp-irreducible-boundary.json",
+      "sha256": "c645a88dc54232de9cf64c542b83c5d38caf835401f4eaec3cedc9744f7a3ff3",
+      "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+    },
+    {
+      "bytes": 18701,
+      "git_blob": "a086b625e1a6dea8bd202699d161167bb69cc9e7",
+      "path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+      "sha256": "2813a99ecc2bc179bf31f6c9166f9c3564516e67f2f256c0a984deee4ed0f692",
+      "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+    },
+    {
+      "bytes": 32020,
+      "git_blob": "4f9000549834c8f9b60ebc9925fadb71e9f96acf",
+      "path": "research/machining-completeness/tasks/MC-038/pb00701_mtp_irreducible_boundary.py",
+      "sha256": "29fb8a0b8ddbece891b31504aa1e661d2471a3a9fea22f1f630d9564da91886d",
+      "use": "PINNED_NONEXECUTED_GRAMMAR_AND_PRIOR_RESEARCH_CONTEXT"
+    }
+  ],
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "gates": {
+    "MC-1": "NOT_ESTABLISHED",
+    "MC-B": "NOT_ESTABLISHED",
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN",
+    "all_26_operations_unchanged": true,
+    "frozen_121_source_corpus_unchanged": true,
+    "frozen_fifty_source_cohort_unchanged": true,
+    "historical_20_blocked_and_30_order_gap_dispositions_unchanged": true,
+    "production_authorized": false
+  },
+  "qualified_base_main": "8190ae2c474fcb6fa9a54851abc03f481a5685d3",
+  "schema": "radicadsac-mc038-coprime-square-source/1.0",
+  "scope": {
+    "all_examples_outside_frozen_fifty_source_cohort": true,
+    "frozen_corpus_additions": 0,
+    "generic_owner_route_repaired": false,
+    "historical_route_or_source_completions_claimed": 0,
+    "hostile_python_sandbox_claimed": false,
+    "native_geometry_evidence": false,
+    "new_research_sources": 7,
+    "prior_qualified_research_source_reproved": 1,
+    "project_context_code_executed": false,
+    "python_and_standard_library_trusted": true
+  },
+  "status": "ESTABLISHED_BOUNDED_COPRIME_SQUARE_SOURCE_CHECKER_RESEARCH",
+  "summary": {
+    "maximal_positive_nonzero_cells": 17,
+    "order_two_root_jets": 16,
+    "original_exterior_roots": 7,
+    "original_research_sources": 8,
+    "per_source_closed_physical_roots": 16,
+    "phase_candidates": 27,
+    "root_free_sources": 1,
+    "strict_source_interior_roots": 9
+  },
+  "supplied_source_contract": {
+    "all_admitted_physical_roots_order_two": true,
+    "closed_finite_phase_lattice_is_exhaustive": true,
+    "failed_proofs_return_atomic_nontruth": true,
+    "fixture_allowlist_used_for_admission": false,
+    "generic_admission_by_reconstruction_and_verified_bezout": true,
+    "noncardinal_exterior_exact_values_not_fabricated": true,
+    "nonzero_points_strictly_positive": true,
+    "original_phase_and_parameter_preserved": true,
+    "pi_irrationality_or_transcendence_used": false,
+    "stationary_phase_or_nonconstant_gcd_admitted": false,
+    "valid_degree_elevation_admitted": true
+  }
+}
