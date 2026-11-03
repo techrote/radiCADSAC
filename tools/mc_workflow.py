@@ -134,7 +134,7 @@ def sync(apply=False):
             continue
         if issue.get("title")!=title or (issue.get("body") or "")!=body:
             drift.append((t["id"],n,"managed drift"))
-            changes.append((n,title,body))
+            changes.append((n,title,body,issue.get("title"),issue.get("body") or ""))
     if conflicts:
         for d in conflicts: print("conflict",*d)
         for d in drift: print("pending",*d)
@@ -143,7 +143,15 @@ def sync(apply=False):
         for d in drift: print(*d)
         return 2
     if apply:
-        for n,title,body in changes:
+        # Refresh the complete proposed write set before mutation. There is no
+        # issue-body compare-and-swap in this API; this detects stale plans
+        # without silently overwriting edits observed since enumeration.
+        for n,title,body,old_title,old_body in changes:
+            observed=gh("GET",f"issues/{n}")
+            if observed.get("title")!=old_title or (observed.get("body") or "")!=old_body:
+                print("pre-write conflict",n)
+                return 4
+        for n,title,body,_,_ in changes:
             gh("PATCH",f"issues/{n}",{"title":title,"body":body})
             observed=gh("GET",f"issues/{n}")
             if observed.get("title")!=title or (observed.get("body") or "")!=body:
@@ -199,7 +207,7 @@ def self_test():
           patch(__name__+".all_issues",side_effect=fake_issues),
           patch(__name__+".gh",side_effect=fake_gh)):
         assert sync(False)==2 and not calls, "check mode mutated the issue"
-        assert sync(True)==0 and calls==[("PATCH",991),("GET",991)], "apply failed to verify mutation"
+        assert sync(True)==0 and calls==[("GET",991),("PATCH",991),("GET",991)], "apply failed to verify mutation"
         assert issues[0]["body"]==good, "managed update modified human-owned text"
         calls.clear()
         assert sync(True)==0 and not calls, "unchanged apply caused a write"
@@ -223,12 +231,26 @@ def self_test():
         graph["tasks"].pop()
         del mapping["tasks"]["MC-998"]
 
-        # A patched body that cannot be read back exactly is not success.
+        # An intervening human edit must abort before the first PATCH.
+        def changed_preflight(method,path,body=None):
+            result=fake_gh(method,path,body)
+            return dict(result,body="human edit") if method=="GET" else result
+        with patch(__name__+".gh",side_effect=changed_preflight):
+            calls.clear()
+            assert sync(True)==4 and calls==[("GET",991)], "stale plan overwrote a concurrent edit"
+
+        # A successful preflight does not excuse an incorrect post-write readback.
+        reads=[0]
         def bad_readback(method,path,body=None):
             result=fake_gh(method,path,body)
-            return dict(result,body="read-back corrupted") if method=="GET" else result
+            if method=="GET":
+                reads[0]+=1
+                if reads[0]==2: return dict(result,body="read-back corrupted")
+            return result
         with patch(__name__+".gh",side_effect=bad_readback):
-            assert sync(True)==4, "post-write mismatch falsely reported success"
+            calls.clear()
+            assert sync(True)==4 and calls==[("GET",991),("PATCH",991),("GET",991)], (
+                "post-write mismatch falsely reported success")
     print("MC managed issue sync adversarial self-test passed")
     return 0
 if __name__=="__main__":
