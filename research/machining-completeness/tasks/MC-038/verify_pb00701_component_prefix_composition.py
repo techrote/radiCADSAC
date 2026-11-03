@@ -6,20 +6,38 @@ import argparse
 import builtins
 import copy
 from fractions import Fraction as Q
+import hashlib
 import importlib.util
 import os
 from pathlib import Path
 import py_compile
 import sys
 import tempfile
-from types import SimpleNamespace
+from types import ModuleType, SimpleNamespace
 import unittest
 from unittest.mock import patch
 
 sys.dont_write_bytecode = True
 HERE = Path(__file__).resolve().parent
-sys.path.insert(0, str(HERE))
-import pb00701_component_prefix_composition as model
+MODEL_BLOB = "530e552bb41c020456fdf0f17506cb18577896f3"
+MAX_MODEL_BYTES = 1048576
+
+
+def _load_verified_model(path, expected):
+    with Path(path).open("rb") as stream:
+        raw = stream.read(MAX_MODEL_BYTES + 1)
+    if len(raw) > MAX_MODEL_BYTES:
+        raise ValueError("RESOURCE_REFUSAL: model source byte budget")
+    actual = hashlib.sha1(b"blob " + str(len(raw)).encode("ascii") + b"\0" + raw).hexdigest()
+    if actual != expected:
+        raise ValueError("VERIFIER_MODEL_SOURCE_DRIFT")
+    module = ModuleType("component_prefix_verified_model")
+    module.__file__ = str(path)
+    exec(compile(raw, str(path), "exec"), module.__dict__)
+    return module
+
+
+model = _load_verified_model(HERE / "pb00701_component_prefix_composition.py", MODEL_BLOB)
 
 
 def contract():
@@ -258,6 +276,41 @@ class TestComponentPrefix(unittest.TestCase):
                 checked = model._module("probe.py", expected)
             self.assertEqual(checked.VALUE, "trusted")
             self.assertEqual(model.git_blob(original), expected)
+
+    def test_verifier_model_bootstrap_ignores_real_cache_and_preloaded_module(self):
+        with tempfile.TemporaryDirectory(prefix="radicadsac-prefix-bootstrap-") as directory:
+            here = Path(directory)
+            original, alternate = here / "probe.py", here / "alternate.py"
+            original.write_text("VALUE = 'trusted'\n", encoding="utf-8")
+            alternate.write_text("VALUE = 'altered'\n", encoding="utf-8")
+            for path in (original, alternate):
+                os.utime(path, (1700000000, 1700000000))
+            cache = Path(importlib.util.cache_from_source(str(original)))
+            cache.parent.mkdir()
+            py_compile.compile(str(alternate), cfile=str(cache), doraise=True)
+            spec = importlib.util.spec_from_file_location("bootstrap_cache_control", original)
+            cached = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(cached)
+            self.assertEqual(cached.VALUE, "altered")
+            poisoned = ModuleType("component_prefix_verified_model")
+            poisoned.VALUE = "preloaded"
+            with patch.dict(sys.modules, {poisoned.__name__: poisoned}):
+                checked = _load_verified_model(original, model.git_blob(original))
+                self.assertEqual(checked.VALUE, "trusted")
+                self.assertIs(sys.modules[poisoned.__name__], poisoned)
+
+    def test_verifier_model_drift_and_oversize_refuse_before_compilation(self):
+        with tempfile.TemporaryDirectory(prefix="radicadsac-prefix-bootstrap-guard-") as directory:
+            path = Path(directory) / "probe.py"
+            path.write_bytes(b"raise AssertionError('must not execute')\n")
+            expected = model.git_blob(path)
+            with patch("builtins.compile", side_effect=AssertionError("unverified source compiled")) as compiler:
+                with self.assertRaisesRegex(ValueError, "VERIFIER_MODEL_SOURCE_DRIFT"):
+                    _load_verified_model(path, "0" * 40)
+                with patch.dict(globals(), MAX_MODEL_BYTES=2):
+                    with self.assertRaisesRegex(ValueError, "RESOURCE_REFUSAL"):
+                        _load_verified_model(path, expected)
+                compiler.assert_not_called()
 
     def test_transitive_lowerer_uses_pinned_bytes_without_global_import_changes(self):
         with tempfile.TemporaryDirectory(prefix="radicadsac-prefix-lowerer-") as directory:
