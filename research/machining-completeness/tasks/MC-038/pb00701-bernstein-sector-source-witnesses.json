@@ -1,0 +1,1129 @@
+{
+  "schema": "radicadsac-mc038-bernstein-sector-source-witnesses/1.0",
+  "task": "MC-038",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "source_baseline_main": "e0514500aeca59afa4924dcc2da3ca0c2688d9ac",
+  "dependencies": {
+    "MC038_git_blobs": {
+      "pb00701-finite-owner-corpus-v54.json": "5841c331579489b25caef38cd412bdbf286f9134",
+      "pb00701-finite-owner-inventory-v54.json": "8649c20ab77e199f9c3fa351b8b6742218f27abb",
+      "pb00701-finite-owner-coverage-v54.json": "600ba29786f50397f29fd435fc5e2c57076088f9",
+      "verify_pb00701_post_v54_frontier.py": "12c6efeb667a954ffc5a7e27849ae815d466580a"
+    },
+    "root_git_blobs": {
+      "research/machining-completeness/tasks/MC-002/domain-contract-v1.json": "23de82f5240a72509f7afe4acd5948b65bc4ff13",
+      "research/machining-completeness/programme-v1.json": "dee7045a1790b2870744df8ae7693429bd1d81a6",
+      "handoffs/current-authority.json": "fa0233323a0804d8a5d3eb7cd892a274a6173fab"
+    }
+  },
+  "analytic_foundation": {
+    "pi_bounds": {
+      "lower": "3",
+      "upper": "22/7",
+      "both_strict": true,
+      "basis": "CLASSICAL_ARCHIMEDEAN_BOUNDS"
+    },
+    "bernstein_basis_nonnegative_partition_of_unity": true,
+    "de_casteljau_and_derivative_power_identities_rechecked": true,
+    "root_existence": "CONTINUITY_AND_OPPOSITE_STRICT_SIGNS",
+    "root_uniqueness_and_order": "STRICT_FIRST_DERIVATIVE_BOUND"
+  },
+  "source_witnesses": [
+    {
+      "case_id": "composite:PB00701_V18_EXACT_NONVANISHING_SOURCE_MODULE_FACTOR:tail0",
+      "original_source_sha256": "2c0db76bcf217c98b53d8b45ee537aec4da818c649df2436c27860a4d8c17111",
+      "original_row_sha256": "06f88535a67c3d521d831f2205b69c3466ff4a2723cdb53b37c5e430b24c04c8",
+      "original_source": {
+        "grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+        "source_parameter_id": "v53-simple-repeated-join",
+        "parameter_lo": "0",
+        "parameter_hi": "2",
+        "phase_turn_offset": "1/24",
+        "phase_turn_rate": "1/24",
+        "cos_splines": {
+          "0": {
+            "degree": 7,
+            "knots": [
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "1",
+              "1",
+              "1",
+              "1",
+              "1",
+              "1",
+              "1",
+              "1",
+              "2",
+              "2",
+              "2",
+              "2",
+              "2",
+              "2",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "-7225/34992",
+              "-84745/489888",
+              "-2188/15309",
+              "-14263/122472",
+              "-28661/306180",
+              "-9091/122472",
+              "-127/2187",
+              "-98/2187",
+              "-98/2187",
+              "-98/2187",
+              "-98/2187",
+              "-98/2187",
+              "-98/2187",
+              "-98/2187",
+              "-98/2187",
+              "-98/2187"
+            ]
+          },
+          "1": {
+            "degree": 6,
+            "knots": [
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "1",
+              "1",
+              "1",
+              "1",
+              "1",
+              "1",
+              "1",
+              "2",
+              "2",
+              "2",
+              "2",
+              "2",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "289/46656",
+              "323/58320",
+              "793/162000",
+              "3119/729000",
+              "1079/291600",
+              "77/24300",
+              "49/18225",
+              "49/18225",
+              "49/18225",
+              "49/18225",
+              "49/18225",
+              "49/18225",
+              "49/18225",
+              "49/18225"
+            ]
+          }
+        },
+        "sin_splines": {
+          "2": {
+            "degree": 6,
+            "knots": [
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "1",
+              "1",
+              "1",
+              "1",
+              "1",
+              "1",
+              "1",
+              "2",
+              "2",
+              "2",
+              "2",
+              "2",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "289/93312",
+              "323/116640",
+              "793/324000",
+              "3119/1458000",
+              "1079/583200",
+              "77/48600",
+              "49/36450",
+              "49/36450",
+              "49/36450",
+              "49/36450",
+              "49/36450",
+              "49/36450",
+              "49/36450",
+              "49/36450"
+            ]
+          }
+        }
+      },
+      "historical_observation": {
+        "id": "composite:PB00701_V18_EXACT_NONVANISHING_SOURCE_MODULE_FACTOR:tail0",
+        "observed": {
+          "status": "CERTIFIED",
+          "spans": [
+            [
+              "PB00701_V18_EXACT_NONVANISHING_SOURCE_MODULE_FACTOR",
+              "CERTIFIED",
+              null
+            ],
+            [
+              "EXACT_RATIONAL_AMPLITUDE_DOMINANCE",
+              "CERTIFIED",
+              null
+            ]
+          ]
+        },
+        "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE"
+      },
+      "source_specific_proof": {
+        "proof_family": "DOMINANCE_CONSTANT_TAIL",
+        "source_parameter_id": "v53-simple-repeated-join",
+        "phase_turn_law": {
+          "offset": "1/24",
+          "rate": "1/24"
+        },
+        "original_bernstein_blocks": {
+          "C0": {
+            "degree": 7,
+            "first_span_controls": [
+              "-7225/34992",
+              "-84745/489888",
+              "-2188/15309",
+              "-14263/122472",
+              "-28661/306180",
+              "-9091/122472",
+              "-127/2187",
+              "-98/2187"
+            ],
+            "second_span_controls": [
+              "-98/2187",
+              "-98/2187",
+              "-98/2187",
+              "-98/2187",
+              "-98/2187",
+              "-98/2187",
+              "-98/2187",
+              "-98/2187"
+            ],
+            "original_knot_value": "-98/2187"
+          },
+          "C1": {
+            "degree": 6,
+            "first_span_controls": [
+              "289/46656",
+              "323/58320",
+              "793/162000",
+              "3119/729000",
+              "1079/291600",
+              "77/24300",
+              "49/18225"
+            ],
+            "second_span_controls": [
+              "49/18225",
+              "49/18225",
+              "49/18225",
+              "49/18225",
+              "49/18225",
+              "49/18225",
+              "49/18225"
+            ],
+            "original_knot_value": "49/18225"
+          },
+          "S2": {
+            "degree": 6,
+            "first_span_controls": [
+              "289/93312",
+              "323/116640",
+              "793/324000",
+              "3119/1458000",
+              "1079/583200",
+              "77/48600",
+              "49/36450"
+            ],
+            "second_span_controls": [
+              "49/36450",
+              "49/36450",
+              "49/36450",
+              "49/36450",
+              "49/36450",
+              "49/36450",
+              "49/36450"
+            ],
+            "original_knot_value": "49/36450"
+          }
+        },
+        "derived_envelopes": {
+          "first_span": [
+            "0",
+            "1"
+          ],
+          "first_C0_upper": "-98/2187",
+          "first_C1_absolute_upper": "289/46656",
+          "first_S2_absolute_upper": "289/93312",
+          "first_F_upper": "-9943/279936",
+          "original_knot_F_upper": "-4459/109350",
+          "tail_C0_derivative_controls": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "tail_C0_slope": "0",
+          "tail_C1": "49/18225",
+          "tail_S2": "49/36450",
+          "tail_nonconstant_harmonic_absolute_upper": "49/12150",
+          "tail_F_upper": "-4459/109350"
+        },
+        "physical_event_proof": {
+          "source_interval": [
+            "0",
+            "2"
+          ],
+          "original_source_piece_edges": [
+            "0",
+            "1",
+            "2"
+          ],
+          "closed_distinct_root_count": 0,
+          "open_distinct_root_count": 0,
+          "events": [],
+          "maximal_sign_cells": [
+            {
+              "left": {
+                "kind": "RATIONAL",
+                "value": "0"
+              },
+              "right": {
+                "kind": "RATIONAL",
+                "value": "2"
+              },
+              "left_closed": true,
+              "right_closed": true,
+              "sign": "NEGATIVE"
+            }
+          ],
+          "exterior_endpoints": [
+            {
+              "parameter": "0",
+              "sign": "NEGATIVE",
+              "is_zero_event": false,
+              "bound_type": "UPPER",
+              "bound": "-9943/279936"
+            },
+            {
+              "parameter": "2",
+              "sign": "NEGATIVE",
+              "is_zero_event": false,
+              "bound_type": "UPPER",
+              "bound": "-4459/109350"
+            }
+          ],
+          "interior_source_knots": [
+            {
+              "parameter": "1",
+              "source_continuous": true,
+              "value_sign": "NEGATIVE",
+              "left_sign": "NEGATIVE",
+              "right_sign": "NEGATIVE",
+              "is_zero_event": false
+            }
+          ],
+          "proof_cuts": [],
+          "continuum_zero_component": false,
+          "complete_for_original_closed_source": true
+        }
+      }
+    },
+    {
+      "case_id": "composite:PB00701_V18_EXACT_NONVANISHING_SOURCE_MODULE_FACTOR:tail100",
+      "original_source_sha256": "2b1f53109ad708bd6eab37e83529e1001a7cadfa82fe630ddf230d94f2132d29",
+      "original_row_sha256": "fa9de27d0eead12eb2c8cee6e49b4b51ba6508e1b1c9dbc8b6e5620c2d15ddf6",
+      "original_source": {
+        "grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+        "source_parameter_id": "v53-simple-repeated-join",
+        "parameter_lo": "0",
+        "parameter_hi": "2",
+        "phase_turn_offset": "1/24",
+        "phase_turn_rate": "1/24",
+        "cos_splines": {
+          "0": {
+            "degree": 7,
+            "knots": [
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "1",
+              "1",
+              "1",
+              "1",
+              "1",
+              "1",
+              "1",
+              "1",
+              "2",
+              "2",
+              "2",
+              "2",
+              "2",
+              "2",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "-7225/34992",
+              "-84745/489888",
+              "-2188/15309",
+              "-14263/122472",
+              "-28661/306180",
+              "-9091/122472",
+              "-127/2187",
+              "-98/2187",
+              "-98/2187",
+              "218014/15309",
+              "436714/15309",
+              "655414/15309",
+              "874114/15309",
+              "1092814/15309",
+              "1311514/15309",
+              "218602/2187"
+            ]
+          },
+          "1": {
+            "degree": 6,
+            "knots": [
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "1",
+              "1",
+              "1",
+              "1",
+              "1",
+              "1",
+              "1",
+              "2",
+              "2",
+              "2",
+              "2",
+              "2",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "289/46656",
+              "323/58320",
+              "793/162000",
+              "3119/729000",
+              "1079/291600",
+              "77/24300",
+              "49/18225",
+              "49/18225",
+              "49/18225",
+              "49/18225",
+              "49/18225",
+              "49/18225",
+              "49/18225",
+              "49/18225"
+            ]
+          }
+        },
+        "sin_splines": {
+          "2": {
+            "degree": 6,
+            "knots": [
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "1",
+              "1",
+              "1",
+              "1",
+              "1",
+              "1",
+              "1",
+              "2",
+              "2",
+              "2",
+              "2",
+              "2",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "289/93312",
+              "323/116640",
+              "793/324000",
+              "3119/1458000",
+              "1079/583200",
+              "77/48600",
+              "49/36450",
+              "49/36450",
+              "49/36450",
+              "49/36450",
+              "49/36450",
+              "49/36450",
+              "49/36450",
+              "49/36450"
+            ]
+          }
+        }
+      },
+      "historical_observation": {
+        "id": "composite:PB00701_V18_EXACT_NONVANISHING_SOURCE_MODULE_FACTOR:tail100",
+        "observed": {
+          "status": "CERTIFIED",
+          "spans": [
+            [
+              "PB00701_V18_EXACT_NONVANISHING_SOURCE_MODULE_FACTOR",
+              "CERTIFIED",
+              null
+            ],
+            [
+              "PB00701_V19_EXACT_MULTI_HARMONIC_MONOTONE_ANCHOR",
+              "CERTIFIED",
+              null
+            ]
+          ]
+        },
+        "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE"
+      },
+      "source_specific_proof": {
+        "proof_family": "DOMINANCE_INCREASING_TAIL",
+        "source_parameter_id": "v53-simple-repeated-join",
+        "phase_turn_law": {
+          "offset": "1/24",
+          "rate": "1/24"
+        },
+        "original_bernstein_blocks": {
+          "C0": {
+            "degree": 7,
+            "first_span_controls": [
+              "-7225/34992",
+              "-84745/489888",
+              "-2188/15309",
+              "-14263/122472",
+              "-28661/306180",
+              "-9091/122472",
+              "-127/2187",
+              "-98/2187"
+            ],
+            "second_span_controls": [
+              "-98/2187",
+              "218014/15309",
+              "436714/15309",
+              "655414/15309",
+              "874114/15309",
+              "1092814/15309",
+              "1311514/15309",
+              "218602/2187"
+            ],
+            "original_knot_value": "-98/2187"
+          },
+          "C1": {
+            "degree": 6,
+            "first_span_controls": [
+              "289/46656",
+              "323/58320",
+              "793/162000",
+              "3119/729000",
+              "1079/291600",
+              "77/24300",
+              "49/18225"
+            ],
+            "second_span_controls": [
+              "49/18225",
+              "49/18225",
+              "49/18225",
+              "49/18225",
+              "49/18225",
+              "49/18225",
+              "49/18225"
+            ],
+            "original_knot_value": "49/18225"
+          },
+          "S2": {
+            "degree": 6,
+            "first_span_controls": [
+              "289/93312",
+              "323/116640",
+              "793/324000",
+              "3119/1458000",
+              "1079/583200",
+              "77/48600",
+              "49/36450"
+            ],
+            "second_span_controls": [
+              "49/36450",
+              "49/36450",
+              "49/36450",
+              "49/36450",
+              "49/36450",
+              "49/36450",
+              "49/36450"
+            ],
+            "original_knot_value": "49/36450"
+          }
+        },
+        "derived_envelopes": {
+          "first_span": [
+            "0",
+            "1"
+          ],
+          "first_C0_upper": "-98/2187",
+          "first_C1_absolute_upper": "289/46656",
+          "first_S2_absolute_upper": "289/93312",
+          "first_F_upper": "-9943/279936",
+          "original_knot_F_upper": "-4459/109350",
+          "tail_C0_derivative_controls": [
+            "100",
+            "100",
+            "100",
+            "100",
+            "100",
+            "100",
+            "100"
+          ],
+          "tail_C0_slope": "100",
+          "tail_C1": "49/18225",
+          "tail_S2": "49/36450",
+          "tail_nonconstant_harmonic_absolute_upper": "49/12150",
+          "tail_F_derivative_lower": "5467423/54675",
+          "bracket_right": "1001/1000",
+          "bracket_right_F_lower": "2797/54675",
+          "exterior_right_F_lower": "10929659/109350"
+        },
+        "physical_event_proof": {
+          "source_interval": [
+            "0",
+            "2"
+          ],
+          "original_source_piece_edges": [
+            "0",
+            "1",
+            "2"
+          ],
+          "closed_distinct_root_count": 1,
+          "open_distinct_root_count": 1,
+          "events": [
+            {
+              "event_id": "root-0",
+              "location": "ORIGINAL_SOURCE_SPAN_INTERIOR",
+              "coordinate": {
+                "kind": "IMPLICIT_ORIGINAL_SOURCE_ROOT",
+                "original_source_sha256": "2b1f53109ad708bd6eab37e83529e1001a7cadfa82fe630ddf230d94f2132d29",
+                "source_parameter_id": "v53-simple-repeated-join",
+                "defining_predicate": "ORIGINAL_SOURCE_F_EQUALS_ZERO",
+                "isolating_interval": [
+                  "1",
+                  "1001/1000"
+                ],
+                "isolating_interval_open": true,
+                "uniqueness_cell": [
+                  "1",
+                  "2"
+                ]
+              },
+              "analytic_order": 1,
+              "left_sign": "NEGATIVE",
+              "right_sign": "POSITIVE",
+              "multiplicity_basis": "STRICT_NONZERO_FIRST_DERIVATIVE_AT_ROOT"
+            }
+          ],
+          "maximal_sign_cells": [
+            {
+              "left": {
+                "kind": "RATIONAL",
+                "value": "0"
+              },
+              "right": {
+                "kind": "EVENT_REFERENCE",
+                "event_id": "root-0"
+              },
+              "left_closed": true,
+              "right_closed": false,
+              "sign": "NEGATIVE"
+            },
+            {
+              "left": {
+                "kind": "EVENT_REFERENCE",
+                "event_id": "root-0"
+              },
+              "right": {
+                "kind": "RATIONAL",
+                "value": "2"
+              },
+              "left_closed": false,
+              "right_closed": true,
+              "sign": "POSITIVE"
+            }
+          ],
+          "exterior_endpoints": [
+            {
+              "parameter": "0",
+              "sign": "NEGATIVE",
+              "is_zero_event": false,
+              "bound_type": "UPPER",
+              "bound": "-9943/279936"
+            },
+            {
+              "parameter": "2",
+              "sign": "POSITIVE",
+              "is_zero_event": false,
+              "bound_type": "LOWER",
+              "bound": "10929659/109350"
+            }
+          ],
+          "interior_source_knots": [
+            {
+              "parameter": "1",
+              "source_continuous": true,
+              "value_sign": "NEGATIVE",
+              "left_sign": "NEGATIVE",
+              "right_sign": "NEGATIVE",
+              "is_zero_event": false
+            }
+          ],
+          "proof_cuts": [
+            {
+              "parameter": "1001/1000",
+              "kind": "BRACKET_ENDPOINT",
+              "value_sign": "POSITIVE",
+              "is_zero_event": false
+            }
+          ],
+          "continuum_zero_component": false,
+          "complete_for_original_closed_source": true
+        }
+      }
+    },
+    {
+      "case_id": "composite:PB00701_V26_EXACT_POINTWISE_COMPONENT_CONE_RESIDUAL_ORTHANTS:tail0",
+      "original_source_sha256": "a9bb78a5415d1c45f54be7838f77739c8854cf329a97b36576f2a2fedf4ed3e4",
+      "original_row_sha256": "333c1bf98905cd41773c7da92efd33f36dc2f1e1bc947b285d9175a4926a25ad",
+      "original_source": {
+        "grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+        "source_parameter_id": "source-time-t",
+        "parameter_lo": "0",
+        "parameter_hi": "2",
+        "phase_turn_offset": "1/6",
+        "phase_turn_rate": "-1/3",
+        "cos_splines": {
+          "0": {
+            "degree": 0,
+            "knots": [
+              "0",
+              "1",
+              "2"
+            ],
+            "controls": [
+              "0",
+              "0"
+            ]
+          },
+          "1": {
+            "degree": 4,
+            "knots": [
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "1",
+              "1",
+              "1",
+              "1",
+              "1",
+              "2",
+              "2",
+              "2",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "83/20",
+              "17/4",
+              "271/50",
+              "403/100",
+              "403/100",
+              "403/100",
+              "403/100",
+              "403/100",
+              "403/100",
+              "403/100"
+            ]
+          },
+          "2": {
+            "degree": 0,
+            "knots": [
+              "0",
+              "1",
+              "2"
+            ],
+            "controls": [
+              "1/10000",
+              "1/10000"
+            ]
+          }
+        },
+        "sin_splines": {
+          "1": {
+            "degree": 4,
+            "knots": [
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "1",
+              "1",
+              "1",
+              "1",
+              "1",
+              "2",
+              "2",
+              "2",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "1081/100",
+              "269/25",
+              "271/25",
+              "227/20",
+              "269/25",
+              "269/25",
+              "269/25",
+              "269/25",
+              "269/25",
+              "269/25"
+            ]
+          }
+        }
+      },
+      "historical_observation": {
+        "id": "composite:PB00701_V26_EXACT_POINTWISE_COMPONENT_CONE_RESIDUAL_ORTHANTS:tail0",
+        "observed": {
+          "status": "CERTIFIED",
+          "spans": [
+            [
+              "PB00701_V26_EXACT_POINTWISE_COMPONENT_CONE_RESIDUAL_ORTHANTS",
+              "CERTIFIED",
+              null
+            ],
+            [
+              "PB00701_V27_EXACT_RATIONAL_PHASE_SECTOR_PARTITION_COMPOSITION",
+              "CERTIFIED",
+              null
+            ]
+          ]
+        },
+        "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE"
+      },
+      "source_specific_proof": {
+        "proof_family": "BERNSTEIN_PHASE_SECTOR_CROSSING",
+        "source_parameter_id": "source-time-t",
+        "phase_turn_law": {
+          "offset": "1/6",
+          "rate": "-1/3"
+        },
+        "original_bernstein_blocks": {
+          "C0": {
+            "degree": 0,
+            "first_span_controls": [
+              "0"
+            ],
+            "second_span_controls": [
+              "0"
+            ],
+            "original_knot_value": "0"
+          },
+          "C1": {
+            "degree": 4,
+            "first_span_controls": [
+              "83/20",
+              "17/4",
+              "271/50",
+              "403/100",
+              "403/100"
+            ],
+            "second_span_controls": [
+              "403/100",
+              "403/100",
+              "403/100",
+              "403/100",
+              "403/100"
+            ],
+            "original_knot_value": "403/100"
+          },
+          "C2": {
+            "degree": 0,
+            "first_span_controls": [
+              "1/10000"
+            ],
+            "second_span_controls": [
+              "1/10000"
+            ],
+            "original_knot_value": "1/10000"
+          },
+          "S1": {
+            "degree": 4,
+            "first_span_controls": [
+              "1081/100",
+              "269/25",
+              "271/25",
+              "227/20",
+              "269/25"
+            ],
+            "second_span_controls": [
+              "269/25",
+              "269/25",
+              "269/25",
+              "269/25",
+              "269/25"
+            ],
+            "original_knot_value": "269/25"
+          }
+        },
+        "derived_envelopes": {
+          "first_half": [
+            "0",
+            "1/2"
+          ],
+          "first_half_A_lower": "403/100",
+          "first_half_B_lower": "269/25",
+          "residual_C2": "1/10000",
+          "first_half_F_lower": "20149/10000",
+          "right_half_A_derivative_controls": [
+            "-7/25",
+            "-161/100",
+            "-139/50",
+            "0"
+          ],
+          "right_half_B_derivative_controls": [
+            "113/200",
+            "51/100",
+            "-4/25",
+            "-59/25"
+          ],
+          "right_half_B_controls": [
+            "3501/320",
+            "8809/800",
+            "443/40",
+            "2211/200",
+            "269/25"
+          ],
+          "right_half_B_lower": "269/25",
+          "B_derivative_sine_upper": "59/25",
+          "right_half_F_derivative_upper": "-220489/26250",
+          "original_knot_F_upper": "-67301/20000",
+          "tail_constant_A": "403/100",
+          "tail_constant_B": "269/25",
+          "tail_sector_1": {
+            "interval": [
+              "1",
+              "5/4"
+            ],
+            "phase_turn_interval": [
+              "-1/4",
+              "-1/6"
+            ],
+            "F_upper": "-33649/10000"
+          },
+          "tail_sector_2": {
+            "interval": [
+              "5/4",
+              "2"
+            ],
+            "phase_turn_interval": [
+              "-1/2",
+              "-1/4"
+            ],
+            "F_upper": "-40299/10000"
+          }
+        },
+        "physical_event_proof": {
+          "source_interval": [
+            "0",
+            "2"
+          ],
+          "original_source_piece_edges": [
+            "0",
+            "1",
+            "2"
+          ],
+          "closed_distinct_root_count": 1,
+          "open_distinct_root_count": 1,
+          "events": [
+            {
+              "event_id": "root-0",
+              "location": "ORIGINAL_SOURCE_SPAN_INTERIOR",
+              "coordinate": {
+                "kind": "IMPLICIT_ORIGINAL_SOURCE_ROOT",
+                "original_source_sha256": "a9bb78a5415d1c45f54be7838f77739c8854cf329a97b36576f2a2fedf4ed3e4",
+                "source_parameter_id": "source-time-t",
+                "defining_predicate": "ORIGINAL_SOURCE_F_EQUALS_ZERO",
+                "isolating_interval": [
+                  "1/2",
+                  "1"
+                ],
+                "isolating_interval_open": true,
+                "uniqueness_cell": [
+                  "1/2",
+                  "1"
+                ]
+              },
+              "analytic_order": 1,
+              "left_sign": "POSITIVE",
+              "right_sign": "NEGATIVE",
+              "multiplicity_basis": "STRICT_NONZERO_FIRST_DERIVATIVE_AT_ROOT"
+            }
+          ],
+          "maximal_sign_cells": [
+            {
+              "left": {
+                "kind": "RATIONAL",
+                "value": "0"
+              },
+              "right": {
+                "kind": "EVENT_REFERENCE",
+                "event_id": "root-0"
+              },
+              "left_closed": true,
+              "right_closed": false,
+              "sign": "POSITIVE"
+            },
+            {
+              "left": {
+                "kind": "EVENT_REFERENCE",
+                "event_id": "root-0"
+              },
+              "right": {
+                "kind": "RATIONAL",
+                "value": "2"
+              },
+              "left_closed": false,
+              "right_closed": true,
+              "sign": "NEGATIVE"
+            }
+          ],
+          "exterior_endpoints": [
+            {
+              "parameter": "0",
+              "sign": "POSITIVE",
+              "is_zero_event": false,
+              "bound_type": "LOWER",
+              "bound": "20149/10000"
+            },
+            {
+              "parameter": "2",
+              "sign": "NEGATIVE",
+              "is_zero_event": false,
+              "bound_type": "EXACT",
+              "bound": "-40299/10000"
+            }
+          ],
+          "interior_source_knots": [
+            {
+              "parameter": "1",
+              "source_continuous": true,
+              "value_sign": "NEGATIVE",
+              "left_sign": "NEGATIVE",
+              "right_sign": "NEGATIVE",
+              "is_zero_event": false
+            }
+          ],
+          "proof_cuts": [
+            {
+              "parameter": "1/2",
+              "kind": "BRACKET_AND_PHASE_CELL_BOUNDARY",
+              "value_sign": "POSITIVE",
+              "is_zero_event": false
+            },
+            {
+              "parameter": "5/4",
+              "kind": "TAIL_PHASE_SECTOR_BOUNDARY",
+              "value_sign": "NEGATIVE",
+              "is_zero_event": false
+            }
+          ],
+          "continuum_zero_component": false,
+          "complete_for_original_closed_source": true
+        }
+      }
+    }
+  ],
+  "summary": {
+    "complete_original_sources": 3,
+    "root_free_sources": 1,
+    "one_simple_root_sources": 2,
+    "continuum_sources": 0
+  },
+  "resources": {
+    "native_campaign_run": false,
+    "paid_campaign_run": false,
+    "method": "BOUNDED_EXACT_RATIONAL_BERNSTEIN_AND_PHASE_SECTOR_PROOFS",
+    "maximum_spline_degree": 12,
+    "input_rational_bit_limit": 256,
+    "report_byte_limit": 262144
+  },
+  "frozen_v54_census": {
+    "original_sources": 121,
+    "route_refusals": 20,
+    "missing_ordered_premises": 30,
+    "historical_dispositions_modified": false
+  },
+  "scope": {
+    "selected_source_ids": [
+      "composite:PB00701_V18_EXACT_NONVANISHING_SOURCE_MODULE_FACTOR:tail0",
+      "composite:PB00701_V18_EXACT_NONVANISHING_SOURCE_MODULE_FACTOR:tail100",
+      "composite:PB00701_V26_EXACT_POINTWISE_COMPONENT_CONE_RESIDUAL_ORTHANTS:tail0"
+    ],
+    "complete_source_specific_mathematical_witnesses": true,
+    "historical_owner_routes_repaired": false,
+    "general_analytic_event_solver": false,
+    "universal_proof_consumer": false,
+    "exhaustive_post_v54_census": false,
+    "PB00701_closed": false,
+    "MC_B": "NOT_ESTABLISHED",
+    "MC_1": "NOT_ESTABLISHED",
+    "production_authorized": false,
+    "protected_operation_count": 26,
+    "native_material_topology_or_STEP_qualified": false
+  }
+}
