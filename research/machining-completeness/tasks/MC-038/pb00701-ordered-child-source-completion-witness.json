@@ -1,0 +1,3505 @@
+{
+  "schema": "radicadsac-mc038-ordered-child-source-completion/1.0",
+  "task": "MC-038 / PB-007-01",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "source_snapshot_main": "e0514500aeca59afa4924dcc2da3ca0c2688d9ac",
+  "purpose": "Complete fifteen original sources with only one registered V6 child, using exact two-span proofs and original-knot composition.",
+  "dependency_git_blobs": {
+    "research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json": "5841c331579489b25caef38cd412bdbf286f9134",
+    "research/machining-completeness/tasks/MC-038/pb00701-finite-owner-inventory-v54.json": "8649c20ab77e199f9c3fa351b8b6742218f27abb",
+    "research/machining-completeness/tasks/MC-038/pb00701-finite-owner-coverage-v54.json": "600ba29786f50397f29fd435fc5e2c57076088f9",
+    "research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation.json": "9f62dd6edc37206317eec054b2969bade02d7728",
+    "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py": "a086b625e1a6dea8bd202699d161167bb69cc9e7",
+    "research/machining-completeness/tasks/MC-038/pb00701_rational_turn_model.py": "a1316ff0f71b2d7aa80807843a74fd8280779cb2",
+    "research/machining-completeness/tasks/MC-038/pb00701_event_model.py": "104c0e7a459cd7da5025853b246faff244a5948e",
+    "research/machining-completeness/tasks/MC-038/pb00701_transverse_trig_interval.py": "2320f92efe4316d865a89f6d848737e2c000ca4d",
+    "research/machining-completeness/tasks/MC-032/event_engine.py": "789a709c5141479a343035d1b7055dd4e53534e1",
+    "research/machining-completeness/tasks/MC-002/domain-contract-v1.json": "23de82f5240a72509f7afe4acd5948b65bc4ff13",
+    "research/machining-completeness/programme-v1.json": "dee7045a1790b2870744df8ae7693429bd1d81a6",
+    "handoffs/current-authority.json": "fa0233323a0804d8a5d3eb7cd892a274a6173fab"
+  },
+  "historical_v54": {
+    "original_source_cases": 121,
+    "route_refusals": 20,
+    "missing_ordered_span_premises": 30,
+    "dispositions_changed": false
+  },
+  "scope": {
+    "selected_original_sources": 15,
+    "historical_child_only_cohort": 18,
+    "deferred_exact_zero_cases": 3,
+    "all_possible_source_proofs_claimed": false,
+    "generic_owner_adapter_established": false,
+    "previous_evidence_registry_modified": false
+  },
+  "proof_method": {
+    "original_global_polynomial_lowering": true,
+    "both_actual_source_spans_replayed": true,
+    "finite_cover_predicates_rechecked": true,
+    "coefficient_continuity_checked_at_true_knot": true,
+    "max_depth_per_span": 12,
+    "max_nodes_per_span": 2000,
+    "root_bracket_width": "1/64",
+    "float_or_sample_authority": false
+  },
+  "summary": {
+    "complete_original_source_witnesses": 15,
+    "finite_simple_roots": 8,
+    "root_free_sources": 8,
+    "nonzero_true_source_knots": 15,
+    "nonzero_exterior_endpoints": 30
+  },
+  "source_cases": [
+    {
+      "case_id": "composite:PB00701_V22_EXACT_PHASE_SECTOR_PARTIAL_DERIVATIVE_ANCHOR:tail0",
+      "origin": "verify_pb00701_v22",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "4304ce6d31b385ce3e3c1af3f31e677d91099f244a7befdcff9170367d4aace9",
+      "original_row_sha256": "1b9853fb48e5fe91dab9856c75f43fb3591f1272367f895e7f382d00a58c9edd",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/12"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_spans": [
+        [
+          "PB00701_V22_EXACT_PHASE_SECTOR_PARTIAL_DERIVATIVE_ANCHOR",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "status": "COMPLETE_PINNED_ORIGINAL_SOURCE_PROOF_RESEARCH_ONLY",
+      "complete_closed_zero_set_kind": "FINITE",
+      "complete_closed_root_count": 0,
+      "ordered_root_events": [],
+      "maximal_open_physical_sign_cells": [
+        {
+          "left": "ORIGINAL_SOURCE_START",
+          "right": "ORIGINAL_SOURCE_END",
+          "sign": 1
+        }
+      ],
+      "true_source_knots": [
+        {
+          "position": "1",
+          "channel_continuous": true,
+          "left_sign": 1,
+          "right_sign": 1,
+          "is_physical_zero": false,
+          "is_physical_event": false
+        }
+      ],
+      "exterior_endpoint_signs": [
+        1,
+        1
+      ],
+      "complete_original_source_zero_set": true,
+      "original_spans": [
+        {
+          "source_span_index": 0,
+          "original_interval": [
+            "0",
+            "1"
+          ],
+          "historical_owner": "PB00701_V22_EXACT_PHASE_SECTOR_PARTIAL_DERIVATIVE_ANCHOR",
+          "original_global_power_coefficients": {
+            "0": {
+              "cos": [
+                "1",
+                "1/1000",
+                "-1/1000"
+              ],
+              "sin": [
+                "0"
+              ]
+            },
+            "1": {
+              "cos": [
+                "0"
+              ],
+              "sin": [
+                "1"
+              ]
+            },
+            "2": {
+              "cos": [
+                "0",
+                "1/1000"
+              ],
+              "sin": [
+                "0"
+              ]
+            }
+          },
+          "interval_proof": {
+            "schema": "radicadsac-pb00701-transverse-trig-interval/1.0",
+            "status": "RESEARCH_ONLY_CHECKED",
+            "evidence_class": "DETERMINISTIC_MODEL",
+            "is_truth_value": true,
+            "source_interval": [
+              "0",
+              "1"
+            ],
+            "source_phase_turns": [
+              "0",
+              "1/12"
+            ],
+            "partition": [
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "0",
+                  "1"
+                ],
+                "sign": 1
+              }
+            ],
+            "endpoint_signs": [
+              1,
+              1
+            ],
+            "complete_simple_root_count": 0,
+            "nodes": 1,
+            "historical_child_certified": false,
+            "production_authorized": false
+          }
+        },
+        {
+          "source_span_index": 1,
+          "original_interval": [
+            "1",
+            "2"
+          ],
+          "historical_owner": "DELEGATED_V6_CONSTANT_MODULATION",
+          "original_global_power_coefficients": {
+            "0": {
+              "cos": [
+                "1"
+              ],
+              "sin": [
+                "0"
+              ]
+            },
+            "1": {
+              "cos": [
+                "0"
+              ],
+              "sin": [
+                "1"
+              ]
+            },
+            "2": {
+              "cos": [
+                "1/1000"
+              ],
+              "sin": [
+                "0"
+              ]
+            }
+          },
+          "interval_proof": {
+            "schema": "radicadsac-pb00701-transverse-trig-interval/1.0",
+            "status": "RESEARCH_ONLY_CHECKED",
+            "evidence_class": "DETERMINISTIC_MODEL",
+            "is_truth_value": true,
+            "source_interval": [
+              "1",
+              "2"
+            ],
+            "source_phase_turns": [
+              "0",
+              "1/12"
+            ],
+            "partition": [
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "1",
+                  "2"
+                ],
+                "sign": 1
+              }
+            ],
+            "endpoint_signs": [
+              1,
+              1
+            ],
+            "complete_simple_root_count": 0,
+            "nodes": 1,
+            "historical_child_certified": false,
+            "production_authorized": false
+          }
+        }
+      ],
+      "certificate_partition_cuts_are_not_physical_events": true,
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V24_EXACT_MIXED_QUADRATURE_PHASE_ANCHOR:tail0",
+      "origin": "verify_pb00701_v24",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "e565ddf6bb0bab080128aeda16be5ea60466b3b971aa98d0408ea9a96da3d052",
+      "original_row_sha256": "696718a819afa68c7a7122e9fba85eae3b5a8b8be905f94836f666fd74d9298b",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "1/12",
+        "rate": "1/24"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_spans": [
+        [
+          "PB00701_V24_EXACT_MIXED_QUADRATURE_PHASE_ANCHOR",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "status": "COMPLETE_PINNED_ORIGINAL_SOURCE_PROOF_RESEARCH_ONLY",
+      "complete_closed_zero_set_kind": "FINITE",
+      "complete_closed_root_count": 0,
+      "ordered_root_events": [],
+      "maximal_open_physical_sign_cells": [
+        {
+          "left": "ORIGINAL_SOURCE_START",
+          "right": "ORIGINAL_SOURCE_END",
+          "sign": 1
+        }
+      ],
+      "true_source_knots": [
+        {
+          "position": "1",
+          "channel_continuous": true,
+          "left_sign": 1,
+          "right_sign": 1,
+          "is_physical_zero": false,
+          "is_physical_event": false
+        }
+      ],
+      "exterior_endpoint_signs": [
+        1,
+        1
+      ],
+      "complete_original_source_zero_set": true,
+      "original_spans": [
+        {
+          "source_span_index": 0,
+          "original_interval": [
+            "0",
+            "1"
+          ],
+          "historical_owner": "PB00701_V24_EXACT_MIXED_QUADRATURE_PHASE_ANCHOR",
+          "original_global_power_coefficients": {
+            "0": {
+              "cos": [
+                "1"
+              ],
+              "sin": [
+                "0"
+              ]
+            },
+            "1": {
+              "cos": [
+                "-1",
+                "-1/1000"
+              ],
+              "sin": [
+                "1",
+                "1/1000"
+              ]
+            },
+            "2": {
+              "cos": [
+                "0",
+                "1/1000"
+              ],
+              "sin": [
+                "0"
+              ]
+            }
+          },
+          "interval_proof": {
+            "schema": "radicadsac-pb00701-transverse-trig-interval/1.0",
+            "status": "RESEARCH_ONLY_CHECKED",
+            "evidence_class": "DETERMINISTIC_MODEL",
+            "is_truth_value": true,
+            "source_interval": [
+              "0",
+              "1"
+            ],
+            "source_phase_turns": [
+              "1/12",
+              "1/24"
+            ],
+            "partition": [
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "0",
+                  "1"
+                ],
+                "sign": 1
+              }
+            ],
+            "endpoint_signs": [
+              1,
+              1
+            ],
+            "complete_simple_root_count": 0,
+            "nodes": 1,
+            "historical_child_certified": false,
+            "production_authorized": false
+          }
+        },
+        {
+          "source_span_index": 1,
+          "original_interval": [
+            "1",
+            "2"
+          ],
+          "historical_owner": "DELEGATED_V6_CONSTANT_MODULATION",
+          "original_global_power_coefficients": {
+            "0": {
+              "cos": [
+                "1"
+              ],
+              "sin": [
+                "0"
+              ]
+            },
+            "1": {
+              "cos": [
+                "-1001/1000"
+              ],
+              "sin": [
+                "1001/1000"
+              ]
+            },
+            "2": {
+              "cos": [
+                "1/1000"
+              ],
+              "sin": [
+                "0"
+              ]
+            }
+          },
+          "interval_proof": {
+            "schema": "radicadsac-pb00701-transverse-trig-interval/1.0",
+            "status": "RESEARCH_ONLY_CHECKED",
+            "evidence_class": "DETERMINISTIC_MODEL",
+            "is_truth_value": true,
+            "source_interval": [
+              "1",
+              "2"
+            ],
+            "source_phase_turns": [
+              "1/12",
+              "1/24"
+            ],
+            "partition": [
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "1",
+                  "2"
+                ],
+                "sign": 1
+              }
+            ],
+            "endpoint_signs": [
+              1,
+              1
+            ],
+            "complete_simple_root_count": 0,
+            "nodes": 1,
+            "historical_child_certified": false,
+            "production_authorized": false
+          }
+        }
+      ],
+      "certificate_partition_cuts_are_not_physical_events": true,
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V28_EXACT_ALGEBRAIC_RATIONAL_TURN_PHASE_CELL_PROJECTION:tail0",
+      "origin": "verify_pb00701_v28",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "7f2984f588215067297eeabe4f5b6c57d993c3ce2c33374e551982ed43de3093",
+      "original_row_sha256": "4bb9b1fd7c9b5e6ae47c3f52cfd1eb6374136c4621ba3220d44b2456c1a0964a",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/12"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_spans": [
+        [
+          "PB00701_V28_EXACT_ALGEBRAIC_RATIONAL_TURN_PHASE_CELL_PROJECTION",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "status": "COMPLETE_PINNED_ORIGINAL_SOURCE_PROOF_RESEARCH_ONLY",
+      "complete_closed_zero_set_kind": "FINITE",
+      "complete_closed_root_count": 1,
+      "ordered_root_events": [
+        {
+          "root_ref": "ROOT_1",
+          "descriptor": "UNIQUE_SIMPLE_ZERO_OF_PINNED_ORIGINAL_SOURCE",
+          "source_span_index": 0,
+          "source_interval": [
+            "0",
+            "1"
+          ],
+          "historical_owner": "PB00701_V28_EXACT_ALGEBRAIC_RATIONAL_TURN_PHASE_CELL_PROJECTION",
+          "strict_bracket": [
+            "13/32",
+            "27/64"
+          ],
+          "left_sign": -1,
+          "right_sign": 1,
+          "smooth_multiplicity": 1,
+          "derivative_sign": 1
+        }
+      ],
+      "maximal_open_physical_sign_cells": [
+        {
+          "left": "ORIGINAL_SOURCE_START",
+          "right": "ROOT_1",
+          "sign": -1
+        },
+        {
+          "left": "ROOT_1",
+          "right": "ORIGINAL_SOURCE_END",
+          "sign": 1
+        }
+      ],
+      "true_source_knots": [
+        {
+          "position": "1",
+          "channel_continuous": true,
+          "left_sign": 1,
+          "right_sign": 1,
+          "is_physical_zero": false,
+          "is_physical_event": false
+        }
+      ],
+      "exterior_endpoint_signs": [
+        -1,
+        1
+      ],
+      "complete_original_source_zero_set": true,
+      "original_spans": [
+        {
+          "source_span_index": 0,
+          "original_interval": [
+            "0",
+            "1"
+          ],
+          "historical_owner": "PB00701_V28_EXACT_ALGEBRAIC_RATIONAL_TURN_PHASE_CELL_PROJECTION",
+          "original_global_power_coefficients": {
+            "0": {
+              "cos": [
+                "-4/5"
+              ],
+              "sin": [
+                "0"
+              ]
+            },
+            "1": {
+              "cos": [
+                "3/5"
+              ],
+              "sin": [
+                "1",
+                "1/100"
+              ]
+            },
+            "2": {
+              "cos": [
+                "1/10000"
+              ],
+              "sin": [
+                "0"
+              ]
+            }
+          },
+          "interval_proof": {
+            "schema": "radicadsac-pb00701-transverse-trig-interval/1.0",
+            "status": "RESEARCH_ONLY_CHECKED",
+            "evidence_class": "DETERMINISTIC_MODEL",
+            "is_truth_value": true,
+            "source_interval": [
+              "0",
+              "1"
+            ],
+            "source_phase_turns": [
+              "0",
+              "1/12"
+            ],
+            "partition": [
+              {
+                "kind": "ONE_SIMPLE_ROOT",
+                "interval": [
+                  "0",
+                  "1"
+                ],
+                "strict_isolation": [
+                  "13/32",
+                  "27/64"
+                ],
+                "derivative_sign": 1,
+                "left_sign": -1,
+                "right_sign": 1,
+                "smooth_multiplicity": 1
+              }
+            ],
+            "endpoint_signs": [
+              -1,
+              1
+            ],
+            "complete_simple_root_count": 1,
+            "nodes": 1,
+            "historical_child_certified": false,
+            "production_authorized": false
+          }
+        },
+        {
+          "source_span_index": 1,
+          "original_interval": [
+            "1",
+            "2"
+          ],
+          "historical_owner": "DELEGATED_V6_CONSTANT_MODULATION",
+          "original_global_power_coefficients": {
+            "0": {
+              "cos": [
+                "-4/5"
+              ],
+              "sin": [
+                "0"
+              ]
+            },
+            "1": {
+              "cos": [
+                "3/5"
+              ],
+              "sin": [
+                "101/100"
+              ]
+            },
+            "2": {
+              "cos": [
+                "1/10000"
+              ],
+              "sin": [
+                "0"
+              ]
+            }
+          },
+          "interval_proof": {
+            "schema": "radicadsac-pb00701-transverse-trig-interval/1.0",
+            "status": "RESEARCH_ONLY_CHECKED",
+            "evidence_class": "DETERMINISTIC_MODEL",
+            "is_truth_value": true,
+            "source_interval": [
+              "1",
+              "2"
+            ],
+            "source_phase_turns": [
+              "0",
+              "1/12"
+            ],
+            "partition": [
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "1",
+                  "3/2"
+                ],
+                "sign": 1
+              },
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "3/2",
+                  "2"
+                ],
+                "sign": 1
+              }
+            ],
+            "endpoint_signs": [
+              1,
+              1
+            ],
+            "complete_simple_root_count": 0,
+            "nodes": 3,
+            "historical_child_certified": false,
+            "production_authorized": false
+          }
+        }
+      ],
+      "certificate_partition_cuts_are_not_physical_events": true,
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V29_EXACT_5_12_13_NESTED_ALGEBRAIC_PHASE_CELL_PROJECTION:tail0",
+      "origin": "verify_pb00701_v29",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "ea2259d594a90d9523a46250e5ed8023dd081a3bf283bf8c2b410f0b18cfa25a",
+      "original_row_sha256": "7312b290c7d1246f15cefe92b5d1694b6dcac5f6143b2dfd270b7cd1920f64a2",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/16"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_spans": [
+        [
+          "PB00701_V29_EXACT_5_12_13_NESTED_ALGEBRAIC_PHASE_CELL_PROJECTION",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "status": "COMPLETE_PINNED_ORIGINAL_SOURCE_PROOF_RESEARCH_ONLY",
+      "complete_closed_zero_set_kind": "FINITE",
+      "complete_closed_root_count": 1,
+      "ordered_root_events": [
+        {
+          "root_ref": "ROOT_1",
+          "descriptor": "UNIQUE_SIMPLE_ZERO_OF_PINNED_ORIGINAL_SOURCE",
+          "source_span_index": 0,
+          "source_interval": [
+            "0",
+            "1"
+          ],
+          "historical_owner": "PB00701_V29_EXACT_5_12_13_NESTED_ALGEBRAIC_PHASE_CELL_PROJECTION",
+          "strict_bracket": [
+            "9/32",
+            "19/64"
+          ],
+          "left_sign": -1,
+          "right_sign": 1,
+          "smooth_multiplicity": 1,
+          "derivative_sign": 1
+        }
+      ],
+      "maximal_open_physical_sign_cells": [
+        {
+          "left": "ORIGINAL_SOURCE_START",
+          "right": "ROOT_1",
+          "sign": -1
+        },
+        {
+          "left": "ROOT_1",
+          "right": "ORIGINAL_SOURCE_END",
+          "sign": 1
+        }
+      ],
+      "true_source_knots": [
+        {
+          "position": "1",
+          "channel_continuous": true,
+          "left_sign": 1,
+          "right_sign": 1,
+          "is_physical_zero": false,
+          "is_physical_event": false
+        }
+      ],
+      "exterior_endpoint_signs": [
+        -1,
+        1
+      ],
+      "complete_original_source_zero_set": true,
+      "original_spans": [
+        {
+          "source_span_index": 0,
+          "original_interval": [
+            "0",
+            "1"
+          ],
+          "historical_owner": "PB00701_V29_EXACT_5_12_13_NESTED_ALGEBRAIC_PHASE_CELL_PROJECTION",
+          "original_global_power_coefficients": {
+            "0": {
+              "cos": [
+                "-19/10"
+              ],
+              "sin": [
+                "0"
+              ]
+            },
+            "1": {
+              "cos": [
+                "9/5"
+              ],
+              "sin": [
+                "1",
+                "1/100"
+              ]
+            },
+            "2": {
+              "cos": [
+                "1/10000"
+              ],
+              "sin": [
+                "0"
+              ]
+            }
+          },
+          "interval_proof": {
+            "schema": "radicadsac-pb00701-transverse-trig-interval/1.0",
+            "status": "RESEARCH_ONLY_CHECKED",
+            "evidence_class": "DETERMINISTIC_MODEL",
+            "is_truth_value": true,
+            "source_interval": [
+              "0",
+              "1"
+            ],
+            "source_phase_turns": [
+              "0",
+              "1/16"
+            ],
+            "partition": [
+              {
+                "kind": "ONE_SIMPLE_ROOT",
+                "interval": [
+                  "0",
+                  "1"
+                ],
+                "strict_isolation": [
+                  "9/32",
+                  "19/64"
+                ],
+                "derivative_sign": 1,
+                "left_sign": -1,
+                "right_sign": 1,
+                "smooth_multiplicity": 1
+              }
+            ],
+            "endpoint_signs": [
+              -1,
+              1
+            ],
+            "complete_simple_root_count": 1,
+            "nodes": 1,
+            "historical_child_certified": false,
+            "production_authorized": false
+          }
+        },
+        {
+          "source_span_index": 1,
+          "original_interval": [
+            "1",
+            "2"
+          ],
+          "historical_owner": "DELEGATED_V6_CONSTANT_MODULATION",
+          "original_global_power_coefficients": {
+            "0": {
+              "cos": [
+                "-19/10"
+              ],
+              "sin": [
+                "0"
+              ]
+            },
+            "1": {
+              "cos": [
+                "9/5"
+              ],
+              "sin": [
+                "101/100"
+              ]
+            },
+            "2": {
+              "cos": [
+                "1/10000"
+              ],
+              "sin": [
+                "0"
+              ]
+            }
+          },
+          "interval_proof": {
+            "schema": "radicadsac-pb00701-transverse-trig-interval/1.0",
+            "status": "RESEARCH_ONLY_CHECKED",
+            "evidence_class": "DETERMINISTIC_MODEL",
+            "is_truth_value": true,
+            "source_interval": [
+              "1",
+              "2"
+            ],
+            "source_phase_turns": [
+              "0",
+              "1/16"
+            ],
+            "partition": [
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "1",
+                  "5/4"
+                ],
+                "sign": 1
+              },
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "5/4",
+                  "3/2"
+                ],
+                "sign": 1
+              },
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "3/2",
+                  "2"
+                ],
+                "sign": 1
+              }
+            ],
+            "endpoint_signs": [
+              1,
+              1
+            ],
+            "complete_simple_root_count": 0,
+            "nodes": 5,
+            "historical_child_certified": false,
+            "production_authorized": false
+          }
+        }
+      ],
+      "certificate_partition_cuts_are_not_physical_events": true,
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V30_EXACT_SOURCE_ADAPTIVE_PROJECTIVE_RATIONAL_SEPARATOR:tail0",
+      "origin": "verify_pb00701_v30",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "7e637ad3528fa5d55ae7cdd9aee3b3d8f2716d089203896a24d80a823f1e969d",
+      "original_row_sha256": "b3df7d07a1386f1e0b64c611d67def143692b95ef10da6a8c6b104ce83a9e1d0",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/16"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_spans": [
+        [
+          "PB00701_V30_EXACT_SOURCE_ADAPTIVE_PROJECTIVE_RATIONAL_SEPARATOR",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "status": "COMPLETE_PINNED_ORIGINAL_SOURCE_PROOF_RESEARCH_ONLY",
+      "complete_closed_zero_set_kind": "FINITE",
+      "complete_closed_root_count": 2,
+      "ordered_root_events": [
+        {
+          "root_ref": "ROOT_1",
+          "descriptor": "UNIQUE_SIMPLE_ZERO_OF_PINNED_ORIGINAL_SOURCE",
+          "source_span_index": 0,
+          "source_interval": [
+            "0",
+            "1"
+          ],
+          "historical_owner": "PB00701_V30_EXACT_SOURCE_ADAPTIVE_PROJECTIVE_RATIONAL_SEPARATOR",
+          "strict_bracket": [
+            "3/32",
+            "7/64"
+          ],
+          "left_sign": -1,
+          "right_sign": 1,
+          "smooth_multiplicity": 1,
+          "derivative_sign": 1
+        },
+        {
+          "root_ref": "ROOT_2",
+          "descriptor": "UNIQUE_SIMPLE_ZERO_OF_PINNED_ORIGINAL_SOURCE",
+          "source_span_index": 1,
+          "source_interval": [
+            "1",
+            "2"
+          ],
+          "historical_owner": "DELEGATED_V6_CONSTANT_MODULATION",
+          "strict_bracket": [
+            "121/64",
+            "61/32"
+          ],
+          "left_sign": 1,
+          "right_sign": -1,
+          "smooth_multiplicity": 1,
+          "derivative_sign": -1
+        }
+      ],
+      "maximal_open_physical_sign_cells": [
+        {
+          "left": "ORIGINAL_SOURCE_START",
+          "right": "ROOT_1",
+          "sign": -1
+        },
+        {
+          "left": "ROOT_1",
+          "right": "ROOT_2",
+          "sign": 1
+        },
+        {
+          "left": "ROOT_2",
+          "right": "ORIGINAL_SOURCE_END",
+          "sign": -1
+        }
+      ],
+      "true_source_knots": [
+        {
+          "position": "1",
+          "channel_continuous": true,
+          "left_sign": 1,
+          "right_sign": 1,
+          "is_physical_zero": false,
+          "is_physical_event": false
+        }
+      ],
+      "exterior_endpoint_signs": [
+        -1,
+        -1
+      ],
+      "complete_original_source_zero_set": true,
+      "original_spans": [
+        {
+          "source_span_index": 0,
+          "original_interval": [
+            "0",
+            "1"
+          ],
+          "historical_owner": "PB00701_V30_EXACT_SOURCE_ADAPTIVE_PROJECTIVE_RATIONAL_SEPARATOR",
+          "original_global_power_coefficients": {
+            "0": {
+              "cos": [
+                "-49/20"
+              ],
+              "sin": [
+                "0"
+              ]
+            },
+            "1": {
+              "cos": [
+                "200/83"
+              ],
+              "sin": [
+                "1",
+                "1/100000"
+              ]
+            },
+            "2": {
+              "cos": [
+                "1/100000000"
+              ],
+              "sin": [
+                "0"
+              ]
+            }
+          },
+          "interval_proof": {
+            "schema": "radicadsac-pb00701-transverse-trig-interval/1.0",
+            "status": "RESEARCH_ONLY_CHECKED",
+            "evidence_class": "DETERMINISTIC_MODEL",
+            "is_truth_value": true,
+            "source_interval": [
+              "0",
+              "1"
+            ],
+            "source_phase_turns": [
+              "0",
+              "1/16"
+            ],
+            "partition": [
+              {
+                "kind": "ONE_SIMPLE_ROOT",
+                "interval": [
+                  "0",
+                  "1/2"
+                ],
+                "strict_isolation": [
+                  "3/32",
+                  "7/64"
+                ],
+                "derivative_sign": 1,
+                "left_sign": -1,
+                "right_sign": 1,
+                "smooth_multiplicity": 1
+              },
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "1/2",
+                  "3/4"
+                ],
+                "sign": 1
+              },
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "3/4",
+                  "7/8"
+                ],
+                "sign": 1
+              },
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "7/8",
+                  "1"
+                ],
+                "sign": 1
+              }
+            ],
+            "endpoint_signs": [
+              -1,
+              1
+            ],
+            "complete_simple_root_count": 1,
+            "nodes": 7,
+            "historical_child_certified": false,
+            "production_authorized": false
+          }
+        },
+        {
+          "source_span_index": 1,
+          "original_interval": [
+            "1",
+            "2"
+          ],
+          "historical_owner": "DELEGATED_V6_CONSTANT_MODULATION",
+          "original_global_power_coefficients": {
+            "0": {
+              "cos": [
+                "-49/20"
+              ],
+              "sin": [
+                "0"
+              ]
+            },
+            "1": {
+              "cos": [
+                "200/83"
+              ],
+              "sin": [
+                "100001/100000"
+              ]
+            },
+            "2": {
+              "cos": [
+                "1/100000000"
+              ],
+              "sin": [
+                "0"
+              ]
+            }
+          },
+          "interval_proof": {
+            "schema": "radicadsac-pb00701-transverse-trig-interval/1.0",
+            "status": "RESEARCH_ONLY_CHECKED",
+            "evidence_class": "DETERMINISTIC_MODEL",
+            "is_truth_value": true,
+            "source_interval": [
+              "1",
+              "2"
+            ],
+            "source_phase_turns": [
+              "0",
+              "1/16"
+            ],
+            "partition": [
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "1",
+                  "9/8"
+                ],
+                "sign": 1
+              },
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "9/8",
+                  "5/4"
+                ],
+                "sign": 1
+              },
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "5/4",
+                  "3/2"
+                ],
+                "sign": 1
+              },
+              {
+                "kind": "ONE_SIMPLE_ROOT",
+                "interval": [
+                  "3/2",
+                  "2"
+                ],
+                "strict_isolation": [
+                  "121/64",
+                  "61/32"
+                ],
+                "derivative_sign": -1,
+                "left_sign": 1,
+                "right_sign": -1,
+                "smooth_multiplicity": 1
+              }
+            ],
+            "endpoint_signs": [
+              1,
+              -1
+            ],
+            "complete_simple_root_count": 1,
+            "nodes": 7,
+            "historical_child_certified": false,
+            "production_authorized": false
+          }
+        }
+      ],
+      "certificate_partition_cuts_are_not_physical_events": true,
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V34_EXACT_PHASE_CORRELATED_COMMON_FACTOR:tail0",
+      "origin": "verify_pb00701_v34",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "404a68c1f2624abb29b700250807b43c466cab18c049c8e78a1049ce5fee10da",
+      "original_row_sha256": "5437a61eaf745a9c5ef5f4405934815db26d147c9d3524a8db66a1146e7d298a",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "-3/16",
+        "rate": "1/48"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_spans": [
+        [
+          "PB00701_V34_EXACT_PHASE_CORRELATED_COMMON_FACTOR",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "status": "COMPLETE_PINNED_ORIGINAL_SOURCE_PROOF_RESEARCH_ONLY",
+      "complete_closed_zero_set_kind": "FINITE",
+      "complete_closed_root_count": 0,
+      "ordered_root_events": [],
+      "maximal_open_physical_sign_cells": [
+        {
+          "left": "ORIGINAL_SOURCE_START",
+          "right": "ORIGINAL_SOURCE_END",
+          "sign": -1
+        }
+      ],
+      "true_source_knots": [
+        {
+          "position": "1",
+          "channel_continuous": true,
+          "left_sign": -1,
+          "right_sign": -1,
+          "is_physical_zero": false,
+          "is_physical_event": false
+        }
+      ],
+      "exterior_endpoint_signs": [
+        -1,
+        -1
+      ],
+      "complete_original_source_zero_set": true,
+      "original_spans": [
+        {
+          "source_span_index": 0,
+          "original_interval": [
+            "0",
+            "1"
+          ],
+          "historical_owner": "PB00701_V34_EXACT_PHASE_CORRELATED_COMMON_FACTOR",
+          "original_global_power_coefficients": {
+            "0": {
+              "cos": [
+                "0"
+              ],
+              "sin": [
+                "0"
+              ]
+            },
+            "1": {
+              "cos": [
+                "1",
+                "1/4",
+                "1/64"
+              ],
+              "sin": [
+                "1",
+                "1/4",
+                "1/64"
+              ]
+            },
+            "2": {
+              "cos": [
+                "1/100000000"
+              ],
+              "sin": [
+                "0"
+              ]
+            }
+          },
+          "interval_proof": {
+            "schema": "radicadsac-pb00701-transverse-trig-interval/1.0",
+            "status": "RESEARCH_ONLY_CHECKED",
+            "evidence_class": "DETERMINISTIC_MODEL",
+            "is_truth_value": true,
+            "source_interval": [
+              "0",
+              "1"
+            ],
+            "source_phase_turns": [
+              "-3/16",
+              "1/48"
+            ],
+            "partition": [
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "0",
+                  "1"
+                ],
+                "sign": -1
+              }
+            ],
+            "endpoint_signs": [
+              -1,
+              -1
+            ],
+            "complete_simple_root_count": 0,
+            "nodes": 1,
+            "historical_child_certified": false,
+            "production_authorized": false
+          }
+        },
+        {
+          "source_span_index": 1,
+          "original_interval": [
+            "1",
+            "2"
+          ],
+          "historical_owner": "DELEGATED_V6_CONSTANT_MODULATION",
+          "original_global_power_coefficients": {
+            "0": {
+              "cos": [
+                "0"
+              ],
+              "sin": [
+                "0"
+              ]
+            },
+            "1": {
+              "cos": [
+                "81/64"
+              ],
+              "sin": [
+                "81/64"
+              ]
+            },
+            "2": {
+              "cos": [
+                "1/100000000"
+              ],
+              "sin": [
+                "0"
+              ]
+            }
+          },
+          "interval_proof": {
+            "schema": "radicadsac-pb00701-transverse-trig-interval/1.0",
+            "status": "RESEARCH_ONLY_CHECKED",
+            "evidence_class": "DETERMINISTIC_MODEL",
+            "is_truth_value": true,
+            "source_interval": [
+              "1",
+              "2"
+            ],
+            "source_phase_turns": [
+              "-3/16",
+              "1/48"
+            ],
+            "partition": [
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "1",
+                  "2"
+                ],
+                "sign": -1
+              }
+            ],
+            "endpoint_signs": [
+              -1,
+              -1
+            ],
+            "complete_simple_root_count": 0,
+            "nodes": 1,
+            "historical_child_certified": false,
+            "production_authorized": false
+          }
+        }
+      ],
+      "certificate_partition_cuts_are_not_physical_events": true,
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V35_EXACT_PHASE_CORRELATED_PROPORTIONAL_COMMON_FACTOR:tail0",
+      "origin": "verify_pb00701_v35",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "6e7d4ae0dcd4303243772ec7cb1914c590ed91b6b5b27af5262f24ee8e493f19",
+      "original_row_sha256": "0caac73bf90d76a5c83f1faa60c2122959a1ad3109e53318c3e975505db1830d",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "-3/16",
+        "rate": "1/48"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_spans": [
+        [
+          "PB00701_V35_EXACT_PHASE_CORRELATED_PROPORTIONAL_COMMON_FACTOR",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "status": "COMPLETE_PINNED_ORIGINAL_SOURCE_PROOF_RESEARCH_ONLY",
+      "complete_closed_zero_set_kind": "FINITE",
+      "complete_closed_root_count": 0,
+      "ordered_root_events": [],
+      "maximal_open_physical_sign_cells": [
+        {
+          "left": "ORIGINAL_SOURCE_START",
+          "right": "ORIGINAL_SOURCE_END",
+          "sign": -1
+        }
+      ],
+      "true_source_knots": [
+        {
+          "position": "1",
+          "channel_continuous": true,
+          "left_sign": -1,
+          "right_sign": -1,
+          "is_physical_zero": false,
+          "is_physical_event": false
+        }
+      ],
+      "exterior_endpoint_signs": [
+        -1,
+        -1
+      ],
+      "complete_original_source_zero_set": true,
+      "original_spans": [
+        {
+          "source_span_index": 0,
+          "original_interval": [
+            "0",
+            "1"
+          ],
+          "historical_owner": "PB00701_V35_EXACT_PHASE_CORRELATED_PROPORTIONAL_COMMON_FACTOR",
+          "original_global_power_coefficients": {
+            "0": {
+              "cos": [
+                "0"
+              ],
+              "sin": [
+                "0"
+              ]
+            },
+            "1": {
+              "cos": [
+                "9/10",
+                "9/40",
+                "9/640"
+              ],
+              "sin": [
+                "1",
+                "1/4",
+                "1/64"
+              ]
+            },
+            "2": {
+              "cos": [
+                "1/100000000"
+              ],
+              "sin": [
+                "0"
+              ]
+            }
+          },
+          "interval_proof": {
+            "schema": "radicadsac-pb00701-transverse-trig-interval/1.0",
+            "status": "RESEARCH_ONLY_CHECKED",
+            "evidence_class": "DETERMINISTIC_MODEL",
+            "is_truth_value": true,
+            "source_interval": [
+              "0",
+              "1"
+            ],
+            "source_phase_turns": [
+              "-3/16",
+              "1/48"
+            ],
+            "partition": [
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "0",
+                  "1"
+                ],
+                "sign": -1
+              }
+            ],
+            "endpoint_signs": [
+              -1,
+              -1
+            ],
+            "complete_simple_root_count": 0,
+            "nodes": 1,
+            "historical_child_certified": false,
+            "production_authorized": false
+          }
+        },
+        {
+          "source_span_index": 1,
+          "original_interval": [
+            "1",
+            "2"
+          ],
+          "historical_owner": "DELEGATED_V6_CONSTANT_MODULATION",
+          "original_global_power_coefficients": {
+            "0": {
+              "cos": [
+                "0"
+              ],
+              "sin": [
+                "0"
+              ]
+            },
+            "1": {
+              "cos": [
+                "729/640"
+              ],
+              "sin": [
+                "81/64"
+              ]
+            },
+            "2": {
+              "cos": [
+                "1/100000000"
+              ],
+              "sin": [
+                "0"
+              ]
+            }
+          },
+          "interval_proof": {
+            "schema": "radicadsac-pb00701-transverse-trig-interval/1.0",
+            "status": "RESEARCH_ONLY_CHECKED",
+            "evidence_class": "DETERMINISTIC_MODEL",
+            "is_truth_value": true,
+            "source_interval": [
+              "1",
+              "2"
+            ],
+            "source_phase_turns": [
+              "-3/16",
+              "1/48"
+            ],
+            "partition": [
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "1",
+                  "2"
+                ],
+                "sign": -1
+              }
+            ],
+            "endpoint_signs": [
+              -1,
+              -1
+            ],
+            "complete_simple_root_count": 0,
+            "nodes": 1,
+            "historical_child_certified": false,
+            "production_authorized": false
+          }
+        }
+      ],
+      "certificate_partition_cuts_are_not_physical_events": true,
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V36_EXACT_PHASE_CORRELATED_VARYING_RATIO_SHARED_FACTOR:tail0",
+      "origin": "verify_pb00701_v36",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "78cb3259190ca810d825690303e33b69f7a63f6ca7bc4fba7d705e470a90695f",
+      "original_row_sha256": "2a7abe39076a67f824b394913e225054168c7a5e4d8e35cd2fa36a8618b8a2e8",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "-3/16",
+        "rate": "1/48"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_spans": [
+        [
+          "PB00701_V36_EXACT_PHASE_CORRELATED_VARYING_RATIO_SHARED_FACTOR",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "status": "COMPLETE_PINNED_ORIGINAL_SOURCE_PROOF_RESEARCH_ONLY",
+      "complete_closed_zero_set_kind": "FINITE",
+      "complete_closed_root_count": 0,
+      "ordered_root_events": [],
+      "maximal_open_physical_sign_cells": [
+        {
+          "left": "ORIGINAL_SOURCE_START",
+          "right": "ORIGINAL_SOURCE_END",
+          "sign": -1
+        }
+      ],
+      "true_source_knots": [
+        {
+          "position": "1",
+          "channel_continuous": true,
+          "left_sign": -1,
+          "right_sign": -1,
+          "is_physical_zero": false,
+          "is_physical_event": false
+        }
+      ],
+      "exterior_endpoint_signs": [
+        -1,
+        -1
+      ],
+      "complete_original_source_zero_set": true,
+      "original_spans": [
+        {
+          "source_span_index": 0,
+          "original_interval": [
+            "0",
+            "1"
+          ],
+          "historical_owner": "PB00701_V36_EXACT_PHASE_CORRELATED_VARYING_RATIO_SHARED_FACTOR",
+          "original_global_power_coefficients": {
+            "0": {
+              "cos": [
+                "0"
+              ],
+              "sin": [
+                "0"
+              ]
+            },
+            "1": {
+              "cos": [
+                "9/10",
+                "17/75",
+                "139/9600",
+                "1/38400"
+              ],
+              "sin": [
+                "1",
+                "1/4",
+                "1/64"
+              ]
+            },
+            "2": {
+              "cos": [
+                "1/100000000"
+              ],
+              "sin": [
+                "0"
+              ]
+            }
+          },
+          "interval_proof": {
+            "schema": "radicadsac-pb00701-transverse-trig-interval/1.0",
+            "status": "RESEARCH_ONLY_CHECKED",
+            "evidence_class": "DETERMINISTIC_MODEL",
+            "is_truth_value": true,
+            "source_interval": [
+              "0",
+              "1"
+            ],
+            "source_phase_turns": [
+              "-3/16",
+              "1/48"
+            ],
+            "partition": [
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "0",
+                  "1"
+                ],
+                "sign": -1
+              }
+            ],
+            "endpoint_signs": [
+              -1,
+              -1
+            ],
+            "complete_simple_root_count": 0,
+            "nodes": 1,
+            "historical_child_certified": false,
+            "production_authorized": false
+          }
+        },
+        {
+          "source_span_index": 1,
+          "original_interval": [
+            "1",
+            "2"
+          ],
+          "historical_owner": "DELEGATED_V6_CONSTANT_MODULATION",
+          "original_global_power_coefficients": {
+            "0": {
+              "cos": [
+                "0"
+              ],
+              "sin": [
+                "0"
+              ]
+            },
+            "1": {
+              "cos": [
+                "14607/12800"
+              ],
+              "sin": [
+                "81/64"
+              ]
+            },
+            "2": {
+              "cos": [
+                "1/100000000"
+              ],
+              "sin": [
+                "0"
+              ]
+            }
+          },
+          "interval_proof": {
+            "schema": "radicadsac-pb00701-transverse-trig-interval/1.0",
+            "status": "RESEARCH_ONLY_CHECKED",
+            "evidence_class": "DETERMINISTIC_MODEL",
+            "is_truth_value": true,
+            "source_interval": [
+              "1",
+              "2"
+            ],
+            "source_phase_turns": [
+              "-3/16",
+              "1/48"
+            ],
+            "partition": [
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "1",
+                  "2"
+                ],
+                "sign": -1
+              }
+            ],
+            "endpoint_signs": [
+              -1,
+              -1
+            ],
+            "complete_simple_root_count": 0,
+            "nodes": 1,
+            "historical_child_certified": false,
+            "production_authorized": false
+          }
+        }
+      ],
+      "certificate_partition_cuts_are_not_physical_events": true,
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V37_EXACT_PHASE_CORRELATED_TWO_POLYNOMIAL_SHARED_FACTOR:tail0",
+      "origin": "verify_pb00701_v37",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "cde19c3ac184e59bf8914f130c3e9b1a988b529467e39bc6b8493764a0feb0fa",
+      "original_row_sha256": "a9d612e237f7277daa3d85f4218fc774cdf391a1761da33e1eb980bf4a35f286",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "-3/16",
+        "rate": "1/8"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_spans": [
+        [
+          "PB00701_V37_EXACT_PHASE_CORRELATED_TWO_POLYNOMIAL_SHARED_FACTOR",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "status": "COMPLETE_PINNED_ORIGINAL_SOURCE_PROOF_RESEARCH_ONLY",
+      "complete_closed_zero_set_kind": "FINITE",
+      "complete_closed_root_count": 1,
+      "ordered_root_events": [
+        {
+          "root_ref": "ROOT_1",
+          "descriptor": "UNIQUE_SIMPLE_ZERO_OF_PINNED_ORIGINAL_SOURCE",
+          "source_span_index": 0,
+          "source_interval": [
+            "0",
+            "1"
+          ],
+          "historical_owner": "PB00701_V37_EXACT_PHASE_CORRELATED_TWO_POLYNOMIAL_SHARED_FACTOR",
+          "strict_bracket": [
+            "9/16",
+            "37/64"
+          ],
+          "left_sign": -1,
+          "right_sign": 1,
+          "smooth_multiplicity": 1,
+          "derivative_sign": 1
+        }
+      ],
+      "maximal_open_physical_sign_cells": [
+        {
+          "left": "ORIGINAL_SOURCE_START",
+          "right": "ROOT_1",
+          "sign": -1
+        },
+        {
+          "left": "ROOT_1",
+          "right": "ORIGINAL_SOURCE_END",
+          "sign": 1
+        }
+      ],
+      "true_source_knots": [
+        {
+          "position": "1",
+          "channel_continuous": true,
+          "left_sign": 1,
+          "right_sign": 1,
+          "is_physical_zero": false,
+          "is_physical_event": false
+        }
+      ],
+      "exterior_endpoint_signs": [
+        -1,
+        1
+      ],
+      "complete_original_source_zero_set": true,
+      "original_spans": [
+        {
+          "source_span_index": 0,
+          "original_interval": [
+            "0",
+            "1"
+          ],
+          "historical_owner": "PB00701_V37_EXACT_PHASE_CORRELATED_TWO_POLYNOMIAL_SHARED_FACTOR",
+          "original_global_power_coefficients": {
+            "0": {
+              "cos": [
+                "0"
+              ],
+              "sin": [
+                "0"
+              ]
+            },
+            "1": {
+              "cos": [
+                "9/10",
+                "34/25",
+                "417/800",
+                "9/1600"
+              ],
+              "sin": [
+                "1",
+                "301/200",
+                "57/100",
+                "9/3200"
+              ]
+            },
+            "2": {
+              "cos": [
+                "1/100000000"
+              ],
+              "sin": [
+                "0"
+              ]
+            }
+          },
+          "interval_proof": {
+            "schema": "radicadsac-pb00701-transverse-trig-interval/1.0",
+            "status": "RESEARCH_ONLY_CHECKED",
+            "evidence_class": "DETERMINISTIC_MODEL",
+            "is_truth_value": true,
+            "source_interval": [
+              "0",
+              "1"
+            ],
+            "source_phase_turns": [
+              "-3/16",
+              "1/8"
+            ],
+            "partition": [
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "0",
+                  "1/16"
+                ],
+                "sign": -1
+              },
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "1/16",
+                  "1/8"
+                ],
+                "sign": -1
+              },
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "1/8",
+                  "3/16"
+                ],
+                "sign": -1
+              },
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "3/16",
+                  "1/4"
+                ],
+                "sign": -1
+              },
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "1/4",
+                  "3/8"
+                ],
+                "sign": -1
+              },
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "3/8",
+                  "1/2"
+                ],
+                "sign": -1
+              },
+              {
+                "kind": "ONE_SIMPLE_ROOT",
+                "interval": [
+                  "1/2",
+                  "3/4"
+                ],
+                "strict_isolation": [
+                  "9/16",
+                  "37/64"
+                ],
+                "derivative_sign": 1,
+                "left_sign": -1,
+                "right_sign": 1,
+                "smooth_multiplicity": 1
+              },
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "3/4",
+                  "1"
+                ],
+                "sign": 1
+              }
+            ],
+            "endpoint_signs": [
+              -1,
+              1
+            ],
+            "complete_simple_root_count": 1,
+            "nodes": 15,
+            "historical_child_certified": false,
+            "production_authorized": false
+          }
+        },
+        {
+          "source_span_index": 1,
+          "original_interval": [
+            "1",
+            "2"
+          ],
+          "historical_owner": "DELEGATED_V6_CONSTANT_MODULATION",
+          "original_global_power_coefficients": {
+            "0": {
+              "cos": [
+                "0"
+              ],
+              "sin": [
+                "0"
+              ]
+            },
+            "1": {
+              "cos": [
+                "4459/1600"
+              ],
+              "sin": [
+                "9849/3200"
+              ]
+            },
+            "2": {
+              "cos": [
+                "1/100000000"
+              ],
+              "sin": [
+                "0"
+              ]
+            }
+          },
+          "interval_proof": {
+            "schema": "radicadsac-pb00701-transverse-trig-interval/1.0",
+            "status": "RESEARCH_ONLY_CHECKED",
+            "evidence_class": "DETERMINISTIC_MODEL",
+            "is_truth_value": true,
+            "source_interval": [
+              "1",
+              "2"
+            ],
+            "source_phase_turns": [
+              "-3/16",
+              "1/8"
+            ],
+            "partition": [
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "1",
+                  "2"
+                ],
+                "sign": 1
+              }
+            ],
+            "endpoint_signs": [
+              1,
+              1
+            ],
+            "complete_simple_root_count": 0,
+            "nodes": 1,
+            "historical_child_certified": false,
+            "production_authorized": false
+          }
+        }
+      ],
+      "certificate_partition_cuts_are_not_physical_events": true,
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V38_EXACT_DIRECT_ROTATED_COORDINATE_TWO_QUADRATURE:tail0",
+      "origin": "verify_pb00701_v38",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "9b7429ae290de259b2990b39740f40495c02b407e4e906e7eece77ea65c43f03",
+      "original_row_sha256": "a8d5801d40c97979d8a49124ddb286c59be91b41bb0cf52c9047e60163e12982",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "-3/16",
+        "rate": "1/48"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_spans": [
+        [
+          "PB00701_V38_EXACT_DIRECT_ROTATED_COORDINATE_TWO_QUADRATURE",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "status": "COMPLETE_PINNED_ORIGINAL_SOURCE_PROOF_RESEARCH_ONLY",
+      "complete_closed_zero_set_kind": "FINITE",
+      "complete_closed_root_count": 0,
+      "ordered_root_events": [],
+      "maximal_open_physical_sign_cells": [
+        {
+          "left": "ORIGINAL_SOURCE_START",
+          "right": "ORIGINAL_SOURCE_END",
+          "sign": -1
+        }
+      ],
+      "true_source_knots": [
+        {
+          "position": "1",
+          "channel_continuous": true,
+          "left_sign": -1,
+          "right_sign": -1,
+          "is_physical_zero": false,
+          "is_physical_event": false
+        }
+      ],
+      "exterior_endpoint_signs": [
+        -1,
+        -1
+      ],
+      "complete_original_source_zero_set": true,
+      "original_spans": [
+        {
+          "source_span_index": 0,
+          "original_interval": [
+            "0",
+            "1"
+          ],
+          "historical_owner": "PB00701_V38_EXACT_DIRECT_ROTATED_COORDINATE_TWO_QUADRATURE",
+          "original_global_power_coefficients": {
+            "0": {
+              "cos": [
+                "0"
+              ],
+              "sin": [
+                "0"
+              ]
+            },
+            "1": {
+              "cos": [
+                "1",
+                "1/5"
+              ],
+              "sin": [
+                "11/10",
+                "1/5"
+              ]
+            },
+            "2": {
+              "cos": [
+                "1/100000000"
+              ],
+              "sin": [
+                "0"
+              ]
+            }
+          },
+          "interval_proof": {
+            "schema": "radicadsac-pb00701-transverse-trig-interval/1.0",
+            "status": "RESEARCH_ONLY_CHECKED",
+            "evidence_class": "DETERMINISTIC_MODEL",
+            "is_truth_value": true,
+            "source_interval": [
+              "0",
+              "1"
+            ],
+            "source_phase_turns": [
+              "-3/16",
+              "1/48"
+            ],
+            "partition": [
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "0",
+                  "1"
+                ],
+                "sign": -1
+              }
+            ],
+            "endpoint_signs": [
+              -1,
+              -1
+            ],
+            "complete_simple_root_count": 0,
+            "nodes": 1,
+            "historical_child_certified": false,
+            "production_authorized": false
+          }
+        },
+        {
+          "source_span_index": 1,
+          "original_interval": [
+            "1",
+            "2"
+          ],
+          "historical_owner": "DELEGATED_V6_CONSTANT_MODULATION",
+          "original_global_power_coefficients": {
+            "0": {
+              "cos": [
+                "0"
+              ],
+              "sin": [
+                "0"
+              ]
+            },
+            "1": {
+              "cos": [
+                "6/5"
+              ],
+              "sin": [
+                "13/10"
+              ]
+            },
+            "2": {
+              "cos": [
+                "1/100000000"
+              ],
+              "sin": [
+                "0"
+              ]
+            }
+          },
+          "interval_proof": {
+            "schema": "radicadsac-pb00701-transverse-trig-interval/1.0",
+            "status": "RESEARCH_ONLY_CHECKED",
+            "evidence_class": "DETERMINISTIC_MODEL",
+            "is_truth_value": true,
+            "source_interval": [
+              "1",
+              "2"
+            ],
+            "source_phase_turns": [
+              "-3/16",
+              "1/48"
+            ],
+            "partition": [
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "1",
+                  "2"
+                ],
+                "sign": -1
+              }
+            ],
+            "endpoint_signs": [
+              -1,
+              -1
+            ],
+            "complete_simple_root_count": 0,
+            "nodes": 1,
+            "historical_child_certified": false,
+            "production_authorized": false
+          }
+        }
+      ],
+      "certificate_partition_cuts_are_not_physical_events": true,
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V39_EXACT_SIGNED_A_DIRECT_ROTATED_COORDINATE:tail0",
+      "origin": "verify_pb00701_v39",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "daeafb37dd81d27fbba1c97dd09b14767531e37046237449aab3eaa9adfc1061",
+      "original_row_sha256": "7a5ae576818a753fb0b0afb1f09058b58b468da8fc884f528166c05bf1c0b176",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "-3/16",
+        "rate": "1/48"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_spans": [
+        [
+          "PB00701_V39_EXACT_SIGNED_A_DIRECT_ROTATED_COORDINATE",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "status": "COMPLETE_PINNED_ORIGINAL_SOURCE_PROOF_RESEARCH_ONLY",
+      "complete_closed_zero_set_kind": "FINITE",
+      "complete_closed_root_count": 0,
+      "ordered_root_events": [],
+      "maximal_open_physical_sign_cells": [
+        {
+          "left": "ORIGINAL_SOURCE_START",
+          "right": "ORIGINAL_SOURCE_END",
+          "sign": 1
+        }
+      ],
+      "true_source_knots": [
+        {
+          "position": "1",
+          "channel_continuous": true,
+          "left_sign": 1,
+          "right_sign": 1,
+          "is_physical_zero": false,
+          "is_physical_event": false
+        }
+      ],
+      "exterior_endpoint_signs": [
+        1,
+        1
+      ],
+      "complete_original_source_zero_set": true,
+      "original_spans": [
+        {
+          "source_span_index": 0,
+          "original_interval": [
+            "0",
+            "1"
+          ],
+          "historical_owner": "PB00701_V39_EXACT_SIGNED_A_DIRECT_ROTATED_COORDINATE",
+          "original_global_power_coefficients": {
+            "0": {
+              "cos": [
+                "0"
+              ],
+              "sin": [
+                "0"
+              ]
+            },
+            "1": {
+              "cos": [
+                "-1",
+                "-1/5"
+              ],
+              "sin": [
+                "-11/10",
+                "-1/5"
+              ]
+            },
+            "2": {
+              "cos": [
+                "-1/100000000"
+              ],
+              "sin": [
+                "0"
+              ]
+            }
+          },
+          "interval_proof": {
+            "schema": "radicadsac-pb00701-transverse-trig-interval/1.0",
+            "status": "RESEARCH_ONLY_CHECKED",
+            "evidence_class": "DETERMINISTIC_MODEL",
+            "is_truth_value": true,
+            "source_interval": [
+              "0",
+              "1"
+            ],
+            "source_phase_turns": [
+              "-3/16",
+              "1/48"
+            ],
+            "partition": [
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "0",
+                  "1"
+                ],
+                "sign": 1
+              }
+            ],
+            "endpoint_signs": [
+              1,
+              1
+            ],
+            "complete_simple_root_count": 0,
+            "nodes": 1,
+            "historical_child_certified": false,
+            "production_authorized": false
+          }
+        },
+        {
+          "source_span_index": 1,
+          "original_interval": [
+            "1",
+            "2"
+          ],
+          "historical_owner": "DELEGATED_V6_CONSTANT_MODULATION",
+          "original_global_power_coefficients": {
+            "0": {
+              "cos": [
+                "0"
+              ],
+              "sin": [
+                "0"
+              ]
+            },
+            "1": {
+              "cos": [
+                "-6/5"
+              ],
+              "sin": [
+                "-13/10"
+              ]
+            },
+            "2": {
+              "cos": [
+                "-1/100000000"
+              ],
+              "sin": [
+                "0"
+              ]
+            }
+          },
+          "interval_proof": {
+            "schema": "radicadsac-pb00701-transverse-trig-interval/1.0",
+            "status": "RESEARCH_ONLY_CHECKED",
+            "evidence_class": "DETERMINISTIC_MODEL",
+            "is_truth_value": true,
+            "source_interval": [
+              "1",
+              "2"
+            ],
+            "source_phase_turns": [
+              "-3/16",
+              "1/48"
+            ],
+            "partition": [
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "1",
+                  "2"
+                ],
+                "sign": 1
+              }
+            ],
+            "endpoint_signs": [
+              1,
+              1
+            ],
+            "complete_simple_root_count": 0,
+            "nodes": 1,
+            "historical_child_certified": false,
+            "production_authorized": false
+          }
+        }
+      ],
+      "certificate_partition_cuts_are_not_physical_events": true,
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V42_EXACT_ROTATED_COORDINATE_ORIENTATION_TRANSITION_BRIDGE:tail0",
+      "origin": "verify_pb00701_v50",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "95a977a9d300218fa2bd45cd54b752f2bb976b3c73c934d3c1aa715a25d6faed",
+      "original_row_sha256": "c0e0cea514ac59ef80d492b8feb255efd2a7883926a8f95ff9ddb9e472901b97",
+      "source_parameter_id": "preserved-carrier",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "-1/8",
+        "rate": "1/24"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_spans": [
+        [
+          "PB00701_V42_EXACT_ROTATED_COORDINATE_ORIENTATION_TRANSITION_BRIDGE",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "status": "COMPLETE_PINNED_ORIGINAL_SOURCE_PROOF_RESEARCH_ONLY",
+      "complete_closed_zero_set_kind": "FINITE",
+      "complete_closed_root_count": 1,
+      "ordered_root_events": [
+        {
+          "root_ref": "ROOT_1",
+          "descriptor": "UNIQUE_SIMPLE_ZERO_OF_PINNED_ORIGINAL_SOURCE",
+          "source_span_index": 0,
+          "source_interval": [
+            "0",
+            "1"
+          ],
+          "historical_owner": "PB00701_V42_EXACT_ROTATED_COORDINATE_ORIENTATION_TRANSITION_BRIDGE",
+          "strict_bracket": [
+            "45/64",
+            "23/32"
+          ],
+          "left_sign": -1,
+          "right_sign": 1,
+          "smooth_multiplicity": 1,
+          "derivative_sign": 1
+        }
+      ],
+      "maximal_open_physical_sign_cells": [
+        {
+          "left": "ORIGINAL_SOURCE_START",
+          "right": "ROOT_1",
+          "sign": -1
+        },
+        {
+          "left": "ROOT_1",
+          "right": "ORIGINAL_SOURCE_END",
+          "sign": 1
+        }
+      ],
+      "true_source_knots": [
+        {
+          "position": "1",
+          "channel_continuous": true,
+          "left_sign": 1,
+          "right_sign": 1,
+          "is_physical_zero": false,
+          "is_physical_event": false
+        }
+      ],
+      "exterior_endpoint_signs": [
+        -1,
+        1
+      ],
+      "complete_original_source_zero_set": true,
+      "original_spans": [
+        {
+          "source_span_index": 0,
+          "original_interval": [
+            "0",
+            "1"
+          ],
+          "historical_owner": "PB00701_V42_EXACT_ROTATED_COORDINATE_ORIENTATION_TRANSITION_BRIDGE",
+          "original_global_power_coefficients": {
+            "0": {
+              "cos": [
+                "0"
+              ],
+              "sin": [
+                "0"
+              ]
+            },
+            "1": {
+              "cos": [
+                "-7/10",
+                "3/5",
+                "8/9",
+                "2/16875"
+              ],
+              "sin": [
+                "7/10",
+                "-19/15",
+                "8/9",
+                "2/16875"
+              ]
+            },
+            "2": {
+              "cos": [
+                "1/25000000"
+              ],
+              "sin": [
+                "0"
+              ]
+            }
+          },
+          "interval_proof": {
+            "schema": "radicadsac-pb00701-transverse-trig-interval/1.0",
+            "status": "RESEARCH_ONLY_CHECKED",
+            "evidence_class": "DETERMINISTIC_MODEL",
+            "is_truth_value": true,
+            "source_interval": [
+              "0",
+              "1"
+            ],
+            "source_phase_turns": [
+              "-1/8",
+              "1/24"
+            ],
+            "partition": [
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "0",
+                  "1/4"
+                ],
+                "sign": -1
+              },
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "1/4",
+                  "1/2"
+                ],
+                "sign": -1
+              },
+              {
+                "kind": "ONE_SIMPLE_ROOT",
+                "interval": [
+                  "1/2",
+                  "3/4"
+                ],
+                "strict_isolation": [
+                  "45/64",
+                  "23/32"
+                ],
+                "derivative_sign": 1,
+                "left_sign": -1,
+                "right_sign": 1,
+                "smooth_multiplicity": 1
+              },
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "3/4",
+                  "1"
+                ],
+                "sign": 1
+              }
+            ],
+            "endpoint_signs": [
+              -1,
+              1
+            ],
+            "complete_simple_root_count": 1,
+            "nodes": 7,
+            "historical_child_certified": false,
+            "production_authorized": false
+          }
+        },
+        {
+          "source_span_index": 1,
+          "original_interval": [
+            "1",
+            "2"
+          ],
+          "historical_owner": "DELEGATED_V6_CONSTANT_MODULATION",
+          "original_global_power_coefficients": {
+            "0": {
+              "cos": [
+                "0"
+              ],
+              "sin": [
+                "0"
+              ]
+            },
+            "1": {
+              "cos": [
+                "26629/33750"
+              ],
+              "sin": [
+                "10879/33750"
+              ]
+            },
+            "2": {
+              "cos": [
+                "1/25000000"
+              ],
+              "sin": [
+                "0"
+              ]
+            }
+          },
+          "interval_proof": {
+            "schema": "radicadsac-pb00701-transverse-trig-interval/1.0",
+            "status": "RESEARCH_ONLY_CHECKED",
+            "evidence_class": "DETERMINISTIC_MODEL",
+            "is_truth_value": true,
+            "source_interval": [
+              "1",
+              "2"
+            ],
+            "source_phase_turns": [
+              "-1/8",
+              "1/24"
+            ],
+            "partition": [
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "1",
+                  "2"
+                ],
+                "sign": 1
+              }
+            ],
+            "endpoint_signs": [
+              1,
+              1
+            ],
+            "complete_simple_root_count": 0,
+            "nodes": 1,
+            "historical_child_certified": false,
+            "production_authorized": false
+          }
+        }
+      ],
+      "certificate_partition_cuts_are_not_physical_events": true,
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF:tail0",
+      "origin": "verify_pb00701_v41",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "28cd4b4be4c74e6404b1a307d2217b2dc5a8b708b28c5ad75309c35e48092efd",
+      "original_row_sha256": "98057a188fdf320d0238600f3b8a4c10dcb60f9a569010b44cda06a32970a9c4",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "-1/16",
+        "rate": "-1/48"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_spans": [
+        [
+          "PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "status": "COMPLETE_PINNED_ORIGINAL_SOURCE_PROOF_RESEARCH_ONLY",
+      "complete_closed_zero_set_kind": "FINITE",
+      "complete_closed_root_count": 0,
+      "ordered_root_events": [],
+      "maximal_open_physical_sign_cells": [
+        {
+          "left": "ORIGINAL_SOURCE_START",
+          "right": "ORIGINAL_SOURCE_END",
+          "sign": 1
+        }
+      ],
+      "true_source_knots": [
+        {
+          "position": "1",
+          "channel_continuous": true,
+          "left_sign": 1,
+          "right_sign": 1,
+          "is_physical_zero": false,
+          "is_physical_event": false
+        }
+      ],
+      "exterior_endpoint_signs": [
+        1,
+        1
+      ],
+      "complete_original_source_zero_set": true,
+      "original_spans": [
+        {
+          "source_span_index": 0,
+          "original_interval": [
+            "0",
+            "1"
+          ],
+          "historical_owner": "PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF",
+          "original_global_power_coefficients": {
+            "0": {
+              "cos": [
+                "0"
+              ],
+              "sin": [
+                "0"
+              ]
+            },
+            "1": {
+              "cos": [
+                "11/20",
+                "-17/60"
+              ],
+              "sin": [
+                "1/5",
+                "-1/20"
+              ]
+            },
+            "2": {
+              "cos": [
+                "1/100000000"
+              ],
+              "sin": [
+                "0"
+              ]
+            }
+          },
+          "interval_proof": {
+            "schema": "radicadsac-pb00701-transverse-trig-interval/1.0",
+            "status": "RESEARCH_ONLY_CHECKED",
+            "evidence_class": "DETERMINISTIC_MODEL",
+            "is_truth_value": true,
+            "source_interval": [
+              "0",
+              "1"
+            ],
+            "source_phase_turns": [
+              "-1/16",
+              "-1/48"
+            ],
+            "partition": [
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "0",
+                  "1"
+                ],
+                "sign": 1
+              }
+            ],
+            "endpoint_signs": [
+              1,
+              1
+            ],
+            "complete_simple_root_count": 0,
+            "nodes": 1,
+            "historical_child_certified": false,
+            "production_authorized": false
+          }
+        },
+        {
+          "source_span_index": 1,
+          "original_interval": [
+            "1",
+            "2"
+          ],
+          "historical_owner": "DELEGATED_V6_CONSTANT_MODULATION",
+          "original_global_power_coefficients": {
+            "0": {
+              "cos": [
+                "0"
+              ],
+              "sin": [
+                "0"
+              ]
+            },
+            "1": {
+              "cos": [
+                "4/15"
+              ],
+              "sin": [
+                "3/20"
+              ]
+            },
+            "2": {
+              "cos": [
+                "1/100000000"
+              ],
+              "sin": [
+                "0"
+              ]
+            }
+          },
+          "interval_proof": {
+            "schema": "radicadsac-pb00701-transverse-trig-interval/1.0",
+            "status": "RESEARCH_ONLY_CHECKED",
+            "evidence_class": "DETERMINISTIC_MODEL",
+            "is_truth_value": true,
+            "source_interval": [
+              "1",
+              "2"
+            ],
+            "source_phase_turns": [
+              "-1/16",
+              "-1/48"
+            ],
+            "partition": [
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "1",
+                  "2"
+                ],
+                "sign": 1
+              }
+            ],
+            "endpoint_signs": [
+              1,
+              1
+            ],
+            "complete_simple_root_count": 0,
+            "nodes": 1,
+            "historical_child_certified": false,
+            "production_authorized": false
+          }
+        }
+      ],
+      "certificate_partition_cuts_are_not_physical_events": true,
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V48_MIXED_ROOT_SINGLE_CUT:tail0",
+      "origin": "verify_pb00701_v53",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "0435a131c257bb5d453932f3692a45f787f83c9cc073fb38c879570f1f60ebfd",
+      "original_row_sha256": "90bee5b127f42eca93118f3b5effdb46f305824271cb703e9d990ffa8d956058",
+      "source_parameter_id": "v53-strict-48",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "-1/8",
+        "rate": "1/16"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_spans": [
+        [
+          "PB00701_V48_MIXED_ROOT_SINGLE_CUT",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "status": "COMPLETE_PINNED_ORIGINAL_SOURCE_PROOF_RESEARCH_ONLY",
+      "complete_closed_zero_set_kind": "FINITE",
+      "complete_closed_root_count": 1,
+      "ordered_root_events": [
+        {
+          "root_ref": "ROOT_1",
+          "descriptor": "UNIQUE_SIMPLE_ZERO_OF_PINNED_ORIGINAL_SOURCE",
+          "source_span_index": 0,
+          "source_interval": [
+            "0",
+            "1"
+          ],
+          "historical_owner": "PB00701_V48_MIXED_ROOT_SINGLE_CUT",
+          "strict_bracket": [
+            "15/32",
+            "31/64"
+          ],
+          "left_sign": -1,
+          "right_sign": 1,
+          "smooth_multiplicity": 1,
+          "derivative_sign": 1
+        }
+      ],
+      "maximal_open_physical_sign_cells": [
+        {
+          "left": "ORIGINAL_SOURCE_START",
+          "right": "ROOT_1",
+          "sign": -1
+        },
+        {
+          "left": "ROOT_1",
+          "right": "ORIGINAL_SOURCE_END",
+          "sign": 1
+        }
+      ],
+      "true_source_knots": [
+        {
+          "position": "1",
+          "channel_continuous": true,
+          "left_sign": 1,
+          "right_sign": 1,
+          "is_physical_zero": false,
+          "is_physical_event": false
+        }
+      ],
+      "exterior_endpoint_signs": [
+        -1,
+        1
+      ],
+      "complete_original_source_zero_set": true,
+      "original_spans": [
+        {
+          "source_span_index": 0,
+          "original_interval": [
+            "0",
+            "1"
+          ],
+          "historical_owner": "PB00701_V48_MIXED_ROOT_SINGLE_CUT",
+          "original_global_power_coefficients": {
+            "0": {
+              "cos": [
+                "0"
+              ],
+              "sin": [
+                "0"
+              ]
+            },
+            "1": {
+              "cos": [
+                "-7/40",
+                "9/40",
+                "1/2",
+                "1/10000"
+              ],
+              "sin": [
+                "7/40",
+                "-19/40",
+                "1/2",
+                "1/10000"
+              ]
+            },
+            "2": {
+              "cos": [
+                "1/100000000"
+              ],
+              "sin": [
+                "0"
+              ]
+            }
+          },
+          "interval_proof": {
+            "schema": "radicadsac-pb00701-transverse-trig-interval/1.0",
+            "status": "RESEARCH_ONLY_CHECKED",
+            "evidence_class": "DETERMINISTIC_MODEL",
+            "is_truth_value": true,
+            "source_interval": [
+              "0",
+              "1"
+            ],
+            "source_phase_turns": [
+              "-1/8",
+              "1/16"
+            ],
+            "partition": [
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "0",
+                  "1/8"
+                ],
+                "sign": -1
+              },
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "1/8",
+                  "1/4"
+                ],
+                "sign": -1
+              },
+              {
+                "kind": "ONE_SIMPLE_ROOT",
+                "interval": [
+                  "1/4",
+                  "1/2"
+                ],
+                "strict_isolation": [
+                  "15/32",
+                  "31/64"
+                ],
+                "derivative_sign": 1,
+                "left_sign": -1,
+                "right_sign": 1,
+                "smooth_multiplicity": 1
+              },
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "1/2",
+                  "3/4"
+                ],
+                "sign": 1
+              },
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "3/4",
+                  "1"
+                ],
+                "sign": 1
+              }
+            ],
+            "endpoint_signs": [
+              -1,
+              1
+            ],
+            "complete_simple_root_count": 1,
+            "nodes": 9,
+            "historical_child_certified": false,
+            "production_authorized": false
+          }
+        },
+        {
+          "source_span_index": 1,
+          "original_interval": [
+            "1",
+            "2"
+          ],
+          "historical_owner": "DELEGATED_V6_CONSTANT_MODULATION",
+          "original_global_power_coefficients": {
+            "0": {
+              "cos": [
+                "0"
+              ],
+              "sin": [
+                "0"
+              ]
+            },
+            "1": {
+              "cos": [
+                "5501/10000"
+              ],
+              "sin": [
+                "2001/10000"
+              ]
+            },
+            "2": {
+              "cos": [
+                "1/100000000"
+              ],
+              "sin": [
+                "0"
+              ]
+            }
+          },
+          "interval_proof": {
+            "schema": "radicadsac-pb00701-transverse-trig-interval/1.0",
+            "status": "RESEARCH_ONLY_CHECKED",
+            "evidence_class": "DETERMINISTIC_MODEL",
+            "is_truth_value": true,
+            "source_interval": [
+              "1",
+              "2"
+            ],
+            "source_phase_turns": [
+              "-1/8",
+              "1/16"
+            ],
+            "partition": [
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "1",
+                  "2"
+                ],
+                "sign": 1
+              }
+            ],
+            "endpoint_signs": [
+              1,
+              1
+            ],
+            "complete_simple_root_count": 0,
+            "nodes": 1,
+            "historical_child_certified": false,
+            "production_authorized": false
+          }
+        }
+      ],
+      "certificate_partition_cuts_are_not_physical_events": true,
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V9_EXACT_MONOTONE_SINGLE_HARMONIC_RATIO:tail0",
+      "origin": "verify_pb00701_v10",
+      "provenance_kind": "COMPOSITE_TAIL",
+      "source_sha256": "4d1ef1cbecceeb4a43b4e30fd37327fa204164cc9ce25dfe4f1744a052cebcc2",
+      "original_row_sha256": "406ec73609a8213051afd3361478416e496c782b2b89ae2a857b772146059279",
+      "source_parameter_id": "source-time-t",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/8"
+      },
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "historical_spans": [
+        [
+          "PB00701_V9_EXACT_MONOTONE_SINGLE_HARMONIC_RATIO",
+          "CERTIFIED",
+          null
+        ],
+        [
+          "DELEGATED_V6_CONSTANT_MODULATION",
+          "CERTIFIED",
+          null
+        ]
+      ],
+      "status": "COMPLETE_PINNED_ORIGINAL_SOURCE_PROOF_RESEARCH_ONLY",
+      "complete_closed_zero_set_kind": "FINITE",
+      "complete_closed_root_count": 1,
+      "ordered_root_events": [
+        {
+          "root_ref": "ROOT_1",
+          "descriptor": "UNIQUE_SIMPLE_ZERO_OF_PINNED_ORIGINAL_SOURCE",
+          "source_span_index": 0,
+          "source_interval": [
+            "0",
+            "1"
+          ],
+          "historical_owner": "PB00701_V9_EXACT_MONOTONE_SINGLE_HARMONIC_RATIO",
+          "strict_bracket": [
+            "17/64",
+            "9/32"
+          ],
+          "left_sign": -1,
+          "right_sign": 1,
+          "smooth_multiplicity": 1,
+          "derivative_sign": 1
+        }
+      ],
+      "maximal_open_physical_sign_cells": [
+        {
+          "left": "ORIGINAL_SOURCE_START",
+          "right": "ROOT_1",
+          "sign": -1
+        },
+        {
+          "left": "ROOT_1",
+          "right": "ORIGINAL_SOURCE_END",
+          "sign": 1
+        }
+      ],
+      "true_source_knots": [
+        {
+          "position": "1",
+          "channel_continuous": true,
+          "left_sign": 1,
+          "right_sign": 1,
+          "is_physical_zero": false,
+          "is_physical_event": false
+        }
+      ],
+      "exterior_endpoint_signs": [
+        -1,
+        1
+      ],
+      "complete_original_source_zero_set": true,
+      "original_spans": [
+        {
+          "source_span_index": 0,
+          "original_interval": [
+            "0",
+            "1"
+          ],
+          "historical_owner": "PB00701_V9_EXACT_MONOTONE_SINGLE_HARMONIC_RATIO",
+          "original_global_power_coefficients": {
+            "0": {
+              "cos": [
+                "0"
+              ],
+              "sin": [
+                "0"
+              ]
+            },
+            "1": {
+              "cos": [
+                "-1/2",
+                "1"
+              ],
+              "sin": [
+                "1"
+              ]
+            }
+          },
+          "interval_proof": {
+            "schema": "radicadsac-pb00701-transverse-trig-interval/1.0",
+            "status": "RESEARCH_ONLY_CHECKED",
+            "evidence_class": "DETERMINISTIC_MODEL",
+            "is_truth_value": true,
+            "source_interval": [
+              "0",
+              "1"
+            ],
+            "source_phase_turns": [
+              "0",
+              "1/8"
+            ],
+            "partition": [
+              {
+                "kind": "ONE_SIMPLE_ROOT",
+                "interval": [
+                  "0",
+                  "1"
+                ],
+                "strict_isolation": [
+                  "17/64",
+                  "9/32"
+                ],
+                "derivative_sign": 1,
+                "left_sign": -1,
+                "right_sign": 1,
+                "smooth_multiplicity": 1
+              }
+            ],
+            "endpoint_signs": [
+              -1,
+              1
+            ],
+            "complete_simple_root_count": 1,
+            "nodes": 1,
+            "historical_child_certified": false,
+            "production_authorized": false
+          }
+        },
+        {
+          "source_span_index": 1,
+          "original_interval": [
+            "1",
+            "2"
+          ],
+          "historical_owner": "DELEGATED_V6_CONSTANT_MODULATION",
+          "original_global_power_coefficients": {
+            "0": {
+              "cos": [
+                "0"
+              ],
+              "sin": [
+                "0"
+              ]
+            },
+            "1": {
+              "cos": [
+                "1/2"
+              ],
+              "sin": [
+                "1"
+              ]
+            }
+          },
+          "interval_proof": {
+            "schema": "radicadsac-pb00701-transverse-trig-interval/1.0",
+            "status": "RESEARCH_ONLY_CHECKED",
+            "evidence_class": "DETERMINISTIC_MODEL",
+            "is_truth_value": true,
+            "source_interval": [
+              "1",
+              "2"
+            ],
+            "source_phase_turns": [
+              "0",
+              "1/8"
+            ],
+            "partition": [
+              {
+                "kind": "NO_ROOT",
+                "interval": [
+                  "1",
+                  "2"
+                ],
+                "sign": 1
+              }
+            ],
+            "endpoint_signs": [
+              1,
+              1
+            ],
+            "complete_simple_root_count": 0,
+            "nodes": 1,
+            "historical_child_certified": false,
+            "production_authorized": false
+          }
+        }
+      ],
+      "certificate_partition_cuts_are_not_physical_events": true,
+      "historical_disposition_changed": false
+    }
+  ],
+  "preserved_negative_controls": [
+    {
+      "case_id": "composite:PB00701_V23_EXACT_NONCONSTANT_AMPLITUDE_PHASE_SECTOR_ANCHOR:tail0",
+      "source_sha256": "e8d2451833854ee7eaf73d4fb70b78b86ba72194b2688876f3bb9ee6ab132ffd",
+      "original_row_sha256": "e52a27e5c3dcdf984919cdcd7bb925c52d2865550035da357cd87178b9fbfc89",
+      "tested_original_interval": [
+        "0",
+        "1"
+      ],
+      "kernel_status": "REFUSAL",
+      "reason": "UNDECIDED_EVENT_OR_TANGENCY",
+      "included_in_complete_sources": false,
+      "mathematical_impossibility_claimed": false
+    },
+    {
+      "case_id": "composite:PB00701_V25_EXACT_COMPONENT_CONE_MIXED_PROJECTION_ANCHOR:tail0",
+      "source_sha256": "d7bf5969875c5ae44fa83f80d217fe17b02aca4db58545dc943c43e744ef68b6",
+      "original_row_sha256": "90642204b36339c0bea36a1196c4b1045f4b0fa360d25493eb59b23881579ab8",
+      "tested_original_interval": [
+        "0",
+        "1"
+      ],
+      "kernel_status": "REFUSAL",
+      "reason": "UNDECIDED_EVENT_OR_TANGENCY",
+      "included_in_complete_sources": false,
+      "mathematical_impossibility_claimed": false
+    },
+    {
+      "case_id": "composite:PB00701_V40_EXACT_SIGNED_B_ANTI_DIAGONAL_DIRECT_ROTATED_COORDINATE:tail0",
+      "source_sha256": "90a5df370094bcd8cef37be171f9bb12264c15a32237300b5435dc8871c6c2bf",
+      "original_row_sha256": "8291b11b51d2109451ba852185bf6d9504c9d7e46473bf01be5924508ded5fad",
+      "tested_original_interval": [
+        "0",
+        "1"
+      ],
+      "kernel_status": "REFUSAL",
+      "reason": "UNDECIDED_ISOLATION_CUT",
+      "included_in_complete_sources": false,
+      "mathematical_impossibility_claimed": false
+    }
+  ],
+  "gates": {
+    "PB-007-01": "OPEN",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "required_machining_operations": 26,
+    "native_geometry_or_STEP_qualified": false,
+    "production_authorized": false
+  }
+}
