@@ -1,0 +1,56 @@
+name: mc1-pb00701-multiplier-tail-source-completion
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/mc1-pb00701-multiplier-tail-source-completion.yml'
+      - 'handoffs/current-authority.json'
+      - 'research/machining-completeness/programme-v1.json'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-coverage-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-inventory-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-multiplier-tail-source-completion-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-multiplier-tail-source-completion-witness.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_component_prefix_composition.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_multiplier_tail_source_completion.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_multiplier_tail_source_completion.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/mc1-pb00701-multiplier-tail-source-completion.yml'
+      - 'handoffs/current-authority.json'
+      - 'research/machining-completeness/programme-v1.json'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-coverage-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-inventory-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-multiplier-tail-source-completion-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-multiplier-tail-source-completion-witness.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_component_prefix_composition.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_multiplier_tail_source_completion.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_multiplier_tail_source_completion.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Record literal source head
+        run: git rev-parse HEAD
+      - name: Replay five original multiplier sources and their falsifiers
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_multiplier_tail_source_completion.py --contract --self-test

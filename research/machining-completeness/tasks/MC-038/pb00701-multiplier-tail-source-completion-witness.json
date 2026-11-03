@@ -1,0 +1,2864 @@
+{
+  "schema": "radicadsac-mc038-multiplier-tail-source-completion/1.0",
+  "task": "MC-038 / PB-007-01",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "source_baseline_main": "4d75edea493a3ee620d3bf64d81fa6e23356800e",
+  "preregistration_issue_100_comment": 6591866803,
+  "dependencies": {
+    "local_git_blobs": {
+      "pb00701-finite-owner-corpus-v54.json": "5841c331579489b25caef38cd412bdbf286f9134",
+      "pb00701-finite-owner-inventory-v54.json": "8649c20ab77e199f9c3fa351b8b6742218f27abb",
+      "pb00701-finite-owner-coverage-v54.json": "600ba29786f50397f29fd435fc5e2c57076088f9",
+      "verify_pb00701_post_v54_frontier.py": "12c6efeb667a954ffc5a7e27849ae815d466580a",
+      "pb00701-post-v54-evidence-reconciliation.json": "9f62dd6edc37206317eec054b2969bade02d7728",
+      "pb00701_component_prefix_composition.py": "530e552bb41c020456fdf0f17506cb18577896f3"
+    },
+    "root_git_blobs": {
+      "research/machining-completeness/tasks/MC-002/domain-contract-v1.json": "23de82f5240a72509f7afe4acd5948b65bc4ff13",
+      "research/machining-completeness/programme-v1.json": "dee7045a1790b2870744df8ae7693429bd1d81a6",
+      "handoffs/current-authority.json": "fa0233323a0804d8a5d3eb7cd892a274a6173fab"
+    }
+  },
+  "qualified_carrier": {
+    "provider_code": "pb00701_component_prefix_composition.py",
+    "provider_git_blob": "530e552bb41c020456fdf0f17506cb18577896f3",
+    "qualified_main": "4d75edea493a3ee620d3bf64d81fa6e23356800e",
+    "consumed_entrypoint": "carrier_prefix_proof",
+    "receipt_sha256": "d9c019f6104618d096d9b87d13bbdf700b958cd197546b6f64db904c8129bbf4",
+    "receipt": {
+      "kind": "EXACT_UNIT_INTERVAL_COMPONENT_CARRIER_LEMMA",
+      "function": "(t-1/3)*cos(pi*t/2)+(2/3-t)*sin(pi*t/2)",
+      "source_interval": [
+        "0",
+        "1"
+      ],
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/4"
+      },
+      "cosine_amplitude_power_coefficients": [
+        "-1/3",
+        "1"
+      ],
+      "sine_amplitude_power_coefficients": [
+        "2/3",
+        "-1"
+      ],
+      "reflection_identity": "R(1-t)=R(t)",
+      "strict_derivative_lower_bound": {
+        "interval": [
+          "0",
+          "1/3"
+        ],
+        "bound": "1/3"
+      },
+      "strict_positive_middle_interval": [
+        "1/3",
+        "2/3"
+      ],
+      "exact_bracket_sign_reason": {
+        "at_1_over_6": "tan(pi/12)=2-sqrt(3)<1/3",
+        "sqrt3_lower_square": "25/9",
+        "at_1_over_4": "tan(pi/8)=sqrt(2)-1>1/5",
+        "sqrt2_lower_square": "36/25"
+      },
+      "root_brackets": [
+        [
+          "1/6",
+          "1/4"
+        ],
+        [
+          "3/4",
+          "5/6"
+        ]
+      ],
+      "root_multiplicities": [
+        1,
+        1
+      ],
+      "maximal_sign_cells": [
+        "NEGATIVE",
+        "POSITIVE",
+        "NEGATIVE"
+      ],
+      "closed_endpoint_values": [
+        "-1/3",
+        "-1/3"
+      ],
+      "closed_endpoint_roots": 0,
+      "proof_cuts": [
+        "1/3",
+        "2/3"
+      ],
+      "proof_cuts_are_physical_events": false,
+      "original_source_binding_supplied_by_this_lemma": false
+    },
+    "provider_whole_source_or_tail_producers_consumed": false,
+    "original_source_binding_derived_in_this_leaf": true
+  },
+  "source_cases": [
+    {
+      "case_id": "composite:PB00701_V13_EXACT_NONVANISHING_EVEN_MULTIPLIER_MULTIHARMONIC:tail100",
+      "family": "V13",
+      "original_source_sha256": "a7131bea021c5c71d0da2682cd6d4c1a982e8c86196c818ad3f69a926afda2e5",
+      "original_row_sha256": "094b31ab55141488e39589ab6e0deda02b21066f06ba8568110609a23cd0a003",
+      "original_source": {
+        "grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+        "source_parameter_id": "source-time-t",
+        "parameter_lo": "0",
+        "parameter_hi": "2",
+        "phase_turn_offset": "0",
+        "phase_turn_rate": "1/4",
+        "cos_splines": {
+          "0": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "0",
+              "0",
+              "0",
+              "100"
+            ]
+          },
+          "1": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "-5/6",
+              "5/3",
+              "5/3",
+              "5/3"
+            ]
+          },
+          "3": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "-1/6",
+              "1/3",
+              "1/3",
+              "1/3"
+            ]
+          }
+        },
+        "sin_splines": {
+          "1": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "1",
+              "-1/2",
+              "-1/2",
+              "-1/2"
+            ]
+          },
+          "3": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "1/3",
+              "-1/6",
+              "-1/6",
+              "-1/6"
+            ]
+          }
+        }
+      },
+      "historical_observation": {
+        "id": "composite:PB00701_V13_EXACT_NONVANISHING_EVEN_MULTIPLIER_MULTIHARMONIC:tail100",
+        "observed": {
+          "status": "CERTIFIED",
+          "spans": [
+            [
+              "PB00701_V13_EXACT_NONVANISHING_EVEN_MULTIPLIER_MULTIHARMONIC",
+              "CERTIFIED",
+              null
+            ],
+            [
+              "PB00701_V19_EXACT_MULTI_HARMONIC_MONOTONE_ANCHOR",
+              "CERTIFIED",
+              null
+            ]
+          ]
+        },
+        "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE"
+      },
+      "source_parameter_id": "source-time-t",
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/4"
+      },
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "original_global_power_coefficients": {
+        "cos_splines": {
+          "0": [
+            [
+              "0",
+              "0"
+            ],
+            [
+              "-100",
+              "100"
+            ]
+          ],
+          "1": [
+            [
+              "-5/6",
+              "5/2"
+            ],
+            [
+              "5/3",
+              "0"
+            ]
+          ],
+          "3": [
+            [
+              "-1/6",
+              "1/2"
+            ],
+            [
+              "1/3",
+              "0"
+            ]
+          ]
+        },
+        "sin_splines": {
+          "1": [
+            [
+              "1",
+              "-3/2"
+            ],
+            [
+              "-1/2",
+              "0"
+            ]
+          ],
+          "3": [
+            [
+              "1/3",
+              "-1/2"
+            ],
+            [
+              "-1/6",
+              "0"
+            ]
+          ]
+        }
+      },
+      "original_channel_knot_continuity": [
+        {
+          "channel": "cos_splines",
+          "harmonic": 0,
+          "left_value": "0",
+          "right_value": "0"
+        },
+        {
+          "channel": "cos_splines",
+          "harmonic": 1,
+          "left_value": "5/3",
+          "right_value": "5/3"
+        },
+        {
+          "channel": "cos_splines",
+          "harmonic": 3,
+          "left_value": "1/3",
+          "right_value": "1/3"
+        },
+        {
+          "channel": "sin_splines",
+          "harmonic": 1,
+          "left_value": "-1/2",
+          "right_value": "-1/2"
+        },
+        {
+          "channel": "sin_splines",
+          "harmonic": 3,
+          "left_value": "-1/6",
+          "right_value": "-1/6"
+        }
+      ],
+      "prefix_proof": {
+        "source_sha256": "a7131bea021c5c71d0da2682cd6d4c1a982e8c86196c818ad3f69a926afda2e5",
+        "source_interval": [
+          "0",
+          "1"
+        ],
+        "source_parameter_id": "source-time-t",
+        "phase_turn_law": {
+          "offset": "0",
+          "rate": "1/4"
+        },
+        "carrier_receipt_sha256": "d9c019f6104618d096d9b87d13bbdf700b958cd197546b6f64db904c8129bbf4",
+        "factor_reconstruction": {
+          "identity": "F(t)=M(theta(t))*R(t)",
+          "original_interval": [
+            "0",
+            "1"
+          ],
+          "all_original_harmonics_reconstructed": true,
+          "multiplier": {
+            "kind": "EVEN_COSINE",
+            "cosine_series": {
+              "0": "2",
+              "2": "1"
+            },
+            "use_square": false,
+            "polynomial_in_cos_theta": [
+              "1",
+              "0",
+              "2"
+            ],
+            "sign": 1,
+            "strict_nonzero_margin": "1",
+            "nonvanishing_proof": {
+              "method": "STRICT_COSINE_L1_DOMINANCE",
+              "constant": "2",
+              "residual_absolute_sum": "1"
+            }
+          },
+          "coefficient_identities": [
+            {
+              "source_t_power": 0,
+              "cosine_polynomial_in_cos_theta": [
+                "0",
+                "-1/3",
+                "0",
+                "-2/3"
+              ],
+              "sine_coefficient_polynomial_in_cos_theta": [
+                "2/3",
+                "0",
+                "4/3"
+              ]
+            },
+            {
+              "source_t_power": 1,
+              "cosine_polynomial_in_cos_theta": [
+                "0",
+                "1",
+                "0",
+                "2"
+              ],
+              "sine_coefficient_polynomial_in_cos_theta": [
+                "-1",
+                "0",
+                "-2"
+              ]
+            }
+          ],
+          "simple_root_transfer": "(M*R)'=M*R' at R=0, with M nonzero"
+        },
+        "closed_distinct_root_count": 2,
+        "root_brackets": [
+          [
+            "1/6",
+            "1/4"
+          ],
+          [
+            "3/4",
+            "5/6"
+          ]
+        ],
+        "simple_root_derivative_signs": [
+          1,
+          -1
+        ],
+        "maximal_sign_cells": [
+          -1,
+          1,
+          -1
+        ],
+        "endpoint_values": [
+          "-1",
+          "-1/3"
+        ],
+        "proof_cuts": [
+          "1/3",
+          "2/3"
+        ],
+        "proof_cuts_are_physical_events": false,
+        "complete_for_original_first_closed_span": true
+      },
+      "tail_proof": {
+        "source_sha256": "a7131bea021c5c71d0da2682cd6d4c1a982e8c86196c818ad3f69a926afda2e5",
+        "source_interval": [
+          "1",
+          "2"
+        ],
+        "source_parameter_id": "source-time-t",
+        "phase_turn_law": {
+          "offset": "0",
+          "rate": "1/4"
+        },
+        "cosine_amplitudes": {
+          "1": "5/3",
+          "3": "1/3"
+        },
+        "sine_amplitudes": {
+          "1": "-1/2",
+          "3": "-1/6"
+        },
+        "zero_harmonic_global_power_coefficients": [
+          "-100",
+          "100"
+        ],
+        "amplitude_absolute_sum": "8/3",
+        "harmonic_weighted_absolute_sum": "11/3",
+        "phase_derivative_strict_upper_bound": "11/7",
+        "phase_derivative_bound_basis": "theta'=pi/2, pi<22/7",
+        "strict_derivative_lower_bound": "1979/21",
+        "bound_at_rational_proof_cut": {
+          "position": "11/10",
+          "lower_bound": "22/3",
+          "is_physical_event": false
+        },
+        "endpoint_values": [
+          "-1/3",
+          "98"
+        ],
+        "closed_distinct_root_count": 1,
+        "root_brackets": [
+          [
+            "1",
+            "11/10"
+          ]
+        ],
+        "simple_root_derivative_signs": [
+          1
+        ],
+        "maximal_sign_cells": [
+          -1,
+          1
+        ],
+        "complete_for_original_second_closed_span": true
+      },
+      "physical_event_proof": {
+        "source_interval": [
+          "0",
+          "2"
+        ],
+        "zero_set_kind": "FINITE",
+        "closed_distinct_root_count": 3,
+        "events": [
+          {
+            "root_ref": "ROOT_1",
+            "coordinate": {
+              "kind": "UNIQUE_IMPLICIT_ZERO_OF_PINNED_ORIGINAL_SOURCE",
+              "source_sha256": "a7131bea021c5c71d0da2682cd6d4c1a982e8c86196c818ad3f69a926afda2e5",
+              "source_parameter_id": "source-time-t",
+              "source_piece_index": 0,
+              "strict_bracket": [
+                "1/6",
+                "1/4"
+              ]
+            },
+            "smooth_physical_multiplicity": 1,
+            "derivative_sign_at_root": 1,
+            "left_sign": -1,
+            "right_sign": 1
+          },
+          {
+            "root_ref": "ROOT_2",
+            "coordinate": {
+              "kind": "UNIQUE_IMPLICIT_ZERO_OF_PINNED_ORIGINAL_SOURCE",
+              "source_sha256": "a7131bea021c5c71d0da2682cd6d4c1a982e8c86196c818ad3f69a926afda2e5",
+              "source_parameter_id": "source-time-t",
+              "source_piece_index": 0,
+              "strict_bracket": [
+                "3/4",
+                "5/6"
+              ]
+            },
+            "smooth_physical_multiplicity": 1,
+            "derivative_sign_at_root": -1,
+            "left_sign": 1,
+            "right_sign": -1
+          },
+          {
+            "root_ref": "ROOT_3",
+            "coordinate": {
+              "kind": "UNIQUE_IMPLICIT_ZERO_OF_PINNED_ORIGINAL_SOURCE",
+              "source_sha256": "a7131bea021c5c71d0da2682cd6d4c1a982e8c86196c818ad3f69a926afda2e5",
+              "source_parameter_id": "source-time-t",
+              "source_piece_index": 1,
+              "strict_bracket": [
+                "1",
+                "11/10"
+              ]
+            },
+            "smooth_physical_multiplicity": 1,
+            "derivative_sign_at_root": 1,
+            "left_sign": -1,
+            "right_sign": 1
+          }
+        ],
+        "maximal_open_sign_cells": [
+          {
+            "left": "ORIGINAL_SOURCE_START",
+            "right": "ROOT_1",
+            "sign": -1
+          },
+          {
+            "left": "ROOT_1",
+            "right": "ROOT_2",
+            "sign": 1
+          },
+          {
+            "left": "ROOT_2",
+            "right": "ROOT_3",
+            "sign": -1
+          },
+          {
+            "left": "ROOT_3",
+            "right": "ORIGINAL_SOURCE_END",
+            "sign": 1
+          }
+        ],
+        "original_source_knot": {
+          "position": "1",
+          "value": "-1/3",
+          "channel_continuous": true,
+          "left_sign": -1,
+          "right_sign": -1,
+          "is_physical_event": false
+        },
+        "exterior_endpoints": [
+          {
+            "position": "0",
+            "value": "-1",
+            "sign": -1,
+            "is_physical_zero": false
+          },
+          {
+            "position": "2",
+            "value": "98",
+            "sign": 1,
+            "is_physical_zero": false
+          }
+        ],
+        "complete_for_original_closed_source": true,
+        "continuum_zero_component": false,
+        "proof_cuts_and_bracket_endpoints_are_not_root_coordinates": true
+      },
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V14_EXACT_STRICT_DOMINANCE_MULTITERM_MULTIPLIER:tail100",
+      "family": "V14",
+      "original_source_sha256": "bd10ad1d9503335b2d7f745c09805b82a421b8db7beea67329cf33d0c9d78ff2",
+      "original_row_sha256": "1940ec5f6aafb641a25fcda3f8941ff7dd9f2afc2bf13056da6920159c3f0e18",
+      "original_source": {
+        "grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+        "source_parameter_id": "source-time-t",
+        "parameter_lo": "0",
+        "parameter_hi": "2",
+        "phase_turn_offset": "0",
+        "phase_turn_rate": "1/4",
+        "cos_splines": {
+          "0": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "0",
+              "0",
+              "0",
+              "100"
+            ]
+          },
+          "1": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "-7/12",
+              "7/6",
+              "7/6",
+              "7/6"
+            ]
+          },
+          "3": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "-1/12",
+              "1/6",
+              "1/6",
+              "1/6"
+            ]
+          },
+          "5": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "-1/6",
+              "1/3",
+              "1/3",
+              "1/3"
+            ]
+          }
+        },
+        "sin_splines": {
+          "1": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "3/2",
+              "-3/4",
+              "-3/4",
+              "-3/4"
+            ]
+          },
+          "3": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "-1/2",
+              "1/4",
+              "1/4",
+              "1/4"
+            ]
+          },
+          "5": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "1/3",
+              "-1/6",
+              "-1/6",
+              "-1/6"
+            ]
+          }
+        }
+      },
+      "historical_observation": {
+        "id": "composite:PB00701_V14_EXACT_STRICT_DOMINANCE_MULTITERM_MULTIPLIER:tail100",
+        "observed": {
+          "status": "CERTIFIED",
+          "spans": [
+            [
+              "PB00701_V14_EXACT_STRICT_DOMINANCE_MULTITERM_MULTIPLIER",
+              "CERTIFIED",
+              null
+            ],
+            [
+              "PB00701_V19_EXACT_MULTI_HARMONIC_MONOTONE_ANCHOR",
+              "CERTIFIED",
+              null
+            ]
+          ]
+        },
+        "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE"
+      },
+      "source_parameter_id": "source-time-t",
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/4"
+      },
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "original_global_power_coefficients": {
+        "cos_splines": {
+          "0": [
+            [
+              "0",
+              "0"
+            ],
+            [
+              "-100",
+              "100"
+            ]
+          ],
+          "1": [
+            [
+              "-7/12",
+              "7/4"
+            ],
+            [
+              "7/6",
+              "0"
+            ]
+          ],
+          "3": [
+            [
+              "-1/12",
+              "1/4"
+            ],
+            [
+              "1/6",
+              "0"
+            ]
+          ],
+          "5": [
+            [
+              "-1/6",
+              "1/2"
+            ],
+            [
+              "1/3",
+              "0"
+            ]
+          ]
+        },
+        "sin_splines": {
+          "1": [
+            [
+              "3/2",
+              "-9/4"
+            ],
+            [
+              "-3/4",
+              "0"
+            ]
+          ],
+          "3": [
+            [
+              "-1/2",
+              "3/4"
+            ],
+            [
+              "1/4",
+              "0"
+            ]
+          ],
+          "5": [
+            [
+              "1/3",
+              "-1/2"
+            ],
+            [
+              "-1/6",
+              "0"
+            ]
+          ]
+        }
+      },
+      "original_channel_knot_continuity": [
+        {
+          "channel": "cos_splines",
+          "harmonic": 0,
+          "left_value": "0",
+          "right_value": "0"
+        },
+        {
+          "channel": "cos_splines",
+          "harmonic": 1,
+          "left_value": "7/6",
+          "right_value": "7/6"
+        },
+        {
+          "channel": "cos_splines",
+          "harmonic": 3,
+          "left_value": "1/6",
+          "right_value": "1/6"
+        },
+        {
+          "channel": "cos_splines",
+          "harmonic": 5,
+          "left_value": "1/3",
+          "right_value": "1/3"
+        },
+        {
+          "channel": "sin_splines",
+          "harmonic": 1,
+          "left_value": "-3/4",
+          "right_value": "-3/4"
+        },
+        {
+          "channel": "sin_splines",
+          "harmonic": 3,
+          "left_value": "1/4",
+          "right_value": "1/4"
+        },
+        {
+          "channel": "sin_splines",
+          "harmonic": 5,
+          "left_value": "-1/6",
+          "right_value": "-1/6"
+        }
+      ],
+      "prefix_proof": {
+        "source_sha256": "bd10ad1d9503335b2d7f745c09805b82a421b8db7beea67329cf33d0c9d78ff2",
+        "source_interval": [
+          "0",
+          "1"
+        ],
+        "source_parameter_id": "source-time-t",
+        "phase_turn_law": {
+          "offset": "0",
+          "rate": "1/4"
+        },
+        "carrier_receipt_sha256": "d9c019f6104618d096d9b87d13bbdf700b958cd197546b6f64db904c8129bbf4",
+        "factor_reconstruction": {
+          "identity": "F(t)=M(theta(t))*R(t)",
+          "original_interval": [
+            "0",
+            "1"
+          ],
+          "all_original_harmonics_reconstructed": true,
+          "multiplier": {
+            "kind": "EVEN_COSINE",
+            "cosine_series": {
+              "0": "2",
+              "2": "-1/2",
+              "4": "1"
+            },
+            "use_square": false,
+            "polynomial_in_cos_theta": [
+              "7/2",
+              "0",
+              "-9",
+              "0",
+              "8"
+            ],
+            "sign": 1,
+            "strict_nonzero_margin": "1/2",
+            "nonvanishing_proof": {
+              "method": "STRICT_COSINE_L1_DOMINANCE",
+              "constant": "2",
+              "residual_absolute_sum": "3/2"
+            }
+          },
+          "coefficient_identities": [
+            {
+              "source_t_power": 0,
+              "cosine_polynomial_in_cos_theta": [
+                "0",
+                "-7/6",
+                "0",
+                "3",
+                "0",
+                "-8/3"
+              ],
+              "sine_coefficient_polynomial_in_cos_theta": [
+                "7/3",
+                "0",
+                "-6",
+                "0",
+                "16/3"
+              ]
+            },
+            {
+              "source_t_power": 1,
+              "cosine_polynomial_in_cos_theta": [
+                "0",
+                "7/2",
+                "0",
+                "-9",
+                "0",
+                "8"
+              ],
+              "sine_coefficient_polynomial_in_cos_theta": [
+                "-7/2",
+                "0",
+                "9",
+                "0",
+                "-8"
+              ]
+            }
+          ],
+          "simple_root_transfer": "(M*R)'=M*R' at R=0, with M nonzero"
+        },
+        "closed_distinct_root_count": 2,
+        "root_brackets": [
+          [
+            "1/6",
+            "1/4"
+          ],
+          [
+            "3/4",
+            "5/6"
+          ]
+        ],
+        "simple_root_derivative_signs": [
+          1,
+          -1
+        ],
+        "maximal_sign_cells": [
+          -1,
+          1,
+          -1
+        ],
+        "endpoint_values": [
+          "-5/6",
+          "-7/6"
+        ],
+        "proof_cuts": [
+          "1/3",
+          "2/3"
+        ],
+        "proof_cuts_are_physical_events": false,
+        "complete_for_original_first_closed_span": true
+      },
+      "tail_proof": {
+        "source_sha256": "bd10ad1d9503335b2d7f745c09805b82a421b8db7beea67329cf33d0c9d78ff2",
+        "source_interval": [
+          "1",
+          "2"
+        ],
+        "source_parameter_id": "source-time-t",
+        "phase_turn_law": {
+          "offset": "0",
+          "rate": "1/4"
+        },
+        "cosine_amplitudes": {
+          "1": "7/6",
+          "3": "1/6",
+          "5": "1/3"
+        },
+        "sine_amplitudes": {
+          "1": "-3/4",
+          "3": "1/4",
+          "5": "-1/6"
+        },
+        "zero_harmonic_global_power_coefficients": [
+          "-100",
+          "100"
+        ],
+        "amplitude_absolute_sum": "17/6",
+        "harmonic_weighted_absolute_sum": "17/3",
+        "phase_derivative_strict_upper_bound": "11/7",
+        "phase_derivative_bound_basis": "theta'=pi/2, pi<22/7",
+        "strict_derivative_lower_bound": "1913/21",
+        "bound_at_rational_proof_cut": {
+          "position": "11/10",
+          "lower_bound": "43/6",
+          "is_physical_event": false
+        },
+        "endpoint_values": [
+          "-7/6",
+          "295/3"
+        ],
+        "closed_distinct_root_count": 1,
+        "root_brackets": [
+          [
+            "1",
+            "11/10"
+          ]
+        ],
+        "simple_root_derivative_signs": [
+          1
+        ],
+        "maximal_sign_cells": [
+          -1,
+          1
+        ],
+        "complete_for_original_second_closed_span": true
+      },
+      "physical_event_proof": {
+        "source_interval": [
+          "0",
+          "2"
+        ],
+        "zero_set_kind": "FINITE",
+        "closed_distinct_root_count": 3,
+        "events": [
+          {
+            "root_ref": "ROOT_1",
+            "coordinate": {
+              "kind": "UNIQUE_IMPLICIT_ZERO_OF_PINNED_ORIGINAL_SOURCE",
+              "source_sha256": "bd10ad1d9503335b2d7f745c09805b82a421b8db7beea67329cf33d0c9d78ff2",
+              "source_parameter_id": "source-time-t",
+              "source_piece_index": 0,
+              "strict_bracket": [
+                "1/6",
+                "1/4"
+              ]
+            },
+            "smooth_physical_multiplicity": 1,
+            "derivative_sign_at_root": 1,
+            "left_sign": -1,
+            "right_sign": 1
+          },
+          {
+            "root_ref": "ROOT_2",
+            "coordinate": {
+              "kind": "UNIQUE_IMPLICIT_ZERO_OF_PINNED_ORIGINAL_SOURCE",
+              "source_sha256": "bd10ad1d9503335b2d7f745c09805b82a421b8db7beea67329cf33d0c9d78ff2",
+              "source_parameter_id": "source-time-t",
+              "source_piece_index": 0,
+              "strict_bracket": [
+                "3/4",
+                "5/6"
+              ]
+            },
+            "smooth_physical_multiplicity": 1,
+            "derivative_sign_at_root": -1,
+            "left_sign": 1,
+            "right_sign": -1
+          },
+          {
+            "root_ref": "ROOT_3",
+            "coordinate": {
+              "kind": "UNIQUE_IMPLICIT_ZERO_OF_PINNED_ORIGINAL_SOURCE",
+              "source_sha256": "bd10ad1d9503335b2d7f745c09805b82a421b8db7beea67329cf33d0c9d78ff2",
+              "source_parameter_id": "source-time-t",
+              "source_piece_index": 1,
+              "strict_bracket": [
+                "1",
+                "11/10"
+              ]
+            },
+            "smooth_physical_multiplicity": 1,
+            "derivative_sign_at_root": 1,
+            "left_sign": -1,
+            "right_sign": 1
+          }
+        ],
+        "maximal_open_sign_cells": [
+          {
+            "left": "ORIGINAL_SOURCE_START",
+            "right": "ROOT_1",
+            "sign": -1
+          },
+          {
+            "left": "ROOT_1",
+            "right": "ROOT_2",
+            "sign": 1
+          },
+          {
+            "left": "ROOT_2",
+            "right": "ROOT_3",
+            "sign": -1
+          },
+          {
+            "left": "ROOT_3",
+            "right": "ORIGINAL_SOURCE_END",
+            "sign": 1
+          }
+        ],
+        "original_source_knot": {
+          "position": "1",
+          "value": "-7/6",
+          "channel_continuous": true,
+          "left_sign": -1,
+          "right_sign": -1,
+          "is_physical_event": false
+        },
+        "exterior_endpoints": [
+          {
+            "position": "0",
+            "value": "-5/6",
+            "sign": -1,
+            "is_physical_zero": false
+          },
+          {
+            "position": "2",
+            "value": "295/3",
+            "sign": 1,
+            "is_physical_zero": false
+          }
+        ],
+        "complete_for_original_closed_source": true,
+        "continuum_zero_component": false,
+        "proof_cuts_and_bracket_endpoints_are_not_root_coordinates": true
+      },
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V15_EXACT_FINITE_STRICT_DOMINANCE_MULTIPLIER:tail100",
+      "family": "V15",
+      "original_source_sha256": "8e41009417dd65f9a47a04b492dd9a91b88a7682f12f45305ce64ac38dffd7b7",
+      "original_row_sha256": "3954e79fceefbcd6e4b5932197f0314dbd4b90891b8fbad8410f9572f746725d",
+      "original_source": {
+        "grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+        "source_parameter_id": "source-time-t",
+        "parameter_lo": "0",
+        "parameter_hi": "2",
+        "phase_turn_offset": "0",
+        "phase_turn_rate": "1/4",
+        "cos_splines": {
+          "0": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "0",
+              "0",
+              "0",
+              "100"
+            ]
+          },
+          "1": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "-17/12",
+              "17/6",
+              "17/6",
+              "17/6"
+            ]
+          },
+          "3": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "-1/24",
+              "1/12",
+              "1/12",
+              "1/12"
+            ]
+          },
+          "5": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "-1/8",
+              "1/4",
+              "1/4",
+              "1/4"
+            ]
+          },
+          "7": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "-1/6",
+              "1/3",
+              "1/3",
+              "1/3"
+            ]
+          }
+        },
+        "sin_splines": {
+          "1": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "5/2",
+              "-5/4",
+              "-5/4",
+              "-5/4"
+            ]
+          },
+          "3": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "1/4",
+              "-1/8",
+              "-1/8",
+              "-1/8"
+            ]
+          },
+          "5": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "-5/12",
+              "5/24",
+              "5/24",
+              "5/24"
+            ]
+          },
+          "7": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "1/3",
+              "-1/6",
+              "-1/6",
+              "-1/6"
+            ]
+          }
+        }
+      },
+      "historical_observation": {
+        "id": "composite:PB00701_V15_EXACT_FINITE_STRICT_DOMINANCE_MULTIPLIER:tail100",
+        "observed": {
+          "status": "CERTIFIED",
+          "spans": [
+            [
+              "PB00701_V15_EXACT_FINITE_STRICT_DOMINANCE_MULTIPLIER",
+              "CERTIFIED",
+              null
+            ],
+            [
+              "PB00701_V19_EXACT_MULTI_HARMONIC_MONOTONE_ANCHOR",
+              "CERTIFIED",
+              null
+            ]
+          ]
+        },
+        "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE"
+      },
+      "source_parameter_id": "source-time-t",
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/4"
+      },
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "original_global_power_coefficients": {
+        "cos_splines": {
+          "0": [
+            [
+              "0",
+              "0"
+            ],
+            [
+              "-100",
+              "100"
+            ]
+          ],
+          "1": [
+            [
+              "-17/12",
+              "17/4"
+            ],
+            [
+              "17/6",
+              "0"
+            ]
+          ],
+          "3": [
+            [
+              "-1/24",
+              "1/8"
+            ],
+            [
+              "1/12",
+              "0"
+            ]
+          ],
+          "5": [
+            [
+              "-1/8",
+              "3/8"
+            ],
+            [
+              "1/4",
+              "0"
+            ]
+          ],
+          "7": [
+            [
+              "-1/6",
+              "1/2"
+            ],
+            [
+              "1/3",
+              "0"
+            ]
+          ]
+        },
+        "sin_splines": {
+          "1": [
+            [
+              "5/2",
+              "-15/4"
+            ],
+            [
+              "-5/4",
+              "0"
+            ]
+          ],
+          "3": [
+            [
+              "1/4",
+              "-3/8"
+            ],
+            [
+              "-1/8",
+              "0"
+            ]
+          ],
+          "5": [
+            [
+              "-5/12",
+              "5/8"
+            ],
+            [
+              "5/24",
+              "0"
+            ]
+          ],
+          "7": [
+            [
+              "1/3",
+              "-1/2"
+            ],
+            [
+              "-1/6",
+              "0"
+            ]
+          ]
+        }
+      },
+      "original_channel_knot_continuity": [
+        {
+          "channel": "cos_splines",
+          "harmonic": 0,
+          "left_value": "0",
+          "right_value": "0"
+        },
+        {
+          "channel": "cos_splines",
+          "harmonic": 1,
+          "left_value": "17/6",
+          "right_value": "17/6"
+        },
+        {
+          "channel": "cos_splines",
+          "harmonic": 3,
+          "left_value": "1/12",
+          "right_value": "1/12"
+        },
+        {
+          "channel": "cos_splines",
+          "harmonic": 5,
+          "left_value": "1/4",
+          "right_value": "1/4"
+        },
+        {
+          "channel": "cos_splines",
+          "harmonic": 7,
+          "left_value": "1/3",
+          "right_value": "1/3"
+        },
+        {
+          "channel": "sin_splines",
+          "harmonic": 1,
+          "left_value": "-5/4",
+          "right_value": "-5/4"
+        },
+        {
+          "channel": "sin_splines",
+          "harmonic": 3,
+          "left_value": "-1/8",
+          "right_value": "-1/8"
+        },
+        {
+          "channel": "sin_splines",
+          "harmonic": 5,
+          "left_value": "5/24",
+          "right_value": "5/24"
+        },
+        {
+          "channel": "sin_splines",
+          "harmonic": 7,
+          "left_value": "-1/6",
+          "right_value": "-1/6"
+        }
+      ],
+      "prefix_proof": {
+        "source_sha256": "8e41009417dd65f9a47a04b492dd9a91b88a7682f12f45305ce64ac38dffd7b7",
+        "source_interval": [
+          "0",
+          "1"
+        ],
+        "source_parameter_id": "source-time-t",
+        "phase_turn_law": {
+          "offset": "0",
+          "rate": "1/4"
+        },
+        "carrier_receipt_sha256": "d9c019f6104618d096d9b87d13bbdf700b958cd197546b6f64db904c8129bbf4",
+        "factor_reconstruction": {
+          "identity": "F(t)=M(theta(t))*R(t)",
+          "original_interval": [
+            "0",
+            "1"
+          ],
+          "all_original_harmonics_reconstructed": true,
+          "multiplier": {
+            "kind": "EVEN_COSINE",
+            "cosine_series": {
+              "0": "4",
+              "2": "1/2",
+              "4": "-1/4",
+              "6": "1"
+            },
+            "use_square": false,
+            "polynomial_in_cos_theta": [
+              "9/4",
+              "0",
+              "21",
+              "0",
+              "-50",
+              "0",
+              "32"
+            ],
+            "sign": 1,
+            "strict_nonzero_margin": "9/4",
+            "nonvanishing_proof": {
+              "method": "STRICT_COSINE_L1_DOMINANCE",
+              "constant": "4",
+              "residual_absolute_sum": "7/4"
+            }
+          },
+          "coefficient_identities": [
+            {
+              "source_t_power": 0,
+              "cosine_polynomial_in_cos_theta": [
+                "0",
+                "-3/4",
+                "0",
+                "-7",
+                "0",
+                "50/3",
+                "0",
+                "-32/3"
+              ],
+              "sine_coefficient_polynomial_in_cos_theta": [
+                "3/2",
+                "0",
+                "14",
+                "0",
+                "-100/3",
+                "0",
+                "64/3"
+              ]
+            },
+            {
+              "source_t_power": 1,
+              "cosine_polynomial_in_cos_theta": [
+                "0",
+                "9/4",
+                "0",
+                "21",
+                "0",
+                "-50",
+                "0",
+                "32"
+              ],
+              "sine_coefficient_polynomial_in_cos_theta": [
+                "-9/4",
+                "0",
+                "-21",
+                "0",
+                "50",
+                "0",
+                "-32"
+              ]
+            }
+          ],
+          "simple_root_transfer": "(M*R)'=M*R' at R=0, with M nonzero"
+        },
+        "closed_distinct_root_count": 2,
+        "root_brackets": [
+          [
+            "1/6",
+            "1/4"
+          ],
+          [
+            "3/4",
+            "5/6"
+          ]
+        ],
+        "simple_root_derivative_signs": [
+          1,
+          -1
+        ],
+        "maximal_sign_cells": [
+          -1,
+          1,
+          -1
+        ],
+        "endpoint_values": [
+          "-7/4",
+          "-3/4"
+        ],
+        "proof_cuts": [
+          "1/3",
+          "2/3"
+        ],
+        "proof_cuts_are_physical_events": false,
+        "complete_for_original_first_closed_span": true
+      },
+      "tail_proof": {
+        "source_sha256": "8e41009417dd65f9a47a04b492dd9a91b88a7682f12f45305ce64ac38dffd7b7",
+        "source_interval": [
+          "1",
+          "2"
+        ],
+        "source_parameter_id": "source-time-t",
+        "phase_turn_law": {
+          "offset": "0",
+          "rate": "1/4"
+        },
+        "cosine_amplitudes": {
+          "1": "17/6",
+          "3": "1/12",
+          "5": "1/4",
+          "7": "1/3"
+        },
+        "sine_amplitudes": {
+          "1": "-5/4",
+          "3": "-1/8",
+          "5": "5/24",
+          "7": "-1/6"
+        },
+        "zero_harmonic_global_power_coefficients": [
+          "-100",
+          "100"
+        ],
+        "amplitude_absolute_sum": "21/4",
+        "harmonic_weighted_absolute_sum": "21/2",
+        "phase_derivative_strict_upper_bound": "11/7",
+        "phase_derivative_bound_basis": "theta'=pi/2, pi<22/7",
+        "strict_derivative_lower_bound": "167/2",
+        "bound_at_rational_proof_cut": {
+          "position": "11/10",
+          "lower_bound": "19/4",
+          "is_physical_event": false
+        },
+        "endpoint_values": [
+          "-3/4",
+          "193/2"
+        ],
+        "closed_distinct_root_count": 1,
+        "root_brackets": [
+          [
+            "1",
+            "11/10"
+          ]
+        ],
+        "simple_root_derivative_signs": [
+          1
+        ],
+        "maximal_sign_cells": [
+          -1,
+          1
+        ],
+        "complete_for_original_second_closed_span": true
+      },
+      "physical_event_proof": {
+        "source_interval": [
+          "0",
+          "2"
+        ],
+        "zero_set_kind": "FINITE",
+        "closed_distinct_root_count": 3,
+        "events": [
+          {
+            "root_ref": "ROOT_1",
+            "coordinate": {
+              "kind": "UNIQUE_IMPLICIT_ZERO_OF_PINNED_ORIGINAL_SOURCE",
+              "source_sha256": "8e41009417dd65f9a47a04b492dd9a91b88a7682f12f45305ce64ac38dffd7b7",
+              "source_parameter_id": "source-time-t",
+              "source_piece_index": 0,
+              "strict_bracket": [
+                "1/6",
+                "1/4"
+              ]
+            },
+            "smooth_physical_multiplicity": 1,
+            "derivative_sign_at_root": 1,
+            "left_sign": -1,
+            "right_sign": 1
+          },
+          {
+            "root_ref": "ROOT_2",
+            "coordinate": {
+              "kind": "UNIQUE_IMPLICIT_ZERO_OF_PINNED_ORIGINAL_SOURCE",
+              "source_sha256": "8e41009417dd65f9a47a04b492dd9a91b88a7682f12f45305ce64ac38dffd7b7",
+              "source_parameter_id": "source-time-t",
+              "source_piece_index": 0,
+              "strict_bracket": [
+                "3/4",
+                "5/6"
+              ]
+            },
+            "smooth_physical_multiplicity": 1,
+            "derivative_sign_at_root": -1,
+            "left_sign": 1,
+            "right_sign": -1
+          },
+          {
+            "root_ref": "ROOT_3",
+            "coordinate": {
+              "kind": "UNIQUE_IMPLICIT_ZERO_OF_PINNED_ORIGINAL_SOURCE",
+              "source_sha256": "8e41009417dd65f9a47a04b492dd9a91b88a7682f12f45305ce64ac38dffd7b7",
+              "source_parameter_id": "source-time-t",
+              "source_piece_index": 1,
+              "strict_bracket": [
+                "1",
+                "11/10"
+              ]
+            },
+            "smooth_physical_multiplicity": 1,
+            "derivative_sign_at_root": 1,
+            "left_sign": -1,
+            "right_sign": 1
+          }
+        ],
+        "maximal_open_sign_cells": [
+          {
+            "left": "ORIGINAL_SOURCE_START",
+            "right": "ROOT_1",
+            "sign": -1
+          },
+          {
+            "left": "ROOT_1",
+            "right": "ROOT_2",
+            "sign": 1
+          },
+          {
+            "left": "ROOT_2",
+            "right": "ROOT_3",
+            "sign": -1
+          },
+          {
+            "left": "ROOT_3",
+            "right": "ORIGINAL_SOURCE_END",
+            "sign": 1
+          }
+        ],
+        "original_source_knot": {
+          "position": "1",
+          "value": "-3/4",
+          "channel_continuous": true,
+          "left_sign": -1,
+          "right_sign": -1,
+          "is_physical_event": false
+        },
+        "exterior_endpoints": [
+          {
+            "position": "0",
+            "value": "-7/4",
+            "sign": -1,
+            "is_physical_zero": false
+          },
+          {
+            "position": "2",
+            "value": "193/2",
+            "sign": 1,
+            "is_physical_zero": false
+          }
+        ],
+        "complete_for_original_closed_source": true,
+        "continuum_zero_component": false,
+        "proof_cuts_and_bracket_endpoints_are_not_root_coordinates": true
+      },
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V17_EXACT_PROJECTIVE_EVEN_TRIG_MULTIPLIER:tail100",
+      "family": "V17",
+      "original_source_sha256": "e85d997c9f4d828b1b748c964b375c21e4acef1b1e9046e074b1f7e29011d08f",
+      "original_row_sha256": "41e86bc30392515873fb55bdd844d154236a81426fd3639c3bd5491dad30f05a",
+      "original_source": {
+        "grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+        "source_parameter_id": "source-time-t",
+        "parameter_lo": "0",
+        "parameter_hi": "2",
+        "phase_turn_offset": "0",
+        "phase_turn_rate": "1/4",
+        "cos_splines": {
+          "0": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "0",
+              "0",
+              "0",
+              "100"
+            ]
+          },
+          "1": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "1",
+              "-3/2",
+              "-3/2",
+              "-3/2"
+            ]
+          },
+          "3": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "-1/3",
+              "1/6",
+              "1/6",
+              "1/6"
+            ]
+          }
+        },
+        "sin_splines": {
+          "1": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "-3/2",
+              "1",
+              "1",
+              "1"
+            ]
+          },
+          "3": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "-1/6",
+              "1/3",
+              "1/3",
+              "1/3"
+            ]
+          }
+        }
+      },
+      "historical_observation": {
+        "id": "composite:PB00701_V17_EXACT_PROJECTIVE_EVEN_TRIG_MULTIPLIER:tail100",
+        "observed": {
+          "status": "CERTIFIED",
+          "spans": [
+            [
+              "PB00701_V17_EXACT_PROJECTIVE_EVEN_TRIG_MULTIPLIER",
+              "CERTIFIED",
+              null
+            ],
+            [
+              "PB00701_V19_EXACT_MULTI_HARMONIC_MONOTONE_ANCHOR",
+              "CERTIFIED",
+              null
+            ]
+          ]
+        },
+        "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE"
+      },
+      "source_parameter_id": "source-time-t",
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/4"
+      },
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "original_global_power_coefficients": {
+        "cos_splines": {
+          "0": [
+            [
+              "0",
+              "0"
+            ],
+            [
+              "-100",
+              "100"
+            ]
+          ],
+          "1": [
+            [
+              "1",
+              "-5/2"
+            ],
+            [
+              "-3/2",
+              "0"
+            ]
+          ],
+          "3": [
+            [
+              "-1/3",
+              "1/2"
+            ],
+            [
+              "1/6",
+              "0"
+            ]
+          ]
+        },
+        "sin_splines": {
+          "1": [
+            [
+              "-3/2",
+              "5/2"
+            ],
+            [
+              "1",
+              "0"
+            ]
+          ],
+          "3": [
+            [
+              "-1/6",
+              "1/2"
+            ],
+            [
+              "1/3",
+              "0"
+            ]
+          ]
+        }
+      },
+      "original_channel_knot_continuity": [
+        {
+          "channel": "cos_splines",
+          "harmonic": 0,
+          "left_value": "0",
+          "right_value": "0"
+        },
+        {
+          "channel": "cos_splines",
+          "harmonic": 1,
+          "left_value": "-3/2",
+          "right_value": "-3/2"
+        },
+        {
+          "channel": "cos_splines",
+          "harmonic": 3,
+          "left_value": "1/6",
+          "right_value": "1/6"
+        },
+        {
+          "channel": "sin_splines",
+          "harmonic": 1,
+          "left_value": "1",
+          "right_value": "1"
+        },
+        {
+          "channel": "sin_splines",
+          "harmonic": 3,
+          "left_value": "1/3",
+          "right_value": "1/3"
+        }
+      ],
+      "prefix_proof": {
+        "source_sha256": "e85d997c9f4d828b1b748c964b375c21e4acef1b1e9046e074b1f7e29011d08f",
+        "source_interval": [
+          "0",
+          "1"
+        ],
+        "source_parameter_id": "source-time-t",
+        "phase_turn_law": {
+          "offset": "0",
+          "rate": "1/4"
+        },
+        "carrier_receipt_sha256": "d9c019f6104618d096d9b87d13bbdf700b958cd197546b6f64db904c8129bbf4",
+        "factor_reconstruction": {
+          "identity": "F(t)=M(theta(t))*R(t)",
+          "original_interval": [
+            "0",
+            "1"
+          ],
+          "all_original_harmonics_reconstructed": true,
+          "multiplier": {
+            "kind": "CONSTANT_PLUS_SINE_2",
+            "constant": "-2",
+            "amplitude": "1",
+            "sign": -1,
+            "strict_nonzero_margin": "1",
+            "nonvanishing_proof": {
+              "method": "STRICT_NEGATIVE_SINE_ENVELOPE",
+              "global_range": [
+                "-3",
+                "-1"
+              ]
+            }
+          },
+          "coefficient_identities": [
+            {
+              "source_t_power": 0,
+              "cosine_polynomial_in_cos_theta": [
+                "0",
+                "2",
+                "0",
+                "-4/3"
+              ],
+              "sine_coefficient_polynomial_in_cos_theta": [
+                "-4/3",
+                "0",
+                "-2/3"
+              ]
+            },
+            {
+              "source_t_power": 1,
+              "cosine_polynomial_in_cos_theta": [
+                "0",
+                "-4",
+                "0",
+                "2"
+              ],
+              "sine_coefficient_polynomial_in_cos_theta": [
+                "2",
+                "0",
+                "2"
+              ]
+            }
+          ],
+          "simple_root_transfer": "(M*R)'=M*R' at R=0, with M nonzero"
+        },
+        "closed_distinct_root_count": 2,
+        "root_brackets": [
+          [
+            "1/6",
+            "1/4"
+          ],
+          [
+            "3/4",
+            "5/6"
+          ]
+        ],
+        "simple_root_derivative_signs": [
+          -1,
+          1
+        ],
+        "maximal_sign_cells": [
+          1,
+          -1,
+          1
+        ],
+        "endpoint_values": [
+          "2/3",
+          "2/3"
+        ],
+        "proof_cuts": [
+          "1/3",
+          "2/3"
+        ],
+        "proof_cuts_are_physical_events": false,
+        "complete_for_original_first_closed_span": true
+      },
+      "tail_proof": {
+        "source_sha256": "e85d997c9f4d828b1b748c964b375c21e4acef1b1e9046e074b1f7e29011d08f",
+        "source_interval": [
+          "1",
+          "2"
+        ],
+        "source_parameter_id": "source-time-t",
+        "phase_turn_law": {
+          "offset": "0",
+          "rate": "1/4"
+        },
+        "cosine_amplitudes": {
+          "1": "-3/2",
+          "3": "1/6"
+        },
+        "sine_amplitudes": {
+          "1": "1",
+          "3": "1/3"
+        },
+        "zero_harmonic_global_power_coefficients": [
+          "-100",
+          "100"
+        ],
+        "amplitude_absolute_sum": "3",
+        "harmonic_weighted_absolute_sum": "4",
+        "phase_derivative_strict_upper_bound": "11/7",
+        "phase_derivative_bound_basis": "theta'=pi/2, pi<22/7",
+        "strict_derivative_lower_bound": "656/7",
+        "bound_at_rational_proof_cut": {
+          "position": "11/10",
+          "lower_bound": "7",
+          "is_physical_event": false
+        },
+        "endpoint_values": [
+          "2/3",
+          "304/3"
+        ],
+        "closed_distinct_root_count": 0,
+        "root_brackets": [],
+        "simple_root_derivative_signs": [],
+        "maximal_sign_cells": [
+          1
+        ],
+        "complete_for_original_second_closed_span": true
+      },
+      "physical_event_proof": {
+        "source_interval": [
+          "0",
+          "2"
+        ],
+        "zero_set_kind": "FINITE",
+        "closed_distinct_root_count": 2,
+        "events": [
+          {
+            "root_ref": "ROOT_1",
+            "coordinate": {
+              "kind": "UNIQUE_IMPLICIT_ZERO_OF_PINNED_ORIGINAL_SOURCE",
+              "source_sha256": "e85d997c9f4d828b1b748c964b375c21e4acef1b1e9046e074b1f7e29011d08f",
+              "source_parameter_id": "source-time-t",
+              "source_piece_index": 0,
+              "strict_bracket": [
+                "1/6",
+                "1/4"
+              ]
+            },
+            "smooth_physical_multiplicity": 1,
+            "derivative_sign_at_root": -1,
+            "left_sign": 1,
+            "right_sign": -1
+          },
+          {
+            "root_ref": "ROOT_2",
+            "coordinate": {
+              "kind": "UNIQUE_IMPLICIT_ZERO_OF_PINNED_ORIGINAL_SOURCE",
+              "source_sha256": "e85d997c9f4d828b1b748c964b375c21e4acef1b1e9046e074b1f7e29011d08f",
+              "source_parameter_id": "source-time-t",
+              "source_piece_index": 0,
+              "strict_bracket": [
+                "3/4",
+                "5/6"
+              ]
+            },
+            "smooth_physical_multiplicity": 1,
+            "derivative_sign_at_root": 1,
+            "left_sign": -1,
+            "right_sign": 1
+          }
+        ],
+        "maximal_open_sign_cells": [
+          {
+            "left": "ORIGINAL_SOURCE_START",
+            "right": "ROOT_1",
+            "sign": 1
+          },
+          {
+            "left": "ROOT_1",
+            "right": "ROOT_2",
+            "sign": -1
+          },
+          {
+            "left": "ROOT_2",
+            "right": "ORIGINAL_SOURCE_END",
+            "sign": 1
+          }
+        ],
+        "original_source_knot": {
+          "position": "1",
+          "value": "2/3",
+          "channel_continuous": true,
+          "left_sign": 1,
+          "right_sign": 1,
+          "is_physical_event": false
+        },
+        "exterior_endpoints": [
+          {
+            "position": "0",
+            "value": "2/3",
+            "sign": 1,
+            "is_physical_zero": false
+          },
+          {
+            "position": "2",
+            "value": "304/3",
+            "sign": 1,
+            "is_physical_zero": false
+          }
+        ],
+        "complete_for_original_closed_source": true,
+        "continuum_zero_component": false,
+        "proof_cuts_and_bracket_endpoints_are_not_root_coordinates": true
+      },
+      "historical_disposition_changed": false
+    },
+    {
+      "case_id": "composite:PB00701_V18_EXACT_LAURENT_MODULE_FACTOR:tail100",
+      "family": "V18_LAURENT",
+      "original_source_sha256": "ed61c9b827417327b9dda32ec0469ba5f0eab9622fb531d4b1bc959a312aa4a1",
+      "original_row_sha256": "7c1304de8afc41ba322fb653f20a1f8b6c3e0ea27af8a7864e44058d6b4d60d1",
+      "original_source": {
+        "grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+        "source_parameter_id": "source-time-t",
+        "parameter_lo": "0",
+        "parameter_hi": "2",
+        "phase_turn_offset": "0",
+        "phase_turn_rate": "1/4",
+        "cos_splines": {
+          "0": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "0",
+              "0",
+              "0",
+              "100"
+            ]
+          },
+          "1": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "-5/6",
+              "5/3",
+              "5/3",
+              "5/3"
+            ]
+          },
+          "3": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "-1/3",
+              "2/3",
+              "2/3",
+              "2/3"
+            ]
+          },
+          "5": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "-1/6",
+              "1/3",
+              "1/3",
+              "1/3"
+            ]
+          }
+        },
+        "sin_splines": {
+          "1": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "1",
+              "-1/2",
+              "-1/2",
+              "-1/2"
+            ]
+          },
+          "3": {
+            "degree": 0,
+            "knots": [
+              "0",
+              "1",
+              "2"
+            ],
+            "controls": [
+              "0",
+              "0"
+            ]
+          },
+          "5": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "1/3",
+              "-1/6",
+              "-1/6",
+              "-1/6"
+            ]
+          }
+        }
+      },
+      "historical_observation": {
+        "id": "composite:PB00701_V18_EXACT_LAURENT_MODULE_FACTOR:tail100",
+        "observed": {
+          "status": "CERTIFIED",
+          "spans": [
+            [
+              "PB00701_V18_EXACT_LAURENT_MODULE_FACTOR",
+              "CERTIFIED",
+              null
+            ],
+            [
+              "PB00701_V19_EXACT_MULTI_HARMONIC_MONOTONE_ANCHOR",
+              "CERTIFIED",
+              null
+            ]
+          ]
+        },
+        "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE"
+      },
+      "source_parameter_id": "source-time-t",
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/4"
+      },
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "original_source_piece_edges": [
+        "0",
+        "1",
+        "2"
+      ],
+      "original_global_power_coefficients": {
+        "cos_splines": {
+          "0": [
+            [
+              "0",
+              "0"
+            ],
+            [
+              "-100",
+              "100"
+            ]
+          ],
+          "1": [
+            [
+              "-5/6",
+              "5/2"
+            ],
+            [
+              "5/3",
+              "0"
+            ]
+          ],
+          "3": [
+            [
+              "-1/3",
+              "1"
+            ],
+            [
+              "2/3",
+              "0"
+            ]
+          ],
+          "5": [
+            [
+              "-1/6",
+              "1/2"
+            ],
+            [
+              "1/3",
+              "0"
+            ]
+          ]
+        },
+        "sin_splines": {
+          "1": [
+            [
+              "1",
+              "-3/2"
+            ],
+            [
+              "-1/2",
+              "0"
+            ]
+          ],
+          "3": [
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "5": [
+            [
+              "1/3",
+              "-1/2"
+            ],
+            [
+              "-1/6",
+              "0"
+            ]
+          ]
+        }
+      },
+      "original_channel_knot_continuity": [
+        {
+          "channel": "cos_splines",
+          "harmonic": 0,
+          "left_value": "0",
+          "right_value": "0"
+        },
+        {
+          "channel": "cos_splines",
+          "harmonic": 1,
+          "left_value": "5/3",
+          "right_value": "5/3"
+        },
+        {
+          "channel": "cos_splines",
+          "harmonic": 3,
+          "left_value": "2/3",
+          "right_value": "2/3"
+        },
+        {
+          "channel": "cos_splines",
+          "harmonic": 5,
+          "left_value": "1/3",
+          "right_value": "1/3"
+        },
+        {
+          "channel": "sin_splines",
+          "harmonic": 1,
+          "left_value": "-1/2",
+          "right_value": "-1/2"
+        },
+        {
+          "channel": "sin_splines",
+          "harmonic": 3,
+          "left_value": "0",
+          "right_value": "0"
+        },
+        {
+          "channel": "sin_splines",
+          "harmonic": 5,
+          "left_value": "-1/6",
+          "right_value": "-1/6"
+        }
+      ],
+      "prefix_proof": {
+        "source_sha256": "ed61c9b827417327b9dda32ec0469ba5f0eab9622fb531d4b1bc959a312aa4a1",
+        "source_interval": [
+          "0",
+          "1"
+        ],
+        "source_parameter_id": "source-time-t",
+        "phase_turn_law": {
+          "offset": "0",
+          "rate": "1/4"
+        },
+        "carrier_receipt_sha256": "d9c019f6104618d096d9b87d13bbdf700b958cd197546b6f64db904c8129bbf4",
+        "factor_reconstruction": {
+          "identity": "F(t)=M(theta(t))*R(t)",
+          "original_interval": [
+            "0",
+            "1"
+          ],
+          "all_original_harmonics_reconstructed": true,
+          "multiplier": {
+            "kind": "EVEN_COSINE",
+            "cosine_series": {
+              "0": "2",
+              "2": "1",
+              "4": "1"
+            },
+            "use_square": true,
+            "polynomial_in_cos_theta": [
+              "2",
+              "0",
+              "-6",
+              "0",
+              "8"
+            ],
+            "sign": 1,
+            "strict_nonzero_margin": "7/8",
+            "nonvanishing_proof": {
+              "method": "EXACT_POSITIVE_QUADRATIC_SQUARE",
+              "variable": "z=cos(2*theta)",
+              "quadratic": "2",
+              "shift": "1/4",
+              "positive_remainder": "7/8"
+            }
+          },
+          "coefficient_identities": [
+            {
+              "source_t_power": 0,
+              "cosine_polynomial_in_cos_theta": [
+                "0",
+                "-2/3",
+                "0",
+                "2",
+                "0",
+                "-8/3"
+              ],
+              "sine_coefficient_polynomial_in_cos_theta": [
+                "4/3",
+                "0",
+                "-4",
+                "0",
+                "16/3"
+              ]
+            },
+            {
+              "source_t_power": 1,
+              "cosine_polynomial_in_cos_theta": [
+                "0",
+                "2",
+                "0",
+                "-6",
+                "0",
+                "8"
+              ],
+              "sine_coefficient_polynomial_in_cos_theta": [
+                "-2",
+                "0",
+                "6",
+                "0",
+                "-8"
+              ]
+            }
+          ],
+          "simple_root_transfer": "(M*R)'=M*R' at R=0, with M nonzero"
+        },
+        "closed_distinct_root_count": 2,
+        "root_brackets": [
+          [
+            "1/6",
+            "1/4"
+          ],
+          [
+            "3/4",
+            "5/6"
+          ]
+        ],
+        "simple_root_derivative_signs": [
+          1,
+          -1
+        ],
+        "maximal_sign_cells": [
+          -1,
+          1,
+          -1
+        ],
+        "endpoint_values": [
+          "-4/3",
+          "-2/3"
+        ],
+        "proof_cuts": [
+          "1/3",
+          "2/3"
+        ],
+        "proof_cuts_are_physical_events": false,
+        "complete_for_original_first_closed_span": true
+      },
+      "tail_proof": {
+        "source_sha256": "ed61c9b827417327b9dda32ec0469ba5f0eab9622fb531d4b1bc959a312aa4a1",
+        "source_interval": [
+          "1",
+          "2"
+        ],
+        "source_parameter_id": "source-time-t",
+        "phase_turn_law": {
+          "offset": "0",
+          "rate": "1/4"
+        },
+        "cosine_amplitudes": {
+          "1": "5/3",
+          "3": "2/3",
+          "5": "1/3"
+        },
+        "sine_amplitudes": {
+          "1": "-1/2",
+          "3": "0",
+          "5": "-1/6"
+        },
+        "zero_harmonic_global_power_coefficients": [
+          "-100",
+          "100"
+        ],
+        "amplitude_absolute_sum": "10/3",
+        "harmonic_weighted_absolute_sum": "20/3",
+        "phase_derivative_strict_upper_bound": "11/7",
+        "phase_derivative_bound_basis": "theta'=pi/2, pi<22/7",
+        "strict_derivative_lower_bound": "1880/21",
+        "bound_at_rational_proof_cut": {
+          "position": "11/10",
+          "lower_bound": "20/3",
+          "is_physical_event": false
+        },
+        "endpoint_values": [
+          "-2/3",
+          "292/3"
+        ],
+        "closed_distinct_root_count": 1,
+        "root_brackets": [
+          [
+            "1",
+            "11/10"
+          ]
+        ],
+        "simple_root_derivative_signs": [
+          1
+        ],
+        "maximal_sign_cells": [
+          -1,
+          1
+        ],
+        "complete_for_original_second_closed_span": true
+      },
+      "physical_event_proof": {
+        "source_interval": [
+          "0",
+          "2"
+        ],
+        "zero_set_kind": "FINITE",
+        "closed_distinct_root_count": 3,
+        "events": [
+          {
+            "root_ref": "ROOT_1",
+            "coordinate": {
+              "kind": "UNIQUE_IMPLICIT_ZERO_OF_PINNED_ORIGINAL_SOURCE",
+              "source_sha256": "ed61c9b827417327b9dda32ec0469ba5f0eab9622fb531d4b1bc959a312aa4a1",
+              "source_parameter_id": "source-time-t",
+              "source_piece_index": 0,
+              "strict_bracket": [
+                "1/6",
+                "1/4"
+              ]
+            },
+            "smooth_physical_multiplicity": 1,
+            "derivative_sign_at_root": 1,
+            "left_sign": -1,
+            "right_sign": 1
+          },
+          {
+            "root_ref": "ROOT_2",
+            "coordinate": {
+              "kind": "UNIQUE_IMPLICIT_ZERO_OF_PINNED_ORIGINAL_SOURCE",
+              "source_sha256": "ed61c9b827417327b9dda32ec0469ba5f0eab9622fb531d4b1bc959a312aa4a1",
+              "source_parameter_id": "source-time-t",
+              "source_piece_index": 0,
+              "strict_bracket": [
+                "3/4",
+                "5/6"
+              ]
+            },
+            "smooth_physical_multiplicity": 1,
+            "derivative_sign_at_root": -1,
+            "left_sign": 1,
+            "right_sign": -1
+          },
+          {
+            "root_ref": "ROOT_3",
+            "coordinate": {
+              "kind": "UNIQUE_IMPLICIT_ZERO_OF_PINNED_ORIGINAL_SOURCE",
+              "source_sha256": "ed61c9b827417327b9dda32ec0469ba5f0eab9622fb531d4b1bc959a312aa4a1",
+              "source_parameter_id": "source-time-t",
+              "source_piece_index": 1,
+              "strict_bracket": [
+                "1",
+                "11/10"
+              ]
+            },
+            "smooth_physical_multiplicity": 1,
+            "derivative_sign_at_root": 1,
+            "left_sign": -1,
+            "right_sign": 1
+          }
+        ],
+        "maximal_open_sign_cells": [
+          {
+            "left": "ORIGINAL_SOURCE_START",
+            "right": "ROOT_1",
+            "sign": -1
+          },
+          {
+            "left": "ROOT_1",
+            "right": "ROOT_2",
+            "sign": 1
+          },
+          {
+            "left": "ROOT_2",
+            "right": "ROOT_3",
+            "sign": -1
+          },
+          {
+            "left": "ROOT_3",
+            "right": "ORIGINAL_SOURCE_END",
+            "sign": 1
+          }
+        ],
+        "original_source_knot": {
+          "position": "1",
+          "value": "-2/3",
+          "channel_continuous": true,
+          "left_sign": -1,
+          "right_sign": -1,
+          "is_physical_event": false
+        },
+        "exterior_endpoints": [
+          {
+            "position": "0",
+            "value": "-4/3",
+            "sign": -1,
+            "is_physical_zero": false
+          },
+          {
+            "position": "2",
+            "value": "292/3",
+            "sign": 1,
+            "is_physical_zero": false
+          }
+        ],
+        "complete_for_original_closed_source": true,
+        "continuum_zero_component": false,
+        "proof_cuts_and_bracket_endpoints_are_not_root_coordinates": true
+      },
+      "historical_disposition_changed": false
+    }
+  ],
+  "summary": {
+    "complete_original_sources": 5,
+    "finite_simple_roots": 14,
+    "by_case_closed_root_count": {
+      "composite:PB00701_V13_EXACT_NONVANISHING_EVEN_MULTIPLIER_MULTIHARMONIC:tail100": 3,
+      "composite:PB00701_V14_EXACT_STRICT_DOMINANCE_MULTITERM_MULTIPLIER:tail100": 3,
+      "composite:PB00701_V15_EXACT_FINITE_STRICT_DOMINANCE_MULTIPLIER:tail100": 3,
+      "composite:PB00701_V17_EXACT_PROJECTIVE_EVEN_TRIG_MULTIPLIER:tail100": 2,
+      "composite:PB00701_V18_EXACT_LAURENT_MODULE_FACTOR:tail100": 3
+    },
+    "continuum_sources": 0,
+    "nonzero_original_knots": 5,
+    "nonzero_exterior_endpoints": 10
+  },
+  "historical_v54": {
+    "original_source_cases": 121,
+    "route_refusals": 20,
+    "missing_ordered_span_premises": 30,
+    "dispositions_changed": false
+  },
+  "resources": {
+    "maximum_spline_degree": 1,
+    "maximum_original_harmonic": 7,
+    "input_rational_bit_limit": 256,
+    "derived_rational_bit_limit": 4096,
+    "byte_limit": 1048576,
+    "native_campaign_run": false,
+    "paid_campaign_run": false
+  },
+  "scope": {
+    "complete_selected_original_source_mathematics_only": true,
+    "historical_owner_routes_repaired": false,
+    "universal_proof_consumer": false,
+    "all_post_v54_sources_reconciled": false
+  },
+  "gates": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT",
+    "PB-007-03": "OPEN_PROPAGATED",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "required_machining_operations": 26,
+    "production_authorized": false,
+    "native_geometry_or_STEP_qualified": false
+  }
+}
