@@ -92,47 +92,150 @@ Record blockers, affected descendants and independent work that can continue. A 
 <!-- MC:MANAGED:END {t['id']} -->"""
 def reconcile_body(body,t):
     marker=f"<!-- MC:TASK:{t['id']} -->"
-    if marker not in body: raise ValueError("stable task marker missing")
+    if body.count(marker)!=1: raise ValueError("expected exactly one stable task marker")
     block=managed(t)
     start=f"<!-- MC:MANAGED:START {t['id']} -->"; end=f"<!-- MC:MANAGED:END {t['id']} -->"
-    if start in body and end in body:
-        a=body.index(start); b=body.index(end,a)+len(end)
+    opens=body.count(start); closes=body.count(end)
+    if opens!=closes or opens>1:
+        raise ValueError("incomplete or duplicate managed block delimiters")
+    if opens:
+        a=body.index(start); b=body.index(end)
+        if b<a: raise ValueError("managed block end precedes start")
+        b+=len(end)
         return body[:a]+block+body[b:]
     return body.rstrip()+"\n\n"+block+"\n"
 def sync(apply=False):
     graph=load("task-graph-v1.json"); mapping=load("github-map-v1.json")["tasks"]; issues=all_issues()
     markers={}
     for issue in issues:
-        for tid in re.findall(r"MC:TASK:(MC-\d{3})",issue.get("body") or ""):
+        for tid in re.findall(r"MC:TASK:(MC-\\d{3})",issue.get("body") or ""):
             markers.setdefault(tid,[]).append(issue)
     duplicates={k:v for k,v in markers.items() if len(v)>1}
     if duplicates:
         for k,v in sorted(duplicates.items()): print("duplicate",k,[x["number"] for x in v])
         return 3
-    drift=[]
+
+    # Plan every mutation before issuing a PATCH: missing bindings, malformed
+    # managed blocks and marker conflicts must not leave a partial sync behind.
+    drift=[]; conflicts=[]; changes=[]
+    by_number={issue["number"]:issue for issue in issues}
     for t in graph["tasks"]:
-        n=mapping[t["id"]]["issue"]; issue=next((x for x in issues if x["number"]==n),None)
-        if issue is None: drift.append((t["id"],n,"missing bound issue")); continue
-        if f"MC:TASK:{t['id']}" not in (issue.get("body") or ""): drift.append((t["id"],n,"marker/binding mismatch")); continue
+        n=mapping[t["id"]]["issue"]; issue=by_number.get(n)
+        if issue is None:
+            conflicts.append((t["id"],n,"missing bound issue"))
+            continue
+        if f"MC:TASK:{t['id']}" not in (issue.get("body") or ""):
+            conflicts.append((t["id"],n,"marker/binding mismatch"))
+            continue
         title=f"[{t['package']}] {t['id']} — {t['title']}"
         try: body=reconcile_body(issue.get("body") or "",t)
-        except ValueError as e: drift.append((t["id"],n,str(e))); continue
-        changed=(issue.get("title")!=title or (issue.get("body") or "")!=body)
-        if changed:
+        except ValueError as e:
+            conflicts.append((t["id"],n,str(e)))
+            continue
+        if issue.get("title")!=title or (issue.get("body") or "")!=body:
             drift.append((t["id"],n,"managed drift"))
-            if apply: gh("PATCH",f"issues/{n}",{"title":title,"body":body})
+            changes.append((n,title,body))
+    if conflicts:
+        for d in conflicts: print("conflict",*d)
+        for d in drift: print("pending",*d)
+        return 3
     if drift and not apply:
         for d in drift: print(*d)
         return 2
     if apply:
-        print(f"Applied {len(drift)} managed issue update(s).")
+        for n,title,body in changes:
+            gh("PATCH",f"issues/{n}",{"title":title,"body":body})
+            observed=gh("GET",f"issues/{n}")
+            if observed.get("title")!=title or (observed.get("body") or "")!=body:
+                print("post-write mismatch",n)
+                return 4
+        print(f"Applied {len(changes)} managed issue update(s); verified read-back.")
         return 0
     print("MC GitHub managed task issues are in zero-drift state.")
+    return 0
+
+def self_test():
+    """Offline adversarial coverage of zero-write conflicts and exact read-back."""
+    from unittest.mock import patch
+
+    task={"id":"MC-999","package":"MG-99","title":"Test task",
+          "objective":"Current objective","scope":"Scoped","non_goals":"No production",
+          "dependencies":[],"locks":[],"acceptance":["A"],"verification":["V"],
+          "artifacts":["R"],"blockers":"None"}
+    graph={"tasks":[task]}
+    mapping={"tasks":{"MC-999":{"issue":991}}}
+    marker="<!-- MC:TASK:MC-999 -->"
+    good=marker+"\n\nHuman-owned notes\n\n"+managed(task)+"\n\nHuman-owned tail\n"
+    stale=good.replace("Current objective","Stale objective",1)
+    issues=[{"number":991,"title":"Old title","body":stale}]
+    calls=[]
+
+    def fake_load(name):
+        return {"task-graph-v1.json":graph,"github-map-v1.json":mapping}[name]
+    def fake_issues():
+        return [dict(issue) for issue in issues]
+    def fake_gh(method,path,body=None):
+        n=int(path.rsplit("/",1)[1])
+        calls.append((method,n))
+        if method=="PATCH":
+            issue=next(issue for issue in issues if issue["number"]==n)
+            issue.update(body)
+            return dict(issue)
+        if method=="GET":
+            return dict(next(issue for issue in issues if issue["number"]==n))
+        raise AssertionError("unexpected GitHub method")
+
+    def reject(body):
+        try: reconcile_body(body,task)
+        except ValueError: return
+        raise AssertionError("accepted a corrupt managed-body marker/delimiter")
+
+    reject(good.replace("<!-- MC:MANAGED:END MC-999 -->",""))
+    reject(good.replace("<!-- MC:MANAGED:START MC-999 -->",""))
+    reject(good+"\n<!-- MC:MANAGED:START MC-999 -->")
+    reject(good.replace(marker,marker+"\n"+marker))
+    reject(marker+"\n<!-- MC:MANAGED:END MC-999 -->\n<!-- MC:MANAGED:START MC-999 -->")
+    with (patch(__name__+".load",side_effect=fake_load),
+          patch(__name__+".all_issues",side_effect=fake_issues),
+          patch(__name__+".gh",side_effect=fake_gh)):
+        assert sync(False)==2 and not calls, "check mode mutated the issue"
+        assert sync(True)==0 and calls==[("PATCH",991),("GET",991)], "apply failed to verify mutation"
+        assert issues[0]["body"]==good, "managed update modified human-owned text"
+        calls.clear()
+        assert sync(True)==0 and not calls, "unchanged apply caused a write"
+        assert sync(False)==0, "corrected issue was still in drift"
+
+        # A missing issue or marker cannot be silently reported as applied.
+        issues.clear()
+        assert sync(True)==3 and not calls, "missing mapped issue did not block"
+        issues.append({"number":991,"title":"Old title","body":"No stable marker"})
+        assert sync(True)==3 and not calls, "missing marker did not block"
+        issues[0]={"number":991,"title":"Old title","body":marker+"\n<!-- MC:MANAGED:START MC-999 -->"}
+        assert sync(True)==3 and not calls, "malformed managed block did not block"
+
+        # A late hard conflict must abort the entire batch, not write the
+        # earlier, otherwise applicable update.
+        issues[0]={"number":991,"title":"Old title","body":stale}
+        task2=dict(task,id="MC-998")
+        graph["tasks"].append(task2)
+        mapping["tasks"]["MC-998"]={"issue":992}
+        assert sync(True)==3 and not calls, "partial write preceded a later conflict"
+        graph["tasks"].pop()
+        del mapping["tasks"]["MC-998"]
+
+        # A patched body that cannot be read back exactly is not success.
+        def bad_readback(method,path,body=None):
+            result=fake_gh(method,path,body)
+            return dict(result,body="read-back corrupted") if method=="GET" else result
+        with patch(__name__+".gh",side_effect=bad_readback):
+            assert sync(True)==4, "post-write mismatch falsely reported success"
+    print("MC managed issue sync adversarial self-test passed")
     return 0
 if __name__=="__main__":
     ap=argparse.ArgumentParser(); sp=ap.add_subparsers(dest="cmd",required=True)
     sp.add_parser("ready")
     v=sp.add_parser("verify"); v.add_argument("task")
     s=sp.add_parser("sync"); mx=s.add_mutually_exclusive_group(); mx.add_argument("--check",action="store_true"); mx.add_argument("--apply",action="store_true")
+    sp.add_parser("self-test")
     a=ap.parse_args()
-    raise SystemExit(ready() if a.cmd=="ready" else verify(a.task) if a.cmd=="verify" else sync(a.apply))
+    raise SystemExit(ready() if a.cmd=="ready" else verify(a.task) if a.cmd=="verify" else self_test() if a.cmd=="self-test" else sync(a.apply))
