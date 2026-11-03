@@ -2,21 +2,28 @@
 
 Status date: **3 November 2026**.
 
-Qualified research source snapshot: `fcf956849345a9333f83bf0dd11a1dc7fcd82aa2`.
+Qualified research source snapshot: `2807827232c72a77bbaa83a334052d99daca6a31`.
 
 Programme capability: **MC-B NOT_ESTABLISHED; MC-1 NOT_ESTABLISHED**.
 
 Primary gate tracker: [MC-038 / #100](https://github.com/techrote/radiCADSAC/issues/100).
 
-Latest qualified research: [complete fifty-source evidence census v2, PR #344](https://github.com/techrote/radiCADSAC/pull/344), consuming the six complete-source proof families qualified in PRs #337–#343. The carrier source family requires its [executed-byte custody correction, PR #338](https://github.com/techrote/radiCADSAC/pull/338). The last versioned historical-owner adapter remains **v54 / PR #277**; later source-specific proofs do not relabel that frozen implementation.
+The fifty-source complete evidence census now has a qualified physical zero-set
+consumer, selected implicit-root refinement and finite restriction/recomposition.
+Separate supplied-source squared-amplitude proofs and checked method-domain
+boundaries extend the research frontier. The newly reconciled landings are
+[#346](https://github.com/techrote/radiCADSAC/pull/346), [#347](https://github.com/techrote/radiCADSAC/pull/347), [#348](https://github.com/techrote/radiCADSAC/pull/348), [#349](https://github.com/techrote/radiCADSAC/pull/349), [#350](https://github.com/techrote/radiCADSAC/pull/350), [#351](https://github.com/techrote/radiCADSAC/pull/351), [#352](https://github.com/techrote/radiCADSAC/pull/352), [#353](https://github.com/techrote/radiCADSAC/pull/353). Their precise scopes and acceptance identities are recorded below
+and in the machine snapshot. The last versioned historical-owner adapter remains
+**v54 / PR #277**; later research does not relabel that frozen implementation.
 
 This is navigation and qualified research evidence, not gate authority. The
-machine-readable current snapshot is
-[`current-implementation-state-v3.json`](../../research/machining-completeness/tasks/MC-038/current-implementation-state-v3.json).
-The [27 October v1 snapshot](../../research/machining-completeness/tasks/MC-038/current-implementation-state-v1.json)
-and [2 November v2 snapshot](../../research/machining-completeness/tasks/MC-038/current-implementation-state-v2.json)
-remain unchanged historical navigation. A complete proof of these fifty selected
-sources does not close PB-007 globally.
+current machine snapshot is
+[`current-implementation-state-v4.json`](../../research/machining-completeness/tasks/MC-038/current-implementation-state-v4.json).
+The [v1](../../research/machining-completeness/tasks/MC-038/current-implementation-state-v1.json),
+[v2](../../research/machining-completeness/tasks/MC-038/current-implementation-state-v2.json) and
+[v3](../../research/machining-completeness/tasks/MC-038/current-implementation-state-v3.json) snapshots remain unchanged
+historical navigation. The fifty selected source proofs and these bounded
+interfaces do not close PB-007 globally.
 
 ## Current gate state
 
@@ -112,10 +119,137 @@ review and successful CI identities for each newly qualified source family.
 Technical reviews are by distinct AI workers through the owner account; no
 human or separate-account independence is claimed.
 
-This remains a finite evidence census. A normalized physical zero-set consumer
-is separately preregistered and active, but **not qualified in this snapshot**.
-The census does not establish arbitrary analytic root arithmetic, generic route
-acceptance, native geometry, or a universal event/composition interface.
+The census remains finite source-specific evidence. Its separately qualified
+physical consumer, refiner and restriction/recomposition interfaces are described
+next. Their successful use does not add arbitrary analytic root arithmetic,
+broaden a historical owner route or establish native geometry.
+
+## Qualified physical source interfaces
+
+The [fifty-source consumer](../../research/machining-completeness/tasks/MC-038/pb00701-fifty-source-zero-set-consumer-research.md)
+reexecutes the accepted proofs and produces **49 finite zero sets plus one closed
+continuum**. The finite sources contain **81 per-source isolated zero occurrences**:
+12 rational coordinates and 69 implicit locators. Their physical classifications
+are two exterior zeros, four true source-knot zeros and 75 strict span-interior
+zeros. Ten finite sources are root-free; the complete interface has **128 maximal
+connected nonzero cells**. Original source identity and phase remain bound, knot
+orders stay sided, and equal-sign touches still separate components. A continuum
+has its own type and is never represented as an empty finite root list.
+
+The [selected refiner](../../research/machining-completeness/tasks/MC-038/pb00701-selected-implicit-root-refinement-research.md)
+narrows all 69 selected implicit locators in 28 original sources. Its qualified
+12-step demonstration makes **828 exact bracket halvings**, with **966 strict
+point decisions**, reducing each width by **4096**. It evaluates original B-spline
+controls and the global phase through bounded outward enclosures. A zero,
+unresolved or rounded-to-zero point enclosure returns nontruth; it does not
+promote an implicit root to a rational coordinate. The parent 81 zeros, closed
+continuum and 128 nonzero cells remain unchanged.
+
+The [finite restriction checker](../../research/machining-completeness/tasks/MC-038/pb00701-finite-source-restriction-research.md)
+accepts one of the fifty original IDs and zero through six increasing canonical
+rational interior cuts. It freshly consumes the qualified refiner, proves each
+cut/root comparison and constructs child-relative records while preserving the
+complete original event and coordinate. Its demonstration partitions all fifty
+sources into **228 closed children**: 224 finite and four continuum children.
+The 91 finite child zero occurrences include ten roots duplicated at shared
+cuts. Checked recomposition validates actual child membership and reconstructs
+the original **81 distinct per-source zeros and 128 cells**, including original
+knots and inward exterior orders. It does not return an unvalidated saved parent.
+The demonstration uses at most four cuts; the checked public limit is six.
+
+These interfaces apply to the selected frozen source population. They do not
+admit an arbitrary analytic source solely because its caller supplies a locator
+or a successful proof flag. Unsupported comparisons and resource exhaustion
+remain atomic nontruth.
+
+## Bounded supplied-source and method-domain results
+
+The [coprime squared-amplitude checker](../../research/machining-completeness/tasks/MC-038/pb00701-coprime-square-source-research.md)
+admits new bounded original single-span inputs satisfying
+`F=P^2*cos(pi*beta)^2+Q^2*sin(pi*beta)^2`, with `beta=b+r*t`, nonzero rational r,
+and a freshly verified polynomial Bezout identity for P,Q. It reconstructs all
+original coefficients in global t, enumerates the complete half-integer phase
+lattice and proves every root has exact order two. The eight saved demonstrations
+produce **27 candidates, 16 per-source roots, seven exterior roots and 17 positive
+cells**. They are examples rather than an admission allowlist. Valid new identities,
+degree elevation and negative rates are tested; a repeated amplitude root can
+still give a physical double root. The maximum tested phase range has 65 candidates
+and 33 roots. Shared factors and stationary phase remain explicit refusals in
+this coprime interface, even if another separately qualified leaf covers them.
+
+The [shared-factor squared-amplitude checker](../../research/machining-completeness/tasks/MC-038/pb00701-shared-square-source-research.md)
+extends that source family while retaining every common polynomial factor.
+It proves `F=G^2*H`, obtains a fresh generic coprime certificate for the actual
+residual H, and combines its rational roots with the complete closed polynomial
+roots of G. Guarded Sturm proofs preserve exact coincidences, polynomial
+multiplicities and original exterior germs. The eight demonstrations contain
+seven finite sources with **12 physical events and 18 positive cells**, plus one
+closed continuum. Dynamic controls establish **order eight** and **36 physical
+roots** within the bounded contract. Algebraic-format descriptors require only
+a square-free defining polynomial and unique strict isolator; they assert
+neither irreducibility nor irrationality. A derived residual that exceeds the
+qualified producer's unchanged raw limits returns resource nontruth. These
+results do not change the earlier coprime interface or v50/v51 carrier contracts.
+
+The [stationary squared-amplitude checker](../../research/machining-completeness/tasks/MC-038/pb00701-stationary-square-source-research.md)
+separately retains the actual original rate zero. At integer phase the source
+is P squared; at odd half-integer phase it is Q squared. At other rational phases
+both weights are positive, so an exact common-factor and Bezout proof reduces
+the physical roots to the polynomial gcd. A zero active amplitude can prove a
+closed continuum despite nonzero original coefficient channels. The eight
+demonstrations give **five finite sources, five interior root occurrences and
+ten positive cells, plus three continua**. Orders are twice polynomial
+multiplicity, at most six, with no moving-carrier contribution. Exact offsets
+separated by `2^-120` distinguish cancellation from strict positivity. Prior
+quarter-turn stationary-polynomial coverage is acknowledged; the new bounded
+family includes general rational phases such as `1/5` without requiring a
+trigonometric coefficient field. Only qualified conditional polynomial stages
+are reused, with a new stationary source proof and unchanged global phase.
+
+The [Pfaffian boundary](../../research/machining-completeness/tasks/MC-038/pb00701-pfaffian-coefficient-boundary-research.md)
+checks the selected rational-turn chain constant `pi/4` against an
+integer-coefficient algorithm's actual hypotheses. Applying that recipe only
+formally produces the partition cut `sqrt(4/pi-1)`, transcendental over Q and
+outside the selected Q-algebraic endpoint interface. The cut is neither an
+original source zero nor a critical point. The existing endpoint implementation
+was not executed by this boundary model. This does not deny computable Q(pi)
+arithmetic or rule out a correctly extended algorithm.
+
+The [MTP boundary](../../research/machining-completeness/tasks/MC-038/pb00701-mtp-irreducible-boundary-research.md)
+gives a concrete limit on transferring an irreducibility/simplicity theorem to
+rational turns. The irreducible polynomial `(T-1)^2+Y^2` becomes a double root at
+`t=1` under `Y=tan(pi*t)`. Its complete original source
+`(t-1)^2*cos(pi*t)^2+sin(pi*t)^2` on `[1/2,3/2]` has only that order-two root and
+positive cells on either side. Rescaling to the radian variable introduces
+Q(pi) coefficients. The paper's original same-radian-variable theorem is not
+disproved, and no impossibility of every possible reduction is claimed.
+
+The source examples in these new theorem leaves are **separate research inputs**.
+They do not enlarge the frozen fifty-source population or revise the historical
+121-source dispositions. The first coprime example re-proves the existing MTP
+example; repeated numeric coordinates across sources are not deduplicated into
+a misleading population count.
+
+### Qualification record for the newly reconciled leaves
+
+| PR | Qualified result | Focused test methods | Accepted checkpoint |
+|---|---|---:|---|
+| [346](https://github.com/techrote/radiCADSAC/pull/346) | Normalized physical zero sets for the fifty original sources | 40 | [Acceptance](https://github.com/techrote/radiCADSAC/issues/100#issuecomment-6592839222) |
+| [347](https://github.com/techrote/radiCADSAC/pull/347) | Pfaffian coefficient-domain and partition-cut boundary | 30 | [Acceptance](https://github.com/techrote/radiCADSAC/issues/100#issuecomment-6593185584) |
+| [348](https://github.com/techrote/radiCADSAC/pull/348) | Selected implicit original-source root refinement | 46 | [Acceptance](https://github.com/techrote/radiCADSAC/issues/100#issuecomment-6593253208) |
+| [349](https://github.com/techrote/radiCADSAC/pull/349) | Rational-turn MTP irreducibility/simplicity transfer boundary | 29 | [Acceptance](https://github.com/techrote/radiCADSAC/issues/100#issuecomment-6593545411) |
+| [350](https://github.com/techrote/radiCADSAC/pull/350) | Finite original-source restriction and checked recomposition | 42 | [Acceptance](https://github.com/techrote/radiCADSAC/issues/100#issuecomment-6593708470) |
+| [351](https://github.com/techrote/radiCADSAC/pull/351) | Bounded supplied-source checker for coprime squared amplitudes | 41 | [Acceptance](https://github.com/techrote/radiCADSAC/issues/100#issuecomment-6593884065) |
+| [352](https://github.com/techrote/radiCADSAC/pull/352) | Bounded shared-factor squared-amplitude source checker | 39 | [Acceptance](https://github.com/techrote/radiCADSAC/issues/100#issuecomment-6597781477) |
+| [353](https://github.com/techrote/radiCADSAC/pull/353) | Bounded stationary squared-amplitude source checker | 39 | [Acceptance](https://github.com/techrote/radiCADSAC/issues/100#issuecomment-6597910499) |
+
+Every row passed distinct AI technical review, literal-head focused/static/
+historical-reconciliation CI, expected-head-protected merge, equal reviewed/
+synthetic/landed Git trees and independent main-push checks. The machine snapshot
+retains the exact heads, merges, trees, file blobs, review IDs, run IDs and
+acceptance comments. Technical review is through the owner account; no human
+or separate-account approval is claimed. Test counts describe research verifiers,
+not native geometry performance or production qualification.
 
 ### Earlier qualified V23 mathematical result
 
@@ -151,37 +285,41 @@ or separate-account approval.
 
 ## Current bounded frontier and corrected routing
 
-Every one of the fifty frozen original sources now has a qualified complete
-source-specific witness. Do not resume the old nine-tail, eighteen-child or
-eight-unregistered work list as if those proof gaps remained.
+All fifty frozen original sources have complete source-specific witnesses, and
+their physical consumer, selected refiner and finite restriction/recomposition
+are qualified. Do not resume the old nine-tail/eighteen-child/eight-unregistered
+work list or treat those three interfaces as still unimplemented.
 
-The next bounded implementation is the [finite physical zero-set consumer](https://github.com/techrote/radiCADSAC/issues/100#issuecomment-6592423001),
-which must translate actual fresh raw proof views into ordered roots, physical
-exteriors, true source knots and maximal connected nonzero cells. Preserve
-implicit locators, sided endpoint/knot orders, touching zeros and the separate
-continuum type. Its current implementation is provisional; the v2 census alone
-does not qualify it.
+The next work must supply a concrete missing premise under issue #100:
 
-A later, separately preregistered source-root refinement may narrow selected
-implicit brackets using certified exact signs. Current feasibility probes are
-read-only research, not accepted event evidence. Broader analytic coverage,
-discontinuity policy and the other PB-007 obligations remain independent work.
-Select one concrete missing premise under existing issue #100 and preserve its
-full source/phase/domain obligations.
+- Extend supplied-source analytic event coverage beyond the admitted single-span squared-amplitude classes, selecting one precise missing premise rather than inferring a universal solver.
+- Resolve original mixed identity/nonidentity span semantics and discontinuous-knot point policy on a new admitted source, without claiming a further delta on the frozen 20-refusal census.
+- Select a separately bounded PB-007-02/03/04 or native material/topology/usable STEP premise while preserving the full 26-operation domain.
+
+The exact active preregistration status, if any, is retained in the v4 snapshot;
+an active reservation or read-only proposal is not qualified evidence. The
+method-domain counterexamples above must remain explicit in any broader solver
+proposal. A missing strict derivative certificate alone does not prove a source
+is mathematically nonmonotone.
+
+A concrete [read-only next-premise handoff](https://github.com/techrote/radiCADSAC/issues/100#issuecomment-6597886756)
+describes two original quadratic B-spline spans with affine squared-amplitude
+hints. Its new obligation is a complete union of maximal closed zero intervals
+and isolated points, retaining original extraction, knot germs and nonzero-cell
+bridges. This candidate has no implementation reservation or qualified parent
+checker; it requires its own later preregistration and review.
 
 Do not repeat `composite:DELEGATED_V6_CONSTANT_MODULATION:tail0`: its endpoint,
-source-knot deduplication and adversarial checks already landed in PRs #307–#309.
-The later #333 handover's recommendation to prove it was stale. Likewise, #333's
-exact identity-topology audit found 1 all-identity, 19 all-nonidentity, 0 mixed and 0
-inconclusive sources among the 20 route refusals. Mixed identity/nonidentity
-segmentation alone offers no further delta on that historical set; this does not
-exclude mixed sources from the wider admitted grammar.
+source-knot deduplication and adversarial checks landed in PRs #307–#309. The
+later #333 recommendation was stale. Likewise, #333's audit found one all-identity,
+19 all-nonidentity, zero mixed and zero inconclusive sources among the 20 route
+refusals. Mixed segmentation alone yields no further delta on that historical
+set, although mixed sources remain part of the wider source-grammar question.
 
-All source-specific overlays leave generic terminating event coverage, reusable
-complete proof consumption, discontinuous knot semantics, the other PB-007
-obligations, and native material/topology/conventional STEP qualification open.
-No new successor issue, production project, scheduler or campaign follows from
-this navigation update.
+All bounded overlays preserve general analytic, source/codec, discontinuity,
+PB-007-02/03/04, native material/topology and conventional usable STEP obligations.
+No successor issue, production project, scheduler or campaign follows from this
+navigation update.
 
 ## Historical versioned PB-007-01 implementation progression
 
@@ -271,7 +409,7 @@ These are implementation/proof frontiers, not permission to shrink the supported
 ## How to navigate the evidence
 
 - **Gate decision / historical blocker review:** `research/machining-completeness/tasks/MC-038/report.md` and `outcome.json`.
-- **Current-state snapshot:** this document and [v3](../../research/machining-completeness/tasks/MC-038/current-implementation-state-v3.json); [v1](../../research/machining-completeness/tasks/MC-038/current-implementation-state-v1.json) and [v2](../../research/machining-completeness/tasks/MC-038/current-implementation-state-v2.json) remain unchanged historical snapshots from 27 October and 2 November.
+- **Current-state snapshot:** this document and [v4](../../research/machining-completeness/tasks/MC-038/current-implementation-state-v4.json); [v1](../../research/machining-completeness/tasks/MC-038/current-implementation-state-v1.json), [v2](../../research/machining-completeness/tasks/MC-038/current-implementation-state-v2.json) and [v3](../../research/machining-completeness/tasks/MC-038/current-implementation-state-v3.json) remain unchanged historical snapshots.
 - **Per-version exact evidence:** `research/machining-completeness/tasks/MC-038/pb00701-report-v*.md`, matching JSON boundary artifacts, models, tests and verifiers.
 - **RAG documents:** `docs/machining-completeness/27-PB00701-...` through `79-PB00701-FINITE-OWNER-COVERAGE.md`.
 - **Historical versioned adapter contract:** issue #275 / PR #277; prior v53 issue #271 / PR #273 is retained as historical accepted evidence.
