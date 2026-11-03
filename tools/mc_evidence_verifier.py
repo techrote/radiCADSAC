@@ -255,9 +255,9 @@ def self_test() -> None:
         ("candidate accepted claim", lambda f,r,v,c,o: c.__setitem__("authority",r["candidate"]["identity"])),
     ]
     for name, mutate in attacks: reject(name, mutate)
-    f,r,v,c,o = copy.deepcopy(base); r["terminal_reason"]="TIMEOUT"; v["result_digest"]=object_digest(r); v["decision"]="INCOMPLETE"; v["reason_codes"]=["TERMINAL_NOT_SUCCEEDED"]; verify_bundle(f,r,v,claim=c,outcome=o)
-    f,r,v,c,o = copy.deepcopy(base); f["expected"]["class"]="VALID_EMPTY"; f["expected"]["digest"]=object_digest({"empty":True}); r["fixture"]["digest"]=object_digest(f); v["fixture_digest"]=object_digest(f); v["result_digest"]=object_digest(r); verify_bundle(f,r,v,claim=c,outcome=o)
-    f,r,v,c,o = copy.deepcopy(base); f["fixture_scope"]="INDEPENDENT_CONTROL"; f["family"]=None; r["fixture"]["digest"]=object_digest(f); v["fixture_digest"]=object_digest(f); v["result_digest"]=object_digest(r); verify_bundle(f,r,v,claim=c,outcome=o)
+    f,r,v,c,o = copy.deepcopy(base); r["terminal_reason"]="TIMEOUT"; v["result_digest"]=object_digest(r); v["decision"]="INCOMPLETE"; v["reason_codes"]=["TERMINAL_NOT_SUCCEEDED"]; c["evidence_refs"][0]["digest"]=object_digest(r); verify_bundle(f,r,v,claim=c,outcome=o)
+    f,r,v,c,o = copy.deepcopy(base); f["expected"]["class"]="VALID_EMPTY"; f["expected"]["digest"]=object_digest({"empty":True}); r["fixture"]["digest"]=object_digest(f); v["fixture_digest"]=object_digest(f); v["result_digest"]=object_digest(r); c["evidence_refs"][0]["digest"]=object_digest(r); verify_bundle(f,r,v,claim=c,outcome=o)
+    f,r,v,c,o = copy.deepcopy(base); f["fixture_scope"]="INDEPENDENT_CONTROL"; f["family"]=None; r["fixture"]["digest"]=object_digest(f); v["fixture_digest"]=object_digest(f); v["result_digest"]=object_digest(r); c["evidence_refs"][0]["digest"]=object_digest(r); verify_bundle(f,r,v,claim=c,outcome=o)
     # A legitimate non-exporting intermediate result can omit the export in
     # both records; all accompanying references must follow the new digest.
     f,r,v,c,o = copy.deepcopy(base)
