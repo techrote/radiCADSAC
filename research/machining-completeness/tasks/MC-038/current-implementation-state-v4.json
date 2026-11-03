@@ -1,0 +1,964 @@
+{
+  "schema": "radicadsac-mc038-current-implementation-state/4.0",
+  "as_of": "2026-11-03",
+  "snapshot_kind": "NAVIGATION_AND_QUALIFIED_RESEARCH_EVIDENCE_NOT_GATE_AUTHORITY",
+  "evidence_snapshot_main": "2807827232c72a77bbaa83a334052d99daca6a31",
+  "authority": {
+    "path": "handoffs/current-authority.json",
+    "git_blob": "fa0233323a0804d8a5d3eb7cd892a274a6173fab",
+    "mc_b": "NOT_ESTABLISHED",
+    "mc_1": "NOT_ESTABLISHED",
+    "mc038_issue": 100,
+    "required_operation_count": 26,
+    "production_authorized": false
+  },
+  "pb007": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN_DEPENDENT",
+    "PB-007-03": "OPEN_PROPAGATED",
+    "PB-007-04": "OPEN_PROPAGATED"
+  },
+  "historical_v54": {
+    "original_source_cases": 121,
+    "route_refusals": 20,
+    "missing_ordered_span_premises": 30,
+    "dispositions_changed": false
+  },
+  "registered_source_evidence": {
+    "report": "research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation-v2.json",
+    "report_git_blob": "e52d3baf3692a011cf86234eeaa992ef407d99fd",
+    "replay": "research/machining-completeness/tasks/MC-038/pb00701_post_v54_evidence_reconciliation_v2.py",
+    "replay_git_blob": "8dede56cebbbd5540b52a280b9a31191c8901fbb",
+    "runtime": "research/machining-completeness/tasks/MC-038/pb00701_pinned_source_runtime.py",
+    "runtime_git_blob": "058c06e4a1e0aee0297880622ee1157a46ef9067",
+    "summary": {
+      "total_historical_unresolved_source_cases": 50,
+      "by_registered_evidence_level": {
+        "COMPLETE_SOURCE_SPECIFIC": 50,
+        "PARTIAL_REFUSED_TAIL_ONLY": 0,
+        "PARTIAL_ORDERED_CHILD": 0,
+        "NO_REGISTERED_SOURCE_EVENT_OR_ORDER_WITNESS": 0
+      },
+      "prior_v1_by_registered_evidence_level": {
+        "COMPLETE_SOURCE_SPECIFIC": 15,
+        "PARTIAL_REFUSED_TAIL_ONLY": 9,
+        "PARTIAL_ORDERED_CHILD": 18,
+        "NO_REGISTERED_SOURCE_EVENT_OR_ORDER_WITNESS": 8
+      },
+      "newly_completed_original_sources": 35,
+      "prior_complete_result_digests_preserved": 15,
+      "complete_finite_sources": 49,
+      "complete_continuum_sources": 1,
+      "historical_route_refusals_with_complete_source_evidence": 20,
+      "historical_missing_ordered_premises_with_complete_source_evidence": 30,
+      "selected_producer_families": 14,
+      "supplemented_executable_closed_endpoint_sources": 2
+    },
+    "historical_cases_still_without_complete_registered_whole_source_witness": 0,
+    "all_50_historical_case_ids_enumerated": true,
+    "all_possible_proofs_exhaustively_discovered": false,
+    "historical_dispositions_changed": false,
+    "universal_root_event_interface_established": false,
+    "normalized_finite_fifty_source_consumer_qualified": true,
+    "executed_dependency_graph": {
+      "python_files": 77,
+      "json_files": 19,
+      "dynamic_aliases": 13,
+      "snapshot_bytes": 2344668,
+      "snapshot_manifest_sha256": "506be2ca874973f32c5028c738f103f5c88c407684c743edd6a21daf34520ac8"
+    },
+    "prior_v1_report_preserved": {
+      "path": "research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation.json",
+      "git_blob": "9f62dd6edc37206317eec054b2969bade02d7728",
+      "historical_file_unchanged": true
+    },
+    "executable_v27_exterior_supplement_sources": 2
+  },
+  "verified_research_landings": [
+    {
+      "result": "V23 Bernstein source proof",
+      "pull_request": 334,
+      "reviewed_head": "4cce67d8f356d0aac5631dbbefc0e645300dbaf3",
+      "merge_sha": "f69cf47f011fd22bd48687d963d015328fa69e1a",
+      "tree_sha": "374342928dc8cf4da70ac140c73fcbc18a68b804",
+      "reviewed_synthetic_landed_trees_equal": true,
+      "technical_review_id": 5744552753,
+      "review_attribution": "distinct AI-assisted technical review through owner account; not human or separate-account approval",
+      "final_head_runs": {
+        "focused": 41540643770,
+        "static": 41540643690
+      },
+      "merged_main_runs": {
+        "focused": 41540871372,
+        "static": 41540871406
+      },
+      "all_recorded_runs_conclusion": "success"
+    },
+    {
+      "result": "50-case registered evidence reconciliation",
+      "pull_request": 335,
+      "reviewed_head": "3681e07a4bce5d22fe6660f448781b6d720da392",
+      "merge_sha": "4eec599abe89041751ba7cb816a63585a59b31b9",
+      "tree_sha": "2dfe867c9aa20730e7657e787539a5aa96bd3f7b",
+      "reviewed_synthetic_landed_trees_equal": true,
+      "technical_review_id": 5744640843,
+      "review_attribution": "distinct AI-assisted technical review through owner account; not human or separate-account approval",
+      "final_head_runs": {
+        "focused": 41541593127,
+        "static": 41541592650
+      },
+      "merged_main_runs": {
+        "focused": 41542011639,
+        "static": 41542011756
+      },
+      "all_recorded_runs_conclusion": "success"
+    },
+    {
+      "result": "Five carrier prefix/tail sources, including executed-byte correction",
+      "pull_request": 338,
+      "related_origin_pull_requests": [
+        337
+      ],
+      "original_source_count": 5,
+      "focused_test_methods": 26,
+      "reviewed_head": "0814f11184ebc40abee1e642628efe3b5a5bcf25",
+      "synthetic_merge": "ba2953bd3b4b7639e6b548c7ce586cda2823800e",
+      "merge_sha": "4d75edea493a3ee620d3bf64d81fa6e23356800e",
+      "tree_sha": "68013199b9c7991cae8bcc49b5e3dc6949fe3115",
+      "reviewed_synthetic_landed_trees_equal": true,
+      "technical_review_id": 5745231841,
+      "review_attribution": "distinct AI-assisted technical review through owner account; not human or separate-account approval",
+      "final_head_runs": {
+        "focused": 41550762365,
+        "static": 41550762557,
+        "historical_reconciliation": 41550762561
+      },
+      "merged_main_runs": {
+        "focused": 41551149594,
+        "static": 41551149665,
+        "historical_reconciliation": 41551149581
+      },
+      "all_recorded_runs_conclusion": "success",
+      "acceptance_issue_100_comment": 6591866576,
+      "qualified_model": {
+        "path": "research/machining-completeness/tasks/MC-038/pb00701_component_prefix_composition.py",
+        "git_blob": "530e552bb41c020456fdf0f17506cb18577896f3"
+      },
+      "qualified_report": {
+        "path": "research/machining-completeness/tasks/MC-038/pb00701-component-prefix-composition.json",
+        "git_blob": "94bf8f8193c190158640063790ca2bbe58306079"
+      }
+    },
+    {
+      "result": "Three Bernstein/sector original-source witnesses",
+      "pull_request": 339,
+      "related_origin_pull_requests": [],
+      "original_source_count": 3,
+      "focused_test_methods": 29,
+      "reviewed_head": "1eb7e167897d1c72ff27c7840aa7c663f0b84691",
+      "synthetic_merge": "732820b7103f1629ee713cbab67c867bc33c3b67",
+      "merge_sha": "1ee8cbecbdf7c580ec98f98c33ac0e7420033148",
+      "tree_sha": "295997cebd0c393bbc08da6a703cf8a38b583f03",
+      "reviewed_synthetic_landed_trees_equal": true,
+      "technical_review_id": 5745266681,
+      "review_attribution": "distinct AI-assisted technical review through owner account; not human or separate-account approval",
+      "final_head_runs": {
+        "focused": 41551321436,
+        "static": 41551321223,
+        "historical_reconciliation": 41551321518
+      },
+      "merged_main_runs": {
+        "focused": 41551594701,
+        "static": 41551594698,
+        "historical_reconciliation": 41551594738
+      },
+      "all_recorded_runs_conclusion": "success",
+      "acceptance_issue_100_comment": 6591930703,
+      "qualified_model": {
+        "path": "research/machining-completeness/tasks/MC-038/pb00701_bernstein_sector_source_witnesses.py",
+        "git_blob": "d71f25124c9780bdd4c77ff16e6d7c9cb63d4385"
+      },
+      "qualified_report": {
+        "path": "research/machining-completeness/tasks/MC-038/pb00701-bernstein-sector-source-witnesses.json",
+        "git_blob": "5b60a1ec744ffcd086c128766c966d305c26f1c9"
+      }
+    },
+    {
+      "result": "Fifteen complete original sources from ordered children",
+      "pull_request": 340,
+      "related_origin_pull_requests": [],
+      "original_source_count": 15,
+      "focused_test_methods": 29,
+      "reviewed_head": "6e5ab71e9cb565a4ba11e8b30a00db51890d5a94",
+      "synthetic_merge": "bb19534f528e3973820fc41ee9c401309a70feb4",
+      "merge_sha": "2ea9ae1e8da4d09f6578d3f2e79204b0ee9bef25",
+      "tree_sha": "d11c593da99492eac84a6a1968378c03cb182b1b",
+      "reviewed_synthetic_landed_trees_equal": true,
+      "technical_review_id": 5745289150,
+      "review_attribution": "distinct AI-assisted technical review through owner account; not human or separate-account approval",
+      "final_head_runs": {
+        "focused": 41551686399,
+        "static": 41551686536,
+        "historical_reconciliation": 41551686442
+      },
+      "merged_main_runs": {
+        "focused": 41551919395,
+        "static": 41551919473,
+        "historical_reconciliation": 41551919412
+      },
+      "all_recorded_runs_conclusion": "success",
+      "acceptance_issue_100_comment": 6591965646,
+      "qualified_model": {
+        "path": "research/machining-completeness/tasks/MC-038/pb00701_ordered_child_source_completion.py",
+        "git_blob": "549251696e43f22122f8ba957baa2befcd8d77a8"
+      },
+      "qualified_report": {
+        "path": "research/machining-completeness/tasks/MC-038/pb00701-ordered-child-source-completion-witness.json",
+        "git_blob": "8e662094df4106b2a79711c565cd865008fadc8c"
+      }
+    },
+    {
+      "result": "Three exact-zero child source completions",
+      "pull_request": 341,
+      "related_origin_pull_requests": [],
+      "original_source_count": 3,
+      "focused_test_methods": 32,
+      "reviewed_head": "1686483f1b780c7413531f4abb48b302425302b7",
+      "synthetic_merge": "071deac984f66dbccec458d7123d7bca70db17a0",
+      "merge_sha": "a5941032937e3816f5f592812fa28a237004cce2",
+      "tree_sha": "642321be140d4464ff3ca7c4aa0fadbad1cca0d7",
+      "reviewed_synthetic_landed_trees_equal": true,
+      "technical_review_id": 5745309046,
+      "review_attribution": "distinct AI-assisted technical review through owner account; not human or separate-account approval",
+      "final_head_runs": {
+        "focused": 41552020500,
+        "static": 41552020432,
+        "historical_reconciliation": 41552020439
+      },
+      "merged_main_runs": {
+        "focused": 41552353135,
+        "static": 41552353026,
+        "historical_reconciliation": 41552353199
+      },
+      "all_recorded_runs_conclusion": "success",
+      "acceptance_issue_100_comment": 6592023466,
+      "qualified_model": {
+        "path": "research/machining-completeness/tasks/MC-038/pb00701_exact_zero_child_source_completion.py",
+        "git_blob": "668eef22876afdeec0931a6ccb6a48573b053203"
+      },
+      "qualified_report": {
+        "path": "research/machining-completeness/tasks/MC-038/pb00701-exact-zero-child-source-completion-witness.json",
+        "git_blob": "ed0a09595a4e73f7fdb9853d9151b8c7b6fea05f"
+      }
+    },
+    {
+      "result": "Four tangent/cotangent original-source compositions",
+      "pull_request": 342,
+      "related_origin_pull_requests": [],
+      "original_source_count": 4,
+      "focused_test_methods": 29,
+      "reviewed_head": "a6cdac4cd2228d3eafb039f1e88d5772f52e9cf9",
+      "synthetic_merge": "f140728554e2b6a1a2dd609b0c478e1a2b6f8eec",
+      "merge_sha": "d594052e7ae870157482493f4dc5bf0535b8e183",
+      "tree_sha": "6d7ef26dbda59e349917b1faaa79a098eb42be47",
+      "reviewed_synthetic_landed_trees_equal": true,
+      "technical_review_id": 5745334749,
+      "review_attribution": "distinct AI-assisted technical review through owner account; not human or separate-account approval",
+      "final_head_runs": {
+        "focused": 41552455238,
+        "static": 41552455103,
+        "historical_reconciliation": 41552455075
+      },
+      "merged_main_runs": {
+        "focused": 41552716956,
+        "static": 41552717028,
+        "historical_reconciliation": 41552716895
+      },
+      "all_recorded_runs_conclusion": "success",
+      "acceptance_issue_100_comment": 6592159488,
+      "qualified_model": {
+        "path": "research/machining-completeness/tasks/MC-038/pb00701_ratio_prefix_composition.py",
+        "git_blob": "bdb72a2f5426ed792d2f9f1ed783187be5f7ada3"
+      },
+      "qualified_report": {
+        "path": "research/machining-completeness/tasks/MC-038/pb00701-ratio-prefix-composition.json",
+        "git_blob": "738c529f783ff76b074047d20fc219874f44a279"
+      }
+    },
+    {
+      "result": "Five original multiplier tail100 source completions",
+      "pull_request": 343,
+      "related_origin_pull_requests": [],
+      "original_source_count": 5,
+      "focused_test_methods": 32,
+      "reviewed_head": "660f8602cc99c1d52f760cf2fc8f09eab5af0735",
+      "synthetic_merge": "47f2cbe864f2190e721ab37d04a94462ae535ca0",
+      "merge_sha": "4fa423eaf71be603a19981bf8b73ddcf4672481b",
+      "tree_sha": "b496e36c9caf073090cd4f57432b5cf8f0bd7d45",
+      "reviewed_synthetic_landed_trees_equal": true,
+      "technical_review_id": 5745423422,
+      "review_attribution": "distinct AI-assisted technical review through owner account; not human or separate-account approval",
+      "final_head_runs": {
+        "focused": 41553909487,
+        "static": 41553909446,
+        "historical_reconciliation": 41553909428
+      },
+      "merged_main_runs": {
+        "focused": 41554176375,
+        "static": 41554176232,
+        "historical_reconciliation": 41554176479
+      },
+      "all_recorded_runs_conclusion": "success",
+      "acceptance_issue_100_comment": 6592248344,
+      "qualified_model": {
+        "path": "research/machining-completeness/tasks/MC-038/pb00701_multiplier_tail_source_completion.py",
+        "git_blob": "c5a3118b7eb486e5289d5a75c85d099d3e9d802b"
+      },
+      "qualified_report": {
+        "path": "research/machining-completeness/tasks/MC-038/pb00701-multiplier-tail-source-completion-witness.json",
+        "git_blob": "caa9f5c31d6b43248a7e7fe7dcf68f54a8103dc9"
+      }
+    },
+    {
+      "result": "Fresh complete evidence census for all fifty original gaps",
+      "pull_request": 344,
+      "related_origin_pull_requests": [],
+      "original_source_count": 50,
+      "focused_test_methods": 44,
+      "reviewed_head": "6dbec827ef42c10c3e2e9df800fc2fd8ad7e9f1e",
+      "synthetic_merge": "aa5a8f544ecd6356e51d1bb08f65969cd7252926",
+      "merge_sha": "fcf956849345a9333f83bf0dd11a1dc7fcd82aa2",
+      "tree_sha": "2c53cb759439ed68f5b6efce340164e120442cce",
+      "reviewed_synthetic_landed_trees_equal": true,
+      "technical_review_id": 5745526932,
+      "review_attribution": "distinct AI-assisted technical review through owner account; not human or separate-account approval",
+      "final_head_runs": {
+        "focused": 41555369862,
+        "static": 41555369679,
+        "historical_reconciliation": 41555369665
+      },
+      "merged_main_runs": {
+        "focused": 41555621957,
+        "static": 41555621947,
+        "historical_reconciliation": 41555621973
+      },
+      "all_recorded_runs_conclusion": "success",
+      "acceptance_issue_100_comment": 6592426300,
+      "qualified_model": {
+        "path": "research/machining-completeness/tasks/MC-038/pb00701_post_v54_evidence_reconciliation_v2.py",
+        "git_blob": "8dede56cebbbd5540b52a280b9a31191c8901fbb"
+      },
+      "qualified_report": {
+        "path": "research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation-v2.json",
+        "git_blob": "e52d3baf3692a011cf86234eeaa992ef407d99fd"
+      }
+    },
+    {
+      "result": "Normalized physical zero sets for the fifty original sources",
+      "pull_request": 346,
+      "focused_test_methods": 40,
+      "reviewed_head": "f847016fa0471061f95de418c0cad3967e9c3acd",
+      "synthetic_merge": "54674eb2d7951e25eaaffa0ada3973ff09700209",
+      "merge_sha": "828df02d3d61b57bd46b0c4a796ce58685d9c987",
+      "tree_sha": "fbdd04c77cd4194e527d723b56f49125f2f8dbc4",
+      "reviewed_synthetic_landed_trees_equal": true,
+      "technical_review_id": 5745761092,
+      "review_attribution": "distinct AI-assisted technical review through owner account; not human or separate-account approval",
+      "final_head_runs": {
+        "focused": 41558278076,
+        "static": 41558277946,
+        "historical_reconciliation": 41558277862
+      },
+      "merged_main_runs": {
+        "focused": 41558654672,
+        "static": 41558654899,
+        "historical_reconciliation": 41558654665
+      },
+      "all_recorded_runs_conclusion": "success",
+      "acceptance_issue_100_comment": 6592839222,
+      "exact_owned_file_blobs": {
+        ".github/workflows/mc1-pb00701-fifty-source-zero-set-consumer.yml": "734839a8e265a7f20c5c810feb2ff2ffb87955bf",
+        "research/machining-completeness/tasks/MC-038/pb00701-fifty-source-zero-set-consumer-research.md": "d92b218fe5ff39995e8fd466c2393935f6fba2e6",
+        "research/machining-completeness/tasks/MC-038/pb00701-fifty-source-zero-set-consumer.json": "8213026ed2a5205d2cfff44e45c26e89deab4ee9",
+        "research/machining-completeness/tasks/MC-038/pb00701_fifty_source_zero_set_consumer.py": "d5eef89ab168a2acc2588f13a6d87ab88b998d40",
+        "research/machining-completeness/tasks/MC-038/verify_pb00701_fifty_source_zero_set_consumer.py": "a1854dd5bc5596d3c180a15dd31d87259e322a0e"
+      }
+    },
+    {
+      "result": "Pfaffian coefficient-domain and partition-cut boundary",
+      "pull_request": 347,
+      "focused_test_methods": 30,
+      "reviewed_head": "eb33a8948670d31e68b6f7c5a87ffe88291c916a",
+      "synthetic_merge": "9e4f8e9eca32d8ed1077daf31ad8b4f1ae616fd3",
+      "merge_sha": "eb3ff0a77ccd041e98fc0f3e151c03ebe16ddd84",
+      "tree_sha": "2a341f3b3cd6524970e0ad0bec4d47e51d660b28",
+      "reviewed_synthetic_landed_trees_equal": true,
+      "technical_review_id": 5745977984,
+      "review_attribution": "distinct AI-assisted technical review through owner account; not human or separate-account approval",
+      "final_head_runs": {
+        "focused": 41560632682,
+        "static": 41560632576,
+        "historical_reconciliation": 41560632465
+      },
+      "merged_main_runs": {
+        "focused": 41560847146,
+        "static": 41560847169,
+        "historical_reconciliation": 41560847241
+      },
+      "all_recorded_runs_conclusion": "success",
+      "acceptance_issue_100_comment": 6593185584,
+      "exact_owned_file_blobs": {
+        ".github/workflows/mc1-pb00701-pfaffian-coefficient-boundary.yml": "eda5f635f7b335d659edb984749bdb8474ad1a56",
+        "research/machining-completeness/tasks/MC-038/pb00701-pfaffian-coefficient-boundary-research.md": "9217dfcda17a352934581f1e410bc414ac281224",
+        "research/machining-completeness/tasks/MC-038/pb00701-pfaffian-coefficient-boundary.json": "fe82029ab0360d422a9aea716157cf70b6fc9ec1",
+        "research/machining-completeness/tasks/MC-038/pb00701_pfaffian_coefficient_boundary.py": "2fe093dca21de8e6dc60e275825955ec0161f6ec",
+        "research/machining-completeness/tasks/MC-038/verify_pb00701_pfaffian_coefficient_boundary.py": "64386ffa6bdd1f07c6845489a583dca938936797"
+      }
+    },
+    {
+      "result": "Selected implicit original-source root refinement",
+      "pull_request": 348,
+      "focused_test_methods": 46,
+      "reviewed_head": "2c9e942a6da6af2fa4eaf0a4756b4322d59f835a",
+      "synthetic_merge": "6b4683ab789da0abf31ace0906fe2a874b2f4671",
+      "merge_sha": "9eea5786f93c71090d4a3d4c7478d65a3f066d42",
+      "tree_sha": "e4fba3aa7a96a0844dc8ab05ea903fede1939ef1",
+      "reviewed_synthetic_landed_trees_equal": true,
+      "technical_review_id": 5746059769,
+      "review_attribution": "distinct AI-assisted technical review through owner account; not human or separate-account approval",
+      "final_head_runs": {
+        "focused": 41561455111,
+        "static": 41561454903,
+        "historical_reconciliation": 41561454976
+      },
+      "merged_main_runs": {
+        "focused": 41561590225,
+        "static": 41561590260,
+        "historical_reconciliation": 41561590204
+      },
+      "all_recorded_runs_conclusion": "success",
+      "acceptance_issue_100_comment": 6593253208,
+      "exact_owned_file_blobs": {
+        "research/machining-completeness/tasks/MC-038/pb00701_selected_implicit_root_refinement.py": "47dfd31a204d6edfb5fb2a82d7ce84c565aca7da",
+        "research/machining-completeness/tasks/MC-038/verify_pb00701_selected_implicit_root_refinement.py": "bf6bf2d0325f033ad3c7bdd8b88316e611c17a43",
+        "research/machining-completeness/tasks/MC-038/pb00701-selected-implicit-root-refinement.json": "a9f0fa0ecc4ab6189f84471147f5a93f58478331",
+        "research/machining-completeness/tasks/MC-038/pb00701-selected-implicit-root-refinement-research.md": "f34fcd17fcde13a5709daee17da77846b51516ee",
+        ".github/workflows/mc1-pb00701-selected-implicit-root-refinement.yml": "de83898844cd5cb3a328a6631231076cb7736b45"
+      }
+    },
+    {
+      "result": "Rational-turn MTP irreducibility/simplicity transfer boundary",
+      "pull_request": 349,
+      "focused_test_methods": 29,
+      "reviewed_head": "0291aca75accf39fe3c67055cb385c2836690d7e",
+      "synthetic_merge": "64f32c56f278c330b6a4c9bbaf621390e67469fd",
+      "merge_sha": "8190ae2c474fcb6fa9a54851abc03f481a5685d3",
+      "tree_sha": "fbba463aaa1882a24b58458be37f18eb46280391",
+      "reviewed_synthetic_landed_trees_equal": true,
+      "technical_review_id": 5746218501,
+      "review_attribution": "distinct AI-assisted technical review through owner account; not human or separate-account approval",
+      "final_head_runs": {
+        "focused": 41563370937,
+        "static": 41563370715,
+        "historical_reconciliation": 41563370746
+      },
+      "merged_main_runs": {
+        "focused": 41563643480,
+        "static": 41563643609,
+        "historical_reconciliation": 41563643522
+      },
+      "all_recorded_runs_conclusion": "success",
+      "acceptance_issue_100_comment": 6593545411,
+      "exact_owned_file_blobs": {
+        ".github/workflows/mc1-pb00701-mtp-irreducible-boundary.yml": "48bb930a3351606eebbd0c0df12ebee2be1d475b",
+        "research/machining-completeness/tasks/MC-038/pb00701-mtp-irreducible-boundary-research.md": "75d6643f843825b21f7effff093625ce8d3b5bea",
+        "research/machining-completeness/tasks/MC-038/pb00701-mtp-irreducible-boundary.json": "4840bbca3847962b537684e0dffa871bd6de82a2",
+        "research/machining-completeness/tasks/MC-038/pb00701_mtp_irreducible_boundary.py": "4f9000549834c8f9b60ebc9925fadb71e9f96acf",
+        "research/machining-completeness/tasks/MC-038/verify_pb00701_mtp_irreducible_boundary.py": "df7820bd59ba3056a1dee22d2296ea651544f4cb"
+      }
+    },
+    {
+      "result": "Finite original-source restriction and checked recomposition",
+      "pull_request": 350,
+      "focused_test_methods": 42,
+      "reviewed_head": "7d496bce4e32d7a873b82e90a594918f12e0c120",
+      "synthetic_merge": "5defe26a94150cd29951a1803bcf02df482ec7dc",
+      "merge_sha": "561ba13e9150a168680d1dade2edccdff0c7eb3a",
+      "tree_sha": "8a15bfd2e50fa03bb5ba7401f88bae587555b6a5",
+      "reviewed_synthetic_landed_trees_equal": true,
+      "technical_review_id": 5746301324,
+      "review_attribution": "distinct AI-assisted technical review through owner account; not human or separate-account approval",
+      "final_head_runs": {
+        "focused": 41564308209,
+        "static": 41564308092,
+        "historical_reconciliation": 41564308188
+      },
+      "merged_main_runs": {
+        "focused": 41564619447,
+        "static": 41564619551,
+        "historical_reconciliation": 41564619446
+      },
+      "all_recorded_runs_conclusion": "success",
+      "acceptance_issue_100_comment": 6593708470,
+      "exact_owned_file_blobs": {
+        ".github/workflows/mc1-pb00701-finite-source-restriction.yml": "70d60ec2556b1e154034a47a2837930ef0f9245c",
+        "research/machining-completeness/tasks/MC-038/pb00701-finite-source-restriction-research.md": "3b04c19eb6d3c96074bcb1a8c6456a95f7edfbc5",
+        "research/machining-completeness/tasks/MC-038/pb00701-finite-source-restriction.json": "f9d0d3976ab13899a61e280059ab2629b855f856",
+        "research/machining-completeness/tasks/MC-038/pb00701_finite_source_restriction.py": "c7e3953425ad1e981b78482c0783cb50f483600b",
+        "research/machining-completeness/tasks/MC-038/verify_pb00701_finite_source_restriction.py": "9f54a6769d83a405290ade35804f0b2bc9b56620"
+      }
+    },
+    {
+      "result": "Bounded supplied-source checker for coprime squared amplitudes",
+      "pull_request": 351,
+      "focused_test_methods": 41,
+      "reviewed_head": "85b125d9210c25d0efcce3e77d16ef0a053219f6",
+      "synthetic_merge": "e7222e6b56d04fc8540fc06a5ae14b6cbbdcfe99",
+      "merge_sha": "384521e111d684a55fe09edfd5ab17c3b41fd426",
+      "tree_sha": "bdf6a0f59e4037fd5420bfea5cfc69b3adf19770",
+      "reviewed_synthetic_landed_trees_equal": true,
+      "technical_review_id": 5746466297,
+      "review_attribution": "distinct AI-assisted technical review through owner account; not human or separate-account approval",
+      "final_head_runs": {
+        "focused": 41565857198,
+        "static": 41565857180,
+        "historical_reconciliation": 41565857176
+      },
+      "merged_main_runs": {
+        "focused": 41566153350,
+        "static": 41566153307,
+        "historical_reconciliation": 41566153396
+      },
+      "all_recorded_runs_conclusion": "success",
+      "acceptance_issue_100_comment": 6593884065,
+      "exact_owned_file_blobs": {
+        ".github/workflows/mc1-pb00701-coprime-square-source.yml": "6fcab1ac3afc225fa6c7fcca9f64dec81bc62508",
+        "research/machining-completeness/tasks/MC-038/pb00701-coprime-square-source-research.md": "f957329156a3db124d791fed726be80d8fa1e381",
+        "research/machining-completeness/tasks/MC-038/pb00701-coprime-square-source.json": "d2bde99c9d5d0dfc39cd52582578ffb98f4dd407",
+        "research/machining-completeness/tasks/MC-038/pb00701_coprime_square_source.py": "4db47f79acff3c036e67ba03dd11b9bfb0a96bdb",
+        "research/machining-completeness/tasks/MC-038/verify_pb00701_coprime_square_source.py": "6aa6f0efc4ebb6e0491af41ef33d8d3e72d7ca86"
+      }
+    },
+    {
+      "result": "Bounded shared-factor squared-amplitude source checker",
+      "pull_request": 352,
+      "focused_test_methods": 39,
+      "reviewed_head": "999854c26b8e50d5c036027493a5eefdf033a428",
+      "synthetic_merge": "8e931f1e88ca42a69475cd322f0f8bc6c0f50a8e",
+      "merge_sha": "61ede6367fde4ea90bc396d4e0dfd14d484c78b3",
+      "tree_sha": "7368f9d6fceb5f7c867fbf10d01381525afbaee1",
+      "reviewed_synthetic_landed_trees_equal": true,
+      "technical_review_id": 5748425218,
+      "review_attribution": "distinct AI-assisted technical review through owner account; not human or separate-account approval",
+      "final_head_runs": {
+        "focused": 41594877190,
+        "static": 41594877101,
+        "historical_reconciliation": 41594877161
+      },
+      "merged_main_runs": {
+        "focused": 41595204572,
+        "static": 41595204502,
+        "historical_reconciliation": 41595204687
+      },
+      "all_recorded_runs_conclusion": "success",
+      "acceptance_issue_100_comment": 6597781477,
+      "exact_owned_file_blobs": {
+        ".github/workflows/mc1-pb00701-shared-square-source.yml": "d171e0af640145faea5c4e5cb5c66cb4f22aeb18",
+        "research/machining-completeness/tasks/MC-038/pb00701-shared-square-source-research.md": "b1f99b3188ceb22e304645f98954fd175878a350",
+        "research/machining-completeness/tasks/MC-038/pb00701-shared-square-source.json": "94abf9a490a6e2001af9ed8a03fd784c3fed0fb0",
+        "research/machining-completeness/tasks/MC-038/pb00701_shared_square_source.py": "e445aae10a2a0eab49b4e958d030fa19f0cd3f7a",
+        "research/machining-completeness/tasks/MC-038/verify_pb00701_shared_square_source.py": "98381f0756d773d35fd00131989389145d6fca8e"
+      }
+    },
+    {
+      "result": "Bounded stationary squared-amplitude source checker",
+      "pull_request": 353,
+      "focused_test_methods": 39,
+      "reviewed_head": "0614bf506121ad0dd23837124945b841cf371ee1",
+      "synthetic_merge": "95f4ad81dbb14462a1eaf233b302544ec6afecdb",
+      "merge_sha": "2807827232c72a77bbaa83a334052d99daca6a31",
+      "tree_sha": "f8963cafab87afa31e281f61e1daea381ef32ba8",
+      "reviewed_synthetic_landed_trees_equal": true,
+      "technical_review_id": 5748496223,
+      "review_attribution": "distinct AI-assisted technical review through owner account; not human or separate-account approval",
+      "final_head_runs": {
+        "focused": 41595796815,
+        "static": 41595796705,
+        "historical_reconciliation": 41595796641
+      },
+      "merged_main_runs": {
+        "focused": 41596057360,
+        "static": 41596057387,
+        "historical_reconciliation": 41596057328
+      },
+      "all_recorded_runs_conclusion": "success",
+      "acceptance_issue_100_comment": 6597910499,
+      "exact_owned_file_blobs": {
+        ".github/workflows/mc1-pb00701-stationary-square-source.yml": "d95506ac308c79d5b67f11db420a9ef7d070b5d5",
+        "research/machining-completeness/tasks/MC-038/pb00701-stationary-square-source-research.md": "e39e99ce04e1016d49a8fab6c5c29efc15bc746f",
+        "research/machining-completeness/tasks/MC-038/pb00701-stationary-square-source.json": "c5063f996bfd79a1958a7adb782e1685c25e413c",
+        "research/machining-completeness/tasks/MC-038/pb00701_stationary_square_source.py": "245ff3da07ce6c8b23e8fa544333b86afc809c48",
+        "research/machining-completeness/tasks/MC-038/verify_pb00701_stationary_square_source.py": "a7a2369f7746a696ea892c8d5cacf4abde381af6"
+      }
+    }
+  ],
+  "active_frontier": {
+    "integration_issue": 100,
+    "state": "OPEN_RESEARCH",
+    "new_successor_issue_selected": false,
+    "next_bounded_candidates": [
+      "Extend supplied-source analytic event coverage beyond the admitted single-span squared-amplitude classes, selecting one precise missing premise rather than inferring a universal solver.",
+      "Resolve original mixed identity/nonidentity span semantics and discontinuous-knot point policy on a new admitted source, without claiming a further delta on the frozen 20-refusal census.",
+      "Select a separately bounded PB-007-02/03/04 or native material/topology/usable STEP premise while preserving the full 26-operation domain."
+    ],
+    "do_not_duplicate": [
+      {
+        "scope": "Whole-source completion for the frozen fifty original unresolved cases",
+        "reason": "Qualified v2 census now reexecutes complete source-specific proofs for every one; the old nine-tail/eighteen-child/eight-unregistered work list is historical."
+      },
+      {
+        "case_id": "composite:DELEGATED_V6_CONSTANT_MODULATION:tail0",
+        "reason": "Endpoint and full source-knot result already landed in PRs 307-309."
+      },
+      {
+        "route": "mixed identity/nonidentity segmentation on the frozen 20 route refusals",
+        "reason": "PR #333 found 1 all-identity, 19 all-nonidentity, 0 mixed, 0 inconclusive; no further historical delta from mixed topology alone."
+      },
+      {
+        "scope": "Normalized physical zero sets for the fifty original sources",
+        "pull_request": 346,
+        "reason": "Already qualified at the stated bounded interface; extend a concrete missing premise instead of repeating the accepted implementation."
+      },
+      {
+        "scope": "Pfaffian coefficient-domain and partition-cut boundary",
+        "pull_request": 347,
+        "reason": "Already qualified at the stated bounded interface; extend a concrete missing premise instead of repeating the accepted implementation."
+      },
+      {
+        "scope": "Selected implicit original-source root refinement",
+        "pull_request": 348,
+        "reason": "Already qualified at the stated bounded interface; extend a concrete missing premise instead of repeating the accepted implementation."
+      },
+      {
+        "scope": "Rational-turn MTP irreducibility/simplicity transfer boundary",
+        "pull_request": 349,
+        "reason": "Already qualified at the stated bounded interface; extend a concrete missing premise instead of repeating the accepted implementation."
+      },
+      {
+        "scope": "Finite original-source restriction and checked recomposition",
+        "pull_request": 350,
+        "reason": "Already qualified at the stated bounded interface; extend a concrete missing premise instead of repeating the accepted implementation."
+      },
+      {
+        "scope": "Bounded supplied-source checker for coprime squared amplitudes",
+        "pull_request": 351,
+        "reason": "Already qualified at the stated bounded interface; extend a concrete missing premise instead of repeating the accepted implementation."
+      },
+      {
+        "scope": "Bounded shared-factor squared-amplitude source checker",
+        "pull_request": 352,
+        "reason": "Already qualified at the stated bounded interface; extend a concrete missing premise instead of repeating the accepted implementation."
+      },
+      {
+        "scope": "Bounded stationary squared-amplitude source checker",
+        "pull_request": 353,
+        "reason": "Already qualified at the stated bounded interface; extend a concrete missing premise instead of repeating the accepted implementation."
+      }
+    ],
+    "active_preregistered_unqualified_leaves": [],
+    "read_only_next_premise": {
+      "issue": 100,
+      "checkpoint_comment": 6597886756,
+      "scope": "Two original quadratic B-spline spans with affine squared-amplitude hints: complete maximal closed zero intervals plus isolated points",
+      "original_extraction": "The knot vector [L,L,L,K,K,R,R,R] restricts five original controls to [c0,c1,c2] and [c2,c3,c4] by exact Cox-de Boor recurrence",
+      "implementation_reserved": false,
+      "qualified_parent_implementation": false,
+      "historical_population_delta_claimed": false,
+      "next_action_requires_separate_preregistration_and_qualification": true
+    }
+  },
+  "unresolved": [
+    "General terminating analytic root/event coverage beyond the qualified finite fifty-source interfaces and bounded supplied-source squared-amplitude classes; unsupported multiplicities and phase/source families remain explicit.",
+    "Discontinuous source-knot point-value semantics and unsupported source/phase/codec families.",
+    "PB-007-02/03/04 and the relevant open programme proof obligations.",
+    "Native material/body/lineage/topology/reconstruction, conventional usable STEP, independent consumer and practical scale qualification."
+  ],
+  "protected_semantics": [
+    "26-operation domain",
+    "original source and phase",
+    "provenance",
+    "canonical journal",
+    "material bodies and lineage",
+    "refusal",
+    "UNCERTIFIED",
+    "conventional usable engineering STEP"
+  ],
+  "note": "The fifty historical source proofs, normalized physical interface, selected refinement and finite restriction/recomposition are qualified. New supplied-source classes and method-domain boundaries are recorded separately from that frozen population. This navigation snapshot does not establish universal analytic coverage, PB-007 closure, MC-B/MC-1, native geometry, usable STEP or production.",
+  "preserved_historical_snapshots": [
+    {
+      "path": "research/machining-completeness/tasks/MC-038/current-implementation-state-v1.json",
+      "git_blob": "6cf82623b40a2944e97191c7e716c62efa4f001a",
+      "as_of": "2026-10-27",
+      "latest_versioned_adapter": 54,
+      "issue": 275,
+      "pull_request": 277
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/current-implementation-state-v2.json",
+      "git_blob": "516728796b52ee98aad71978aaaafd6d9c3ce6e3",
+      "as_of": "2026-11-02",
+      "evidence_snapshot_main": "4eec599abe89041751ba7cb816a63585a59b31b9",
+      "registered_evidence_summary": {
+        "total_historical_unresolved_source_cases": 50,
+        "by_registered_evidence_level": {
+          "COMPLETE_SOURCE_SPECIFIC": 15,
+          "PARTIAL_REFUSED_TAIL_ONLY": 9,
+          "PARTIAL_ORDERED_CHILD": 18,
+          "NO_REGISTERED_SOURCE_EVENT_OR_ORDER_WITNESS": 8
+        },
+        "historical_route_refusals": {
+          "COMPLETE_SOURCE_SPECIFIC": 11,
+          "PARTIAL_REFUSED_TAIL_ONLY": 9,
+          "PARTIAL_ORDERED_CHILD": 0,
+          "NO_REGISTERED_SOURCE_EVENT_OR_ORDER_WITNESS": 0
+        },
+        "historical_missing_ordered_premises": {
+          "COMPLETE_SOURCE_SPECIFIC": 4,
+          "PARTIAL_REFUSED_TAIL_ONLY": 0,
+          "PARTIAL_ORDERED_CHILD": 18,
+          "NO_REGISTERED_SOURCE_EVENT_OR_ORDER_WITNESS": 8
+        },
+        "complete_continuum_sources": 1
+      }
+    },
+    {
+      "path": "research/machining-completeness/tasks/MC-038/current-implementation-state-v3.json",
+      "git_blob": "5d498d0c9937aca11a4196d61c25e06f83a9cf5e",
+      "as_of": "2026-11-03",
+      "evidence_snapshot_main": "fcf956849345a9333f83bf0dd11a1dc7fcd82aa2",
+      "pull_request": 345,
+      "reviewed_head": "6c20083eba9c10c61940f34a3fdc2a31cf61e9a4",
+      "merge_sha": "526eaf9ce22d3115238c5492c9b17f82cab795e5",
+      "tree_sha": "00048403a1f6ed87d8c13c621327424b028907d7",
+      "technical_review_id": 5745586356,
+      "acceptance_issue_100_comment": 6592574804,
+      "historical_note": "All fifty original source proofs complete; physical consumer and refinement still unqualified at that earlier snapshot",
+      "historical_file_unchanged": true
+    }
+  ],
+  "qualified_source_interfaces": {
+    "finite_fifty_source_zero_sets": {
+      "report": "research/machining-completeness/tasks/MC-038/pb00701-fifty-source-zero-set-consumer.json",
+      "report_git_blob": "8213026ed2a5205d2cfff44e45c26e89deab4ee9",
+      "model": "research/machining-completeness/tasks/MC-038/pb00701_fifty_source_zero_set_consumer.py",
+      "model_git_blob": "d5eef89ab168a2acc2588f13a6d87ab88b998d40",
+      "summary": {
+        "continuum_source_count": 1,
+        "finite_root_free_sources": 10,
+        "finite_source_count": 49,
+        "implicit_original_source_zero_locators": 69,
+        "maximal_connected_nonzero_cells": 128,
+        "nonzero_finite_exterior_points": 96,
+        "nonzero_original_source_knots": 40,
+        "original_source_count": 50,
+        "producer_family_count": 14,
+        "rational_zero_coordinates": 12,
+        "source_exterior_zero_events": 2,
+        "strict_span_interior_zero_events": 75,
+        "sum_of_per_source_distinct_isolated_zeros": 81,
+        "true_source_knot_zero_events": 4
+      },
+      "pull_request": 346,
+      "acceptance_issue_100_comment": 6592839222,
+      "admission": "Exactly the frozen fifty original source IDs; fresh full producer replay, not generic analytic admission",
+      "implicit_coordinates_remain_implicit": true,
+      "continuum_is_separate_from_empty_finite": true,
+      "same_sign_touches_split_nonzero_components": true,
+      "source_knots_and_exterior_orders_remain_sided": true
+    },
+    "selected_implicit_refinement": {
+      "report": "research/machining-completeness/tasks/MC-038/pb00701-selected-implicit-root-refinement.json",
+      "report_git_blob": "a9f0fa0ecc4ab6189f84471147f5a93f58478331",
+      "model": "research/machining-completeness/tasks/MC-038/pb00701_selected_implicit_root_refinement.py",
+      "model_git_blob": "47dfd31a204d6edfb5fb2a82d7ce84c565aca7da",
+      "summary": {
+        "completed_bisections": 828,
+        "parent_continuum_sources": 1,
+        "parent_isolated_physical_zeros": 81,
+        "parent_maximal_connected_nonzero_cells": 128,
+        "parent_original_sources": 50,
+        "parent_rational_zero_coordinates": 12,
+        "selected_implicit_locators": 69,
+        "selected_original_sources": 28,
+        "strict_point_decisions": 966,
+        "width_divisor": 4096
+      },
+      "pull_request": 348,
+      "acceptance_issue_100_comment": 6593253208,
+      "admission": "The selected 69 original-source implicit locators in 28 of the frozen sources; 0..12 bounded refinement steps",
+      "point_proof": "Fresh exact original B-spline and phase evaluation with outward dyadic trigonometric enclosures; only strict signs narrow a locator",
+      "unresolved_or_zero_point_result": "Atomic nontruth, never promotion to an exact rational root",
+      "parent_zero_set_and_cell_counts_unchanged": true
+    },
+    "finite_restriction_recomposition": {
+      "report": "research/machining-completeness/tasks/MC-038/pb00701-finite-source-restriction.json",
+      "report_git_blob": "f9d0d3976ab13899a61e280059ab2629b855f856",
+      "model": "research/machining-completeness/tasks/MC-038/pb00701_finite_source_restriction.py",
+      "model_git_blob": "c7e3953425ad1e981b78482c0783cb50f483600b",
+      "summary": {
+        "admissible_nonzero_cell_joins": 165,
+        "all_interior_cuts": 178,
+        "child_closed_finite_zero_occurrences": 91,
+        "child_relative_boundary_zero_occurrences": 22,
+        "child_relative_interior_zero_occurrences": 69,
+        "closed_children": 228,
+        "continuum_children": 4,
+        "continuum_sources": 1,
+        "finite_children": 224,
+        "finite_interior_cuts": 175,
+        "finite_sources": 49,
+        "implicit_child_locators_clipped": 28,
+        "maximum_cuts_per_source": 4,
+        "nonzero_finite_cuts": 165,
+        "original_sources": 50,
+        "physical_zeros_on_interior_cuts": 10,
+        "recomposed_finite_physical_zeros": 81,
+        "recomposed_maximal_nonzero_cells": 128,
+        "restricted_maximal_nonzero_cells": 293,
+        "sources_needing_point_comparison": 28,
+        "strict_open_bound_equalities_not_root_equalities": 22,
+        "strict_point_comparisons": 28
+      },
+      "pull_request": 350,
+      "acceptance_issue_100_comment": 6593708470,
+      "admission": "A frozen original source ID and zero through six strictly ordered canonical rational interior cuts",
+      "fresh_upstream": "One complete checked 12-step refiner replay; actual child records are validated before recomposition",
+      "original_implicit_coordinate_and_child_locator_distinct": true,
+      "shared_cut_root_counted_once_after_recomposition": true,
+      "original_knots_exteriors_cells_and_provenance_reconstructed": true,
+      "unsupported_or_unresolved_cut_result": "Atomic nontruth"
+    },
+    "coprime_squared_amplitude_sources": {
+      "report": "research/machining-completeness/tasks/MC-038/pb00701-coprime-square-source.json",
+      "report_git_blob": "d2bde99c9d5d0dfc39cd52582578ffb98f4dd407",
+      "model": "research/machining-completeness/tasks/MC-038/pb00701_coprime_square_source.py",
+      "model_git_blob": "4db47f79acff3c036e67ba03dd11b9bfb0a96bdb",
+      "summary": {
+        "maximal_positive_nonzero_cells": 17,
+        "order_two_root_jets": 16,
+        "original_exterior_roots": 7,
+        "original_research_sources": 8,
+        "per_source_closed_physical_roots": 16,
+        "phase_candidates": 27,
+        "root_free_sources": 1,
+        "strict_source_interior_roots": 9
+      },
+      "pull_request": 351,
+      "acceptance_issue_100_comment": 6593884065,
+      "admission": "Generic supplied bounded full-clamped single-span source and degree-at-most-three rational P,Q hints, with exact nonzero affine phase rate",
+      "source_formula": "P(t)^2*cos(pi*beta(t))^2 + Q(t)^2*sin(pi*beta(t))^2",
+      "proof": "Complete original global-parameter coefficient reconstruction; executed and verified Bezout1; complete half-integer phase enumeration; positive order-two original-source jets",
+      "source_degree_maximum": 6,
+      "raw_operand_bits": 128,
+      "derived_pre_operation_bits": 4096,
+      "maximum_phase_candidates": 65,
+      "saved_examples_are_not_an_allowlist": true,
+      "historical_population_added": 0,
+      "nonconstant_gcd_or_stationary_phase": "Explicit nontruth in this interface"
+    },
+    "shared_squared_amplitude_sources": {
+      "report": "research/machining-completeness/tasks/MC-038/pb00701-shared-square-source.json",
+      "report_git_blob": "94abf9a490a6e2001af9ed8a03fd784c3fed0fb0",
+      "model": "research/machining-completeness/tasks/MC-038/pb00701_shared_square_source.py",
+      "model_git_blob": "e445aae10a2a0eab49b4e958d030fa19f0cd3f7a",
+      "summary": {
+        "G_H_coincident_physical_roots": 2,
+        "actual_midpoint_operations": 3,
+        "actual_residual_proofs": 7,
+        "algebraic_isolator_coordinate_events": 4,
+        "closed_continuum_sources": 1,
+        "common_polynomial_roots": 11,
+        "finite_sources": 7,
+        "maximal_positive_nonzero_cells": 18,
+        "original_exterior_roots": 1,
+        "original_research_sources": 8,
+        "per_source_closed_physical_roots": 12,
+        "rational_coordinate_events": 8,
+        "residual_half_integer_phase_candidates": 27,
+        "residual_physical_roots": 3,
+        "root_free_finite_sources": 0,
+        "strict_source_interior_roots": 11
+      },
+      "pull_request": 352,
+      "acceptance_issue_100_comment": 6597781477,
+      "admission": "Generic bounded original single-span source; see the separately qualified leaf contract",
+      "historical_population_added": 0,
+      "saved_examples_are_not_an_allowlist": true,
+      "implicit_or_algebraic_descriptors_do_not_assert_irrationality": true
+    },
+    "stationary_squared_amplitude_sources": {
+      "report": "research/machining-completeness/tasks/MC-038/pb00701-stationary-square-source.json",
+      "report_git_blob": "c5063f996bfd79a1958a7adb782e1685c25e413c",
+      "model": "research/machining-completeness/tasks/MC-038/pb00701_stationary_square_source.py",
+      "model_git_blob": "245ff3da07ce6c8b23e8fa544333b86afc809c48",
+      "summary": {
+        "algebraic_format_root_coordinates": 2,
+        "closed_continuum_sources": 3,
+        "finite_sources": 5,
+        "maximal_positive_nonzero_cells": 10,
+        "original_exterior_roots": 0,
+        "original_research_sources": 8,
+        "per_source_closed_physical_roots": 5,
+        "physical_order_histogram": {
+          "2": 4,
+          "4": 1
+        },
+        "rational_root_coordinates": 3,
+        "root_free_finite_sources": 1,
+        "stationary_weight_branches": {
+          "BOTH_WEIGHTS_STRICTLY_POSITIVE": 4,
+          "INTEGER_COSINE_WEIGHT_ONE": 2,
+          "ODD_HALF_SINE_WEIGHT_ONE": 2
+        },
+        "strict_source_interior_roots": 5
+      },
+      "pull_request": 353,
+      "acceptance_issue_100_comment": 6597910499,
+      "admission": "Generic bounded original single-span source; see the separately qualified leaf contract",
+      "historical_population_added": 0,
+      "saved_examples_are_not_an_allowlist": true,
+      "implicit_or_algebraic_descriptors_do_not_assert_irrationality": true
+    }
+  },
+  "qualified_method_applicability_boundaries": {
+    "pfaffian_rational_turns": {
+      "report": "research/machining-completeness/tasks/MC-038/pb00701-pfaffian-coefficient-boundary.json",
+      "report_git_blob": "fe82029ab0360d422a9aea716157cf70b6fc9ec1",
+      "model": "research/machining-completeness/tasks/MC-038/pb00701_pfaffian_coefficient_boundary.py",
+      "model_git_blob": "2fe093dca21de8e6dc60e275825955ec0161f6ec",
+      "summary": null,
+      "pull_request": 347,
+      "acceptance_issue_100_comment": 6593185584,
+      "finding": "The selected integer-coefficient recipe is not directly instantiated by the rational-turn chain constant pi/4; its formal partition cut sqrt(4/pi-1) is transcendental over Q and outside the selected Q-algebraic endpoint domain",
+      "legacy_v46_executed": false,
+      "formal_cut_is_original_source_zero_or_critical_point": false,
+      "all_extensions_impossible_claimed": false,
+      "computable_Q_pi_arithmetic_denied": false
+    },
+    "mtp_rational_turns": {
+      "report": "research/machining-completeness/tasks/MC-038/pb00701-mtp-irreducible-boundary.json",
+      "report_git_blob": "4840bbca3847962b537684e0dffa871bd6de82a2",
+      "model": "research/machining-completeness/tasks/MC-038/pb00701_mtp_irreducible_boundary.py",
+      "model_git_blob": "4f9000549834c8f9b60ebc9925fadb71e9f96acf",
+      "summary": null,
+      "pull_request": 349,
+      "acceptance_issue_100_comment": 6593545411,
+      "finding": "Irreducibility and polynomial coprimality over Q[T,Y] do not imply nonzero-root simplicity/disjointness after the different substitution Y=tan(pi*t)",
+      "counterexample": "(t-1)^2*cos(pi*t)^2 + sin(pi*t)^2 on [1/2,3/2] has only t=1, with exact order two",
+      "original_paper_same_radian_variable_theorem_disproved": false,
+      "all_possible_reductions_impossible_claimed": false,
+      "rescaling_coefficient_domain": "Q(pi), not the original rational-coefficient hypothesis",
+      "historical_population_added": 0
+    }
+  }
+}
