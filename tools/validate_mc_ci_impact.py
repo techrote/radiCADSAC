@@ -49,13 +49,33 @@ MC_STATIC_COMMANDS = (
     "python3 tools/mc_workflow.py self-test",
 )
 
+def _static_trigger_block(s):
+    """Only count events nested below the active root-level YAML on: key."""
+    lines = s.splitlines()
+    roots = [i for i, line in enumerate(lines) if line == "on:"]
+    if len(roots) != 1:
+        raise AssertionError("mc1-static: expected one active root-level on: trigger")
+    start = roots[0]
+    end = next((i for i in range(start + 1, len(lines))
+                if lines[i] and not lines[i][0].isspace()
+                and not lines[i].lstrip().startswith("#")), len(lines))
+    block = lines[start + 1:end]
+    for event in ("push", "pull_request"):
+        if block.count(f"  {event}:") != 1:
+            raise AssertionError(f"mc1-static: expected one active on.{event} event")
+    return "\n".join(block) + "\n"
+
+
 def _static_event_paths(s, event, next_event):
     """Read active positive paths entries for the checked-in MC static YAML layout.
 
     Fail closed on unexpected list syntax; this is deliberately not a general
     YAML parser or an assertion about arbitrary GitHub Actions workflows.
     """
-    block = event_block(s, event, next_event)
+    # Do not accept event-looking keys under unrelated root objects.
+    block = event_block(_static_trigger_block(s) + "\npermissions:\n", event, next_event)
+    if "    paths-ignore:" in block:
+        raise AssertionError(f"mc1-static: {event} combines paths with paths-ignore")
     lines = block.splitlines()
     headers = [i for i, line in enumerate(lines) if line == "    paths:"]
     if len(headers) != 1:
@@ -94,7 +114,11 @@ def _static_run_commands(s):
             if not line.startswith("        run:"):
                 continue
             value = line[len("        run:"):].strip()
-            if value in ("|", "|-", ">", ">-"):
+            # YAML > folds newlines: a required-looking line may just be
+            # part of a preceding echo command, never an executed command.
+            if value in (">", ">-"):
+                raise AssertionError("mc1-static: folded run block cannot prove commands")
+            if value in ("|", "|-"):
                 for subline in step[i + 1:]:
                     if subline and not subline.startswith("          "):
                         break
@@ -182,8 +206,14 @@ def self_test():
         else:
             raise AssertionError(f"failed to reject {label}")
 
+    # Event-looking keys are not sufficient without an actual root on:.
+    reject_static(mc.replace("\non:\n", "\nnot_on:\n", 1),
+                  "renamed root on: event")
     for event, next_event in (("push", "pull_request"), ("pull_request", "permissions")):
         block = event_block(mc, event, next_event)
+        reject_static(mc.replace(block, block.replace(
+            "    paths:\n", "    paths-ignore:\n      - 'tools/**'\n    paths:\n", 1), 1),
+                      f"{event} invalid paths + paths-ignore")
         marker = "      - 'tools/validate_repo.py'\n"
         # Prefixing # leaves the old substring intact but disables its route.
         reject_static(mc.replace(block, block.replace(marker, "#" + marker, 1), 1),
@@ -200,6 +230,7 @@ def self_test():
         ("non-run field", "        with: python3 tools/validate_repo.py"),
         ("guarded validation step", "        if: false\n        run: python3 tools/validate_repo.py"),
         ("multiline shell comment", "        run: |\n          # python3 tools/validate_repo.py"),
+        ("folded run echo decoy", "        run: >\n          echo inert\n          python3 tools/validate_repo.py"),
     ):
         reject_static(mc.replace(baseline_run, decoy, 1), label)
     # MC workflow is inline in the real source. Convert it to a multiline
