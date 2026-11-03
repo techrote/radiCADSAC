@@ -1,0 +1,53 @@
+name: MC-1 PB-007-01 coprime squared amplitudes
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/mc1-pb00701-coprime-square-source.yml'
+      - 'docs/machining-completeness/31-PB00701-COUPLED-BSPLINE-BOUNDARY.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-coprime-square-source-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-coprime-square-source.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-mtp-irreducible-boundary.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_coprime_square_source.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_mtp_irreducible_boundary.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_coprime_square_source.py'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/mc1-pb00701-coprime-square-source.yml'
+      - 'docs/machining-completeness/31-PB00701-COUPLED-BSPLINE-BOUNDARY.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-coprime-square-source-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-coprime-square-source.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-mtp-irreducible-boundary.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_coprime_square_source.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_mtp_irreducible_boundary.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_coprime_square_source.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mc1-coprime-square-source-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  coprime-square-source:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Record literal tested revision
+        run: git rev-parse HEAD
+      - name: Fresh supplied-source proofs and substantive falsifiers
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_coprime_square_source.py --contract --self-test
