@@ -30,6 +30,7 @@ on:
       - 'tools/validate_machining_completeness.py'
       - 'tools/validate_repo.py'
       - 'tools/validate_mc_ci_impact.py'
+      - 'tools/validate_bootstrap_consistency.py'
       - 'tools/mc_workflow.py'
       - 'tools/mc_evidence_verifier.py'
       - '.github/workflows/mc1-static.yml'
