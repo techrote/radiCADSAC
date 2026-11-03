@@ -317,24 +317,22 @@ def validate_fixture(path: Path) -> None:
     # An immutable revision history is rooted, not just a set of individually
     # resolvable parent references. Detect cycles even when the corresponding
     # operation parent pointers are consistently forged to match them.
-    revision_visiting: set[str] = set()
     revision_checked: set[str] = set()
-
-    def visit_revision(revision_id: str) -> None:
-        if revision_id in revision_checked:
-            return
-        if revision_id in revision_visiting:
-            add_error(path, f"revision graph cycle detected at {revision_id}")
-            return
-        revision_visiting.add(revision_id)
-        parent = revision_by_id[revision_id].get("parent_revision_id")
-        if isinstance(parent, str) and parent in revision_by_id:
-            visit_revision(parent)
-        revision_visiting.remove(revision_id)
-        revision_checked.add(revision_id)
-
-    for revision_id in revision_by_id:
-        visit_revision(revision_id)
+    for start_revision in revision_by_id:
+        if start_revision in revision_checked:
+            continue
+        walked: set[str] = set()
+        current = start_revision
+        # Iterative ancestry walk: even very long valid journals must not
+        # overflow Python's recursion limit while checking for a cycle.
+        while current in revision_by_id and current not in revision_checked:
+            if current in walked:
+                add_error(path, f"revision graph cycle detected at {current}")
+                break
+            walked.add(current)
+            parent = revision_by_id[current].get("parent_revision_id")
+            current = parent if isinstance(parent, str) else ""
+        revision_checked.update(walked)
 
     for op_id, op in operation_by_id.items():
         parent_id = op.get("parent_revision_id")

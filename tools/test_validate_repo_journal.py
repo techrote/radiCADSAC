@@ -63,7 +63,29 @@ def main() -> None:
     self_loop["journal"]["operations"][1]["parent_revision_id"] = "rev:2"
     assert_rejected(self_loop, "revision graph cycle detected")
 
-    print("RCS-002 revision lineage: two accepted controls, four adversarial refusals passed")
+    # Long legitimate immutable journals are normal engineering inputs.
+    # This controls against introducing a recursive traversal limit.
+    long_journal = copy.deepcopy(lathe)
+    history = long_journal["journal"]
+    setup = copy.deepcopy(history["operations"][0])
+    history["operations"] = []
+    history["revisions"] = [copy.deepcopy(history["revisions"][0])]
+    for index in range(1, 1501):
+        operation = copy.deepcopy(setup)
+        operation["operation_id"] = f"op:long-{index}"
+        operation["parent_revision_id"] = f"rev:{index - 1}"
+        history["operations"].append(operation)
+        history["revisions"].append({
+            "revision_id": f"rev:{index}",
+            "parent_revision_id": f"rev:{index - 1}",
+            "caused_by_operation_id": f"op:long-{index}",
+            "body_ids": ["body:stock"],
+        })
+    history["selected_head_revision_id"] = "rev:1500"
+    long_journal["expected_journal_invariants"]["process_motion_count"] = 0
+    assert not check(long_journal), "valid 1,500-revision history must pass without recursion errors"
+
+    print("RCS-002 revision lineage: three accepted controls, four adversarial refusals passed")
 
 
 if __name__ == "__main__":
