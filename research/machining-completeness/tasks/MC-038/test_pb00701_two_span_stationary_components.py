@@ -123,6 +123,19 @@ class MixedComponents(unittest.TestCase):
         s6["cos_splines"]["1"]["controls"][1]=0.5
         self.assertEqual(m.attempt(s6)["status"],"BLOCKED")
 
+    def test_resource_budgets_refuse_as_nontruth(self):
+        s=source([Q(0)]*3,[Q(-1),Q(1),Q(0)])
+        s["cos_splines"]["0"]["controls"][0]=str(1 << 120)
+        r=m.attempt(s)
+        self.assertEqual(r["status"],"RESOURCE_REFUSAL")
+        self.assertIn("RATIONAL_BIT_BUDGET",r["reason"])
+        self.assertFalse(r["is_truth_value"])
+        s=source([Q(0)]*3,[Q(-1),Q(1),Q(0)])
+        s["source_parameter_id"]="x"*16000
+        r=m.attempt(s)
+        self.assertIn(r["status"],("BLOCKED","RESOURCE_REFUSAL"))
+        self.assertFalse(r["is_truth_value"])
+
     def test_unsplit_irrational_quadratic_fails_closed(self):
         # t^2-2 gives irrational roots; no invented finite order proof.
         s=source([Q(-2),Q(0),Q(1)],[Q(-2),Q(0),Q(1)],Q(0),Q(1),Q(3))
