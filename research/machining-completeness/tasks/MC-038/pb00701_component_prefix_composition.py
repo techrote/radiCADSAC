@@ -9,15 +9,16 @@ caller-supplied truth assertions. Historical dispositions and gates stay open.
 from __future__ import annotations
 
 import argparse
+import builtins
 import copy
 from fractions import Fraction as Q
 import hashlib
-import importlib.util
 import json
 from math import gcd
 from pathlib import Path
 import re
 import sys
+import types
 
 sys.dont_write_bytecode = True
 HERE = Path(__file__).resolve().parent
@@ -26,7 +27,7 @@ sys.path.insert(0, str(HERE))
 SCHEMA = "radicadsac-mc038-component-prefix-composition/1.0"
 REPORT = HERE / "pb00701-component-prefix-composition.json"
 BASE_MAIN = "e0514500aeca59afa4924dcc2da3ca0c2688d9ac"
-RECORDED_UTC = "2026-11-02T23:51:19Z"
+RECORDED_UTC = "2026-11-03T00:00:57Z"
 PREREGISTRATION_COMMENT = 6591325199
 MAX_BYTES = 1048576
 MAX_NODES = 65536
@@ -165,7 +166,14 @@ def git_blob(path):
 
 
 def pin(path, expected):
-    need(git_blob(path) == expected, "PINNED_SOURCE_DRIFT: " + str(path))
+    _pinned_bytes(path, expected)
+
+
+def _pinned_bytes(path, expected):
+    raw = _file_bytes(path)
+    actual = hashlib.sha1(b"blob " + str(len(raw)).encode("ascii") + b"\0" + raw).hexdigest()
+    need(actual == expected, "PINNED_SOURCE_DRIFT: " + str(path))
+    return raw
 
 
 def _unique_pairs(pairs):
@@ -187,9 +195,10 @@ def _nonexact_json(_):
     raise Refusal("NONEXACT_JSON_SCALAR")
 
 
-def read_report(path=REPORT):
+def _decode_json(raw):
+    need(type(raw) is bytes and len(raw) <= MAX_BYTES, "RESOURCE_REFUSAL: JSON input bytes")
     try:
-        value = json.loads(_file_bytes(path), object_pairs_hook=_unique_pairs,
+        value = json.loads(raw, object_pairs_hook=_unique_pairs,
                            parse_int=_json_integer, parse_float=_nonexact_json,
                            parse_constant=_nonexact_json)
     except (ValueError, RecursionError, UnicodeError) as exc:
@@ -198,15 +207,76 @@ def read_report(path=REPORT):
     return value
 
 
+def read_report(path=REPORT):
+    return _decode_json(_file_bytes(path))
+
+
+def _pinned_json(path, expected):
+    return _decode_json(_pinned_bytes(path, expected))
+
+
+def _verified_lowerer_spec(name, path):
+    """Legacy import facade: only the one pinned transitive lowerer is allowed."""
+    original = HERE / "verify_pb00701_v43_refusal_cone.py"
+    need(Path(path).resolve() == original.resolve(), "UNPINNED_TRANSITIVE_MODULE")
+    raw = _pinned_bytes(original, PINS[original.name])
+    return types.SimpleNamespace(name=name, origin=str(original),
+        loader=types.SimpleNamespace(exec_module=lambda module: _execute_module(module, original, raw)))
+
+
+def _module_from_verified_spec(spec):
+    module = types.ModuleType(spec.name)
+    module.__file__ = spec.origin
+    return module
+
+
+def _execute_module(module, path, raw):
+    """Compile the bytes just pinned, bypassing every filesystem bytecode cache.
+
+    Four historical producers import their lowerer at module initialization.
+    A module-local importlib.util facade applies the same rule transitively;
+    global import machinery and the historical files remain unchanged.
+    """
+    original_import = builtins.__import__
+    facade = types.SimpleNamespace(util=types.SimpleNamespace(
+        spec_from_file_location=_verified_lowerer_spec,
+        module_from_spec=_module_from_verified_spec))
+
+    def verified_import(name, globals=None, locals=None, fromlist=(), level=0):
+        if name == "importlib.util" and level == 0:
+            need(not fromlist, "UNREVIEWED_IMPORTLIB_INTERFACE")
+            return facade
+        return original_import(name, globals, locals, fromlist, level)
+
+    module.__file__ = str(path)
+    module.__dict__["__builtins__"] = dict(vars(builtins), __import__=verified_import)
+    exec(compile(raw, str(path), "exec"), module.__dict__)
+
+
 def _module(filename, expected):
     path = HERE / filename
-    pin(path, expected)
-    spec = importlib.util.spec_from_file_location("component_prefix_" + path.stem, path)
-    need(spec is not None and spec.loader is not None, "PINNED_MODULE_UNAVAILABLE")
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    pin(path, expected)
+    raw = _pinned_bytes(path, expected)
+    module = types.ModuleType("component_prefix_" + path.stem)
+    _execute_module(module, path, raw)
     return module
+
+
+def _dependency_expected(path):
+    resolved = Path(path).resolve()
+    allowed = {str((HERE / name).resolve()): sha for name, sha in PINS.items()}
+    allowed.update({str((ROOT / name).resolve()): sha for name, sha in ROOT_PINS.items()})
+    need(str(resolved) in allowed, "UNPINNED_LEGACY_INPUT")
+    return allowed[str(resolved)]
+
+
+def _dependency_json(path):
+    return _pinned_json(path, _dependency_expected(path))
+
+
+def _dependency_blob(path):
+    expected = _dependency_expected(path)
+    pin(path, expected)
+    return expected
 
 
 def _inputs():
@@ -216,17 +286,17 @@ def _inputs():
         pin(ROOT / filename, expected)
     for filename, expected in PRODUCERS.values():
         pin(HERE / filename, expected)
-    corpus = read_report(HERE / "pb00701-finite-owner-corpus-v54.json")
-    inventory = read_report(HERE / "pb00701-finite-owner-inventory-v54.json")
-    coverage = read_report(HERE / "pb00701-finite-owner-coverage-v54.json")
+    corpus = _dependency_json(HERE / "pb00701-finite-owner-corpus-v54.json")
+    inventory = _dependency_json(HERE / "pb00701-finite-owner-inventory-v54.json")
+    coverage = _dependency_json(HERE / "pb00701-finite-owner-coverage-v54.json")
     auditor = _module("verify_pb00701_post_v54_frontier.py", PINS["verify_pb00701_post_v54_frontier.py"])
     audit = auditor.audit(corpus, inventory, coverage)
     need(audit["cases"] == 121 and audit["v54_dispositions"]["BLOCKED"] == 20 and
          audit["v54_dispositions"]["BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE"] == 30,
          "HISTORICAL_121_20_30_DRIFT")
-    auth = read_report(ROOT / "handoffs/current-authority.json")
-    programme = read_report(ROOT / "research/machining-completeness/programme-v1.json")
-    domain = read_report(ROOT / "research/machining-completeness/tasks/MC-002/domain-contract-v1.json")
+    auth = _dependency_json(ROOT / "handoffs/current-authority.json")
+    programme = _dependency_json(ROOT / "research/machining-completeness/programme-v1.json")
+    domain = _dependency_json(ROOT / "research/machining-completeness/tasks/MC-002/domain-contract-v1.json")
     need(auth["capability_status"] == programme["capability_status"] == "NOT_ESTABLISHED" and
          auth["production_authorized"] is False and programme["production_authorized"] is False and
          any(g["id"] == "MC-B" and g["state"] == "NOT_ESTABLISHED" for g in programme["gates"]),
@@ -442,6 +512,10 @@ def _tail_receipts():
     receipts = {}
     for family, (filename, expected) in PRODUCERS.items():
         module = _module(filename, expected)
+        # Keep each original contract and proof body, but make its file I/O
+        # use bounded same-buffer pins instead of an unchecked later reread.
+        module.load_json = _dependency_json
+        module.blob_sha = _dependency_blob
         proof = module.contract()  # Only pinned original repository input; no caller data.
         bounded_bytes(proof)
         views = proof["v12_v43_tail_reports"] if family == "V12" else [proof]

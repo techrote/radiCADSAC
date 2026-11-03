@@ -1,6 +1,6 @@
 # MC-038 — five original component-prefix and tail compositions
 
-**Recorded:** 2 November 2026. **Owner:** [MC-038 / issue #100](https://github.com/techrote/radiCADSAC/issues/100). **Preregistration:** [comment 6591325199](https://github.com/techrote/radiCADSAC/issues/100#issuecomment-6591325199). **Source baseline:** `e0514500aeca59afa4924dcc2da3ca0c2688d9ac`. **Evidence class:** deterministic exact source-bound model research.
+**Recorded:** 3 November 2026. **Owner:** [MC-038 / issue #100](https://github.com/techrote/radiCADSAC/issues/100). **Preregistration:** [comment 6591325199](https://github.com/techrote/radiCADSAC/issues/100#issuecomment-6591325199). **Source baseline:** `e0514500aeca59afa4924dcc2da3ca0c2688d9ac`. **Evidence class:** deterministic exact source-bound model research.
 
 ## Purpose and bounded result
 
@@ -96,7 +96,7 @@ The earlier V41/V13 fixed-source proof uses sine harmonic **4**, while this V13 
 
 ## Replayed tails and whole-source composition
 
-Four pinned producers run their existing `contract()` entry points against their own pinned original inputs:
+Four pinned producers run their existing `contract()` entry points against their own pinned original inputs. Their mathematical code is compiled from the exact verified source buffer. A module-local import facade does the same for their sole transitive lowerer; their JSON reader and blob-check entry points use bounded exact-path adapters. These adapters change no historical file or mathematical proof:
 
 | Producer | Actual second-span result used |
 |---|---|
@@ -123,7 +123,9 @@ Public source/report inputs are bounded typed JSON before serialization, hashing
 
 Only pinned repository originals reach the historical producer functions. Caller rows must match the full original-record and source digests before any legacy proof executes. Fresh replay refusal or drift aborts the result; it cannot become a coverage classification. The private structural composition helper assumes mathematical views already established by the fixed prefix proof and pinned tail replay; it is not a public verifier of arbitrary truth assertions.
 
-The 20 adversarial test methods challenge original harmonic coefficient identities independently of source hashes, V17 sign reversal, polynomial multiplier positivity, phase/knot/continuity, cross-source substitutions, fake proof-cut and knot events, bracket ordering and multiplicity, omitted tail evidence, changed/failed producers, canonical rational/resource parsing, boolean/integer aliases and false authority/completeness claims.
+Hashing and later reopening a module is insufficient custody: a timestamp/size-valid Python bytecode cache can execute different bytes while both source-file pins still match. A bounded local counterexample reproduced that behavior during review. The final wrapper hashes and compiles the same bounded source buffer, including the historical producers' nested lowerer. Its module-local import facade leaves global import machinery unchanged. JSON is likewise hashed and decoded from the same buffer, so replacing a path after hashing cannot substitute the interpreted input. Unknown nested modules and legacy input paths refuse.
+
+The 24 adversarial test methods challenge original harmonic coefficient identities independently of source hashes, V17 sign reversal, polynomial multiplier positivity, phase/knot/continuity, cross-source substitutions, fake proof-cut and knot events, bracket ordering and multiplicity, omitted tail evidence, changed/failed producers, canonical rational/resource parsing, boolean/integer aliases and false authority/completeness claims. Four additional custody methods exercise an actual accepted but altered bytecode cache, the transitive lowerer cache and unchanged global importer, path replacement after JSON hashing, and each historical contract's exact-path JSON adapter.
 
 Run from the repository root:
 
