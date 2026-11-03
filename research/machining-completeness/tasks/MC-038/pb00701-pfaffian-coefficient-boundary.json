@@ -1,0 +1,936 @@
+{
+  "algorithm_applicability": {
+    "actual_chain_coefficient_domain": "Q(pi)",
+    "chain_Phi_in_Z_T_Y": false,
+    "cited_integer_coefficient_theorem_instantiated": false,
+    "extension_with_sign_oracle_qualified": false,
+    "general_Pfaffian_algorithm_implemented": false,
+    "operation_performed": "FINITE_ALGEBRAIC_RECIPE_UNDER_FORMAL_Q_K_COEFFICIENT_EXTENSION",
+    "primitive_P_in_Z_T_Y": true,
+    "reference": "Barbagallo-Jeronimo-Sabia 2016, Algorithm ZeroCounting Steps 1-3"
+  },
+  "constant_binding": {
+    "derived_from_original_turn_rate": "1/4",
+    "exact_meaning": "pi/4",
+    "formal_symbol": "K",
+    "rational_approximation_substitution_allowed": false
+  },
+  "context_reference_bytes": [
+    {
+      "bytes": 2255,
+      "git_blob": "6005fc55e2d18e71639e6bc31cfbc1597bf4a915",
+      "path": "docs/machining-completeness/31-PB00701-COUPLED-BSPLINE-BOUNDARY.md",
+      "sha256": "7cc6704ee4636e498d4f8575dfaea35462f33effc20fbef6d45d994b416f4515",
+      "use": "NONEXECUTED_SOURCE_AND_ORACLE_DOMAIN_REFERENCE"
+    },
+    {
+      "bytes": 10282,
+      "git_blob": "3d8b6e0c23f1a5488f791e8bb04a4ee76ab8885a",
+      "path": "docs/machining-completeness/70-PB00701-ALGEBRAIC-ENDPOINT.md",
+      "sha256": "e5ecfe6701fd0d70a1ee5a915225977bfe746f77f0938856f46a8a81ea99bdc1",
+      "use": "NONEXECUTED_SOURCE_AND_ORACLE_DOMAIN_REFERENCE"
+    },
+    {
+      "bytes": 14416,
+      "git_blob": "77c18cb5c8c0700072c65969c973e8f3c4c12a99",
+      "path": "research/machining-completeness/tasks/MC-038/pb00701_algebraic_endpoint_model.py",
+      "sha256": "5b27d62b3e94637e39b039878e633701b0b27a064967b6ac9e417010909283b1",
+      "use": "NONEXECUTED_SOURCE_AND_ORACLE_DOMAIN_REFERENCE"
+    },
+    {
+      "bytes": 18701,
+      "git_blob": "a086b625e1a6dea8bd202699d161167bb69cc9e7",
+      "path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+      "sha256": "2813a99ecc2bc179bf31f6c9166f9c3564516e67f2f256c0a984deee4ed0f692",
+      "use": "NONEXECUTED_SOURCE_AND_ORACLE_DOMAIN_REFERENCE"
+    }
+  ],
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "gates": {
+    "MC-1": "NOT_ESTABLISHED",
+    "MC-B": "NOT_ESTABLISHED",
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN",
+    "production_authorized": false
+  },
+  "independent_source_sanity_proof": {
+    "argument_kind": "REVIEWED_ANALYTIC_ARGUMENT_WITH_EXACT_ALGEBRAIC_CERTIFICATE",
+    "at_partition_cut": {
+      "first_derivative_sign": 1,
+      "positive_derivative_identity": "2*K*(alpha-Y(alpha))^2/(1+Y(alpha)^2)",
+      "source_sign": 1
+    },
+    "chart_pole_free_on_closed_source": true,
+    "closed_source_zero_set": [
+      {
+        "coordinate": "0",
+        "first_derivative": "2*(1-K)",
+        "left_sign": null,
+        "location": "SOURCE_LEFT_ENDPOINT",
+        "order": {
+          "kind": "ONE_SIDED",
+          "side": "RIGHT",
+          "value": 1
+        },
+        "right_sign": 1
+      },
+      {
+        "coordinate": "1",
+        "first_derivative": "1-2*K",
+        "left_sign": 1,
+        "location": "SOURCE_RIGHT_ENDPOINT",
+        "order": {
+          "kind": "ONE_SIDED",
+          "side": "LEFT",
+          "value": 1
+        },
+        "right_sign": null
+      }
+    ],
+    "endpoint_chord": {
+      "Y_at_0": "0",
+      "Y_at_1": "1"
+    },
+    "half_angle_chart": "Y(t)=tan(pi*t/4)",
+    "interior_inequality": "Y(t)<t for 0<t<1",
+    "isolated_root_count": 2,
+    "maximal_nonzero_components": [
+      {
+        "open_interval": [
+          "0",
+          "1"
+        ],
+        "sign": 1
+      }
+    ],
+    "physical_proof_obtained_by_v46_oracle": false,
+    "source_interior_sign": 1,
+    "strict_convexity_premise": "tan''(x)=2*tan(x)*sec(x)^2>0 for 0<x<pi/4",
+    "strict_source_interior_root_count": 0
+  },
+  "project_modules_imported_or_executed": [],
+  "proof_premises": {
+    "external_theorems": [
+      "pi is transcendental over Q"
+    ],
+    "machine_checked": [
+      "all original affine channels in the cleared numerator",
+      "formal chain derivative and exact polynomial division",
+      "Sylvester determinant",
+      "primitive r versus literal 8*r normalization",
+      "degree-one leading-coefficient cut",
+      "Machin integer identity and strict rational enclosures",
+      "physical derivative identity"
+    ],
+    "proof_assistant_formalization_claimed": false,
+    "reviewed_analytic": [
+      "standard half-angle trigonometric identities",
+      "Machin branch selection and alternating arctangent remainder",
+      "strict tangent convexity and its endpoint chord",
+      "continuity and derivative sign implications"
+    ]
+  },
+  "qualified_context_main": "828df02d3d61b57bd46b0c4a796ce58685d9c987",
+  "rational_enclosures": {
+    "alpha_squared_strict_interval": [
+      "45775469449/167535764926",
+      "20942878683682/76533529466193"
+    ],
+    "alpha_strict_interval": [
+      "1/2",
+      "3/5"
+    ],
+    "alternating_bounds_are_strict": true,
+    "arctangent_reciprocal_bounds": {
+      "239": [
+        "171362/40955757",
+        "48941844013/11697168977985"
+      ],
+      "5": [
+        "74/375",
+        "9253/46875"
+      ]
+    },
+    "branch_argument": "0<4*atan(1/5)-atan(1/239)<4/5<1<pi/2; tangent=1",
+    "coarse_pi_strict_interval": [
+      "3",
+      "22/7"
+    ],
+    "elementary_pi_lower_bound_premise": "pi=4*atan(1)>2 by the positive integral",
+    "floating_point_used": false,
+    "gaussian_integer_identity": {
+      "left": "(5+i)^4*(239-i)",
+      "right": [
+        114244,
+        114244
+      ]
+    },
+    "k_strict_interval": [
+      "76533529466193/97476408149875",
+      "167535764926/213311234375"
+    ],
+    "pi_strict_interval": [
+      "306134117864772/97476408149875",
+      "670143059704/213311234375"
+    ],
+    "r_at_one_half_strict_lower_bound": "1556611287/85324493750",
+    "r_at_three_fifths_strict_upper_bound": "-165229798103687/2436910203746875",
+    "selected_angle_strict_interval": [
+      "76533529466193/97476408149875",
+      "167535764926/213311234375"
+    ],
+    "source_left_first_derivative_strict_interval": [
+      "91550938898/213311234375",
+      "41885757367364/97476408149875"
+    ],
+    "source_right_first_derivative_strict_interval": [
+      "-121760295477/213311234375",
+      "-55590650782511/97476408149875"
+    ]
+  },
+  "rescaling_check": {
+    "cited_algorithm_assumptions_restored": false,
+    "new_chain": "dY/dU=1+Y^2",
+    "new_chain_has_integer_coefficients": true,
+    "new_coordinate": "U=K*T",
+    "new_interval": [
+      "0",
+      "K"
+    ],
+    "new_primitive_polynomial": "U-K*Y",
+    "new_right_endpoint_algebraic_over_Q": false,
+    "new_source_polynomial_has_integer_coefficients": false,
+    "positive_normalization": "multiply P(U/K,Y) by K>0"
+  },
+  "resource_limits": {
+    "arithmetic_operand_bits": 1024,
+    "depth": 24,
+    "json_bytes": 524288,
+    "nodes": 16384,
+    "polynomial_terms": 64,
+    "polynomial_total_degree": 6,
+    "rational_operand_bits": 256
+  },
+  "schema": "pb00701.pfaffian-coefficient-boundary.v1",
+  "scope": {
+    "all_26_operations_remain_required": true,
+    "alternate_exact_methods_excluded": false,
+    "conjecture_necessity_claimed": false,
+    "frozen_corpus_additions": 0,
+    "general_method_impossible": false,
+    "generic_owner_route_repaired": false,
+    "native_evidence_claimed": false,
+    "old_endpoint_domain_widened": false,
+    "registered_new_fixture_count": 1,
+    "undecidability_claimed": false
+  },
+  "selected_partition_cut": {
+    "algebraic_over_Q": false,
+    "algebraic_over_Q_pi": true,
+    "defining_equation": "1-(pi/4)*(1+alpha^2)=0",
+    "definition": "positive sqrt(4/pi-1)",
+    "event_or_sign_cell_boundary": false,
+    "external_theorem": "PI_IS_TRANSCENDENTAL_OVER_Q",
+    "nonalgebraicity_basis": "If alpha were Q-algebraic, pi=4/(1+alpha^2) would be Q-algebraic",
+    "nonalgebraicity_inferred_from_numeric_enclosure": false,
+    "physical_source_critical_point": false,
+    "physical_source_zero": false,
+    "strict_interval": [
+      "1/2",
+      "3/5"
+    ],
+    "unique_positive_root": true
+  },
+  "source": {
+    "case_id": "research:pb00701:pfaffian-coefficient-boundary:half-angle",
+    "historical_source_completion_claimed": false,
+    "scope": "NEW_RESEARCH_FIXTURE_OUTSIDE_FROZEN_FIFTY_SOURCE_COHORT",
+    "source_sha256": "0e1920cea3d9f1541f187632aad5b6dc138ac6893581b1558c9257eeeb63f3ca",
+    "spec": {
+      "cos_splines": {
+        "0": {
+          "controls": [
+            "0",
+            "1"
+          ],
+          "degree": 1,
+          "knots": [
+            "0",
+            "0",
+            "1",
+            "1"
+          ]
+        },
+        "1": {
+          "controls": [
+            "0",
+            "1"
+          ],
+          "degree": 1,
+          "knots": [
+            "0",
+            "0",
+            "1",
+            "1"
+          ]
+        }
+      },
+      "grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+      "parameter_hi": "1",
+      "parameter_lo": "0",
+      "phase_turn_offset": "0",
+      "phase_turn_rate": "1/4",
+      "sin_splines": {
+        "1": {
+          "controls": [
+            "-1",
+            "-1"
+          ],
+          "degree": 1,
+          "knots": [
+            "0",
+            "0",
+            "1",
+            "1"
+          ]
+        }
+      },
+      "source_parameter_id": "pb00701-pfaffian-coefficient-boundary-original-t"
+    }
+  },
+  "status": "BOUNDED_PFAFFIAN_COEFFICIENT_DOMAIN_COUNTEREXAMPLE",
+  "symbolic_certificate": {
+    "amplitude_polynomials": {
+      "C0": [
+        {
+          "coefficient": "1",
+          "powers_T_Y_K": [
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "C1": [
+        {
+          "coefficient": "1",
+          "powers_T_Y_K": [
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "S1": [
+        {
+          "coefficient": "-1",
+          "powers_T_Y_K": [
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    "degree_one_recipe": {
+      "N": 1,
+      "R0": [
+        {
+          "coefficient": "-1",
+          "powers_T_Y_K": [
+            0,
+            1,
+            0
+          ]
+        },
+        {
+          "coefficient": "1",
+          "powers_T_Y_K": [
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "R1": [
+        {
+          "coefficient": "1",
+          "powers_T_Y_K": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "coefficient": "-1",
+          "powers_T_Y_K": [
+            0,
+            0,
+            1
+          ]
+        },
+        {
+          "coefficient": "-1",
+          "powers_T_Y_K": [
+            2,
+            0,
+            1
+          ]
+        }
+      ],
+      "rho2": [
+        {
+          "coefficient": "1",
+          "powers_T_Y_K": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "coefficient": "-1",
+          "powers_T_Y_K": [
+            0,
+            0,
+            1
+          ]
+        },
+        {
+          "coefficient": "-1",
+          "powers_T_Y_K": [
+            2,
+            0,
+            1
+          ]
+        }
+      ],
+      "step3_partition_polynomial": [
+        {
+          "coefficient": "1",
+          "powers_T_Y_K": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "coefficient": "-1",
+          "powers_T_Y_K": [
+            0,
+            0,
+            1
+          ]
+        },
+        {
+          "coefficient": "-1",
+          "powers_T_Y_K": [
+            2,
+            0,
+            1
+          ]
+        }
+      ],
+      "tau0": [
+        {
+          "coefficient": "-1",
+          "powers_T_Y_K": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "tau1": [
+        {
+          "coefficient": "1",
+          "powers_T_Y_K": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "coefficient": "-1",
+          "powers_T_Y_K": [
+            0,
+            0,
+            1
+          ]
+        },
+        {
+          "coefficient": "-1",
+          "powers_T_Y_K": [
+            2,
+            0,
+            1
+          ]
+        }
+      ]
+    },
+    "division_quotient": [
+      {
+        "coefficient": "1",
+        "powers_T_Y_K": [
+          0,
+          1,
+          1
+        ]
+      },
+      {
+        "coefficient": "1",
+        "powers_T_Y_K": [
+          1,
+          0,
+          1
+        ]
+      }
+    ],
+    "division_remainder": [
+      {
+        "coefficient": "1",
+        "powers_T_Y_K": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "coefficient": "-1",
+        "powers_T_Y_K": [
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "coefficient": "-1",
+        "powers_T_Y_K": [
+          2,
+          0,
+          1
+        ]
+      }
+    ],
+    "equivalent_derivative_numerator": [
+      {
+        "coefficient": "2",
+        "powers_T_Y_K": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "coefficient": "-2",
+        "powers_T_Y_K": [
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "coefficient": "2",
+        "powers_T_Y_K": [
+          0,
+          2,
+          0
+        ]
+      },
+      {
+        "coefficient": "2",
+        "powers_T_Y_K": [
+          0,
+          4,
+          1
+        ]
+      },
+      {
+        "coefficient": "-4",
+        "powers_T_Y_K": [
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "coefficient": "-4",
+        "powers_T_Y_K": [
+          1,
+          3,
+          1
+        ]
+      }
+    ],
+    "formal_chain_derivative_of_primitive": [
+      {
+        "coefficient": "1",
+        "powers_T_Y_K": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "coefficient": "-1",
+        "powers_T_Y_K": [
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "coefficient": "-1",
+        "powers_T_Y_K": [
+          0,
+          2,
+          1
+        ]
+      }
+    ],
+    "formal_chain_polynomial": [
+      {
+        "coefficient": "1",
+        "powers_T_Y_K": [
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "coefficient": "1",
+        "powers_T_Y_K": [
+          0,
+          2,
+          1
+        ]
+      }
+    ],
+    "half_angle_denominator": [
+      {
+        "coefficient": "1",
+        "powers_T_Y_K": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "coefficient": "1",
+        "powers_T_Y_K": [
+          0,
+          2,
+          0
+        ]
+      }
+    ],
+    "literal_2P_quotient": [
+      {
+        "coefficient": "4",
+        "powers_T_Y_K": [
+          0,
+          1,
+          1
+        ]
+      },
+      {
+        "coefficient": "4",
+        "powers_T_Y_K": [
+          1,
+          0,
+          1
+        ]
+      }
+    ],
+    "literal_2P_remainder": [
+      {
+        "coefficient": "8",
+        "powers_T_Y_K": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "coefficient": "-8",
+        "powers_T_Y_K": [
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "coefficient": "-8",
+        "powers_T_Y_K": [
+          2,
+          0,
+          1
+        ]
+      }
+    ],
+    "literal_2P_resultant": [
+      {
+        "coefficient": "8",
+        "powers_T_Y_K": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "coefficient": "-8",
+        "powers_T_Y_K": [
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "coefficient": "-8",
+        "powers_T_Y_K": [
+          2,
+          0,
+          1
+        ]
+      }
+    ],
+    "literal_cleared_numerator": [
+      {
+        "coefficient": "-2",
+        "powers_T_Y_K": [
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "coefficient": "2",
+        "powers_T_Y_K": [
+          1,
+          0,
+          0
+        ]
+      }
+    ],
+    "literal_to_primitive_remainder_factor": "8",
+    "monomial_order": [
+      "T",
+      "Y",
+      "K"
+    ],
+    "physical_derivative_identity": "H'=2*(r(T)+K*(T-Y)^2)/(1+Y^2)",
+    "physical_derivative_numerator_over_denominator_squared": [
+      {
+        "coefficient": "2",
+        "powers_T_Y_K": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "coefficient": "-2",
+        "powers_T_Y_K": [
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "coefficient": "2",
+        "powers_T_Y_K": [
+          0,
+          2,
+          0
+        ]
+      },
+      {
+        "coefficient": "2",
+        "powers_T_Y_K": [
+          0,
+          4,
+          1
+        ]
+      },
+      {
+        "coefficient": "-4",
+        "powers_T_Y_K": [
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "coefficient": "-4",
+        "powers_T_Y_K": [
+          1,
+          3,
+          1
+        ]
+      }
+    ],
+    "positive_constant_normalization": "2",
+    "primitive_polynomial": [
+      {
+        "coefficient": "-1",
+        "powers_T_Y_K": [
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "coefficient": "1",
+        "powers_T_Y_K": [
+          1,
+          0,
+          0
+        ]
+      }
+    ],
+    "step1_scaled_derivative": [
+      {
+        "coefficient": "1",
+        "powers_T_Y_K": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "coefficient": "-1",
+        "powers_T_Y_K": [
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "coefficient": "-1",
+        "powers_T_Y_K": [
+          0,
+          2,
+          1
+        ]
+      }
+    ],
+    "step1_smallest_even_leading_power": 2,
+    "sylvester_determinant": [
+      {
+        "coefficient": "1",
+        "powers_T_Y_K": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "coefficient": "-1",
+        "powers_T_Y_K": [
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "coefficient": "-1",
+        "powers_T_Y_K": [
+          2,
+          0,
+          1
+        ]
+      }
+    ],
+    "sylvester_matrix": [
+      [
+        [
+          {
+            "coefficient": "-1",
+            "powers_T_Y_K": [
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        [
+          {
+            "coefficient": "1",
+            "powers_T_Y_K": [
+              1,
+              0,
+              0
+            ]
+          }
+        ],
+        []
+      ],
+      [
+        [],
+        [
+          {
+            "coefficient": "-1",
+            "powers_T_Y_K": [
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        [
+          {
+            "coefficient": "1",
+            "powers_T_Y_K": [
+              1,
+              0,
+              0
+            ]
+          }
+        ]
+      ],
+      [
+        [
+          {
+            "coefficient": "-1",
+            "powers_T_Y_K": [
+              0,
+              0,
+              1
+            ]
+          }
+        ],
+        [],
+        [
+          {
+            "coefficient": "1",
+            "powers_T_Y_K": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "coefficient": "-1",
+            "powers_T_Y_K": [
+              0,
+              0,
+              1
+            ]
+          }
+        ]
+      ]
+    ]
+  },
+  "v46_domain_decision": {
+    "actual_coordinate_domain": "TRANSCENDENTAL_OVER_Q_ALGEBRAIC_OVER_Q_PI",
+    "endpoint_value_established": false,
+    "original_source_grammar_preserved": true,
+    "proof_established": false,
+    "reason": "The selected partition cut is outside the qualified coordinate domain",
+    "required_coordinate_domain": "REAL_ALGEBRAIC_OVER_Q",
+    "root_or_nonroot_result": null,
+    "status": "UNSUPPORTED_COORDINATE_DOMAIN",
+    "v46_oracle_invoked": false
+  }
+}
