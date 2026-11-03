@@ -1,21 +1,22 @@
 # MC-038 / PB-007 current implementation state
 
-Status date: **2 November 2026**.
+Status date: **3 November 2026**.
 
-Qualified research source snapshot: `4eec599abe89041751ba7cb816a63585a59b31b9`.
+Qualified research source snapshot: `fcf956849345a9333f83bf0dd11a1dc7fcd82aa2`.
 
 Programme capability: **MC-B NOT_ESTABLISHED; MC-1 NOT_ESTABLISHED**.
 
 Primary gate tracker: [MC-038 / #100](https://github.com/techrote/radiCADSAC/issues/100).
 
-Latest qualified research: [V23 source proof, PR #334](https://github.com/techrote/radiCADSAC/pull/334) and [registered 50-case evidence reconciliation, PR #335](https://github.com/techrote/radiCADSAC/pull/335). The last versioned historical-owner adapter remains **v54 / PR #277**; later source-specific proofs do not relabel that frozen implementation.
+Latest qualified research: [complete fifty-source evidence census v2, PR #344](https://github.com/techrote/radiCADSAC/pull/344), consuming the six complete-source proof families qualified in PRs #337–#343. The carrier source family requires its [executed-byte custody correction, PR #338](https://github.com/techrote/radiCADSAC/pull/338). The last versioned historical-owner adapter remains **v54 / PR #277**; later source-specific proofs do not relabel that frozen implementation.
 
 This is navigation and qualified research evidence, not gate authority. The
 machine-readable current snapshot is
-[`current-implementation-state-v2.json`](../../research/machining-completeness/tasks/MC-038/current-implementation-state-v2.json).
+[`current-implementation-state-v3.json`](../../research/machining-completeness/tasks/MC-038/current-implementation-state-v3.json).
 The [27 October v1 snapshot](../../research/machining-completeness/tasks/MC-038/current-implementation-state-v1.json)
-is preserved unchanged as historical navigation. A closed research PR or a
-complete source-specific mathematical witness does not close PB-007 globally.
+and [2 November v2 snapshot](../../research/machining-completeness/tasks/MC-038/current-implementation-state-v2.json)
+remain unchanged historical navigation. A complete proof of these fifty selected
+sources does not close PB-007 globally.
 
 ## Current gate state
 
@@ -34,36 +35,89 @@ The historical MC-038 `report.md` and `outcome.json` remain correct as the froze
 
 ## Current registered source-evidence reconciliation
 
-The [executable reconciliation](../../research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation-research.md)
-enumerates **all 50 historically unresolved original source IDs** and reexecutes
-16 pinned registered producers for the evidence attached to those IDs. Each row
-binds the original source/row hashes,
-parameter, phase, source-piece edges, historical owner/refusal and the actual
-proved interval. The historical V54 census is unchanged: **121 sources, 20
-route refusals, 30 missing ordered premises**.
+The [v2 executable reconciliation](../../research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation-v2-research.md)
+reexecutes **fourteen producer families** and proves a disjoint, exact union of
+**all fifty historically unresolved original source IDs**. Every row binds the
+original source and whole-row hashes, parameter, affine phase, source-piece
+edges, historical owner/refusal and the actual complete closed interval.
 
-| Registered evidence for the original whole source | Total | Historic route refusals | Historic missing ordered premises |
+| Current v2 evidence | Total | Historic route refusals | Historic missing ordered premises |
 |---|---:|---:|---:|
-| Complete source-specific mathematical witness | **15** | 11 | 4 |
-| Only the refused second source span is proved | **9** | 9 | 0 |
-| Only one V6 ordered child span is supplied | **18** | 0 | 18 |
-| No relevant source event/order witness in this registry | **8** | 0 | 8 |
-| Historical unresolved-source denominator | **50** | **20** | **30** |
+| Complete source-specific whole-source witness | **50** | **20** | **30** |
+| Only partial or unregistered whole-source evidence | **0** | **0** | **0** |
 
-**35 cases still lack a complete whole-source witness in this registry.** The
-eight-case row is only the group without selected relevant event/order evidence;
-it is not the total remaining work. The complete group contains fourteen finite
-zero-set sources and one typed closed continuum-zero source. A continuum is
-never encoded as a finite isolated-root list. The five-source and six-source
-historical unions are deduplicated by exact original source identity.
+The fifty complete sources comprise **49 finite zero sets and one typed closed
+continuum**. Thirty-five sources gained complete evidence; all fifteen earlier
+complete raw proof results reproduce their exact accepted digests. A continuum
+is never encoded as an empty finite zero set or an isolated-root list. Replayed
+union metadata, auxiliary tail probes and already-certified sources do not add
+duplicate population entries.
 
-The denominator is exhaustive for these 50 frozen cases; the producer registry
-does not claim to have discovered every possible proof. A failed/refused replay
-aborts the reconciliation rather than creating a new mathematical classification.
-This is an evidence inventory, not a universal normalized root-event consumer,
-generic route acceptance, a change to frozen V54 verdicts, or native geometry.
+The immutable [v1 reconciliation](../../research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation.json)
+remains its historical **15 complete / 9 tail-only / 18 child-only / 8 unregistered**
+observation. The frozen V54 census also remains unchanged: **121 sources, twenty
+route refusals and thirty missing ordered premises**. These source-specific
+proofs do not assert that an old generic owner supplied a premise it refused.
 
-### New qualified V23 mathematical result
+### Newly qualified complete-source families
+
+| Family | Original sources | Previous v1 evidence | Qualified implementation |
+|---|---:|---|---|
+| Carrier prefix and actual tail composition | 5 | Tail-only | [#337](https://github.com/techrote/radiCADSAC/pull/337) with required correction [#338](https://github.com/techrote/radiCADSAC/pull/338) |
+| Tangent/cotangent prefix and actual tail composition | 4 | Tail-only | [#342](https://github.com/techrote/radiCADSAC/pull/342) |
+| Complete original sources from ordered children | 15 | One ordered child | [#340](https://github.com/techrote/radiCADSAC/pull/340) |
+| Exact-zero child source completion | 3 | One ordered child | [#341](https://github.com/techrote/radiCADSAC/pull/341) |
+| Bernstein/sector original-source witnesses | 3 | Unregistered | [#339](https://github.com/techrote/radiCADSAC/pull/339) |
+| Original multiplier tail100 sources | 5 | Unregistered | [#343](https://github.com/techrote/radiCADSAC/pull/343) |
+| New whole-source witnesses | **35** | | |
+
+V2 additionally executes strict exterior endpoint checks for the two original
+V27 sources. Their old mathematical results and raw digests stay unchanged;
+the supplemental closure derives actual endpoint values from original clamped
+controls and phase. The harvested V41 source already had executed closed-zone
+endpoint evidence. Source identity keeps it distinct from the similarly named
+new V13 multiplier family.
+
+### Executed evidence and qualification
+
+The finite runtime captures **77 Python and 19 JSON files** before execution.
+Project imports and data reads consume the same verified buffers, including the
+actual transitive proofs used by unchanged producers. Its private registrations
+support original algebraic dataclasses and are cleaned up on success or failure.
+The wrapper bootstraps bypass stale bytecode and preloaded project modules.
+Python and its standard library remain trusted; this is not a security sandbox.
+
+The final v2 contract passes **44 adversarial test methods**. Independent review
+also compares all fresh raw views with a separately prepared original-source
+map. The public validator rejects source/phase substitution, incomplete or
+overlapping unions, continuum confusion, failed producers and numeric resource
+hazards. A saved success never replaces a failed fresh proof.
+
+| V2 qualification | Exact identity |
+|---|---|
+| Reviewed head | `6dbec827ef42c10c3e2e9df800fc2fd8ad7e9f1e` |
+| Landed main | `fcf956849345a9333f83bf0dd11a1dc7fcd82aa2` |
+| Identical reviewed/synthetic/landed tree | `2c53cb759439ed68f5b6efce340164e120442cce` |
+| Technical review | [5745526932](https://github.com/techrote/radiCADSAC/pull/344#pullrequestreview-5745526932) |
+| Acceptance checkpoint | [#100 comment 6592426300](https://github.com/techrote/radiCADSAC/issues/100#issuecomment-6592426300) |
+
+Literal-head [focused v2](https://github.com/techrote/radiCADSAC/actions/runs/41555369862),
+[static](https://github.com/techrote/radiCADSAC/actions/runs/41555369679) and
+[historical v1 reconciliation](https://github.com/techrote/radiCADSAC/actions/runs/41555369665)
+checks passed. Independent landed-main [focused v2](https://github.com/techrote/radiCADSAC/actions/runs/41555621957),
+[static](https://github.com/techrote/radiCADSAC/actions/runs/41555621947) and
+[historical v1 reconciliation](https://github.com/techrote/radiCADSAC/actions/runs/41555621973)
+checks passed. The machine snapshot records corresponding head/merge/tree,
+review and successful CI identities for each newly qualified source family.
+Technical reviews are by distinct AI workers through the owner account; no
+human or separate-account independence is claimed.
+
+This remains a finite evidence census. A normalized physical zero-set consumer
+is separately preregistered and active, but **not qualified in this snapshot**.
+The census does not establish arbitrary analytic root arithmetic, generic route
+acceptance, native geometry, or a universal event/composition interface.
+
+### Earlier qualified V23 mathematical result
 
 For `harvested:verify_pb00701_v52:2250401ce435`, exact original Bernstein controls
 and phase establish `F(t)>=49*t^2/34992` on `[0,1]`, with
@@ -75,10 +129,10 @@ The [proof and custody record](../../research/machining-completeness/tasks/MC-03
 includes a bounded sufficient-condition checker and 17 adversarial test methods.
 Independent review found and corrected exponent-string expansion before rational
 validation; the accepted parser validates bounded ASCII integer/ratio syntax
-before fraction construction. The registered complete-source count increases
-from 14 to 15 because of this distinct source proof.
+before fraction construction. The historical v1 complete-source count increased
+from 14 to 15 because of this distinct source proof; v2 retains the same result.
 
-### Qualification identities
+### Earlier qualification identities
 
 | Result | Reviewed head | Landed main | Identical reviewed/synthetic/landed tree |
 |---|---|---|---|
@@ -97,14 +151,23 @@ or separate-account approval.
 
 ## Current bounded frontier and corrected routing
 
-Use each machine-report row's actual covered interval and remaining requirement.
-The next useful bounded proof work is full original-source event/endpoint and
-source-knot composition for the nine proved tails, or completing the other span
-and composition for the eighteen checked V6 children. For each of the eight
-unregistered cases, first check for existing unregistered proofs, then register
-sound evidence or establish the missing source-specific event/order witness. Select and preregister
-one exact missing premise under existing issue #100; do not infer acceptance from
-historical `CERTIFIED` child counts or sampled values.
+Every one of the fifty frozen original sources now has a qualified complete
+source-specific witness. Do not resume the old nine-tail, eighteen-child or
+eight-unregistered work list as if those proof gaps remained.
+
+The next bounded implementation is the [finite physical zero-set consumer](https://github.com/techrote/radiCADSAC/issues/100#issuecomment-6592423001),
+which must translate actual fresh raw proof views into ordered roots, physical
+exteriors, true source knots and maximal connected nonzero cells. Preserve
+implicit locators, sided endpoint/knot orders, touching zeros and the separate
+continuum type. Its current implementation is provisional; the v2 census alone
+does not qualify it.
+
+A later, separately preregistered source-root refinement may narrow selected
+implicit brackets using certified exact signs. Current feasibility probes are
+read-only research, not accepted event evidence. Broader analytic coverage,
+discontinuity policy and the other PB-007 obligations remain independent work.
+Select one concrete missing premise under existing issue #100 and preserve its
+full source/phase/domain obligations.
 
 Do not repeat `composite:DELEGATED_V6_CONSTANT_MODULATION:tail0`: its endpoint,
 source-knot deduplication and adversarial checks already landed in PRs #307–#309.
@@ -208,7 +271,7 @@ These are implementation/proof frontiers, not permission to shrink the supported
 ## How to navigate the evidence
 
 - **Gate decision / historical blocker review:** `research/machining-completeness/tasks/MC-038/report.md` and `outcome.json`.
-- **Current-state snapshot:** this document and `research/machining-completeness/tasks/MC-038/current-implementation-state-v2.json`; v1 remains the unchanged 27 October historical snapshot.
+- **Current-state snapshot:** this document and [v3](../../research/machining-completeness/tasks/MC-038/current-implementation-state-v3.json); [v1](../../research/machining-completeness/tasks/MC-038/current-implementation-state-v1.json) and [v2](../../research/machining-completeness/tasks/MC-038/current-implementation-state-v2.json) remain unchanged historical snapshots from 27 October and 2 November.
 - **Per-version exact evidence:** `research/machining-completeness/tasks/MC-038/pb00701-report-v*.md`, matching JSON boundary artifacts, models, tests and verifiers.
 - **RAG documents:** `docs/machining-completeness/27-PB00701-...` through `79-PB00701-FINITE-OWNER-COVERAGE.md`.
 - **Historical versioned adapter contract:** issue #275 / PR #277; prior v53 issue #271 / PR #273 is retained as historical accepted evidence.
