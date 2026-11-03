@@ -56,6 +56,10 @@ jobs:
         run: python3 tools/validate_machining_completeness.py --self-test
       - name: Verify additive evidence STEP and claim identity bindings
         run: python3 tools/mc_evidence_bundle_identity.py --self-test
+      - name: Qualify prospective original two-span stationary mixed-zero components
+        run: |
+          python3 -m py_compile research/machining-completeness/tasks/MC-038/pb00701_two_span_stationary_components.py research/machining-completeness/tasks/MC-038/test_pb00701_two_span_stationary_components.py
+          python3 research/machining-completeness/tasks/MC-038/test_pb00701_two_span_stationary_components.py
       - name: Validate planning/native CI impact routing
         run: python3 tools/validate_mc_ci_impact.py --self-test
       - name: Falsify managed-issue synchronization and apply safety
