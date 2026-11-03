@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 import argparse
+import re
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 WF=ROOT/".github"/"workflows"
@@ -105,7 +106,8 @@ def _static_run_commands(s):
     """Find literal commands in unconditional steps[].run fields, not decoy text."""
     if s.count("\njobs:\n") != 1:
         raise AssertionError("mc1-static: expected one jobs section")
-    if "defaults:" in s.splitlines():
+    if any(re.match(r"""^(?:defaults|[\'"]defaults[\'"])\s*:""", line)
+           for line in s.splitlines()):
         # Workflow-level run.shell can replace the executor for all steps.
         raise AssertionError("mc1-static: workflow-wide shell defaults are not qualified")
     lines = s.split("\njobs:\n", 1)[1].splitlines()
@@ -274,6 +276,15 @@ def self_test():
     reject_static(mc.replace("permissions:\n",
                              "defaults:\n  run:\n    shell: 'echo {0}'\npermissions:\n", 1),
                   "custom workflow default shell")
+    # A comment or quoted YAML key must not evade the root default-shell guard.
+    reject_static(mc.replace("permissions:\n",
+                             "defaults: # valid YAML inline comment\n  run:\n    shell: 'echo {0}'\npermissions:\n", 1),
+                  "commented workflow default shell key")
+    reject_static(mc.replace("permissions:\n",
+                             "'defaults':\n  run:\n    shell: 'echo {0}'\npermissions:\n", 1),
+                  "quoted workflow default shell key")
+    validate_mc_static(mc.replace("permissions:\n",
+                                  "# defaults: harmless commentary\npermissions:\n", 1))
     # MC workflow is inline in the real source. Convert it to a multiline
     # step before introducing an inert echo (not a nonexistent source line).
     workflow_run = "        run: python3 tools/mc_workflow.py self-test"
