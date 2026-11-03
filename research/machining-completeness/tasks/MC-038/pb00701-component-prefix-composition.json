@@ -2,7 +2,7 @@
   "schema": "radicadsac-mc038-component-prefix-composition/1.0",
   "task": "MC-038",
   "evidence_class": "DETERMINISTIC_EXACT_SOURCE_BOUND_RESEARCH",
-  "recorded_utc": "2026-11-02T23:51:19Z",
+  "recorded_utc": "2026-11-03T00:00:57Z",
   "source_baseline_main": "e0514500aeca59afa4924dcc2da3ca0c2688d9ac",
   "preregistration_issue_100_comment": 6591325199,
   "scope": "FIVE_FROZEN_COMPONENT_CARRIER_PREFIXES_AND_ORIGINAL_TAIL_COMPOSITION",

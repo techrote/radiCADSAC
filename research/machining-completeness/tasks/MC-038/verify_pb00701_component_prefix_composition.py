@@ -3,19 +3,41 @@
 from __future__ import annotations
 
 import argparse
+import builtins
 import copy
 from fractions import Fraction as Q
+import hashlib
+import importlib.util
+import os
 from pathlib import Path
+import py_compile
 import sys
 import tempfile
-from types import SimpleNamespace
+from types import ModuleType, SimpleNamespace
 import unittest
 from unittest.mock import patch
 
 sys.dont_write_bytecode = True
 HERE = Path(__file__).resolve().parent
-sys.path.insert(0, str(HERE))
-import pb00701_component_prefix_composition as model
+MODEL_BLOB = "530e552bb41c020456fdf0f17506cb18577896f3"
+MAX_MODEL_BYTES = 1048576
+
+
+def _load_verified_model(path, expected):
+    with Path(path).open("rb") as stream:
+        raw = stream.read(MAX_MODEL_BYTES + 1)
+    if len(raw) > MAX_MODEL_BYTES:
+        raise ValueError("RESOURCE_REFUSAL: model source byte budget")
+    actual = hashlib.sha1(b"blob " + str(len(raw)).encode("ascii") + b"\0" + raw).hexdigest()
+    if actual != expected:
+        raise ValueError("VERIFIER_MODEL_SOURCE_DRIFT")
+    module = ModuleType("component_prefix_verified_model")
+    module.__file__ = str(path)
+    exec(compile(raw, str(path), "exec"), module.__dict__)
+    return module
+
+
+model = _load_verified_model(HERE / "pb00701_component_prefix_composition.py", MODEL_BLOB)
 
 
 def contract():
@@ -231,6 +253,121 @@ class TestComponentPrefix(unittest.TestCase):
                 patch.object(model, "_module", side_effect=AssertionError("untrusted dependency loaded")) as loader:
             self.reject(model.expected_report)
             loader.assert_not_called()
+
+    def test_cached_bytecode_cannot_replace_the_pinned_module(self):
+        with tempfile.TemporaryDirectory(prefix="radicadsac-prefix-cache-") as directory:
+            here = Path(directory)
+            original, alternate = here / "probe.py", here / "alternate.py"
+            original.write_text("VALUE = 'trusted'\n", encoding="utf-8")
+            alternate.write_text("VALUE = 'altered'\n", encoding="utf-8")
+            for path in (original, alternate):
+                os.utime(path, (1700000000, 1700000000))
+            self.assertEqual(original.stat().st_size, alternate.stat().st_size)
+            cache = Path(importlib.util.cache_from_source(str(original)))
+            cache.parent.mkdir()
+            py_compile.compile(str(alternate), cfile=str(cache), doraise=True)
+            # This is a real accepted timestamp/size cache, not a mocked loader.
+            spec = importlib.util.spec_from_file_location("untrusted_cache_control", original)
+            cached = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(cached)
+            self.assertEqual(cached.VALUE, "altered")
+            expected = model.git_blob(original)
+            with patch.object(model, "HERE", here):
+                checked = model._module("probe.py", expected)
+            self.assertEqual(checked.VALUE, "trusted")
+            self.assertEqual(model.git_blob(original), expected)
+
+    def test_verifier_model_bootstrap_ignores_real_cache_and_preloaded_module(self):
+        with tempfile.TemporaryDirectory(prefix="radicadsac-prefix-bootstrap-") as directory:
+            here = Path(directory)
+            original, alternate = here / "probe.py", here / "alternate.py"
+            original.write_text("VALUE = 'trusted'\n", encoding="utf-8")
+            alternate.write_text("VALUE = 'altered'\n", encoding="utf-8")
+            for path in (original, alternate):
+                os.utime(path, (1700000000, 1700000000))
+            cache = Path(importlib.util.cache_from_source(str(original)))
+            cache.parent.mkdir()
+            py_compile.compile(str(alternate), cfile=str(cache), doraise=True)
+            spec = importlib.util.spec_from_file_location("bootstrap_cache_control", original)
+            cached = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(cached)
+            self.assertEqual(cached.VALUE, "altered")
+            poisoned = ModuleType("component_prefix_verified_model")
+            poisoned.VALUE = "preloaded"
+            with patch.dict(sys.modules, {poisoned.__name__: poisoned}):
+                checked = _load_verified_model(original, model.git_blob(original))
+                self.assertEqual(checked.VALUE, "trusted")
+                self.assertIs(sys.modules[poisoned.__name__], poisoned)
+
+    def test_verifier_model_drift_and_oversize_refuse_before_compilation(self):
+        with tempfile.TemporaryDirectory(prefix="radicadsac-prefix-bootstrap-guard-") as directory:
+            path = Path(directory) / "probe.py"
+            path.write_bytes(b"raise AssertionError('must not execute')\n")
+            expected = model.git_blob(path)
+            with patch("builtins.compile", side_effect=AssertionError("unverified source compiled")) as compiler:
+                with self.assertRaisesRegex(ValueError, "VERIFIER_MODEL_SOURCE_DRIFT"):
+                    _load_verified_model(path, "0" * 40)
+                with patch.dict(globals(), MAX_MODEL_BYTES=2):
+                    with self.assertRaisesRegex(ValueError, "RESOURCE_REFUSAL"):
+                        _load_verified_model(path, expected)
+                compiler.assert_not_called()
+
+    def test_transitive_lowerer_uses_pinned_bytes_without_global_import_changes(self):
+        with tempfile.TemporaryDirectory(prefix="radicadsac-prefix-lowerer-") as directory:
+            here = Path(directory)
+            filename = "verify_pb00701_v43_refusal_cone.py"
+            original, alternate = here / filename, here / "alternate.py"
+            original.write_text("VALUE = 'trusted'\n", encoding="utf-8")
+            alternate.write_text("VALUE = 'altered'\n", encoding="utf-8")
+            for path in (original, alternate):
+                os.utime(path, (1700000000, 1700000000))
+            cache = Path(importlib.util.cache_from_source(str(original)))
+            cache.parent.mkdir()
+            py_compile.compile(str(alternate), cfile=str(cache), doraise=True)
+            producer = here / "producer.py"
+            producer.write_text(
+                "import importlib.util\nfrom pathlib import Path\n"
+                "spec = importlib.util.spec_from_file_location('checked_lowerer', "
+                "Path(__file__).with_name('verify_pb00701_v43_refusal_cone.py'))\n"
+                "LOWERER = importlib.util.module_from_spec(spec)\n"
+                "spec.loader.exec_module(LOWERER)\nVALUE = LOWERER.VALUE\n", encoding="utf-8")
+            importer = builtins.__import__
+            factory = importlib.util.spec_from_file_location
+            with patch.object(model, "HERE", here), patch.dict(model.PINS, {filename: model.git_blob(original)}):
+                checked = model._module("producer.py", model.git_blob(producer))
+                self.assertEqual(checked.VALUE, "trusted")
+                self.reject(model._verified_lowerer_spec, "other", here / "alternate.py")
+            self.assertIs(builtins.__import__, importer)
+            self.assertIs(importlib.util.spec_from_file_location, factory)
+
+    def test_pinned_json_decodes_the_verified_buffer_after_path_replacement(self):
+        with tempfile.TemporaryDirectory(prefix="radicadsac-prefix-json-") as directory:
+            path = Path(directory) / "original.json"
+            path.write_bytes(b'{"value":1}\n')
+            expected = model.git_blob(path)
+            decode = model._decode_json
+
+            def replace_after_hash(raw):
+                path.write_bytes(b'{"value":2}\n')
+                return decode(raw)
+
+            with patch.object(model, "_decode_json", side_effect=replace_after_hash):
+                self.assertEqual(model._pinned_json(path, expected), {"value": 1})
+            self.reject(model._pinned_json, path, expected)
+
+    def test_legacy_json_adapter_requires_an_exact_pinned_path(self):
+        with tempfile.TemporaryDirectory(prefix="radicadsac-prefix-input-") as directory:
+            path = Path(directory) / "unlisted.json"
+            path.write_bytes(b'{}\n')
+            with patch.object(model, "_pinned_json", side_effect=AssertionError("unlisted file parsed")) as parser:
+                self.reject(model._dependency_json, path)
+                parser.assert_not_called()
+        for family, (filename, expected) in model.PRODUCERS.items():
+            producer = model._module(filename, expected)
+            producer.load_json = model._dependency_json
+            producer.blob_sha = model._dependency_blob
+            with patch.object(model, "_pinned_json", side_effect=model.Refusal("controlled read failure")):
+                self.reject(producer.contract)
 
     def test_noncanonical_rationals_never_reach_fraction_constructor(self):
         tokens = ["1e1000000000", "1.0", "+1", "01", "-0", "1/1", "2/2", "0/2", "1/0", "١", "9" * 78, "1/" + "9" * 79]
