@@ -1,0 +1,60 @@
+name: mc1-pb00701-ratio-prefix-composition
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_ratio_prefix_composition.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_ratio_prefix_composition.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-ratio-prefix-composition.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-ratio-prefix-composition-research.md'
+      - '.github/workflows/mc1-pb00701-ratio-prefix-composition.yml'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-inventory-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-coverage-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v43_refusal_cone.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v43_v10_tail0_crossings.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v43_v10_tail_crossing.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v43_v11_tail_contrast.py'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'research/machining-completeness/programme-v1.json'
+      - 'handoffs/current-authority.json'
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_ratio_prefix_composition.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_ratio_prefix_composition.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-ratio-prefix-composition.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-ratio-prefix-composition-research.md'
+      - '.github/workflows/mc1-pb00701-ratio-prefix-composition.yml'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-inventory-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-coverage-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v43_refusal_cone.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v43_v10_tail0_crossings.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v43_v10_tail_crossing.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v43_v11_tail_contrast.py'
+      - 'research/machining-completeness/tasks/MC-002/domain-contract-v1.json'
+      - 'research/machining-completeness/programme-v1.json'
+      - 'handoffs/current-authority.json'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Record literal source head
+        run: git rev-parse HEAD
+      - name: Replay original ratio-chart proofs and adversarial controls
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_ratio_prefix_composition.py --contract --self-test
+      - name: Preserve frozen census and historical negative controls
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py --contract --self-test

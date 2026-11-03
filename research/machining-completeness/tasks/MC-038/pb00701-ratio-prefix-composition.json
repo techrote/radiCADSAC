@@ -1,0 +1,3324 @@
+{
+  "schema": "radicadsac-mc038-ratio-prefix-composition/1.0",
+  "task": "MC-038",
+  "evidence_class": "DETERMINISTIC_EXACT_SOURCE_BOUND_MODEL",
+  "recorded_utc": "2026-11-03T00:15:07Z",
+  "source_baseline_main": "e8108b98af35c4c4fd72a0cbf224a4b1aea0740c",
+  "preregistration_comments": [
+    6591720927,
+    6591724660
+  ],
+  "dependencies": {
+    "local_git_blobs": {
+      "pb00701-finite-owner-corpus-v54.json": "5841c331579489b25caef38cd412bdbf286f9134",
+      "pb00701-finite-owner-inventory-v54.json": "8649c20ab77e199f9c3fa351b8b6742218f27abb",
+      "pb00701-finite-owner-coverage-v54.json": "600ba29786f50397f29fd435fc5e2c57076088f9",
+      "verify_pb00701_post_v54_frontier.py": "12c6efeb667a954ffc5a7e27849ae815d466580a",
+      "verify_pb00701_v43_refusal_cone.py": "2a8079ee2cf012bc2a12794c4c5ff19ebd760007"
+    },
+    "root_git_blobs": {
+      "research/machining-completeness/tasks/MC-002/domain-contract-v1.json": "23de82f5240a72509f7afe4acd5948b65bc4ff13",
+      "research/machining-completeness/programme-v1.json": "dee7045a1790b2870744df8ae7693429bd1d81a6",
+      "handoffs/current-authority.json": "fa0233323a0804d8a5d3eb7cd892a274a6173fab"
+    },
+    "tail_producers": {
+      "V10_ZERO": {
+        "path": "verify_pb00701_v43_v10_tail0_crossings.py",
+        "git_blob": "5bf6f85f1432b513ba89d17f5e4da17d1bce212d"
+      },
+      "V10_RAMP": {
+        "path": "verify_pb00701_v43_v10_tail_crossing.py",
+        "git_blob": "ada50468fe840625bd652c5a0042e0e3d75607d6"
+      },
+      "V11_PAIR": {
+        "path": "verify_pb00701_v43_v11_tail_contrast.py",
+        "git_blob": "a978284ce2672ce05d0ae45a9e2a9043c227a4f2"
+      }
+    }
+  },
+  "analytic_foundation": {
+    "pi_strict_lower_bound": "3",
+    "bernstein_basis_nonnegative_partition_of_unity": true,
+    "derivative_and_point_power_identities_rechecked": true,
+    "ratio_asymptotes_and_nonzero_chart_multipliers": true
+  },
+  "source_cases": [
+    {
+      "source_case_id": "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail0",
+      "original_source_sha256": "57d3c14096ccedfb7faea5023f5a09bada2ca274748f2207c36d77bbc790927c",
+      "original_row_sha256": "c5ba85453dc65e0d18675353986394ae5b34af6219a741ce14af0c332ffc47cd",
+      "original_source": {
+        "grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+        "source_parameter_id": "source-time-t",
+        "parameter_lo": "0",
+        "parameter_hi": "2",
+        "phase_turn_offset": "-1/2",
+        "phase_turn_rate": "2",
+        "cos_splines": {
+          "0": {
+            "degree": 0,
+            "knots": [
+              "0",
+              "1",
+              "2"
+            ],
+            "controls": [
+              "0",
+              "0"
+            ]
+          },
+          "1": {
+            "degree": 0,
+            "knots": [
+              "0",
+              "1",
+              "2"
+            ],
+            "controls": [
+              "1",
+              "1"
+            ]
+          }
+        },
+        "sin_splines": {
+          "1": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "1/2",
+              "-1/2",
+              "-1/2",
+              "-1/2"
+            ]
+          }
+        }
+      },
+      "historical_observation": {
+        "id": "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail0",
+        "observed": {
+          "status": "BLOCKED",
+          "spans": [
+            [
+              "PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO",
+              "CERTIFIED",
+              null
+            ],
+            [
+              "PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF",
+              "BLOCKED",
+              "CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED"
+            ]
+          ]
+        },
+        "v54_disposition": "BLOCKED"
+      },
+      "prefix_proof": {
+        "proof_family": "STRICT_DECREASING_COTANGENT_CHARTS",
+        "source_sha256": "57d3c14096ccedfb7faea5023f5a09bada2ca274748f2207c36d77bbc790927c",
+        "source_parameter_id": "source-time-t",
+        "source_piece_index": 0,
+        "source_interval": [
+          "0",
+          "1"
+        ],
+        "complete_first_closed_span": true,
+        "conditional_lemma_not_frozen_source_acceptance": true,
+        "original_prefix_power_coefficients": {
+          "C0": [
+            "0"
+          ],
+          "C1": [
+            "1"
+          ],
+          "S1": [
+            "1/2",
+            "-1"
+          ]
+        },
+        "original_amplitude_derivative_controls": [
+          "-1"
+        ],
+        "strict_ratio_derivative_bound": {
+          "direction": "UPPER",
+          "value": "-13",
+          "strict": true,
+          "pi_lower_bound": "3"
+        },
+        "charts": [
+          {
+            "interval": [
+              "0",
+              "1/4"
+            ],
+            "open_at_both_poles": true,
+            "ratio_left_limit": "POSITIVE_INFINITY",
+            "ratio_right_limit": "NEGATIVE_INFINITY",
+            "root_count": 1,
+            "nonzero_chart_multiplier": "sin(theta)"
+          },
+          {
+            "interval": [
+              "1/4",
+              "1/2"
+            ],
+            "open_at_both_poles": true,
+            "ratio_left_limit": "POSITIVE_INFINITY",
+            "ratio_right_limit": "NEGATIVE_INFINITY",
+            "root_count": 1,
+            "nonzero_chart_multiplier": "sin(theta)"
+          },
+          {
+            "interval": [
+              "1/2",
+              "3/4"
+            ],
+            "open_at_both_poles": true,
+            "ratio_left_limit": "POSITIVE_INFINITY",
+            "ratio_right_limit": "NEGATIVE_INFINITY",
+            "root_count": 1,
+            "nonzero_chart_multiplier": "sin(theta)"
+          },
+          {
+            "interval": [
+              "3/4",
+              "1"
+            ],
+            "open_at_both_poles": true,
+            "ratio_left_limit": "POSITIVE_INFINITY",
+            "ratio_right_limit": "NEGATIVE_INFINITY",
+            "root_count": 1,
+            "nonzero_chart_multiplier": "sin(theta)"
+          }
+        ],
+        "root_brackets": [
+          [
+            "1/8",
+            "1/4"
+          ],
+          [
+            "3/8",
+            "1/2"
+          ],
+          [
+            "1/2",
+            "5/8"
+          ],
+          [
+            "3/4",
+            "7/8"
+          ]
+        ],
+        "bracket_sign_proofs": [
+          {
+            "strict_open_interval": [
+              "1/8",
+              "1/4"
+            ],
+            "exact_boundary_values": [
+              "-3/8",
+              "1"
+            ]
+          },
+          {
+            "strict_open_interval": [
+              "3/8",
+              "1/2"
+            ],
+            "exact_boundary_values": [
+              "1/8",
+              "-1"
+            ]
+          },
+          {
+            "strict_open_interval": [
+              "1/2",
+              "5/8"
+            ],
+            "exact_boundary_values": [
+              "-1",
+              "1/8"
+            ]
+          },
+          {
+            "strict_open_interval": [
+              "3/4",
+              "7/8"
+            ],
+            "exact_boundary_values": [
+              "1",
+              "-3/8"
+            ]
+          }
+        ],
+        "root_uniqueness_cells": [
+          [
+            "0",
+            "1/4"
+          ],
+          [
+            "1/4",
+            "1/2"
+          ],
+          [
+            "1/2",
+            "3/4"
+          ],
+          [
+            "3/4",
+            "1"
+          ]
+        ],
+        "root_multiplicities": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "root_simplicity_basis": "NONZERO_CHART_MULTIPLIER_TIMES_STRICT_RATIO_DERIVATIVE",
+        "endpoint_values": [
+          "-1",
+          "-1"
+        ],
+        "maximal_sign_cells": [
+          "NEGATIVE",
+          "POSITIVE",
+          "NEGATIVE",
+          "POSITIVE",
+          "NEGATIVE"
+        ],
+        "proof_cuts": [
+          {
+            "parameter": "1/8",
+            "kind": "EXACT_BRACKET_SIGN_WITNESS",
+            "exact_source_value": "-3/8",
+            "value_sign": "NEGATIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "1/4",
+            "kind": "RATIO_CHART_POLE",
+            "exact_source_value": "1",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "3/8",
+            "kind": "EXACT_BRACKET_SIGN_WITNESS",
+            "exact_source_value": "1/8",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "1/2",
+            "kind": "RATIO_CHART_POLE",
+            "exact_source_value": "-1",
+            "value_sign": "NEGATIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "5/8",
+            "kind": "EXACT_BRACKET_SIGN_WITNESS",
+            "exact_source_value": "1/8",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "3/4",
+            "kind": "RATIO_CHART_POLE",
+            "exact_source_value": "1",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "7/8",
+            "kind": "EXACT_BRACKET_SIGN_WITNESS",
+            "exact_source_value": "-3/8",
+            "value_sign": "NEGATIVE",
+            "is_zero_event": false
+          }
+        ],
+        "chart_poles_are_nonzero_original_source_points": true
+      },
+      "tail_proof": {
+        "source_sha256": "57d3c14096ccedfb7faea5023f5a09bada2ca274748f2207c36d77bbc790927c",
+        "source_interval": [
+          "1",
+          "2"
+        ],
+        "endpoint_values": [
+          "-1",
+          "-1"
+        ],
+        "root_brackets": [
+          [
+            "17/16",
+            "9/8"
+          ],
+          [
+            "21/16",
+            "11/8"
+          ],
+          [
+            "25/16",
+            "13/8"
+          ],
+          [
+            "29/16",
+            "15/8"
+          ]
+        ],
+        "root_uniqueness_cells": [
+          [
+            "1",
+            "5/4"
+          ],
+          [
+            "5/4",
+            "3/2"
+          ],
+          [
+            "3/2",
+            "7/4"
+          ],
+          [
+            "7/4",
+            "2"
+          ]
+        ],
+        "root_multiplicities": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "maximal_sign_cells": [
+          "NEGATIVE",
+          "POSITIVE",
+          "NEGATIVE",
+          "POSITIVE",
+          "NEGATIVE"
+        ],
+        "producer": "verify_pb00701_v43_v10_tail0_crossings.py",
+        "producer_git_blob": "5bf6f85f1432b513ba89d17f5e4da17d1bce212d",
+        "fresh_replay_sha256": "5fd2d417ce4f8313bbb6214622b14bd6d81a24f1d2be8f1b1aee167174f9263f",
+        "complete_second_closed_span": true
+      },
+      "fresh_tail_receipt": {
+        "schema": "radicadsac-pb00701-v43-v10-tail0-four-crossings/1.0",
+        "evidence_class": "DETERMINISTIC_EXACT_SOURCE_BOUND_CASE_PROOF_ONLY",
+        "source_case": "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail0",
+        "original_source_parameter_id": "source-time-t",
+        "historical_v43_refusals": 11,
+        "historical_v54_disposition": "BLOCKED",
+        "physical_source_span": [
+          "1",
+          "2"
+        ],
+        "quarter_points": [
+          "1",
+          "5/4",
+          "3/2",
+          "7/4",
+          "2"
+        ],
+        "phase_turns": [
+          "3/2",
+          "2",
+          "5/2",
+          "3",
+          "7/2"
+        ],
+        "exact_endpoint_values": [
+          "-1",
+          "1",
+          "-1",
+          "1",
+          "-1"
+        ],
+        "exact_open_roots": 4,
+        "internal_tan_half_numerator": [
+          "1",
+          "-1",
+          "-1"
+        ],
+        "internal_tan_half_discriminant": "5",
+        "cross_pole_v6_certificate_claimed": false,
+        "ordered_open_roots": [
+          {
+            "source_order_index": 0,
+            "source_identity": "1+k/4+atan(2)/(4*pi), k=source_order_index",
+            "phase_angle_identity": "theta=3*pi+atan(2)+k*pi",
+            "strict_source_bracket": [
+              "17/16",
+              "9/8"
+            ],
+            "half_cycle_open_source_interval": [
+              "1",
+              "5/4"
+            ],
+            "multiplicity": 1,
+            "event_kind": "SIMPLE_CROSSING",
+            "physical_sign_before": "NEGATIVE",
+            "physical_sign_after": "POSITIVE",
+            "derivative_at_root_nonzero": true,
+            "algebraic_or_rational_source_coordinate_claimed": false
+          },
+          {
+            "source_order_index": 1,
+            "source_identity": "1+k/4+atan(2)/(4*pi), k=source_order_index",
+            "phase_angle_identity": "theta=3*pi+atan(2)+k*pi",
+            "strict_source_bracket": [
+              "21/16",
+              "11/8"
+            ],
+            "half_cycle_open_source_interval": [
+              "5/4",
+              "3/2"
+            ],
+            "multiplicity": 1,
+            "event_kind": "SIMPLE_CROSSING",
+            "physical_sign_before": "POSITIVE",
+            "physical_sign_after": "NEGATIVE",
+            "derivative_at_root_nonzero": true,
+            "algebraic_or_rational_source_coordinate_claimed": false
+          },
+          {
+            "source_order_index": 2,
+            "source_identity": "1+k/4+atan(2)/(4*pi), k=source_order_index",
+            "phase_angle_identity": "theta=3*pi+atan(2)+k*pi",
+            "strict_source_bracket": [
+              "25/16",
+              "13/8"
+            ],
+            "half_cycle_open_source_interval": [
+              "3/2",
+              "7/4"
+            ],
+            "multiplicity": 1,
+            "event_kind": "SIMPLE_CROSSING",
+            "physical_sign_before": "NEGATIVE",
+            "physical_sign_after": "POSITIVE",
+            "derivative_at_root_nonzero": true,
+            "algebraic_or_rational_source_coordinate_claimed": false
+          },
+          {
+            "source_order_index": 3,
+            "source_identity": "1+k/4+atan(2)/(4*pi), k=source_order_index",
+            "phase_angle_identity": "theta=3*pi+atan(2)+k*pi",
+            "strict_source_bracket": [
+              "29/16",
+              "15/8"
+            ],
+            "half_cycle_open_source_interval": [
+              "7/4",
+              "2"
+            ],
+            "multiplicity": 1,
+            "event_kind": "SIMPLE_CROSSING",
+            "physical_sign_before": "POSITIVE",
+            "physical_sign_after": "NEGATIVE",
+            "derivative_at_root_nonzero": true,
+            "algebraic_or_rational_source_coordinate_claimed": false
+          }
+        ],
+        "all_roots_simple_crossings": true,
+        "complete_sign_cells": [
+          "NEGATIVE",
+          "POSITIVE",
+          "NEGATIVE",
+          "POSITIVE",
+          "NEGATIVE"
+        ],
+        "first_span_historical_certification_unchanged": true,
+        "whole_source_composition_claimed": false,
+        "general_v43_route_or_ordered_event_theorem_claimed": false,
+        "v54_dispositions_changed": false,
+        "mc_b_or_mc1_or_native_claimed": false
+      },
+      "physical_event_proof": {
+        "source_interval": [
+          "0",
+          "2"
+        ],
+        "original_piece_edges": [
+          "0",
+          "1",
+          "2"
+        ],
+        "closed_distinct_root_count": 8,
+        "open_distinct_root_count": 8,
+        "events": [
+          {
+            "event_id": "root-0",
+            "source_piece_index": 0,
+            "coordinate": {
+              "kind": "IMPLICIT_ORIGINAL_SOURCE_ROOT",
+              "source_case_id": "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail0",
+              "original_source_sha256": "57d3c14096ccedfb7faea5023f5a09bada2ca274748f2207c36d77bbc790927c",
+              "source_parameter_id": "source-time-t",
+              "defining_predicate": "ORIGINAL_SOURCE_F_EQUALS_ZERO",
+              "strict_open_isolating_interval": [
+                "1/8",
+                "1/4"
+              ],
+              "uniqueness_cell": [
+                "0",
+                "1/4"
+              ]
+            },
+            "analytic_order": 1,
+            "left_sign": "NEGATIVE",
+            "right_sign": "POSITIVE"
+          },
+          {
+            "event_id": "root-1",
+            "source_piece_index": 0,
+            "coordinate": {
+              "kind": "IMPLICIT_ORIGINAL_SOURCE_ROOT",
+              "source_case_id": "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail0",
+              "original_source_sha256": "57d3c14096ccedfb7faea5023f5a09bada2ca274748f2207c36d77bbc790927c",
+              "source_parameter_id": "source-time-t",
+              "defining_predicate": "ORIGINAL_SOURCE_F_EQUALS_ZERO",
+              "strict_open_isolating_interval": [
+                "3/8",
+                "1/2"
+              ],
+              "uniqueness_cell": [
+                "1/4",
+                "1/2"
+              ]
+            },
+            "analytic_order": 1,
+            "left_sign": "POSITIVE",
+            "right_sign": "NEGATIVE"
+          },
+          {
+            "event_id": "root-2",
+            "source_piece_index": 0,
+            "coordinate": {
+              "kind": "IMPLICIT_ORIGINAL_SOURCE_ROOT",
+              "source_case_id": "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail0",
+              "original_source_sha256": "57d3c14096ccedfb7faea5023f5a09bada2ca274748f2207c36d77bbc790927c",
+              "source_parameter_id": "source-time-t",
+              "defining_predicate": "ORIGINAL_SOURCE_F_EQUALS_ZERO",
+              "strict_open_isolating_interval": [
+                "1/2",
+                "5/8"
+              ],
+              "uniqueness_cell": [
+                "1/2",
+                "3/4"
+              ]
+            },
+            "analytic_order": 1,
+            "left_sign": "NEGATIVE",
+            "right_sign": "POSITIVE"
+          },
+          {
+            "event_id": "root-3",
+            "source_piece_index": 0,
+            "coordinate": {
+              "kind": "IMPLICIT_ORIGINAL_SOURCE_ROOT",
+              "source_case_id": "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail0",
+              "original_source_sha256": "57d3c14096ccedfb7faea5023f5a09bada2ca274748f2207c36d77bbc790927c",
+              "source_parameter_id": "source-time-t",
+              "defining_predicate": "ORIGINAL_SOURCE_F_EQUALS_ZERO",
+              "strict_open_isolating_interval": [
+                "3/4",
+                "7/8"
+              ],
+              "uniqueness_cell": [
+                "3/4",
+                "1"
+              ]
+            },
+            "analytic_order": 1,
+            "left_sign": "POSITIVE",
+            "right_sign": "NEGATIVE"
+          },
+          {
+            "event_id": "root-4",
+            "source_piece_index": 1,
+            "coordinate": {
+              "kind": "IMPLICIT_ORIGINAL_SOURCE_ROOT",
+              "source_case_id": "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail0",
+              "original_source_sha256": "57d3c14096ccedfb7faea5023f5a09bada2ca274748f2207c36d77bbc790927c",
+              "source_parameter_id": "source-time-t",
+              "defining_predicate": "ORIGINAL_SOURCE_F_EQUALS_ZERO",
+              "strict_open_isolating_interval": [
+                "17/16",
+                "9/8"
+              ],
+              "uniqueness_cell": [
+                "1",
+                "5/4"
+              ]
+            },
+            "analytic_order": 1,
+            "left_sign": "NEGATIVE",
+            "right_sign": "POSITIVE"
+          },
+          {
+            "event_id": "root-5",
+            "source_piece_index": 1,
+            "coordinate": {
+              "kind": "IMPLICIT_ORIGINAL_SOURCE_ROOT",
+              "source_case_id": "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail0",
+              "original_source_sha256": "57d3c14096ccedfb7faea5023f5a09bada2ca274748f2207c36d77bbc790927c",
+              "source_parameter_id": "source-time-t",
+              "defining_predicate": "ORIGINAL_SOURCE_F_EQUALS_ZERO",
+              "strict_open_isolating_interval": [
+                "21/16",
+                "11/8"
+              ],
+              "uniqueness_cell": [
+                "5/4",
+                "3/2"
+              ]
+            },
+            "analytic_order": 1,
+            "left_sign": "POSITIVE",
+            "right_sign": "NEGATIVE"
+          },
+          {
+            "event_id": "root-6",
+            "source_piece_index": 1,
+            "coordinate": {
+              "kind": "IMPLICIT_ORIGINAL_SOURCE_ROOT",
+              "source_case_id": "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail0",
+              "original_source_sha256": "57d3c14096ccedfb7faea5023f5a09bada2ca274748f2207c36d77bbc790927c",
+              "source_parameter_id": "source-time-t",
+              "defining_predicate": "ORIGINAL_SOURCE_F_EQUALS_ZERO",
+              "strict_open_isolating_interval": [
+                "25/16",
+                "13/8"
+              ],
+              "uniqueness_cell": [
+                "3/2",
+                "7/4"
+              ]
+            },
+            "analytic_order": 1,
+            "left_sign": "NEGATIVE",
+            "right_sign": "POSITIVE"
+          },
+          {
+            "event_id": "root-7",
+            "source_piece_index": 1,
+            "coordinate": {
+              "kind": "IMPLICIT_ORIGINAL_SOURCE_ROOT",
+              "source_case_id": "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail0",
+              "original_source_sha256": "57d3c14096ccedfb7faea5023f5a09bada2ca274748f2207c36d77bbc790927c",
+              "source_parameter_id": "source-time-t",
+              "defining_predicate": "ORIGINAL_SOURCE_F_EQUALS_ZERO",
+              "strict_open_isolating_interval": [
+                "29/16",
+                "15/8"
+              ],
+              "uniqueness_cell": [
+                "7/4",
+                "2"
+              ]
+            },
+            "analytic_order": 1,
+            "left_sign": "POSITIVE",
+            "right_sign": "NEGATIVE"
+          }
+        ],
+        "strict_ordered_root_brackets": [
+          [
+            "1/8",
+            "1/4"
+          ],
+          [
+            "3/8",
+            "1/2"
+          ],
+          [
+            "1/2",
+            "5/8"
+          ],
+          [
+            "3/4",
+            "7/8"
+          ],
+          [
+            "17/16",
+            "9/8"
+          ],
+          [
+            "21/16",
+            "11/8"
+          ],
+          [
+            "25/16",
+            "13/8"
+          ],
+          [
+            "29/16",
+            "15/8"
+          ]
+        ],
+        "maximal_sign_cells": [
+          {
+            "left": {
+              "kind": "RATIONAL",
+              "value": "0"
+            },
+            "right": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-0"
+            },
+            "sign": "NEGATIVE",
+            "left_closed": true,
+            "right_closed": false
+          },
+          {
+            "left": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-0"
+            },
+            "right": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-1"
+            },
+            "sign": "POSITIVE",
+            "left_closed": false,
+            "right_closed": false
+          },
+          {
+            "left": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-1"
+            },
+            "right": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-2"
+            },
+            "sign": "NEGATIVE",
+            "left_closed": false,
+            "right_closed": false
+          },
+          {
+            "left": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-2"
+            },
+            "right": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-3"
+            },
+            "sign": "POSITIVE",
+            "left_closed": false,
+            "right_closed": false
+          },
+          {
+            "left": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-3"
+            },
+            "right": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-4"
+            },
+            "sign": "NEGATIVE",
+            "left_closed": false,
+            "right_closed": false
+          },
+          {
+            "left": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-4"
+            },
+            "right": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-5"
+            },
+            "sign": "POSITIVE",
+            "left_closed": false,
+            "right_closed": false
+          },
+          {
+            "left": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-5"
+            },
+            "right": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-6"
+            },
+            "sign": "NEGATIVE",
+            "left_closed": false,
+            "right_closed": false
+          },
+          {
+            "left": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-6"
+            },
+            "right": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-7"
+            },
+            "sign": "POSITIVE",
+            "left_closed": false,
+            "right_closed": false
+          },
+          {
+            "left": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-7"
+            },
+            "right": {
+              "kind": "RATIONAL",
+              "value": "2"
+            },
+            "sign": "NEGATIVE",
+            "left_closed": false,
+            "right_closed": true
+          }
+        ],
+        "exterior_endpoints": [
+          {
+            "parameter": "0",
+            "exact_value": "-1",
+            "value_sign": "NEGATIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "2",
+            "exact_value": "-1",
+            "value_sign": "NEGATIVE",
+            "is_zero_event": false
+          }
+        ],
+        "original_source_knot": {
+          "parameter": "1",
+          "source_continuous": true,
+          "exact_left_value": "-1",
+          "exact_right_value": "-1",
+          "value_sign": "NEGATIVE",
+          "is_zero_event": false
+        },
+        "proof_cuts": [
+          {
+            "parameter": "1/8",
+            "kind": "EXACT_BRACKET_SIGN_WITNESS",
+            "exact_source_value": "-3/8",
+            "value_sign": "NEGATIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "1/4",
+            "kind": "RATIO_CHART_POLE",
+            "exact_source_value": "1",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "3/8",
+            "kind": "EXACT_BRACKET_SIGN_WITNESS",
+            "exact_source_value": "1/8",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "1/2",
+            "kind": "RATIO_CHART_POLE",
+            "exact_source_value": "-1",
+            "value_sign": "NEGATIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "5/8",
+            "kind": "EXACT_BRACKET_SIGN_WITNESS",
+            "exact_source_value": "1/8",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "3/4",
+            "kind": "RATIO_CHART_POLE",
+            "exact_source_value": "1",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "7/8",
+            "kind": "EXACT_BRACKET_SIGN_WITNESS",
+            "exact_source_value": "-3/8",
+            "value_sign": "NEGATIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "5/4",
+            "kind": "TAIL_HALF_CYCLE_BOUNDARY",
+            "exact_source_value": "1",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "3/2",
+            "kind": "TAIL_HALF_CYCLE_BOUNDARY",
+            "exact_source_value": "-1",
+            "value_sign": "NEGATIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "7/4",
+            "kind": "TAIL_HALF_CYCLE_BOUNDARY",
+            "exact_source_value": "1",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          }
+        ],
+        "continuum_zero_component": false,
+        "complete_for_original_closed_source": true
+      }
+    },
+    {
+      "source_case_id": "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail100",
+      "original_source_sha256": "21a0dde2ee6783f4465ab0c23dbef08fc400a4c8f2169cc5b851a3b0c3f5e23b",
+      "original_row_sha256": "cdd45c443caa2e240e4b87736b227070371f7d4a94ac69c98987a3bc9d293632",
+      "original_source": {
+        "grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+        "source_parameter_id": "source-time-t",
+        "parameter_lo": "0",
+        "parameter_hi": "2",
+        "phase_turn_offset": "-1/2",
+        "phase_turn_rate": "2",
+        "cos_splines": {
+          "0": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "0",
+              "0",
+              "0",
+              "100"
+            ]
+          },
+          "1": {
+            "degree": 0,
+            "knots": [
+              "0",
+              "1",
+              "2"
+            ],
+            "controls": [
+              "1",
+              "1"
+            ]
+          }
+        },
+        "sin_splines": {
+          "1": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "1/2",
+              "-1/2",
+              "-1/2",
+              "-1/2"
+            ]
+          }
+        }
+      },
+      "historical_observation": {
+        "id": "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail100",
+        "observed": {
+          "status": "BLOCKED",
+          "spans": [
+            [
+              "PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO",
+              "CERTIFIED",
+              null
+            ],
+            [
+              "PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF",
+              "BLOCKED",
+              "CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED"
+            ]
+          ]
+        },
+        "v54_disposition": "BLOCKED"
+      },
+      "prefix_proof": {
+        "proof_family": "STRICT_DECREASING_COTANGENT_CHARTS",
+        "source_sha256": "21a0dde2ee6783f4465ab0c23dbef08fc400a4c8f2169cc5b851a3b0c3f5e23b",
+        "source_parameter_id": "source-time-t",
+        "source_piece_index": 0,
+        "source_interval": [
+          "0",
+          "1"
+        ],
+        "complete_first_closed_span": true,
+        "conditional_lemma_not_frozen_source_acceptance": true,
+        "original_prefix_power_coefficients": {
+          "C0": [
+            "0",
+            "0"
+          ],
+          "C1": [
+            "1"
+          ],
+          "S1": [
+            "1/2",
+            "-1"
+          ]
+        },
+        "original_amplitude_derivative_controls": [
+          "-1"
+        ],
+        "strict_ratio_derivative_bound": {
+          "direction": "UPPER",
+          "value": "-13",
+          "strict": true,
+          "pi_lower_bound": "3"
+        },
+        "charts": [
+          {
+            "interval": [
+              "0",
+              "1/4"
+            ],
+            "open_at_both_poles": true,
+            "ratio_left_limit": "POSITIVE_INFINITY",
+            "ratio_right_limit": "NEGATIVE_INFINITY",
+            "root_count": 1,
+            "nonzero_chart_multiplier": "sin(theta)"
+          },
+          {
+            "interval": [
+              "1/4",
+              "1/2"
+            ],
+            "open_at_both_poles": true,
+            "ratio_left_limit": "POSITIVE_INFINITY",
+            "ratio_right_limit": "NEGATIVE_INFINITY",
+            "root_count": 1,
+            "nonzero_chart_multiplier": "sin(theta)"
+          },
+          {
+            "interval": [
+              "1/2",
+              "3/4"
+            ],
+            "open_at_both_poles": true,
+            "ratio_left_limit": "POSITIVE_INFINITY",
+            "ratio_right_limit": "NEGATIVE_INFINITY",
+            "root_count": 1,
+            "nonzero_chart_multiplier": "sin(theta)"
+          },
+          {
+            "interval": [
+              "3/4",
+              "1"
+            ],
+            "open_at_both_poles": true,
+            "ratio_left_limit": "POSITIVE_INFINITY",
+            "ratio_right_limit": "NEGATIVE_INFINITY",
+            "root_count": 1,
+            "nonzero_chart_multiplier": "sin(theta)"
+          }
+        ],
+        "root_brackets": [
+          [
+            "1/8",
+            "1/4"
+          ],
+          [
+            "3/8",
+            "1/2"
+          ],
+          [
+            "1/2",
+            "5/8"
+          ],
+          [
+            "3/4",
+            "7/8"
+          ]
+        ],
+        "bracket_sign_proofs": [
+          {
+            "strict_open_interval": [
+              "1/8",
+              "1/4"
+            ],
+            "exact_boundary_values": [
+              "-3/8",
+              "1"
+            ]
+          },
+          {
+            "strict_open_interval": [
+              "3/8",
+              "1/2"
+            ],
+            "exact_boundary_values": [
+              "1/8",
+              "-1"
+            ]
+          },
+          {
+            "strict_open_interval": [
+              "1/2",
+              "5/8"
+            ],
+            "exact_boundary_values": [
+              "-1",
+              "1/8"
+            ]
+          },
+          {
+            "strict_open_interval": [
+              "3/4",
+              "7/8"
+            ],
+            "exact_boundary_values": [
+              "1",
+              "-3/8"
+            ]
+          }
+        ],
+        "root_uniqueness_cells": [
+          [
+            "0",
+            "1/4"
+          ],
+          [
+            "1/4",
+            "1/2"
+          ],
+          [
+            "1/2",
+            "3/4"
+          ],
+          [
+            "3/4",
+            "1"
+          ]
+        ],
+        "root_multiplicities": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "root_simplicity_basis": "NONZERO_CHART_MULTIPLIER_TIMES_STRICT_RATIO_DERIVATIVE",
+        "endpoint_values": [
+          "-1",
+          "-1"
+        ],
+        "maximal_sign_cells": [
+          "NEGATIVE",
+          "POSITIVE",
+          "NEGATIVE",
+          "POSITIVE",
+          "NEGATIVE"
+        ],
+        "proof_cuts": [
+          {
+            "parameter": "1/8",
+            "kind": "EXACT_BRACKET_SIGN_WITNESS",
+            "exact_source_value": "-3/8",
+            "value_sign": "NEGATIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "1/4",
+            "kind": "RATIO_CHART_POLE",
+            "exact_source_value": "1",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "3/8",
+            "kind": "EXACT_BRACKET_SIGN_WITNESS",
+            "exact_source_value": "1/8",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "1/2",
+            "kind": "RATIO_CHART_POLE",
+            "exact_source_value": "-1",
+            "value_sign": "NEGATIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "5/8",
+            "kind": "EXACT_BRACKET_SIGN_WITNESS",
+            "exact_source_value": "1/8",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "3/4",
+            "kind": "RATIO_CHART_POLE",
+            "exact_source_value": "1",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "7/8",
+            "kind": "EXACT_BRACKET_SIGN_WITNESS",
+            "exact_source_value": "-3/8",
+            "value_sign": "NEGATIVE",
+            "is_zero_event": false
+          }
+        ],
+        "chart_poles_are_nonzero_original_source_points": true
+      },
+      "tail_proof": {
+        "source_sha256": "21a0dde2ee6783f4465ab0c23dbef08fc400a4c8f2169cc5b851a3b0c3f5e23b",
+        "source_interval": [
+          "1",
+          "2"
+        ],
+        "endpoint_values": [
+          "-1",
+          "99"
+        ],
+        "root_brackets": [
+          [
+            "1",
+            "101/100"
+          ]
+        ],
+        "root_uniqueness_cells": [
+          [
+            "1",
+            "2"
+          ]
+        ],
+        "root_multiplicities": [
+          1
+        ],
+        "maximal_sign_cells": [
+          "NEGATIVE",
+          "POSITIVE"
+        ],
+        "producer": "verify_pb00701_v43_v10_tail_crossing.py",
+        "producer_git_blob": "ada50468fe840625bd652c5a0042e0e3d75607d6",
+        "fresh_replay_sha256": "d7fe2699b430979f84c3f0c9f7b85b1d77087759b5cd5e1e7b3f0b00ae7ff752",
+        "complete_second_closed_span": true
+      },
+      "fresh_tail_receipt": {
+        "schema": "radicadsac-pb00701-v43-v10-tail-crossing/1.0",
+        "evidence_class": "DETERMINISTIC_EXACT_SOURCE_BOUND_CASE_PROOF_ONLY",
+        "source_case": "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail100",
+        "original_source_parameter_id": "source-time-t",
+        "historical_v43_refusals": 11,
+        "historical_v54_disposition": "BLOCKED",
+        "source_span": [
+          "1",
+          "2"
+        ],
+        "phase_turns_at_bracket_and_right": [
+          "3/2",
+          "38/25",
+          "7/2"
+        ],
+        "left_exact_value": "-1",
+        "right_exact_value": "99",
+        "strict_positive_witness": "101/100",
+        "strict_open_root_bracket": [
+          "1",
+          "101/100"
+        ],
+        "derivative_strict_lower_bound": "568/7",
+        "strictly_increasing_on_closed_span": true,
+        "exact_open_roots": 1,
+        "root_event": "SIMPLE_NEGATIVE_TO_POSITIVE_CROSSING",
+        "physical_sign_before_root": "NEGATIVE",
+        "physical_sign_after_root": "POSITIVE",
+        "first_span_historical_certification_unchanged": true,
+        "whole_source_composition_claimed": false,
+        "general_v43_route_or_ordered_event_theorem_claimed": false,
+        "v54_dispositions_changed": false,
+        "mc_b_or_mc1_or_native_claimed": false
+      },
+      "physical_event_proof": {
+        "source_interval": [
+          "0",
+          "2"
+        ],
+        "original_piece_edges": [
+          "0",
+          "1",
+          "2"
+        ],
+        "closed_distinct_root_count": 5,
+        "open_distinct_root_count": 5,
+        "events": [
+          {
+            "event_id": "root-0",
+            "source_piece_index": 0,
+            "coordinate": {
+              "kind": "IMPLICIT_ORIGINAL_SOURCE_ROOT",
+              "source_case_id": "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail100",
+              "original_source_sha256": "21a0dde2ee6783f4465ab0c23dbef08fc400a4c8f2169cc5b851a3b0c3f5e23b",
+              "source_parameter_id": "source-time-t",
+              "defining_predicate": "ORIGINAL_SOURCE_F_EQUALS_ZERO",
+              "strict_open_isolating_interval": [
+                "1/8",
+                "1/4"
+              ],
+              "uniqueness_cell": [
+                "0",
+                "1/4"
+              ]
+            },
+            "analytic_order": 1,
+            "left_sign": "NEGATIVE",
+            "right_sign": "POSITIVE"
+          },
+          {
+            "event_id": "root-1",
+            "source_piece_index": 0,
+            "coordinate": {
+              "kind": "IMPLICIT_ORIGINAL_SOURCE_ROOT",
+              "source_case_id": "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail100",
+              "original_source_sha256": "21a0dde2ee6783f4465ab0c23dbef08fc400a4c8f2169cc5b851a3b0c3f5e23b",
+              "source_parameter_id": "source-time-t",
+              "defining_predicate": "ORIGINAL_SOURCE_F_EQUALS_ZERO",
+              "strict_open_isolating_interval": [
+                "3/8",
+                "1/2"
+              ],
+              "uniqueness_cell": [
+                "1/4",
+                "1/2"
+              ]
+            },
+            "analytic_order": 1,
+            "left_sign": "POSITIVE",
+            "right_sign": "NEGATIVE"
+          },
+          {
+            "event_id": "root-2",
+            "source_piece_index": 0,
+            "coordinate": {
+              "kind": "IMPLICIT_ORIGINAL_SOURCE_ROOT",
+              "source_case_id": "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail100",
+              "original_source_sha256": "21a0dde2ee6783f4465ab0c23dbef08fc400a4c8f2169cc5b851a3b0c3f5e23b",
+              "source_parameter_id": "source-time-t",
+              "defining_predicate": "ORIGINAL_SOURCE_F_EQUALS_ZERO",
+              "strict_open_isolating_interval": [
+                "1/2",
+                "5/8"
+              ],
+              "uniqueness_cell": [
+                "1/2",
+                "3/4"
+              ]
+            },
+            "analytic_order": 1,
+            "left_sign": "NEGATIVE",
+            "right_sign": "POSITIVE"
+          },
+          {
+            "event_id": "root-3",
+            "source_piece_index": 0,
+            "coordinate": {
+              "kind": "IMPLICIT_ORIGINAL_SOURCE_ROOT",
+              "source_case_id": "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail100",
+              "original_source_sha256": "21a0dde2ee6783f4465ab0c23dbef08fc400a4c8f2169cc5b851a3b0c3f5e23b",
+              "source_parameter_id": "source-time-t",
+              "defining_predicate": "ORIGINAL_SOURCE_F_EQUALS_ZERO",
+              "strict_open_isolating_interval": [
+                "3/4",
+                "7/8"
+              ],
+              "uniqueness_cell": [
+                "3/4",
+                "1"
+              ]
+            },
+            "analytic_order": 1,
+            "left_sign": "POSITIVE",
+            "right_sign": "NEGATIVE"
+          },
+          {
+            "event_id": "root-4",
+            "source_piece_index": 1,
+            "coordinate": {
+              "kind": "IMPLICIT_ORIGINAL_SOURCE_ROOT",
+              "source_case_id": "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail100",
+              "original_source_sha256": "21a0dde2ee6783f4465ab0c23dbef08fc400a4c8f2169cc5b851a3b0c3f5e23b",
+              "source_parameter_id": "source-time-t",
+              "defining_predicate": "ORIGINAL_SOURCE_F_EQUALS_ZERO",
+              "strict_open_isolating_interval": [
+                "1",
+                "101/100"
+              ],
+              "uniqueness_cell": [
+                "1",
+                "2"
+              ]
+            },
+            "analytic_order": 1,
+            "left_sign": "NEGATIVE",
+            "right_sign": "POSITIVE"
+          }
+        ],
+        "strict_ordered_root_brackets": [
+          [
+            "1/8",
+            "1/4"
+          ],
+          [
+            "3/8",
+            "1/2"
+          ],
+          [
+            "1/2",
+            "5/8"
+          ],
+          [
+            "3/4",
+            "7/8"
+          ],
+          [
+            "1",
+            "101/100"
+          ]
+        ],
+        "maximal_sign_cells": [
+          {
+            "left": {
+              "kind": "RATIONAL",
+              "value": "0"
+            },
+            "right": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-0"
+            },
+            "sign": "NEGATIVE",
+            "left_closed": true,
+            "right_closed": false
+          },
+          {
+            "left": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-0"
+            },
+            "right": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-1"
+            },
+            "sign": "POSITIVE",
+            "left_closed": false,
+            "right_closed": false
+          },
+          {
+            "left": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-1"
+            },
+            "right": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-2"
+            },
+            "sign": "NEGATIVE",
+            "left_closed": false,
+            "right_closed": false
+          },
+          {
+            "left": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-2"
+            },
+            "right": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-3"
+            },
+            "sign": "POSITIVE",
+            "left_closed": false,
+            "right_closed": false
+          },
+          {
+            "left": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-3"
+            },
+            "right": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-4"
+            },
+            "sign": "NEGATIVE",
+            "left_closed": false,
+            "right_closed": false
+          },
+          {
+            "left": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-4"
+            },
+            "right": {
+              "kind": "RATIONAL",
+              "value": "2"
+            },
+            "sign": "POSITIVE",
+            "left_closed": false,
+            "right_closed": true
+          }
+        ],
+        "exterior_endpoints": [
+          {
+            "parameter": "0",
+            "exact_value": "-1",
+            "value_sign": "NEGATIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "2",
+            "exact_value": "99",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          }
+        ],
+        "original_source_knot": {
+          "parameter": "1",
+          "source_continuous": true,
+          "exact_left_value": "-1",
+          "exact_right_value": "-1",
+          "value_sign": "NEGATIVE",
+          "is_zero_event": false
+        },
+        "proof_cuts": [
+          {
+            "parameter": "1/8",
+            "kind": "EXACT_BRACKET_SIGN_WITNESS",
+            "exact_source_value": "-3/8",
+            "value_sign": "NEGATIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "1/4",
+            "kind": "RATIO_CHART_POLE",
+            "exact_source_value": "1",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "3/8",
+            "kind": "EXACT_BRACKET_SIGN_WITNESS",
+            "exact_source_value": "1/8",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "1/2",
+            "kind": "RATIO_CHART_POLE",
+            "exact_source_value": "-1",
+            "value_sign": "NEGATIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "5/8",
+            "kind": "EXACT_BRACKET_SIGN_WITNESS",
+            "exact_source_value": "1/8",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "3/4",
+            "kind": "RATIO_CHART_POLE",
+            "exact_source_value": "1",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "7/8",
+            "kind": "EXACT_BRACKET_SIGN_WITNESS",
+            "exact_source_value": "-3/8",
+            "value_sign": "NEGATIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "5/4",
+            "kind": "TAIL_HALF_CYCLE_BOUNDARY",
+            "exact_source_value": "26",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "3/2",
+            "kind": "TAIL_HALF_CYCLE_BOUNDARY",
+            "exact_source_value": "49",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "7/4",
+            "kind": "TAIL_HALF_CYCLE_BOUNDARY",
+            "exact_source_value": "76",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          }
+        ],
+        "continuum_zero_component": false,
+        "complete_for_original_closed_source": true
+      }
+    },
+    {
+      "source_case_id": "composite:PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO:tail0",
+      "original_source_sha256": "1535f364cd4d3c1a3bf34f57f394ad70a17ad1327880a0a47f25f3ecff5c7560",
+      "original_row_sha256": "cf16b962fba955f1bf66b2412beb9c15e10aa263f3197172cc2961737bd6b804",
+      "original_source": {
+        "grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+        "source_parameter_id": "source-time-t",
+        "parameter_lo": "0",
+        "parameter_hi": "2",
+        "phase_turn_offset": "0",
+        "phase_turn_rate": "2",
+        "cos_splines": {
+          "0": {
+            "degree": 0,
+            "knots": [
+              "0",
+              "1",
+              "2"
+            ],
+            "controls": [
+              "0",
+              "0"
+            ]
+          },
+          "1": {
+            "degree": 2,
+            "knots": [
+              "0",
+              "0",
+              "0",
+              "1",
+              "1",
+              "1",
+              "2",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "1/8",
+              "-3/8",
+              "1/8",
+              "1/8",
+              "1/8",
+              "1/8"
+            ]
+          }
+        },
+        "sin_splines": {
+          "1": {
+            "degree": 0,
+            "knots": [
+              "0",
+              "1",
+              "2"
+            ],
+            "controls": [
+              "1",
+              "1"
+            ]
+          }
+        }
+      },
+      "historical_observation": {
+        "id": "composite:PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO:tail0",
+        "observed": {
+          "status": "BLOCKED",
+          "spans": [
+            [
+              "PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO",
+              "CERTIFIED",
+              null
+            ],
+            [
+              "PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF",
+              "BLOCKED",
+              "CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED"
+            ]
+          ]
+        },
+        "v54_disposition": "BLOCKED"
+      },
+      "prefix_proof": {
+        "proof_family": "STRICT_INCREASING_TANGENT_CHARTS",
+        "source_sha256": "1535f364cd4d3c1a3bf34f57f394ad70a17ad1327880a0a47f25f3ecff5c7560",
+        "source_parameter_id": "source-time-t",
+        "source_piece_index": 0,
+        "source_interval": [
+          "0",
+          "1"
+        ],
+        "complete_first_closed_span": true,
+        "conditional_lemma_not_frozen_source_acceptance": true,
+        "original_prefix_power_coefficients": {
+          "C0": [
+            "0"
+          ],
+          "C1": [
+            "1/8",
+            "-1",
+            "1"
+          ],
+          "S1": [
+            "1"
+          ]
+        },
+        "original_amplitude_derivative_controls": [
+          "-1",
+          "1"
+        ],
+        "strict_ratio_derivative_bound": {
+          "direction": "LOWER",
+          "value": "11",
+          "strict": true,
+          "pi_lower_bound": "3"
+        },
+        "charts": [
+          {
+            "interval": [
+              "0",
+              "1/8"
+            ],
+            "left_closed": true,
+            "right_closed": false,
+            "ratio_left_value": "1/8",
+            "ratio_right_limit": "POSITIVE_INFINITY",
+            "root_count": 0,
+            "nonzero_chart_multiplier": "cos(theta)"
+          },
+          {
+            "interval": [
+              "1/8",
+              "3/8"
+            ],
+            "open_at_both_poles": true,
+            "ratio_left_limit": "NEGATIVE_INFINITY",
+            "ratio_right_limit": "POSITIVE_INFINITY",
+            "root_count": 1,
+            "nonzero_chart_multiplier": "cos(theta)"
+          },
+          {
+            "interval": [
+              "3/8",
+              "5/8"
+            ],
+            "open_at_both_poles": true,
+            "ratio_left_limit": "NEGATIVE_INFINITY",
+            "ratio_right_limit": "POSITIVE_INFINITY",
+            "root_count": 1,
+            "nonzero_chart_multiplier": "cos(theta)"
+          },
+          {
+            "interval": [
+              "5/8",
+              "7/8"
+            ],
+            "open_at_both_poles": true,
+            "ratio_left_limit": "NEGATIVE_INFINITY",
+            "ratio_right_limit": "POSITIVE_INFINITY",
+            "root_count": 1,
+            "nonzero_chart_multiplier": "cos(theta)"
+          },
+          {
+            "interval": [
+              "7/8",
+              "1"
+            ],
+            "left_closed": false,
+            "right_closed": true,
+            "ratio_left_limit": "NEGATIVE_INFINITY",
+            "ratio_right_value": "1/8",
+            "root_count": 1,
+            "nonzero_chart_multiplier": "cos(theta)"
+          }
+        ],
+        "root_brackets": [
+          [
+            "1/4",
+            "3/8"
+          ],
+          [
+            "1/2",
+            "5/8"
+          ],
+          [
+            "3/4",
+            "7/8"
+          ],
+          [
+            "7/8",
+            "1"
+          ]
+        ],
+        "bracket_sign_proofs": [
+          {
+            "strict_open_interval": [
+              "1/4",
+              "3/8"
+            ],
+            "exact_boundary_values": [
+              "1/16",
+              "-1"
+            ]
+          },
+          {
+            "strict_open_interval": [
+              "1/2",
+              "5/8"
+            ],
+            "exact_boundary_values": [
+              "-1/8",
+              "1"
+            ]
+          },
+          {
+            "strict_open_interval": [
+              "3/4",
+              "7/8"
+            ],
+            "exact_boundary_values": [
+              "1/16",
+              "-1"
+            ]
+          },
+          {
+            "strict_open_interval": [
+              "7/8",
+              "1"
+            ],
+            "exact_boundary_values": [
+              "-1",
+              "1/8"
+            ]
+          }
+        ],
+        "root_uniqueness_cells": [
+          [
+            "1/8",
+            "3/8"
+          ],
+          [
+            "3/8",
+            "5/8"
+          ],
+          [
+            "5/8",
+            "7/8"
+          ],
+          [
+            "7/8",
+            "1"
+          ]
+        ],
+        "root_multiplicities": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "root_simplicity_basis": "NONZERO_CHART_MULTIPLIER_TIMES_STRICT_RATIO_DERIVATIVE",
+        "endpoint_values": [
+          "1/8",
+          "1/8"
+        ],
+        "maximal_sign_cells": [
+          "POSITIVE",
+          "NEGATIVE",
+          "POSITIVE",
+          "NEGATIVE",
+          "POSITIVE"
+        ],
+        "proof_cuts": [
+          {
+            "parameter": "1/8",
+            "kind": "RATIO_CHART_POLE",
+            "exact_source_value": "1",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "1/4",
+            "kind": "EXACT_BRACKET_SIGN_WITNESS",
+            "exact_source_value": "1/16",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "3/8",
+            "kind": "RATIO_CHART_POLE",
+            "exact_source_value": "-1",
+            "value_sign": "NEGATIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "1/2",
+            "kind": "EXACT_BRACKET_SIGN_WITNESS",
+            "exact_source_value": "-1/8",
+            "value_sign": "NEGATIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "5/8",
+            "kind": "RATIO_CHART_POLE",
+            "exact_source_value": "1",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "3/4",
+            "kind": "EXACT_BRACKET_SIGN_WITNESS",
+            "exact_source_value": "1/16",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "7/8",
+            "kind": "RATIO_CHART_POLE",
+            "exact_source_value": "-1",
+            "value_sign": "NEGATIVE",
+            "is_zero_event": false
+          }
+        ],
+        "chart_poles_are_nonzero_original_source_points": true
+      },
+      "tail_proof": {
+        "source_sha256": "1535f364cd4d3c1a3bf34f57f394ad70a17ad1327880a0a47f25f3ecff5c7560",
+        "source_interval": [
+          "1",
+          "2"
+        ],
+        "endpoint_values": [
+          "1/8",
+          "1/8"
+        ],
+        "root_brackets": [
+          [
+            "19/16",
+            "159/128"
+          ],
+          [
+            "23/16",
+            "191/128"
+          ],
+          [
+            "27/16",
+            "223/128"
+          ],
+          [
+            "31/16",
+            "255/128"
+          ]
+        ],
+        "root_uniqueness_cells": [
+          [
+            "1",
+            "5/4"
+          ],
+          [
+            "5/4",
+            "3/2"
+          ],
+          [
+            "3/2",
+            "7/4"
+          ],
+          [
+            "7/4",
+            "2"
+          ]
+        ],
+        "root_multiplicities": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "maximal_sign_cells": [
+          "POSITIVE",
+          "NEGATIVE",
+          "POSITIVE",
+          "NEGATIVE",
+          "POSITIVE"
+        ],
+        "producer": "verify_pb00701_v43_v11_tail_contrast.py",
+        "producer_git_blob": "a978284ce2672ce05d0ae45a9e2a9043c227a4f2",
+        "fresh_replay_sha256": "f94ad20bdd7c383255f4bee38294cd67b5ba0f1aac504026f529d62050f9a457",
+        "complete_second_closed_span": true
+      },
+      "fresh_tail_receipt": {
+        "case_id": "composite:PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO:tail0",
+        "classification": "FOUR_EXACT_SIMPLE_ALTERNATING_CROSSINGS",
+        "physical_source_span": [
+          "1",
+          "2"
+        ],
+        "phase_theta_over_pi_at_halfcycles": [
+          "4",
+          "5",
+          "6",
+          "7",
+          "8"
+        ],
+        "exact_halfcycle_endpoint_values": [
+          "1/8",
+          "-1/8",
+          "1/8",
+          "-1/8",
+          "1/8"
+        ],
+        "exact_open_physical_roots": 4,
+        "ordered_open_roots": [
+          {
+            "source_order_index": 0,
+            "source_identity": "1+(k+1)/4-atan(1/8)/(4*pi), k=source_order_index",
+            "exact_phase_identity": "(5+k)*pi-atan(1/8)",
+            "half_cycle_open_source_interval": [
+              "1",
+              "5/4"
+            ],
+            "strict_source_bracket": [
+              "19/16",
+              "159/128"
+            ],
+            "multiplicity": 1,
+            "event_kind": "SIMPLE_CROSSING",
+            "physical_sign_before": "POSITIVE",
+            "physical_sign_after": "NEGATIVE",
+            "derivative_at_root_identity": "(-1)^(k+1)*pi*sqrt(65)/2",
+            "source_rational_or_algebraic_coordinate_claimed": false
+          },
+          {
+            "source_order_index": 1,
+            "source_identity": "1+(k+1)/4-atan(1/8)/(4*pi), k=source_order_index",
+            "exact_phase_identity": "(5+k)*pi-atan(1/8)",
+            "half_cycle_open_source_interval": [
+              "5/4",
+              "3/2"
+            ],
+            "strict_source_bracket": [
+              "23/16",
+              "191/128"
+            ],
+            "multiplicity": 1,
+            "event_kind": "SIMPLE_CROSSING",
+            "physical_sign_before": "NEGATIVE",
+            "physical_sign_after": "POSITIVE",
+            "derivative_at_root_identity": "(-1)^(k+1)*pi*sqrt(65)/2",
+            "source_rational_or_algebraic_coordinate_claimed": false
+          },
+          {
+            "source_order_index": 2,
+            "source_identity": "1+(k+1)/4-atan(1/8)/(4*pi), k=source_order_index",
+            "exact_phase_identity": "(5+k)*pi-atan(1/8)",
+            "half_cycle_open_source_interval": [
+              "3/2",
+              "7/4"
+            ],
+            "strict_source_bracket": [
+              "27/16",
+              "223/128"
+            ],
+            "multiplicity": 1,
+            "event_kind": "SIMPLE_CROSSING",
+            "physical_sign_before": "POSITIVE",
+            "physical_sign_after": "NEGATIVE",
+            "derivative_at_root_identity": "(-1)^(k+1)*pi*sqrt(65)/2",
+            "source_rational_or_algebraic_coordinate_claimed": false
+          },
+          {
+            "source_order_index": 3,
+            "source_identity": "1+(k+1)/4-atan(1/8)/(4*pi), k=source_order_index",
+            "exact_phase_identity": "(5+k)*pi-atan(1/8)",
+            "half_cycle_open_source_interval": [
+              "7/4",
+              "2"
+            ],
+            "strict_source_bracket": [
+              "31/16",
+              "255/128"
+            ],
+            "multiplicity": 1,
+            "event_kind": "SIMPLE_CROSSING",
+            "physical_sign_before": "NEGATIVE",
+            "physical_sign_after": "POSITIVE",
+            "derivative_at_root_identity": "(-1)^(k+1)*pi*sqrt(65)/2",
+            "source_rational_or_algebraic_coordinate_claimed": false
+          }
+        ],
+        "complete_sign_cells": [
+          "POSITIVE",
+          "NEGATIVE",
+          "POSITIVE",
+          "NEGATIVE",
+          "POSITIVE"
+        ],
+        "phase_chart_poles_crossed": true,
+        "general_v6_cross_pole_authority_claimed": false,
+        "first_span_historical_v11_owner_unchanged": true
+      },
+      "physical_event_proof": {
+        "source_interval": [
+          "0",
+          "2"
+        ],
+        "original_piece_edges": [
+          "0",
+          "1",
+          "2"
+        ],
+        "closed_distinct_root_count": 8,
+        "open_distinct_root_count": 8,
+        "events": [
+          {
+            "event_id": "root-0",
+            "source_piece_index": 0,
+            "coordinate": {
+              "kind": "IMPLICIT_ORIGINAL_SOURCE_ROOT",
+              "source_case_id": "composite:PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO:tail0",
+              "original_source_sha256": "1535f364cd4d3c1a3bf34f57f394ad70a17ad1327880a0a47f25f3ecff5c7560",
+              "source_parameter_id": "source-time-t",
+              "defining_predicate": "ORIGINAL_SOURCE_F_EQUALS_ZERO",
+              "strict_open_isolating_interval": [
+                "1/4",
+                "3/8"
+              ],
+              "uniqueness_cell": [
+                "1/8",
+                "3/8"
+              ]
+            },
+            "analytic_order": 1,
+            "left_sign": "POSITIVE",
+            "right_sign": "NEGATIVE"
+          },
+          {
+            "event_id": "root-1",
+            "source_piece_index": 0,
+            "coordinate": {
+              "kind": "IMPLICIT_ORIGINAL_SOURCE_ROOT",
+              "source_case_id": "composite:PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO:tail0",
+              "original_source_sha256": "1535f364cd4d3c1a3bf34f57f394ad70a17ad1327880a0a47f25f3ecff5c7560",
+              "source_parameter_id": "source-time-t",
+              "defining_predicate": "ORIGINAL_SOURCE_F_EQUALS_ZERO",
+              "strict_open_isolating_interval": [
+                "1/2",
+                "5/8"
+              ],
+              "uniqueness_cell": [
+                "3/8",
+                "5/8"
+              ]
+            },
+            "analytic_order": 1,
+            "left_sign": "NEGATIVE",
+            "right_sign": "POSITIVE"
+          },
+          {
+            "event_id": "root-2",
+            "source_piece_index": 0,
+            "coordinate": {
+              "kind": "IMPLICIT_ORIGINAL_SOURCE_ROOT",
+              "source_case_id": "composite:PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO:tail0",
+              "original_source_sha256": "1535f364cd4d3c1a3bf34f57f394ad70a17ad1327880a0a47f25f3ecff5c7560",
+              "source_parameter_id": "source-time-t",
+              "defining_predicate": "ORIGINAL_SOURCE_F_EQUALS_ZERO",
+              "strict_open_isolating_interval": [
+                "3/4",
+                "7/8"
+              ],
+              "uniqueness_cell": [
+                "5/8",
+                "7/8"
+              ]
+            },
+            "analytic_order": 1,
+            "left_sign": "POSITIVE",
+            "right_sign": "NEGATIVE"
+          },
+          {
+            "event_id": "root-3",
+            "source_piece_index": 0,
+            "coordinate": {
+              "kind": "IMPLICIT_ORIGINAL_SOURCE_ROOT",
+              "source_case_id": "composite:PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO:tail0",
+              "original_source_sha256": "1535f364cd4d3c1a3bf34f57f394ad70a17ad1327880a0a47f25f3ecff5c7560",
+              "source_parameter_id": "source-time-t",
+              "defining_predicate": "ORIGINAL_SOURCE_F_EQUALS_ZERO",
+              "strict_open_isolating_interval": [
+                "7/8",
+                "1"
+              ],
+              "uniqueness_cell": [
+                "7/8",
+                "1"
+              ]
+            },
+            "analytic_order": 1,
+            "left_sign": "NEGATIVE",
+            "right_sign": "POSITIVE"
+          },
+          {
+            "event_id": "root-4",
+            "source_piece_index": 1,
+            "coordinate": {
+              "kind": "IMPLICIT_ORIGINAL_SOURCE_ROOT",
+              "source_case_id": "composite:PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO:tail0",
+              "original_source_sha256": "1535f364cd4d3c1a3bf34f57f394ad70a17ad1327880a0a47f25f3ecff5c7560",
+              "source_parameter_id": "source-time-t",
+              "defining_predicate": "ORIGINAL_SOURCE_F_EQUALS_ZERO",
+              "strict_open_isolating_interval": [
+                "19/16",
+                "159/128"
+              ],
+              "uniqueness_cell": [
+                "1",
+                "5/4"
+              ]
+            },
+            "analytic_order": 1,
+            "left_sign": "POSITIVE",
+            "right_sign": "NEGATIVE"
+          },
+          {
+            "event_id": "root-5",
+            "source_piece_index": 1,
+            "coordinate": {
+              "kind": "IMPLICIT_ORIGINAL_SOURCE_ROOT",
+              "source_case_id": "composite:PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO:tail0",
+              "original_source_sha256": "1535f364cd4d3c1a3bf34f57f394ad70a17ad1327880a0a47f25f3ecff5c7560",
+              "source_parameter_id": "source-time-t",
+              "defining_predicate": "ORIGINAL_SOURCE_F_EQUALS_ZERO",
+              "strict_open_isolating_interval": [
+                "23/16",
+                "191/128"
+              ],
+              "uniqueness_cell": [
+                "5/4",
+                "3/2"
+              ]
+            },
+            "analytic_order": 1,
+            "left_sign": "NEGATIVE",
+            "right_sign": "POSITIVE"
+          },
+          {
+            "event_id": "root-6",
+            "source_piece_index": 1,
+            "coordinate": {
+              "kind": "IMPLICIT_ORIGINAL_SOURCE_ROOT",
+              "source_case_id": "composite:PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO:tail0",
+              "original_source_sha256": "1535f364cd4d3c1a3bf34f57f394ad70a17ad1327880a0a47f25f3ecff5c7560",
+              "source_parameter_id": "source-time-t",
+              "defining_predicate": "ORIGINAL_SOURCE_F_EQUALS_ZERO",
+              "strict_open_isolating_interval": [
+                "27/16",
+                "223/128"
+              ],
+              "uniqueness_cell": [
+                "3/2",
+                "7/4"
+              ]
+            },
+            "analytic_order": 1,
+            "left_sign": "POSITIVE",
+            "right_sign": "NEGATIVE"
+          },
+          {
+            "event_id": "root-7",
+            "source_piece_index": 1,
+            "coordinate": {
+              "kind": "IMPLICIT_ORIGINAL_SOURCE_ROOT",
+              "source_case_id": "composite:PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO:tail0",
+              "original_source_sha256": "1535f364cd4d3c1a3bf34f57f394ad70a17ad1327880a0a47f25f3ecff5c7560",
+              "source_parameter_id": "source-time-t",
+              "defining_predicate": "ORIGINAL_SOURCE_F_EQUALS_ZERO",
+              "strict_open_isolating_interval": [
+                "31/16",
+                "255/128"
+              ],
+              "uniqueness_cell": [
+                "7/4",
+                "2"
+              ]
+            },
+            "analytic_order": 1,
+            "left_sign": "NEGATIVE",
+            "right_sign": "POSITIVE"
+          }
+        ],
+        "strict_ordered_root_brackets": [
+          [
+            "1/4",
+            "3/8"
+          ],
+          [
+            "1/2",
+            "5/8"
+          ],
+          [
+            "3/4",
+            "7/8"
+          ],
+          [
+            "7/8",
+            "1"
+          ],
+          [
+            "19/16",
+            "159/128"
+          ],
+          [
+            "23/16",
+            "191/128"
+          ],
+          [
+            "27/16",
+            "223/128"
+          ],
+          [
+            "31/16",
+            "255/128"
+          ]
+        ],
+        "maximal_sign_cells": [
+          {
+            "left": {
+              "kind": "RATIONAL",
+              "value": "0"
+            },
+            "right": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-0"
+            },
+            "sign": "POSITIVE",
+            "left_closed": true,
+            "right_closed": false
+          },
+          {
+            "left": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-0"
+            },
+            "right": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-1"
+            },
+            "sign": "NEGATIVE",
+            "left_closed": false,
+            "right_closed": false
+          },
+          {
+            "left": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-1"
+            },
+            "right": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-2"
+            },
+            "sign": "POSITIVE",
+            "left_closed": false,
+            "right_closed": false
+          },
+          {
+            "left": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-2"
+            },
+            "right": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-3"
+            },
+            "sign": "NEGATIVE",
+            "left_closed": false,
+            "right_closed": false
+          },
+          {
+            "left": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-3"
+            },
+            "right": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-4"
+            },
+            "sign": "POSITIVE",
+            "left_closed": false,
+            "right_closed": false
+          },
+          {
+            "left": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-4"
+            },
+            "right": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-5"
+            },
+            "sign": "NEGATIVE",
+            "left_closed": false,
+            "right_closed": false
+          },
+          {
+            "left": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-5"
+            },
+            "right": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-6"
+            },
+            "sign": "POSITIVE",
+            "left_closed": false,
+            "right_closed": false
+          },
+          {
+            "left": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-6"
+            },
+            "right": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-7"
+            },
+            "sign": "NEGATIVE",
+            "left_closed": false,
+            "right_closed": false
+          },
+          {
+            "left": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-7"
+            },
+            "right": {
+              "kind": "RATIONAL",
+              "value": "2"
+            },
+            "sign": "POSITIVE",
+            "left_closed": false,
+            "right_closed": true
+          }
+        ],
+        "exterior_endpoints": [
+          {
+            "parameter": "0",
+            "exact_value": "1/8",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "2",
+            "exact_value": "1/8",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          }
+        ],
+        "original_source_knot": {
+          "parameter": "1",
+          "source_continuous": true,
+          "exact_left_value": "1/8",
+          "exact_right_value": "1/8",
+          "value_sign": "POSITIVE",
+          "is_zero_event": false
+        },
+        "proof_cuts": [
+          {
+            "parameter": "1/8",
+            "kind": "RATIO_CHART_POLE",
+            "exact_source_value": "1",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "1/4",
+            "kind": "EXACT_BRACKET_SIGN_WITNESS",
+            "exact_source_value": "1/16",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "3/8",
+            "kind": "RATIO_CHART_POLE",
+            "exact_source_value": "-1",
+            "value_sign": "NEGATIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "1/2",
+            "kind": "EXACT_BRACKET_SIGN_WITNESS",
+            "exact_source_value": "-1/8",
+            "value_sign": "NEGATIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "5/8",
+            "kind": "RATIO_CHART_POLE",
+            "exact_source_value": "1",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "3/4",
+            "kind": "EXACT_BRACKET_SIGN_WITNESS",
+            "exact_source_value": "1/16",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "7/8",
+            "kind": "RATIO_CHART_POLE",
+            "exact_source_value": "-1",
+            "value_sign": "NEGATIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "5/4",
+            "kind": "TAIL_HALF_CYCLE_BOUNDARY",
+            "exact_source_value": "-1/8",
+            "value_sign": "NEGATIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "3/2",
+            "kind": "TAIL_HALF_CYCLE_BOUNDARY",
+            "exact_source_value": "1/8",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "7/4",
+            "kind": "TAIL_HALF_CYCLE_BOUNDARY",
+            "exact_source_value": "-1/8",
+            "value_sign": "NEGATIVE",
+            "is_zero_event": false
+          }
+        ],
+        "continuum_zero_component": false,
+        "complete_for_original_closed_source": true
+      }
+    },
+    {
+      "source_case_id": "composite:PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO:tail100",
+      "original_source_sha256": "f70a884ea00042d46f517577ab598d8c85152ad511d48ea0bb8b2e6d7c55d0d5",
+      "original_row_sha256": "dd2744103931e0c754809f3db0376aa7a5aa986af2644fc7ae4ba7dd9348fce1",
+      "original_source": {
+        "grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+        "source_parameter_id": "source-time-t",
+        "parameter_lo": "0",
+        "parameter_hi": "2",
+        "phase_turn_offset": "0",
+        "phase_turn_rate": "2",
+        "cos_splines": {
+          "0": {
+            "degree": 1,
+            "knots": [
+              "0",
+              "0",
+              "1",
+              "1",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "0",
+              "0",
+              "0",
+              "100"
+            ]
+          },
+          "1": {
+            "degree": 2,
+            "knots": [
+              "0",
+              "0",
+              "0",
+              "1",
+              "1",
+              "1",
+              "2",
+              "2",
+              "2"
+            ],
+            "controls": [
+              "1/8",
+              "-3/8",
+              "1/8",
+              "1/8",
+              "1/8",
+              "1/8"
+            ]
+          }
+        },
+        "sin_splines": {
+          "1": {
+            "degree": 0,
+            "knots": [
+              "0",
+              "1",
+              "2"
+            ],
+            "controls": [
+              "1",
+              "1"
+            ]
+          }
+        }
+      },
+      "historical_observation": {
+        "id": "composite:PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO:tail100",
+        "observed": {
+          "status": "BLOCKED",
+          "spans": [
+            [
+              "PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO",
+              "CERTIFIED",
+              null
+            ],
+            [
+              "PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF",
+              "BLOCKED",
+              "CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED"
+            ]
+          ]
+        },
+        "v54_disposition": "BLOCKED"
+      },
+      "prefix_proof": {
+        "proof_family": "STRICT_INCREASING_TANGENT_CHARTS",
+        "source_sha256": "f70a884ea00042d46f517577ab598d8c85152ad511d48ea0bb8b2e6d7c55d0d5",
+        "source_parameter_id": "source-time-t",
+        "source_piece_index": 0,
+        "source_interval": [
+          "0",
+          "1"
+        ],
+        "complete_first_closed_span": true,
+        "conditional_lemma_not_frozen_source_acceptance": true,
+        "original_prefix_power_coefficients": {
+          "C0": [
+            "0",
+            "0"
+          ],
+          "C1": [
+            "1/8",
+            "-1",
+            "1"
+          ],
+          "S1": [
+            "1"
+          ]
+        },
+        "original_amplitude_derivative_controls": [
+          "-1",
+          "1"
+        ],
+        "strict_ratio_derivative_bound": {
+          "direction": "LOWER",
+          "value": "11",
+          "strict": true,
+          "pi_lower_bound": "3"
+        },
+        "charts": [
+          {
+            "interval": [
+              "0",
+              "1/8"
+            ],
+            "left_closed": true,
+            "right_closed": false,
+            "ratio_left_value": "1/8",
+            "ratio_right_limit": "POSITIVE_INFINITY",
+            "root_count": 0,
+            "nonzero_chart_multiplier": "cos(theta)"
+          },
+          {
+            "interval": [
+              "1/8",
+              "3/8"
+            ],
+            "open_at_both_poles": true,
+            "ratio_left_limit": "NEGATIVE_INFINITY",
+            "ratio_right_limit": "POSITIVE_INFINITY",
+            "root_count": 1,
+            "nonzero_chart_multiplier": "cos(theta)"
+          },
+          {
+            "interval": [
+              "3/8",
+              "5/8"
+            ],
+            "open_at_both_poles": true,
+            "ratio_left_limit": "NEGATIVE_INFINITY",
+            "ratio_right_limit": "POSITIVE_INFINITY",
+            "root_count": 1,
+            "nonzero_chart_multiplier": "cos(theta)"
+          },
+          {
+            "interval": [
+              "5/8",
+              "7/8"
+            ],
+            "open_at_both_poles": true,
+            "ratio_left_limit": "NEGATIVE_INFINITY",
+            "ratio_right_limit": "POSITIVE_INFINITY",
+            "root_count": 1,
+            "nonzero_chart_multiplier": "cos(theta)"
+          },
+          {
+            "interval": [
+              "7/8",
+              "1"
+            ],
+            "left_closed": false,
+            "right_closed": true,
+            "ratio_left_limit": "NEGATIVE_INFINITY",
+            "ratio_right_value": "1/8",
+            "root_count": 1,
+            "nonzero_chart_multiplier": "cos(theta)"
+          }
+        ],
+        "root_brackets": [
+          [
+            "1/4",
+            "3/8"
+          ],
+          [
+            "1/2",
+            "5/8"
+          ],
+          [
+            "3/4",
+            "7/8"
+          ],
+          [
+            "7/8",
+            "1"
+          ]
+        ],
+        "bracket_sign_proofs": [
+          {
+            "strict_open_interval": [
+              "1/4",
+              "3/8"
+            ],
+            "exact_boundary_values": [
+              "1/16",
+              "-1"
+            ]
+          },
+          {
+            "strict_open_interval": [
+              "1/2",
+              "5/8"
+            ],
+            "exact_boundary_values": [
+              "-1/8",
+              "1"
+            ]
+          },
+          {
+            "strict_open_interval": [
+              "3/4",
+              "7/8"
+            ],
+            "exact_boundary_values": [
+              "1/16",
+              "-1"
+            ]
+          },
+          {
+            "strict_open_interval": [
+              "7/8",
+              "1"
+            ],
+            "exact_boundary_values": [
+              "-1",
+              "1/8"
+            ]
+          }
+        ],
+        "root_uniqueness_cells": [
+          [
+            "1/8",
+            "3/8"
+          ],
+          [
+            "3/8",
+            "5/8"
+          ],
+          [
+            "5/8",
+            "7/8"
+          ],
+          [
+            "7/8",
+            "1"
+          ]
+        ],
+        "root_multiplicities": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "root_simplicity_basis": "NONZERO_CHART_MULTIPLIER_TIMES_STRICT_RATIO_DERIVATIVE",
+        "endpoint_values": [
+          "1/8",
+          "1/8"
+        ],
+        "maximal_sign_cells": [
+          "POSITIVE",
+          "NEGATIVE",
+          "POSITIVE",
+          "NEGATIVE",
+          "POSITIVE"
+        ],
+        "proof_cuts": [
+          {
+            "parameter": "1/8",
+            "kind": "RATIO_CHART_POLE",
+            "exact_source_value": "1",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "1/4",
+            "kind": "EXACT_BRACKET_SIGN_WITNESS",
+            "exact_source_value": "1/16",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "3/8",
+            "kind": "RATIO_CHART_POLE",
+            "exact_source_value": "-1",
+            "value_sign": "NEGATIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "1/2",
+            "kind": "EXACT_BRACKET_SIGN_WITNESS",
+            "exact_source_value": "-1/8",
+            "value_sign": "NEGATIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "5/8",
+            "kind": "RATIO_CHART_POLE",
+            "exact_source_value": "1",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "3/4",
+            "kind": "EXACT_BRACKET_SIGN_WITNESS",
+            "exact_source_value": "1/16",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "7/8",
+            "kind": "RATIO_CHART_POLE",
+            "exact_source_value": "-1",
+            "value_sign": "NEGATIVE",
+            "is_zero_event": false
+          }
+        ],
+        "chart_poles_are_nonzero_original_source_points": true
+      },
+      "tail_proof": {
+        "source_sha256": "f70a884ea00042d46f517577ab598d8c85152ad511d48ea0bb8b2e6d7c55d0d5",
+        "source_interval": [
+          "1",
+          "2"
+        ],
+        "endpoint_values": [
+          "1/8",
+          "801/8"
+        ],
+        "root_brackets": [],
+        "root_uniqueness_cells": [],
+        "root_multiplicities": [],
+        "maximal_sign_cells": [
+          "POSITIVE"
+        ],
+        "producer": "verify_pb00701_v43_v11_tail_contrast.py",
+        "producer_git_blob": "a978284ce2672ce05d0ae45a9e2a9043c227a4f2",
+        "fresh_replay_sha256": "cccc4c6968d4ba40f0f702ac7e97b8994ed7f7815a810a365458a89d1cb669f6",
+        "complete_second_closed_span": true
+      },
+      "fresh_tail_receipt": {
+        "case_id": "composite:PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO:tail100",
+        "classification": "STRICT_POSITIVE_STRICT_INCREASING_ROOT_FREE",
+        "physical_source_span": [
+          "1",
+          "2"
+        ],
+        "phase_theta_over_pi_at_halfcycles": [
+          "4",
+          "5",
+          "6",
+          "7",
+          "8"
+        ],
+        "exact_source_endpoint_values": [
+          "1/8",
+          "801/8"
+        ],
+        "exact_open_physical_roots": 0,
+        "strict_source_derivative_lower_rational": "601/7",
+        "complete_sign_cells": [
+          "POSITIVE"
+        ],
+        "first_span_historical_v11_owner_unchanged": true
+      },
+      "physical_event_proof": {
+        "source_interval": [
+          "0",
+          "2"
+        ],
+        "original_piece_edges": [
+          "0",
+          "1",
+          "2"
+        ],
+        "closed_distinct_root_count": 4,
+        "open_distinct_root_count": 4,
+        "events": [
+          {
+            "event_id": "root-0",
+            "source_piece_index": 0,
+            "coordinate": {
+              "kind": "IMPLICIT_ORIGINAL_SOURCE_ROOT",
+              "source_case_id": "composite:PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO:tail100",
+              "original_source_sha256": "f70a884ea00042d46f517577ab598d8c85152ad511d48ea0bb8b2e6d7c55d0d5",
+              "source_parameter_id": "source-time-t",
+              "defining_predicate": "ORIGINAL_SOURCE_F_EQUALS_ZERO",
+              "strict_open_isolating_interval": [
+                "1/4",
+                "3/8"
+              ],
+              "uniqueness_cell": [
+                "1/8",
+                "3/8"
+              ]
+            },
+            "analytic_order": 1,
+            "left_sign": "POSITIVE",
+            "right_sign": "NEGATIVE"
+          },
+          {
+            "event_id": "root-1",
+            "source_piece_index": 0,
+            "coordinate": {
+              "kind": "IMPLICIT_ORIGINAL_SOURCE_ROOT",
+              "source_case_id": "composite:PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO:tail100",
+              "original_source_sha256": "f70a884ea00042d46f517577ab598d8c85152ad511d48ea0bb8b2e6d7c55d0d5",
+              "source_parameter_id": "source-time-t",
+              "defining_predicate": "ORIGINAL_SOURCE_F_EQUALS_ZERO",
+              "strict_open_isolating_interval": [
+                "1/2",
+                "5/8"
+              ],
+              "uniqueness_cell": [
+                "3/8",
+                "5/8"
+              ]
+            },
+            "analytic_order": 1,
+            "left_sign": "NEGATIVE",
+            "right_sign": "POSITIVE"
+          },
+          {
+            "event_id": "root-2",
+            "source_piece_index": 0,
+            "coordinate": {
+              "kind": "IMPLICIT_ORIGINAL_SOURCE_ROOT",
+              "source_case_id": "composite:PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO:tail100",
+              "original_source_sha256": "f70a884ea00042d46f517577ab598d8c85152ad511d48ea0bb8b2e6d7c55d0d5",
+              "source_parameter_id": "source-time-t",
+              "defining_predicate": "ORIGINAL_SOURCE_F_EQUALS_ZERO",
+              "strict_open_isolating_interval": [
+                "3/4",
+                "7/8"
+              ],
+              "uniqueness_cell": [
+                "5/8",
+                "7/8"
+              ]
+            },
+            "analytic_order": 1,
+            "left_sign": "POSITIVE",
+            "right_sign": "NEGATIVE"
+          },
+          {
+            "event_id": "root-3",
+            "source_piece_index": 0,
+            "coordinate": {
+              "kind": "IMPLICIT_ORIGINAL_SOURCE_ROOT",
+              "source_case_id": "composite:PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO:tail100",
+              "original_source_sha256": "f70a884ea00042d46f517577ab598d8c85152ad511d48ea0bb8b2e6d7c55d0d5",
+              "source_parameter_id": "source-time-t",
+              "defining_predicate": "ORIGINAL_SOURCE_F_EQUALS_ZERO",
+              "strict_open_isolating_interval": [
+                "7/8",
+                "1"
+              ],
+              "uniqueness_cell": [
+                "7/8",
+                "1"
+              ]
+            },
+            "analytic_order": 1,
+            "left_sign": "NEGATIVE",
+            "right_sign": "POSITIVE"
+          }
+        ],
+        "strict_ordered_root_brackets": [
+          [
+            "1/4",
+            "3/8"
+          ],
+          [
+            "1/2",
+            "5/8"
+          ],
+          [
+            "3/4",
+            "7/8"
+          ],
+          [
+            "7/8",
+            "1"
+          ]
+        ],
+        "maximal_sign_cells": [
+          {
+            "left": {
+              "kind": "RATIONAL",
+              "value": "0"
+            },
+            "right": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-0"
+            },
+            "sign": "POSITIVE",
+            "left_closed": true,
+            "right_closed": false
+          },
+          {
+            "left": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-0"
+            },
+            "right": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-1"
+            },
+            "sign": "NEGATIVE",
+            "left_closed": false,
+            "right_closed": false
+          },
+          {
+            "left": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-1"
+            },
+            "right": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-2"
+            },
+            "sign": "POSITIVE",
+            "left_closed": false,
+            "right_closed": false
+          },
+          {
+            "left": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-2"
+            },
+            "right": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-3"
+            },
+            "sign": "NEGATIVE",
+            "left_closed": false,
+            "right_closed": false
+          },
+          {
+            "left": {
+              "kind": "EVENT_REFERENCE",
+              "event_id": "root-3"
+            },
+            "right": {
+              "kind": "RATIONAL",
+              "value": "2"
+            },
+            "sign": "POSITIVE",
+            "left_closed": false,
+            "right_closed": true
+          }
+        ],
+        "exterior_endpoints": [
+          {
+            "parameter": "0",
+            "exact_value": "1/8",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "2",
+            "exact_value": "801/8",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          }
+        ],
+        "original_source_knot": {
+          "parameter": "1",
+          "source_continuous": true,
+          "exact_left_value": "1/8",
+          "exact_right_value": "1/8",
+          "value_sign": "POSITIVE",
+          "is_zero_event": false
+        },
+        "proof_cuts": [
+          {
+            "parameter": "1/8",
+            "kind": "RATIO_CHART_POLE",
+            "exact_source_value": "1",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "1/4",
+            "kind": "EXACT_BRACKET_SIGN_WITNESS",
+            "exact_source_value": "1/16",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "3/8",
+            "kind": "RATIO_CHART_POLE",
+            "exact_source_value": "-1",
+            "value_sign": "NEGATIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "1/2",
+            "kind": "EXACT_BRACKET_SIGN_WITNESS",
+            "exact_source_value": "-1/8",
+            "value_sign": "NEGATIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "5/8",
+            "kind": "RATIO_CHART_POLE",
+            "exact_source_value": "1",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "3/4",
+            "kind": "EXACT_BRACKET_SIGN_WITNESS",
+            "exact_source_value": "1/16",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "7/8",
+            "kind": "RATIO_CHART_POLE",
+            "exact_source_value": "-1",
+            "value_sign": "NEGATIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "5/4",
+            "kind": "TAIL_HALF_CYCLE_BOUNDARY",
+            "exact_source_value": "199/8",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "3/2",
+            "kind": "TAIL_HALF_CYCLE_BOUNDARY",
+            "exact_source_value": "401/8",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          },
+          {
+            "parameter": "7/4",
+            "kind": "TAIL_HALF_CYCLE_BOUNDARY",
+            "exact_source_value": "599/8",
+            "value_sign": "POSITIVE",
+            "is_zero_event": false
+          }
+        ],
+        "continuum_zero_component": false,
+        "complete_for_original_closed_source": true
+      }
+    }
+  ],
+  "summary": {
+    "complete_original_source_witnesses": 4,
+    "by_case_closed_root_count": {
+      "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail0": 8,
+      "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail100": 5,
+      "composite:PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO:tail0": 8,
+      "composite:PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO:tail100": 4
+    },
+    "all_physical_roots_simple": true,
+    "original_knot_roots": 0,
+    "exterior_roots": 0
+  },
+  "historical_v54": {
+    "original_sources": 121,
+    "route_refusals": 20,
+    "missing_ordered_premises": 30,
+    "dispositions_changed": false
+  },
+  "resources": {
+    "maximum_spline_degree": 6,
+    "input_rational_bit_limit": 256,
+    "byte_limit": 1048576,
+    "native_campaign_run": false,
+    "paid_campaign_run": false
+  },
+  "scope": {
+    "historical_owner_routes_repaired": false,
+    "universal_proof_consumer": false,
+    "general_ratio_or_v43_event_solver": false,
+    "PB00701_closed": false,
+    "MC_B": "NOT_ESTABLISHED",
+    "MC_1": "NOT_ESTABLISHED",
+    "production_authorized": false,
+    "protected_operation_count": 26,
+    "native_material_topology_or_STEP_qualified": false
+  }
+}
