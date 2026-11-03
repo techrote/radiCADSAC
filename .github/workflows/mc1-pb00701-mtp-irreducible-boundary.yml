@@ -1,0 +1,46 @@
+name: mc1-pb00701-mtp-irreducible-boundary
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/mc1-pb00701-mtp-irreducible-boundary.yml'
+      - 'docs/machining-completeness/31-PB00701-COUPLED-BSPLINE-BOUNDARY.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-mtp-irreducible-boundary-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-mtp-irreducible-boundary.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-pfaffian-coefficient-boundary.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_mtp_irreducible_boundary.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_pfaffian_coefficient_boundary.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_mtp_irreducible_boundary.py'
+  pull_request:
+    paths:
+      - '.github/workflows/mc1-pb00701-mtp-irreducible-boundary.yml'
+      - 'docs/machining-completeness/31-PB00701-COUPLED-BSPLINE-BOUNDARY.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-mtp-irreducible-boundary-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-mtp-irreducible-boundary.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-pfaffian-coefficient-boundary.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_mtp_irreducible_boundary.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701_pfaffian_coefficient_boundary.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_mtp_irreducible_boundary.py'
+
+permissions:
+  contents: read
+
+jobs:
+  bounded-certificate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify original source, theorem domain and adversaries
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_mtp_irreducible_boundary.py --contract --self-test
