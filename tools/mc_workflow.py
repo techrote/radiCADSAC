@@ -102,6 +102,8 @@ def reconcile_body(body,t):
         a=body.index(start); b=body.index(end)
         if b<a: raise ValueError("managed block end precedes start")
         b+=len(end)
+        if a<=body.index(marker)<b:
+            raise ValueError("stable task marker lies inside replaceable managed block")
         return body[:a]+block+body[b:]
     return body.rstrip()+"\n\n"+block+"\n"
 def sync(apply=False):
@@ -119,8 +121,14 @@ def sync(apply=False):
     # managed blocks and marker conflicts must not leave a partial sync behind.
     drift=[]; conflicts=[]; changes=[]
     by_number={issue["number"]:issue for issue in issues}
+    bound_numbers={}
     for t in graph["tasks"]:
-        n=mapping[t["id"]]["issue"]; issue=by_number.get(n)
+        n=mapping[t["id"]]["issue"]
+        if n in bound_numbers:
+            conflicts.append((t["id"],n,f"issue also bound to {bound_numbers[n]}"))
+            continue
+        bound_numbers[n]=t["id"]
+        issue=by_number.get(n)
         if issue is None:
             conflicts.append((t["id"],n,"missing bound issue"))
             continue
@@ -203,6 +211,7 @@ def self_test():
     reject(good+"\n<!-- MC:MANAGED:START MC-999 -->")
     reject(good.replace(marker,marker+"\n"+marker))
     reject(marker+"\n<!-- MC:MANAGED:END MC-999 -->\n<!-- MC:MANAGED:START MC-999 -->")
+    reject("<!-- MC:MANAGED:START MC-999 -->\n"+marker+"\n<!-- MC:MANAGED:END MC-999 -->")
     with (patch(__name__+".load",side_effect=fake_load),
           patch(__name__+".all_issues",side_effect=fake_issues),
           patch(__name__+".gh",side_effect=fake_gh)):
@@ -230,6 +239,18 @@ def self_test():
         assert sync(True)==3 and not calls, "partial write preceded a later conflict"
         graph["tasks"].pop()
         del mapping["tasks"]["MC-998"]
+
+        # Two distinct tasks mapped to one issue would overwrite each other's
+        # reconciliations even if both have valid stable markers.
+        issues[0]={"number":991,"title":"Old title",
+                   "body":stale+"\n<!-- MC:TASK:MC-998 -->\n"+managed(task2)}
+        graph["tasks"].append(task2)
+        mapping["tasks"]["MC-998"]={"issue":991}
+        calls.clear()
+        assert sync(True)==3 and not calls, "duplicate binding overwrote a prior task update"
+        graph["tasks"].pop()
+        del mapping["tasks"]["MC-998"]
+        issues[0]={"number":991,"title":"Old title","body":stale}
 
         # An intervening human edit must abort before the first PATCH.
         def changed_preflight(method,path,body=None):
