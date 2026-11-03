@@ -108,12 +108,16 @@ def _static_run_commands(s):
     lines = s.split("\njobs:\n", 1)[1].splitlines()
     if any(line.startswith("    if:") for line in lines):
         raise AssertionError("mc1-static: conditional validation job is not qualified")
+    if any(line.startswith(("    continue-on-error:", "    defaults:")) for line in lines):
+        raise AssertionError("mc1-static: non-enforcing or custom validation job is not qualified")
     commands = set()
     step = None
 
     def add_step(step):
         # Required validation commands must not be hidden behind step guards.
-        if any(line.startswith("        if:") for line in step):
+        if any(line.startswith(("        if:", "        continue-on-error:", "        shell:")) for line in step):
+            # A guarded, failure-tolerant or overridden-shell step cannot
+            # establish the required validation execution contract.
             return
         for i, line in enumerate(step):
             if not line.startswith("        run:"):
@@ -124,6 +128,10 @@ def _static_run_commands(s):
             if value in (">", ">-"):
                 raise AssertionError("mc1-static: folded run block cannot prove commands")
             if value in ("|", "|-"):
+                # This deliberately does not interpret shell control flow.
+                # A literal block proves execution only with one substantive
+                # statement, never an exit, heredoc or conditional prelude.
+                statements = []
                 for subline in step[i + 1:]:
                     if subline and not subline.startswith("          "):
                         break
@@ -133,7 +141,9 @@ def _static_run_commands(s):
                         # not an independent executable statement.
                         raise AssertionError("mc1-static: shell continuation cannot prove commands")
                     if statement and not statement.startswith("#"):
-                        commands.add(statement)
+                        statements.append(statement)
+                if len(statements) == 1:
+                    commands.add(statements[0])
             elif value and not value.startswith("#"):
                 commands.add(value)
 
@@ -244,9 +254,20 @@ def self_test():
         ("guarded validation step", "        if: false\n        run: python3 tools/validate_repo.py"),
         ("multiline shell comment", "        run: |\n          # python3 tools/validate_repo.py"),
         ("folded run echo decoy", "        run: >\n          echo inert\n          python3 tools/validate_repo.py"),
+        ("early-exit shell decoy", "        run: |\n          exit 0\n          python3 tools/validate_repo.py"),
+        ("here-document shell decoy", "        run: |\n          cat <<'EOF'\n          python3 tools/validate_repo.py\n          EOF"),
+        ("false-branch shell decoy", "        run: |\n          if false; then\n          python3 tools/validate_repo.py\n          fi"),
+        ("continue-on-error step", "        continue-on-error: true\n        run: python3 tools/validate_repo.py"),
+        ("custom shell step", "        shell: 'echo {0}'\n        run: python3 tools/validate_repo.py"),
         ("backslash-continued echo decoy", "        run: |\n          echo inert \\\n          python3 tools/validate_repo.py"),
     ):
         reject_static(mc.replace(baseline_run, decoy, 1), label)
+    reject_static(mc.replace("    runs-on: ubuntu-24.04",
+                             "    continue-on-error: true\n    runs-on: ubuntu-24.04", 1),
+                  "continue-on-error job")
+    reject_static(mc.replace("    runs-on: ubuntu-24.04",
+                             "    defaults:\n      run:\n        shell: 'echo {0}'\n    runs-on: ubuntu-24.04", 1),
+                  "custom job default shell")
     # MC workflow is inline in the real source. Convert it to a multiline
     # step before introducing an inert echo (not a nonexistent source line).
     workflow_run = "        run: python3 tools/mc_workflow.py self-test"
