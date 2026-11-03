@@ -108,7 +108,7 @@ def sync(apply=False):
     graph=load("task-graph-v1.json"); mapping=load("github-map-v1.json")["tasks"]; issues=all_issues()
     markers={}
     for issue in issues:
-        for tid in re.findall(r"MC:TASK:(MC-\\d{3})",issue.get("body") or ""):
+        for tid in re.findall(r"MC:TASK:(MC-\d{3})",issue.get("body") or ""):
             markers.setdefault(tid,[]).append(issue)
     duplicates={k:v for k,v in markers.items() if len(v)>1}
     if duplicates:
