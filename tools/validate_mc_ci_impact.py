@@ -184,13 +184,13 @@ def self_test():
 
     for event, next_event in (("push", "pull_request"), ("pull_request", "permissions")):
         block = event_block(mc, event, next_event)
-        marker = "      - 'tools/validate_repo.py'\\n"
+        marker = "      - 'tools/validate_repo.py'\n"
         # Prefixing # leaves the old substring intact but disables its route.
         reject_static(mc.replace(block, block.replace(marker, "#" + marker, 1), 1),
                       f"{event} commented-out route")
         # An identically spelled path under a different event key is not a route.
         reject_static(mc.replace(block, block.replace(marker, "", 1) +
-                                 "    branches:\\n" + marker, 1),
+                                 "    branches:\n" + marker, 1),
                       f"{event} path under branches")
 
     baseline_run = "        run: python3 tools/validate_repo.py"
@@ -198,8 +198,8 @@ def self_test():
         ("echo decoy", "        run: echo python3 tools/validate_repo.py"),
         ("quoted comment decoy", "        run: echo '# python3 tools/validate_repo.py'"),
         ("non-run field", "        with: python3 tools/validate_repo.py"),
-        ("guarded validation step", "        if: false\\n        run: python3 tools/validate_repo.py"),
-        ("multiline shell comment", "        run: |\\n          # python3 tools/validate_repo.py"),
+        ("guarded validation step", "        if: false\n        run: python3 tools/validate_repo.py"),
+        ("multiline shell comment", "        run: |\n          # python3 tools/validate_repo.py"),
     ):
         reject_static(mc.replace(baseline_run, decoy, 1), label)
     reject_static(mc.replace("          python3 tools/mc_workflow.py self-test",
