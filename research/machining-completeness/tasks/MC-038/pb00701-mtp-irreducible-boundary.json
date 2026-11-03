@@ -1,0 +1,833 @@
+{
+  "basis_main": "9eea5786f93c71090d4a3d4c7478d65a3f066d42",
+  "broader_literature_boundary": {
+    "bounded_question_location": "Open Problem 1, printed page 65:16",
+    "bounded_question_scope": "ETPs over a computable discrete real subfield, rational bounded endpoints",
+    "hardness_reduction_to_our_bounded_commensurate_grammar_supplied": false,
+    "our_bounded_grammar_undecidable_claimed": false,
+    "unbounded_problem_domain": "[0,infinity)",
+    "url": "https://doi.org/10.4230/LIPIcs.MFCS.2026.65"
+  },
+  "context_references": [
+    {
+      "bytes": 2255,
+      "git_blob": "6005fc55e2d18e71639e6bc31cfbc1597bf4a915",
+      "path": "docs/machining-completeness/31-PB00701-COUPLED-BSPLINE-BOUNDARY.md",
+      "sha256": "7cc6704ee4636e498d4f8575dfaea35462f33effc20fbef6d45d994b416f4515",
+      "use": "NONEXECUTED_SOURCE_GRAMMAR_AND_PRIOR_BOUNDARY_REFERENCE"
+    },
+    {
+      "bytes": 19890,
+      "git_blob": "fe82029ab0360d422a9aea716157cf70b6fc9ec1",
+      "path": "research/machining-completeness/tasks/MC-038/pb00701-pfaffian-coefficient-boundary.json",
+      "sha256": "e83706632da095bfdcc0a49f688ffd3a149bcb9835730b1eacb7ac55e054ab05",
+      "use": "NONEXECUTED_SOURCE_GRAMMAR_AND_PRIOR_BOUNDARY_REFERENCE"
+    },
+    {
+      "bytes": 18701,
+      "git_blob": "a086b625e1a6dea8bd202699d161167bb69cc9e7",
+      "path": "research/machining-completeness/tasks/MC-038/pb00701_coupled_bspline_model.py",
+      "sha256": "2813a99ecc2bc179bf31f6c9166f9c3564516e67f2f256c0a984deee4ed0f692",
+      "use": "NONEXECUTED_SOURCE_GRAMMAR_AND_PRIOR_BOUNDARY_REFERENCE"
+    },
+    {
+      "bytes": 32903,
+      "git_blob": "2fe093dca21de8e6dc60e275825955ec0161f6ec",
+      "path": "research/machining-completeness/tasks/MC-038/pb00701_pfaffian_coefficient_boundary.py",
+      "sha256": "caaad914c59f0ae196051c2cd08562b0bf1771d9ebd15c7759a863a6f2596aba",
+      "use": "NONEXECUTED_SOURCE_GRAMMAR_AND_PRIOR_BOUNDARY_REFERENCE"
+    }
+  ],
+  "gates": {
+    "MC-1": "NOT_ESTABLISHED",
+    "MC-B": "NOT_ESTABLISHED",
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN",
+    "PB-007-03": "OPEN",
+    "PB-007-04": "OPEN",
+    "production_authorized": false
+  },
+  "primary_theorem_scope": {
+    "checked_statement_locations": [
+      "Proposition 5.1, printed page 30 (PDF index 29)",
+      "Proposition 5.2, printed page 31 (PDF index 30)"
+    ],
+    "checked_version": "arXiv:2301.05847v1",
+    "direct_rational_turn_coprime_no_common_root_transfer_refuted": true,
+    "direct_rational_turn_simple_root_transfer_refuted": true,
+    "original_analytic_substitution": "Y=tan(X)",
+    "original_polynomial_domain": "Q[X,Y]",
+    "original_theorems_disproved": false,
+    "paper_rational_coefficient_hypotheses_restored_by_rescaling": false,
+    "published_doi": "10.1016/j.jsc.2023.102250",
+    "published_full_algorithm_implemented": false,
+    "published_title": "Isolating all the real roots of a mixed trigonometric-polynomial",
+    "selected_analytic_substitution": "Y=tan(pi*T)",
+    "selected_polynomial_domain": "Q[T,Y]",
+    "url": "https://arxiv.org/pdf/2301.05847"
+  },
+  "proof_premises": {
+    "external_theorems": [
+      "pi is irrational"
+    ],
+    "machine_checked": [
+      "all original Bernstein controls and phase identity",
+      "exact global polynomial lowering",
+      "tangent denominator clearing",
+      "irreducibility discriminant/translation premises",
+      "coprime pair remainder and common point",
+      "positive square coefficient margin",
+      "original-source second-order Taylor jet",
+      "both original closed endpoint values",
+      "exact rescaling and nonrational coefficient ratio"
+    ],
+    "numeric_sampling_supplies_completeness": false,
+    "proof_assistant_formalization_claimed": false,
+    "reviewed_mathematical": [
+      "Gauss lemma and the quadratic criterion over ordered Q(T)",
+      "squares are nonnegative",
+      "standard sine/cosine/tangent identities and exact cardinal values",
+      "standard trigonometric differentiation",
+      "continuity and connected components after removal of a point"
+    ]
+  },
+  "resource_limits": {
+    "arithmetic_result_bits": 1024,
+    "depth": 24,
+    "json_bytes": 524288,
+    "nodes": 16384,
+    "polynomial_terms": 64,
+    "polynomial_total_degree": 6,
+    "rational_operand_bits": 256
+  },
+  "schema": "pb00701.mtp-irreducible-boundary.v1",
+  "scope": {
+    "all_26_operations_remain_required": true,
+    "all_exact_methods_excluded": false,
+    "frozen_corpus_additions": 0,
+    "general_impossibility_claimed": false,
+    "generic_owner_route_repaired": false,
+    "native_evidence_claimed": false,
+    "new_universal_analytic_solver": false,
+    "selected_new_fixture_count": 1
+  },
+  "source": {
+    "case_id": "research:pb00701:mtp-irreducible-boundary:quadratic-touch",
+    "historical_source_completion_claimed": false,
+    "scope": "NEW_RESEARCH_FIXTURE_OUTSIDE_FROZEN_FIFTY_SOURCE_COHORT",
+    "source_sha256": "8ec9541990fcacf2d2f4e55f5a52082f7b2e900fe21e46cb817a64c3ec9a293d",
+    "spec": {
+      "cos_splines": {
+        "0": {
+          "controls": [
+            "5/8",
+            "3/8",
+            "5/8"
+          ],
+          "degree": 2,
+          "knots": [
+            "1/2",
+            "1/2",
+            "1/2",
+            "3/2",
+            "3/2",
+            "3/2"
+          ]
+        },
+        "1": {
+          "controls": [
+            "-3/8",
+            "-5/8",
+            "-3/8"
+          ],
+          "degree": 2,
+          "knots": [
+            "1/2",
+            "1/2",
+            "1/2",
+            "3/2",
+            "3/2",
+            "3/2"
+          ]
+        }
+      },
+      "grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+      "parameter_hi": "3/2",
+      "parameter_lo": "1/2",
+      "phase_turn_offset": "0",
+      "phase_turn_rate": "1",
+      "sin_splines": {},
+      "source_parameter_id": "pb00701-mtp-irreducible-boundary-original-t"
+    }
+  },
+  "source_zero_set": {
+    "closed_domain": [
+      "1/2",
+      "3/2"
+    ],
+    "closed_root_count": 1,
+    "kind": "FINITE_ORIGINAL_SOURCE_ZERO_SET",
+    "maximal_nonzero_components": [
+      {
+        "component_id": "CELL_0",
+        "interval": [
+          "1/2",
+          "1"
+        ],
+        "left_included": true,
+        "right_included": false,
+        "sign": 1
+      },
+      {
+        "component_id": "CELL_1",
+        "interval": [
+          "1",
+          "3/2"
+        ],
+        "left_included": false,
+        "right_included": true,
+        "sign": 1
+      }
+    ],
+    "physical_zeros": [
+      {
+        "coordinate": {
+          "kind": "RATIONAL",
+          "value": "1"
+        },
+        "event_id": "ROOT_0",
+        "left_sign": 1,
+        "location": "SOURCE_SPAN_INTERIOR",
+        "order": {
+          "kind": "SMOOTH_MULTIPLICITY",
+          "value": 2
+        },
+        "original_source_piece_index": 0,
+        "right_sign": 1
+      }
+    ],
+    "source_exteriors": [
+      {
+        "coordinate": "1/2",
+        "side": "LEFT",
+        "sign": 1,
+        "value": "1"
+      },
+      {
+        "coordinate": "3/2",
+        "side": "RIGHT",
+        "sign": 1,
+        "value": "1"
+      }
+    ],
+    "true_interior_source_knots": []
+  },
+  "status": "ESTABLISHED_SELECTED_DOMAIN_BOUNDARY",
+  "symbolic_certificate": {
+    "amplitudes": {
+      "C0": [
+        {
+          "coefficient": "1",
+          "powers_T_Y_K": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "coefficient": "-1",
+          "powers_T_Y_K": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "coefficient": "1/2",
+          "powers_T_Y_K": [
+            2,
+            0,
+            0
+          ]
+        }
+      ],
+      "C1": [
+        {
+          "coefficient": "-1",
+          "powers_T_Y_K": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "coefficient": "1/2",
+          "powers_T_Y_K": [
+            2,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    "cleared_numerator": [
+      {
+        "coefficient": "1",
+        "powers_T_Y_K": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "coefficient": "1",
+        "powers_T_Y_K": [
+          0,
+          2,
+          0
+        ]
+      },
+      {
+        "coefficient": "-2",
+        "powers_T_Y_K": [
+          1,
+          0,
+          0
+        ]
+      },
+      {
+        "coefficient": "1",
+        "powers_T_Y_K": [
+          2,
+          0,
+          0
+        ]
+      }
+    ],
+    "coprime_pair": {
+      "analytic_binding": "tan(pi)=0",
+      "argument": "T-1 is irreducible and does not divide Y; substituting T=1 leaves Y",
+      "coprime_over_Q_T_Y": true,
+      "p": [
+        {
+          "coefficient": "-1",
+          "powers_T_Y_K": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "coefficient": "1",
+          "powers_T_Y_K": [
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "q": [
+        {
+          "coefficient": "1",
+          "powers_T_Y_K": [
+            0,
+            1,
+            0
+          ]
+        }
+      ],
+      "q_remainder_mod_p": [
+        {
+          "coefficient": "1",
+          "powers_T_Y_K": [
+            0,
+            1,
+            0
+          ]
+        }
+      ],
+      "rational_common_point": {
+        "T": "1",
+        "Y": "0"
+      }
+    },
+    "endpoints": [
+      {
+        "C0": [
+          {
+            "coefficient": "5/8",
+            "powers_T_Y_K": [
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "C1": [
+          {
+            "coefficient": "-3/8",
+            "powers_T_Y_K": [
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_tangent_chart_has_pole": true,
+        "coordinate": "1/2",
+        "cosine": "-1",
+        "original_source_value_established": true,
+        "original_turns": "1/2",
+        "sign": 1,
+        "value": "1"
+      },
+      {
+        "C0": [
+          {
+            "coefficient": "5/8",
+            "powers_T_Y_K": [
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "C1": [
+          {
+            "coefficient": "-3/8",
+            "powers_T_Y_K": [
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "auxiliary_tangent_chart_has_pole": true,
+        "coordinate": "3/2",
+        "cosine": "-1",
+        "original_source_value_established": true,
+        "original_turns": "3/2",
+        "sign": 1,
+        "value": "1"
+      }
+    ],
+    "formal_K_meaning": "pi",
+    "irreducibility": {
+      "algebraic_premises": [
+        "Q(T) admits an ordering",
+        "a square is nonnegative in an ordered field",
+        "quadratic factor criterion over a field of characteristic not two",
+        "Gauss lemma"
+      ],
+      "coefficient_field": "Q(T)",
+      "constant_coefficient_in_Y": [
+        {
+          "coefficient": "1",
+          "powers_T_Y_K": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "coefficient": "-2",
+          "powers_T_Y_K": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "coefficient": "1",
+          "powers_T_Y_K": [
+            2,
+            0,
+            0
+          ]
+        }
+      ],
+      "degree_in_Y": 2,
+      "discriminant_in_Y": [
+        {
+          "coefficient": "-4",
+          "powers_T_Y_K": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "coefficient": "8",
+          "powers_T_Y_K": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "coefficient": "-4",
+          "powers_T_Y_K": [
+            2,
+            0,
+            0
+          ]
+        }
+      ],
+      "irreducible_over_Q_T_Y": true,
+      "irreducible_over_complex_coefficients_claimed": false,
+      "leading_coefficient_in_Y": "1",
+      "linear_coefficient_in_Y": "0",
+      "nonsquare_argument": "A square equal to -(T-1)^2 would make -1 a square in the ordered field Q(T)",
+      "polynomial": [
+        {
+          "coefficient": "1",
+          "powers_T_Y_K": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "coefficient": "1",
+          "powers_T_Y_K": [
+            0,
+            2,
+            0
+          ]
+        },
+        {
+          "coefficient": "-2",
+          "powers_T_Y_K": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "coefficient": "1",
+          "powers_T_Y_K": [
+            2,
+            0,
+            0
+          ]
+        }
+      ],
+      "primitive_in_Q_T_Y": true,
+      "proof_kind": "EXACT_PREMISES_WITH_REVIEWED_ALGEBRAIC_ARGUMENT",
+      "translated_polynomial": [
+        {
+          "coefficient": "1",
+          "powers_T_Y_K": [
+            0,
+            2,
+            0
+          ]
+        },
+        {
+          "coefficient": "1",
+          "powers_T_Y_K": [
+            2,
+            0,
+            0
+          ]
+        }
+      ],
+      "translation": "T=D+1; translated T slot denotes D"
+    },
+    "jet": {
+      "C0_coefficients": [
+        [
+          {
+            "coefficient": "1/2",
+            "powers_T_Y_K": [
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        [],
+        [
+          {
+            "coefficient": "1/2",
+            "powers_T_Y_K": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      ],
+      "C1_coefficients": [
+        [
+          {
+            "coefficient": "-1/2",
+            "powers_T_Y_K": [
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        [],
+        [
+          {
+            "coefficient": "1/2",
+            "powers_T_Y_K": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      ],
+      "center": "1",
+      "cos_2piT_coefficients": [
+        [
+          {
+            "coefficient": "1",
+            "powers_T_Y_K": [
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        [],
+        [
+          {
+            "coefficient": "-2",
+            "powers_T_Y_K": [
+              0,
+              0,
+              2
+            ]
+          }
+        ]
+      ],
+      "first_derivative": [],
+      "local_symbol": "D=T-1; original phase remains T",
+      "physical_root_multiplicity": 2,
+      "second_derivative": [
+        {
+          "coefficient": "2",
+          "powers_T_Y_K": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "coefficient": "2",
+          "powers_T_Y_K": [
+            0,
+            0,
+            2
+          ]
+        }
+      ],
+      "second_derivative_positive_reason": "2*(1+pi^2)>=2>0",
+      "source_coefficients": [
+        [],
+        [],
+        [
+          {
+            "coefficient": "1",
+            "powers_T_Y_K": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "coefficient": "1",
+            "powers_T_Y_K": [
+              0,
+              0,
+              2
+            ]
+          }
+        ]
+      ]
+    },
+    "monomial_order": [
+      "T",
+      "Y",
+      "K"
+    ],
+    "original_tangent_chart": "Y=tan(pi*T), valid for 1/2<T<3/2",
+    "positivity": {
+      "delta": [
+        {
+          "coefficient": "-1",
+          "powers_T_Y_K": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "coefficient": "1",
+          "powers_T_Y_K": [
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "delta_interval": [
+        "-1/2",
+        "1/2"
+      ],
+      "delta_squared": [
+        {
+          "coefficient": "1",
+          "powers_T_Y_K": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "coefficient": "-2",
+          "powers_T_Y_K": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "coefficient": "1",
+          "powers_T_Y_K": [
+            2,
+            0,
+            0
+          ]
+        }
+      ],
+      "delta_squared_upper_bound": "1/4",
+      "identity": "F(T)=(T-1)^2+(1-(T-1)^2)*sin(pi*T)^2",
+      "source_lower_bound": "(T-1)^2",
+      "squared_sine_coefficient": [
+        {
+          "coefficient": "2",
+          "powers_T_Y_K": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "coefficient": "-1",
+          "powers_T_Y_K": [
+            2,
+            0,
+            0
+          ]
+        }
+      ],
+      "squared_sine_coefficient_lower_bound": "3/4",
+      "strict_unless_T_equals": "1"
+    },
+    "rescaling": {
+      "clearing_factor": "K^2",
+      "coefficient_X": "-2*K",
+      "coefficient_X_squared": "1",
+      "coefficient_field": "Q(pi)",
+      "coefficient_ratio": "-2*pi",
+      "displayed_polynomial_in_Q_X_Y": false,
+      "external_premise": "pi is irrational",
+      "new_coordinate": "X=K*T; polynomial T slot below denotes X",
+      "other_reductions_excluded": false,
+      "polynomial": [
+        {
+          "coefficient": "1",
+          "powers_T_Y_K": [
+            0,
+            0,
+            2
+          ]
+        },
+        {
+          "coefficient": "1",
+          "powers_T_Y_K": [
+            0,
+            2,
+            2
+          ]
+        },
+        {
+          "coefficient": "-2",
+          "powers_T_Y_K": [
+            1,
+            0,
+            1
+          ]
+        },
+        {
+          "coefficient": "1",
+          "powers_T_Y_K": [
+            2,
+            0,
+            0
+          ]
+        }
+      ],
+      "scalar_argument": "Any scalar making the X^2 coefficient rational is rational; its nonzero X coefficient would then force pi rational",
+      "scalar_rationalization_possible": false,
+      "substituting_X_equals_KT": [
+        {
+          "coefficient": "1",
+          "powers_T_Y_K": [
+            0,
+            0,
+            2
+          ]
+        },
+        {
+          "coefficient": "1",
+          "powers_T_Y_K": [
+            0,
+            2,
+            2
+          ]
+        },
+        {
+          "coefficient": "-2",
+          "powers_T_Y_K": [
+            1,
+            0,
+            2
+          ]
+        },
+        {
+          "coefficient": "1",
+          "powers_T_Y_K": [
+            2,
+            0,
+            2
+          ]
+        }
+      ]
+    },
+    "source_sha256": "8ec9541990fcacf2d2f4e55f5a52082f7b2e900fe21e46cb817a64c3ec9a293d",
+    "tangent_denominator": [
+      {
+        "coefficient": "1",
+        "powers_T_Y_K": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "coefficient": "1",
+        "powers_T_Y_K": [
+          0,
+          2,
+          0
+        ]
+      }
+    ]
+  }
+}
