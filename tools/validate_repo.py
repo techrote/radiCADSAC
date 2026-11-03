@@ -303,11 +303,38 @@ def validate_fixture(path: Path) -> None:
                 add_error(path, f"operation {caused} causes more than one revision")
             else:
                 caused_ops.add(caused)
+            # The journal has two independent parent pointers. A valid
+            # operation/revision pair must identify the same predecessor.
+            if (caused in operation_by_id
+                    and parent != operation_by_id[caused].get("parent_revision_id")):
+                add_error(path, f"revision {revision_id} parent disagrees with causing operation {caused}")
 
     if set(operation_by_id) != caused_ops:
         missing = sorted(set(operation_by_id) - caused_ops)
         if missing:
             add_error(path, f"operations without resulting revision: {missing}")
+
+    # An immutable revision history is rooted, not just a set of individually
+    # resolvable parent references. Detect cycles even when the corresponding
+    # operation parent pointers are consistently forged to match them.
+    revision_visiting: set[str] = set()
+    revision_checked: set[str] = set()
+
+    def visit_revision(revision_id: str) -> None:
+        if revision_id in revision_checked:
+            return
+        if revision_id in revision_visiting:
+            add_error(path, f"revision graph cycle detected at {revision_id}")
+            return
+        revision_visiting.add(revision_id)
+        parent = revision_by_id[revision_id].get("parent_revision_id")
+        if isinstance(parent, str) and parent in revision_by_id:
+            visit_revision(parent)
+        revision_visiting.remove(revision_id)
+        revision_checked.add(revision_id)
+
+    for revision_id in revision_by_id:
+        visit_revision(revision_id)
 
     for op_id, op in operation_by_id.items():
         parent_id = op.get("parent_revision_id")
