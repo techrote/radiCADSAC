@@ -49,19 +49,83 @@ MC_STATIC_COMMANDS = (
     "python3 tools/mc_workflow.py self-test",
 )
 
+def _static_event_paths(s, event, next_event):
+    """Read active positive paths entries for the checked-in MC static YAML layout.
+
+    Fail closed on unexpected list syntax; this is deliberately not a general
+    YAML parser or an assertion about arbitrary GitHub Actions workflows.
+    """
+    block = event_block(s, event, next_event)
+    lines = block.splitlines()
+    headers = [i for i, line in enumerate(lines) if line == "    paths:"]
+    if len(headers) != 1:
+        raise AssertionError(f"mc1-static: {event} requires exactly one positive paths list")
+    paths = set()
+    for line in lines[headers[0] + 1:]:
+        if line.startswith("      - "):
+            item = line[8:].strip()
+            if len(item) < 3 or item[0] not in ("'", '"') or item[-1] != item[0]:
+                raise AssertionError(f"mc1-static: {event} malformed path entry: {line}")
+            paths.add(item[1:-1])
+        elif not line.strip() or line.lstrip().startswith("#"):
+            continue
+        elif len(line) - len(line.lstrip(" ")) <= 4:
+            break
+        else:
+            raise AssertionError(f"mc1-static: {event} malformed positive paths list: {line}")
+    return paths
+
+
+def _static_run_commands(s):
+    """Find literal commands in unconditional steps[].run fields, not decoy text."""
+    if s.count("\njobs:\n") != 1:
+        raise AssertionError("mc1-static: expected one jobs section")
+    lines = s.split("\njobs:\n", 1)[1].splitlines()
+    if any(line.startswith("    if:") for line in lines):
+        raise AssertionError("mc1-static: conditional validation job is not qualified")
+    commands = set()
+    step = None
+
+    def add_step(step):
+        # Required validation commands must not be hidden behind step guards.
+        if any(line.startswith("        if:") for line in step):
+            return
+        for i, line in enumerate(step):
+            if not line.startswith("        run:"):
+                continue
+            value = line[len("        run:"):].strip()
+            if value in ("|", "|-", ">", ">-"):
+                for subline in step[i + 1:]:
+                    if subline and not subline.startswith("          "):
+                        break
+                    statement = subline.strip()
+                    if statement and not statement.startswith("#"):
+                        commands.add(statement)
+            elif value and not value.startswith("#"):
+                commands.add(value)
+
+    for line in lines + ["      - __END__"]:
+        if line.startswith("      - "):
+            if step is not None:
+                add_step(step)
+            step = [line]
+        elif step is not None:
+            step.append(line)
+    return commands
+
+
 def validate_mc_static(s):
-    # Running a validator is not enough: edits to each invoked validator
-    # must independently dispatch this workflow on PRs and main pushes.
+    # Paths and actual run commands are independently mandatory: stray text,
+    # comments, echo strings, and conditionally disabled steps cannot satisfy.
     for event, next_event in (("push", "pull_request"), ("pull_request", "permissions")):
-        block = event_block(s, event, next_event)
-        if "\n    paths:\n" not in block:
-            raise AssertionError(f"mc1-static: {event} lost positive paths routing")
+        paths = _static_event_paths(s, event, next_event)
         for path in MC_STATIC_INPUTS:
-            if f"      - '{path}'" not in block:
+            if path not in paths:
                 raise AssertionError(f"mc1-static: {event} does not watch {path}")
+    commands = _static_run_commands(s)
     for command in MC_STATIC_COMMANDS:
-        if command not in s:
-            raise AssertionError(f"mc1-static: missing validation command {command}")
+        if command not in commands:
+            raise AssertionError(f"mc1-static: missing active validation command {command}")
 
 def validate():
     for n in sorted(BROAD):
@@ -107,6 +171,40 @@ def self_test():
         pass
     else:
         raise AssertionError("failed to reject missing baseline validation step")
+    # Active YAML structure matters, not just the presence of a matching substring.
+    def reject_static(mutant, label):
+        if mutant == mc:
+            raise AssertionError(f"self-test did not mutate {label}")
+        try:
+            validate_mc_static(mutant)
+        except AssertionError:
+            pass
+        else:
+            raise AssertionError(f"failed to reject {label}")
+
+    for event, next_event in (("push", "pull_request"), ("pull_request", "permissions")):
+        block = event_block(mc, event, next_event)
+        marker = "      - 'tools/validate_repo.py'\\n"
+        # Prefixing # leaves the old substring intact but disables its route.
+        reject_static(mc.replace(block, block.replace(marker, "#" + marker, 1), 1),
+                      f"{event} commented-out route")
+        # An identically spelled path under a different event key is not a route.
+        reject_static(mc.replace(block, block.replace(marker, "", 1) +
+                                 "    branches:\\n" + marker, 1),
+                      f"{event} path under branches")
+
+    baseline_run = "        run: python3 tools/validate_repo.py"
+    for label, decoy in (
+        ("echo decoy", "        run: echo python3 tools/validate_repo.py"),
+        ("quoted comment decoy", "        run: echo '# python3 tools/validate_repo.py'"),
+        ("non-run field", "        with: python3 tools/validate_repo.py"),
+        ("guarded validation step", "        if: false\\n        run: python3 tools/validate_repo.py"),
+        ("multiline shell comment", "        run: |\\n          # python3 tools/validate_repo.py"),
+    ):
+        reject_static(mc.replace(baseline_run, decoy, 1), label)
+    reject_static(mc.replace("          python3 tools/mc_workflow.py self-test",
+                            "          echo python3 tools/mc_workflow.py self-test", 1),
+                  "multiline echo decoy")
     print("MC-1 CI impact self-test passed")
 if __name__=="__main__":
     p=argparse.ArgumentParser(); p.add_argument("--self-test",action="store_true"); a=p.parse_args()
