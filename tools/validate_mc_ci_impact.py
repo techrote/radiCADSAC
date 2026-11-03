@@ -202,8 +202,13 @@ def self_test():
         ("multiline shell comment", "        run: |\n          # python3 tools/validate_repo.py"),
     ):
         reject_static(mc.replace(baseline_run, decoy, 1), label)
-    reject_static(mc.replace("          python3 tools/mc_workflow.py self-test",
-                            "          echo python3 tools/mc_workflow.py self-test", 1),
+    # MC workflow is inline in the real source. Convert it to a multiline
+    # step before introducing an inert echo (not a nonexistent source line).
+    workflow_run = "        run: python3 tools/mc_workflow.py self-test"
+    validate_mc_static(mc.replace(workflow_run,
+                                  "        run: |\n          python3 tools/mc_workflow.py self-test", 1))
+    reject_static(mc.replace(workflow_run,
+                             "        run: |\n          echo python3 tools/mc_workflow.py self-test", 1),
                   "multiline echo decoy")
     print("MC-1 CI impact self-test passed")
 if __name__=="__main__":
