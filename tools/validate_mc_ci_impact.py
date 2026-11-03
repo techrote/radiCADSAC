@@ -105,6 +105,9 @@ def _static_run_commands(s):
     """Find literal commands in unconditional steps[].run fields, not decoy text."""
     if s.count("\njobs:\n") != 1:
         raise AssertionError("mc1-static: expected one jobs section")
+    if "defaults:" in s.splitlines():
+        # Workflow-level run.shell can replace the executor for all steps.
+        raise AssertionError("mc1-static: workflow-wide shell defaults are not qualified")
     lines = s.split("\njobs:\n", 1)[1].splitlines()
     if any(line.startswith("    if:") for line in lines):
         raise AssertionError("mc1-static: conditional validation job is not qualified")
@@ -268,6 +271,9 @@ def self_test():
     reject_static(mc.replace("    runs-on: ubuntu-24.04",
                              "    defaults:\n      run:\n        shell: 'echo {0}'\n    runs-on: ubuntu-24.04", 1),
                   "custom job default shell")
+    reject_static(mc.replace("permissions:\n",
+                             "defaults:\n  run:\n    shell: 'echo {0}'\npermissions:\n", 1),
+                  "custom workflow default shell")
     # MC workflow is inline in the real source. Convert it to a multiline
     # step before introducing an inert echo (not a nonexistent source line).
     workflow_run = "        run: python3 tools/mc_workflow.py self-test"
