@@ -131,9 +131,10 @@ class MixedComponents(unittest.TestCase):
         self.assertIn("RATIONAL_BIT_BUDGET",r["reason"])
         self.assertFalse(r["is_truth_value"])
         s=source([Q(0)]*3,[Q(-1),Q(1),Q(0)])
-        s["source_parameter_id"]="x"*16000
+        s["source_parameter_id"]="x"*20000
         r=m.attempt(s)
-        self.assertIn(r["status"],("BLOCKED","RESOURCE_REFUSAL"))
+        self.assertEqual(r["status"],"RESOURCE_REFUSAL")
+        self.assertIn("SOURCE_BYTE_BUDGET",r["reason"])
         self.assertFalse(r["is_truth_value"])
 
     def test_unsplit_irrational_quadratic_fails_closed(self):
