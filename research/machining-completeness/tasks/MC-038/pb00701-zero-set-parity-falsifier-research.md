@@ -62,7 +62,7 @@ Machine before/after record: `pb00701-zero-set-parity-falsifier.json`. All calcu
 
 ## Exact historical denominator and evidence classification
 
-Pinned v54 original corpus Git blob: `5841c331579489b25caef38cd412bdbf286f9134`. Pinned v2 supplemental registry Git blob: `e52d3baf3692a011cf86234eeaa992ef407d99`.
+Pinned v54 original corpus Git blob: `5841c331579489b25caef38cd412bdbf286f9134`. Pinned v2 supplemental registry Git blob: `e52d3baf3692a011cf86234eeaa992ef407d99fd`.
 
 | Population | Before | After | Delta |
 |---|---:|---:|---:|
