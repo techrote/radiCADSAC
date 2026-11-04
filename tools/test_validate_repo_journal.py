@@ -63,6 +63,32 @@ def main() -> None:
     self_loop["journal"]["operations"][1]["parent_revision_id"] = "rev:2"
     assert_rejected(self_loop, "revision graph cycle detected")
 
+    # A transition is allowed to be malformed input, not an excuse for an
+    # unhandled KeyError or TypeError after the ordinary journal error.
+    missing_parent = copy.deepcopy(mill)
+    missing_parent["journal"]["operations"][1]["parent_revision_id"] = "rev:missing"
+    assert_rejected(missing_parent, "references missing parent revision 'rev:missing'")
+
+    invalid_parent_bodies = copy.deepcopy(mill)
+    invalid_parent_bodies["journal"]["revisions"][1]["body_ids"] = None
+    assert_rejected(invalid_parent_bodies, "parent revision has invalid body_ids")
+
+    invalid_input = copy.deepcopy(mill)
+    invalid_input["journal"]["material_body_transitions"][0]["input_body_ids"] = [["body:stock"]]
+    assert_rejected(invalid_input, "has invalid/duplicate input body IDs")
+
+    repeated_input = copy.deepcopy(mill)
+    repeated_input["journal"]["material_body_transitions"][0]["input_body_ids"] = ["body:stock", "body:stock"]
+    assert_rejected(repeated_input, "has invalid/duplicate input body IDs")
+
+    invalid_output = copy.deepcopy(mill)
+    invalid_output["journal"]["material_body_transitions"][0]["output_bodies"][0]["body_id"] = ["body:left"]
+    assert_rejected(invalid_output, "has invalid/duplicate output bodies")
+
+    invalid_committed_bodies = copy.deepcopy(mill)
+    invalid_committed_bodies["journal"]["revisions"][2]["body_ids"] = None
+    assert_rejected(invalid_committed_bodies, "committed revision has invalid body_ids")
+
     # Long legitimate immutable journals are normal engineering inputs.
     # This controls against introducing a recursive traversal limit.
     long_journal = copy.deepcopy(lathe)
@@ -85,7 +111,7 @@ def main() -> None:
     long_journal["expected_journal_invariants"]["process_motion_count"] = 0
     assert not check(long_journal), "valid 1,500-revision history must pass without recursion errors"
 
-    print("RCS-002 revision lineage: three accepted controls, four adversarial refusals passed")
+    print("RCS-002 revision lineage: three accepted controls, ten adversarial refusals passed")
 
 
 if __name__ == "__main__":
