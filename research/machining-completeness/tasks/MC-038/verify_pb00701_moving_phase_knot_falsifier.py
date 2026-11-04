@@ -10,6 +10,53 @@ from fractions import Fraction as Q
 import pb00701_moving_phase_knot_falsifier as m
 
 
+def verify_historical_census():
+    """Read actual frozen v54 sources and qualified v2 rows, not saved totals."""
+    from collections import Counter
+    from pathlib import Path
+    import hashlib
+
+    here = Path(__file__).resolve().parent
+    v54 = json.loads((here / "pb00701-finite-owner-corpus-v54.json").read_text())
+    v2 = json.loads((here / "pb00701-post-v54-evidence-reconciliation-v2.json").read_text())
+    original = {c["id"]: c for c in v54["cases"]}
+    rows = v2["source_cases"]
+    assert len(original) == len(v54["cases"]) == 121
+    assert len(rows) == len({r["case_id"] for r in rows}) == 50
+    assert v2["frozen_corpus_git_blob"] == "5841c331579489b25caef38cd412bdbf286f9134"
+    assert v2["historical_v54"] == {
+        "original_source_cases": 121, "route_refusals": 20,
+        "missing_ordered_span_premises": 30, "dispositions_changed": False
+    }
+    observed = Counter()
+    for row in rows:
+        prior = original[row["case_id"]]
+        assert row["historical_v54_disposition"] == prior["expected"]["v54_disposition"]
+        assert row["source_sha256"] == hashlib.sha256(
+            m.canonical(prior["spec"])).hexdigest()
+        assert row["registered_evidence_level"] == "COMPLETE_SOURCE_SPECIFIC"
+        assert row["historical_disposition_changed"] is False
+        observed[row["historical_v54_disposition"]] += 1
+    assert observed == {
+        "BLOCKED": 20,
+        "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE": 30
+    }
+    old_unresolved = {c["id"] for c in v54["cases"] if
+                      c["expected"]["v54_disposition"] != "CERTIFIED"}
+    assert old_unresolved == {r["case_id"] for r in rows}
+    assert m.source_binding(m.SOURCE) not in {r["source_sha256"] for r in rows}
+    s = v2["summary"]
+    assert s["by_registered_evidence_level"] == {
+        "COMPLETE_SOURCE_SPECIFIC": 50, "PARTIAL_REFUSED_TAIL_ONLY": 0,
+        "PARTIAL_ORDERED_CHILD": 0,
+        "NO_REGISTERED_SOURCE_EVENT_OR_ORDER_WITNESS": 0
+    }
+    assert s["complete_finite_sources"] == 49 and s["complete_continuum_sources"] == 1
+    assert s["newly_completed_original_sources"] == 35
+    return {"historical_cases": len(original), "historical_unresolved": len(rows),
+            "now_source_specific_complete": 50, "new_historical_completions": 0}
+
+
 class FalsifierTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -118,6 +165,9 @@ class FalsifierTests(unittest.TestCase):
             self.assertEqual(m.validate_report(self.spec, report)["status"],
                              "BLOCKED")
 
+    def test_historical_registry_source_ids_are_exact(self):
+        self.assertEqual(verify_historical_census()["new_historical_completions"], 0)
+
     def test_historical_census_unchanged(self):
         r = self.truth
         self.assertEqual((r["historical_121_source_denominator"],
@@ -153,6 +203,7 @@ def main():
     if not (args.self_test or args.contract):
         parser.error("select --self-test and/or --contract")
     if args.contract:
+        verify_historical_census()
         actual=m.analyze(m.SOURCE)
         assert m.validate_report(m.SOURCE,actual)==actual
         with open(__file__.rsplit("/",1)[0]+"/pb00701-moving-phase-knot-falsifier.json",
