@@ -30,7 +30,7 @@ python3 research/machining-completeness/tasks/MC-045/campaign_harness.py self-te
 python3 tools/validate_machining_completeness.py --self-test
 ```
 
-Twelve explicitly asserted synthetic controls: complete and partial positive classifications; missing stderr after stdout capture; orphan stdout before ledger commit; committed row with missing stdout; torn trailing JSONL; modified capture digest; duplicate attempt identity; skipped repeat group; capture symlink; ledger symlink; and preserved non-PASS CRASH terminal. The targeted workflow `.github/workflows/mc1-mc047-replay-preflight.yml` executes the contract and upstream self-test with pinned Python 3.12 on Ubuntu 24.04. Tests write exclusively to temporary local directories and do not execute native geometry, paid jobs or network requests.
+Thirteen explicitly asserted synthetic controls: complete and partial positive classifications; missing stderr after stdout capture; orphan stdout before ledger commit; committed row with missing stdout; torn trailing JSONL; modified capture digest; duplicate attempt identity; skipped repeat group; capture symlink; ledger symlink; preserved non-PASS CRASH terminal; and an injected post-hash/pre-snapshot capture mutation. The targeted workflow `.github/workflows/mc1-mc047-replay-preflight.yml` executes the contract and upstream self-test with pinned Python 3.12 on Ubuntu 24.04. Tests write exclusively to temporary local directories and do not execute native geometry, paid jobs or network requests.
 
 ## Known limitations / explicit NON-CLAIMS
 
