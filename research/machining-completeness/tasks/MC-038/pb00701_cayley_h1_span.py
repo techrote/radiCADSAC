@@ -33,7 +33,11 @@ class Root:
     denominator: Q
     order: int
     def sign(self):
-        return surd_sign(self.numerator, self.radical_sign, self.radical_square)*sgn(self.denominator)
+        return self.compare(Q(0))
+    def compare(self, rational):
+        """Exact sign of this signed-radical z minus a rational tan boundary."""
+        return surd_sign(self.numerator-rational*self.denominator,
+                         self.radical_sign,self.radical_square)*sgn(self.denominator)
     def as_dict(self):
         return dict(numerator=str(self.numerator),radical_sign=self.radical_sign,radical_square=str(self.radical_square),denominator=str(self.denominator),order=self.order)
 
@@ -50,23 +54,28 @@ def finite_cayley_roots(A,C,S):
         return [Root(-A,0,Q(0),S,1)]  # z=-A/S
     return []
 
-def integer_half(v): return (2*v).denominator==1
+def integer_quarter(v): return (4*v).denominator==1
 
 def phase_cmp_root_to_boundary(n,root,endpoint):
-    """compare n+atan(root)/pi vs integer/half-integer endpoint."""
+    """Compare n+atan(z)/pi with an exact integer-quarter phase boundary."""
     if endpoint<=Q(2*n-1,2): return 1
     if endpoint>=Q(2*n+1,2): return -1
-    if endpoint!=Q(n): raise Refusal('endpoint not half-integer')
-    return root.sign()
+    offset=endpoint-Q(n)
+    if offset==Q(-1,4): return root.compare(Q(-1))
+    if offset==Q(0): return root.sign()
+    if offset==Q(1,4): return root.compare(Q(1))
+    raise Refusal('endpoint not an admitted quarter-turn')
 
 def source_sign(A,C,S,p,on_right):
-    """Exact germ to the phase-right or phase-left at p in 1/2 Z."""
-    co=1 if p.denominator==1 else -1
-    f=A+co*C
+    """Physical one-sided nonzero germ at integer-quarter phase, no division."""
+    if not integer_quarter(p): raise Refusal('endpoint not quarter-turn')
+    residue=(4*p).numerator%4
+    co,si={0:(1,0),1:(0,1),2:(-1,0),3:(0,-1)}[residue]
+    f=A+co*C+si*S
     if f: return sgn(f)
-    deriv=co*S
+    deriv=co*S-si*C
     if deriv: return sgn(deriv)*(1 if on_right else -1)
-    if A: return sgn(A)  # double zero, same-sided sign
+    if A: return sgn(A)  # exact second order and same-sided sign
     raise Refusal('identity must be handled separately')
 
 def certify_span(*,lo,hi,offset,rate,A,C,S,max_strips=64):
@@ -74,7 +83,7 @@ def certify_span(*,lo,hi,offset,rate,A,C,S,max_strips=64):
     if not all(isinstance(v,Q) for v in vals): raise Refusal('all input must be exact Fractions')
     if lo>=hi or rate<=0: raise Refusal('invalid domain/rate')
     p0=offset+rate*lo; p1=offset+rate*hi
-    if not (integer_half(p0) and integer_half(p1)): raise Refusal('phase endpoints not in 1/2 Z')
+    if not (integer_quarter(p0) and integer_quarter(p1)): raise Refusal('phase endpoints not in 1/4 Z')
     if p1-p0>max_strips: raise Refusal('bounded-resource refusal; not a mathematical zero claim')
     if A==C==S==0:
         return dict(kind='IDENTITY_ZERO',phase_interval=[str(p0),str(p1)],events=[],sign_cells=[],zero_component=[str(lo),str(hi)],phase_rate=str(rate))
@@ -123,6 +132,13 @@ def self_test():
     assert v10['sign_cells']==[-1,1,-1,1,-1]
     v11=certify_span(lo=Q(1),hi=Q(2),offset=Q(0),rate=Q(2),A=Q(0),C=Q(1,8),S=Q(1))
     assert len(v11['events'])==4 and v11['sign_cells']==[1,-1,1,-1,1]
+    # Original frozen V8 tail0 V27-refused child: finite-z-only Cayley misses
+    # its physical simple root at tan(pi*phase) = infinity.
+    v8=certify_span(lo=Q(1),hi=Q(2),offset=Q(-1,4),rate=Q(1,2),A=Q(0),C=Q(0),S=Q(1,2))
+    assert len(v8['events'])==1 and v8['events'][0]['kind']=='PHASE_POLE_ZERO'
+    assert v8['events'][0]['phase']=='1/2' and v8['events'][0]['order']==1
+    assert v8['sign_cells']==[1,-1] and v8['endpoint_zeros']==[False,False]
+    assert len(finite_cayley_roots(Q(0),Q(0),Q(1,2)))==1  # finite root z=0 lies OUTSIDE this child
     assert c(0,0,0,0,1)['kind']=='IDENTITY_ZERO'
     assert c(2,1,0,0,1)['events']==[]
     assert c(-2,1,0,0,1)['sign_cells']==[-1]
@@ -134,7 +150,7 @@ def self_test():
     assert len(near['events'])==2 and near['sign_cells']==[1,-1,1]
     ep=c(1,0,1,Q(-1,2),Q(1,2))
     assert len(ep['events'])==1 and ep['events'][0]['order']==2 and ep['sign_cells']==[1,1]
-    for p0,p1 in [(Q(0),Q(1,4)),(Q(0),Q(100)),(Q(1),Q(0))]:
+    for p0,p1 in [(Q(0),Q(1,8)),(Q(0),Q(100)),(Q(1),Q(0))]:
         try: c(0,1,0,p0,p1); assert False
         except Refusal: pass
     assert surd_sign(Q(-1),1,Q(1))==0
