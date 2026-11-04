@@ -68,7 +68,7 @@ class FalsifierTests(unittest.TestCase):
         self.assertEqual(sha, self.truth["source_sha256"])
         self.assertEqual(coeffs["0"], ((Q(0), Q(0), Q(1,2)),)*2)
         self.assertEqual(coeffs["1"][0], (Q(0), Q(0), Q(1,2)))
-        self.assertEqual(coeffs["1"][1], (Q(0), Q(0), Q(-1,2))))
+        self.assertEqual(coeffs["1"][1], (Q(0), Q(0), Q(-1,2)))
         self.assertEqual([m.poly_eval(coeffs["0"][0], t)
                           for t in [Q(-1), Q(-1,2), Q(0)]],
                          [Q(1,2), Q(1,8), Q(0)])
