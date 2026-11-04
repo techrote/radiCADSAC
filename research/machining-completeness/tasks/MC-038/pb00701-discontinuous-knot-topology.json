@@ -1,0 +1,220 @@
+{
+  "schema": "radicadsac-mc038-discontinuous-knot-topology/1.0",
+  "status": "EXACT_SOURCE_BOUND_NEGATIVE_C_RESEARCH",
+  "claim": "C_DISCONTINUOUS_KNOT_CLOSED_ONLY_AND_ZERO_SET_ONLY_TRANSFER_FALSIFIED",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "primary_source_sha256": "4860a921cea8332762d2db3f5aaeafa286593b230299f44d07ffc3a9bbcbd136",
+  "right_internal_original_source": {
+    "schema": "radicadsac-mc038-discontinuous-knot-topology/1.0",
+    "status": "EXACT_BOUNDED_ORIGINAL_SOURCE_KNOT_TOPOLOGY_RESEARCH",
+    "evidence_class": "DETERMINISTIC_MODEL",
+    "source_sha256": "4860a921cea8332762d2db3f5aaeafa286593b230299f44d07ffc3a9bbcbd136",
+    "source_parameter_id": "source-time-t",
+    "original_interval": [
+      "0",
+      "2"
+    ],
+    "true_original_knot": "1",
+    "phase_turn_law": {
+      "offset": "0",
+      "rate": "1/16"
+    },
+    "phase_turn_endpoints": [
+      "0",
+      "1/8"
+    ],
+    "phase_sector": "STRICTLY_POSITIVE_COSINE",
+    "original_degree_zero_controls": [
+      "0",
+      "1"
+    ],
+    "knot_point_policy": "RIGHT_CONTINUOUS_INTERNAL_WITH_TERMINAL_CLAMP",
+    "original_open_piece_zero_relations": [
+      "IDENTITY_ZERO",
+      "NONZERO"
+    ],
+    "left_one_sided_sign": 0,
+    "right_one_sided_sign": 1,
+    "actual_knot_point_sign": 1,
+    "actual_knot_point_zero": false,
+    "physical_continuity_at_knot": false,
+    "maximal_zero_components": [
+      {
+        "lo": "0",
+        "hi": "1",
+        "left_closed": true,
+        "right_closed": false,
+        "relation": "ZERO"
+      }
+    ],
+    "maximal_constant_sign_components": [
+      {
+        "lo": "1",
+        "hi": "2",
+        "left_closed": true,
+        "right_closed": true,
+        "relation": "POSITIVE"
+      }
+    ],
+    "zero_set_relatively_closed": false,
+    "closed_components_only_complete": false,
+    "isolated_finite_root_list_complete": false,
+    "global_smooth_knot_multiplicity_claimed": false,
+    "historical_v54_admitted": false,
+    "pb00701_certified": false,
+    "mc_b_established": false,
+    "mc1_established": false,
+    "native_step_qualified": false,
+    "production_authorized": false
+  },
+  "left_internal_counterfactual_same_open_pieces": {
+    "schema": "radicadsac-mc038-discontinuous-knot-topology/1.0",
+    "status": "EXACT_BOUNDED_ORIGINAL_SOURCE_KNOT_TOPOLOGY_RESEARCH",
+    "evidence_class": "DETERMINISTIC_MODEL",
+    "source_sha256": "4860a921cea8332762d2db3f5aaeafa286593b230299f44d07ffc3a9bbcbd136",
+    "source_parameter_id": "source-time-t",
+    "original_interval": [
+      "0",
+      "2"
+    ],
+    "true_original_knot": "1",
+    "phase_turn_law": {
+      "offset": "0",
+      "rate": "1/16"
+    },
+    "phase_turn_endpoints": [
+      "0",
+      "1/8"
+    ],
+    "phase_sector": "STRICTLY_POSITIVE_COSINE",
+    "original_degree_zero_controls": [
+      "0",
+      "1"
+    ],
+    "knot_point_policy": "LEFT_CONTINUOUS_INTERNAL_COUNTERFACTUAL",
+    "original_open_piece_zero_relations": [
+      "IDENTITY_ZERO",
+      "NONZERO"
+    ],
+    "left_one_sided_sign": 0,
+    "right_one_sided_sign": 1,
+    "actual_knot_point_sign": 0,
+    "actual_knot_point_zero": true,
+    "physical_continuity_at_knot": false,
+    "maximal_zero_components": [
+      {
+        "lo": "0",
+        "hi": "1",
+        "left_closed": true,
+        "right_closed": true,
+        "relation": "ZERO"
+      }
+    ],
+    "maximal_constant_sign_components": [
+      {
+        "lo": "1",
+        "hi": "2",
+        "left_closed": false,
+        "right_closed": true,
+        "relation": "POSITIVE"
+      }
+    ],
+    "zero_set_relatively_closed": true,
+    "closed_components_only_complete": true,
+    "isolated_finite_root_list_complete": false,
+    "global_smooth_knot_multiplicity_claimed": false,
+    "historical_v54_admitted": false,
+    "pb00701_certified": false,
+    "mc_b_established": false,
+    "mc1_established": false,
+    "native_step_qualified": false,
+    "production_authorized": false
+  },
+  "sign_jump_source_sha256": "97c4d80e91b4bee8a018d97ea7c1b3b8e7c3765cd37a7e4590f3caef98a4fb51",
+  "sign_jump_no_zero_control": {
+    "schema": "radicadsac-mc038-discontinuous-knot-topology/1.0",
+    "status": "EXACT_BOUNDED_ORIGINAL_SOURCE_KNOT_TOPOLOGY_RESEARCH",
+    "evidence_class": "DETERMINISTIC_MODEL",
+    "source_sha256": "97c4d80e91b4bee8a018d97ea7c1b3b8e7c3765cd37a7e4590f3caef98a4fb51",
+    "source_parameter_id": "source-time-t",
+    "original_interval": [
+      "0",
+      "2"
+    ],
+    "true_original_knot": "1",
+    "phase_turn_law": {
+      "offset": "0",
+      "rate": "1/16"
+    },
+    "phase_turn_endpoints": [
+      "0",
+      "1/8"
+    ],
+    "phase_sector": "STRICTLY_POSITIVE_COSINE",
+    "original_degree_zero_controls": [
+      "1",
+      "-1"
+    ],
+    "knot_point_policy": "RIGHT_CONTINUOUS_INTERNAL_WITH_TERMINAL_CLAMP",
+    "original_open_piece_zero_relations": [
+      "NONZERO",
+      "NONZERO"
+    ],
+    "left_one_sided_sign": 1,
+    "right_one_sided_sign": -1,
+    "actual_knot_point_sign": -1,
+    "actual_knot_point_zero": false,
+    "physical_continuity_at_knot": false,
+    "maximal_zero_components": [],
+    "maximal_constant_sign_components": [
+      {
+        "lo": "0",
+        "hi": "1",
+        "left_closed": true,
+        "right_closed": false,
+        "relation": "POSITIVE"
+      },
+      {
+        "lo": "1",
+        "hi": "2",
+        "left_closed": true,
+        "right_closed": true,
+        "relation": "NEGATIVE"
+      }
+    ],
+    "zero_set_relatively_closed": true,
+    "closed_components_only_complete": true,
+    "isolated_finite_root_list_complete": true,
+    "global_smooth_knot_multiplicity_claimed": false,
+    "historical_v54_admitted": false,
+    "pb00701_certified": false,
+    "mc_b_established": false,
+    "mc1_established": false,
+    "native_step_qualified": false,
+    "production_authorized": false
+  },
+  "finite_union_of_closed_sets_cannot_equal_half_open": true,
+  "point_policy_must_be_bound_to_actual_original_source": true,
+  "no_general_analytic_solver_impossibility_claim": true,
+  "historical_source_denominator_before_after": [
+    121,
+    121
+  ],
+  "historical_route_refusals_before_after": [
+    20,
+    20
+  ],
+  "historical_missing_premises_before_after": [
+    30,
+    30
+  ],
+  "complete_source_specific_before_after": [
+    50,
+    50
+  ],
+  "new_historical_case_ids_closed": [],
+  "pb00701_certified": false,
+  "mc_b_established": false,
+  "mc1_established": false,
+  "production_authorized": false
+}
