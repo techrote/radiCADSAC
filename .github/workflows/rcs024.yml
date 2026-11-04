@@ -49,7 +49,9 @@ jobs:
 
   differential-linux:
     needs: validate-rcs024
-    runs-on: ubuntu-latest
+    # Differential footprint evidence was frozen on Ubuntu 24.04. Floating
+    # ubuntu-latest now selects 26.04, changing binaries and their GLIBC ABI.
+    runs-on: ubuntu-24.04
     timeout-minutes: 50
     env:
       RCS006_OCCT_PREFIX: ${{ github.workspace }}/.deps/rcs006/occt-8.0.1
@@ -61,16 +63,17 @@ jobs:
       - name: Prepare diagnostic artifact directory
         run: mkdir -p .results/rcs024/bootstrap
       - name: Restore baseline OCCT cache
+        id: baseline-cache
         uses: actions/cache/restore@v4
         with:
           path: .deps/rcs006/occt-8.0.1
-          key: rcs006-occt-8.0.1-${{ runner.os }}-${{ hashFiles('research/rcs-006/harness/bootstrap_occt.sh') }}
+          key: rcs006-occt-8.0.1-ubuntu2404-${{ hashFiles('research/rcs-006/harness/bootstrap_occt.sh') }}
       - name: Restore candidate OCCT cache
         id: candidate-cache
         uses: actions/cache/restore@v4
         with:
           path: .deps/rcs024/occt-8.1.0-dev1
-          key: rcs024-occt-3d097a0328e71b826377d4814ab05ec3c3d23871-${{ runner.os }}-${{ hashFiles('research/rcs-024/bootstrap_candidate.sh') }}
+          key: rcs024-occt-3d097a0328e71b826377d4814ab05ec3c3d23871-ubuntu2404-${{ hashFiles('research/rcs-024/bootstrap_candidate.sh') }}
       - name: Ensure Ninja
         run: |
           if ! command -v ninja >/dev/null 2>&1; then sudo apt-get update && sudo apt-get install -y ninja-build; fi
@@ -81,12 +84,18 @@ jobs:
           bash research/rcs-006/harness/bootstrap_occt.sh 2>&1 | tee .results/rcs024/bootstrap/baseline-bootstrap.log
           bash research/rcs-006/harness/verify_occt_install.sh 2>&1 | tee .results/rcs024/bootstrap/baseline-verify.log
           bash research/rcs-024/bootstrap_candidate.sh 2>&1 | tee .results/rcs024/bootstrap/candidate-bootstrap.log
+      - name: Save Ubuntu-24.04 baseline OCCT cache after verified bootstrap
+        if: steps.baseline-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: .deps/rcs006/occt-8.0.1
+          key: rcs006-occt-8.0.1-ubuntu2404-${{ hashFiles('research/rcs-006/harness/bootstrap_occt.sh') }}
       - name: Save candidate cache
         if: steps.candidate-cache.outputs.cache-hit != 'true'
         uses: actions/cache/save@v4
         with:
           path: .deps/rcs024/occt-8.1.0-dev1
-          key: rcs024-occt-3d097a0328e71b826377d4814ab05ec3c3d23871-${{ runner.os }}-${{ hashFiles('research/rcs-024/bootstrap_candidate.sh') }}
+          key: rcs024-occt-3d097a0328e71b826377d4814ab05ec3c3d23871-ubuntu2404-${{ hashFiles('research/rcs-024/bootstrap_candidate.sh') }}
       - name: Configure and build baseline probes
         shell: bash
         run: |
