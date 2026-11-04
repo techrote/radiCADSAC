@@ -17,7 +17,7 @@ python3 tools/validate_machining_completeness.py --self-test
 python3 tools/validate_machining_completeness.py
 ```
 
-New synthetic negative: while an exclusive lock exists, a valid next attempt must fail without changing either the ledger or the existing lock. Positive: removal of that test-owned lock allows exactly one valid append, yields an ordered two-row ledger, and leaves no lock behind. A corrupt JSONL prefix must still refuse append and release its own temporary lock. An adversarial deleted/recreated lock must refuse release without deleting the replacement owner file. Existing replay/digest/permit/capture negative tests remain.
+New synthetic negative: while an exclusive lock exists, a valid next attempt must fail without changing either the ledger or the existing lock. Positive: removal of that test-owned lock allows exactly one valid append, yields an ordered two-row ledger, and leaves no lock behind. A corrupt JSONL prefix must still refuse append and release its own temporary lock. An adversarial deleted/recreated lock must refuse release without deleting the replacement owner file (POSIX-only forced replacement; Windows generally denies deletion of an open lock handle). Existing replay/digest/permit/capture negative tests remain.
 
 ## Boundaries / next prerequisite
 
