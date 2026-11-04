@@ -195,7 +195,9 @@ def validate_attempt(attempt: dict[str, Any], permit: dict[str, Any], plan: dict
     for key in ("stdout_sha256", "stderr_sha256"):
         if not is_sha256_digest(attempt[key]):
             raise ContractError(f"{key} must be a canonical sha256 digest")
-    return_code = attempt.get("return_code")
+    if "return_code" not in attempt:
+        raise ContractError("return_code must be recorded (integer or null)")
+    return_code = attempt["return_code"]
     if return_code is not None and type(return_code) is not int:
         raise ContractError("return_code must be an integer or null")
     if terminal == "SUCCEEDED" and return_code != 0:
@@ -375,6 +377,7 @@ def self_test() -> None:
 
     must_reject_attempt(lambda a: a.update({"return_code": 1}))
     must_reject_attempt(lambda a: a.update({"return_code": None}))
+    must_reject_attempt(lambda a: a.pop("return_code"))
     must_reject_attempt(lambda a: a.update({"return_code": True}))
     must_reject_attempt(lambda a: a.update({"return_code": "0"}))
     must_reject_attempt(lambda a: a.update({"stdout_sha256": "unknown"}))
