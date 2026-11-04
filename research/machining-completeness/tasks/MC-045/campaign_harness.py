@@ -115,11 +115,15 @@ def validate_permit(permit: dict[str, Any], *, allow_native: bool = False) -> No
     tariff = permit.get("tariff_basis")
     if not isinstance(tariff, dict):
         raise ContractError("tariff_basis must be an object")
-    if tariff.get("paid") is True and tariff.get("verified_current") is not True:
+    # JSON numbers compare equal to booleans in Python (0 == False, 1 == True).
+    # Missing or malformed tariff flags must never bypass admission checks.
+    if type(tariff.get("paid")) is not bool:
+        raise ContractError("tariff_basis.paid must be an explicit boolean")
+    if type(tariff.get("verified_current")) is not bool:
+        raise ContractError("tariff_basis.verified_current must be an explicit boolean")
+    if tariff["paid"] and not tariff["verified_current"]:
         raise ContractError("paid campaigns require a verified-current tariff basis")
-    if tariff.get("paid") is False and tariff.get("verified_current") not in {True, False}:
-        raise ContractError("free/model tariff basis must state verified_current explicitly")
-    if permit["dispatch_class"] == "MODEL_ONLY" and tariff.get("paid") is True:
+    if permit["dispatch_class"] == "MODEL_ONLY" and tariff["paid"]:
         raise ContractError("MODEL_ONLY self-tests cannot consume paid dispatch")
 
 
@@ -436,6 +440,23 @@ def self_test() -> None:
     must_reject(lambda p, q: q.update({"egress_bytes_max": 1025}))
     must_reject(lambda p, q: p.update({"expensive_campaign_lock": "FREE"}))
     must_reject(lambda p, q: p.update({"tariff_basis": {"paid": True, "verified_current": False, "basis": "guessed"}}))
+
+    # Tariff flags are exact JSON booleans, not truthy/falsy values or numbers.
+    # Missing paid previously bypassed every branch; numeric 0/1 previously
+    # impersonated False/True in verified_current membership comparisons.
+    for bad in (None, 0, 1, -1, "false", "true", [], {}, [False]):
+        must_reject(lambda p, q, value=bad: p["tariff_basis"].__setitem__("paid", value))
+        must_reject(lambda p, q, value=bad: p["tariff_basis"].__setitem__("verified_current", value))
+    must_reject(lambda p, q: p["tariff_basis"].pop("paid"))
+    must_reject(lambda p, q: p["tariff_basis"].pop("verified_current"))
+    must_reject(lambda p, q: p.update({"tariff_basis": []}))
+    must_reject(lambda p, q: p["tariff_basis"].update({"paid": True, "verified_current": True}))
+
+    # Canonical free MODEL_ONLY permits legitimately record either current
+    # verified-free tariff data or an explicitly unverified free/no-dispatch basis.
+    verified_free = json.loads(json.dumps(permit))
+    verified_free["tariff_basis"]["verified_current"] = True
+    validate_plan(verified_free, plan)
 
     with tempfile.TemporaryDirectory() as td:
         ledger = Path(td) / "attempts.jsonl"
