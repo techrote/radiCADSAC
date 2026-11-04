@@ -337,13 +337,21 @@ def exclusive_ledger_append_lock(path: Path):
         raise ContractError("ledger append locked (active or stale); no append performed") from exc
     except OSError as exc:
         raise ContractError("unable to establish exclusive ledger append lock") from exc
+    identity = None
     try:
-        identity = os.fstat(fd)
-        os.write(fd, f"pid={os.getpid()}\n".encode("ascii"))
-        os.fsync(fd)
+        try:
+            identity = os.fstat(fd)
+            os.write(fd, f"pid={os.getpid()}\n".encode("ascii"))
+            os.fsync(fd)
+        except OSError as exc:
+            raise ContractError("ledger append lock initialization failed") from exc
         yield
     finally:
         os.close(fd)
+        if identity is None:
+            # Ownership cannot be proven if fstat failed. Leave the lock
+            # intact for explicit manual review rather than unlinking it.
+            raise ContractError("ledger append lock identity unavailable; manual audit required")
         try:
             current = lock_path.lstat()
         except OSError as exc:
@@ -733,6 +741,21 @@ def self_test() -> None:
             raise AssertionError("corrupt append replay was admitted")
         assert history.read_bytes() == original
         assert not lock.exists()
+
+        # A deleted/recreated lock is not the acquired lease. The original
+        # writer must refuse release and must not unlink the replacement.
+        lock.write_bytes(b"unrelated existing lock\n")
+        lock.unlink()
+        try:
+            with exclusive_ledger_append_lock(history):
+                lock.unlink()
+                lock.write_bytes(b"replacement owner\n")
+        except ContractError:
+            pass
+        else:
+            raise AssertionError("replaced ledger append lock was accepted")
+        assert lock.read_bytes() == b"replacement owner\n"
+        lock.unlink()
 
 
 def load_json(path: Path) -> dict[str, Any]:
