@@ -339,7 +339,14 @@ def validate_fixture(path: Path) -> None:
         if parent_id not in revision_by_id:
             add_error(path, f"operation {op_id} references missing parent revision {parent_id!r}")
             continue
-        parent_bodies = set(revision_by_id[parent_id].get("body_ids", []))
+        # A malformed parent revision was already reported above; do not
+        # turn an invalid body-ID collection into a parser exception.
+        parent_body_ids = revision_by_id[parent_id].get("body_ids")
+        if (not isinstance(parent_body_ids, list)
+                or not all(isinstance(body, str) for body in parent_body_ids)):
+            add_error(path, f"operation {op_id} parent revision has invalid body_ids")
+            continue
+        parent_bodies = set(parent_body_ids)
         targets = op.get("target_body_ids", [])
         if not isinstance(targets, list) or not all(isinstance(v, str) for v in targets):
             add_error(path, f"operation {op_id} target_body_ids must be strings")
@@ -442,13 +449,34 @@ def validate_fixture(path: Path) -> None:
             add_error(path, f"transition {transition_id} needs output_bodies")
             continue
         parent_id = operation_by_id[op_id].get("parent_revision_id")
-        parent_body_ids = set(revision_by_id[parent_id].get("body_ids", []))
-        if not set(input_bodies).issubset(parent_body_ids):
+        # Resolve and type-check every body collection before converting to a
+        # set. A prior journal error must not become an uncaught exception.
+        if not isinstance(parent_id, str) or parent_id not in revision_by_id:
+            add_error(path, f"transition {transition_id} references missing parent revision {parent_id!r}")
+            continue
+        parent_bodies = revision_by_id[parent_id].get("body_ids")
+        if (not isinstance(parent_bodies, list)
+                or not all(isinstance(body, str) for body in parent_bodies)):
+            add_error(path, f"transition {transition_id} parent revision has invalid body_ids")
+            continue
+        if (not all(isinstance(body, str) for body in input_bodies)
+                or len(input_bodies) != len(set(input_bodies))):
+            add_error(path, f"transition {transition_id} has invalid/duplicate input body IDs")
+            continue
+        if not set(input_bodies).issubset(set(parent_bodies)):
             add_error(path, f"transition {transition_id} input body not present in parent")
         output_ids = [item.get("body_id") for item in output_bodies if isinstance(item, dict)]
-        if len(output_ids) != len(output_bodies) or len(output_ids) != len(set(output_ids)):
+        if (len(output_ids) != len(output_bodies)
+                or not all(isinstance(body, str) for body in output_ids)
+                or len(output_ids) != len(set(output_ids))):
             add_error(path, f"transition {transition_id} has invalid/duplicate output bodies")
-        if set(output_ids) != set(revision_by_id[revision_id].get("body_ids", [])):
+            continue
+        committed_bodies = revision_by_id[revision_id].get("body_ids")
+        if (not isinstance(committed_bodies, list)
+                or not all(isinstance(body, str) for body in committed_bodies)):
+            add_error(path, f"transition {transition_id} committed revision has invalid body_ids")
+            continue
+        if set(output_ids) != set(committed_bodies):
             add_error(path, f"transition {transition_id} outputs do not match committed revision")
         if revision_by_id[revision_id].get("caused_by_operation_id") != op_id:
             add_error(path, f"transition {transition_id} revision cause does not match operation")
