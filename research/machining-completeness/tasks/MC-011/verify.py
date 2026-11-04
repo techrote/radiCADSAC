@@ -10,6 +10,7 @@ import importlib.util
 import json
 import subprocess
 import sys
+import tempfile
 from fractions import Fraction
 from pathlib import Path
 
@@ -20,6 +21,10 @@ ORACLE_PATH = TASK / "fixture_oracle.py"
 CELL_ORACLE_PATH = ROOT / "research/machining-completeness/tasks/MC-010/independent_exact_oracle.py"
 FAMILIES_PATH = ROOT / "research/machining-completeness/fixture-families-v1.json"
 OUTCOMES_PATH = ROOT / "research/machining-completeness/outcomes-v1.json"
+
+# Accepted MC-011 source interval; do not reclassify later RCS maintenance as MC-011 edits.
+MC011_SOURCE_BASELINE = "4dc3213b230d88ea662f16a19e14384dc6727979"
+MC011_ACCEPTED_MAIN = "fd39d24319072492f95eab9cf523b306ce623c41"
 
 
 def fail(message: str) -> None:
@@ -287,18 +292,90 @@ def verify_registry(contract):
         fail("MC-011 unexpectedly claims native/paid execution")
 
 
-def verify_no_protected_source_edits(contract):
+def protected_source_edits_in_window(
+    repo: Path, baseline: str, accepted: str, head: str = "HEAD"
+) -> list[str]:
+    """Check MC-011's historical implementation window, not unrelated later work.
+
+    Both ancestry edges must exist. The accepted commit is a fixed source
+    identity from MC-011 issue #73 / squash-merged PR #132, not moving HEAD.
+    """
+    for older, newer in ((baseline, accepted), (accepted, head)):
+        relation = subprocess.run(
+            ["git", "merge-base", "--is-ancestor", older, newer],
+            cwd=repo, check=False, capture_output=True, text=True,
+        )
+        if relation.returncode != 0:
+            fail(f"MC-011 historical source ancestry invalid: {older} -> {newer}")
     proc = subprocess.run(
-        ["git", "diff", "--name-only", f"{contract['source_baseline']}..HEAD"],
-        cwd=ROOT,
-        check=True,
-        capture_output=True,
-        text=True,
+        ["git", "diff", "--name-only", f"{baseline}..{accepted}"],
+        cwd=repo, check=True, capture_output=True, text=True,
     )
-    changed = {line.strip() for line in proc.stdout.splitlines() if line.strip()}
-    forbidden = sorted(p for p in changed if p.startswith("research/rcs-"))
+    return sorted(
+        path for path in (line.strip() for line in proc.stdout.splitlines())
+        if path.startswith("research/rcs-")
+    )
+
+
+def verify_no_protected_source_edits(contract):
+    if contract.get("source_baseline") != MC011_SOURCE_BASELINE:
+        fail("MC-011 historical source baseline identity drift")
+    forbidden = protected_source_edits_in_window(
+        ROOT, MC011_SOURCE_BASELINE, MC011_ACCEPTED_MAIN,
+    )
     if forbidden:
         fail(f"MC-011 edited protected historical sources: {forbidden}")
+
+
+def adversarial_protected_source_window():
+    """Reproduce both a historic forbidden edit and a legitimate later repair."""
+    with tempfile.TemporaryDirectory(prefix="mc011-history-") as temporary:
+        repo = Path(temporary)
+        def git(*args: str) -> str:
+            proc = subprocess.run(
+                ["git", *args], cwd=repo, check=True,
+                capture_output=True, text=True,
+            )
+            return proc.stdout.strip()
+
+        git("init", "-q")
+        git("config", "user.name", "MC-011 regression")
+        git("config", "user.email", "mc011-test@example.invalid")
+        doc = repo / "docs" / "note.txt"
+        doc.parent.mkdir(parents=True)
+        doc.write_text("baseline\n", encoding="utf-8")
+        git("add", ".")
+        git("commit", "-qm", "historical baseline")
+        baseline = git("rev-parse", "HEAD")
+
+        doc.write_text("accepted fixtures\n", encoding="utf-8")
+        git("commit", "-qam", "MC-011 accepted (non-RCS edits only)")
+        accepted = git("rev-parse", "HEAD")
+
+        protected = repo / "research" / "rcs-006" / "harness" / "bootstrap.sh"
+        protected.parent.mkdir(parents=True)
+        protected.write_text("later reviewed fix\n", encoding="utf-8")
+        git("add", ".")
+        git("commit", "-qm", "post-MC-011 reviewed RCS maintenance")
+        later = git("rev-parse", "HEAD")
+
+        assert protected_source_edits_in_window(repo, baseline, accepted, later) == []
+        assert protected_source_edits_in_window(repo, baseline, later, later) == [
+            "research/rcs-006/harness/bootstrap.sh"
+        ]
+        for wrong_baseline, wrong_accepted, wrong_head in (
+            (accepted, baseline, later),  # reversed historical window
+            (baseline, accepted, baseline),  # accepted commit not in HEAD
+        ):
+            try:
+                protected_source_edits_in_window(
+                    repo, wrong_baseline, wrong_accepted, wrong_head
+                )
+            except AssertionError:
+                pass
+            else:
+                fail("invalid MC-011 source ancestry was accepted")
+
 
 
 def adversarial_controls(contract, oracle, cell):
@@ -383,6 +460,7 @@ def verify_contract() -> None:
     verify_f04(by_id["F04"], oracle)
     verify_registry(contract)
     verify_no_protected_source_edits(contract)
+    adversarial_protected_source_window()
     adversarial_controls(contract, oracle, cell)
     print("MC-011 F01-F04 physical/adversarial corpus verification passed")
 
