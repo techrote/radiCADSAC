@@ -174,6 +174,14 @@ def history():
             and v2["historical_v54"]["route_refusals"] == 20
             and v2["historical_v54"]["missing_ordered_span_premises"] == 30,
             "V2_REPORTED_HISTORICAL_CENSUS_CHANGED")
+    summary = v2["summary"]
+    require(summary["total_historical_unresolved_source_cases"] == 50
+            and summary["by_registered_evidence_level"]["COMPLETE_SOURCE_SPECIFIC"] == 50
+            and summary["complete_finite_sources"] == 49
+            and summary["complete_continuum_sources"] == 1
+            and summary["historical_route_refusals_with_complete_source_evidence"] == 20
+            and summary["historical_missing_ordered_premises_with_complete_source_evidence"] == 30,
+            "SUPPLEMENTAL_FINITE_CONTINUUM_OR_HISTORICAL_COUNTS_DRIFT")
     return {"frozen_corpus_git_blob": CORPUS_BLOB,
             "frozen_sources": 121, "historical_route_refusals": 20,
             "historical_missing_ordered_premises": 30,
