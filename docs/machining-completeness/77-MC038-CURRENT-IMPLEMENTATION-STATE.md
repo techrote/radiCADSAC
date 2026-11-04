@@ -1,8 +1,8 @@
 # MC-038 / PB-007 current implementation state
 
-Status date: **3 November 2026**.
+Status date: **4 November 2026** (3 November v4 base; later accepted research is recorded in a separate post-v4 overlay).
 
-Qualified research source snapshot: `2807827232c72a77bbaa83a334052d99daca6a31`.
+Qualified v4-base research source snapshot: `2807827232c72a77bbaa83a334052d99daca6a31`. Later qualified source-bound findings are enumerated below without altering that base snapshot.
 
 Programme capability: **MC-B NOT_ESTABLISHED; MC-1 NOT_ESTABLISHED**.
 
@@ -16,14 +16,45 @@ boundaries extend the research frontier. The newly reconciled landings are
 and in the machine snapshot. The last versioned historical-owner adapter remains
 **v54 / PR #277**; later research does not relabel that frozen implementation.
 
-This is navigation and qualified research evidence, not gate authority. The
-current machine snapshot is
+This is navigation and qualified research evidence, not gate authority. The qualified 3 November base machine snapshot is
 [`current-implementation-state-v4.json`](../../research/machining-completeness/tasks/MC-038/current-implementation-state-v4.json).
+The separate 4 November **additive, machine-readable qualification overlay** is
+[`current-implementation-post-v4-overlay-20261104.json`](../../research/machining-completeness/tasks/MC-038/current-implementation-post-v4-overlay-20261104.json).
+The overlay is a dated navigation supplement, not a wholesale replacement for v4, the frozen v54 audit, the independently executed v2 producer register or capability authority.
 The [v1](../../research/machining-completeness/tasks/MC-038/current-implementation-state-v1.json),
 [v2](../../research/machining-completeness/tasks/MC-038/current-implementation-state-v2.json) and
 [v3](../../research/machining-completeness/tasks/MC-038/current-implementation-state-v3.json) snapshots remain unchanged
 historical navigation. The fifty selected source proofs and these bounded
 interfaces do not close PB-007 globally.
+
+## 4 November 2026: accepted bounded falsifications after the v4 base
+
+**Source audit authority for this status update:** [main `df36a07bae551dcc3fd4c7ec63774cae56b49d6c`](https://github.com/techrote/radiCADSAC/commit/df36a07bae551dcc3fd4c7ec63774cae56b49d6c), following unrelated MC-047 qualification. The latest **proof** integration is [#385](https://github.com/techrote/radiCADSAC/pull/385), merged at `87b3bfa4387a014f0915a23c7fdf8a6816bcf8c2`. Its literal landed-main [focused](https://github.com/techrote/radiCADSAC/actions/runs/41911443722), [static](https://github.com/techrote/radiCADSAC/actions/runs/41911443879) and [v2 reconciliation](https://github.com/techrote/radiCADSAC/actions/runs/41911443734) workflows all passed. Subsequent unrelated source changes do not supply a PB proof by implication.
+
+Five separately source-reviewed, merged **bounded negative route findings** landed after the v4 base. They challenge proposed *shortcuts*, not the mathematical possibility of complete analytic event isolation. Their case IDs and original SHA-256 identities are included in the [machine overlay](../../research/machining-completeness/tasks/MC-038/current-implementation-post-v4-overlay-20261104.json).
+
+| PR | Pinned historical anchor | Precisely bounded negative claim |
+|---|---|---|
+| [#374](https://github.com/techrote/radiCADSAC/pull/374) | `composite:DELEGATED_V6_CONSTANT_MODULATION:tail100` | Positive exterior and source-knot signs do not exclude a prospective hidden interior root after changing one B-spline control; original source already complete |
+| [#376](https://github.com/techrote/radiCADSAC/pull/376) | `composite:PB00701_V8_EXACT_COMMON_FACTOR_REDUCTION:tail0` | A finite-Cayley-coordinate-only enumeration misses a source-bound pole-phase root |
+| [#378](https://github.com/techrote/radiCADSAC/pull/378) | `composite:PB00701_V12_EXACT_COMPONENT_ROOT_PARTITION_SINGLE_HARMONIC:tail0` | Same negative exterior/knot signs hide two simple interior crossing roots; exact tangency/close-root threshold distinguished |
+| [#382](https://github.com/techrote/radiCADSAC/pull/382) | `harvested:verify_pb00701_v52:2250401ce435` | Root-free nonmonotone original source disproves the necessity of one global derivative sign |
+| [#385](https://github.com/techrote/radiCADSAC/pull/385) | `harvested:verify_pb00701_v9:4e7b85fa122a` | Affine nonconstant H1 amplitude introduces a nonrational `arctan(z)` term; direct rational Cayley polynomialization alone cannot decide its events |
+
+**Recomputed matched frozen-original census (same immutable 121-case v54 and 50-case v2 records):**
+
+| Classification | Before | After | Delta |
+|---|---:|---:|---:|
+| Frozen original sources | 121 | 121 | 0 |
+| Historical refused routes | 20 | 20 | 0 |
+| Historical missing ordered premises | 30 | 30 | 0 |
+| Complete source-specific original witnesses | 50 | 50 | 0 |
+
+All **50/50** historically unresolved original IDs retain registered complete source-specific witnesses (49 finite, one continuum); the negative route findings above **resolve zero new historical cases**. Those five original case IDs already occur in the v2 register. The historical v54 failure/disposition denominator is unchanged; no prospective control becomes a new case. Evidence is `DETERMINISTIC_MODEL`, not native geometry, independent oracle or engineering STEP.
+
+**Still unresolved:** reusable terminating analytic events for the general nonconstant-amplitude/multi-span grammar, arbitrary unsupported multiplicities and ordered physical source-side sign transfer; PB-007-01/02/03/04 and PO-02/04/05/07/08; native material/topology, engineering STEP and consumer qualification. No globally decidable event theorem is assumed. Failed sufficient derivative/interval certificates do not prove mathematical impossibility or actual nonmonotonicity. MC-B and MC-1 remain `NOT_ESTABLISHED`; all **26** supported operations stay mandatory, and production/native campaign restrictions remain. The critical path is **generic premise coverage**, not redundant selected-source witnesses.
+
+This separately coordinated documentation reconciliation does not revise v54/v2, the 3 November v4 snapshot, prior negative results, proof/programme registries or source-producer identities.
 
 ## Current gate state
 
