@@ -89,6 +89,31 @@ def main() -> None:
     invalid_committed_bodies["journal"]["revisions"][2]["body_ids"] = None
     assert_rejected(invalid_committed_bodies, "committed revision has invalid body_ids")
 
+    # Frame ancestry must be fail-closed for malformed parent IDs rather
+    # than raising TypeError for an unhashable JSON list.
+    invalid_frame_parent = copy.deepcopy(lathe)
+    invalid_frame_parent["journal"]["definitions"]["frames"][1]["parent_frame_id"] = ["frame:workpiece"]
+    assert_rejected(invalid_frame_parent, "has invalid parent_frame_id")
+
+    # The same frame cycle must be rejected without recursive DFS.
+    cyclic_frames = copy.deepcopy(lathe)
+    cyclic_frames["journal"]["definitions"]["frames"][1]["parent_frame_id"] = "frame:tool-tip"
+    assert_rejected(cyclic_frames, "frame graph cycle detected")
+
+    # A valid 1,500-level frame chain is legitimate independent of the
+    # revision count and must not depend on Python's recursion limit.
+    long_frames = copy.deepcopy(lathe)
+    frames = long_frames["journal"]["definitions"]["frames"]
+    template = frames[1]
+    prior_frame = "frame:tool-tip"
+    for index in range(1, 1501):
+        frame = copy.deepcopy(template)
+        frame["frame_id"] = f"frame:deep-{index}"
+        frame["parent_frame_id"] = prior_frame
+        frames.append(frame)
+        prior_frame = frame["frame_id"]
+    assert not check(long_frames), "valid 1,500-frame hierarchy must pass without recursion errors"
+
     # Long legitimate immutable journals are normal engineering inputs.
     # This controls against introducing a recursive traversal limit.
     long_journal = copy.deepcopy(lathe)
@@ -111,7 +136,7 @@ def main() -> None:
     long_journal["expected_journal_invariants"]["process_motion_count"] = 0
     assert not check(long_journal), "valid 1,500-revision history must pass without recursion errors"
 
-    print("RCS-002 revision lineage: three accepted controls, ten adversarial refusals passed")
+    print("RCS-002 revision lineage: four accepted controls, twelve adversarial refusals passed")
 
 
 if __name__ == "__main__":
