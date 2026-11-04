@@ -26,12 +26,47 @@ def validate(graph=None,programme=None,outcomes=None,ghmap=None,posdoc=None):
     ):
         if not isinstance(value, dict) or any(key not in value for key in keys):
             fail(f"{name} registry malformed")
+    # Check nested JSON shapes before IDs, dependencies or registry rows are
+    # dereferenced. Malformed supplied evidence must be a controlled refusal,
+    # not an uncontrolled Python exception or an implicit default.
+    if (not isinstance(graph["tasks"],list)
+            or any(not isinstance(t,dict) or not isinstance(t.get("id"),str)
+                   for t in graph["tasks"])):
+        fail("task inventory malformed")
+    if (not isinstance(graph["packages"],list)
+            or any(not isinstance(p,dict) or not isinstance(p.get("id"),str)
+                   or not isinstance(p.get("tasks"),list)
+                   or any(not isinstance(i,str) for i in p["tasks"])
+                   for p in graph["packages"])):
+        fail("package inventory malformed")
+    if (not isinstance(outcomes["tasks"],dict)
+            or any(not isinstance(v,dict) for v in outcomes["tasks"].values())
+            or not isinstance(ghmap["tasks"],dict)
+            or any(not isinstance(v,dict) for v in ghmap["tasks"].values())):
+        fail("task outcome/GitHub registry malformed")
+    if (not isinstance(posdoc["obligations"],list)
+            or any(not isinstance(v,dict) or not isinstance(v.get("id"),str)
+                   for v in posdoc["obligations"])):
+        fail("proof obligation inventory malformed")
     tasks=graph["tasks"]; ids=[t["id"] for t in tasks]; idset=set(ids)
     expected={f"MC-{i:03d}" for i in range(1,59)}
     if len(tasks)!=58 or idset!=expected or len(ids)!=len(idset): fail("MC task ID/count mismatch")
     for t in tasks:
+        if (not isinstance(t.get("dependencies"),list)
+                or any(not isinstance(d,dict) or not isinstance(d.get("task"),str)
+                       or not isinstance(d.get("type"),str)
+                       for d in t["dependencies"])):
+            fail(f"{t['id']} dependencies malformed")
         for k in ("package","title","objective","scope","non_goals","acceptance","verification","artifacts","blockers","locks"):
             if k not in t: fail(f"{t['id']} missing {k}")
+        # Each executable task contract is a list of nonempty strings; locks may
+        # be empty but cannot be replaced by a truthy scalar or mapping.
+        for k in ("acceptance","verification","artifacts","locks"):
+            entries=t[k]
+            if (not isinstance(entries,list)
+                    or any(not isinstance(entry,str) or not entry.strip()
+                           for entry in entries)):
+                fail(f"{t['id']} malformed {k}")
         if not t["acceptance"] or not t["verification"] or not t["artifacts"]: fail(f"{t['id']} missing executable contract")
         for d in t["dependencies"]:
             if d["task"] not in idset or d["type"] not in {"artifact","capability"}: fail(f"{t['id']} bad dependency")
@@ -59,6 +94,13 @@ def validate(graph=None,programme=None,outcomes=None,ghmap=None,posdoc=None):
     if pids!=[f"MG-{i:02d}" for i in range(14)]: fail("package hierarchy mismatch")
     members=[x for p in graph["packages"] for x in p["tasks"]]
     if sorted(members)!=sorted(ids) or len(members)!=len(set(members)): fail("package membership mismatch")
+    # A task's self-declared package must agree with its unique package owner.
+    # Otherwise a corrupt nested task record could pass the package membership
+    # check while claiming a different recognized MG package.
+    for package in graph["packages"]:
+        for task_id in package["tasks"]:
+            if tmap[task_id].get("package") != package["id"]:
+                fail(f"{task_id} task package binding mismatch")
 
     gate_owners={"MC-A":"MC-005","MC-B":"MC-038","MC-C":"MC-016","MC-D":"MC-041","MC-E":"MC-044","MC-F":"MC-048","MC-1":"MC-052"}
     gate_states={"MC-A":"ACCEPTED","MC-B":"NOT_ESTABLISHED","MC-C":"NOT_ESTABLISHED","MC-D":"NOT_ESTABLISHED","MC-E":"NOT_ESTABLISHED","MC-F":"NOT_ESTABLISHED","MC-1":"NOT_ESTABLISHED"}
@@ -162,6 +204,41 @@ def self_test():
     try: validate(g,p,o,badm,pos)
     except AssertionError: pass
     else: fail("self-test accepted boolean GitHub issue number")
+    # These mutations previously raised TypeError/KeyError/AttributeError
+    # before reaching a conservative registry refusal.
+    for target, change, label in (
+        (0, lambda x: x.__setitem__("tasks",None), "null task inventory"),
+        (0, lambda x: x["tasks"].__setitem__(0,None), "null task record"),
+        (0, lambda x: x["tasks"][0].__setitem__("id",[]), "unhashable task ID"),
+        (0, lambda x: x["tasks"][0].__setitem__("dependencies",None), "null dependencies"),
+        (0, lambda x: x["tasks"][0].pop("dependencies"), "missing dependencies"),
+        (0, lambda x: x["tasks"][0].__setitem__("package","MG-13"), "cross-package task declaration"),
+        (0, lambda x: x["tasks"][0].__setitem__("acceptance",True), "boolean acceptance contract"),
+        (0, lambda x: x["tasks"][0].__setitem__("verification","not a list"), "scalar verification contract"),
+        (0, lambda x: x["tasks"][0].__setitem__("artifacts",{"item":1}), "mapping artifacts contract"),
+        (0, lambda x: x["tasks"][0].__setitem__("locks",{"programme-registry":True}), "mapping locks"),
+        (0, lambda x: x["tasks"][0]["acceptance"].__setitem__(0,None), "null acceptance entry"),
+        (0, lambda x: x["tasks"][0].__setitem__("locks",[None]), "null lock entry"),
+        (0, lambda x: x["tasks"][0].__setitem__("artifacts",["  "]), "blank artifact entry"),
+        (0, lambda x: next(t for t in x["tasks"] if t["dependencies"])["dependencies"].__setitem__(0,None), "null dependency"),
+        (0, lambda x: x.__setitem__("packages",None), "null package inventory"),
+        (0, lambda x: x["packages"].__setitem__(0,None), "null package record"),
+        (0, lambda x: x["packages"][0].__setitem__("tasks",None), "null package membership"),
+        (0, lambda x: x["packages"][0]["tasks"].__setitem__(0,{}), "unhashable package member"),
+        (2, lambda x: x.__setitem__("tasks",None), "null outcome registry"),
+        (2, lambda x: x["tasks"].__setitem__("MC-005",None), "null outcome row"),
+        (3, lambda x: x.__setitem__("tasks",None), "null GitHub registry"),
+        (3, lambda x: x["tasks"].__setitem__("MC-001",None), "null GitHub row"),
+        (4, lambda x: x.__setitem__("obligations",None), "null obligation inventory"),
+        (4, lambda x: x["obligations"].__setitem__(0,None), "null obligation row"),
+    ):
+        inputs=[copy.deepcopy(g),copy.deepcopy(p),copy.deepcopy(o),copy.deepcopy(m),copy.deepcopy(pos)]
+        change(inputs[target])
+        try: validate(*inputs)
+        except AssertionError: pass
+        except (TypeError,KeyError,AttributeError,ValueError) as exc:
+            fail(f"self-test {label} raised uncontrolled {type(exc).__name__}: {exc}")
+        else: fail(f"self-test accepted {label}")
     print("MC-1 validator self-test passed")
 if __name__=="__main__":
     ap=argparse.ArgumentParser(); ap.add_argument("--self-test",action="store_true"); a=ap.parse_args()
