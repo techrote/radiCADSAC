@@ -386,7 +386,7 @@ def _ledger_metadata(path: Path):
 
 def _ledger_fingerprint(metadata):
     return (metadata.st_dev, metadata.st_ino, metadata.st_nlink,
-            metadata.st_size, metadata.st_mtime_ns, metadata.st_ctime_ns)
+            metadata.st_size, metadata.st_mtime_ns)
 
 
 def append_attempt(path: Path, attempt: dict[str, Any], permit: dict[str, Any], plan: dict[str, Any]) -> None:
@@ -410,8 +410,13 @@ def append_attempt(path: Path, attempt: dict[str, Any], permit: dict[str, Any], 
             opened = os.fstat(fh.fileno())
             named = _ledger_metadata(path)
             if (named is None or _ledger_fingerprint(opened) != _ledger_fingerprint(named) or
-                    (before is not None and _ledger_fingerprint(before) != _ledger_fingerprint(opened))):
-                raise ContractError(f"ledger identity changed before replay (fd={_ledger_fingerprint(opened)!r}, path={_ledger_fingerprint(named) if named is not None else None!r}, previous={_ledger_fingerprint(before) if before is not None else None!r})")
+                    (before is not None and (_ledger_fingerprint(before) != _ledger_fingerprint(opened)
+                      or before.st_ctime_ns != named.st_ctime_ns))):
+                raise ContractError("ledger identity changed before replay")
+            # On Windows fstat and lstat may report different change-time
+            # conventions for the same open file. Compare ctime only within
+            # the same observation route, never across the two interfaces.
+            named_ctime = named.st_ctime_ns
             fh.seek(0)
             prior, _digest = _parse_ledger_stream(fh)
             validate_ledger_sequence(
@@ -423,7 +428,9 @@ def append_attempt(path: Path, attempt: dict[str, Any], permit: dict[str, Any], 
             after = os.fstat(fh.fileno())
             named = _ledger_metadata(path)
             if (named is None or _ledger_fingerprint(after) != _ledger_fingerprint(opened)
-                    or _ledger_fingerprint(after) != _ledger_fingerprint(named)):
+                    or _ledger_fingerprint(after) != _ledger_fingerprint(named)
+                    or after.st_ctime_ns != opened.st_ctime_ns
+                    or named.st_ctime_ns != named_ctime):
                 raise ContractError("ledger identity or contents changed during replay")
             line = canonical_bytes(attempt) + b"\n"
             fh.seek(0, os.SEEK_END)
