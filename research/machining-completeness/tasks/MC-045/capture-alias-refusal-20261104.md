@@ -15,7 +15,7 @@
 
 ## Implementation
 
-For each expected retained capture, read one `lstat` snapshot, refuse nonregular files and symlinks, require an available nonzero inode identity, and refuse a repeated `(st_dev, st_ino)` among expected captures before digest verification. The SHA-256 check, exact filename inventory check and ledger-row identity checks remain in place. This rejects obvious aliases even when both digests are identical. On a filesystem that cannot supply usable inode identities, refuse rather than claim custody qualification.
+For each expected retained capture, read one `lstat` snapshot, refuse nonregular files and symlinks, require an available nonzero inode identity, require `st_nlink == 1` to refuse aliases outside the audited inventory, and refuse a repeated `(st_dev, st_ino)` among expected captures before digest verification. The SHA-256 check, exact filename inventory check and ledger-row identity checks remain in place. This rejects obvious aliases even when both digests are identical. On a filesystem that cannot supply usable inode identities, refuse rather than claim custody qualification.
 
 ## Deterministic controls
 
@@ -28,10 +28,14 @@ python3 tools/validate_machining_completeness.py --self-test
 python3 tools/validate_machining_completeness.py
 ```
 
-The MC-045 self-test retains positive, independently created empty stdout/stderr files and exercises two negative aliases: within one attempt and across separate attempts. Each mutation is undone, and the positive control is replayed. The retained missing/modified/unexpected-file and corrupt-ledger negatives remain unchanged. No paid or native workload is dispatched.
+The MC-045 self-test retains positive, independently created empty stdout/stderr files and exercises three negative aliases: within one attempt, across separate attempts, and an external hard link not listed in the audited capture directory. Each mutation is undone, and the positive control is replayed. The retained missing/modified/unexpected-file and corrupt-ledger negatives remain unchanged. No paid or native workload is dispatched.
 
 ## Residual limitations and handoff
 
-This is **static file-identity admission**, not atomic evidence custody. A hostile concurrent writer may replace paths between `lstat` and open, and an inode number can be recycled. Neither cross-process append locking, safe transaction commit, endpoint attestation, Windows physical filesystem proof, nor native geometry/STEP validation is established. A later bounded follow-on should pin open descriptors and compare `fstat` identity to the admitted snapshot, then separately address capture/ledger atomic transactions. Do not promote a green synthetic test into MC-F/MC-1 acceptance.
+This is **static file-identity admission**, not atomic evidence custody. A hostile concurrent writer may replace paths between `lstat` and open, and an inode number can be recycled. Link counts are point-in-time filesystem metadata, not external immutability attestations. Neither cross-process append locking, safe transaction commit, endpoint attestation, Windows physical filesystem proof, nor native geometry/STEP validation is established. A later bounded follow-on should pin open descriptors and compare `fstat` identity to the admitted snapshot, then separately address capture/ledger atomic transactions. Do not promote a green synthetic test into MC-F/MC-1 acceptance.
 
 Review the PR at the final exact head and inspect CI before any guarded integration. An owner-account AI-assisted COMMENTED review is not an independent human APPROVED review.
+
+## Review-driven correction
+
+A source-level owner-account [COMMENT review](https://github.com/techrote/radiCADSAC/pull/384#pullrequestreview-5774390343) on initial head `1f25b4eb2755daf1a5f7a2ea7a08931dc2f1c579` found the outside-inventory hardlink bypass. Correction head `43d8a11465e9488d3ddae464974c4977275f3fc1` adds strict link-count admission and a third negative control. Review status remains **AI-assisted COMMENTED, not human APPROVED**; exact-corrected-head CI and distinct-session review are required.
