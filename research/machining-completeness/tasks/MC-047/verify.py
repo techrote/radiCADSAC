@@ -41,10 +41,12 @@ def fingerprints(ledger: Path, captures: Path) -> tuple[Any, ...]:
     identities = {(ledger_mark[0], ledger_mark[1])}
     entries = []
     for child in captures.iterdir():
-        metadata = child.lstat()
-        if not stat.S_ISREG(metadata.st_mode):
-            raise ValueError("capture inventory contains non-regular or symlinked entry")
+        # Mode and identity must come from the *same* lstat snapshot. A
+        # separate pre-check could approve a regular file replaced by a
+        # symlink before mark() (still not a full TOCTOU defense).
         child_mark = mark(child)
+        if not stat.S_ISREG(child_mark[2]):
+            raise ValueError("capture inventory contains non-regular or symlinked entry")
         identity = (child_mark[0], child_mark[1])
         if identity in identities:
             raise ValueError("ledger/capture inventory contains hard-linked file aliases")
