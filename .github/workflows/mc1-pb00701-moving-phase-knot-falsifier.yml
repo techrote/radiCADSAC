@@ -1,0 +1,43 @@
+name: mc1-pb00701-moving-phase-knot-falsifier
+on:
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_moving_phase_knot_falsifier.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_moving_phase_knot_falsifier.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-moving-phase-knot-falsifier.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-moving-phase-knot-falsifier-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation-v2.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'handoffs/current-authority.json'
+      - '.github/workflows/mc1-pb00701-moving-phase-knot-falsifier.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_moving_phase_knot_falsifier.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_moving_phase_knot_falsifier.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-moving-phase-knot-falsifier.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-moving-phase-knot-falsifier-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation-v2.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'handoffs/current-authority.json'
+      - '.github/workflows/mc1-pb00701-moving-phase-knot-falsifier.yml'
+permissions:
+  contents: read
+jobs:
+  exact-source-falsification:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Exact original-source and historical census contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/machining-completeness/tasks/MC-038/pb00701_moving_phase_knot_falsifier.py --contract
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_moving_phase_knot_falsifier.py --contract --self-test
