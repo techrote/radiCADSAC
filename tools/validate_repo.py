@@ -177,27 +177,30 @@ def validate_fixture(path: Path) -> None:
 
     for frame_id, frame in frame_by_id.items():
         parent = frame.get("parent_frame_id")
-        if parent is not None and parent not in frame_by_id:
-            add_error(path, f"frame {frame_id} references missing parent {parent}")
+        if parent is not None:
+            if not isinstance(parent, str):
+                add_error(path, f"frame {frame_id} has invalid parent_frame_id")
+            elif parent not in frame_by_id:
+                add_error(path, f"frame {frame_id} references missing parent {parent}")
 
-    visiting: set[str] = set()
+    # Frame hierarchies can be deeper than Python's recursion limit. Follow
+    # parent links iteratively and memoize completed paths so the walk stays
+    # linear, even for long immutable journals. Type errors above are refusals
+    # and must not become exceptions during cycle detection.
     visited: set[str] = set()
-
-    def visit_frame(frame_id: str) -> None:
-        if frame_id in visited:
-            return
-        if frame_id in visiting:
-            add_error(path, f"frame graph cycle detected at {frame_id}")
-            return
-        visiting.add(frame_id)
-        parent = frame_by_id[frame_id].get("parent_frame_id")
-        if isinstance(parent, str) and parent in frame_by_id:
-            visit_frame(parent)
-        visiting.remove(frame_id)
-        visited.add(frame_id)
-
-    for frame_id in frame_by_id:
-        visit_frame(frame_id)
+    for start_frame in frame_by_id:
+        if start_frame in visited:
+            continue
+        walked: set[str] = set()
+        current = start_frame
+        while current in frame_by_id and current not in visited:
+            if current in walked:
+                add_error(path, f"frame graph cycle detected at {current}")
+                break
+            walked.add(current)
+            parent = frame_by_id[current].get("parent_frame_id")
+            current = parent if isinstance(parent, str) else ""
+        visited.update(walked)
 
     def build_refs(collection: str, id_key: str) -> set[str]:
         refs: set[str] = set()
