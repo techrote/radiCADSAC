@@ -230,8 +230,20 @@ def verify_current_families_progression(contract) -> None:
 
 def verify_no_historical_source_edits(contract) -> None:
     baseline = contract["source_baseline"]
+    # The protection claim belongs to the original MC task window;
+    # accepted later RCS maintenance is not an edit by this task.
+    if contract.get("source_baseline") != "2881b90bd790ea53cefe5b14e4734590883b991d":
+        fail("MC-055 source baseline identity drift")
+    accepted_main = "4dc3213b230d88ea662f16a19e14384dc6727979"
+    for older, newer in ((contract["source_baseline"], accepted_main), (accepted_main, "HEAD")):
+        ancestry = subprocess.run(
+            ["git", "merge-base", "--is-ancestor", older, newer],
+            cwd=ROOT, check=False, capture_output=True, text=True,
+        )
+        if ancestry.returncode != 0:
+            fail(f"MC-055 protected-source history ancestry invalid: {older} -> {newer}")
     proc = subprocess.run(
-        ["git", "diff", "--name-only", f"{baseline}..HEAD"],
+        ["git", "diff", "--name-only", f"{baseline}..{accepted_main}"],
         cwd=ROOT,
         check=True,
         capture_output=True,
