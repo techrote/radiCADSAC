@@ -212,7 +212,7 @@ def classify_slope(value):
             (["0", "1"] if right_roots else []),
         "root_near_t2_bound":
             {"upper_distance": "3/1267650600228229401496703205376",
-             "source_interval": ["2-3/1267650600228229401496703205376", "2"]}
+             "source_interval": [str(Q(2) - Q(3, 2**100)), "2"]}
             if a == 1 + Q(1, 2**100) else None,
         "method": "EXACT_CONVEXITY_PI_RATIONAL_BOUNDS_CYCLOTOMIC_BRACKET",
         "root_sampling_used_as_truth": False,
