@@ -72,6 +72,11 @@ def is_int64(value: Any) -> bool:
     return isinstance(value, int) and not isinstance(value, bool) and INT64_MIN <= value <= INT64_MAX
 
 
+def is_known_reference(value: Any, references: dict[str, Any] | set[str]) -> bool:
+    """JSON references must be strings before any mapping/set membership."""
+    return isinstance(value, str) and value in references
+
+
 def validate_int64_tree(path: Path, node: Any, key: str = "") -> None:
     if isinstance(node, dict):
         for child_key, child in node.items():
@@ -116,6 +121,10 @@ def validate_fixture(path: Path) -> None:
         data = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as exc:
         add_error(path, f"cannot parse JSON: {exc}")
+        return
+
+    if not isinstance(data, dict):
+        add_error(path, "fixture root must be an object")
         return
 
     if data.get("fixture_schema") != "rcs-002-journal-fixture/1.0":
@@ -227,21 +236,25 @@ def validate_fixture(path: Path) -> None:
     tool_refs = build_refs("tools", "tool_id")
     policy_refs = build_refs("normalization_policies", "policy_id")
 
-    for stock in definitions.get("stocks", []):
-        if isinstance(stock, dict):
-            frame_ref = stock.get("frame_ref")
-            if frame_ref not in frame_refs:
-                add_error(path, f"stock references missing frame {frame_ref!r}")
-
-    for setup in definitions.get("setups", []):
-        if isinstance(setup, dict):
-            for field in ("workpiece_frame_ref", "machine_frame_ref"):
-                if setup.get(field) not in frame_refs:
-                    add_error(path, f"setup references missing frame {setup.get(field)!r}")
-
-    for tool in definitions.get("tools", []):
-        if isinstance(tool, dict) and tool.get("tool_frame_ref") not in frame_refs:
-            add_error(path, f"tool references missing frame {tool.get('tool_frame_ref')!r}")
+    # Definition collections must not silently disappear when their JSON
+    # type changes. A malformed nested reference must not raise TypeError.
+    for collection, frame_fields in (
+        ("stocks", ("frame_ref",)),
+        ("setups", ("workpiece_frame_ref", "machine_frame_ref")),
+        ("tools", ("tool_frame_ref",)),
+    ):
+        items = definitions.get(collection, [])
+        if not isinstance(items, list):
+            add_error(path, f"definitions.{collection} must be a list")
+            continue
+        for item in items:
+            if not isinstance(item, dict):
+                add_error(path, f"definitions.{collection} contains non-object")
+                continue
+            for field in frame_fields:
+                value = item.get(field)
+                if not is_known_reference(value, frame_refs):
+                    add_error(path, f"{collection[:-1]} references missing frame {value!r}")
 
     operations = journal.get("operations", [])
     revisions = journal.get("revisions", [])
@@ -262,7 +275,7 @@ def validate_fixture(path: Path) -> None:
         if op_id in operation_by_id:
             add_error(path, f"duplicate operation_id {op_id}")
         operation_by_id[op_id] = op
-        if op.get("kind") not in {"setup_change", "process_motion"}:
+        if not is_known_reference(op.get("kind"), {"setup_change", "process_motion"}):
             add_error(path, f"operation {op_id} has unsupported core kind {op.get('kind')!r}")
 
     revision_by_id: dict[str, dict[str, Any]] = {}
@@ -285,9 +298,9 @@ def validate_fixture(path: Path) -> None:
 
     root_revision_id = journal.get("root_revision_id")
     head_revision_id = journal.get("selected_head_revision_id")
-    if root_revision_id not in revision_by_id:
+    if not is_known_reference(root_revision_id, revision_by_id):
         add_error(path, "root_revision_id does not resolve")
-    if head_revision_id not in revision_by_id:
+    if not is_known_reference(head_revision_id, revision_by_id):
         add_error(path, "selected_head_revision_id does not resolve")
 
     caused_ops: set[str] = set()
@@ -298,9 +311,9 @@ def validate_fixture(path: Path) -> None:
             if parent is not None or caused is not None:
                 add_error(path, "root revision must have null parent and cause")
         else:
-            if parent not in revision_by_id:
+            if not is_known_reference(parent, revision_by_id):
                 add_error(path, f"revision {revision_id} references missing parent {parent!r}")
-            if caused not in operation_by_id:
+            if not is_known_reference(caused, operation_by_id):
                 add_error(path, f"revision {revision_id} references missing operation {caused!r}")
             elif caused in caused_ops:
                 add_error(path, f"operation {caused} causes more than one revision")
@@ -308,7 +321,7 @@ def validate_fixture(path: Path) -> None:
                 caused_ops.add(caused)
             # The journal has two independent parent pointers. A valid
             # operation/revision pair must identify the same predecessor.
-            if (caused in operation_by_id
+            if (is_known_reference(caused, operation_by_id)
                     and parent != operation_by_id[caused].get("parent_revision_id")):
                 add_error(path, f"revision {revision_id} parent disagrees with causing operation {caused}")
 
@@ -339,7 +352,7 @@ def validate_fixture(path: Path) -> None:
 
     for op_id, op in operation_by_id.items():
         parent_id = op.get("parent_revision_id")
-        if parent_id not in revision_by_id:
+        if not is_known_reference(parent_id, revision_by_id):
             add_error(path, f"operation {op_id} references missing parent revision {parent_id!r}")
             continue
         # A malformed parent revision was already reported above; do not
@@ -356,21 +369,21 @@ def validate_fixture(path: Path) -> None:
         elif not set(targets).issubset(parent_bodies):
             add_error(path, f"operation {op_id} targets body not present in parent revision")
 
-        if op.get("setup_ref") not in setup_refs:
+        if not is_known_reference(op.get("setup_ref"), setup_refs):
             add_error(path, f"operation {op_id} references missing setup {op.get('setup_ref')!r}")
 
         if op.get("kind") != "process_motion":
             continue
-        if op.get("tool_ref") not in tool_refs:
+        if not is_known_reference(op.get("tool_ref"), tool_refs):
             add_error(path, f"operation {op_id} references missing tool {op.get('tool_ref')!r}")
-        if op.get("normalization_policy_ref") not in policy_refs:
+        if not is_known_reference(op.get("normalization_policy_ref"), policy_refs):
             add_error(path, f"operation {op_id} references missing normalization policy")
 
         trajectory = op.get("trajectory")
         if not isinstance(trajectory, dict):
             add_error(path, f"operation {op_id} missing trajectory")
             continue
-        if trajectory.get("frame_ref") not in frame_refs:
+        if not is_known_reference(trajectory.get("frame_ref"), frame_refs):
             add_error(path, f"operation {op_id} trajectory references missing frame")
         validate_quaternion(
             path,
@@ -407,7 +420,7 @@ def validate_fixture(path: Path) -> None:
                 add_error(path, f"operation {op_id} has missing/duplicate section_id")
             else:
                 section_ids.add(section_id)
-            if section.get("engagement") not in {"neutral", "remove", "add", "probe"}:
+            if not is_known_reference(section.get("engagement"), {"neutral", "remove", "add", "probe"}):
                 add_error(path, f"operation {op_id} has unsupported engagement")
             start = section.get("start_time_ns")
             end = section.get("end_time_ns")
@@ -438,10 +451,10 @@ def validate_fixture(path: Path) -> None:
         transition_by_id[transition_id] = transition
         op_id = transition.get("caused_by_operation_id")
         revision_id = transition.get("committed_revision_id")
-        if op_id not in operation_by_id or revision_id not in revision_by_id:
+        if not is_known_reference(op_id, operation_by_id) or not is_known_reference(revision_id, revision_by_id):
             add_error(path, f"transition {transition_id} has missing operation/revision reference")
             continue
-        if transition.get("kind") not in {"split", "merge", "replace", "classification_only"}:
+        if not is_known_reference(transition.get("kind"), {"split", "merge", "replace", "classification_only"}):
             add_error(path, f"transition {transition_id} has unsupported kind")
         input_bodies = transition.get("input_body_ids")
         output_bodies = transition.get("output_bodies")
@@ -489,7 +502,7 @@ def validate_fixture(path: Path) -> None:
         actual = sum(1 for op in operations if isinstance(op, dict) and op.get("kind") == "process_motion")
         if expected["process_motion_count"] != actual:
             add_error(path, "process_motion_count expectation does not match fixture")
-    if isinstance(expected, dict) and "body_count_at_head" in expected and head_revision_id in revision_by_id:
+    if isinstance(expected, dict) and "body_count_at_head" in expected and is_known_reference(head_revision_id, revision_by_id):
         head_bodies = revision_by_id[head_revision_id].get("body_ids")
         if not isinstance(head_bodies, list):
             add_error(path, "body_count_at_head cannot inspect invalid head body_ids")
