@@ -1,0 +1,41 @@
+name: mc1-mc047-replay-preflight
+
+on:
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-047/**'
+      - '.github/workflows/mc1-mc047-replay-preflight.yml'
+      - 'research/machining-completeness/tasks/MC-045/campaign_harness.py'
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-047/**'
+      - '.github/workflows/mc1-mc047-replay-preflight.yml'
+      - 'research/machining-completeness/tasks/MC-045/campaign_harness.py'
+
+permissions:
+  contents: read
+
+jobs:
+  model-only-crash-window-controls:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 1
+      - name: Verify checkout is literal event head
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile MC-045 and MC-047 deterministic sources
+        run: |
+          python3 -m py_compile research/machining-completeness/tasks/MC-045/campaign_harness.py research/machining-completeness/tasks/MC-047/verify.py
+      - name: Verify original MC-045 permit/ledger contracts
+        run: python3 research/machining-completeness/tasks/MC-045/campaign_harness.py self-test
+      - name: Run MC-047 synthetic fault matrix
+        run: python3 research/machining-completeness/tasks/MC-047/verify.py --contract --self-test
+      - name: Validate MC-1 registry contracts
+        run: python3 tools/validate_machining_completeness.py --self-test

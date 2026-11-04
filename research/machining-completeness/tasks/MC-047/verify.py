@@ -1,0 +1,228 @@
+#!/usr/bin/env python3
+"""MC-047 read-only crash-window audit; synthetic evidence, no native dispatch."""
+from __future__ import annotations
+
+import argparse
+import importlib.util
+import json
+import stat
+import tempfile
+from pathlib import Path
+from typing import Any
+
+
+CORE_PATH = Path(__file__).resolve().parent.parent / "MC-045" / "campaign_harness.py"
+
+
+def core_module():
+    spec = importlib.util.spec_from_file_location("mc045_campaign_read_only", CORE_PATH)
+    if spec is None or spec.loader is None:
+        raise RuntimeError("MC-045 source unavailable")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def fingerprints(ledger: Path, captures: Path) -> tuple[Any, ...]:
+    """Detect ordinary mutations during audit; not atomic custody/attestation."""
+    def mark(path: Path) -> tuple[int, int, int, int, int]:
+        s = path.lstat()
+        return (s.st_dev, s.st_ino, s.st_mode, s.st_size, s.st_mtime_ns)
+
+    if ledger.is_symlink() or not ledger.is_file():
+        raise ValueError("ledger missing, non-file or symlinked")
+    if captures.is_symlink() or not captures.is_dir():
+        raise ValueError("capture directory missing or symlinked")
+    entries = []
+    for child in captures.iterdir():
+        metadata = child.lstat()
+        if not stat.S_ISREG(metadata.st_mode):
+            raise ValueError("capture inventory contains non-regular or symlinked entry")
+        entries.append((child.name, mark(child)))
+    return (mark(ledger), mark(captures), tuple(sorted(entries)))
+
+
+def audit(permit: dict[str, Any], plan: dict[str, Any], ledger: Path,
+          captures: Path, *, allow_native_evidence: bool = False) -> dict[str, Any]:
+    """Never repairs, deletes, appends or authorizes resumption of a campaign."""
+    h = core_module()
+    if not isinstance(permit, dict) or not isinstance(plan, dict):
+        raise ValueError("permit and plan must be objects")
+    if permit.get("dispatch_class") != "MODEL_ONLY" and not allow_native_evidence:
+        raise ValueError("native evidence requires explicit read-only acknowledgement")
+    h.validate_plan(permit, plan, allow_native=allow_native_evidence)
+    pre = fingerprints(ledger, captures)
+    rows, digest = h.load_ledger_with_digest(ledger)
+    h.validate_ledger_sequence(rows, permit, plan, allow_native=allow_native_evidence)
+    h.verify_retained_captures(rows, captures)
+    if pre != fingerprints(ledger, captures):
+        raise ValueError("evidence changed during inspection; refuse retry without frozen custody")
+    expected = plan["max_jobs"] * plan["sequential_repeats"]
+    return {
+        "schema": "radicadsac-mc047-readonly-recovery-preflight/1.0",
+        "status": ("FULL_SLOT_LEDGER_NOT_PROGRAMME_ACCEPTED" if len(rows) == expected
+                   else "PARTIAL_PREFIX_NOT_AUTHORIZED_TO_RESUME"),
+        "evidence_class": ("DETERMINISTIC_MODEL" if permit["dispatch_class"] == "MODEL_ONLY"
+                           else "NATIVE_RECORDS_UNQUALIFIED"),
+        "source_sha": permit["source_sha"],
+        "ledger_sha256": digest,
+        "slots_recorded": len(rows),
+        "slots_planned": expected,
+        "nonpass_terminals": sum(r["terminal_reason"] != "SUCCEEDED" for r in rows),
+        "resumption_authorized": False,
+        "programme_acceptance_established": False,
+    }
+
+
+def synthetic_contract() -> tuple[dict[str, Any], dict[str, Any]]:
+    permit = {
+        "schema": "radicadsac-mc-native-permit/1.0", "permit_id": "MC047-SYNTHETIC",
+        "programme": "MC-1", "owner_task": "MC-047", "dispatch_class": "MODEL_ONLY",
+        "approval_authority": "MC-1-programme",
+        "approval_evidence": "synthetic offline MC-047 control; no campaign dispatch",
+        "source_sha": "0" * 40,
+        "candidate_config_digest": "sha256:" + "1" * 64,
+        "fixture_profile_digest": "sha256:" + "2" * 64,
+        "platform_id": "MC047-OFFLINE-SYNTHETIC",
+        "retention_path": "synthetic-only", "allocated_vcpus": 2,
+        "max_processes": 1, "threads_per_process": 1, "max_jobs": 1,
+        "sequential_repeats": 3, "timeout_seconds": 10,
+        "peak_rss_bytes_max": 1024, "storage_bytes_max": 2048,
+        "egress_bytes_max": 1024,
+        "tariff_basis": {"paid": False, "verified_current": False, "basis": "no provider"},
+        "stop_rules": ["incomplete or corrupt evidence"],
+        "expensive_campaign_lock": "HELD_BY_THIS_PERMIT",
+    }
+    plan = {
+        "schema": "radicadsac-mc-campaign-plan/1.0",
+        **{k: permit[k] for k in (
+            "permit_id", "source_sha", "candidate_config_digest", "fixture_profile_digest", "platform_id",
+            "max_jobs", "sequential_repeats", "max_processes", "threads_per_process",
+            "timeout_seconds", "peak_rss_bytes_max", "storage_bytes_max", "egress_bytes_max")},
+        "command": ["python3", "-c", "pass"], "shell": False,
+        "parallel_repeats": False, "environment": {},
+    }
+    return permit, plan
+
+
+def self_test() -> None:
+    h = core_module()
+    permit, plan = synthetic_contract()
+    h.validate_plan(permit, plan)
+    rows = [h._attempt(permit, plan, i, 0, "SUCCEEDED") for i in range(3)]
+    checks = 0
+    with tempfile.TemporaryDirectory() as temp:
+        root = Path(temp)
+        ledger, captures = root / "ledger.jsonl", root / "captures"
+        captures.mkdir()
+
+        def write(rows_to_write: list[dict[str, Any]]) -> None:
+            ledger.write_bytes(b"".join(h.canonical_bytes(row) + b"\n" for row in rows_to_write))
+            for item in captures.iterdir():
+                item.unlink()
+            for i in range(len(rows_to_write)):
+                for stream in ("stdout", "stderr"):
+                    (captures / f"{i:06d}.{stream}.bin").write_bytes(b"")
+
+        def reject(label: str) -> None:
+            nonlocal checks
+            try:
+                audit(permit, plan, ledger, captures)
+            except (ValueError, OSError, h.ContractError):
+                checks += 1
+                return
+            raise AssertionError("unsafe evidence accepted: " + label)
+
+        write(rows[:1])
+        result = audit(permit, plan, ledger, captures)
+        assert result["status"] == "PARTIAL_PREFIX_NOT_AUTHORIZED_TO_RESUME"
+        assert result["resumption_authorized"] is False
+        checks += 1
+
+        write(rows)
+        result = audit(permit, plan, ledger, captures)
+        assert result["status"] == "FULL_SLOT_LEDGER_NOT_PROGRAMME_ACCEPTED"
+        assert result["programme_acceptance_established"] is False
+        checks += 1
+
+        write(rows[:1]); (captures / "000000.stderr.bin").unlink()
+        reject("crash after stdout only")
+        write(rows[:1]); (captures / "000001.stdout.bin").write_bytes(b"orphan")
+        reject("captures before ledger commit")
+        write(rows[:1]); (captures / "000000.stdout.bin").unlink()
+        reject("ledger committed but capture absent")
+        write(rows[:1]); ledger.write_bytes(ledger.read_bytes()[:-1])
+        reject("torn trailing ledger line")
+        write(rows[:1]); (captures / "000000.stdout.bin").write_bytes(b"tamper")
+        reject("captured content mutation")
+        write(rows[:2]); mutated = [rows[0], dict(rows[1], attempt_id=rows[0]["attempt_id"])]
+        ledger.write_bytes(b"".join(h.canonical_bytes(x) + b"\n" for x in mutated))
+        reject("duplicate attempt identity")
+        write(rows[:1]); ledger.write_bytes(h.canonical_bytes(rows[2]) + b"\n")
+        reject("skipped repeat")
+        write(rows[:1]); (captures / "000000.stdout.bin").unlink()
+        (captures / "000000.stdout.bin").symlink_to(ledger)
+        reject("capture symlink")
+        write(rows[:1]); ledger.unlink(); ledger.symlink_to(root / "not-here")
+        reject("ledger symlink")
+        ledger.unlink()
+        write(rows[:2]); rows_with_fault = [rows[0], dict(rows[1], terminal_reason="CRASH", return_code=139, programme_pass=False)]
+        write(rows_with_fault)
+        assert audit(permit, plan, ledger, captures)["nonpass_terminals"] == 1
+        checks += 1
+        # After a valid digest pass, mutate capture bytes before the final
+        # metadata snapshot. The read-only admission must refuse this race.
+        write(rows[:1])
+        original_core = core_module
+
+        def race_injected_core():
+            source = original_core()
+            original_verify = source.verify_retained_captures
+
+            def mutate_after_verify(*args):
+                original_verify(*args)
+                (captures / "000000.stdout.bin").write_bytes(b"changed-after-digest")
+
+            source.verify_retained_captures = mutate_after_verify
+            return source
+
+        globals()["core_module"] = race_injected_core
+        try:
+            reject("post-hash/pre-snapshot mutation")
+        finally:
+            globals()["core_module"] = original_core
+    assert checks == 13, checks
+    print(f"MC-047 read-only crash-window controls passed: {checks}; MODEL_ONLY; no native dispatch")
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--contract", action="store_true")
+    ap.add_argument("--self-test", action="store_true")
+    ap.add_argument("--permit", type=Path)
+    ap.add_argument("--plan", type=Path)
+    ap.add_argument("--ledger", type=Path)
+    ap.add_argument("--captures", type=Path)
+    ap.add_argument("--allow-native-evidence", action="store_true",
+                    help="read-only inspection, never a dispatch permit")
+    args = ap.parse_args()
+    if args.contract or args.self_test:
+        self_test()
+        return 0
+    if not all((args.permit, args.plan, args.ledger, args.captures)):
+        ap.error("--permit, --plan, --ledger and --captures must be provided together")
+    try:
+        h = core_module()
+        permit, plan = h.load_json(args.permit), h.load_json(args.plan)
+        result = audit(permit, plan, args.ledger, args.captures,
+                       allow_native_evidence=args.allow_native_evidence)
+    except (ValueError, OSError, json.JSONDecodeError) as exc:
+        print(json.dumps({"status": "REFUSED", "reason": str(exc),
+                          "programme_acceptance_established": False}, sort_keys=True))
+        return 2
+    print(json.dumps(result, sort_keys=True))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
