@@ -11,7 +11,21 @@ def validate(graph=None,programme=None,outcomes=None,ghmap=None,posdoc=None):
     required=[ROOT/"handoffs/current-authority.json", DOC/"00-PROGRAMME.md", DOC/"01-DOMAIN-AND-SEMANTICS.md", DOC/"02-COMPLETENESS-ARGUMENT.md", DOC/"03-ORACLE-AND-CORPUS.md", DOC/"04-REPRESENTATION-AND-RECONSTRUCTION.md", DOC/"05-QUALIFICATION.md", DOC/"06-MC1-DECISION.md", DOC/"07-EXECUTION-PROTOCOL.md", DOC/"08-SOURCES-AND-EVIDENCE.md", DOC/"09-REVIEW-AND-CHANGELOG.md", DOC/"10-RAG-INDEX.md", DOC/"11-FORMAT-CONTRACTS.md", DOC/"12-ROADMAP.md", MC/"programme-v1.json", MC/"task-graph-v1.json", MC/"proof-obligations-v1.json", MC/"fixture-families-v1.json", MC/"evidence-ledger-v1.json", MC/"outcomes-v1.json", MC/"authority-map-v1.json", MC/"github-map-v1.json"]
     for p in required:
         if not p.exists(): fail(f"missing {p.relative_to(ROOT)}")
-    graph=graph or load(MC/"task-graph-v1.json"); programme=programme or load(MC/"programme-v1.json"); outcomes=outcomes or load(MC/"outcomes-v1.json"); ghmap=ghmap or load(MC/"github-map-v1.json"); posdoc=posdoc or load(MC/"proof-obligations-v1.json")
+    # Only None requests a disk load: explicit empty registries are invalid.
+    graph=load(MC/"task-graph-v1.json") if graph is None else graph
+    programme=load(MC/"programme-v1.json") if programme is None else programme
+    outcomes=load(MC/"outcomes-v1.json") if outcomes is None else outcomes
+    ghmap=load(MC/"github-map-v1.json") if ghmap is None else ghmap
+    posdoc=load(MC/"proof-obligations-v1.json") if posdoc is None else posdoc
+    for name, value, keys in (
+        ("task graph", graph, ("tasks", "packages")),
+        ("programme", programme, ("gates",)),
+        ("outcomes", outcomes, ("tasks",)),
+        ("GitHub map", ghmap, ("tasks",)),
+        ("proof obligations", posdoc, ("obligations",)),
+    ):
+        if not isinstance(value, dict) or any(key not in value for key in keys):
+            fail(f"{name} registry malformed")
     tasks=graph["tasks"]; ids=[t["id"] for t in tasks]; idset=set(ids)
     expected={f"MC-{i:03d}" for i in range(1,59)}
     if len(tasks)!=58 or idset!=expected or len(ids)!=len(idset): fail("MC task ID/count mismatch")
@@ -48,11 +62,18 @@ def validate(graph=None,programme=None,outcomes=None,ghmap=None,posdoc=None):
 
     gate_owners={"MC-A":"MC-005","MC-B":"MC-038","MC-C":"MC-016","MC-D":"MC-041","MC-E":"MC-044","MC-F":"MC-048","MC-1":"MC-052"}
     gate_states={"MC-A":"ACCEPTED","MC-B":"NOT_ESTABLISHED","MC-C":"NOT_ESTABLISHED","MC-D":"NOT_ESTABLISHED","MC-E":"NOT_ESTABLISHED","MC-F":"NOT_ESTABLISHED","MC-1":"NOT_ESTABLISHED"}
-    gates={g["id"]:g for g in programme["gates"]}
+    listed_gates=programme["gates"]
+    if (not isinstance(listed_gates,list) or len(listed_gates)!=len(gate_owners)
+            or any(not isinstance(g,dict) or not isinstance(g.get("id"),str)
+                   for g in listed_gates)):
+        fail("gate inventory malformed")
+    gates={g["id"]:g for g in listed_gates}
+    if len(gates)!=len(listed_gates) or set(gates)!=set(gate_owners):
+        fail("gate inventory mismatch")
     for g,o in gate_owners.items():
         if gates.get(g,{}).get("owner")!=o or gates[g].get("state")!=gate_states[g]: fail(f"{g} current state/owner mismatch")
     if programme.get("capability_status")!="NOT_ESTABLISHED": fail("MC-1 capability advanced before final gate")
-    if programme.get("production_authorized") or programme.get("expensive_execution_authorized"): fail("MC-A must not authorize production/native spend")
+    if programme.get("production_authorized") is not False or programme.get("expensive_execution_authorized") is not False: fail("MC-A must not authorize production/native spend")
 
     if set(outcomes["tasks"])!=idset or set(ghmap["tasks"])!=idset: fail("task registry set mismatch")
     if outcomes["tasks"]["MC-005"].get("state")!="CAPABILITY_ACCEPTED": fail("MC-005 outcome registry mismatch")
@@ -60,7 +81,7 @@ def validate(graph=None,programme=None,outcomes=None,ghmap=None,posdoc=None):
     nums=[]
     for i in ids:
         n=ghmap["tasks"][i].get("issue")
-        if not isinstance(n,int) or n<=0: fail(f"{i} missing issue")
+        if type(n) is not int or n<=0: fail(f"{i} missing issue")
         nums.append(n)
     if len(nums)!=len(set(nums)) or ghmap.get("programme_issue")!=62: fail("GitHub map mismatch")
 
@@ -122,6 +143,25 @@ def self_test():
     try: validate(bad,p,o,m,pos)
     except AssertionError: pass
     else: fail("self-test failed to reject removed post-gate MC-038 dependency")
+    # Adversarial contract probes: malformed inputs must not be substituted,
+    # silently shadow a gate, or masquerade as validated authority.
+    try: validate({},p,o,m,pos)
+    except AssertionError: pass
+    else: fail("self-test accepted explicitly empty injected graph")
+    for change, label in (
+        (lambda x: x["gates"].append(copy.deepcopy(x["gates"][0])), "duplicate gate"),
+        (lambda x: x["gates"][-1].__setitem__("id","MC-Z"), "unknown gate"),
+        (lambda x: x.__setitem__("production_authorized",0), "non-boolean production permission"),
+        (lambda x: x.__setitem__("expensive_execution_authorized",0), "non-boolean native permission"),
+    ):
+        badp=copy.deepcopy(p); change(badp)
+        try: validate(g,badp,o,m,pos)
+        except AssertionError: pass
+        else: fail(f"self-test accepted {label}")
+    badm=copy.deepcopy(m); badm["tasks"]["MC-001"]["issue"]=True
+    try: validate(g,p,o,badm,pos)
+    except AssertionError: pass
+    else: fail("self-test accepted boolean GitHub issue number")
     print("MC-1 validator self-test passed")
 if __name__=="__main__":
     ap=argparse.ArgumentParser(); ap.add_argument("--self-test",action="store_true"); a=ap.parse_args()
