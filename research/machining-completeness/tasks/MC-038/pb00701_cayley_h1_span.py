@@ -139,6 +139,22 @@ def self_test():
     assert v8['events'][0]['phase']=='1/2' and v8['events'][0]['order']==1
     assert v8['sign_cells']==[1,-1] and v8['endpoint_zeros']==[False,False]
     assert len(finite_cayley_roots(Q(0),Q(0),Q(1,2)))==1  # finite root z=0 lies OUTSIDE this child
+    # Quarter-turn admission must be proved at both finite z=±1 boundaries,
+    # at a pole endpoint, and at a repeated/tangential endpoint zero.
+    both_quarter=c(0,1,0,Q(-1,4),Q(1,4))
+    assert len(both_quarter['events'])==2
+    assert [e['order'] for e in both_quarter['events']]==[1,1]
+    assert all(e['position']=='endpoint' for e in both_quarter['events'])
+    assert both_quarter['endpoint_zeros']==[True,True] and both_quarter['sign_cells']==[1]
+    pole_endpoint=c(0,0,1,Q(1,4),Q(1,2))
+    assert len(pole_endpoint['events'])==1
+    assert pole_endpoint['events'][0]['kind']=='PHASE_POLE_ZERO'
+    assert pole_endpoint['events'][0]['position']=='endpoint' and pole_endpoint['events'][0]['order']==1
+    assert pole_endpoint['endpoint_zeros']==[False,True] and pole_endpoint['sign_cells']==[1]
+    tangent_quarter=c(-1,0,1,Q(1,4),Q(3,4))
+    assert len(tangent_quarter['events'])==1 and tangent_quarter['events'][0]['order']==2
+    assert tangent_quarter['events'][0]['position']=='endpoint'
+    assert tangent_quarter['endpoint_zeros']==[True,False] and tangent_quarter['sign_cells']==[-1]
     assert c(0,0,0,0,1)['kind']=='IDENTITY_ZERO'
     assert c(2,1,0,0,1)['events']==[]
     assert c(-2,1,0,0,1)['sign_cells']==[-1]
