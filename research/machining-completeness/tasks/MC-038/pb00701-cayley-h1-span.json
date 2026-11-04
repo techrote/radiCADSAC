@@ -54,6 +54,24 @@
         -1,
         1
       ]
+    },
+    {
+      "case_id": "composite:PB00701_V8_EXACT_COMMON_FACTOR_REDUCTION:tail0",
+      "original_source_sha256": "9abbed355812241cdef20f3ce3b3522619bdd682c3a73fb01828d8f95c72f0af",
+      "historical_span": "V27 BLOCKED",
+      "complete_source_specific_preexisting": true,
+      "new_historical_closure": false,
+      "span_event_count": 1,
+      "span_event_orders": [
+        1
+      ],
+      "span_sign_cells": [
+        1,
+        -1
+      ],
+      "falsified_candidate": "FINITE_Z_CAYLEY_ONLY",
+      "candidate_reported_roots": 0,
+      "actual_closed_child_roots": 1
     }
   ]
 }
