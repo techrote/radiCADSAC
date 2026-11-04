@@ -1,0 +1,109 @@
+{
+  "schema": "radicadsac-pb00701-ramp-hidden-root/1.0",
+  "task": "MC-038",
+  "claim": "C_POSITIVE_EXTERIORS_AND_ZERO_KNOT_DO_NOT_PROVE_INTERIOR_EVENT_COMPLETENESS",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "historical_anchor_case_id": "composite:DELEGATED_V6_CONSTANT_MODULATION:tail100",
+  "historical_anchor_source_sha256": "f6a0eb06c66af415fbb8abdfe62f9b36a2a2bf154e535d83307a80228e044ad5",
+  "prospective_slope_3_2_source_sha256": "e4bd5090915c3ff4dac70092918b154b43b5233105b8c86575cf4cc1a8480f9e",
+  "historical_v54_corpus_git_blob": "5841c331579489b25caef38cd412bdbf286f9134",
+  "current_fifty_source_registry_git_blob": "e52d3baf3692a011cf86234eeaa992ef407d99fd",
+  "original_exact_case": {
+    "ramp_slope": "100",
+    "case": "POSITIVE_RIGHT_NO_EXTRA_ROOT",
+    "left_source_open_root_count": 0,
+    "right_source_open_root_count": 0,
+    "right_exterior_root_count": 0,
+    "distinct_closed_source_root_count": 1,
+    "source_knot_coordinate": "1",
+    "source_knot_is_zero": true,
+    "source_knot_one_sided_orders": [
+      1,
+      1
+    ],
+    "global_smooth_source_knot_multiplicity_claimed": false,
+    "source_knot_event": "TOUCHING",
+    "ordered_physical_open_signs": [
+      "POSITIVE",
+      "POSITIVE"
+    ],
+    "exterior_values": {
+      "t=0": "1",
+      "t=2": "99"
+    },
+    "interior_root_bracket_local_x": [],
+    "root_near_t2_bound": null,
+    "method": "EXACT_CONVEXITY_PI_RATIONAL_BOUNDS_CYCLOTOMIC_BRACKET",
+    "root_sampling_used_as_truth": false,
+    "resource_refusal_is_truth": false
+  },
+  "changed_control_exact_case": {
+    "ramp_slope": "3/2",
+    "case": "ONE_UNIQUE_SIMPLE_RIGHT_OPEN_CROSSING",
+    "left_source_open_root_count": 0,
+    "right_source_open_root_count": 1,
+    "right_exterior_root_count": 0,
+    "distinct_closed_source_root_count": 2,
+    "source_knot_coordinate": "1",
+    "source_knot_is_zero": true,
+    "source_knot_one_sided_orders": [
+      1,
+      1
+    ],
+    "global_smooth_source_knot_multiplicity_claimed": false,
+    "source_knot_event": "CROSSING",
+    "ordered_physical_open_signs": [
+      "POSITIVE",
+      "NEGATIVE",
+      "POSITIVE"
+    ],
+    "exterior_values": {
+      "t=0": "1",
+      "t=2": "1/2"
+    },
+    "interior_root_bracket_local_x": [
+      "1/4",
+      "1/2"
+    ],
+    "root_near_t2_bound": null,
+    "method": "EXACT_CONVEXITY_PI_RATIONAL_BOUNDS_CYCLOTOMIC_BRACKET",
+    "root_sampling_used_as_truth": false,
+    "resource_refusal_is_truth": false
+  },
+  "same_phase_knot_degree_harmonics": true,
+  "both_exact_exterior_signs_positive_and_knot_zero": true,
+  "positive_exteriors_knot_zero_shortcut_falsified": true,
+  "proof_obligation": "PB-007-01 exact physical event partition and ordered signs",
+  "census": {
+    "frozen_source_count_before_after": [
+      121,
+      121
+    ],
+    "historical_route_refusals_before_after": [
+      20,
+      20
+    ],
+    "historical_missing_order_premises_before_after": [
+      30,
+      30
+    ],
+    "complete_source_specific_witnesses_before_after": [
+      50,
+      50
+    ],
+    "complete_finite_witnesses": 49,
+    "complete_continuum_witnesses": 1,
+    "new_frozen_case_ids_resolved": [],
+    "historical_v54_dispositions_changed": false,
+    "all_121_source_hashes_recomputed": true,
+    "all_50_source_evidence_hashes_checked": true
+  },
+  "general_analytic_solver_impossibility_claimed": false,
+  "all_26_operations_preserved": true,
+  "historical_v54_accepted_route_changed": false,
+  "pb00701_full_grammar_certified": false,
+  "mc_b_established": false,
+  "mc1_established": false,
+  "native_or_step_qualified": false,
+  "production_authorized": false
+}
