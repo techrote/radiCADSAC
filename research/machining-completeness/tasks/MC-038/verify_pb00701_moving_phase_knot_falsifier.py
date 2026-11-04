@@ -42,7 +42,8 @@ def verify_historical_census():
         "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE": 30
     }
     old_unresolved = {c["id"] for c in v54["cases"] if
-                      c["expected"]["v54_disposition"] != "CERTIFIED"}
+                      c["expected"]["v54_disposition"] in (
+                          "BLOCKED", "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE")}
     assert old_unresolved == {r["case_id"] for r in rows}
     assert m.source_binding(m.SOURCE) not in {r["source_sha256"] for r in rows}
     s = v2["summary"]
