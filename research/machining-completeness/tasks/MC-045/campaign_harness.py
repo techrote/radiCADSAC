@@ -398,6 +398,13 @@ def append_attempt(path: Path, attempt: dict[str, Any], permit: dict[str, Any], 
         before = _ledger_metadata(path)
         flags = os.O_RDWR | os.O_APPEND | getattr(os, "O_BINARY", 0)
         if before is None:
+            # Refuse an out-of-order initial attempt before O_CREAT produces a
+            # durable empty ledger. Replay validates again on the held descriptor
+            # after opening; this preflight cannot authorize an append by itself.
+            validate_ledger_sequence(
+                [attempt], permit, plan,
+                allow_native=(permit.get("dispatch_class") == "NATIVE_BOUNDED"),
+            )
             # Never follow a newly planted symlink or overwrite a new peer.
             flags |= os.O_CREAT | os.O_EXCL
         else:
@@ -647,6 +654,22 @@ def self_test() -> None:
     # MC-045 ledger replay/control qualification. All records and captured bytes
     # are synthetic; no subprocess or native geometry is executed here.
     canonical_rows = [_attempt(permit, plan, i, 0, "SUCCEEDED") for i in range(3)]
+    # Refusal of a valid but out-of-order first attempt must not create even
+    # an empty ledger. O_CREAT must not precede initial sequence admission.
+    with tempfile.TemporaryDirectory() as td:
+        missing = Path(td) / "refused-first-attempt.jsonl"
+        lock = missing.with_name(missing.name + ".append.lock")
+        try:
+            append_attempt(missing, canonical_rows[1], permit, plan)
+        except ContractError as exc:
+            assert "skipped or reordered repeat group" in str(exc), exc
+        else:
+            raise AssertionError("out-of-order first append accepted")
+        assert not missing.exists(), "refused first append created empty ledger evidence"
+        assert not lock.exists(), "refused first append stranded its lock"
+        # Accepted first entry remains functional on the same missing path.
+        append_attempt(missing, canonical_rows[0], permit, plan)
+        assert load_ledger(missing) == canonical_rows[:1]
     validate_ledger_sequence(canonical_rows, permit, plan, require_complete=True)
     validate_ledger_sequence(canonical_rows[:2], permit, plan)
     def reject_rows(rows, *, complete=False):
