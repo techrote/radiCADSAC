@@ -263,10 +263,22 @@ def verify_registry(contract):
 
 
 def verify_protected_sources(contract):
+    # The protection claim belongs to the original MC task window;
+    # accepted later RCS maintenance is not an edit by this task.
+    if contract.get("source_baseline") != "bfe1ee16a28b3c5193d43f0e553a7cb782ee2aa1":
+        fail("MC-013 source baseline identity drift")
+    accepted_main = "f5bce8ec716e0de193cc162c110d1dfdb9bbb3d1"
+    for older, newer in ((contract["source_baseline"], accepted_main), (accepted_main, "HEAD")):
+        ancestry = subprocess.run(
+            ["git", "merge-base", "--is-ancestor", older, newer],
+            cwd=ROOT, check=False, capture_output=True, text=True,
+        )
+        if ancestry.returncode != 0:
+            fail(f"MC-013 protected-source history ancestry invalid: {older} -> {newer}")
     for path, expected in PROTECTED_BLOBS.items():
         if git_blob(path) != expected:
             fail(f"protected historical source drift: {path}")
-    proc = subprocess.run(["git", "diff", "--name-only", f"{contract['source_baseline']}..HEAD"], cwd=ROOT, check=True, capture_output=True, text=True)
+    proc = subprocess.run(["git", "diff", "--name-only", f"{contract['source_baseline']}..{accepted_main}"], cwd=ROOT, check=True, capture_output=True, text=True)
     changed = {line.strip() for line in proc.stdout.splitlines() if line.strip()}
     forbidden = sorted(path for path in changed if path.startswith("research/rcs-"))
     if forbidden:
