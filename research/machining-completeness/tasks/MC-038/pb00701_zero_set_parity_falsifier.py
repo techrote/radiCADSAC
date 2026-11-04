@@ -45,7 +45,7 @@ def digest(value) -> str:
 
 def git_blob_bytes(raw: bytes) -> str:
     return hashlib.sha1(b"blob " + str(len(raw)).encode("ascii")
-                        + b"\\0" + raw).hexdigest()
+                        + bytes([0]) + raw).hexdigest()
 
 
 def read_pinned_json(path: Path, blob: str):
