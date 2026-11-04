@@ -1,0 +1,43 @@
+name: mc1-pb00701-v23-nonmonotone-positive
+on:
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v23_nonmonotone_positive.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v23-nonmonotone-positive-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v23-nonmonotone-positive.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation-v2.json'
+      - '.github/workflows/mc1-pb00701-v23-nonmonotone-positive.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v23_nonmonotone_positive.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v23-nonmonotone-positive-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v23-nonmonotone-positive.json'
+      - '.github/workflows/mc1-pb00701-v23-nonmonotone-positive.yml'
+permissions:
+  contents: read
+jobs:
+  original-v23-nonmonotone-positive:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: V23 exact original source, derivative falsifier and adversarial tests
+        run: |
+          set -euo pipefail
+          python3 research/machining-completeness/tasks/MC-038/pb00701_v23_nonmonotone_positive.py --contract --self-test
+      - name: Independently reproduce the frozen 50-source reconciliation
+        run: |
+          set -euo pipefail
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_evidence_reconciliation_v2.py --contract
+      - name: MC-1 static authority and registry checks
+        run: |
+          set -euo pipefail
+          python3 tools/validate_machining_completeness.py
