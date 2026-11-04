@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import importlib.util
 import json
+import os
 import stat
 import tempfile
 from pathlib import Path
@@ -25,21 +26,31 @@ def core_module():
 
 def fingerprints(ledger: Path, captures: Path) -> tuple[Any, ...]:
     """Detect ordinary mutations during audit; not atomic custody/attestation."""
-    def mark(path: Path) -> tuple[int, int, int, int, int]:
+    def mark(path: Path) -> tuple[int, int, int, int, int, int]:
         s = path.lstat()
-        return (s.st_dev, s.st_ino, s.st_mode, s.st_size, s.st_mtime_ns)
+        # On POSIX, ctime changes for same-size rewrites even when mtime is
+        # restored. On Windows ctime may mean creation time: NOT attestation.
+        return (s.st_dev, s.st_ino, s.st_mode, s.st_size,
+                s.st_mtime_ns, s.st_ctime_ns)
 
     if ledger.is_symlink() or not ledger.is_file():
         raise ValueError("ledger missing, non-file or symlinked")
     if captures.is_symlink() or not captures.is_dir():
         raise ValueError("capture directory missing or symlinked")
+    ledger_mark = mark(ledger)
+    identities = {(ledger_mark[0], ledger_mark[1])}
     entries = []
     for child in captures.iterdir():
         metadata = child.lstat()
         if not stat.S_ISREG(metadata.st_mode):
             raise ValueError("capture inventory contains non-regular or symlinked entry")
-        entries.append((child.name, mark(child)))
-    return (mark(ledger), mark(captures), tuple(sorted(entries)))
+        child_mark = mark(child)
+        identity = (child_mark[0], child_mark[1])
+        if identity in identities:
+            raise ValueError("ledger/capture inventory contains hard-linked file aliases")
+        identities.add(identity)
+        entries.append((child.name, child_mark))
+    return (ledger_mark, mark(captures), tuple(sorted(entries)))
 
 
 def audit(permit: dict[str, Any], plan: dict[str, Any], ledger: Path,
@@ -166,6 +177,12 @@ def self_test() -> None:
         write(rows[:1]); ledger.unlink(); ledger.symlink_to(root / "not-here")
         reject("ledger symlink")
         ledger.unlink()
+        # Two capture filenames must not share one inode, even if both empty
+        # streams have valid matching SHA-256 values. A hardlink ties custody.
+        write(rows[:1])
+        (captures / "000000.stderr.bin").unlink()
+        os.link(captures / "000000.stdout.bin", captures / "000000.stderr.bin")
+        reject("hard-linked stdout/stderr alias")
         write(rows[:2]); rows_with_fault = [rows[0], dict(rows[1], terminal_reason="CRASH", return_code=139, programme_pass=False)]
         write(rows_with_fault)
         assert audit(permit, plan, ledger, captures)["nonpass_terminals"] == 1
@@ -191,7 +208,41 @@ def self_test() -> None:
             reject("post-hash/pre-snapshot mutation")
         finally:
             globals()["core_module"] = original_core
-    assert checks == 13, checks
+
+        # The old fingerprint used size+mtime and missed an equal-length
+        # post-digest rewrite followed by explicit mtime restoration. POSIX
+        # inode change-time must detect it, without trusting a second hash.
+        if os.name == "posix":
+            capture = captures / "000000.stdout.bin"
+            modified = dict(rows[0], stdout_sha256=h.sha256_bytes(b"AAAA"),
+                            output_bytes=4)
+            write([modified])
+            capture.write_bytes(b"AAAA")
+
+            def restored_mtime_core():
+                source = original_core()
+                original_verify = source.verify_retained_captures
+
+                def mutate_after_verify(*args):
+                    original_verify(*args)
+                    before = capture.stat()
+                    capture.write_bytes(b"BBBB")
+                    os.utime(capture, ns=(before.st_atime_ns,
+                                          before.st_mtime_ns))
+                    after = capture.stat()
+                    assert after.st_size == before.st_size
+                    assert after.st_mtime_ns == before.st_mtime_ns
+                    assert after.st_ctime_ns != before.st_ctime_ns
+
+                source.verify_retained_captures = mutate_after_verify
+                return source
+
+            globals()["core_module"] = restored_mtime_core
+            try:
+                reject("equal-length post-hash rewrite with restored mtime")
+            finally:
+                globals()["core_module"] = original_core
+    assert checks == (15 if os.name == "posix" else 14), checks
     print(f"MC-047 read-only crash-window controls passed: {checks}; MODEL_ONLY; no native dispatch")
 
 
