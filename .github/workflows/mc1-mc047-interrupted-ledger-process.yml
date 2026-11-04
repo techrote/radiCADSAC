@@ -1,0 +1,55 @@
+name: mc1-mc047-interrupted-ledger-process
+
+on:
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-047/interrupted_ledger_process_qualification.py'
+      - 'research/machining-completeness/tasks/MC-047/interrupted-ledger-process-qualification-20261104.md'
+      - '.github/workflows/mc1-mc047-interrupted-ledger-process.yml'
+      - 'research/machining-completeness/tasks/MC-045/campaign_harness.py'
+      - 'research/machining-completeness/tasks/MC-047/verify.py'
+      - 'research/machining-completeness/tasks/MC-047/single_writer_process_qualification.py'
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-047/interrupted_ledger_process_qualification.py'
+      - '.github/workflows/mc1-mc047-interrupted-ledger-process.yml'
+      - 'research/machining-completeness/tasks/MC-045/campaign_harness.py'
+      - 'research/machining-completeness/tasks/MC-047/verify.py'
+      - 'research/machining-completeness/tasks/MC-047/single_writer_process_qualification.py'
+
+permissions:
+  contents: read
+
+jobs:
+  synthetic-interrupted-ledger-process:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2022]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Confirm literal source head
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: python -c "import os,subprocess; assert subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()==os.environ['EXPECTED_SHA']"
+      - name: Compile source-matched qualification code
+        run: python -m py_compile research/machining-completeness/tasks/MC-045/campaign_harness.py research/machining-completeness/tasks/MC-047/verify.py research/machining-completeness/tasks/MC-047/single_writer_process_qualification.py research/machining-completeness/tasks/MC-047/interrupted_ledger_process_qualification.py
+      - name: Retain accepted MC-045 contract controls
+        run: python research/machining-completeness/tasks/MC-045/campaign_harness.py self-test
+      - name: Retain accepted MC-047 recovery controls
+        run: python research/machining-completeness/tasks/MC-047/verify.py --contract --self-test
+      - name: Retain accepted MC-047 process controls
+        run: python research/machining-completeness/tasks/MC-047/single_writer_process_qualification.py --contract --self-test
+      - name: Subprocess torn JSONL crash refusal
+        run: python research/machining-completeness/tasks/MC-047/interrupted_ledger_process_qualification.py --contract --self-test
+      - name: Static programme registry check
+        run: python tools/validate_machining_completeness.py
