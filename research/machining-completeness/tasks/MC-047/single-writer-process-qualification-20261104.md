@@ -23,7 +23,7 @@ python research/machining-completeness/tasks/MC-045/campaign_harness.py self-tes
 python tools/validate_machining_completeness.py --self-test
 ```
 
-The narrow [MC-047 subprocess workflow](../../../..//.github/workflows/mc1-mc047-single-writer-process.yml) (repository root: `.github/workflows/mc1-mc047-single-writer-process.yml`) invokes this against literal PR head or merged-main commit on Ubuntu 24.04 and Windows 2022, Python 3.12. Expected result: the control output reports actual-process MODEL_ONLY PASS on both platforms. Check actual CI job conclusions and final source SHA before describing those outcomes as qualified.
+The narrow [MC-047 subprocess workflow](../../../../.github/workflows/mc1-mc047-single-writer-process.yml) (repository root: `.github/workflows/mc1-mc047-single-writer-process.yml`) invokes this against literal PR head or merged-main commit on Ubuntu 24.04 and Windows 2022, Python 3.12. Expected result: the control output reports actual-process MODEL_ONLY PASS on both platforms. Check actual CI job conclusions and final source SHA before describing those outcomes as qualified.
 
 ## Interpretation and limits
 
