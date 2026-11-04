@@ -94,6 +94,13 @@ def validate(graph=None,programme=None,outcomes=None,ghmap=None,posdoc=None):
     if pids!=[f"MG-{i:02d}" for i in range(14)]: fail("package hierarchy mismatch")
     members=[x for p in graph["packages"] for x in p["tasks"]]
     if sorted(members)!=sorted(ids) or len(members)!=len(set(members)): fail("package membership mismatch")
+    # A task's self-declared package must agree with its unique package owner.
+    # Otherwise a corrupt nested task record could pass the package membership
+    # check while claiming a different recognized MG package.
+    for package in graph["packages"]:
+        for task_id in package["tasks"]:
+            if tmap[task_id].get("package") != package["id"]:
+                fail(f"{task_id} task package binding mismatch")
 
     gate_owners={"MC-A":"MC-005","MC-B":"MC-038","MC-C":"MC-016","MC-D":"MC-041","MC-E":"MC-044","MC-F":"MC-048","MC-1":"MC-052"}
     gate_states={"MC-A":"ACCEPTED","MC-B":"NOT_ESTABLISHED","MC-C":"NOT_ESTABLISHED","MC-D":"NOT_ESTABLISHED","MC-E":"NOT_ESTABLISHED","MC-F":"NOT_ESTABLISHED","MC-1":"NOT_ESTABLISHED"}
@@ -204,6 +211,8 @@ def self_test():
         (0, lambda x: x["tasks"].__setitem__(0,None), "null task record"),
         (0, lambda x: x["tasks"][0].__setitem__("id",[]), "unhashable task ID"),
         (0, lambda x: x["tasks"][0].__setitem__("dependencies",None), "null dependencies"),
+        (0, lambda x: x["tasks"][0].pop("dependencies"), "missing dependencies"),
+        (0, lambda x: x["tasks"][0].__setitem__("package","MG-13"), "cross-package task declaration"),
         (0, lambda x: x["tasks"][0].__setitem__("acceptance",True), "boolean acceptance contract"),
         (0, lambda x: x["tasks"][0].__setitem__("verification","not a list"), "scalar verification contract"),
         (0, lambda x: x["tasks"][0].__setitem__("artifacts",{"item":1}), "mapping artifacts contract"),
