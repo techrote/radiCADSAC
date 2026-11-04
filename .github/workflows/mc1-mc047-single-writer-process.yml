@@ -1,0 +1,45 @@
+name: mc1-mc047-single-writer-process
+
+on:
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-047/single_writer_process_qualification.py'
+      - 'research/machining-completeness/tasks/MC-047/single-writer-process-qualification-20261104.md'
+      - 'research/machining-completeness/tasks/MC-045/campaign_harness.py'
+      - '.github/workflows/mc1-mc047-single-writer-process.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-047/single_writer_process_qualification.py'
+      - 'research/machining-completeness/tasks/MC-045/campaign_harness.py'
+      - '.github/workflows/mc1-mc047-single-writer-process.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  model-only-real-process-lock-check:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2022]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify checkout is literal head
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: python -c "import os, subprocess; assert subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip() == os.environ['EXPECTED_SHA']"
+      - name: Compile MC-045 and process qualification source
+        run: python -m py_compile research/machining-completeness/tasks/MC-045/campaign_harness.py research/machining-completeness/tasks/MC-047/single_writer_process_qualification.py
+      - name: Verify upstream synthetic MC-045 lock contracts
+        run: python research/machining-completeness/tasks/MC-045/campaign_harness.py self-test
+      - name: Qualify genuine subprocess contention, same-slot race, and crashed-owner refusal
+        run: python research/machining-completeness/tasks/MC-047/single_writer_process_qualification.py --contract --self-test
