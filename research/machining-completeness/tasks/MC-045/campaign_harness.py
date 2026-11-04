@@ -411,7 +411,7 @@ def append_attempt(path: Path, attempt: dict[str, Any], permit: dict[str, Any], 
             named = _ledger_metadata(path)
             if (named is None or _ledger_fingerprint(opened) != _ledger_fingerprint(named) or
                     (before is not None and _ledger_fingerprint(before) != _ledger_fingerprint(opened))):
-                raise ContractError("ledger identity changed before replay")
+                raise ContractError(f"ledger identity changed before replay (fd={_ledger_fingerprint(opened)!r}, path={_ledger_fingerprint(named) if named is not None else None!r}, previous={_ledger_fingerprint(before) if before is not None else None!r})")
             fh.seek(0)
             prior, _digest = _parse_ledger_stream(fh)
             validate_ledger_sequence(
