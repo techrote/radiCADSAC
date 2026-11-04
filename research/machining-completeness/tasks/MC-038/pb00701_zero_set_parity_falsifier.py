@@ -50,7 +50,7 @@ def git_blob_bytes(raw: bytes) -> str:
 
 def read_pinned_json(path: Path, blob: str):
     raw = path.read_bytes()
-    require(git_blob_bytes(raw) == blob, "PINNED_SOURCE_DRIFT:" + path.name)
+    require(git_blob_bytes(raw) == blob, "PINNED_SOURCE_DRIFT:" + path.name + ":" + git_blob_bytes(raw) + "!=" + blob)
     return json.loads(raw.decode("utf-8"))
 
 
