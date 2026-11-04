@@ -86,7 +86,7 @@ class ExactRampHiddenRootTests(unittest.TestCase):
         # Positivity and (23/16)^2>2 make the radical comparison exact.
         self.assertGreater(Q(23, 16)**2, Q(2))
         self.assertGreater(Q(23, 16), 0)
-        self.assertGreater(Q(2)-Q(23, 16), Q(9, 16))
+        self.assertEqual(Q(2)-Q(23, 16), Q(9, 16))
 
     def test_exact_cyclotomic_positive_at_half(self):
         # G(1/2)=3/4-sqrt(2)/2 > 0 from (3/4)^2>1/2.
