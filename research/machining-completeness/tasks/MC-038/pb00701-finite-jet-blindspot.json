@@ -1,0 +1,113 @@
+{
+  "schema": "radicadsac-pb00701-finite-jet-blindspot/1.0",
+  "claim": "C_FIXED_FINITE_ENDPOINT_KNOT_JET_BUDGET_INSUFFICIENT_FOR_COMPLETE_SOURCE_EVENTS",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "historical_frozen_case_anchor": "composite:DELEGATED_V6_CONSTANT_MODULATION:tail0",
+  "historical_anchor_source_sha256": "9eb6f08a44882adffa919529247c40190c70e8d7599ee2b1a0f7978ef2569eb1",
+  "frozen_v54_git_blob": "5841c331579489b25caef38cd412bdbf286f9134",
+  "complete_v2_registry_git_blob": "e52d3baf3692a011cf86234eeaa992ef407d99fd",
+  "selected_prospective_construction": {
+    "schema": "radicadsac-pb00701-finite-jet-blindspot/1.0",
+    "evidence_class": "DETERMINISTIC_MODEL",
+    "claim": "C_FIXED_FINITE_ENDPOINT_KNOT_JET_BUDGET_INSUFFICIENT_FOR_COMPLETE_SOURCE_EVENTS",
+    "m": 9,
+    "matched_jet_orders": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "first_unmatched_jet_order": 9,
+    "epsilon": "1/1073741824",
+    "baseline_sha256": "e49198f9f123c1a15f0ad3747f58c20bb917d843dede8f4a18a1fdc8708cb723",
+    "adversary_sha256": "52af293fcb0df5a3749ff0f311b06995f35dac88367648ef17b2c79020bcfc34",
+    "source_interval": [
+      "0",
+      "2"
+    ],
+    "true_source_knot": "1",
+    "phase_turn_law": {
+      "offset": "0",
+      "rate": "1/16"
+    },
+    "source_degree": 18,
+    "baseline_complete_zero_set": [],
+    "adversary_complete_zero_set": [
+      "536870911/1073741824",
+      "536870913/1073741824"
+    ],
+    "adversary_exact_open_sign_cells": [
+      {
+        "interval": [
+          "0",
+          "536870911/1073741824"
+        ],
+        "sign": 1
+      },
+      {
+        "interval": [
+          "536870911/1073741824",
+          "536870913/1073741824"
+        ],
+        "sign": -1
+      },
+      {
+        "interval": [
+          "536870913/1073741824",
+          "2"
+        ],
+        "sign": 1
+      }
+    ],
+    "adversary_root_orders": [
+      1,
+      1
+    ],
+    "endpoint_and_true_knot_jet_equality_through_order": 8,
+    "both_true_knot_point_values_equal_and_positive": true,
+    "adversary_endpoint_or_knot_zero": false,
+    "left_span_difference_order_m_coefficient_at_zero": "-3599131035634557106248430806148785487095757694641533306480604458089470064537190296255232548883112685719936728506816716098566612844395439751206812144692131084107776/13729595320261219001256877879230753772678224048789566751953601495772264058640132729895725335713847704424010215083307161251732252958164715859932039523696902143",
+    "left_span_difference_order_m_coefficient_at_knot_without_cos_factor": "3599131035634557106248430806148785487095757694641533306480604458089470064537190296255232548883112685719936728506816716098566612844395439751206812144692131084107776/13729595320261219001256877879230753772678224048789566751953601495772264058640132729895725335713847704424010215083307161251732252958164715859932039523696902143",
+    "global_smooth_multiplicity_claimed": false,
+    "baseline_and_adversary_same_piece_knot_phase_grammar": true,
+    "pb00701_certified": false,
+    "mc_b_established": false,
+    "mc1_established": false,
+    "production_authorized": false
+  },
+  "census": {
+    "frozen_source_count_before_after": [
+      121,
+      121
+    ],
+    "historical_route_refusals_before_after": [
+      20,
+      20
+    ],
+    "historical_missing_order_premises_before_after": [
+      30,
+      30
+    ],
+    "complete_source_specific_witnesses_before_after": [
+      50,
+      50
+    ],
+    "complete_finite_witnesses": 49,
+    "complete_continuum_witnesses": 1,
+    "new_frozen_case_ids_resolved": [],
+    "historical_v54_dispositions_changed": false,
+    "all_121_original_source_hashes_recomputed": true,
+    "all_50_evidence_case_ids_and_source_hashes_rechecked": true
+  },
+  "general_no_solver_impossibility_claim": true,
+  "fixed_endpoint_or_knot_jet_budget_route_falsified": true,
+  "full_pb00701_coverage_established": false,
+  "mc_b_established": false,
+  "mc1_established": false,
+  "production_authorized": false
+}
