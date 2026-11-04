@@ -1,0 +1,45 @@
+name: mc1-pb00701-v43-cayley-amplitude-boundary
+on:
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v43_cayley_amplitude_boundary.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v43-cayley-amplitude-boundary-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v43-cayley-amplitude-boundary.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation-v2.json'
+      - '.github/workflows/mc1-pb00701-v43-cayley-amplitude-boundary.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v43_cayley_amplitude_boundary.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v43-cayley-amplitude-boundary-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v43-cayley-amplitude-boundary.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation-v2.json'
+      - '.github/workflows/mc1-pb00701-v43-cayley-amplitude-boundary.yml'
+permissions:
+  contents: read
+jobs:
+  original-v43-cayley-amplitude-boundary:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Exact original V43 source and affine-amplitude nonrationality falsifier
+        run: |
+          set -euo pipefail
+          python3 research/machining-completeness/tasks/MC-038/pb00701_v43_cayley_amplitude_boundary.py --contract --self-test
+      - name: Independently reproduce frozen original fifty-source evidence
+        run: |
+          set -euo pipefail
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_evidence_reconciliation_v2.py --contract
+      - name: MC-1 static guard
+        run: |
+          set -euo pipefail
+          python3 tools/validate_machining_completeness.py
