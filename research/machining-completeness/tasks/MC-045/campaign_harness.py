@@ -58,6 +58,16 @@ def sha256_bytes(data: bytes) -> str:
     return "sha256:" + hashlib.sha256(data).hexdigest()
 
 
+def is_sha256_digest(value: Any) -> bool:
+    """Require canonical lowercase SHA-256 evidence digests, not arbitrary text."""
+    return (
+        isinstance(value, str)
+        and len(value) == 71
+        and value.startswith("sha256:")
+        and all(char in "0123456789abcdef" for char in value[7:])
+    )
+
+
 def _require_text(obj: dict[str, Any], key: str) -> str:
     value = obj.get(key)
     if not isinstance(value, str) or not value.strip():
@@ -177,10 +187,19 @@ def validate_attempt(attempt: dict[str, Any], permit: dict[str, Any], plan: dict
     for key in BINDINGS:
         if attempt.get(key) != permit.get(key):
             raise ContractError(f"attempt/permit binding mismatch: {key}")
-    if attempt.get("terminal_reason") not in ALLOWED_TERMINALS:
+    terminal = attempt.get("terminal_reason")
+    if not isinstance(terminal, str) or terminal not in ALLOWED_TERMINALS:
         raise ContractError("unknown terminal reason")
     for key in ("attempt_id", "started_utc", "finished_utc", "stdout_sha256", "stderr_sha256"):
         _require_text(attempt, key)
+    for key in ("stdout_sha256", "stderr_sha256"):
+        if not is_sha256_digest(attempt[key]):
+            raise ContractError(f"{key} must be a canonical sha256 digest")
+    return_code = attempt.get("return_code")
+    if return_code is not None and type(return_code) is not int:
+        raise ContractError("return_code must be an integer or null")
+    if terminal == "SUCCEEDED" and return_code != 0:
+        raise ContractError("SUCCEEDED requires a zero process return_code")
     for key in ("repeat_index", "job_index", "wall_time_ns", "cpu_time_ns", "allocated_vcpus", "observed_peak_rss_bytes", "output_bytes", "storage_bytes", "egress_bytes"):
         value = attempt.get(key)
         if type(value) is not int or value < 0:
@@ -341,6 +360,46 @@ def self_test() -> None:
         faults = load_ledger(fault_ledger)
         assert [x["terminal_reason"] for x in faults] == ["TIMEOUT", "RESOURCE_EXHAUSTED", "CRASH"]
         assert all(x["programme_pass"] is False for x in faults)
+
+    # An attempt marked SUCCEEDED cannot carry a failed/unknown process exit
+    # or unverifiable stdout/stderr identities into the durable evidence ledger.
+    # All controls use MODEL_ONLY synthetic data; this test never dispatches work.
+    def must_reject_attempt(mutator):
+        attempt = _attempt(permit, plan, 0, 0, "SUCCEEDED")
+        mutator(attempt)
+        try:
+            validate_attempt(attempt, permit, plan)
+        except ContractError:
+            return
+        raise AssertionError("invalid success-attempt evidence was accepted")
+
+    must_reject_attempt(lambda a: a.update({"return_code": 1}))
+    must_reject_attempt(lambda a: a.update({"return_code": None}))
+    must_reject_attempt(lambda a: a.update({"return_code": True}))
+    must_reject_attempt(lambda a: a.update({"return_code": "0"}))
+    must_reject_attempt(lambda a: a.update({"stdout_sha256": "unknown"}))
+    must_reject_attempt(lambda a: a.update({"stdout_sha256": "sha256:" + "g" * 64}))
+    must_reject_attempt(lambda a: a.update({"stdout_sha256": "sha256:" + "A" * 64}))
+    must_reject_attempt(lambda a: a.update({"stderr_sha256": "sha256:" + "0" * 63}))
+    must_reject_attempt(lambda a: a.update({"stderr_sha256": None}))
+    must_reject_attempt(lambda a: a.pop("stderr_sha256"))
+    must_reject_attempt(lambda a: a.update({"terminal_reason": []}))
+    must_reject_attempt(lambda a: a.update({"terminal_reason": "NOT_A_TERMINAL"}))
+
+    # Process execution and programme acceptance are distinct: a zero-exit
+    # process may still fail the evidence/certificate check.
+    observed = _attempt(permit, plan, 0, 0, "SUCCEEDED")
+    observed["programme_pass"] = False
+    validate_attempt(observed, permit, plan)
+    failed = _attempt(permit, plan, 0, 0, "CRASH", return_code=139)
+    validate_attempt(failed, permit, plan)
+    failed["return_code"] = ["invalid"]
+    try:
+        validate_attempt(failed, permit, plan)
+    except ContractError:
+        pass
+    else:
+        raise AssertionError("non-integer failure return_code was accepted")
 
 
 def load_json(path: Path) -> dict[str, Any]:
