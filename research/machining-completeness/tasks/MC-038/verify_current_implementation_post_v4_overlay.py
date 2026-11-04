@@ -187,7 +187,7 @@ def self_test(original, corpus, registry, base):
     damaged[-1]["merged_main"]="0"*40
     reject("reviewed_merged_results",damaged,"wrong merge identity")
     damaged=copy.deepcopy(corpus)
-    damaged["cases"][0]["spec"]["phase_turn_rate"]="37"
+    next(row for row in damaged["cases"] if row["expected"]["v54_disposition"].startswith("BLOCKED"))["spec"]["phase_turn_rate"]="37"
     try: validate(original,damaged,registry,base)
     except (ValueError,KeyError,TypeError): pass
     else: raise AssertionError("corrupted source accepted")
