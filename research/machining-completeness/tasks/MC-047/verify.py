@@ -170,7 +170,28 @@ def self_test() -> None:
         write(rows_with_fault)
         assert audit(permit, plan, ledger, captures)["nonpass_terminals"] == 1
         checks += 1
-    assert checks == 12, checks
+        # After a valid digest pass, mutate capture bytes before the final
+        # metadata snapshot. The read-only admission must refuse this race.
+        write(rows[:1])
+        original_core = core_module
+
+        def race_injected_core():
+            source = original_core()
+            original_verify = source.verify_retained_captures
+
+            def mutate_after_verify(*args):
+                original_verify(*args)
+                (captures / "000000.stdout.bin").write_bytes(b"changed-after-digest")
+
+            source.verify_retained_captures = mutate_after_verify
+            return source
+
+        globals()["core_module"] = race_injected_core
+        try:
+            reject("post-hash/pre-snapshot mutation")
+        finally:
+            globals()["core_module"] = original_core
+    assert checks == 13, checks
     print(f"MC-047 read-only crash-window controls passed: {checks}; MODEL_ONLY; no native dispatch")
 
 
