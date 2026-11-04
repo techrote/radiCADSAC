@@ -224,8 +224,87 @@ def validate_attempt(attempt: dict[str, Any], permit: dict[str, Any], plan: dict
         raise ContractError("programme_pass, if present, must be boolean")
 
 
+
+def validate_ledger_sequence(
+    rows: list[dict[str, Any]], permit: dict[str, Any], plan: dict[str, Any],
+    *, require_complete: bool = False, allow_native: bool = False,
+) -> None:
+    """Validate a strict ordered-repeat prefix; job completions may interleave within one repeat.
+
+    This is an integrity check, not a dispatch authorization or an MC-1 verdict.
+    A partial last repeat is retained as evidence, but cannot be followed by a
+    later repeat. At most one terminal row is admitted per (repeat, job) slot.
+    """
+    validate_plan(permit, plan, allow_native=allow_native)
+    if not isinstance(rows, list):
+        raise ContractError("ledger must be a list of attempts")
+    jobs = _require_pos_int(plan, "max_jobs")
+    repeats = _require_pos_int(plan, "sequential_repeats")
+    expected = jobs * repeats
+    if len(rows) > expected:
+        raise ContractError("ledger exceeds permit-bound attempt slots")
+    ids: set[str] = set()
+    slots: set[tuple[int, int]] = set()
+    for position, attempt in enumerate(rows):
+        if not isinstance(attempt, dict):
+            raise ContractError(f"ledger row {position} must be an object")
+        validate_attempt(attempt, permit, plan)
+        attempt_id = attempt["attempt_id"]
+        slot = (attempt["repeat_index"], attempt["job_index"])
+        if attempt_id in ids:
+            raise ContractError(f"duplicate attempt_id in ledger row {position}")
+        if slot in slots:
+            raise ContractError(f"duplicate repeat/job slot in ledger row {position}")
+        if attempt["repeat_index"] != position // jobs:
+            raise ContractError(f"skipped or reordered repeat group at ledger row {position}")
+        ids.add(attempt_id)
+        slots.add(slot)
+    if require_complete and len(rows) != expected:
+        raise ContractError("incomplete ledger cannot claim full planned execution")
+
+
+def sha256_file(path: Path) -> str:
+    """Stream retained bytes in bounded chunks rather than materializing whole captures."""
+    digest = hashlib.sha256()
+    with path.open("rb") as fh:
+        for chunk in iter(lambda: fh.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return "sha256:" + digest.hexdigest()
+
+
+def verify_retained_captures(rows: list[dict[str, Any]], capture_dir: Path) -> None:
+    """Independently hash retained stdout/stderr bytes, indexed by ledger row.
+
+    Each row i requires i:06d.stdout.bin and i:06d.stderr.bin. Index-derived
+    filenames deliberately do not trust user-controlled attempt IDs as paths.
+    This binds stored bytes to recorded digests, not to an external attestor.
+    """
+    if capture_dir.is_symlink() or not capture_dir.is_dir():
+        raise ContractError("retained capture directory missing or a symlink")
+    expected: set[str] = set()
+    for position, attempt in enumerate(rows):
+        for stream in ("stdout", "stderr"):
+            name = f"{position:06d}.{stream}.bin"
+            expected.add(name)
+            capture = capture_dir / name
+            if capture.is_symlink() or not capture.is_file():
+                raise ContractError(f"missing or symlinked capture: {name}")
+            if sha256_file(capture) != attempt[f"{stream}_sha256"]:
+                raise ContractError(f"retained capture digest mismatch: {name}")
+    actual = {entry.name for entry in capture_dir.iterdir()}
+    if actual != expected:
+        raise ContractError("retained capture inventory has missing or unexpected paths")
+
+
 def append_attempt(path: Path, attempt: dict[str, Any], permit: dict[str, Any], plan: dict[str, Any]) -> None:
     validate_attempt(attempt, permit, plan)
+    # A single-writer append must never extend corrupt, duplicate, or
+    # out-of-order history. Cross-process mutual exclusion is NOT supplied.
+    prior = load_ledger(path) if path.exists() else []
+    validate_ledger_sequence(
+        prior + [attempt], permit, plan,
+        allow_native=(permit.get("dispatch_class") == "NATIVE_BOUNDED"),
+    )
     path.parent.mkdir(parents=True, exist_ok=True)
     line = canonical_bytes(attempt) + b"\n"
     with path.open("ab", buffering=0) as fh:
@@ -233,17 +312,28 @@ def append_attempt(path: Path, attempt: dict[str, Any], permit: dict[str, Any], 
         os.fsync(fh.fileno())
 
 
-def load_ledger(path: Path) -> list[dict[str, Any]]:
+def load_ledger_with_digest(path: Path) -> tuple[list[dict[str, Any]], str]:
+    """Parse canonical JSONL and hash precisely the bytes read in the same pass."""
     out: list[dict[str, Any]] = []
-    with path.open("r", encoding="utf-8") as fh:
+    digest = hashlib.sha256()
+    with path.open("rb") as fh:
         for lineno, raw in enumerate(fh, 1):
-            raw = raw.strip()
-            if not raw:
-                raise ContractError(f"blank ledger line {lineno}")
-            item = json.loads(raw)
-            canonical_bytes(item)
+            digest.update(raw)
+            if not raw.endswith(b"\n"):
+                raise ContractError(f"unterminated ledger line {lineno}")
+            try:
+                item = json.loads(raw)
+                if not isinstance(item, dict) or raw != canonical_bytes(item) + b"\n":
+                    raise ContractError(f"noncanonical ledger line {lineno}")
+            except (ValueError, UnicodeError) as exc:
+                raise ContractError(f"invalid ledger line {lineno}") from exc
             out.append(item)
-    return out
+    return out, "sha256:" + digest.hexdigest()
+
+
+def load_ledger(path: Path) -> list[dict[str, Any]]:
+    """Backward-compatible strict reader for append and deterministic controls."""
+    return load_ledger_with_digest(path)[0]
 
 
 def _attempt(permit: dict[str, Any], plan: dict[str, Any], repeat_index: int, job_index: int, terminal: str, *, peak: int = 0, storage: int = 0, egress: int = 0, return_code: int | None = 0) -> dict[str, Any]:
@@ -405,6 +495,101 @@ def self_test() -> None:
         raise AssertionError("non-integer failure return_code was accepted")
 
 
+    # MC-045 ledger replay/control qualification. All records and captured bytes
+    # are synthetic; no subprocess or native geometry is executed here.
+    canonical_rows = [_attempt(permit, plan, i, 0, "SUCCEEDED") for i in range(3)]
+    validate_ledger_sequence(canonical_rows, permit, plan, require_complete=True)
+    validate_ledger_sequence(canonical_rows[:2], permit, plan)
+    def reject_rows(rows, *, complete=False):
+        try:
+            validate_ledger_sequence(rows, permit, plan, require_complete=complete)
+        except ContractError:
+            return
+        raise AssertionError("corrupt campaign ledger sequence was accepted")
+    reject_rows(canonical_rows[:2], complete=True)
+    reject_rows(canonical_rows + [canonical_rows[0]])
+    reject_rows([canonical_rows[0], canonical_rows[0]])
+    reject_rows([canonical_rows[1]])
+    reject_rows([canonical_rows[0], canonical_rows[2]])
+    reject_rows([canonical_rows[1], canonical_rows[0]])
+    reject_rows([canonical_rows[0], dict(canonical_rows[1], attempt_id=canonical_rows[0]["attempt_id"])])
+    reject_rows([canonical_rows[0], dict(canonical_rows[1], job_index=0, repeat_index=0)])
+    reject_rows([canonical_rows[0], None])
+    # Two jobs in the same repeat can finish in either order. Distinct repeat
+    # groups must still be sequential, and incomplete prefixes remain visible.
+    two_permit = json.loads(json.dumps(permit))
+    two_permit["max_jobs"] = 2
+    two_jobs = json.loads(json.dumps(plan))
+    two_jobs["max_jobs"] = 2
+    validate_plan(two_permit, two_jobs)
+    alternate = [_attempt(two_permit, two_jobs, 0, 1, "SUCCEEDED"),
+                 _attempt(two_permit, two_jobs, 0, 0, "TIMEOUT", return_code=None),
+                 _attempt(two_permit, two_jobs, 1, 0, "CRASH", return_code=139)]
+    validate_ledger_sequence(alternate, two_permit, two_jobs)
+    with tempfile.TemporaryDirectory() as td:
+        directory = Path(td)
+        captures = directory / "captures"
+        captures.mkdir()
+        for position, row in enumerate(canonical_rows):
+            for stream in ("stdout", "stderr"):
+                (captures / f"{position:06d}.{stream}.bin").write_bytes(b"")
+        verify_retained_captures(canonical_rows, captures)
+        target = captures / "000001.stdout.bin"
+        target.write_bytes(b"tampered stdout")
+        try:
+            verify_retained_captures(canonical_rows, captures)
+        except ContractError:
+            pass
+        else:
+            raise AssertionError("altered retained stdout digest was accepted")
+        target.write_bytes(b"")
+        target.unlink()
+        try:
+            verify_retained_captures(canonical_rows, captures)
+        except ContractError:
+            pass
+        else:
+            raise AssertionError("missing captured stdout was accepted")
+        target.write_bytes(b"")
+        extra = captures / "unregistered.bin"
+        extra.write_bytes(b"")
+        try:
+            verify_retained_captures(canonical_rows, captures)
+        except ContractError:
+            pass
+        else:
+            raise AssertionError("unexpected retained capture was accepted")
+        extra.unlink()
+        history = directory / "ledger.jsonl"
+        history.write_bytes(b"".join(canonical_bytes(row) + b"\n" for row in canonical_rows))
+        assert load_ledger(history) == canonical_rows
+        parsed, custody_digest = load_ledger_with_digest(history)
+        assert parsed == canonical_rows
+        assert custody_digest == sha256_bytes(history.read_bytes())
+        for corrupt in (
+            canonical_bytes(canonical_rows[0]),  # torn/truncated final line
+            b" " + canonical_bytes(canonical_rows[0]) + b"\n",
+            b'{"attempt_id":"duplicate","attempt_id":"hidden"}\n',
+            b"{}\n\n",
+        ):
+            history.write_bytes(corrupt)
+            original = history.read_bytes()
+            try:
+                append_attempt(history, canonical_rows[1], permit, plan)
+            except ContractError:
+                pass
+            else:
+                raise AssertionError("append extended corrupted ledger evidence")
+            assert history.read_bytes() == original
+        history.write_bytes(canonical_bytes(canonical_rows[0]) + b"\n")
+        try:
+            append_attempt(history, canonical_rows[0], permit, plan)
+        except ContractError:
+            pass
+        else:
+            raise AssertionError("duplicate attempt append was accepted")
+
+
 def load_json(path: Path) -> dict[str, Any]:
     value = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(value, dict):
@@ -423,6 +608,13 @@ def main() -> int:
     a.add_argument("--permit", required=True, type=Path)
     a.add_argument("--plan", required=True, type=Path)
     a.add_argument("--allow-native", action="store_true")
+    ledger = sp.add_parser("audit-ledger")
+    ledger.add_argument("--permit", required=True, type=Path)
+    ledger.add_argument("--plan", required=True, type=Path)
+    ledger.add_argument("--ledger", required=True, type=Path)
+    ledger.add_argument("--captures", required=True, type=Path)
+    ledger.add_argument("--require-complete", action="store_true")
+    ledger.add_argument("--allow-native", action="store_true")
     sp.add_parser("self-test")
     args = ap.parse_args()
     if args.cmd == "self-test":
@@ -432,6 +624,21 @@ def main() -> int:
     permit = load_json(args.permit)
     plan = load_json(args.plan)
     validate_plan(permit, plan, allow_native=args.allow_native)
+    if args.cmd == "audit-ledger":
+        rows, custody_digest = load_ledger_with_digest(args.ledger)
+        validate_ledger_sequence(
+            rows, permit, plan,
+            require_complete=args.require_complete,
+            allow_native=args.allow_native,
+        )
+        verify_retained_captures(rows, args.captures)
+        print(json.dumps({
+            "status": "LEDGER_REPLAY_VALIDATED_NOT_NATIVE_QUALIFICATION",
+            "attempt_count": len(rows),
+            "complete": len(rows) == plan["max_jobs"] * plan["sequential_repeats"],
+            "ledger_sha256": custody_digest,
+        }, sort_keys=True))
+        return 0
     if args.cmd == "account":
         print(json.dumps(accounting_summary(permit, plan), sort_keys=True))
     else:
