@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+from contextlib import contextmanager
 import hashlib
 import json
 import os
@@ -320,20 +321,64 @@ def verify_retained_captures(rows: list[dict[str, Any]], capture_dir: Path) -> N
         raise ContractError("retained capture inventory has missing or unexpected paths")
 
 
+@contextmanager
+def exclusive_ledger_append_lock(path: Path):
+    """Serialize cooperating appenders; a stale/contended lock refuses admission.
+
+    The adjacent exclusive-create lock is deliberately NOT auto-reclaimed after
+    a crash. This is not an atomic capture transaction, a hostile-filesystem
+    security boundary, or a distributed-filesystem lease guarantee.
+    """
+    path.parent.mkdir(parents=True, exist_ok=True)
+    lock_path = path.with_name(path.name + ".append.lock")
+    try:
+        fd = os.open(lock_path, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
+    except FileExistsError as exc:
+        raise ContractError("ledger append locked (active or stale); no append performed") from exc
+    except OSError as exc:
+        raise ContractError("unable to establish exclusive ledger append lock") from exc
+    identity = None
+    try:
+        try:
+            identity = os.fstat(fd)
+            os.write(fd, f"pid={os.getpid()}\n".encode("ascii"))
+            os.fsync(fd)
+        except OSError as exc:
+            raise ContractError("ledger append lock initialization failed") from exc
+        yield
+    finally:
+        os.close(fd)
+        if identity is None:
+            # Ownership cannot be proven if fstat failed. Leave the lock
+            # intact for explicit manual review rather than unlinking it.
+            raise ContractError("ledger append lock identity unavailable; manual audit required")
+        try:
+            current = lock_path.lstat()
+        except OSError as exc:
+            raise ContractError("ledger append lock missing during release") from exc
+        if (not stat.S_ISREG(current.st_mode) or
+                (current.st_dev, current.st_ino) != (identity.st_dev, identity.st_ino)):
+            raise ContractError("ledger append lock replaced during ownership")
+        try:
+            lock_path.unlink()
+        except OSError as exc:
+            raise ContractError("ledger append lock release failed") from exc
+
+
 def append_attempt(path: Path, attempt: dict[str, Any], permit: dict[str, Any], plan: dict[str, Any]) -> None:
     validate_attempt(attempt, permit, plan)
-    # A single-writer append must never extend corrupt, duplicate, or
-    # out-of-order history. Cross-process mutual exclusion is NOT supplied.
-    prior = load_ledger(path) if path.exists() else []
-    validate_ledger_sequence(
-        prior + [attempt], permit, plan,
-        allow_native=(permit.get("dispatch_class") == "NATIVE_BOUNDED"),
-    )
-    path.parent.mkdir(parents=True, exist_ok=True)
-    line = canonical_bytes(attempt) + b"\n"
-    with path.open("ab", buffering=0) as fh:
-        fh.write(line)
-        os.fsync(fh.fileno())
+    # Replay and append must be in one exclusive critical section. The
+    # lock serializes cooperating writers, not external filesystem mutations.
+    with exclusive_ledger_append_lock(path):
+        prior = load_ledger(path) if path.exists() else []
+        validate_ledger_sequence(
+            prior + [attempt], permit, plan,
+            allow_native=(permit.get("dispatch_class") == "NATIVE_BOUNDED"),
+        )
+        line = canonical_bytes(attempt) + b"\n"
+        with path.open("ab", buffering=0) as fh:
+            fh.write(line)
+            os.fsync(fh.fileno())
 
 
 def load_ledger_with_digest(path: Path) -> tuple[list[dict[str, Any]], str]:
@@ -663,6 +708,55 @@ def self_test() -> None:
             pass
         else:
             raise AssertionError("duplicate attempt append was accepted")
+
+        # The same ledger cannot be extended while another writer holds an
+        # exclusive lock, even if the next attempt itself is valid. A stale
+        # lock also refuses instead of guessing whether its owner is dead.
+        history.write_bytes(canonical_bytes(canonical_rows[0]) + b"\n")
+        lock = history.with_name(history.name + ".append.lock")
+        lock.write_bytes(b"other writer or stale lock\n")
+        original = history.read_bytes()
+        try:
+            append_attempt(history, canonical_rows[1], permit, plan)
+        except ContractError:
+            pass
+        else:
+            raise AssertionError("competing ledger append was admitted")
+        assert history.read_bytes() == original
+        assert lock.read_bytes() == b"other writer or stale lock\n"
+        lock.unlink()
+        append_attempt(history, canonical_rows[1], permit, plan)
+        assert load_ledger(history) == canonical_rows[:2]
+        assert not lock.exists()
+
+        # Refusal after lock acquisition must not strand a lock or change the
+        # corrupted ledger. This models interrupted/corrupted replay input.
+        history.write_bytes(b"invalid ledger JSONL\n")
+        original = history.read_bytes()
+        try:
+            append_attempt(history, canonical_rows[2], permit, plan)
+        except ContractError:
+            pass
+        else:
+            raise AssertionError("corrupt append replay was admitted")
+        assert history.read_bytes() == original
+        assert not lock.exists()
+
+        # A deleted/recreated lock is not the acquired lease. The original
+        # writer must refuse release and must not unlink the replacement.
+        if os.name != "nt":
+            # Windows normally forbids unlinking a still-open lock handle;
+            # forced replacement is only an executable POSIX fault injection.
+            try:
+                with exclusive_ledger_append_lock(history):
+                    lock.unlink()
+                    lock.write_bytes(b"replacement owner\n")
+            except ContractError:
+                pass
+            else:
+                raise AssertionError("replaced ledger append lock was accepted")
+            assert lock.read_bytes() == b"replacement owner\n"
+            lock.unlink()
 
 
 def load_json(path: Path) -> dict[str, Any]:
