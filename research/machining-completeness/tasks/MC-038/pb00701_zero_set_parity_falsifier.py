@@ -19,7 +19,7 @@ REGISTRY = HERE / "pb00701-post-v54-evidence-reconciliation-v2.json"
 CASE = "composite:DELEGATED_V6_CONSTANT_MODULATION:tail0"
 CASE_SOURCE_SHA256 = "9eb6f08a44882adffa919529247c40190c70e8d7599ee2b1a0f7978ef2569eb1"
 CORPUS_BLOB = "5841c331579489b25caef38cd412bdbf286f9134"
-REGISTRY_BLOB = "e52d3baf3692a011cf86234eeaa992ef407d99"
+REGISTRY_BLOB = "e52d3baf3692a011cf86234eeaa992ef407d99fd"
 MAX_POWER = 8
 SCHEMA = "radicadsac-pb00701-zero-set-only-sign-transfer-falsifier/1.0"
 EVIDENCE_CLASS = "DETERMINISTIC_MODEL"
@@ -50,7 +50,7 @@ def git_blob_bytes(raw: bytes) -> str:
 
 def read_pinned_json(path: Path, blob: str):
     raw = path.read_bytes()
-    require(git_blob_bytes(raw) == blob, "PINNED_SOURCE_DRIFT:" + path.name + ":" + git_blob_bytes(raw) + "!=" + blob)
+    require(git_blob_bytes(raw) == blob, "PINNED_SOURCE_DRIFT:" + path.name)
     return json.loads(raw.decode("utf-8"))
 
 
