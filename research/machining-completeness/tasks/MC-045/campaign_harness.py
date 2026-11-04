@@ -312,11 +312,13 @@ def append_attempt(path: Path, attempt: dict[str, Any], permit: dict[str, Any], 
         os.fsync(fh.fileno())
 
 
-def load_ledger(path: Path) -> list[dict[str, Any]]:
-    """Reject torn, noncanonical or ambiguous JSONL rather than repairing it."""
+def load_ledger_with_digest(path: Path) -> tuple[list[dict[str, Any]], str]:
+    """Parse canonical JSONL and hash precisely the bytes read in the same pass."""
     out: list[dict[str, Any]] = []
+    digest = hashlib.sha256()
     with path.open("rb") as fh:
         for lineno, raw in enumerate(fh, 1):
+            digest.update(raw)
             if not raw.endswith(b"\n"):
                 raise ContractError(f"unterminated ledger line {lineno}")
             try:
@@ -326,7 +328,12 @@ def load_ledger(path: Path) -> list[dict[str, Any]]:
             except (ValueError, UnicodeError) as exc:
                 raise ContractError(f"invalid ledger line {lineno}") from exc
             out.append(item)
-    return out
+    return out, "sha256:" + digest.hexdigest()
+
+
+def load_ledger(path: Path) -> list[dict[str, Any]]:
+    """Backward-compatible strict reader for append and deterministic controls."""
+    return load_ledger_with_digest(path)[0]
 
 
 def _attempt(permit: dict[str, Any], plan: dict[str, Any], repeat_index: int, job_index: int, terminal: str, *, peak: int = 0, storage: int = 0, egress: int = 0, return_code: int | None = 0) -> dict[str, Any]:
@@ -556,6 +563,9 @@ def self_test() -> None:
         history = directory / "ledger.jsonl"
         history.write_bytes(b"".join(canonical_bytes(row) + b"\n" for row in canonical_rows))
         assert load_ledger(history) == canonical_rows
+        parsed, custody_digest = load_ledger_with_digest(history)
+        assert parsed == canonical_rows
+        assert custody_digest == sha256_bytes(history.read_bytes())
         for corrupt in (
             canonical_bytes(canonical_rows[0]),  # torn/truncated final line
             b" " + canonical_bytes(canonical_rows[0]) + b"\n",
@@ -615,7 +625,7 @@ def main() -> int:
     plan = load_json(args.plan)
     validate_plan(permit, plan, allow_native=args.allow_native)
     if args.cmd == "audit-ledger":
-        rows = load_ledger(args.ledger)
+        rows, custody_digest = load_ledger_with_digest(args.ledger)
         validate_ledger_sequence(
             rows, permit, plan,
             require_complete=args.require_complete,
@@ -626,7 +636,7 @@ def main() -> int:
             "status": "LEDGER_REPLAY_VALIDATED_NOT_NATIVE_QUALIFICATION",
             "attempt_count": len(rows),
             "complete": len(rows) == plan["max_jobs"] * plan["sequential_repeats"],
-            "ledger_sha256": sha256_bytes(args.ledger.read_bytes()),
+            "ledger_sha256": custody_digest,
         }, sort_keys=True))
         return 0
     if args.cmd == "account":
