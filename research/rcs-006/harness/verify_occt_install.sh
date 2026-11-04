@@ -46,6 +46,10 @@ for toolkit in "${REQUIRED_TOOLKITS[@]}"; do
   [[ "${found}" -eq 1 ]] || fail "missing required toolkit ${toolkit}"
 done
 
+# A matching source pin and SONAMEs cannot prove that a cached binary links
+# against this runner: check the full installed shared-object GLIBC floor.
+python3 "${SCRIPT_DIR}/check_glibc_abi.py" "${INSTALL_DIR}" || fail "host GLIBC ABI incompatible"
+
 echo "RCS-006 OCCT install verified"
 echo "  prefix=${INSTALL_DIR}"
 echo "  version=${EXPECTED_VERSION}"
