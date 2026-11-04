@@ -39,6 +39,43 @@ def main() -> None:
     assert not check(lathe), "unchanged lathe journal must pass"
     assert not check(mill), "unchanged split-body mill journal must pass"
 
+    # JSON permits arrays and objects where an ID or enum string belongs.
+    # These previously raised TypeError on dict/set membership, sometimes
+    # after an unrelated error had already been recorded. Every case below
+    # must instead return a structured, field-specific refusal.
+    assert_rejected(["not a fixture object"], "fixture root must be an object")
+    malformed_reference_cases = [
+        (lathe, ("journal", "root_revision_id"), ["rev:0"], "root_revision_id does not resolve"),
+        (lathe, ("journal", "selected_head_revision_id"), {"revision": "rev:3"}, "selected_head_revision_id does not resolve"),
+        (lathe, ("journal", "revisions", 1, "parent_revision_id"), ["rev:0"], "references missing parent"),
+        (lathe, ("journal", "revisions", 1, "caused_by_operation_id"), {"op": "op:setup-1"}, "references missing operation"),
+        (lathe, ("journal", "operations", 0, "parent_revision_id"), ["rev:0"], "references missing parent revision"),
+        (lathe, ("journal", "operations", 0, "kind"), ["setup_change"], "unsupported core kind"),
+        (lathe, ("journal", "operations", 0, "setup_ref"), ["setup:lathe-1@1"], "references missing setup"),
+        (lathe, ("journal", "operations", 1, "tool_ref"), {"tool": "tool:turning-od@1"}, "references missing tool"),
+        (lathe, ("journal", "operations", 1, "normalization_policy_ref"), ["policy"], "references missing normalization policy"),
+        (lathe, ("journal", "operations", 1, "trajectory", "frame_ref"), ["frame:workpiece@1"], "trajectory references missing frame"),
+        (lathe, ("journal", "operations", 1, "trajectory", "sections", 0, "engagement"), ["neutral"], "unsupported engagement"),
+        (lathe, ("journal", "definitions", "stocks", 0, "frame_ref"), ["frame:workpiece@1"], "stock references missing frame"),
+        (lathe, ("journal", "definitions", "setups", 0, "workpiece_frame_ref"), ["frame:workpiece@1"], "setup references missing frame"),
+        (lathe, ("journal", "definitions", "tools", 0, "tool_frame_ref"), ["frame:tool-tip@1"], "tool references missing frame"),
+        (mill, ("journal", "material_body_transitions", 0, "caused_by_operation_id"), ["op:cut-through"], "missing operation/revision reference"),
+        (mill, ("journal", "material_body_transitions", 0, "committed_revision_id"), {"rev": "rev:2"}, "missing operation/revision reference"),
+        (mill, ("journal", "material_body_transitions", 0, "kind"), ["split"], "unsupported kind"),
+        (lathe, ("journal", "definitions", "stocks"), {"stock": "invalid"}, "definitions.stocks must be a list"),
+        (lathe, ("journal", "definitions", "setups"), {"setup": "invalid"}, "definitions.setups must be a list"),
+        (lathe, ("journal", "definitions", "tools"), {"tool": "invalid"}, "definitions.tools must be a list"),
+        (lathe, ("journal", "definitions", "stocks"), [None], "definitions.stocks contains non-object"),
+        (lathe, ("journal", "definitions", "tools"), [None], "definitions.tools contains non-object"),
+    ]
+    for original, access_path, malformed, expected_error in malformed_reference_cases:
+        mutated = copy.deepcopy(original)
+        target = mutated
+        for key in access_path[:-1]:
+            target = target[key]
+        target[access_path[-1]] = malformed
+        assert_rejected(mutated, expected_error)
+
     # The previous validator checked that both references existed, but did
     # not compare them. All referenced revisions and body IDs still exist.
     wrong_op_parent = copy.deepcopy(lathe)
@@ -136,7 +173,10 @@ def main() -> None:
     long_journal["expected_journal_invariants"]["process_motion_count"] = 0
     assert not check(long_journal), "valid 1,500-revision history must pass without recursion errors"
 
-    print("RCS-002 revision lineage: four accepted controls, twelve adversarial refusals passed")
+    print(
+        "RCS-002 revision lineage: four accepted controls, twelve prior and "
+        f"{len(malformed_reference_cases) + 1} malformed-type refusals passed"
+    )
 
 
 if __name__ == "__main__":
