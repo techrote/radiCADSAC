@@ -1,0 +1,194 @@
+{
+  "schema": "radicadsac-mc038-current-implementation-post-v4-overlay/1.0",
+  "as_of": "2026-11-04",
+  "snapshot_kind": "POST_V4_QUALIFIED_NEGATIVE_METHOD_BOUNDARIES_NOT_GATE_AUTHORITY",
+  "base_status_document": "docs/machining-completeness/77-MC038-CURRENT-IMPLEMENTATION-STATE.md",
+  "base_v4_snapshot": {
+    "path": "research/machining-completeness/tasks/MC-038/current-implementation-state-v4.json",
+    "git_blob": "81124b7c607b7257747f635ee4bc5f810317914d",
+    "as_of": "2026-11-03"
+  },
+  "source_authority_main": "df36a07bae551dcc3fd4c7ec63774cae56b49d6c",
+  "source_authority_historical_pins": {
+    "v54_corpus_git_blob": "5841c331579489b25caef38cd412bdbf286f9134",
+    "v54_inventory_git_blob": "8649c20ab77e199f9c3fa351b8b6742218f27abb",
+    "v54_coverage_git_blob": "600ba29786f50397f29fd435fc5e2c57076088f9",
+    "post_v54_v2_git_blob": "e52d3baf3692a011cf86234eeaa992ef407d99fd"
+  },
+  "historical_source_denominator": 121,
+  "frozen_before": {
+    "frozen_original_sources": 121,
+    "historical_route_refusals": 20,
+    "historical_missing_ordered_premises": 30,
+    "complete_source_specific_witnesses": 50
+  },
+  "frozen_after": {
+    "frozen_original_sources": 121,
+    "historical_route_refusals": 20,
+    "historical_missing_ordered_premises": 30,
+    "complete_source_specific_witnesses": 50
+  },
+  "frozen_deltas": {
+    "frozen_original_sources": 0,
+    "historical_route_refusals": 0,
+    "historical_missing_ordered_premises": 0,
+    "complete_source_specific_witnesses": 0
+  },
+  "newly_resolved_historical_case_ids": [],
+  "post_v54_v2_summary": {
+    "complete_source_specific_original_case_ids": 50,
+    "finite_source_cases": 49,
+    "continuum_source_cases": 1,
+    "selected_producer_families": 14
+  },
+  "registered_original_cases_with_bounded_route_falsifiers": [
+    {
+      "original_case_id": "composite:DELEGATED_V6_CONSTANT_MODULATION:tail100",
+      "original_source_sha256": "f6a0eb06c66af415fbb8abdfe62f9b36a2a2bf154e535d83307a80228e044ad5",
+      "original_row_sha256": "0801317d3452c77733a129148d58eaac2f06aa9cd26396a44892e82c524e1db2",
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/4"
+      },
+      "original_source_interval": [
+        "0",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED",
+      "prior_v2_coverage": "COMPLETE_SOURCE_SPECIFIC",
+      "negative_route": "POSITIVE_EXTERIOR_KNOT_OMITS_INTERIOR_ROOT_PROSPECTIVE_CONTROL",
+      "merged_pr": 374,
+      "original_case_newly_resolved_by_pr": false
+    },
+    {
+      "original_case_id": "composite:PB00701_V8_EXACT_COMMON_FACTOR_REDUCTION:tail0",
+      "original_source_sha256": "9abbed355812241cdef20f3ce3b3522619bdd682c3a73fb01828d8f95c72f0af",
+      "original_row_sha256": "2a26a89bcce4070571f41cf377697fc6f258c4c9e04819c14096103f720861cf",
+      "phase_turn_law": {
+        "offset": "-1/4",
+        "rate": "1/2"
+      },
+      "original_source_interval": [
+        "0",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED",
+      "prior_v2_coverage": "COMPLETE_SOURCE_SPECIFIC",
+      "negative_route": "FINITE_Z_CAYLEY_ONLY",
+      "merged_pr": 376,
+      "original_case_newly_resolved_by_pr": false
+    },
+    {
+      "original_case_id": "composite:PB00701_V12_EXACT_COMPONENT_ROOT_PARTITION_SINGLE_HARMONIC:tail0",
+      "original_source_sha256": "ee15e947924b45640dd16634247a476bb230fdc145fef94407d9a7c219928cd5",
+      "original_row_sha256": "d0acef7c69cb8ac1ba128b988e83817a91feff78509dd18007d0e56a506336c3",
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/4"
+      },
+      "original_source_interval": [
+        "0",
+        "2"
+      ],
+      "historical_v54_disposition": "BLOCKED",
+      "prior_v2_coverage": "COMPLETE_SOURCE_SPECIFIC",
+      "negative_route": "ENDPOINT_SAME_SIGN_IMPLIES_EMPTY_INTERIOR",
+      "merged_pr": 378,
+      "original_case_newly_resolved_by_pr": false
+    },
+    {
+      "original_case_id": "harvested:verify_pb00701_v52:2250401ce435",
+      "original_source_sha256": "4a3ee3f47b9347429c13830abef382301c7963b0af518f0977390c2d3ffba040",
+      "original_row_sha256": "545b621c525b85657edfe2191981406f82d5e00a8a0ea11316004e6e466bc153",
+      "phase_turn_law": {
+        "offset": "1/4",
+        "rate": "-1/24"
+      },
+      "original_source_interval": [
+        "0",
+        "1"
+      ],
+      "historical_v54_disposition": "BLOCKED",
+      "prior_v2_coverage": "COMPLETE_SOURCE_SPECIFIC",
+      "negative_route": "GLOBAL_SINGLE_DERIVATIVE_SIGN_REQUIRED",
+      "merged_pr": 382,
+      "original_case_newly_resolved_by_pr": false
+    },
+    {
+      "original_case_id": "harvested:verify_pb00701_v9:4e7b85fa122a",
+      "original_source_sha256": "a83ca0cd16c7822e6525f8f2d2df26a54f45b99807cadebc67f31fc49b066c10",
+      "original_row_sha256": "62346bbddca22c4271a14c10aa130327013ac7cf8daa0b0ae515257e8f28cfad",
+      "phase_turn_law": {
+        "offset": "0",
+        "rate": "1/8"
+      },
+      "original_source_interval": [
+        "0",
+        "1"
+      ],
+      "historical_v54_disposition": "BLOCKED",
+      "prior_v2_coverage": "COMPLETE_SOURCE_SPECIFIC",
+      "negative_route": "DIRECT_AFFINE_H1_CAYLEY_RATIONAL_POLYNOMIALIZATION",
+      "merged_pr": 385,
+      "original_case_newly_resolved_by_pr": false
+    }
+  ],
+  "reviewed_merged_results": [
+    {
+      "pr": 374,
+      "merged_main": "8178ee868654b741ffee381b85659893c5e62ce5",
+      "acceptance_issue_comment": 6630011987
+    },
+    {
+      "pr": 376,
+      "merged_main": "2db9b72ca7652c94cad76e452247414c5c004827",
+      "acceptance_issue_comment": 6636567490
+    },
+    {
+      "pr": 378,
+      "merged_main": "1344943ce7c96f31d6439b3282f689293b0ee08b",
+      "acceptance_issue_comment": 6633885751
+    },
+    {
+      "pr": 382,
+      "merged_main": "34e91a5691b9f83ff1afd746fc964c7666bf142b",
+      "acceptance_issue_comment": 6639310614
+    },
+    {
+      "pr": 385,
+      "merged_main": "87b3bfa4387a014f0915a23c7fdf8a6816bcf8c2",
+      "acceptance_issue_comment": 6641969147,
+      "last_proof_merged_main_success_ci": [
+        41911443722,
+        41911443879,
+        41911443734
+      ]
+    }
+  ],
+  "open_required": [
+    "PB-007-01",
+    "PB-007-02",
+    "PB-007-03",
+    "PB-007-04",
+    "PO-02",
+    "PO-04",
+    "PO-05",
+    "PO-07",
+    "PO-08"
+  ],
+  "mc_b": "NOT_ESTABLISHED",
+  "mc_1": "NOT_ESTABLISHED",
+  "required_operation_count": 26,
+  "production_authorized": false,
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "exact_claim_scope": "Bounded negative results falsify their stated shortcuts only. They neither withdraw existing 50 complete source-specific witnesses nor prove a generic analytic theorem.",
+  "not_authorized": [
+    "native/paid campaigns",
+    "native geometry capability claims",
+    "STEP engineering qualification",
+    "programme gate promotion",
+    "production repository creation",
+    "domain narrowing"
+  ],
+  "evidence_chain_note": "Append-only qualified frontier update; v4 stays a byte-for-byte historical source and v54/v2 records remain frozen. Future source-level theorem work must not re-count these prospective or already-complete cases."
+}
