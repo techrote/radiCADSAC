@@ -1,0 +1,41 @@
+name: mc1-pb00701-ramp-hidden-root
+on:
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_ramp_hidden_root.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_ramp_hidden_root.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-ramp-hidden-root.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-ramp-hidden-root-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation-v2.json'
+      - '.github/workflows/mc1-pb00701-ramp-hidden-root.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_ramp_hidden_root.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_ramp_hidden_root.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-ramp-hidden-root.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-ramp-hidden-root-research.md'
+      - '.github/workflows/mc1-pb00701-ramp-hidden-root.yml'
+permissions:
+  contents: read
+jobs:
+  ramp-hidden-root:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Original-source exact ramp theorem, adversarial tests and pinned census
+        run: |
+          set -euo pipefail
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_ramp_hidden_root.py --contract --self-test
+      - name: Independent post-v54 fifty-source proof reconciliation
+        run: |
+          set -euo pipefail
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_evidence_reconciliation_v2.py --contract
