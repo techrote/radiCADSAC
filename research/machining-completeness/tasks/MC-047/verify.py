@@ -261,6 +261,7 @@ def self_test() -> None:
         def reject_with_masked_metadata(label, mutate_after_first):
             saved_core = core_module
             snapshot = original_fingerprints(ledger, captures)
+            injection = {"completed": False}
 
             def injection_core():
                 source = saved_core()
@@ -273,6 +274,7 @@ def self_test() -> None:
                     if not injected:
                         injected = True
                         mutate_after_first()
+                        injection["completed"] = True
 
                 source.verify_retained_captures = mutate_once
                 return source
@@ -281,6 +283,9 @@ def self_test() -> None:
             globals()["fingerprints"] = lambda _ledger, _captures: snapshot
             try:
                 reject(label)
+                # An early refusal or OSError in fault injection must not
+                # masquerade as successful post-hash mutation detection.
+                assert injection["completed"], "post-hash fault was not injected: " + label
             finally:
                 globals()["core_module"] = saved_core
                 globals()["fingerprints"] = original_fingerprints
