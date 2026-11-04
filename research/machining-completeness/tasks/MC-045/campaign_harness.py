@@ -305,6 +305,10 @@ def verify_retained_captures(rows: list[dict[str, Any]], capture_dir: Path) -> N
                 raise ContractError(f"non-regular or symlinked capture: {name}")
             if not metadata.st_ino:
                 raise ContractError(f"capture filesystem identity unavailable: {name}")
+            # A hard link outside the audited inventory is also unsafe:
+            # duplicates *within* this directory are not the only aliases.
+            if metadata.st_nlink != 1:
+                raise ContractError(f"hard-linked retained capture (link count != 1): {name}")
             identity = (metadata.st_dev, metadata.st_ino)
             if identity in identities:
                 raise ContractError(f"hard-linked retained capture alias: {name}")
@@ -591,6 +595,20 @@ def self_test() -> None:
 
         reject_capture_alias("000000.stdout.bin", "000000.stderr.bin")
         reject_capture_alias("000000.stdout.bin", "000002.stderr.bin")
+        # No second name need exist *inside* the capture inventory: an
+        # external hard link still exposes mutable bytes under another path.
+        external_alias = directory / "unregistered-hardlink.bin"
+        os.link(captures / "000000.stdout.bin", external_alias)
+        try:
+            try:
+                verify_retained_captures(canonical_rows, captures)
+            except ContractError:
+                pass
+            else:
+                raise AssertionError("hard link outside capture inventory admitted")
+        finally:
+            external_alias.unlink()
+        verify_retained_captures(canonical_rows, captures)
         target = captures / "000001.stdout.bin"
         target.write_bytes(b"tampered stdout")
         try:
