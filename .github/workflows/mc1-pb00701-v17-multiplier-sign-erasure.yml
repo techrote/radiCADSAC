@@ -1,0 +1,48 @@
+name: mc1-pb00701-v17-multiplier-sign-erasure
+on:
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v17_negative_multiplier_sign_erasure.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v17-negative-multiplier-sign-erasure-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v17-negative-multiplier-sign-erasure.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation-v2.json'
+      - '.github/workflows/mc1-pb00701-v17-multiplier-sign-erasure.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v17_negative_multiplier_sign_erasure.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v17-negative-multiplier-sign-erasure-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v17-negative-multiplier-sign-erasure.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation-v2.json'
+      - '.github/workflows/mc1-pb00701-v17-multiplier-sign-erasure.yml'
+permissions:
+  contents: read
+jobs:
+  original-v17-sign-transfer-falsifier:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Original V17 exact source, sign inversion and 15 adversarial controls
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v17_negative_multiplier_sign_erasure.py --contract --self-test
+      - name: Fresh 50-case original-source producer replay and full refusal checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_evidence_reconciliation_v2.py --contract
+      - name: MC-1 static programme and evidence authority
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/validate_machining_completeness.py
