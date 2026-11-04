@@ -1,0 +1,45 @@
+name: mc1-pb00701-v12-affine-threshold
+on:
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v12_affine_threshold.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v12_affine_threshold.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v12-affine-threshold-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v12-affine-threshold.json'
+      - '.github/workflows/mc1-pb00701-v12-affine-threshold.yml'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation-v2.json'
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_v12_affine_threshold.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v12_affine_threshold.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v12-affine-threshold-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v12-affine-threshold.json'
+      - '.github/workflows/mc1-pb00701-v12-affine-threshold.yml'
+permissions:
+  contents: read
+jobs:
+  exact-original-v12:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Exact V12 affine-H1 source-bound contract and adversarial controls
+        run: |
+          set -euo pipefail
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v12_affine_threshold.py --contract --self-test
+      - name: Independently reproduce original fifty-source reconciliation
+        run: |
+          set -euo pipefail
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_evidence_reconciliation_v2.py --contract
+      - name: MC-1 static domain and registry controls
+        run: |
+          set -euo pipefail
+          python3 tools/validate_machining_completeness.py
