@@ -1,0 +1,77 @@
+{
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "historical_v54": {
+    "missing_ordered_after": 30,
+    "missing_ordered_before": 30,
+    "route_refusals_after": 20,
+    "route_refusals_before": 20,
+    "source_denominator": 121
+  },
+  "newly_closed_ids": [],
+  "required_pb00701_discharge": false,
+  "schema": "radicadsac-pb00701-cayley-h1-span/1.0",
+  "source_specific_witnesses_after": 50,
+  "source_specific_witnesses_before": 50,
+  "span_certificates": [
+    {
+      "case_id": "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail0",
+      "complete_source_specific_preexisting": true,
+      "historical_span": "V43 BLOCKED",
+      "new_historical_closure": false,
+      "original_source_sha256": "57d3c14096ccedfb7faea5023f5a09bada2ca274748f2207c36d77bbc790927c",
+      "span_event_count": 4,
+      "span_event_orders": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "span_sign_cells": [
+        -1,
+        1,
+        -1,
+        1,
+        -1
+      ]
+    },
+    {
+      "case_id": "composite:PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO:tail0",
+      "complete_source_specific_preexisting": true,
+      "historical_span": "V43 BLOCKED",
+      "new_historical_closure": false,
+      "original_source_sha256": "1535f364cd4d3c1a3bf34f57f394ad70a17ad1327880a0a47f25f3ecff5c7560",
+      "span_event_count": 4,
+      "span_event_orders": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "span_sign_cells": [
+        1,
+        -1,
+        1,
+        -1,
+        1
+      ]
+    },
+    {
+      "case_id": "composite:PB00701_V8_EXACT_COMMON_FACTOR_REDUCTION:tail0",
+      "original_source_sha256": "9abbed355812241cdef20f3ce3b3522619bdd682c3a73fb01828d8f95c72f0af",
+      "historical_span": "V27 BLOCKED",
+      "complete_source_specific_preexisting": true,
+      "new_historical_closure": false,
+      "span_event_count": 1,
+      "span_event_orders": [
+        1
+      ],
+      "span_sign_cells": [
+        1,
+        -1
+      ],
+      "falsified_candidate": "FINITE_Z_CAYLEY_ONLY",
+      "candidate_reported_roots": 0,
+      "actual_closed_child_roots": 1
+    }
+  ]
+}
