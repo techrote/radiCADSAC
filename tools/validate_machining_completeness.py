@@ -59,6 +59,14 @@ def validate(graph=None,programme=None,outcomes=None,ghmap=None,posdoc=None):
             fail(f"{t['id']} dependencies malformed")
         for k in ("package","title","objective","scope","non_goals","acceptance","verification","artifacts","blockers","locks"):
             if k not in t: fail(f"{t['id']} missing {k}")
+        # Each executable task contract is a list of nonempty strings; locks may
+        # be empty but cannot be replaced by a truthy scalar or mapping.
+        for k in ("acceptance","verification","artifacts","locks"):
+            entries=t[k]
+            if (not isinstance(entries,list)
+                    or any(not isinstance(entry,str) or not entry.strip()
+                           for entry in entries)):
+                fail(f"{t['id']} malformed {k}")
         if not t["acceptance"] or not t["verification"] or not t["artifacts"]: fail(f"{t['id']} missing executable contract")
         for d in t["dependencies"]:
             if d["task"] not in idset or d["type"] not in {"artifact","capability"}: fail(f"{t['id']} bad dependency")
@@ -196,6 +204,13 @@ def self_test():
         (0, lambda x: x["tasks"].__setitem__(0,None), "null task record"),
         (0, lambda x: x["tasks"][0].__setitem__("id",[]), "unhashable task ID"),
         (0, lambda x: x["tasks"][0].__setitem__("dependencies",None), "null dependencies"),
+        (0, lambda x: x["tasks"][0].__setitem__("acceptance",True), "boolean acceptance contract"),
+        (0, lambda x: x["tasks"][0].__setitem__("verification","not a list"), "scalar verification contract"),
+        (0, lambda x: x["tasks"][0].__setitem__("artifacts",{"item":1}), "mapping artifacts contract"),
+        (0, lambda x: x["tasks"][0].__setitem__("locks",{"programme-registry":True}), "mapping locks"),
+        (0, lambda x: x["tasks"][0]["acceptance"].__setitem__(0,None), "null acceptance entry"),
+        (0, lambda x: x["tasks"][0].__setitem__("locks",[None]), "null lock entry"),
+        (0, lambda x: x["tasks"][0].__setitem__("artifacts",["  "]), "blank artifact entry"),
         (0, lambda x: next(t for t in x["tasks"] if t["dependencies"])["dependencies"].__setitem__(0,None), "null dependency"),
         (0, lambda x: x.__setitem__("packages",None), "null package inventory"),
         (0, lambda x: x["packages"].__setitem__(0,None), "null package record"),
