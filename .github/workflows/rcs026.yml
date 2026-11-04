@@ -56,6 +56,8 @@ jobs:
         run: python -m py_compile research/rcs-026/*.py tools/validate_rcs026.py
       - name: Run adversarial and boundary tests
         run: python -m unittest discover -v -s research/rcs-026 -p 'test_*.py'
+      - name: Falsify incompatible cached OCCT GLIBC ABI
+        run: python -m unittest discover -v -s research/rcs-006/harness -p 'test_check_glibc_abi.py'
 
   platform-campaign:
     name: platform-${{ matrix.label }}
@@ -167,7 +169,7 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: .deps/rcs006/occt-8.0.1
-          key: rcs006-occt-8.0.1-${{ runner.os }}-${{ hashFiles('research/rcs-006/harness/bootstrap_occt.sh') }}
+          key: rcs006-occt-8.0.1-ubuntu2404-${{ hashFiles('research/rcs-006/harness/bootstrap_occt.sh') }}
       - name: Install bootstrap prerequisites on cache miss
         if: steps.occt-cache.outputs.cache-hit != 'true'
         run: |
@@ -181,6 +183,12 @@ jobs:
         run: |
           bash research/rcs-006/harness/bootstrap_occt.sh
           bash research/rcs-006/harness/verify_occt_install.sh
+      - name: Save Ubuntu-24.04 OCCT cache after verified bootstrap
+        if: steps.occt-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: .deps/rcs006/occt-8.0.1
+          key: rcs006-occt-8.0.1-ubuntu2404-${{ hashFiles('research/rcs-006/harness/bootstrap_occt.sh') }}
       - name: Configure and build OCCT STEP exporter
         run: |
           cmake -S research/rcs-022/harness -B .build/rcs026-exporter -G Ninja \
