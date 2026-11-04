@@ -487,8 +487,10 @@ def validate_fixture(path: Path) -> None:
         if expected["process_motion_count"] != actual:
             add_error(path, "process_motion_count expectation does not match fixture")
     if isinstance(expected, dict) and "body_count_at_head" in expected and head_revision_id in revision_by_id:
-        actual = len(revision_by_id[head_revision_id].get("body_ids", []))
-        if expected["body_count_at_head"] != actual:
+        head_bodies = revision_by_id[head_revision_id].get("body_ids")
+        if not isinstance(head_bodies, list):
+            add_error(path, "body_count_at_head cannot inspect invalid head body_ids")
+        elif expected["body_count_at_head"] != len(head_bodies):
             add_error(path, "body_count_at_head expectation does not match fixture")
 
 
