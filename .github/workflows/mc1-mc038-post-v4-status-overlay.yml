@@ -1,0 +1,41 @@
+name: mc1-mc038-post-v4-status-overlay
+on:
+  pull_request:
+    paths:
+      - 'docs/machining-completeness/77-MC038-CURRENT-IMPLEMENTATION-STATE.md'
+      - 'research/machining-completeness/tasks/MC-038/current-implementation-post-v4-overlay-20261104.json'
+      - 'research/machining-completeness/tasks/MC-038/verify_current_implementation_post_v4_overlay.py'
+      - '.github/workflows/mc1-mc038-post-v4-status-overlay.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'docs/machining-completeness/77-MC038-CURRENT-IMPLEMENTATION-STATE.md'
+      - 'research/machining-completeness/tasks/MC-038/current-implementation-post-v4-overlay-20261104.json'
+      - 'research/machining-completeness/tasks/MC-038/verify_current_implementation_post_v4_overlay.py'
+      - '.github/workflows/mc1-mc038-post-v4-status-overlay.yml'
+permissions:
+  contents: read
+jobs:
+  verify-dated-proof-status:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Check exact historical sources, zero-delta ledger and adversarial refusals
+        run: |
+          set -euo pipefail
+          python3 research/machining-completeness/tasks/MC-038/verify_current_implementation_post_v4_overlay.py --contract --self-test
+      - name: Independently replay accepted fifty original-source evidence
+        run: |
+          set -euo pipefail
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_evidence_reconciliation_v2.py --contract
+      - name: Programme MC-1 static guard
+        run: |
+          set -euo pipefail
+          python3 tools/validate_machining_completeness.py
