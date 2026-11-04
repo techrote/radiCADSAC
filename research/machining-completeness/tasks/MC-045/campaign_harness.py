@@ -5,6 +5,7 @@ import argparse
 import hashlib
 import json
 import os
+import stat
 import subprocess
 import tempfile
 import time
@@ -286,13 +287,28 @@ def verify_retained_captures(rows: list[dict[str, Any]], capture_dir: Path) -> N
     if capture_dir.is_symlink() or not capture_dir.is_dir():
         raise ContractError("retained capture directory missing or a symlink")
     expected: set[str] = set()
+    identities: set[tuple[int, int]] = set()
     for position, attempt in enumerate(rows):
         for stream in ("stdout", "stderr"):
             name = f"{position:06d}.{stream}.bin"
             expected.add(name)
             capture = capture_dir / name
-            if capture.is_symlink() or not capture.is_file():
-                raise ContractError(f"missing or symlinked capture: {name}")
+            try:
+                metadata = capture.lstat()
+            except OSError as exc:
+                raise ContractError(f"missing or inaccessible capture: {name}") from exc
+            # An lstat snapshot refuses symlinks and special files without
+            # following them. Identical hashes do NOT imply separate custody.
+            # This is a static alias check, not protection against concurrent
+            # replacement between lstat and the streaming read.
+            if not stat.S_ISREG(metadata.st_mode):
+                raise ContractError(f"non-regular or symlinked capture: {name}")
+            if not metadata.st_ino:
+                raise ContractError(f"capture filesystem identity unavailable: {name}")
+            identity = (metadata.st_dev, metadata.st_ino)
+            if identity in identities:
+                raise ContractError(f"hard-linked retained capture alias: {name}")
+            identities.add(identity)
             if sha256_file(capture) != attempt[f"{stream}_sha256"]:
                 raise ContractError(f"retained capture digest mismatch: {name}")
     actual = {entry.name for entry in capture_dir.iterdir()}
@@ -555,6 +571,26 @@ def self_test() -> None:
             for stream in ("stdout", "stderr"):
                 (captures / f"{position:06d}.{stream}.bin").write_bytes(b"")
         verify_retained_captures(canonical_rows, captures)
+        # Standalone MC-045 audit must not accept two names for one retained
+        # inode even when both valid empty captures have identical digests.
+        def reject_capture_alias(source: str, destination: str) -> None:
+            src, dst = captures / source, captures / destination
+            dst.unlink()
+            os.link(src, dst)
+            try:
+                try:
+                    verify_retained_captures(canonical_rows, captures)
+                except ContractError:
+                    pass
+                else:
+                    raise AssertionError("hard-linked retained capture alias admitted")
+            finally:
+                dst.unlink()
+                dst.write_bytes(b"")
+            verify_retained_captures(canonical_rows, captures)
+
+        reject_capture_alias("000000.stdout.bin", "000000.stderr.bin")
+        reject_capture_alias("000000.stdout.bin", "000002.stderr.bin")
         target = captures / "000001.stdout.bin"
         target.write_bytes(b"tampered stdout")
         try:
