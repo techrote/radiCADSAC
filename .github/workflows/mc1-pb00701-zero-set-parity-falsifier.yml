@@ -1,0 +1,42 @@
+name: mc1-pb00701-zero-set-parity-falsifier
+on:
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_zero_set_parity_falsifier.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_zero_set_parity_falsifier.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-zero-set-parity-falsifier.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-zero-set-parity-falsifier-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation-v2.json'
+      - 'handoffs/current-authority.json'
+      - '.github/workflows/mc1-pb00701-zero-set-parity-falsifier.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_zero_set_parity_falsifier.py'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_zero_set_parity_falsifier.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-zero-set-parity-falsifier.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-zero-set-parity-falsifier-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation-v2.json'
+      - 'handoffs/current-authority.json'
+      - '.github/workflows/mc1-pb00701-zero-set-parity-falsifier.yml'
+permissions:
+  contents: read
+jobs:
+  original-source-parity:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Check exact frozen source, parity proof, and negative controls
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_zero_set_parity_falsifier.py --contract --self-test

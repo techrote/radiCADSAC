@@ -1,0 +1,55 @@
+{
+  "schema": "radicadsac-pb00701-zero-set-only-sign-transfer-falsifier/1.0",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "accepted_bounded_outcome": "C_NEGATIVE_SOURCE_BOUND_ZERO_SET_ONLY_TRANSFER",
+  "historical_case_id": "composite:DELEGATED_V6_CONSTANT_MODULATION:tail0",
+  "historical_source_sha256": "9eb6f08a44882adffa919529247c40190c70e8d7599ee2b1a0f7978ef2569eb1",
+  "before": {
+    "frozen_sources": 121,
+    "historical_route_refusals": 20,
+    "historical_missing_ordered_premises": 30,
+    "supplemental_complete_original_sources": 50
+  },
+  "after": {
+    "frozen_sources": 121,
+    "historical_route_refusals": 20,
+    "historical_missing_ordered_premises": 30,
+    "supplemental_complete_original_sources": 50
+  },
+  "delta": {
+    "frozen_sources": 0,
+    "route_refusals": 0,
+    "missing_ordered_premises": 0,
+    "complete_supplemental_sources": 0,
+    "newly_disposed_frozen_case_ids": []
+  },
+  "same_closed_source_zero_set_for_all_variants": [
+    "1"
+  ],
+  "orders": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "right_cell_signs": [
+    -1,
+    1,
+    -1,
+    1,
+    -1,
+    1,
+    -1,
+    1
+  ],
+  "changed_historical_case_ids": [],
+  "pb00701_certified": false,
+  "mc_b_established": false,
+  "mc1_established": false,
+  "production_authorized": false,
+  "scope": "Original frozen m=1 plus seven NEW source-specific prospective variants; no generic PB route"
+}
