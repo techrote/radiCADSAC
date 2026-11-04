@@ -41,6 +41,13 @@ install_is_usable() {
       return 1
     fi
   done
+  # A cache key based on runner.os alone can restore Ubuntu 26.04 ELF
+  # libraries on Ubuntu 24.04. Even complete/version-pinned installs must
+  # be rejected if their GLIBC symbol requirements exceed the host.
+  if ! python3 "${SCRIPT_DIR}/check_glibc_abi.py" "${INSTALL_DIR}"; then
+    echo "Cached OCCT install has incompatible or unreadable GLIBC ABI; rebuilding" >&2
+    return 1
+  fi
   return 0
 }
 
