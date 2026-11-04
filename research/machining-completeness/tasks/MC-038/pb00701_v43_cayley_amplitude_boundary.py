@@ -175,6 +175,45 @@ def certify(corpus: dict, register: dict):
     }
 
 
+
+def validate_saved_receipt(receipt: dict, report: dict) -> None:
+    """Bind the committed machine receipt to freshly checked source and census."""
+    need(receipt.get("schema") == report["schema"] and
+         receipt.get("evidence_class") == report["evidence_class"],
+         "MACHINE_RECEIPT_SCHEMA_OR_EVIDENCE_CHANGED")
+    need(receipt.get("case_id") == report["case_id"] and
+         receipt.get("original_spec_sha256") == report["source_sha256"] and
+         receipt.get("original_row_sha256") == report["row_sha256"],
+         "MACHINE_RECEIPT_SOURCE_IDENTITY_CHANGED")
+    need(receipt.get("source_interval") == report["domain"] and
+         receipt.get("source_piece_edges") == ["0","1"] and
+         receipt.get("interior_source_knots") == [] and
+         receipt.get("phase_turns") == {"offset":"0","rate":"1/8"},
+         "MACHINE_RECEIPT_KNOT_PHASE_OR_INTERVAL_CHANGED")
+    need(receipt.get("frozen",{}).get("corpus_git_blob") == CORPUS_BLOB and
+         receipt.get("frozen",{}).get("v2_git_blob") == REGISTER_BLOB and
+         receipt.get("frozen",{}).get("historical_v43_refusal") == REFUSAL and
+         receipt.get("frozen",{}).get("prior_complete_source_specific") is True,
+         "MACHINE_RECEIPT_FROZEN_EVIDENCE_CHANGED")
+    need(receipt.get("cayley_chart",{}).get("numerator") ==
+         "1-z^2-z+(16/pi)*z*arctan(z)" and
+         receipt["cayley_chart"].get("direct_rational_polynomialization_possible") is False,
+         "MACHINE_RECEIPT_PROOF_CONCLUSION_CHANGED")
+    keys = {"original_sources":"sources", "route_refusals":"route_refusals",
+            "missing_ordered_premises":"missing_ordered_premises",
+            "complete_source_specific":"complete_witnesses"}
+    for side in ("before","after"):
+        need(all(receipt.get(side,{}).get(key) == report[side][mapped]
+                 for key,mapped in keys.items()), "MACHINE_RECEIPT_CENSUS_CHANGED")
+    need(receipt.get("delta") == dict.fromkeys(keys,0) and
+         receipt.get("newly_resolved_original_case_ids") == [] and
+         receipt.get("pb007_01_discharged") is False and
+         receipt.get("mc_b") == "NOT_ESTABLISHED" and
+         receipt.get("mc_1") == "NOT_ESTABLISHED" and
+         receipt.get("production_authorized") is False,
+         "MACHINE_RECEIPT_UNQUALIFIED_GATE_PROMOTION")
+
+
 class AdversarialTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -237,6 +276,31 @@ class AdversarialTests(unittest.TestCase):
             with self.subTest(mutation=mutation), self.assertRaises(Refused):
                 certify(corpus,self.register)
 
+    def test_machine_evidence_binding_and_adversarial_corruption(self):
+        report=certify(self.corpus,self.register)
+        receipt=json.loads((TASK/"pb00701-v43-cayley-amplitude-boundary.json").read_text())
+        validate_saved_receipt(receipt,report)
+        for path,value in [
+            (("case_id",),"forged:source"),
+            (("source_piece_edges",),["0","1/2","1"]),
+            (("phase_turns","rate"),"1/4"),
+            (("cayley_chart","numerator"),"1-z^2-z"),
+            (("frozen","corpus_git_blob"),"wrong"),
+            (("before","route_refusals"),19),
+            (("after","complete_source_specific"),51),
+            (("delta","route_refusals"),-1),
+            (("newly_resolved_original_case_ids",),[CASE]),
+            (("pb007_01_discharged",),True),
+            (("production_authorized",),True),
+        ]:
+            change=copy.deepcopy(receipt)
+            dest=change
+            for key in path[:-1]:
+                dest=dest[key]
+            dest[path[-1]]=value
+            with self.subTest(path=path),self.assertRaises(Refused):
+                validate_saved_receipt(change,report)
+
     def test_register_custody_and_complete_set_refusals(self):
         for mutation in ["source-sha", "row-sha", "evidence-class", "extra-id"]:
             register=copy.deepcopy(self.register)
@@ -257,6 +321,8 @@ def main():
     args=parser.parse_args()
     if args.contract or not args.self_test:
         report=certify(*load_inputs())
+        receipt=json.loads((TASK/"pb00701-v43-cayley-amplitude-boundary.json").read_text())
+        validate_saved_receipt(receipt,report)
         print(json.dumps(report,sort_keys=True,indent=2))
     if args.self_test:
         suite=unittest.defaultTestLoader.loadTestsFromTestCase(AdversarialTests)
