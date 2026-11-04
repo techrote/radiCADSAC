@@ -4,7 +4,7 @@
 
 ## Authority, scope and source
 
-Baseline: accepted `main=f10927c509079959af7c0f80c11b0211ae581503` (merged PR #381). Selected [MC-047 #109](https://github.com/techrote/radiCADSAC/issues/109) under the [MC-1 execution protocol](../../../docs/machining-completeness/07-EXECUTION-PROTOCOL.md). Core implementation is the accepted `../MC-045/campaign_harness.py`, whose source is not changed. The PB-007 mathematical owner works separately on MC-038; [PR #382](https://github.com/techrote/radiCADSAC/pull/382) owns unrelated mathematical files.
+Baseline: accepted `main=f10927c509079959af7c0f80c11b0211ae581503` (merged PR #381). Selected [MC-047 #109](https://github.com/techrote/radiCADSAC/issues/109) under the [MC-1 execution protocol](../../../../docs/machining-completeness/07-EXECUTION-PROTOCOL.md). Core implementation is the accepted `../MC-045/campaign_harness.py`, whose source is not changed. The PB-007 mathematical owner works separately on MC-038; [PR #382](https://github.com/techrote/radiCADSAC/pull/382) owns unrelated mathematical files.
 
 The MC-041 actual native capability prerequisite remains open; MC-042 native output evidence is not qualified. No permit, native run, Windows runner, paid work, production bootstrap, authority change or programme gate assertion is introduced.
 
