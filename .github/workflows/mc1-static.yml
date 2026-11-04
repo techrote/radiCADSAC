@@ -13,6 +13,7 @@ on:
       - 'handoffs/README.md'
       - 'tools/validate_machining_completeness.py'
       - 'tools/validate_repo.py'
+      - 'tools/test_validate_repo_journal.py'
       - 'tools/validate_mc_ci_impact.py'
       - 'tools/validate_bootstrap_consistency.py'
       - 'tools/mc_workflow.py'
@@ -30,6 +31,7 @@ on:
       - 'handoffs/README.md'
       - 'tools/validate_machining_completeness.py'
       - 'tools/validate_repo.py'
+      - 'tools/test_validate_repo_journal.py'
       - 'tools/validate_mc_ci_impact.py'
       - 'tools/validate_bootstrap_consistency.py'
       - 'tools/mc_workflow.py'
@@ -52,6 +54,8 @@ jobs:
           python-version: '3.12'
       - name: Validate repository baseline contracts
         run: python3 tools/validate_repo.py
+      - name: Falsify journal revision lineage and parent cycles
+        run: python3 tools/test_validate_repo_journal.py
       - name: Validate MC-1 contracts and adversarial self-tests
         run: python3 tools/validate_machining_completeness.py --self-test
       - name: Verify additive evidence STEP and claim identity bindings
