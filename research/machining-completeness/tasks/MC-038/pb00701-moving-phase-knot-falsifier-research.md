@@ -1,6 +1,6 @@
 # PB-007-01 — actual two-span moving-phase source-knot order falsification
 
-**Status:** scoped negative research candidate, 4 November 2026. **Evidence class:** DETERMINISTIC_MODEL; neither native machining geometry nor independent STEP qualification. **Parent:** [MC-038 #100](https://github.com/techrote/radiCADSAC/issues/100); preregistration [#6621287841](https://github.com/techrote/radiCADSAC/issues/100#issuecomment-6621287841), coordinating owner [#324](https://github.com/techrote/radiCADSAC/issues/324). **Baseline:** main \`bded1b5ef5fb43914adee3dda817f6a962023cad\`. The earlier [two-span stationary result #359](https://github.com/techrote/radiCADSAC/pull/359) is merged and its scope is *stationary zero phase only*.
+**Status:** scoped negative research candidate, 4 November 2026. **Evidence class:** DETERMINISTIC_MODEL; neither native machining geometry nor independent STEP qualification. **Parent:** [MC-038 #100](https://github.com/techrote/radiCADSAC/issues/100); preregistration [#6621287841](https://github.com/techrote/radiCADSAC/issues/100#issuecomment-6621287841), coordinating owner [#324](https://github.com/techrote/radiCADSAC/issues/324). **Baseline:** main `bded1b5ef5fb43914adee3dda817f6a962023cad`. The earlier [two-span stationary result #359](https://github.com/techrote/radiCADSAC/pull/359) is merged and its scope is *stationary zero phase only*.
 
 ## Question, hypothesis and falsification target
 
@@ -13,7 +13,7 @@ The next PB-007-01 premise is **source-bound exact moving-phase zero-component c
 
 ## Exact source (not a sampled polynomial approximation)
 
-Grammar: \`RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE\`; source parameter \`source-time-t\`; original closed source interval [-1,1]; global phase turns \(\beta(t)=t\); cosine harmonics 0 and 1; no sine channels. Both harmonic channels have original degree-2 clamped knot vector
+Grammar: `RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE`; source parameter `source-time-t`; original closed source interval [-1,1]; global phase turns \(\beta(t)=t\); cosine harmonics 0 and 1; no sine channels. Both harmonic channels have original degree-2 clamped knot vector
 
 \[
 [-1,-1,-1,0,0,1,1,1],
@@ -26,7 +26,7 @@ with the **actual interior knot 0 of multiplicity two**. Original five controls:
 | \(C_0\) | \([1/2,0,0,0,1/2]\) |
 | \(C_1\) | \([1/2,0,0,0,-1/2]\) |
 
-The script's canonical original-source SHA-256 is \`3c4eea96bf46a769a92902e0c06196258e2107566f956c6f76c818e43f3a3058\`. All source fields, exact rational tokens, knot multiplicities, global phase and source parameter are bound and validated. The source is **new prospective research**, not a v54 historical original ID. It must never be counted as reducing any one of the frozen fifty historical cases.
+The script's canonical original-source SHA-256 is `3c4eea96bf46a769a92902e0c06196258e2107566f956c6f76c818e43f3a3058`. All source fields, exact rational tokens, knot multiplicities, global phase and source parameter are bound and validated. The source is **new prospective research**, not a v54 historical original ID. It must never be counted as reducing any one of the frozen fifty historical cases.
 
 ## Exact whole-span identities, roots, orders and positive cells
 
@@ -83,12 +83,12 @@ Files in this leaf:
 
 Run from the repository root:
 
-\`\`\`sh
+```sh
 python3 research/machining-completeness/tasks/MC-038/pb00701_moving_phase_knot_falsifier.py --contract
 python3 research/machining-completeness/tasks/MC-038/verify_pb00701_moving_phase_knot_falsifier.py --contract --self-test
-\`\`\`
+```
 
-All arithmetic applied to original controls, intervals and knots is exact bounded \`fractions.Fraction\` polynomial arithmetic. The only nonalgebraic facts invoked are *exact* trigonometric zero positions at integer/half-integer phase and the nonzero derivative of sine/cosine at these positions. The proof has a fixed finite number of source coefficients, two true pieces, and a complete fixed event partition. Timeouts, numerical tolerance, finite sampling and arithmetic resource exhaustion **never** establish a root-free interval or root count. Input and report byte limits cause nontruth; they cannot turn an unresolved source into a proved one. Tests reject changed phase, knot, amplitude, parameter, malformed rationals, forged signs/orders/continuum, counterfeit root/census counts and gate escalation.
+All arithmetic applied to original controls, intervals and knots is exact bounded `fractions.Fraction` polynomial arithmetic. The only nonalgebraic facts invoked are *exact* trigonometric zero positions at integer/half-integer phase and the nonzero derivative of sine/cosine at these positions. The proof has a fixed finite number of source coefficients, two true pieces, and a complete fixed event partition. Timeouts, numerical tolerance, finite sampling and arithmetic resource exhaustion **never** establish a root-free interval or root count. Input and report byte limits cause nontruth; they cannot turn an unresolved source into a proved one. Tests reject changed phase, knot, amplitude, parameter, malformed rationals, forged signs/orders/continuum, counterfeit root/census counts and gate escalation.
 
 The independent census check parses **all 121 frozen v54 source specs** and the accepted v2 fifty-source registry, verifies all fifty original case ID/source SHA-256 identities and unchanged historical dispositions, then confirms the new source is not a member. The v2 proof's prior fifteen complete/35 newly complete source results remain unchanged. Source-specific before/after: **50→50 complete, delta 0**. Historical v54 route-refused cohort **20→20** and missing ordered-premise cohort **30→30** (frozen dispositions unchanged). This result satisfies the stated **bounded falsification C** only when its own fresh exact-head tests and independent technical review qualify; a passing local proof does not imply accepted integration.
 
