@@ -1,0 +1,158 @@
+{
+  "schema": "radicadsac-pb00701-moving-phase-knot-falsifier/1.0",
+  "status": "EXACT_SOURCE_BOUND_COUNTEREXAMPLE",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "source_sha256": "3c4eea96bf46a769a92902e0c06196258e2107566f956c6f76c818e43f3a3058",
+  "source_parameter_id": "source-time-t",
+  "source_interval": [
+    "-1",
+    "1"
+  ],
+  "original_true_knots": [
+    "0"
+  ],
+  "global_phase_turn_law": {
+    "offset": "0",
+    "rate": "1"
+  },
+  "source_coefficient_polynomials_global_t": {
+    "harmonic_0": [
+      [
+        "0",
+        "0",
+        "1/2"
+      ],
+      [
+        "0",
+        "0",
+        "1/2"
+      ]
+    ],
+    "harmonic_1": [
+      [
+        "0",
+        "0",
+        "1/2"
+      ],
+      [
+        "0",
+        "0",
+        "-1/2"
+      ]
+    ]
+  },
+  "moving_physical_pieces": [
+    {
+      "interval": [
+        "-1",
+        "0"
+      ],
+      "identity": "t^2*cos(pi*t)^2"
+    },
+    {
+      "interval": [
+        "0",
+        "1"
+      ],
+      "identity": "t^2*sin(pi*t)^2"
+    }
+  ],
+  "moving_zero_set_kind": "FINITE_DISTINCT_CLOSED_SOURCE_ROOTS",
+  "moving_distinct_zero_coordinates": [
+    "-1/2",
+    "0",
+    "1"
+  ],
+  "moving_distinct_root_count": 3,
+  "moving_positive_components": [
+    {
+      "lo": "-1",
+      "hi": "-1/2",
+      "left_closed": true,
+      "right_closed": false
+    },
+    {
+      "lo": "-1/2",
+      "hi": "0",
+      "left_closed": false,
+      "right_closed": false
+    },
+    {
+      "lo": "0",
+      "hi": "1",
+      "left_closed": false,
+      "right_closed": false
+    }
+  ],
+  "moving_events": [
+    {
+      "source_t": "-1/2",
+      "kind": "TOUCHING",
+      "position": "STRICT_LEFT_SPAN_INTERIOR",
+      "order": 2,
+      "left_sign": 1,
+      "right_sign": 1
+    },
+    {
+      "source_t": "0",
+      "kind": "SOURCE_KNOT_TOUCHING",
+      "position": "TRUE_ORIGINAL_SOURCE_KNOT",
+      "left_one_sided_order": 2,
+      "right_one_sided_order": 4,
+      "left_sign": 1,
+      "right_sign": 1,
+      "global_smooth_multiplicity": null
+    },
+    {
+      "source_t": "1",
+      "kind": "RIGHT_EXTERIOR_ZERO",
+      "position": "ORIGINAL_RIGHT_EXTERIOR",
+      "right_inward_order": 2,
+      "inward_sign": 1
+    }
+  ],
+  "stationary_counterfactual": {
+    "source_mutation": "ONLY_PHASE_TURN_RATE_1_TO_0",
+    "phase_turn_offset": "0",
+    "phase_turn_rate": "0",
+    "left_piece": "t^2",
+    "right_piece": "0",
+    "zero_set_kind": "CLOSED_ZERO_CONTINUUM",
+    "closed_zero_components": [
+      [
+        "0",
+        "1"
+      ]
+    ],
+    "isolated_root_count": 0,
+    "finite_total_root_count": null,
+    "positive_components": [
+      [
+        "-1",
+        "0"
+      ]
+    ]
+  },
+  "falsified_transfer_rules": [
+    "STATIONARY_ZERO_COMPONENTS_ARE_PHASE_INVARIANT",
+    "TRUE_ORIGINAL_KNOT_REQUIRES_ONE_GLOBAL_SMOOTH_MULTIPLICITY",
+    "ALL_MOVING_SQUARED_AMPLITUDE_KNOT_ZEROS_HAVE_ORDER_TWO"
+  ],
+  "general_impossibility_claimed": false,
+  "frozen_v54_corpus_modified": false,
+  "historical_121_source_denominator": 121,
+  "historical_route_refusals": 20,
+  "historical_missing_ordered_premises": 30,
+  "before_complete_fifty_source_supplemental_proofs": 50,
+  "after_complete_fifty_source_supplemental_proofs": 50,
+  "historical_source_closure_delta": 0,
+  "named_original_historical_source_case_ids_added": [],
+  "pb00701_certified": false,
+  "pb00702_certified": false,
+  "pb00703_certified": false,
+  "pb00704_certified": false,
+  "mc_b_established": false,
+  "mc1_established": false,
+  "native_brep_or_step_qualified": false,
+  "production_authorized": false
+}
