@@ -35,6 +35,7 @@ def verify(task):
     if (not isinstance(obj,dict)
             or obj.get("schema")!="radicadsac-mc-task-outcome/1.0"
             or obj.get("task")!=task
+            or type(obj.get("result_kind")) is not str
             or obj.get("result_kind") not in {"COMPLETED_RESEARCH","NEGATIVE_RESULT","BLOCKED","CAPABILITY_ACCEPTED"}
             or not isinstance(registered,dict) or not isinstance(mapped,dict)
             # A BLOCKED provisional report may precede registry acceptance:
@@ -218,6 +219,8 @@ def self_test_verify():
             dict(canonical,task="MC-005"),
             None,
             ["not an outcome object"],
+            dict(canonical,result_kind=[]),
+            dict(canonical,result_kind={}),
         ]
         with (patch.dict(globals(),{"MC":root}),
               patch(__name__+".load",side_effect=fake_load),
