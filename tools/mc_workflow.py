@@ -22,8 +22,32 @@ def verify(task):
     for p in (d/"report.md",d/"outcome.json"):
         if not p.exists(): raise SystemExit(f"missing {p.relative_to(ROOT)}")
     obj=json.loads((d/"outcome.json").read_text(encoding="utf-8"))
-    if obj.get("task")!=task or obj.get("result_kind") not in {"COMPLETED_RESEARCH","NEGATIVE_RESULT","BLOCKED","CAPABILITY_ACCEPTED"}:
-        raise SystemExit("invalid task outcome")
+    # A cheap task verifier is not a gate authority. It must nevertheless
+    # refuse an artifact that promotes its own status or changes its issue
+    # binding relative to the accepted outcome and GitHub registries.
+    outcomes=load("outcomes-v1.json"); mapping=load("github-map-v1.json")
+    registered=(outcomes.get("tasks",{}).get(task)
+                if isinstance(outcomes,dict) and isinstance(outcomes.get("tasks"),dict)
+                else None)
+    mapped=(mapping.get("tasks",{}).get(task)
+            if isinstance(mapping,dict) and isinstance(mapping.get("tasks"),dict)
+            else None)
+    if (not isinstance(obj,dict)
+            or obj.get("schema")!="radicadsac-mc-task-outcome/1.0"
+            or obj.get("task")!=task
+            or type(obj.get("result_kind")) is not str
+            or obj.get("result_kind") not in {"COMPLETED_RESEARCH","NEGATIVE_RESULT","BLOCKED","CAPABILITY_ACCEPTED"}
+            or not isinstance(registered,dict) or not isinstance(mapped,dict)
+            # A BLOCKED provisional report may precede registry acceptance:
+            # MC-038 deliberately remains NOT_STARTED in the authoritative map.
+            or (obj.get("result_kind")!=registered.get("state")
+                and not (registered.get("state")=="NOT_STARTED"
+                         and obj.get("result_kind")=="BLOCKED"))
+            or type(obj.get("issue")) is not int
+            or type(registered.get("issue")) is not int
+            or type(mapped.get("issue")) is not int
+            or obj["issue"]!=registered["issue"] or obj["issue"]!=mapped["issue"]):
+        raise SystemExit("invalid or unregistered task outcome")
     v=d/"verify.py"
     if v.exists(): subprocess.run([sys.executable,str(v),"--contract"],check=True)
     print(f"{task} contract verification passed")
@@ -170,6 +194,64 @@ def sync(apply=False):
     print("MC GitHub managed task issues are in zero-drift state.")
     return 0
 
+def self_test_verify():
+    """Fail closed on self-promoted status, forged issue bindings and bad shapes."""
+    from tempfile import TemporaryDirectory
+    from unittest.mock import patch
+    with TemporaryDirectory() as td:
+        root=Path(td); d=root/"tasks"/"MC-038"; d.mkdir(parents=True)
+        (d/"report.md").write_text("synthetic contract",encoding="utf-8")
+        (d/"verify.py").write_text("# mocked verifier",encoding="utf-8")
+        canonical={"schema":"radicadsac-mc-task-outcome/1.0",
+                   "task":"MC-038","result_kind":"BLOCKED","issue":100}
+        fixtures={
+            "task-graph-v1.json":{"tasks":[{"id":"MC-038"}]},
+            "outcomes-v1.json":{"tasks":{"MC-038":{"state":"NOT_STARTED","issue":100}}},
+            "github-map-v1.json":{"tasks":{"MC-038":{"issue":100}}},
+        }
+        def fake_load(name):
+            return fixtures[name]
+        bad=[
+            dict(canonical,result_kind="CAPABILITY_ACCEPTED"),
+            dict(canonical,issue=101),
+            dict(canonical,issue=True),
+            dict(canonical,schema="unknown-schema"),
+            dict(canonical,task="MC-005"),
+            None,
+            ["not an outcome object"],
+            dict(canonical,result_kind=[]),
+            dict(canonical,result_kind={}),
+        ]
+        with (patch.dict(globals(),{"MC":root}),
+              patch(__name__+".load",side_effect=fake_load),
+              patch(__name__+".subprocess.run") as runner):
+            (d/"outcome.json").write_text(json.dumps(canonical),encoding="utf-8")
+            assert verify("MC-038")==0
+            assert runner.call_count==1, "valid contract verifier not invoked"
+            for sample in bad:
+                (d/"outcome.json").write_text(json.dumps(sample),encoding="utf-8")
+                try: verify("MC-038")
+                except SystemExit as exc:
+                    assert str(exc)=="invalid or unregistered task outcome", (
+                        f"unexpected refusal for {sample}: {exc}")
+                else: raise AssertionError(f"accepted forged task outcome: {sample}")
+            assert runner.call_count==1, "forged task outcome reached verifier"
+            # Corrupted authoritative mappings must also refuse an otherwise
+            # well-formed source artifact instead of silently accepting it.
+            (d/"outcome.json").write_text(json.dumps(canonical),encoding="utf-8")
+            fixtures["outcomes-v1.json"]["tasks"]["MC-038"]["state"]="CAPABILITY_ACCEPTED"
+            try: verify("MC-038")
+            except SystemExit: pass
+            else: raise AssertionError("accepted inconsistent registered state")
+            fixtures["outcomes-v1.json"]["tasks"]["MC-038"]["state"]="NOT_STARTED"
+            fixtures["github-map-v1.json"]["tasks"]["MC-038"]["issue"]=101
+            try: verify("MC-038")
+            except SystemExit: pass
+            else: raise AssertionError("accepted inconsistent GitHub issue map")
+            assert runner.call_count==1, "inconsistent registry reached verifier"
+    print("MC task outcome authority-binding adversarial self-test passed")
+
+
 def self_test():
     """Offline adversarial coverage of zero-write conflicts and exact read-back."""
     from unittest.mock import patch
@@ -272,6 +354,7 @@ def self_test():
             calls.clear()
             assert sync(True)==4 and calls==[("GET",991),("PATCH",991),("GET",991)], (
                 "post-write mismatch falsely reported success")
+    self_test_verify()
     print("MC managed issue sync adversarial self-test passed")
     return 0
 if __name__=="__main__":
