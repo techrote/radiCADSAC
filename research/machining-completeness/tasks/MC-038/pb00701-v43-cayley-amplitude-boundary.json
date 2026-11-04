@@ -1,0 +1,107 @@
+{
+  "schema": "radicadsac-mc038-v43-cayley-affine-boundary/1.0",
+  "task": "MC-038",
+  "pb": "PB-007-01",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "status": "BOUNDED_NEGATIVE_C_DRAFT_NOT_PB_DISCHARGE",
+  "case_id": "harvested:verify_pb00701_v9:4e7b85fa122a",
+  "original_spec_sha256": "a83ca0cd16c7822e6525f8f2d2df26a54f45b99807cadebc67f31fc49b066c10",
+  "original_row_sha256": "62346bbddca22c4271a14c10aa130327013ac7cf8daa0b0ae515257e8f28cfad",
+  "original_source_parameter": "source-time-t",
+  "source_interval": [
+    "0",
+    "1"
+  ],
+  "phase_turns": {
+    "offset": "0",
+    "rate": "1/8"
+  },
+  "cosine_harmonic_one": {
+    "degree": 1,
+    "knots": [
+      "0",
+      "0",
+      "1",
+      "1"
+    ],
+    "controls": [
+      "1",
+      "1"
+    ],
+    "global_t_polynomial": "1"
+  },
+  "sine_harmonic_one": {
+    "degree": 1,
+    "knots": [
+      "0",
+      "0",
+      "1",
+      "1"
+    ],
+    "controls": [
+      "-1/2",
+      "1/2"
+    ],
+    "global_t_polynomial": "t-1/2"
+  },
+  "physical_function": "cos(pi*t/4)+(t-1/2)*sin(pi*t/4)",
+  "cayley_chart": {
+    "variable": "z=tan(pi*t/8)",
+    "interval": "0<z<tan(pi/8)",
+    "inverse": "t=(8/pi)*arctan(z)",
+    "rational_denominator": "1+z^2",
+    "numerator": "1-z^2-z+(16/pi)*z*arctan(z)",
+    "direct_rational_polynomialization_possible": false
+  },
+  "exact_obstruction": {
+    "claim": "ARCTAN_NONRATIONAL_OVER_C(z)",
+    "argument": "a rational primitive of 1/(1+z^2) would have derivative with finite simple-pole residues -i/2 and i/2, whereas a rational derivative has zero residues",
+    "residues": {
+      "at_plus_i": "-i/2",
+      "at_minus_i": "+i/2"
+    }
+  },
+  "falsified_candidate": "DIRECT_AFFINE_H1_CAYLEY_RATIONAL_POLYNOMIALIZATION",
+  "not_falsified": [
+    "arbitrary original-source analytic event theorem",
+    "qualified constant-amplitude Cayley event theorem",
+    "new analytic event algorithms retaining arctan",
+    "other transformed variables with separately proven completeness"
+  ],
+  "frozen": {
+    "corpus_git_blob": "5841c331579489b25caef38cd412bdbf286f9134",
+    "v2_git_blob": "e52d3baf3692a011cf86234eeaa992ef407d99fd",
+    "historical_v43_refusal": "CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED",
+    "prior_complete_source_specific": true
+  },
+  "before": {
+    "original_sources": 121,
+    "route_refusals": 20,
+    "missing_ordered_premises": 30,
+    "complete_source_specific": 50
+  },
+  "after": {
+    "original_sources": 121,
+    "route_refusals": 20,
+    "missing_ordered_premises": 30,
+    "complete_source_specific": 50
+  },
+  "delta": {
+    "original_sources": 0,
+    "route_refusals": 0,
+    "missing_ordered_premises": 0,
+    "complete_source_specific": 0
+  },
+  "newly_resolved_original_case_ids": [],
+  "pb007_01_discharged": false,
+  "pb007_02_03_04_discharged": false,
+  "mc_b": "NOT_ESTABLISHED",
+  "mc_1": "NOT_ESTABLISHED",
+  "production_authorized": false,
+  "verification": "python3 research/machining-completeness/tasks/MC-038/pb00701_v43_cayley_amplitude_boundary.py --contract --self-test",
+  "source_piece_edges": [
+    "0",
+    "1"
+  ],
+  "interior_source_knots": []
+}
