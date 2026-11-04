@@ -12,10 +12,6 @@
     "0",
     "1"
   ],
-  "source_knots": [
-    "0",
-    "1"
-  ],
   "phase_turns": {
     "offset": "0",
     "rate": "1/8"
@@ -102,5 +98,10 @@
   "mc_b": "NOT_ESTABLISHED",
   "mc_1": "NOT_ESTABLISHED",
   "production_authorized": false,
-  "verification": "python3 research/machining-completeness/tasks/MC-038/pb00701_v43_cayley_amplitude_boundary.py --contract --self-test"
+  "verification": "python3 research/machining-completeness/tasks/MC-038/pb00701_v43_cayley_amplitude_boundary.py --contract --self-test",
+  "source_piece_edges": [
+    "0",
+    "1"
+  ],
+  "interior_source_knots": []
 }
