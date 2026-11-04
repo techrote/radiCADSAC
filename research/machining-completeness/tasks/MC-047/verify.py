@@ -68,6 +68,14 @@ def audit(permit: dict[str, Any], plan: dict[str, Any], ledger: Path,
     rows, digest = h.load_ledger_with_digest(ledger)
     h.validate_ledger_sequence(rows, permit, plan, allow_native=allow_native_evidence)
     h.verify_retained_captures(rows, captures)
+    # A metadata-only final snapshot is insufficient on platforms where ctime
+    # means creation time or metadata can be restored. Repeat the bounded,
+    # streaming content checks against the *original* expected ledger rows.
+    # This narrows a post-hash mutation window; it is not atomic custody.
+    h.verify_retained_captures(rows, captures)
+    replay_rows, replay_digest = h.load_ledger_with_digest(ledger)
+    if replay_digest != digest or replay_rows != rows:
+        raise ValueError("ledger bytes changed during inspection; refuse mutable custody")
     if pre != fingerprints(ledger, captures):
         raise ValueError("evidence changed during inspection; refuse retry without frozen custody")
     expected = plan["max_jobs"] * plan["sequential_repeats"]
@@ -244,7 +252,72 @@ def self_test() -> None:
                 reject("equal-length post-hash rewrite with restored mtime")
             finally:
                 globals()["core_module"] = original_core
-    assert checks == (15 if os.name == "posix" else 14), checks
+        # Simulate a filesystem with no dependable change-time indication,
+        # including Windows creation-time semantics. The fingerprint is held
+        # constant deliberately; the *second content pass*, not metadata,
+        # must reject a mutation performed after the first digest check.
+        original_fingerprints = fingerprints
+
+        def reject_with_masked_metadata(label, mutate_after_first):
+            saved_core = core_module
+            snapshot = original_fingerprints(ledger, captures)
+            injection = {"completed": False}
+
+            def injection_core():
+                source = saved_core()
+                original_verify = source.verify_retained_captures
+                injected = False
+
+                def mutate_once(*args):
+                    nonlocal injected
+                    original_verify(*args)
+                    if not injected:
+                        injected = True
+                        mutate_after_first()
+                        injection["completed"] = True
+
+                source.verify_retained_captures = mutate_once
+                return source
+
+            globals()["core_module"] = injection_core
+            globals()["fingerprints"] = lambda _ledger, _captures: snapshot
+            try:
+                reject(label)
+                # An early refusal or OSError in fault injection must not
+                # masquerade as successful post-hash mutation detection.
+                assert injection["completed"], "post-hash fault was not injected: " + label
+            finally:
+                globals()["core_module"] = saved_core
+                globals()["fingerprints"] = original_fingerprints
+
+        modified_capture_row = dict(rows[0], stdout_sha256=h.sha256_bytes(b"AAAA"),
+                                    output_bytes=4)
+        write([modified_capture_row])
+        capture = captures / "000000.stdout.bin"
+        capture.write_bytes(b"AAAA")
+
+        def rewrite_capture():
+            before = capture.stat()
+            capture.write_bytes(b"BBBB")
+            os.utime(capture, ns=(before.st_atime_ns, before.st_mtime_ns))
+            assert capture.stat().st_size == before.st_size
+
+        reject_with_masked_metadata("metadata-invisible posthash capture replacement",
+                                    rewrite_capture)
+
+        write(rows[:1])
+        rewritten_row = dict(rows[0], source_sha="f" * 40)
+        rewritten_ledger = h.canonical_bytes(rewritten_row) + b"\n"
+        assert len(rewritten_ledger) == len(ledger.read_bytes())
+
+        def rewrite_ledger():
+            before = ledger.stat()
+            ledger.write_bytes(rewritten_ledger)
+            os.utime(ledger, ns=(before.st_atime_ns, before.st_mtime_ns))
+
+        reject_with_masked_metadata("metadata-invisible posthash ledger replacement",
+                                    rewrite_ledger)
+    assert checks == (17 if os.name == "posix" else 16), checks
     print(f"MC-047 read-only crash-window controls passed: {checks}; MODEL_ONLY; no native dispatch")
 
 
