@@ -227,7 +227,7 @@ def validate_attempt(attempt: dict[str, Any], permit: dict[str, Any], plan: dict
 
 def validate_ledger_sequence(
     rows: list[dict[str, Any]], permit: dict[str, Any], plan: dict[str, Any],
-    *, require_complete: bool = False,
+    *, require_complete: bool = False, allow_native: bool = False,
 ) -> None:
     """Validate a strict ordered-repeat prefix; job completions may interleave within one repeat.
 
@@ -235,6 +235,7 @@ def validate_ledger_sequence(
     A partial last repeat is retained as evidence, but cannot be followed by a
     later repeat. At most one terminal row is admitted per (repeat, job) slot.
     """
+    validate_plan(permit, plan, allow_native=allow_native)
     if not isinstance(rows, list):
         raise ContractError("ledger must be a list of attempts")
     jobs = _require_pos_int(plan, "max_jobs")
@@ -262,6 +263,15 @@ def validate_ledger_sequence(
         raise ContractError("incomplete ledger cannot claim full planned execution")
 
 
+def sha256_file(path: Path) -> str:
+    """Stream retained bytes in bounded chunks rather than materializing whole captures."""
+    digest = hashlib.sha256()
+    with path.open("rb") as fh:
+        for chunk in iter(lambda: fh.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return "sha256:" + digest.hexdigest()
+
+
 def verify_retained_captures(rows: list[dict[str, Any]], capture_dir: Path) -> None:
     """Independently hash retained stdout/stderr bytes, indexed by ledger row.
 
@@ -279,7 +289,7 @@ def verify_retained_captures(rows: list[dict[str, Any]], capture_dir: Path) -> N
             capture = capture_dir / name
             if capture.is_symlink() or not capture.is_file():
                 raise ContractError(f"missing or symlinked capture: {name}")
-            if sha256_bytes(capture.read_bytes()) != attempt[f"{stream}_sha256"]:
+            if sha256_file(capture) != attempt[f"{stream}_sha256"]:
                 raise ContractError(f"retained capture digest mismatch: {name}")
     actual = {entry.name for entry in capture_dir.iterdir()}
     if actual != expected:
@@ -291,7 +301,10 @@ def append_attempt(path: Path, attempt: dict[str, Any], permit: dict[str, Any], 
     # A single-writer append must never extend corrupt, duplicate, or
     # out-of-order history. Cross-process mutual exclusion is NOT supplied.
     prior = load_ledger(path) if path.exists() else []
-    validate_ledger_sequence(prior + [attempt], permit, plan)
+    validate_ledger_sequence(
+        prior + [attempt], permit, plan,
+        allow_native=(permit.get("dispatch_class") == "NATIVE_BOUNDED"),
+    )
     path.parent.mkdir(parents=True, exist_ok=True)
     line = canonical_bytes(attempt) + b"\n"
     with path.open("ab", buffering=0) as fh:
@@ -497,12 +510,15 @@ def self_test() -> None:
     reject_rows([canonical_rows[0], None])
     # Two jobs in the same repeat can finish in either order. Distinct repeat
     # groups must still be sequential, and incomplete prefixes remain visible.
+    two_permit = json.loads(json.dumps(permit))
+    two_permit["max_jobs"] = 2
     two_jobs = json.loads(json.dumps(plan))
     two_jobs["max_jobs"] = 2
-    alternate = [_attempt(permit, two_jobs, 0, 1, "SUCCEEDED"),
-                 _attempt(permit, two_jobs, 0, 0, "TIMEOUT", return_code=None),
-                 _attempt(permit, two_jobs, 1, 0, "CRASH", return_code=139)]
-    validate_ledger_sequence(alternate, permit, two_jobs)
+    validate_plan(two_permit, two_jobs)
+    alternate = [_attempt(two_permit, two_jobs, 0, 1, "SUCCEEDED"),
+                 _attempt(two_permit, two_jobs, 0, 0, "TIMEOUT", return_code=None),
+                 _attempt(two_permit, two_jobs, 1, 0, "CRASH", return_code=139)]
+    validate_ledger_sequence(alternate, two_permit, two_jobs)
     with tempfile.TemporaryDirectory() as td:
         directory = Path(td)
         captures = directory / "captures"
@@ -600,7 +616,11 @@ def main() -> int:
     validate_plan(permit, plan, allow_native=args.allow_native)
     if args.cmd == "audit-ledger":
         rows = load_ledger(args.ledger)
-        validate_ledger_sequence(rows, permit, plan, require_complete=args.require_complete)
+        validate_ledger_sequence(
+            rows, permit, plan,
+            require_complete=args.require_complete,
+            allow_native=args.allow_native,
+        )
         verify_retained_captures(rows, args.captures)
         print(json.dumps({
             "status": "LEDGER_REPLAY_VALIDATED_NOT_NATIVE_QUALIFICATION",
