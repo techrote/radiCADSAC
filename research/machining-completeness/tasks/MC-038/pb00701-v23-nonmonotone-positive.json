@@ -1,0 +1,59 @@
+{
+  "schema": "radicadsac-mc038-v23-nonmonotone-positive/1.0",
+  "case_id": "harvested:verify_pb00701_v52:2250401ce435",
+  "original_source_sha256": "4a3ee3f47b9347429c13830abef382301c7963b0af518f0977390c2d3ffba040",
+  "original_source_parameter": "v52-original-source",
+  "source_interval": [
+    "0",
+    "1"
+  ],
+  "phase_turns": "1/4-t/24",
+  "historical_refusal": "NONCONSTANT_AMPLITUDE_PHASE_DEPENDENT_ANCHOR_NOT_CERTIFIED",
+  "proposed_route_falsified": "GLOBAL_SINGLE_DERIVATIVE_SIGN_REQUIRED",
+  "finding": "positive_on_open_span_but_derivative_sign_reverses",
+  "certificate": {
+    "t2_bernstein_positive_lower_coefficient": "49/34992",
+    "left_first_derivative": "0",
+    "left_second_derivative": "1/36",
+    "right_A0_derivative": "-133/69984",
+    "right_A1_derivative": "-7/194400",
+    "right_B2_derivative": "-7/388800",
+    "right_derivative_strict_upper_bound": "-133/72900",
+    "open_interval_zero_count": 0,
+    "left_endpoint_zero_order": 2,
+    "positive_derivative_near_left": true,
+    "negative_derivative_at_right": true,
+    "whole_span_derivative_single_sign": false
+  },
+  "frozen_corpus_git_blob": "5841c331579489b25caef38cd412bdbf286f9134",
+  "post_v54_v2_git_blob": "e52d3baf3692a011cf86234eeaa992ef407d99fd",
+  "census": {
+    "original_sources": {
+      "before": 121,
+      "after": 121,
+      "delta": 0
+    },
+    "historical_route_refusals": {
+      "before": 20,
+      "after": 20,
+      "delta": 0
+    },
+    "missing_ordered_premises": {
+      "before": 30,
+      "after": 30,
+      "delta": 0
+    },
+    "previously_complete_source_specific": {
+      "before": 50,
+      "after": 50,
+      "delta": 0
+    },
+    "new_historical_case_ids_closed": []
+  },
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "PB00701_required_obligations_discharged": [],
+  "MC_B": "NOT_ESTABLISHED",
+  "MC_1": "NOT_ESTABLISHED",
+  "native_geometry_or_step": false,
+  "production_authorized": false
+}
