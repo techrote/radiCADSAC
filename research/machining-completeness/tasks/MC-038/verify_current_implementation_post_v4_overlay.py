@@ -93,8 +93,9 @@ def validate(overlay, corpus, registry, base):
         ("pb00701-post-v54-evidence-reconciliation-v2.json","post_v54_v2_git_blob")]:
         require(pins[label]==PINS[filename], "OVERLAY_PIN_DRIFT: "+label)
     rows=corpus["cases"]
-    require(len(rows)==121 and len({r["id"] for r in rows})==121,
-            "ORIGINAL_SOURCE_DENOMINATOR")
+    require(len(rows)==121 and len({r["id"] for r in rows})==121 and
+            len({canon_hash(r["spec"]) for r in rows})==121,
+            "ORIGINAL_SOURCE_DENOMINATOR_OR_DUPLICATE_SOURCE_SPEC")
     historical={r["id"]:r for r in rows if r["expected"]["v54_disposition"].startswith("BLOCKED")}
     refusal=sum(r["expected"]["v54_disposition"]=="BLOCKED" for r in historical.values())
     ordered=sum(r["expected"]["v54_disposition"]==
@@ -187,6 +188,11 @@ def self_test(original, corpus, registry, base):
     damaged[-1]["merged_main"]="0"*40
     reject("reviewed_merged_results",damaged,"wrong merge identity")
     damaged=copy.deepcopy(corpus)
+    damaged["cases"][0]["spec"]=copy.deepcopy(damaged["cases"][1]["spec"])
+    try: validate(original,damaged,registry,base)
+    except (ValueError,KeyError,TypeError): pass
+    else: raise AssertionError("duplicate original source spec accepted")
+    damaged=copy.deepcopy(corpus)
     next(row for row in damaged["cases"] if row["expected"]["v54_disposition"].startswith("BLOCKED"))["spec"]["phase_turn_rate"]="37"
     try: validate(original,damaged,registry,base)
     except (ValueError,KeyError,TypeError): pass
@@ -196,7 +202,7 @@ def self_test(original, corpus, registry, base):
     try: validate(original,corpus,damaged,base)
     except (ValueError,KeyError,TypeError): pass
     else: raise AssertionError("registry downgrade accepted")
-    return {"adversarial_mutations_rejected":10}
+    return {"adversarial_mutations_rejected":11}
 
 def main():
     ap=argparse.ArgumentParser()
