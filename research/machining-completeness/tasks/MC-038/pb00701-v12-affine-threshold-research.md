@@ -36,7 +36,7 @@ because theta lies between π/2 and π, cosine is nonpositive, sine nonnegative,
 For |x|≤1/2, cos(kx)>0, and the ratio
 
 [
-G(x)=x	an(kx)
+G(x)=x\tan(kx)
 ]
 
 is even. On 0<x≤1/2, `G'(x)=tan(kx)+kx sec²(kx)>0`; G(0)=0 and G(1/2)=1/2. Hence the source equation F_a=0 is equivalent to G(x)=δ and **all** roots in the admitted grammar are completely classified, with no arbitrary refinement or interval scan. This proof is degree-aware and only for the precisely declared affine-H1 family; it does not assume general analytic decidability.
