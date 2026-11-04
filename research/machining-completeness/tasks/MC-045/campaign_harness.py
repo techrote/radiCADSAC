@@ -744,18 +744,19 @@ def self_test() -> None:
 
         # A deleted/recreated lock is not the acquired lease. The original
         # writer must refuse release and must not unlink the replacement.
-        lock.write_bytes(b"unrelated existing lock\n")
-        lock.unlink()
-        try:
-            with exclusive_ledger_append_lock(history):
-                lock.unlink()
-                lock.write_bytes(b"replacement owner\n")
-        except ContractError:
-            pass
-        else:
-            raise AssertionError("replaced ledger append lock was accepted")
-        assert lock.read_bytes() == b"replacement owner\n"
-        lock.unlink()
+        if os.name != "nt":
+            # Windows normally forbids unlinking a still-open lock handle;
+            # forced replacement is only an executable POSIX fault injection.
+            try:
+                with exclusive_ledger_append_lock(history):
+                    lock.unlink()
+                    lock.write_bytes(b"replacement owner\n")
+            except ContractError:
+                pass
+            else:
+                raise AssertionError("replaced ledger append lock was accepted")
+            assert lock.read_bytes() == b"replacement owner\n"
+            lock.unlink()
 
 
 def load_json(path: Path) -> dict[str, Any]:
