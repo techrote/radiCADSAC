@@ -140,7 +140,15 @@ def worker(mode: str, ledger: Path, ready: Path, release: Path, result: Path | N
         wait_for_file(release)
         try:
             h.append_attempt(ledger, attempt, permit, plan)
-        except h.ContractError:
+        except h.ContractError as exc:
+            # A generic ContractError would make this adversarial control pass
+            # for unrelated input/schema failures. Only the expected competing
+            # lock or duplicate committed slot is a legitimate loser.
+            message = str(exc)
+            if not any(marker in message for marker in (
+                "locked", "duplicate attempt_id", "duplicate repeat/job slot",
+            )):
+                raise AssertionError(f"unexpected losing-writer refusal: {message}") from exc
             result.write_text("REFUSED", encoding="ascii")
         else:
             result.write_text("APPENDED", encoding="ascii")
