@@ -85,6 +85,12 @@ def proposal_identity(metadata: os.stat_result) -> tuple[int, int, int, int, int
             metadata.st_size, metadata.st_mtime_ns, metadata.st_ctime_ns)
 
 
+def proposal_identity_drift(a: os.stat_result, b: os.stat_result) -> str:
+    """Name differing metadata fields without leaking local filesystem identifiers."""
+    fields = ("st_dev", "st_ino", "st_nlink", "st_size", "st_mtime_ns", "st_ctime_ns")
+    return ",".join(field for field in fields if getattr(a, field) != getattr(b, field))
+
+
 def require_single_regular(metadata: os.stat_result) -> None:
     require(stat.S_ISREG(metadata.st_mode), "T2 preparation proposal must be a regular file")
     require(metadata.st_nlink == 1, "T2 preparation hard-link alias forbidden")
@@ -109,7 +115,8 @@ def read_proposal(path: Path) -> Any:
             require(descriptor_before.st_size <= MAX_PROPOSAL_BYTES,
                     "T2 preparation JSON exceeds byte limit")
             require(proposal_identity(pathname_before) == proposal_identity(descriptor_before),
-                    "T2 preparation proposal file identity/metadata changed before open")
+                    "T2 preparation proposal file identity/metadata changed before open: " +
+                    proposal_identity_drift(pathname_before, descriptor_before))
             # Always bound descriptor data even if the file grows during read.
             raw = stream.read(MAX_PROPOSAL_BYTES + 1)
             require(len(raw) <= MAX_PROPOSAL_BYTES,
@@ -121,7 +128,9 @@ def read_proposal(path: Path) -> Any:
             identity = proposal_identity(pathname_before)
             require(identity == proposal_identity(descriptor_after) ==
                     proposal_identity(pathname_after),
-                    "T2 preparation proposal file identity/metadata changed during read")
+                    "T2 preparation proposal file identity/metadata changed during read: " +
+                    proposal_identity_drift(pathname_before, descriptor_after) + "/" +
+                    proposal_identity_drift(pathname_before, pathname_after))
     except OSError as exc:
         raise Refused("T2 preparation proposal custody/read failed") from exc
     return read_json(raw)
