@@ -1,0 +1,40 @@
+name: mc1-outcome-ledger-custody
+
+on:
+  pull_request:
+    paths:
+      - 'tools/validate_machining_completeness.py'
+      - '.github/workflows/mc1-outcome-ledger-custody.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'tools/validate_machining_completeness.py'
+      - '.github/workflows/mc1-outcome-ledger-custody.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  exact-head-outcome-custody:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Refuse synthetic or stale checkout
+        run: |
+          set -euo pipefail
+          ACTUAL="$(git rev-parse HEAD)"
+          EXPECTED="${{ github.event.pull_request.head.sha || github.sha }}"
+          echo "Qualified literal commit: $ACTUAL"
+          test "$ACTUAL" = "$EXPECTED"
+      - name: MC-1 outcome custody and adversarial self-tests
+        run: |
+          set -euo pipefail
+          python3 tools/validate_machining_completeness.py
+          python3 tools/validate_machining_completeness.py --self-test
