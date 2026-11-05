@@ -194,7 +194,7 @@ def self_test():
     # 12 independent source/status/provenance mutation refusals on frozen shapes.
     originals = {
         k: {"id": k, "origin": "verify_pb00701_v7", "kind": "COMPOSITE_TAIL",
-            "spec": expected_spec(v), "expected": {"v54_disposition": "BLOCKED",
+            "spec": expected_spec(v), "expected": {"id": k, "v54_disposition": "BLOCKED",
                "observed": {"status": "BLOCKED",
                  "spans": [["DELEGATED_V6_CONSTANT_MODULATION","CERTIFIED",None],
                     ["PB00701_V27_EXACT_RATIONAL_PHASE_SECTOR_PARTITION_COMPOSITION",
