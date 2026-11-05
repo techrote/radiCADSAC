@@ -13,6 +13,7 @@ import hashlib
 import json
 from fractions import Fraction as Q
 from pathlib import Path
+from tempfile import TemporaryDirectory
 
 HERE = Path(__file__).resolve().parent
 CORPUS = HERE / "pb00701-finite-owner-corpus-v54.json"
@@ -24,6 +25,10 @@ CASE = "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail0"
 SOURCE_SHA = "57d3c14096ccedfb7faea5023f5a09bada2ca274748f2207c36d77bbc790927c"
 ROW_SHA = "c5ba85453dc65e0d18675353986394ae5b34af6219a741ce14af0c332ffc47cd"
 COMPANION_SHA = "21a0dde2ee6783f4465ab0c23dbef08fc400a4c8f2169cc5b851a3b0c3f5e23b"
+# Resource safety only. These are nontruth input-admission bounds, not
+# proof-theoretic restrictions or substitute original-source witnesses.
+MAX_FROZEN_INPUT_BYTES = 1024 * 1024
+MAX_RECEIPT_BYTES = 64 * 1024
 
 class Refusal(ValueError):
     pass
@@ -42,8 +47,16 @@ def sha256(value):
 def git_blob(data):
     return hashlib.sha1(b"blob " + str(len(data)).encode("ascii") + b"\0" + data).hexdigest()
 
+def read_bounded(path, byte_limit, refusal):
+    # Bound allocation *before* parsing or hash verification. Reading limit+1
+    # detects a late-growing regular file, rather than trusting its prior size.
+    with path.open("rb") as stream:
+        data = stream.read(byte_limit + 1)
+    need(len(data) <= byte_limit, refusal)
+    return data
+
 def read_pinned(path, digest):
-    data = path.read_bytes()
+    data = read_bounded(path, MAX_FROZEN_INPUT_BYTES, "FROZEN_INPUT_BYTE_LIMIT")
     need(git_blob(data) == digest, "FROZEN_GIT_BLOB_DRIFT:" + path.name)
     return json.loads(data)
 
@@ -265,6 +278,30 @@ def self_test(corpus, register, expected):
             raise AssertionError("accepted forged receipt " + field)
     return count
 
+def bounded_io_self_test():
+    # Real on-disk oversized fixtures. Test the exact loader path so a future
+    # reintroduction of read_bytes() is not concealed by forged receipt checks.
+    with TemporaryDirectory(prefix="mc038-v10-bounded-") as directory:
+        path = Path(directory) / "adversarial-input.json"
+        path.write_bytes(b" " * (MAX_FROZEN_INPUT_BYTES + 1))
+        try:
+            read_pinned(path, CORPUS_BLOB)
+        except Refusal as exc:
+            assert str(exc) == "FROZEN_INPUT_BYTE_LIMIT", exc
+        else:
+            raise AssertionError("oversized frozen original admitted")
+        path.write_bytes(b" " * (MAX_RECEIPT_BYTES + 1))
+        try:
+            read_bounded(path, MAX_RECEIPT_BYTES, "RECEIPT_BYTE_LIMIT")
+        except Refusal as exc:
+            assert str(exc) == "RECEIPT_BYTE_LIMIT", exc
+        else:
+            raise AssertionError("oversized machine receipt admitted")
+        # At the exact limit the reader must not reject solely for size.
+        path.write_bytes(b"x" * MAX_RECEIPT_BYTES)
+        assert read_bounded(path, MAX_RECEIPT_BYTES, "RECEIPT_BYTE_LIMIT") == b"x" * MAX_RECEIPT_BYTES
+    return 3
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--contract", action="store_true")
@@ -273,12 +310,14 @@ def main():
     c = read_pinned(CORPUS, CORPUS_BLOB)
     v = read_pinned(V2, V2_BLOB)
     expected = make_report(c, v)
-    saved = json.loads(RECEIPT.read_bytes())
+    saved = json.loads(read_bounded(RECEIPT, MAX_RECEIPT_BYTES, "RECEIPT_BYTE_LIMIT"))
     check_receipt(saved, expected)
     if opts.self_test:
         count = self_test(c, v, expected)
         assert count == 21, count
         print(f"21/21 source/receipt adversarial mutations refused")
+        assert bounded_io_self_test() == 3
+        print("3/3 bounded file ingress controls passed (oversized frozen/receipt + exact receipt byte limit)")
     print(f"ORIGINAL_SOURCE_PROVENANCE_VALID; historical=121/20/30/50; new_historical_closure=0; exact C phase-alias proof RAG, root_claims=8 simple")
 if __name__ == "__main__":
     main()
