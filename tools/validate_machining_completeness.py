@@ -124,6 +124,26 @@ def validate(graph=None,programme=None,outcomes=None,ghmap=None,posdoc=None):
     for i in ids:
         n=ghmap["tasks"][i].get("issue")
         if type(n) is not int or n<=0: fail(f"{i} missing issue")
+        # The outcomes and GitHub routing ledgers must identify the *same*
+        # task-specific issue. Validating each register in isolation would
+        # admit a stale or silently misdirected acceptance record.
+        row=outcomes["tasks"][i]
+        if type(row.get("issue")) is not int or row["issue"]!=n:
+            fail(f"{i} outcome/GitHub issue binding mismatch")
+        if row.get("state") not in {
+            "NOT_STARTED","COMPLETED_RESEARCH","NEGATIVE_RESULT","CAPABILITY_ACCEPTED"
+        }:
+            fail(f"{i} unknown outcome state")
+        # A task-local outcome must not unilaterally grant a capability while
+        # the programme and proof gates still say NOT_ESTABLISHED.
+        if row["state"]=="CAPABILITY_ACCEPTED" and i!="MC-005":
+            fail(f"{i} capability acceptance contradicts current programme gates")
+        if (not isinstance(row.get("accepted_artifacts"),list)
+                or any(not isinstance(p,str) or not p.strip()
+                       for p in row["accepted_artifacts"])
+                or not isinstance(row.get("blockers"),list)
+                or any(not isinstance(b,dict) for b in row["blockers"])):
+            fail(f"{i} outcome evidence/blocker fields malformed")
         nums.append(n)
     if len(nums)!=len(set(nums)) or ghmap.get("programme_issue")!=62: fail("GitHub map mismatch")
 
@@ -204,6 +224,21 @@ def self_test():
     try: validate(g,p,o,badm,pos)
     except AssertionError: pass
     else: fail("self-test accepted boolean GitHub issue number")
+    # Adversarial cross-register custody: valid-looking individual ledgers
+    # must fail if their shared issue key drifts or gate acceptance is forged.
+    for change, label in (
+        (lambda x: x["tasks"]["MC-038"].__setitem__("issue",101), "misrouted issue"),
+        (lambda x: x["tasks"]["MC-038"].__setitem__("issue",True), "boolean outcome issue"),
+        (lambda x: x["tasks"]["MC-038"].__setitem__("state","CAPABILITY_ACCEPTED"), "premature MC-B outcome"),
+        (lambda x: x["tasks"]["MC-052"].__setitem__("state","CAPABILITY_ACCEPTED"), "premature MC-1 outcome"),
+        (lambda x: x["tasks"]["MC-038"].__setitem__("state","CLOSED"), "unknown outcome state"),
+        (lambda x: x["tasks"]["MC-038"].__setitem__("accepted_artifacts",None), "null accepted artifacts"),
+        (lambda x: x["tasks"]["MC-038"].__setitem__("blockers",None), "null blockers"),
+    ):
+        bado=copy.deepcopy(o); change(bado)
+        try: validate(g,p,bado,m,pos)
+        except AssertionError: pass
+        else: fail(f"self-test accepted {label}")
     # These mutations previously raised TypeError/KeyError/AttributeError
     # before reaching a conservative registry refusal.
     for target, change, label in (
