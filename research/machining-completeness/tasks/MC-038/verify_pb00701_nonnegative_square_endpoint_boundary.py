@@ -167,6 +167,7 @@ def audit(corpus, registry):
     negative = []
     exact_endpoints = 0
     unknown_endpoints = 0
+    excluded_non_source_time = []
     for case_id in sorted(blocked):
         row, r = originals[case_id], registered[case_id]
         spec = row["spec"]
@@ -184,6 +185,11 @@ def audit(corpus, registry):
              r["phase_turn_law"] ==
              {"offset": spec["phase_turn_offset"], "rate": spec["phase_turn_rate"]},
              "ORIGINAL_REGISTERED_PROVENANCE_MISMATCH")
+        if spec["source_parameter_id"] != "source-time-t":
+            # Preserve original parameter/phase identity. Do not silently
+            # reinterpret special proof-carrier parameters as physical time.
+            excluded_non_source_time.append(case_id)
+            continue
         sides = []
         for side in ("lo", "hi"):
             e = endpoint_components(spec, side)
@@ -223,6 +229,7 @@ def audit(corpus, registry):
         "negative_missing_ordered_premise_originals": 12,
         "exactly_admitted_endpoint_evaluations": exact_endpoints,
         "nonquarter_endpoint_evaluations_not_claimed": unknown_endpoints,
+        "non_source_time_originals_not_screened": excluded_non_source_time,
         "negative_original_case_records": negative,
         "newly_closed_historical_case_ids": [],
         "pb00701_or_required_po_discharged": False,
