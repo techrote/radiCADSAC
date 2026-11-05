@@ -267,13 +267,15 @@ def bounded_json_integer(token: str) -> int:
     return int(token)
 
 
-def check_json_container_depth(data: bytes) -> None:
-    # UTF-8 ASCII brackets cannot occur in multibyte continuation bytes.
-    # Ignore delimiters inside quoted/escaped strings.
+def check_json_container_depth(text: str) -> None:
+    # json.loads accepts UTF-8, UTF-16 and UTF-32 byte inputs. Inspect
+    # decoded characters rather than octets, or the low byte of a Unicode
+    # code point (e.g. U+0122) can impersonate an ASCII quote.
     depth = 0
     quoted = False
     escaped = False
-    for code in data:
+    for character in text:
+        code = ord(character)
         if quoted:
             if escaped:
                 escaped = False
@@ -292,14 +294,19 @@ def check_json_container_depth(data: bytes) -> None:
             require(depth >= 0, "JSON closing delimiter without opener")
     # json.loads remains responsible for all remaining JSON grammar.
 
-
 def read_json_bytes(data: bytes) -> dict[str, Any]:
     require(isinstance(data, bytes) and len(data) <= MAX_JSON_BYTES,
             "JSON raw-byte budget exceeded")
-    check_json_container_depth(data)
+    # Decode with the same JSON encoding detection used by json.loads(bytes),
+    # before the quote-aware nesting scan. The raw-byte limit remains first.
+    try:
+        decoded = data.decode(json.detect_encoding(data))
+    except UnicodeError as exc:
+        raise Rejected(f"JSON Unicode decode refusal: {exc}") from exc
+    check_json_container_depth(decoded)
     try:
         document = json.loads(
-            data, object_pairs_hook=no_duplicate_keys, parse_float=finite_json_float,
+            decoded, object_pairs_hook=no_duplicate_keys, parse_float=finite_json_float,
             parse_int=bounded_json_integer,
             parse_constant=lambda x: (_ for _ in ()).throw(Rejected(f"nonfinite JSON: {x}")))
     except (RecursionError, OverflowError, UnicodeError, json.JSONDecodeError) as exc:

@@ -370,6 +370,24 @@ def self_test() -> int:
         assert read_json_bytes(b'{"n":' + b'9' * MAX_JSON_INT_DIGITS + b'}')["n"] > 0
         assert read_json_bytes(b'{"literal":"[[[{{{"}')["literal"] == "[[[{{{"
 
+        # Python's json.loads(bytes) admits UTF-16/32; the depth scanner
+        # must not mistake a non-ASCII code point's low byte for a quote.
+        false_quote = "\u0122" + "[" * (MAX_JSON_DEPTH + 8)
+        alternate_wire = json.dumps({"literal": false_quote, "n": [1]},
+                                    ensure_ascii=False)
+        for encoding in ("utf-16-le", "utf-16-be", "utf-32-le", "utf-32-be",
+                         "utf-16", "utf-32"):
+            recovered = read_json_bytes(alternate_wire.encode(encoding))
+            assert recovered["literal"] == false_quote and recovered["n"] == [1]
+
+        # Genuine over-depth JSON must still refuse when encoded as UTF-16/32.
+        deep_wire = ('{"nested":' + "[" * MAX_JSON_DEPTH + "0" +
+                     "]" * MAX_JSON_DEPTH + "}")
+        reject_ingress("UTF-16LE over-depth JSON", deep_wire.encode("utf-16-le"))
+        reject_ingress("UTF-32BE over-depth JSON", deep_wire.encode("utf-32-be"))
+        reject_ingress("invalid UTF-8 byte sequence",
+                       b'{"n":"' + bytes([255]) + b'"}')
+
         oversized_path = root / "oversized-manifest.json"
         receipt_path = root / "valid-structural-receipt.json"
         oversized_path.write_bytes(over)
@@ -432,7 +450,7 @@ def main() -> None:
     if not args.contract and not args.self_test:
         parser.error("select --contract and/or --self-test")
     rejected = self_test()
-    assert rejected == 54, rejected
+    assert rejected == 57, rejected
     print(f"MC-043 PROVISIONAL STRUCTURAL_PREFLIGHT_ONLY: 4 positive synthetic controls; {rejected} rejected corruptions")
     print("No real STEP file, independent consumer process, native permit or MC-E capability qualified")
 
