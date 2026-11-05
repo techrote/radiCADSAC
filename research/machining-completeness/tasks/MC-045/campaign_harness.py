@@ -33,6 +33,10 @@ POS_INT_FIELDS = (
     "sequential_repeats", "timeout_seconds", "peak_rss_bytes_max",
     "storage_bytes_max", "egress_bytes_max",
 )
+# Permit/plan authority is intentionally small; refuse parser and canonicalizer
+# resource hazards before any authority validation or campaign accounting.
+MAX_AUTHORITY_JSON_BYTES = 1 << 20
+MAX_AUTHORITY_JSON_NESTING = 32
 
 class ContractError(ValueError):
     pass
@@ -700,6 +704,14 @@ def self_test() -> None:
         for original, expected in ((valid_permit, permit), (valid_plan, plan)):
             authority_path.write_text(original, encoding="utf-8")
             assert load_json(authority_path) == expected
+        # The limit counts JSON object/list containers, not punctuation inside
+        # strings. Include the exact permitted depth as a positive control.
+        at_depth_limit = '{"levels":' + '[' * (MAX_AUTHORITY_JSON_NESTING - 1) + '0' + ']' * (MAX_AUTHORITY_JSON_NESTING - 1) + '}'
+        authority_path.write_text(at_depth_limit, encoding="utf-8")
+        assert len(load_json(authority_path)["levels"]) == 1
+        string_brackets = valid_permit[:-1] + ',"note":"' + '[' * (MAX_AUTHORITY_JSON_NESTING + 10) + '"}'
+        authority_path.write_text(string_brackets, encoding="utf-8")
+        assert load_json(authority_path)["note"] == '[' * (MAX_AUTHORITY_JSON_NESTING + 10)
 
         nested_duplicate = valid_permit.replace('"paid":false', '"paid":false,"paid":false', 1)
         assert nested_duplicate != valid_permit, "tariff duplicate was not injected"
@@ -720,6 +732,12 @@ def self_test() -> None:
             ("unpaired surrogate",
              valid_permit[:-1] + ',"extra":"\\u' + 'd800"}', "invalid authority JSON"),
             ("top-level array", "[]", "top-level JSON object"),
+            ("nested past structural limit",
+             '{"levels":' + '[' * MAX_AUTHORITY_JSON_NESTING + '0' + ']' * MAX_AUTHORITY_JSON_NESTING + '}',
+             "authority JSON nesting limit"),
+            ("oversized on-disk authority",
+             valid_plan[:-1] + ',"padding":"' + 'x' * (MAX_AUTHORITY_JSON_BYTES + 1) + '"}',
+             "authority JSON byte limit"),
             ("invalid syntax", "{", "invalid authority JSON"),
         ]
         for label, raw, expected_reason in invalid_authority:
@@ -1294,10 +1312,11 @@ def self_test() -> None:
             globals()["verify_retained_captures"] = original_verify
 
 def load_json(path: Path) -> dict[str, Any]:
-    """Reject ambiguous authority JSON before permit/plan validation or accounting.
+    """Bound and unambiguously parse permit/plan authority JSON.
 
-    Duplicate keys must be refused at every depth, even when equal-valued:
-    a dictionary obtained by last-write-wins parsing is not the source record.
+    This is conservative local-file ingress, not an atomic filesystem snapshot
+    or a security sandbox. Byte size is checked before decoding/JSON parsing;
+    structural nesting is checked before recursive canonicalization.
     """
     def unique_keys(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
         value: dict[str, Any] = {}
@@ -1310,16 +1329,35 @@ def load_json(path: Path) -> dict[str, Any]:
     def reject_constant(token: str) -> Any:
         raise ContractError(f"nonfinite JSON constant: {token}")
 
+    def check_nesting(node: Any, depth: int = 0) -> None:
+        if not isinstance(node, (dict, list)):
+            return
+        depth += 1
+        if depth > MAX_AUTHORITY_JSON_NESTING:
+            raise ContractError("authority JSON nesting limit exceeded")
+        children = node.values() if isinstance(node, dict) else node
+        for child in children:
+            check_nesting(child, depth)
+
     try:
-        value = json.loads(path.read_text(encoding="utf-8"),
+        # Read at most the bound plus one sentinel byte; avoid unbounded
+        # read_text() allocation on an untrusted permit/plan pathname.
+        with path.open("rb") as fh:
+            raw = fh.read(MAX_AUTHORITY_JSON_BYTES + 1)
+        if len(raw) > MAX_AUTHORITY_JSON_BYTES:
+            raise ContractError("authority JSON byte limit exceeded")
+        value = json.loads(raw.decode("utf-8"),
                            object_pairs_hook=unique_keys,
                            parse_constant=reject_constant)
         if not isinstance(value, dict):
             raise ContractError("top-level JSON object required")
-        # Reject binary floats and unpaired Unicode surrogates on the same
-        # ingress path that subsequently produces canonical evidence digests.
+        check_nesting(value)
+        # Reject binary floats and unpaired Unicode surrogates before
+        # the subsequent canonical authority/digest contract.
         canonical_bytes(value)
-    except (json.JSONDecodeError, UnicodeError) as exc:
+    except ContractError:
+        raise
+    except (ValueError, UnicodeError, RecursionError, OverflowError) as exc:
         raise ContractError("invalid authority JSON syntax or UTF-8/Unicode") from exc
     return value
 
