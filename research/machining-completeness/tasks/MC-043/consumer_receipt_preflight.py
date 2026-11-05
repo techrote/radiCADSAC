@@ -154,6 +154,11 @@ def check(manifest: dict[str, Any], receipt: dict[str, Any], manifest_bytes: byt
         return STRUCTURAL_ONLY
 
     require(state in ("NONEMPTY", "NONEMPTY_GROUPED"), "unsupported material state")
+    # MC-ENG-OUTPUT/1.0 distinguishes the regular single durable-body state
+    # from the explicit grouped multi-body/singular output envelope. A fully
+    # bound item inventory alone cannot make a falsely ungrouped manifest valid.
+    require(state != "NONEMPTY" or len(bodies) == 1,
+            "NONEMPTY state requires exactly one durable body")
     require(bodies and artifacts, "nonempty material must retain bodies and STEP artifacts")
     require(manifest["empty_transition"] is None, "nonempty material has empty transition")
     artifact_paths: set[str] = set()
