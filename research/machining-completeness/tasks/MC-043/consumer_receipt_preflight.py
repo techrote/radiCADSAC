@@ -18,6 +18,10 @@ SCHEMA = "radicadsac-mc043-consumer-receipt-preflight/1.0"
 PROFILE = "MC-ENG-OUTPUT/1.0"
 STRUCTURAL_ONLY = "STRUCTURAL_PREFLIGHT_ONLY"
 
+MAX_JSON_BYTES = 1024 * 1024
+MAX_JSON_DEPTH = 32
+MAX_JSON_INT_DIGITS = 128
+
 
 class Rejected(ValueError):
     pass
