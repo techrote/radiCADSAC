@@ -287,6 +287,56 @@ def self_test() -> int:
                 target.unlink()
                 displaced.replace(target)
 
+        # Validate the real raw-byte JSON admission path, not a parsed dict
+        # assembled by the fixture. Extra fields are deliberately outside the
+        # consumed schema: unsafe scalar decoding must refuse before check().
+        def wire_check(manifest_data: bytes, receipt_data: bytes) -> str:
+            return check(read_json_bytes(manifest_data), read_json_bytes(receipt_data),
+                         manifest_data, root)
+
+        def with_aux(document: bytes, literal: bytes) -> bytes:
+            assert document.endswith(b"}"), document
+            return document[:-1] + b',"auxiliary":' + literal + b"}"
+
+        original_manifest = as_bytes(nonempty)
+        original_receipt = as_bytes(valid)
+        good_manifest = with_aux(
+            original_manifest, b'{"finite":1.25,"scalar":"\\ud83d\\ude00"}')
+        good_receipt = copy.deepcopy(valid)
+        good_receipt["manifest_sha256"] = digest(good_manifest)
+        assert wire_check(good_manifest, as_bytes(good_receipt)) == STRUCTURAL_ONLY
+        assert read_json_bytes(good_manifest)["auxiliary"]["scalar"] == "\U0001f600"
+        # This remains a structural-only synthetic test, not STEP qualification.
+
+        def reject_wire(label: str, *, manifest_data: bytes | None = None,
+                        receipt_data: bytes | None = None) -> None:
+            nonlocal rejected
+            raw = original_manifest if manifest_data is None else manifest_data
+            rebound = copy.deepcopy(valid)
+            rebound["manifest_sha256"] = digest(raw)
+            receipt_raw = as_bytes(rebound) if receipt_data is None else receipt_data
+            try:
+                wire_check(raw, receipt_raw)
+            except Rejected:
+                rejected += 1
+                return
+            raise AssertionError(f"ambiguous JSON wire input admitted: {label}")
+
+        reject_wire("positive overflowing exponent in manifest",
+                    manifest_data=with_aux(original_manifest, b'1e999'))
+        reject_wire("negative overflowing exponent in nested receipt",
+                    receipt_data=with_aux(original_receipt, b'{"layer":[-1e999]}'))
+        reject_wire("lone high surrogate value in manifest",
+                    manifest_data=with_aux(original_manifest, b'"\\ud800"'))
+        reject_wire("lone low surrogate as nested receipt key",
+                    receipt_data=with_aux(original_receipt, b'{"\\udfff":"x"}'))
+        reject_wire("lone high surrogate as nested manifest key",
+                    manifest_data=with_aux(original_manifest, b'{"layer":{"\\ud800":2}}'))
+        reject_wire("explicit NaN constant still refused",
+                    manifest_data=with_aux(original_manifest, b'NaN'))
+        reject_wire("explicit Infinity constant still refused",
+                    receipt_data=with_aux(original_receipt, b'Infinity'))
+
         (root / "body-a.step").write_bytes(b"TAMPERED_SYNTHETIC_BYTES\n")
         reject_case("mutated bytes after recorded digest", copy.deepcopy(nonempty), copy.deepcopy(valid), root)
         rejected += 1
@@ -311,8 +361,8 @@ def main() -> None:
     if not args.contract and not args.self_test:
         parser.error("select --contract and/or --self-test")
     rejected = self_test()
-    assert rejected == 40, rejected
-    print(f"MC-043 PROVISIONAL STRUCTURAL_PREFLIGHT_ONLY: 3 positive synthetic controls; {rejected} rejected corruptions")
+    assert rejected == 47, rejected
+    print(f"MC-043 PROVISIONAL STRUCTURAL_PREFLIGHT_ONLY: 4 positive synthetic controls; {rejected} rejected corruptions")
     print("No real STEP file, independent consumer process, native permit or MC-E capability qualified")
 
 
