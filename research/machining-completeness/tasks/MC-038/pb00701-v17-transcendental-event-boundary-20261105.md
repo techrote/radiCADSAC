@@ -4,7 +4,7 @@
 
 ## Falsifiable proposed route and mathematical consequence
 
-The precise candidate AL​GEBRAIC_COORDINATES_ONLY_FOR_ALL_RATIONAL_AFFINE_PHASE_PHYSICAL_EVENTS asserts that the physical zero events of every original rational-B-spline / rational-affine-phase harmonic source have algebraic coordinate values. A root enumerator whose **event coordinates themselves** must be algebraic numbers, each represented by an exact polynomial over the rationals, would then be complete.
+The precise candidate ALGEBRAIC_COORDINATES_ONLY_FOR_ALL_RATIONAL_AFFINE_PHASE_PHYSICAL_EVENTS asserts that the physical zero events of every original rational-B-spline / rational-affine-phase harmonic source have algebraic coordinate values. A root enumerator whose **event coordinates themselves** must be algebraic numbers, each represented by an exact polynomial over the rationals, would then be complete.
 
 We disprove this property for two interior roots of one actual frozen source. This is a substantive mathematical distinction from the previously demonstrated phase-lattice omission in merged #402: **the roots themselves are transcendental**, not merely off a proposed rational candidate lattice. The result does not affect an interface that represents a transcendental root *implicitly* by an exact defining analytic function and verified rational brackets. The existing v2 witness does exactly that. No claim is made that all analytic root isolation is impossible or that an accepted implementation uses the falsified shortcut.
 

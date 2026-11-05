@@ -82,7 +82,7 @@ def exact_original_root_premises(spec):
     # Derivatives of q1, q2 have negative numerator -1/3.
     need((-1)*Q(2, 3) + Q(1, 3) == -Q(1, 3),
          "RATIO_MONOTONICITY_LOST")
-    need((-1)*(-Q(2, 3)) - (-1)*(-Q(1, 3)) == -Q(1, 3),
+    need(-Q(2, 3) + Q(1, 3) == -Q(1, 3),
          "REFLECTED_RATIO_MONOTONICITY_LOST")
     # Exact inequalities for first bracket root sign, no float scan.
     need(Q(3) > Q(5, 3)**2 and
