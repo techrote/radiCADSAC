@@ -748,6 +748,85 @@ def self_test() -> None:
                 assert expected_reason in str(exc), (label, str(exc))
             else:
                 raise AssertionError(f"ambiguous authority JSON admitted: {label}")
+
+        # Authority files must have separate, stable filesystem identity from
+        # path inspection through the descriptor read. Synthetic controls do
+        # not exercise a native campaign or claim hostile-filesystem atomicity.
+        authority_path.write_text(valid_permit, encoding="utf-8")
+        assert load_json(authority_path) == permit
+        try:
+            load_json(Path(temp_json))
+        except ContractError as exc:
+            assert "unique regular file" in str(exc), exc
+        else:
+            raise AssertionError("directory admitted as permit JSON")
+
+        alias = Path(temp_json) / "authority-alias.json"
+        try:
+            os.link(authority_path, alias)
+        except (OSError, NotImplementedError):
+            pass  # Platform refuses hard-link creation; not an executed test.
+        else:
+            try:
+                for hard_path in (authority_path, alias):
+                    try:
+                        load_json(hard_path)
+                    except ContractError as exc:
+                        assert "unique regular file" in str(exc), exc
+                    else:
+                        raise AssertionError("hard-linked authority accepted")
+            finally:
+                alias.unlink()
+        assert load_json(authority_path) == permit
+
+        try:
+            alias.symlink_to(authority_path)
+        except (OSError, NotImplementedError):
+            pass  # Unprivileged Windows runners may refuse symlink creation.
+        else:
+            try:
+                load_json(alias)
+            except ContractError as exc:
+                assert "unique regular file" in str(exc), exc
+            else:
+                raise AssertionError("symlinked authority accepted")
+            finally:
+                alias.unlink()
+
+        # Inject an after-open name swap. POSIX permits rename of a still-open
+        # file; Windows commonly refuses it, in which case no substitution
+        # occurred and the original valid document must remain admissible.
+        replacement = Path(temp_json) / "replacement.json"
+        other_permit = valid_permit.replace("MC045-SELFTEST-001", "MC045-SELFTEST-002")
+        assert other_permit != valid_permit and len(other_permit) == len(valid_permit)
+        replacement.write_text(other_permit, encoding="utf-8")
+        actual_os_open = os.open
+        swap = {"performed": False, "os_refused": False}
+        def inject_swap(filename, flags, mode=0o777, *, dir_fd=None):
+            fd = (actual_os_open(filename, flags, mode) if dir_fd is None
+                  else actual_os_open(filename, flags, mode, dir_fd=dir_fd))
+            if Path(filename) == authority_path:
+                try:
+                    os.replace(replacement, authority_path)
+                except OSError:
+                    swap["os_refused"] = True
+                else:
+                    swap["performed"] = True
+            return fd
+        os.open = inject_swap
+        try:
+            try:
+                loaded = load_json(authority_path)
+            except ContractError as exc:
+                assert swap["performed"] and "authority JSON identity" in str(exc), exc
+            else:
+                assert swap["os_refused"] and not swap["performed"], swap
+                assert loaded == permit
+        finally:
+            os.open = actual_os_open
+        if swap["performed"]:
+            authority_path.write_text(valid_permit, encoding="utf-8")
+        assert load_json(authority_path) == permit
     assert accounting_summary(permit, plan)["reserved_vcpu_seconds"] == 120
     assert reserved_vcpu_minutes_fraction(permit, plan) == Fraction(2, 1)
 
@@ -1339,11 +1418,46 @@ def load_json(path: Path) -> dict[str, Any]:
         for child in children:
             check_nesting(child, depth)
 
+    def identity(metadata) -> tuple[int, int, int, int, int]:
+        return (metadata.st_dev, metadata.st_ino, metadata.st_nlink,
+                stat.S_IFMT(metadata.st_mode), metadata.st_size)
+
+    def snapshot(metadata) -> tuple[int, ...]:
+        return identity(metadata) + (metadata.st_mtime_ns, metadata.st_ctime_ns)
+
     try:
-        # Read at most the bound plus one sentinel byte; avoid unbounded
-        # read_text() allocation on an untrusted permit/plan pathname.
-        with path.open("rb") as fh:
-            raw = fh.read(MAX_AUTHORITY_JSON_BYTES + 1)
+        # A pathname is not a custody identity: refuse aliases and special
+        # files, open without following the final symlink when supported, and
+        # read only from the verified descriptor. Name/descriptor change times
+        # are intentionally compared within their own observation routes:
+        # Windows stat and fstat can report different ctime semantics.
+        named_before = path.lstat()
+        if (not stat.S_ISREG(named_before.st_mode) or
+                not named_before.st_ino or named_before.st_nlink != 1):
+            raise ContractError("authority JSON path must be a unique regular file")
+        flags = (os.O_RDONLY | getattr(os, "O_BINARY", 0) |
+                 getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_NONBLOCK", 0))
+        fd = os.open(path, flags)
+        try:
+            opened = os.fstat(fd)
+            named_open = path.lstat()
+            if (not stat.S_ISREG(opened.st_mode) or
+                    not stat.S_ISREG(named_open.st_mode) or
+                    identity(opened) != identity(named_before) or
+                    identity(named_open) != identity(named_before) or
+                    snapshot(named_open) != snapshot(named_before)):
+                raise ContractError("authority JSON identity changed before read")
+            # Bounded allocation and parsing remain the original contract.
+            with os.fdopen(fd, "rb", closefd=False) as fh:
+                raw = fh.read(MAX_AUTHORITY_JSON_BYTES + 1)
+            descriptor_after = os.fstat(fd)
+            named_after = path.lstat()
+            if (snapshot(descriptor_after) != snapshot(opened) or
+                    snapshot(named_after) != snapshot(named_before) or
+                    identity(descriptor_after) != identity(named_after)):
+                raise ContractError("authority JSON identity or bytes changed during read")
+        finally:
+            os.close(fd)
         if len(raw) > MAX_AUTHORITY_JSON_BYTES:
             raise ContractError("authority JSON byte limit exceeded")
         value = json.loads(raw.decode("utf-8"),
@@ -1357,6 +1471,8 @@ def load_json(path: Path) -> dict[str, Any]:
         canonical_bytes(value)
     except ContractError:
         raise
+    except OSError as exc:
+        raise ContractError("authority JSON descriptor custody unavailable") from exc
     except (ValueError, UnicodeError, RecursionError, OverflowError) as exc:
         raise ContractError("invalid authority JSON syntax or UTF-8/Unicode") from exc
     return value
