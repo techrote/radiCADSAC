@@ -277,12 +277,55 @@ def validate_ledger_sequence(
         raise ContractError("incomplete ledger cannot claim full planned execution")
 
 
-def sha256_file(path: Path) -> str:
-    """Stream retained bytes in bounded chunks rather than materializing whole captures."""
-    digest = hashlib.sha256()
-    with path.open("rb") as fh:
-        for chunk in iter(lambda: fh.read(1024 * 1024), b""):
-            digest.update(chunk)
+def sha256_file(path: Path, *, expected_metadata=None) -> str:
+    """Hash a capture on one checked descriptor, not a second unguarded pathname.
+
+    lstat→open substitution must refuse even when the substituted file has
+    identical bytes. O_NOFOLLOW is best-effort on supported OSes; fstat and
+    post-read pathname identity checks are mandatory on every platform.
+    This is not an atomic filesystem snapshot or hostile-filesystem proof.
+    """
+    def identity(s):
+        return (s.st_dev, s.st_ino, stat.S_IFMT(s.st_mode), s.st_nlink, s.st_size)
+
+    def descriptor_snapshot(s):
+        # Compare descriptor metadata to *itself*, not ctime to lstat: Windows
+        # can report different ctime meanings for fstat and pathname stat.
+        return identity(s) + (s.st_mtime_ns, s.st_ctime_ns)
+
+    flags = (os.O_RDONLY | getattr(os, "O_BINARY", 0)
+             | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_NONBLOCK", 0))
+    try:
+        fd = os.open(path, flags)
+    except OSError as exc:
+        raise ContractError(f"retained capture descriptor open refused: {path.name}") from exc
+    try:
+        try:
+            opened = os.fstat(fd)
+            current = path.lstat()
+            if (not stat.S_ISREG(opened.st_mode) or
+                    not stat.S_ISREG(current.st_mode) or
+                    not opened.st_ino or opened.st_nlink != 1 or
+                    identity(current) != identity(opened) or
+                    (expected_metadata is not None and
+                     identity(opened) != identity(expected_metadata))):
+                raise ContractError(f"retained capture identity changed before read: {path.name}")
+            digest = hashlib.sha256()
+            while True:
+                chunk = os.read(fd, 1024 * 1024)
+                if not chunk:
+                    break
+                digest.update(chunk)
+            after = os.fstat(fd)
+            final_path = path.lstat()
+            if (descriptor_snapshot(after) != descriptor_snapshot(opened) or
+                    not stat.S_ISREG(final_path.st_mode) or
+                    identity(final_path) != identity(opened)):
+                raise ContractError(f"retained capture changed during read: {path.name}")
+        except OSError as exc:
+            raise ContractError(f"retained capture descriptor custody unavailable: {path.name}") from exc
+    finally:
+        os.close(fd)
     return "sha256:" + digest.hexdigest()
 
 
@@ -322,7 +365,7 @@ def verify_retained_captures(rows: list[dict[str, Any]], capture_dir: Path) -> N
             if identity in identities:
                 raise ContractError(f"hard-linked retained capture alias: {name}")
             identities.add(identity)
-            if sha256_file(capture) != attempt[f"{stream}_sha256"]:
+            if sha256_file(capture, expected_metadata=metadata) != attempt[f"{stream}_sha256"]:
                 raise ContractError(f"retained capture digest mismatch: {name}")
     actual = {entry.name for entry in capture_dir.iterdir()}
     if actual != expected:
