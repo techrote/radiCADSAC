@@ -103,6 +103,21 @@ def self_test() -> int:
         assert run_case(copy.deepcopy(nonempty), copy.deepcopy(valid), root) == STRUCTURAL_ONLY
         assert run_case(copy.deepcopy(empty), copy.deepcopy(valid_empty), root) == STRUCTURAL_ONLY
 
+        # MC-ENG-OUTPUT/1.0 also admits a regular single-body NONEMPTY path.
+        # Construct a fully source/receipt-consistent example, rather than
+        # relying on a bare predicate that bypasses check() or artifact bytes.
+        single = copy.deepcopy(nonempty)
+        single_receipt = copy.deepcopy(valid)
+        single["material_state"] = "NONEMPTY"
+        single["durable_bodies"] = single["durable_bodies"][:1]
+        single["step_artifacts"] = single["step_artifacts"][:1]
+        single["representation_pieces"] = single["representation_pieces"][:1]
+        single["contact_relations"] = []
+        single_receipt["import"]["files"].pop("body-b.step")
+        single_receipt["import"]["items"] = single_receipt["import"]["items"][:1]
+        single_receipt["follow_on"]["consumed_item_ids"] = ["a-1"]
+        assert run_case(single, single_receipt, root) == STRUCTURAL_ONLY
+
         def mutate(label: str, *, empty_case: bool = False, mutate_manifest=None,
                    mutate_receipt=None, rebind: bool = True) -> None:
             nonlocal rejected
@@ -113,6 +128,18 @@ def self_test() -> int:
                 mutate_receipt(r)
             reject_case(label, m, r, root, rebind=rebind)
             rejected += 1
+
+        # Valid two-body grouped evidence must not become a false ungrouped
+        # one-body state by mutating only material_state. This previously passed.
+        mislabelled = copy.deepcopy(nonempty)
+        mislabelled["material_state"] = "NONEMPTY"
+        try:
+            run_case(mislabelled, copy.deepcopy(valid), root)
+        except Rejected as exc:
+            assert "NONEMPTY state requires exactly one durable body" in str(exc), str(exc)
+        else:
+            raise AssertionError("two durable bodies accepted as single-body NONEMPTY")
+        rejected += 1
 
         mutate("profile mismatch", mutate_manifest=lambda m: m.update(profile_id="WRONG"))
         mutate("manifest digest drift", mutate_manifest=lambda m: m.update(test_nonce="byte-drift"), rebind=False)
@@ -284,8 +311,8 @@ def main() -> None:
     if not args.contract and not args.self_test:
         parser.error("select --contract and/or --self-test")
     rejected = self_test()
-    assert rejected == 39, rejected
-    print(f"MC-043 PROVISIONAL STRUCTURAL_PREFLIGHT_ONLY: 2 positive synthetic controls; {rejected} rejected corruptions")
+    assert rejected == 40, rejected
+    print(f"MC-043 PROVISIONAL STRUCTURAL_PREFLIGHT_ONLY: 3 positive synthetic controls; {rejected} rejected corruptions")
     print("No real STEP file, independent consumer process, native permit or MC-E capability qualified")
 
 
