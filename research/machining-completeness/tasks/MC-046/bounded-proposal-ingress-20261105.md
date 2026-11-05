@@ -6,7 +6,7 @@ Status: **draft engineering qualification candidate**, 5 November 2026. Source b
 
 `readiness.py --check-plan PATH` previously consumed `Path.read_bytes()` without an input-size bound, then parsed and iteratively traversed arbitrarily nested JSON. An external proposal path could consume uncontrolled memory and excessive validation work before the fail-closed `PLAN_ONLY` plan comparison. These hazards are separate from, and do not weaken, the accepted MC-004 source-blob pin or the four mandatory T2 tiers.
 
-Hypothesis: bounding proposal input to **1,048,576 bytes** and **32 object/list containing levels**, with a `MAX+1` file read and structural refusal before acceptance, preserves canonical valid plans and rejects oversized/deep plans. This is **resource hygiene**, not proof of hostile-filesystem atomicity or native geometry.
+Hypothesis: bounding proposal input to **1,048,576 bytes** and **32 object/list containing levels**, plus **128 integer digits per numeric token**, with a `MAX+1` file read and structural refusal before acceptance, preserves canonical valid plans and rejects oversized/deep plans. This is **resource hygiene**, not proof of hostile-filesystem atomicity or native geometry.
 
 ## Independent write scope
 
@@ -27,7 +27,7 @@ python3 research/machining-completeness/tasks/MC-046/readiness.py --check-plan p
 python3 tools/validate_machining_completeness.py
 ```
 
-Existing 26 plan mutations and six malformed JSON cases remain. New negative controls must refuse a >1 MiB raw JSON buffer, 33-level array and object nesting, an oversized on-disk proposal, an actual post-lstat file-growth injection, and a directory as a proposal file. New positive controls admit 32-level array JSON and a canonical emitted plan read from a real file. Expected total: **38 negative/refusal controls**, plus the original two canonical structural positive controls and the two new direct boundary/roundtrip positives. A passing syntax-only or mocked check must never be described as native T2 qualification.
+Existing 26 plan mutations and six malformed JSON cases remain. New negative controls must refuse a >1 MiB raw JSON buffer, 33-level array and object nesting, a 5,000-digit integer token, an oversized on-disk proposal, an actual post-lstat file-growth injection, and a directory as a proposal file. New positive controls admit 32-level array JSON and a canonical emitted plan read from a real file. Expected total: **39 negative/refusal controls**, plus the original two canonical structural positive controls and the two new direct boundary/roundtrip positives. A passing syntax-only or mocked check must never be described as native T2 qualification.
 
 Exact-head Actions: `mc1-mc046-t2-readiness.yml` on Ubuntu 24.04 / Windows Server 2022, plus the repository's MC-1 static validator. Record workflow run IDs and any failures on the PR before claiming qualification. Do not merge in this authoring session; require separate review and guarded integration.
 
