@@ -316,7 +316,7 @@ def self_test(c, r, receipt, actual):
     sample["cos_splines"]["1"]["controls"] = ["0", "0"]
     assert endpoint_components(sample, "hi")["F"] == "0"
     # Distinct rational signs, not floating point epsilon comparisons.
-    assert Fraction("-1", 2**80) < 0 < Fraction("1", 2**80)
+    assert Fraction(-1, 2**80) < 0 < Fraction(1, 2**80)
     print("PASS: source-bound 22 negative originals; 10 route/12 ordered; "
           "quarter-turn exactness, mutation refusals and unchanged 121/20/30/50")
 
