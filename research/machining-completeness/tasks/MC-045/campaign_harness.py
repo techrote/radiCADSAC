@@ -38,6 +38,14 @@ class ContractError(ValueError):
     pass
 
 
+class UncertainLedgerDurabilityError(ContractError):
+    """An append may have changed on-disk bytes without confirmed durability.
+
+    A caller must not automatically retry. The adjacent lock remains as an
+    explicit quarantine marker pending human inspection and recovery.
+    """
+
+
 def canonical_bytes(obj: Any) -> bytes:
     def reject_float(value: Any) -> None:
         if isinstance(value, float):
@@ -338,6 +346,7 @@ def exclusive_ledger_append_lock(path: Path):
     except OSError as exc:
         raise ContractError("unable to establish exclusive ledger append lock") from exc
     identity = None
+    retain_for_audit = False
     try:
         try:
             identity = os.fstat(fd)
@@ -345,7 +354,12 @@ def exclusive_ledger_append_lock(path: Path):
             os.fsync(fd)
         except OSError as exc:
             raise ContractError("ledger append lock initialization failed") from exc
-        yield
+        try:
+            yield
+        except UncertainLedgerDurabilityError:
+            # A partial or unflushed complete record must not be retried.
+            retain_for_audit = True
+            raise
     finally:
         os.close(fd)
         if identity is None:
@@ -359,10 +373,11 @@ def exclusive_ledger_append_lock(path: Path):
         if (not stat.S_ISREG(current.st_mode) or
                 (current.st_dev, current.st_ino) != (identity.st_dev, identity.st_ino)):
             raise ContractError("ledger append lock replaced during ownership")
-        try:
-            lock_path.unlink()
-        except OSError as exc:
-            raise ContractError("ledger append lock release failed") from exc
+        if not retain_for_audit:
+            try:
+                lock_path.unlink()
+            except OSError as exc:
+                raise ContractError("ledger append lock release failed") from exc
 
 
 def _ledger_metadata(path: Path):
@@ -413,38 +428,60 @@ def append_attempt(path: Path, attempt: dict[str, Any], permit: dict[str, Any], 
             fd = os.open(path, flags, 0o600)
         except OSError as exc:
             raise ContractError("ledger file changed or is inaccessible before append") from exc
-        with os.fdopen(fd, "r+b", buffering=0) as fh:
-            opened = os.fstat(fh.fileno())
-            named = _ledger_metadata(path)
-            if (named is None or _ledger_fingerprint(opened) != _ledger_fingerprint(named) or
-                    (before is not None and (_ledger_fingerprint(before) != _ledger_fingerprint(opened)
-                      or before.st_ctime_ns != named.st_ctime_ns))):
-                raise ContractError("ledger identity changed before replay")
-            # On Windows fstat and lstat may report different change-time
-            # conventions for the same open file. Compare ctime only within
-            # the same observation route, never across the two interfaces.
-            named_ctime = named.st_ctime_ns
-            fh.seek(0)
-            prior, _digest = _parse_ledger_stream(fh)
-            validate_ledger_sequence(
-                prior + [attempt], permit, plan,
-                allow_native=(permit.get("dispatch_class") == "NATIVE_BOUNDED"),
-            )
-            # Detect a name swap, a link-count change, or a normal concurrent
-            # in-place modification during replay before any append occurs.
-            after = os.fstat(fh.fileno())
-            named = _ledger_metadata(path)
-            if (named is None or _ledger_fingerprint(after) != _ledger_fingerprint(opened)
-                    or _ledger_fingerprint(after) != _ledger_fingerprint(named)
-                    or after.st_ctime_ns != opened.st_ctime_ns
-                    or named.st_ctime_ns != named_ctime):
-                raise ContractError("ledger identity or contents changed during replay")
-            line = canonical_bytes(attempt) + b"\n"
-            fh.seek(0, os.SEEK_END)
-            if fh.write(line) != len(line):
-                raise ContractError("short durable ledger append; manual recovery required")
-            os.fsync(fh.fileno())
-
+        mutation_started = False
+        try:
+            with os.fdopen(fd, "r+b", buffering=0) as fh:
+                opened = os.fstat(fh.fileno())
+                named = _ledger_metadata(path)
+                if (named is None or _ledger_fingerprint(opened) != _ledger_fingerprint(named) or
+                        (before is not None and (_ledger_fingerprint(before) != _ledger_fingerprint(opened)
+                          or before.st_ctime_ns != named.st_ctime_ns))):
+                    raise ContractError("ledger identity changed before replay")
+                # On Windows fstat and lstat may report different change-time
+                # conventions for the same open file. Compare ctime only within
+                # the same observation route, never across the two interfaces.
+                named_ctime = named.st_ctime_ns
+                fh.seek(0)
+                prior, _digest = _parse_ledger_stream(fh)
+                validate_ledger_sequence(
+                    prior + [attempt], permit, plan,
+                    allow_native=(permit.get("dispatch_class") == "NATIVE_BOUNDED"),
+                )
+                # Detect a name swap, a link-count change, or a normal concurrent
+                # in-place modification during replay before any append occurs.
+                after = os.fstat(fh.fileno())
+                named = _ledger_metadata(path)
+                if (named is None or _ledger_fingerprint(after) != _ledger_fingerprint(opened)
+                        or _ledger_fingerprint(after) != _ledger_fingerprint(named)
+                        or after.st_ctime_ns != opened.st_ctime_ns
+                        or named.st_ctime_ns != named_ctime):
+                    raise ContractError("ledger identity or contents changed during replay")
+                line = canonical_bytes(attempt) + b"\n"
+                fh.seek(0, os.SEEK_END)
+                mutation_started = True
+                try:
+                    if fh.write(line) != len(line):
+                        raise UncertainLedgerDurabilityError(
+                            "short ledger append; quarantine lock retained for manual recovery"
+                        )
+                    os.fsync(fh.fileno())
+                except OSError as exc:
+                    raise UncertainLedgerDurabilityError(
+                        "ledger write/fsync failed; quarantine lock retained for manual recovery"
+                    ) from exc
+        except BaseException as exc:
+            # Once a write was attempted, ANY exceptional unwind may leave
+            # unflushed bytes. KeyboardInterrupt/SystemExit run Python finally
+            # blocks (unlike a hard kill) and would otherwise release the
+            # cooperating-writer lock despite uncertain durability. Preserve
+            # the original typed uncertainty when it already exists.
+            if mutation_started:
+                if isinstance(exc, UncertainLedgerDurabilityError):
+                    raise
+                raise UncertainLedgerDurabilityError(
+                    "ledger write/fsync/close/interruption failed; quarantine lock retained for manual recovery"
+                ) from exc
+            raise
 
 def _parse_ledger_stream(fh) -> tuple[list[dict[str, Any]], str]:
     """Canonical JSONL parse and custody hash from the exact open descriptor."""
@@ -473,6 +510,22 @@ def load_ledger_with_digest(path: Path) -> tuple[list[dict[str, Any]], str]:
 def load_ledger(path: Path) -> list[dict[str, Any]]:
     """Backward-compatible strict reader for append and deterministic controls."""
     return load_ledger_with_digest(path)[0]
+
+
+def refuse_ledger_append_lock(path: Path) -> None:
+    """No authoritative audit while an append may be in flight or uncertain.
+
+    This is a conservative local snapshot, not cross-host locking or a
+    hostile-filesystem race-proof attestation.
+    """
+    lock = path.with_name(path.name + ".append.lock")
+    try:
+        lock.lstat()
+    except FileNotFoundError:
+        return
+    except OSError as exc:
+        raise ContractError("unable to inspect ledger append lock") from exc
+    raise ContractError("ledger append active or quarantined; audit refused")
 
 
 def _attempt(permit: dict[str, Any], plan: dict[str, Any], repeat_index: int, job_index: int, terminal: str, *, peak: int = 0, storage: int = 0, egress: int = 0, return_code: int | None = 0) -> dict[str, Any]:
@@ -910,6 +963,138 @@ def self_test() -> None:
             lock.unlink()
 
 
+
+        # Deterministic descriptor-local fault injection: no actual power-loss
+        # or crash-atomicity claim. A completed write with failed fsync is not
+        # durable evidence and must retain the single-writer quarantine lock.
+        real_os = os
+
+        class _InjectedLedgerFile:
+            def __init__(self, stream, fault):
+                self.stream = stream
+                self.fault = fault
+
+            def __enter__(self):
+                self.stream.__enter__()
+                return self
+
+            def __exit__(self, *args):
+                result = self.stream.__exit__(*args)
+                if self.fault.mode in ("close_error", "fsync_close_error"):
+                    self.fault.close_hit = True
+                    self.fault.hit = True
+                    raise OSError(5, "injected ledger close EIO")
+                return result
+
+            def __iter__(self):
+                return iter(self.stream)
+
+            def __getattr__(self, name):
+                return getattr(self.stream, name)
+
+            def write(self, data):
+                if self.fault.mode in ("short", "write_error", "interrupt_write"):
+                    written = self.stream.write(data[:17])
+                    self.fault.hit = True
+                    assert written == 17, "fault fixture did not write its 17-byte prefix"
+                    if self.fault.mode == "write_error":
+                        raise OSError(5, "injected EIO after 17 bytes")
+                    if self.fault.mode == "interrupt_write":
+                        raise KeyboardInterrupt("injected interrupt after 17 bytes")
+                    return written
+                return self.stream.write(data)
+
+        class _FaultOS:
+            def __init__(self, mode):
+                self.mode = mode
+                self.hit = False
+                self.ledger_fd = None
+                self.close_hit = False
+                self.fsync_hit = False
+
+            def __getattr__(self, name):
+                return getattr(real_os, name)
+
+            def fdopen(self, fd, *args, **kwargs):
+                self.ledger_fd = fd
+                return _InjectedLedgerFile(real_os.fdopen(fd, *args, **kwargs), self)
+
+            def fsync(self, fd):
+                if self.mode in ("fsync_error", "fsync_close_error") and fd == self.ledger_fd:
+                    self.hit = True
+                    self.fsync_hit = True
+                    raise OSError(5, "injected ledger fsync EIO")
+                if self.mode == "exit_fsync" and fd == self.ledger_fd:
+                    self.hit = True
+                    self.fsync_hit = True
+                    raise SystemExit("injected system exit during ledger fsync")
+                return real_os.fsync(fd)
+
+        first = canonical_bytes(canonical_rows[0]) + b"\n"
+        second = canonical_bytes(canonical_rows[1]) + b"\n"
+        for mode, new_file in (
+            ("short", False),
+            ("write_error", False),
+            ("fsync_error", False),
+            ("close_error", False),
+            ("fsync_close_error", False),
+            ("interrupt_write", False),
+            ("exit_fsync", False),
+            ("short", True),
+        ):
+            trial = directory / f"uncertain-{mode}-{'new' if new_file else 'old'}.jsonl"
+            if not new_file:
+                trial.write_bytes(first)
+            fault = _FaultOS(mode)
+            globals()["os"] = fault
+            try:
+                try:
+                    append_attempt(trial, canonical_rows[0 if new_file else 1], permit, plan)
+                except UncertainLedgerDurabilityError as exc:
+                    assert "quarantine lock retained" in str(exc), exc
+                    if mode == "interrupt_write":
+                        assert isinstance(exc.__cause__, KeyboardInterrupt), "interrupt was not the actual refusal cause"
+                    if mode == "exit_fsync":
+                        assert isinstance(exc.__cause__, SystemExit), "system exit was not the actual refusal cause"
+                else:
+                    raise AssertionError("uncertain ledger append returned success")
+            finally:
+                globals()["os"] = real_os
+            assert fault.hit, f"fault injection missed: {mode}"
+            if mode == "fsync_close_error":
+                assert fault.fsync_hit and fault.close_hit, "combined sync+close fault was not reproduced"
+            if mode == "exit_fsync":
+                assert fault.fsync_hit, "system-exit fsync injection did not execute"
+            lock_path = trial.with_name(trial.name + ".append.lock")
+            assert lock_path.is_file(), f"uncertain ledger append lost its lock: {mode}"
+            try:
+                refuse_ledger_append_lock(trial)
+            except ContractError as exc:
+                assert "audit refused" in str(exc), f"audit did not refuse quarantine: {exc}"
+            else:
+                raise AssertionError("authoritative audit admitted a quarantined ledger")
+            failing_row = first if new_file else second
+            expected_tail = failing_row if mode in ("fsync_error", "close_error", "fsync_close_error", "exit_fsync") else failing_row[:17]
+            expected_bytes = (b"" if new_file else first) + expected_tail
+            assert trial.read_bytes() == expected_bytes, f"write anomaly changed unexpected bytes: {mode}"
+            try:
+                append_attempt(trial, canonical_rows[2], permit, plan)
+            except ContractError as exc:
+                assert "ledger append locked" in str(exc), f"did not refuse quarantine: {exc}"
+            else:
+                raise AssertionError("another writer appended to an uncertain ledger")
+            assert trial.read_bytes() == expected_bytes
+            if mode not in ("fsync_error", "close_error", "fsync_close_error", "exit_fsync"):
+                try:
+                    load_ledger(trial)
+                except ContractError as exc:
+                    assert "unterminated ledger line" in str(exc), exc
+                else:
+                    raise AssertionError("partial JSONL was accepted as a complete record")
+            # Test-only cleanup. Real recovery requires manual provenance audit.
+            lock_path.unlink()
+            refuse_ledger_append_lock(trial)
+
 def load_json(path: Path) -> dict[str, Any]:
     value = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(value, dict):
@@ -945,6 +1130,7 @@ def main() -> int:
     plan = load_json(args.plan)
     validate_plan(permit, plan, allow_native=args.allow_native)
     if args.cmd == "audit-ledger":
+        refuse_ledger_append_lock(args.ledger)
         rows, custody_digest = load_ledger_with_digest(args.ledger)
         validate_ledger_sequence(
             rows, permit, plan,
@@ -952,6 +1138,7 @@ def main() -> int:
             allow_native=args.allow_native,
         )
         verify_retained_captures(rows, args.captures)
+        refuse_ledger_append_lock(args.ledger)
         print(json.dumps({
             "status": "LEDGER_REPLAY_VALIDATED_NOT_NATIVE_QUALIFICATION",
             "attempt_count": len(rows),
