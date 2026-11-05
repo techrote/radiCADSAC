@@ -71,9 +71,15 @@ def file_digest(path: Path) -> str:
     Reject external hard-link aliases and detectable same-byte inode swaps.
     This is bounded local custody, NOT atomic hostile-filesystem attestation.
     """
-    def identity(s: Any) -> tuple[int, int, int, int, int, int, int]:
+    def identity(s: Any) -> tuple[int, int, int, int, int, int]:
+        # Windows lstat and fstat need not report the same st_ctime_ns.
+        # Compare only portable identity fields ACROSS those APIs.
         return (s.st_dev, s.st_ino, s.st_mode, s.st_nlink, s.st_size,
-                s.st_mtime_ns, s.st_ctime_ns)
+                s.st_mtime_ns)
+
+    def snapshot(s: Any) -> tuple[int, int, int, int, int, int, int]:
+        # Compare ctime WITHIN each API independently to detect mutations.
+        return (*identity(s), s.st_ctime_ns)
 
     try:
         before = path.lstat()
@@ -93,7 +99,8 @@ def file_digest(path: Path) -> str:
                     h.update(chunk)
             finished = os.fstat(fd)
             after = path.lstat()
-            require(identity(finished) == identity(opened) and
+            require(snapshot(finished) == snapshot(opened) and
+                    snapshot(after) == snapshot(before) and
                     identity(after) == identity(opened),
                     "STEP artifact custody: identity changed during hash")
             return "sha256:" + h.hexdigest()
