@@ -365,39 +365,109 @@ def exclusive_ledger_append_lock(path: Path):
             raise ContractError("ledger append lock release failed") from exc
 
 
+def _ledger_metadata(path: Path):
+    """Admission snapshot for a single, non-aliased regular ledger path.
+
+    A file's link count can be greater than one even when its other aliases
+    are outside this directory. Refuse that ambiguity before mutation.
+    """
+    try:
+        metadata = path.lstat()
+    except FileNotFoundError:
+        return None
+    except OSError as exc:
+        raise ContractError("unable to inspect ledger filesystem identity") from exc
+    if not stat.S_ISREG(metadata.st_mode):
+        raise ContractError("ledger must be a regular file, not a symlink or special file")
+    if not metadata.st_ino or metadata.st_nlink != 1:
+        raise ContractError("ledger must have a unique available filesystem identity")
+    return metadata
+
+
+def _ledger_fingerprint(metadata):
+    return (metadata.st_dev, metadata.st_ino, metadata.st_nlink,
+            metadata.st_size, metadata.st_mtime_ns)
+
+
 def append_attempt(path: Path, attempt: dict[str, Any], permit: dict[str, Any], plan: dict[str, Any]) -> None:
     validate_attempt(attempt, permit, plan)
-    # Replay and append must be in one exclusive critical section. The
-    # lock serializes cooperating writers, not external filesystem mutations.
+    # Hold one filesystem descriptor across canonical replay, sequence checking,
+    # and durable append. The adjacent lock serializes cooperating processes;
+    # neither this path check nor timestamps are hostile-filesystem guarantees.
     with exclusive_ledger_append_lock(path):
-        prior = load_ledger(path) if path.exists() else []
-        validate_ledger_sequence(
-            prior + [attempt], permit, plan,
-            allow_native=(permit.get("dispatch_class") == "NATIVE_BOUNDED"),
-        )
-        line = canonical_bytes(attempt) + b"\n"
-        with path.open("ab", buffering=0) as fh:
-            fh.write(line)
+        before = _ledger_metadata(path)
+        flags = os.O_RDWR | os.O_APPEND | getattr(os, "O_BINARY", 0)
+        if before is None:
+            # Refuse an out-of-order initial attempt before O_CREAT produces a
+            # durable empty ledger. Replay validates again on the held descriptor
+            # after opening; this preflight cannot authorize an append by itself.
+            validate_ledger_sequence(
+                [attempt], permit, plan,
+                allow_native=(permit.get("dispatch_class") == "NATIVE_BOUNDED"),
+            )
+            # Never follow a newly planted symlink or overwrite a new peer.
+            flags |= os.O_CREAT | os.O_EXCL
+        else:
+            flags |= getattr(os, "O_NOFOLLOW", 0)
+        try:
+            fd = os.open(path, flags, 0o600)
+        except OSError as exc:
+            raise ContractError("ledger file changed or is inaccessible before append") from exc
+        with os.fdopen(fd, "r+b", buffering=0) as fh:
+            opened = os.fstat(fh.fileno())
+            named = _ledger_metadata(path)
+            if (named is None or _ledger_fingerprint(opened) != _ledger_fingerprint(named) or
+                    (before is not None and (_ledger_fingerprint(before) != _ledger_fingerprint(opened)
+                      or before.st_ctime_ns != named.st_ctime_ns))):
+                raise ContractError("ledger identity changed before replay")
+            # On Windows fstat and lstat may report different change-time
+            # conventions for the same open file. Compare ctime only within
+            # the same observation route, never across the two interfaces.
+            named_ctime = named.st_ctime_ns
+            fh.seek(0)
+            prior, _digest = _parse_ledger_stream(fh)
+            validate_ledger_sequence(
+                prior + [attempt], permit, plan,
+                allow_native=(permit.get("dispatch_class") == "NATIVE_BOUNDED"),
+            )
+            # Detect a name swap, a link-count change, or a normal concurrent
+            # in-place modification during replay before any append occurs.
+            after = os.fstat(fh.fileno())
+            named = _ledger_metadata(path)
+            if (named is None or _ledger_fingerprint(after) != _ledger_fingerprint(opened)
+                    or _ledger_fingerprint(after) != _ledger_fingerprint(named)
+                    or after.st_ctime_ns != opened.st_ctime_ns
+                    or named.st_ctime_ns != named_ctime):
+                raise ContractError("ledger identity or contents changed during replay")
+            line = canonical_bytes(attempt) + b"\n"
+            fh.seek(0, os.SEEK_END)
+            if fh.write(line) != len(line):
+                raise ContractError("short durable ledger append; manual recovery required")
             os.fsync(fh.fileno())
 
 
-def load_ledger_with_digest(path: Path) -> tuple[list[dict[str, Any]], str]:
-    """Parse canonical JSONL and hash precisely the bytes read in the same pass."""
+def _parse_ledger_stream(fh) -> tuple[list[dict[str, Any]], str]:
+    """Canonical JSONL parse and custody hash from the exact open descriptor."""
     out: list[dict[str, Any]] = []
     digest = hashlib.sha256()
-    with path.open("rb") as fh:
-        for lineno, raw in enumerate(fh, 1):
-            digest.update(raw)
-            if not raw.endswith(b"\n"):
-                raise ContractError(f"unterminated ledger line {lineno}")
-            try:
-                item = json.loads(raw)
-                if not isinstance(item, dict) or raw != canonical_bytes(item) + b"\n":
-                    raise ContractError(f"noncanonical ledger line {lineno}")
-            except (ValueError, UnicodeError) as exc:
-                raise ContractError(f"invalid ledger line {lineno}") from exc
-            out.append(item)
+    for lineno, raw in enumerate(fh, 1):
+        digest.update(raw)
+        if not raw.endswith(b"\n"):
+            raise ContractError(f"unterminated ledger line {lineno}")
+        try:
+            item = json.loads(raw)
+            if not isinstance(item, dict) or raw != canonical_bytes(item) + b"\n":
+                raise ContractError(f"noncanonical ledger line {lineno}")
+        except (ValueError, UnicodeError) as exc:
+            raise ContractError(f"invalid ledger line {lineno}") from exc
+        out.append(item)
     return out, "sha256:" + digest.hexdigest()
+
+
+def load_ledger_with_digest(path: Path) -> tuple[list[dict[str, Any]], str]:
+    """Read-only strict parser; append uses the same parser on its held descriptor."""
+    with path.open("rb") as fh:
+        return _parse_ledger_stream(fh)
 
 
 def load_ledger(path: Path) -> list[dict[str, Any]]:
@@ -584,6 +654,22 @@ def self_test() -> None:
     # MC-045 ledger replay/control qualification. All records and captured bytes
     # are synthetic; no subprocess or native geometry is executed here.
     canonical_rows = [_attempt(permit, plan, i, 0, "SUCCEEDED") for i in range(3)]
+    # Refusal of a valid but out-of-order first attempt must not create even
+    # an empty ledger. O_CREAT must not precede initial sequence admission.
+    with tempfile.TemporaryDirectory() as td:
+        missing = Path(td) / "refused-first-attempt.jsonl"
+        lock = missing.with_name(missing.name + ".append.lock")
+        try:
+            append_attempt(missing, canonical_rows[1], permit, plan)
+        except ContractError as exc:
+            assert "skipped or reordered repeat group" in str(exc), exc
+        else:
+            raise AssertionError("out-of-order first append accepted")
+        assert not missing.exists(), "refused first append created empty ledger evidence"
+        assert not lock.exists(), "refused first append stranded its lock"
+        # Accepted first entry remains functional on the same missing path.
+        append_attempt(missing, canonical_rows[0], permit, plan)
+        assert load_ledger(missing) == canonical_rows[:1]
     validate_ledger_sequence(canonical_rows, permit, plan, require_complete=True)
     validate_ledger_sequence(canonical_rows[:2], permit, plan)
     def reject_rows(rows, *, complete=False):
@@ -708,6 +794,71 @@ def self_test() -> None:
             pass
         else:
             raise AssertionError("duplicate attempt append was accepted")
+
+        # Ledger evidence must not be appended through an alias. The lock name
+        # cannot independently serialize two names for one inode.
+        history.write_bytes(canonical_bytes(canonical_rows[0]) + b"\n")
+        aliased_prefix = history.read_bytes()
+        alias = directory / "aliased-ledger.jsonl"
+        os.link(history, alias)
+        try:
+            for target_path in (history, alias):
+                try:
+                    append_attempt(target_path, canonical_rows[1], permit, plan)
+                except ContractError as exc:
+                    assert "identity" in str(exc), f"wrong hardlink refusal: {exc}"
+                else:
+                    raise AssertionError("hard-linked ledger admitted an append")
+            assert history.read_bytes() == aliased_prefix
+        finally:
+            alias.unlink()
+
+        # Windows may require a symlink privilege. POSIX must execute this
+        # control; do not silently classify a privilege skip as passing it.
+        symlink = directory / "symlink-ledger.jsonl"
+        try:
+            symlink.symlink_to(history)
+        except OSError:
+            if os.name != "nt":
+                raise
+        else:
+            try:
+                try:
+                    append_attempt(symlink, canonical_rows[1], permit, plan)
+                except ContractError as exc:
+                    assert "regular file" in str(exc), f"wrong symlink refusal: {exc}"
+                else:
+                    raise AssertionError("symlinked ledger admitted an append")
+                assert history.read_bytes() == aliased_prefix
+            finally:
+                symlink.unlink()
+
+        # Descriptor continuity must survive the parsing step. A deterministic
+        # POSIX source-level fault replaces the named inode after replay; the
+        # append must refuse without modifying either old or replacement bytes.
+        # Windows generally blocks this rename of an open file.
+        if os.name != "nt":
+            saved_parser = _parse_ledger_stream
+            def swapped_during_replay(stream):
+                result = saved_parser(stream)
+                replacement = directory / "replaced-ledger.jsonl"
+                replacement.write_bytes(aliased_prefix)
+                os.replace(replacement, history)
+                return result
+            globals()["_parse_ledger_stream"] = swapped_during_replay
+            try:
+                try:
+                    append_attempt(history, canonical_rows[1], permit, plan)
+                except ContractError as exc:
+                    assert "changed during replay" in str(exc), f"wrong swap refusal: {exc}"
+                else:
+                    raise AssertionError("replaced ledger inode admitted an append")
+                assert history.read_bytes() == aliased_prefix
+            finally:
+                globals()["_parse_ledger_stream"] = saved_parser
+        append_attempt(history, canonical_rows[1], permit, plan)
+        assert load_ledger(history) == canonical_rows[:2]
+        assert not history.with_name(history.name + ".append.lock").exists()
 
         # The same ledger cannot be extended while another writer holds an
         # exclusive lock, even if the next attempt itself is valid. A stale
