@@ -342,7 +342,7 @@ class ExactOriginalTwoSpanMovingSquareTests(unittest.TestCase):
                 (b'{"value":Infinity}',"BLOCKED","NONFINITE_SOURCE_JSON"),
                 (b'{"', "BLOCKED",None),
                 (bytes([0xff]), "BLOCKED",None),
-                (b"["*1500+b"0"+b"]"*1500,"RESOURCE_REFUSAL","RecursionError"),
+                (b"["*1500+b"0"+b"]"*1500,"RESOURCE_REFUSAL","SOURCE_JSON_NESTING_BUDGET"),
             ]
             for raw,kind,reason in bad_cases:
                 with self.subTest(expected=reason or raw[:20]):
@@ -354,6 +354,14 @@ class ExactOriginalTwoSpanMovingSquareTests(unittest.TestCase):
                     self.assertFalse(answer["is_truth_value"])
                     self.assertFalse(answer["mc_b_established"])
                     self.assertFalse(answer["production_authorized"])
+            # Delimiter-like bytes inside a JSON string must not count
+            # against structural nesting. JSON is parsed, then the
+            # unsupported source grammar is independently refused.
+            path.write_bytes(b'{"value":"' + b"["*100 + b'"}')
+            quoted=m.attempt_file(path)
+            self.assertEqual(quoted["status"],"BLOCKED",quoted)
+            self.assertEqual(quoted["reason"],"ORIGINAL_SOURCE_FIELDS_REQUIRED")
+            self.assertFalse(quoted["is_truth_value"])
 
 
 if __name__=="__main__":
