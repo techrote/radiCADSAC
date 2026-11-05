@@ -21,6 +21,7 @@ SCHEMA = "radicadsac-mc046-t2-plan-only/1.0"
 TIERS = ("T2-G10", "T2-G100", "T2-G1000", "T2-G10000")
 MAX_PROPOSAL_BYTES = 1 << 20  # bound untrusted PLAN_ONLY JSON before parsing
 MAX_JSON_CONTAINER_DEPTH = 32
+MAX_INTEGER_DIGITS = 128  # no unbounded JSON big-integer conversion
 
 
 class Refused(ValueError):
@@ -48,10 +49,16 @@ def read_json(raw: bytes, *, allow_floats: bool = False) -> Any:
     def no_constant(value: str) -> Any:
         raise Refused("nonfinite JSON constant not permitted")
 
+    def bounded_int(token: str) -> int:
+        require(len(token.lstrip("-")) <= MAX_INTEGER_DIGITS,
+                "T2 preparation integer token exceeds digit limit")
+        return int(token)
+
     require(len(raw) <= MAX_PROPOSAL_BYTES, "T2 preparation JSON exceeds byte limit")
     try:
         result = json.loads(raw.decode("utf-8"), object_pairs_hook=unique_keys,
-                            parse_float=(float if allow_floats else no_float), parse_constant=no_constant)
+                            parse_float=(float if allow_floats else no_float), parse_constant=no_constant,
+                            parse_int=bounded_int)
         # Count containing object/list levels, not scalar fields. Avoid recursive
         # traversal; the depth limit is independent of Python recursion limits.
         queue = [(result, 1)]
@@ -279,6 +286,7 @@ def self_test(contract: dict[str, Any]) -> int:
         (b" " * (MAX_PROPOSAL_BYTES + 1), "byte limit"),
         (deep_array, "depth limit"),
         (deep_object, "depth limit"),
+        (b'{"number":' + b"9" * 5000 + b"}", "digit limit"),
     ]
     for raw, reason in bounded_negative:
         try:
