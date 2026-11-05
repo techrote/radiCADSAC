@@ -28,6 +28,8 @@ Run `python3 research/machining-completeness/tasks/MC-047/verify.py --self-test`
 
 Controls increase from **17 to 19 on POSIX** and from **16 to 18 on Windows**. Previous unlocked partial/full positive controls must remain accepted only within their deliberately non-authoritative statuses. Assert the specific refusal reason; unrelated errors must not count as successful negatives. Run repository `tools/validate_machining_completeness.py` and applicable exact-head Actions workflows. A failed CI invocation or cross-platform test is not discarded as redundant.
 
+**Retained initial negative / corrected integration oracle:** First candidate `564f23d391c289ab44eba0fb2342c53a38cead1d` passed the new 19/18 MC-047 tests but failed both Linux and Windows jobs of [interrupted-ledger CI #41961710877](https://github.com/techrote/radiCADSAC/actions/runs/41961710877). The existing `interrupted_ledger_process_qualification.py` expected a torn JSONL line error while a crash-owner lock remained. This newer preflight must refuse the **lock first**, as the MC-045 CLI already does. The test oracle is corrected to expect that stronger custody refusal **before** test-only lock removal; after removal it retains the independent `unterminated ledger line 2` parsing refusal in *both* append and preflight, plus byte/hash preservation. This is a source contract priority change, not suppressing a failure. Source-only third edited file: `MC-047/interrupted_ledger_process_qualification.py`. The failed logs are retained for independent review.
+
 ## Hypothesis and limitations
 
 **Hypothesis:** cooperative single-host MC-047 recovery preflight must never classify a ledger as admitted while an active or retained MC-045 append/quarantine marker is observable at the explicit admission checks.
@@ -40,6 +42,6 @@ MC-041 capability and MC-042 native STEP work remain unqualified prerequisites f
 
 ## Ownership, review and follow-on
 
-Exclusive source scope: `MC-047/verify.py` and this task-local document on isolated `fix/mc047-quarantine-preflight-20261105`. Disjoint MC-038 proof PRs #392 and #394 and issue #100 remain owned separately. This task never claims a proof closure, human approval, actual native platform execution, or production qualification.
+Exclusive source scope: `MC-047/verify.py`, `MC-047/interrupted_ledger_process_qualification.py` and this task-local document on isolated `fix/mc047-quarantine-preflight-20261105`. Disjoint MC-038 proof PRs #392 and #394 and issue #100 remain owned separately. This task never claims a proof closure, human approval, actual native platform execution, or production qualification.
 
 Complete exact-head CI/run IDs, original failure links, reviewed head and merge disposition are to be added in the PR discussion after the actual checks. Do not merge this draft until a distinct-session source-level review of the literal final head and required CI; rerun merged-main checks only if accepted and merged.
