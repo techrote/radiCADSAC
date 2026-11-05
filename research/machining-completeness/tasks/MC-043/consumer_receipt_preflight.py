@@ -193,9 +193,13 @@ def check(manifest: dict[str, Any], receipt: dict[str, Any], manifest_bytes: byt
         require(a in bodies and b in bodies and a != b, "contact not between distinct bodies")
         require(contact.get("source_certificate_digest") == manifest["source_material_certificate_digest"],
                 "contact not source-certificate-bound")
+    # Python considers False == 0 and 0.0 == 0. A process exit receipt must
+    # retain its integer type, not merely compare equal to successful exit 0.
+    require(type(imported.get("exit_code")) is int and imported["exit_code"] == 0,
+            "import exit_code must be integer zero")
     require(imported.get("invoked") is True and imported.get("strict") is True and
             imported.get("exact") is True and imported.get("repair") == "none" and
-            imported.get("reject_invalid") is True and imported.get("exit_code") == 0 and
+            imported.get("reject_invalid") is True and
             imported.get("status") == "complete", "import must be strict/complete/no-repair")
     files = imported.get("files")
     require(isinstance(files, dict) and files == expected_files, "import inputs not exact original STEP bytes")
