@@ -1,0 +1,53 @@
+name: mc1-pb00701-negative-original-square-boundary
+
+on:
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_nonnegative_square_endpoint_boundary.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-nonnegative-square-endpoint-boundary-20261105.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-nonnegative-square-endpoint-boundary-20261105.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation-v2.json'
+      - '.github/workflows/mc1-pb00701-negative-original-square-boundary.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_nonnegative_square_endpoint_boundary.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-nonnegative-square-endpoint-boundary-20261105.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-nonnegative-square-endpoint-boundary-20261105.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation-v2.json'
+      - '.github/workflows/mc1-pb00701-negative-original-square-boundary.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  exact-negative-original-boundary:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Literal source and provenance identity
+        shell: bash
+        run: |
+          echo "Checked out exact commit $(git rev-parse HEAD)"
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: All frozen original exact negative endpoints and adversarial mutation controls
+        run: |
+          set -euo pipefail
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_nonnegative_square_endpoint_boundary.py --contract --self-test
+      - name: Independently replay full 50-source source-specific proof custody
+        run: |
+          set -euo pipefail
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_evidence_reconciliation_v2.py --contract
+      - name: Static programme and source authority
+        run: |
+          set -euo pipefail
+          python3 tools/validate_machining_completeness.py
