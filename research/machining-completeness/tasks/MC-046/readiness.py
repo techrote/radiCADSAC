@@ -11,6 +11,7 @@ import subprocess
 import tempfile
 from pathlib import Path
 from typing import Any
+from unittest.mock import patch
 
 TASK = Path(__file__).resolve().parent
 ROOT = TASK.parents[3]
@@ -300,13 +301,34 @@ def self_test(contract: dict[str, Any]) -> int:
             assert "byte limit" in str(exc), str(exc)
         else:
             raise AssertionError("oversized on-disk proposal admitted")
+        # Grow an initially small real file after lstat but before open: the
+        # MAX+1 descriptor read must still reject it, not trust only st_size.
+        proposal.write_bytes(b"{}")
+        original_open = Path.open
+        growth_executed = [False]
+
+        def grow_before_open(target: Path, *args, **kwargs):
+            if target == proposal and not growth_executed[0]:
+                growth_executed[0] = True
+                with original_open(proposal, "wb") as output:
+                    output.write(b" " * (MAX_PROPOSAL_BYTES + 1))
+            return original_open(target, *args, **kwargs)
+
+        with patch.object(Path, "open", grow_before_open):
+            try:
+                read_proposal(proposal)
+            except Refused as exc:
+                assert "byte limit" in str(exc), str(exc)
+            else:
+                raise AssertionError("proposal grown after lstat admitted")
+        assert growth_executed[0], "after-stat growth fault was not exercised"
         try:
             read_proposal(Path(tmp))
         except Refused as exc:
             assert "regular file" in str(exc), str(exc)
         else:
             raise AssertionError("directory admitted as proposal")
-    return len(mutants) + len(raw_cases) + len(bounded_negative) + 2
+    return len(mutants) + len(raw_cases) + len(bounded_negative) + 3
 
 
 def main() -> None:
