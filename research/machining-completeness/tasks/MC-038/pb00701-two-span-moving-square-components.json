@@ -1,0 +1,163 @@
+{
+  "schema": "radicadsac-mc038-two-span-moving-square-components-research/1.0",
+  "date_utc": "2026-11-05",
+  "task": "MC-038",
+  "obligation": "PB-007-01",
+  "downstream_proof_obligations": [
+    "PO-04",
+    "PO-05",
+    "PO-08"
+  ],
+  "claim_kind": "BOUNDED_PROSPECTIVE_SOURCE_METHOD_NOT_A_B_OR_C",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "source_selection_main": "2ab90bd3ec684f92830b9863ab870bdbe188c1b5",
+  "parent_issue": "https://github.com/techrote/radiCADSAC/issues/100",
+  "coordination_comment": "https://github.com/techrote/radiCADSAC/issues/324#issuecomment-6650035975",
+  "source_class": "ORIGINAL_CONTINUOUS_TWO_SPAN_QUADRATIC_H0_H1_RATIONAL_BSPLINE_WITH_NONSTATIONARY_RATIONAL_AFFINE_PHASE_AND_EXACT_AFFINE_SQUARE_DECOMPOSITION",
+  "frozen_inputs": {
+    "corpus_path": "research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json",
+    "corpus_git_blob": "5841c331579489b25caef38cd412bdbf286f9134",
+    "complete_witness_path": "research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation-v2.json",
+    "complete_witness_git_blob": "e52d3baf3692a011cf86234eeaa992ef407d99fd"
+  },
+  "historical_anchor": {
+    "id": "composite:DELEGATED_V6_CONSTANT_MODULATION:tail0",
+    "original_source_sha256": "9eb6f08a44882adffa919529247c40190c70e8d7599ee2b1a0f7978ef2569eb1",
+    "source_interval": [
+      "0",
+      "2"
+    ],
+    "true_knot": "1",
+    "phase_turn_law": {
+      "offset": "0",
+      "rate": "1/4"
+    },
+    "historical_status": "BLOCKED",
+    "existing_complete_witness": true,
+    "new_historical_closure_claimed": false
+  },
+  "population": {
+    "before": {
+      "original_sources": 121,
+      "route_refusals": 20,
+      "missing_ordered_premises": 30,
+      "complete_source_specific_witnesses": 50
+    },
+    "after": {
+      "original_sources": 121,
+      "route_refusals": 20,
+      "missing_ordered_premises": 30,
+      "complete_source_specific_witnesses": 50
+    },
+    "delta": {
+      "original_sources": 0,
+      "route_refusals": 0,
+      "missing_ordered_premises": 0,
+      "complete_source_specific_witnesses": 0
+    },
+    "newly_resolved_historical_case_ids": []
+  },
+  "bounded_proof": {
+    "nonconstant_phase": true,
+    "original_degree": 2,
+    "original_true_span_count": 2,
+    "original_knot_multiplicity": 2,
+    "cosine_harmonics": [
+      0,
+      1
+    ],
+    "sine_harmonics": [],
+    "square_identity": "C0=(P^2+Q^2)/2; C1=(P^2-Q^2)/2; P,Q rational affine on original source span",
+    "physical_identity": "F=P^2 cos^2(pi*phase_turns)+Q^2 sin^2(pi*phase_turns)",
+    "zero_condition": "P*cos(pi*phase_turns)=0 AND Q*sin(pi*phase_turns)=0",
+    "algorithm": "finite exact rational integer/half-integer lattice plus affine root candidates, exact multiplicity/parity, original knot-sided orders, maximal closed zero intervals and positive cells",
+    "bounded_source_bytes": 16384,
+    "bounded_input_rational_bits": 256,
+    "bounded_intermediate_rational_bits": 1024,
+    "bounded_absolute_phase_turns": 32,
+    "out_of_grammar_behavior": "BLOCKED_OR_RESOURCE_REFUSAL_NOT_TRUTH"
+  },
+  "prospective_examples": [
+    {
+      "name": "moving_closed_left_plus_isolated_right_exterior",
+      "source_sha256": "f832ada1c7da5c155626857b4b02b252d721275ca56d29a45e5f310e8d96957d",
+      "zero_intervals": [
+        [
+          "0",
+          "1"
+        ]
+      ],
+      "isolated_points": [
+        "2"
+      ],
+      "knot_continuum_right_germ_order": 4
+    },
+    {
+      "name": "moving_closed_right_plus_isolated_left_exterior",
+      "zero_intervals": [
+        [
+          "1",
+          "2"
+        ]
+      ],
+      "isolated_points": [
+        "0"
+      ]
+    },
+    {
+      "name": "isolated_true_knot_sided_orders",
+      "isolated_points": [
+        "1",
+        "2"
+      ],
+      "source_knot_orders": [
+        2,
+        4
+      ]
+    },
+    {
+      "name": "strict_positive_bridge_over_nonzero_true_knot",
+      "isolated_points": [
+        "0",
+        "2"
+      ],
+      "nonzero_positive_cells": 1
+    },
+    {
+      "name": "exact_close_root_pair",
+      "difference": "1/1180591620717411303424",
+      "note": "2^-70, no precision merger"
+    },
+    {
+      "name": "stationary_phase",
+      "expected": "BLOCKED"
+    },
+    {
+      "name": "nonrational_sqrt_affine",
+      "expected": "BLOCKED"
+    }
+  ],
+  "verification": {
+    "python_contract": "python3 research/machining-completeness/tasks/MC-038/pb00701_two_span_moving_square_components.py --contract",
+    "adversarial_test": "python3 research/machining-completeness/tasks/MC-038/test_pb00701_two_span_moving_square_components.py",
+    "full_frozen_source_producer": "python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_evidence_reconciliation_v2.py --contract",
+    "static": "python3 tools/validate_machining_completeness.py"
+  },
+  "gates": {
+    "pb00701": "OPEN",
+    "pb00702": "OPEN",
+    "pb00703": "OPEN",
+    "pb00704": "OPEN",
+    "po02": "OPEN",
+    "po04": "OPEN",
+    "po05": "OPEN",
+    "po07": "OPEN",
+    "po08": "OPEN",
+    "mc_b": "NOT_ESTABLISHED",
+    "mc1": "NOT_ESTABLISHED",
+    "production_authorized": false,
+    "engineering_step_qualified": false,
+    "native_geometry_qualified": false,
+    "supported_operations": 26
+  }
+}
