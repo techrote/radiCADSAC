@@ -169,6 +169,11 @@ def self_test() -> int:
             rejected += 1
         finally:
             alias.unlink()
+            # Windows can retain alias-related metadata across the immediately
+            # following handle open. Each fault scenario must start from a
+            # clean synthetic inode, not from the previous alias experiment.
+            target.unlink()
+            target.write_bytes(original_bytes)
         assert target.read_bytes() == original_bytes
         assert run_case(copy.deepcopy(nonempty), copy.deepcopy(valid), root) == STRUCTURAL_ONLY, (
             "hard-link alias cleanup did not restore positive receipt")
