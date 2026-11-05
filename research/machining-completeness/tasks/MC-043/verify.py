@@ -5,6 +5,9 @@ from __future__ import annotations
 import argparse
 import copy
 import json
+import os
+from unittest.mock import patch
+import consumer_receipt_preflight as custody
 import tempfile
 from pathlib import Path
 
@@ -150,6 +153,81 @@ def self_test() -> int:
         mutate("empty false downstream status", empty_case=True,
                mutate_receipt=lambda r: r["follow_on"].update(status="completed"))
 
+        # Actual unchanged synthetic bytes cannot authorize a hard-linked
+        # STEP artifact: another pathname may rewrite the same inode.
+        target = root / "body-a.step"
+        original_bytes = target.read_bytes()
+        alias = root / "unlisted-hardlink.step"
+        os.link(target, alias)
+        try:
+            try:
+                run_case(copy.deepcopy(nonempty), copy.deepcopy(valid), root)
+            except Rejected as exc:
+                assert "STEP artifact custody:" in str(exc), str(exc)
+            else:
+                raise AssertionError("hard-linked same-byte STEP artifact admitted")
+            rejected += 1
+        finally:
+            alias.unlink()
+        assert target.read_bytes() == original_bytes
+
+        # Deterministically replace the pathname with a fresh same-byte inode
+        # AFTER lstat and BEFORE descriptor acquisition; the digest still matches.
+        real_open = os.open
+        displaced = root / "previous-body-a.step"
+        swapped = [False]
+
+        def before_open_swap(path, flags, *args, **kwargs):
+            if Path(path) == target and not swapped[0]:
+                swapped[0] = True
+                target.replace(displaced)
+                target.write_bytes(original_bytes)
+            return real_open(path, flags, *args, **kwargs)
+
+        try:
+            with patch.object(custody.os, "open", side_effect=before_open_swap):
+                try:
+                    run_case(copy.deepcopy(nonempty), copy.deepcopy(valid), root)
+                except Rejected as exc:
+                    assert "STEP artifact custody:" in str(exc), str(exc)
+                else:
+                    raise AssertionError("same-byte STEP inode substitution before open admitted")
+            assert swapped[0], "inode-swap injection was not executed"
+            assert target.read_bytes() == original_bytes
+            rejected += 1
+        finally:
+            if swapped[0]:
+                target.unlink()
+                displaced.replace(target)
+
+        # Another adversarial ordering: replace the pathname AFTER the checked
+        # fd is opened but BEFORE reading. The fd still sees original bytes.
+        real_fdopen = os.fdopen
+        swapped = [False]
+
+        def during_hash_swap(fd, *args, **kwargs):
+            if not swapped[0]:
+                swapped[0] = True
+                target.replace(displaced)
+                target.write_bytes(original_bytes)
+            return real_fdopen(fd, *args, **kwargs)
+
+        try:
+            with patch.object(custody.os, "fdopen", side_effect=during_hash_swap):
+                try:
+                    run_case(copy.deepcopy(nonempty), copy.deepcopy(valid), root)
+                except Rejected as exc:
+                    assert "STEP artifact custody:" in str(exc), str(exc)
+                else:
+                    raise AssertionError("same-byte STEP inode substitution during read admitted")
+            assert swapped[0], "during-hash inode-swap injection was not executed"
+            assert target.read_bytes() == original_bytes
+            rejected += 1
+        finally:
+            if swapped[0]:
+                target.unlink()
+                displaced.replace(target)
+
         (root / "body-a.step").write_bytes(b"TAMPERED_SYNTHETIC_BYTES\n")
         reject_case("mutated bytes after recorded digest", copy.deepcopy(nonempty), copy.deepcopy(valid), root)
         rejected += 1
@@ -174,7 +252,7 @@ def main() -> None:
     if not args.contract and not args.self_test:
         parser.error("select --contract and/or --self-test")
     rejected = self_test()
-    assert rejected == 34, rejected
+    assert rejected == 37, rejected
     print(f"MC-043 PROVISIONAL STRUCTURAL_PREFLIGHT_ONLY: 2 positive synthetic controls; {rejected} rejected corruptions")
     print("No real STEP file, independent consumer process, native permit or MC-E capability qualified")
 
