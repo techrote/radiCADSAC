@@ -1,0 +1,52 @@
+name: mc1-pb00701-v54-pr397-direct-admission-boundary
+
+on:
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v54-pr397-admission-boundary-20261105.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v54-pr397-admission-boundary-20261105.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v54-pr397-admission-boundary-20261105.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation-v2.json'
+      - '.github/workflows/mc1-pb00701-v54-pr397-admission-boundary.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v54-pr397-admission-boundary-20261105.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v54-pr397-admission-boundary-20261105.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v54-pr397-admission-boundary-20261105.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation-v2.json'
+      - '.github/workflows/mc1-pb00701-v54-pr397-admission-boundary.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  exact-original-direct-admission-refusal:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Literal candidate head and frozen source authority
+        run: |
+          echo "checked-out=$(git rev-parse HEAD) expected=${{ github.event.pull_request.head.sha || github.sha }}"
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Recompute exact 121/50 source-grammar refusals and mutations
+        run: |
+          set -euo pipefail
+          python3 research/machining-completeness/tasks/MC-038/pb00701-v54-pr397-admission-boundary-20261105.py --contract --self-test
+      - name: Independently reexecute full v54/v2 source-producer evidence
+        run: |
+          set -euo pipefail
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_evidence_reconciliation_v2.py --contract
+      - name: MC-1 source/static/gate nonpromotion validation
+        run: |
+          set -euo pipefail
+          python3 tools/validate_machining_completeness.py
