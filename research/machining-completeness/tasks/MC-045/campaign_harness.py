@@ -691,6 +691,45 @@ def self_test() -> None:
         "environment": {},
     }
     validate_plan(permit, plan)
+    # Exercise the actual permit/plan JSON file ingress, not just dictionary
+    # validation. Standard json.loads() silently accepts duplicate keys.
+    with tempfile.TemporaryDirectory() as temp_json:
+        authority_path = Path(temp_json) / "authority.json"
+        valid_permit = canonical_bytes(permit).decode("utf-8")
+        valid_plan = canonical_bytes(plan).decode("utf-8")
+        for original, expected in ((valid_permit, permit), (valid_plan, plan)):
+            authority_path.write_text(original, encoding="utf-8")
+            assert load_json(authority_path) == expected
+
+        nested_duplicate = valid_permit.replace('"paid":false', '"paid":false,"paid":false', 1)
+        assert nested_duplicate != valid_permit, "tariff duplicate was not injected"
+        # All these remain valid JSON except the intentionally malformed syntax.
+        invalid_authority = [
+            ("same-valued top-level permit duplicate",
+             valid_permit[:-1] + ',"permit_id":"MC045-SELFTEST-001"}',
+             "duplicate JSON key"),
+            ("conflicting top-level permit duplicate",
+             valid_permit[:-1] + ',"permit_id":"OTHER"}',
+             "duplicate JSON key"),
+            ("nested paid flag duplicate", nested_duplicate, "duplicate JSON key"),
+            ("same-valued plan duplicate",
+             valid_plan[:-1] + ',"max_jobs":1}', "duplicate JSON key"),
+            ("nonfinite NaN", valid_permit[:-1] + ',"extra":NaN}', "nonfinite JSON constant"),
+            ("nonfinite Infinity",
+             valid_plan[:-1] + ',"extra":-Infinity}', "nonfinite JSON constant"),
+            ("unpaired surrogate",
+             valid_permit[:-1] + ',"extra":"\\u' + 'd800"}', "invalid authority JSON"),
+            ("top-level array", "[]", "top-level JSON object"),
+            ("invalid syntax", "{", "invalid authority JSON"),
+        ]
+        for label, raw, expected_reason in invalid_authority:
+            authority_path.write_text(raw, encoding="utf-8")
+            try:
+                load_json(authority_path)
+            except ContractError as exc:
+                assert expected_reason in str(exc), (label, str(exc))
+            else:
+                raise AssertionError(f"ambiguous authority JSON admitted: {label}")
     assert accounting_summary(permit, plan)["reserved_vcpu_seconds"] == 120
     assert reserved_vcpu_minutes_fraction(permit, plan) == Fraction(2, 1)
 
@@ -1255,9 +1294,33 @@ def self_test() -> None:
             globals()["verify_retained_captures"] = original_verify
 
 def load_json(path: Path) -> dict[str, Any]:
-    value = json.loads(path.read_text(encoding="utf-8"))
-    if not isinstance(value, dict):
-        raise ContractError("top-level JSON object required")
+    """Reject ambiguous authority JSON before permit/plan validation or accounting.
+
+    Duplicate keys must be refused at every depth, even when equal-valued:
+    a dictionary obtained by last-write-wins parsing is not the source record.
+    """
+    def unique_keys(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+        value: dict[str, Any] = {}
+        for key, item in pairs:
+            if key in value:
+                raise ContractError(f"duplicate JSON key: {key}")
+            value[key] = item
+        return value
+
+    def reject_constant(token: str) -> Any:
+        raise ContractError(f"nonfinite JSON constant: {token}")
+
+    try:
+        value = json.loads(path.read_text(encoding="utf-8"),
+                           object_pairs_hook=unique_keys,
+                           parse_constant=reject_constant)
+        if not isinstance(value, dict):
+            raise ContractError("top-level JSON object required")
+        # Reject binary floats and unpaired Unicode surrogates on the same
+        # ingress path that subsequently produces canonical evidence digests.
+        canonical_bytes(value)
+    except (json.JSONDecodeError, UnicodeError) as exc:
+        raise ContractError("invalid authority JSON syntax or UTF-8/Unicode") from exc
     return value
 
 
