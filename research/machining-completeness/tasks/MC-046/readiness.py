@@ -81,13 +81,19 @@ def read_json(raw: bytes, *, allow_floats: bool = False) -> Any:
 
 def proposal_identity(metadata: os.stat_result) -> tuple[int, int, int, int, int, int]:
     """Best-effort local-file custody: identity, link count, size, write/change timestamps."""
+    # Windows path lstat and CRT-backed fstat report different ctime_ns for
+    # the same genuine file (hosted Windows run 42122094816). A ctime equality
+    # check there produces false refusal; retain the POSIX ctime witness only.
     return (metadata.st_dev, metadata.st_ino, metadata.st_nlink,
-            metadata.st_size, metadata.st_mtime_ns, metadata.st_ctime_ns)
+            metadata.st_size, metadata.st_mtime_ns,
+            metadata.st_ctime_ns if os.name != "nt" else 0)
 
 
 def proposal_identity_drift(a: os.stat_result, b: os.stat_result) -> str:
     """Name differing metadata fields without leaking local filesystem identifiers."""
-    fields = ("st_dev", "st_ino", "st_nlink", "st_size", "st_mtime_ns", "st_ctime_ns")
+    fields = ("st_dev", "st_ino", "st_nlink", "st_size", "st_mtime_ns")
+    if os.name != "nt":
+        fields += ("st_ctime_ns",)
     return ",".join(field for field in fields if getattr(a, field) != getattr(b, field))
 
 
