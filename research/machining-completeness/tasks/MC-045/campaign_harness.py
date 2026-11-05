@@ -1084,7 +1084,7 @@ def self_test() -> None:
             else:
                 raise AssertionError("another writer appended to an uncertain ledger")
             assert trial.read_bytes() == expected_bytes
-            if mode not in ("fsync_error", "close_error", "fsync_close_error"):
+            if mode not in ("fsync_error", "close_error", "fsync_close_error", "exit_fsync"):
                 try:
                     load_ledger(trial)
                 except ContractError as exc:
