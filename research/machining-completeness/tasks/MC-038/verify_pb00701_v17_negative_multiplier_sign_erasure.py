@@ -39,8 +39,10 @@ def digest(obj):
     return hashlib.sha256(canonical(obj)).hexdigest()
 
 def checked_json(path, expected_blob):
-    data = path.read_bytes()
-    need(len(data) < 350_000, "INPUT_COST_BUDGET")
+    # Bound memory before reading, rather than checking an unbounded read.
+    with path.open("rb") as stream:
+        data = stream.read(350_001)
+    need(len(data) <= 350_000, "INPUT_COST_BUDGET")
     got = hashlib.sha1(b"blob " + str(len(data)).encode() + b"\0" + data).hexdigest()
     need(got == expected_blob, "FROZEN_GIT_BLOB_DRIFT:" + path.name)
     return json.loads(data)
@@ -236,16 +238,36 @@ def run_self_test(row):
             pass
         else:
             raise AssertionError("ADVERSARIAL_REPORT_MUTATION_ACCEPTED")
-    # Prospective rational-only adversaries, not historical source cases:
-    # (t-1/2)^2 has an even touching root and no sign change.
-    # (t-1/2)^2-2^-200 has two simple roots 2^-99 apart.
-    gap=Q(1,2**99)
-    lo=Q(1,2)-Q(1,2**100)
-    hi=Q(1,2)+Q(1,2**100)
-    need(hi-lo == gap and (lo-Q(1,2))**2==Q(1,2**200)
-         and (hi-Q(1,2))**2==Q(1,2**200),
+    # Independently exact prospective controls; never count them as v54 rows.
+    # An even-multiplicity tangent has no sign change: p=(t-1/2)^2,
+    # p'(1/2)=0 and p''=2; endpoints are strictly positive.
+    center=Q(1,2)
+    tangent=lambda t:(t-center)**2
+    need(tangent(Q(0))==Q(1,4) and tangent(center)==0 and
+         tangent(Q(1))==Q(1,4) and 2*(center-center)==0 and
+         Q(2)>0, "PROSPECTIVE_EVEN_TANGENCY_CONTROL")
+
+    # The two roots of p=(t-1/2)^2-2^-200 are distinct, simple,
+    # separated by exactly 2^-99, with opposite signs outside/inside.
+    tiny=Q(1,2**200)
+    close=lambda t:(t-center)**2-tiny
+    lo=center-Q(1,2**100)
+    hi=center+Q(1,2**100)
+    need(hi-lo==Q(1,2**99) and close(lo)==0 and close(hi)==0 and
+         2*(lo-center)<0<2*(hi-center) and close(center)<0 and
+         close(Q(0))>0 and close(Q(1))>0,
          "PROSPECTIVE_CLOSE_ROOT_CONTROL")
-    need(all(x==0 for x in [Q(0)]*7), "IDENTITY_ZERO_CONTROL")
+
+    # Formal Laurent exponents prove the identity-zero trigonometric
+    # numerator 2*sin(2x)*cos(x)-sin(3x)-sin(x) == 0 for every x.
+    # Multiply by 2i first; all remaining coefficients are exact ints.
+    product={}
+    for e2,c2 in ((2,1),(-2,-1)):
+        for e1,c1 in ((1,1),(-1,1)):
+            exponent=e2+e1
+            product[exponent]=product.get(exponent,0)+c2*c1
+    need(product=={3:1,1:1,-1:-1,-3:-1},
+         "PROSPECTIVE_IDENTITY_ZERO_LAURENT_CONTROL")
     return 15
 
 def main():
