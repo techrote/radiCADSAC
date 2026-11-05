@@ -170,6 +170,8 @@ def self_test() -> int:
         finally:
             alias.unlink()
         assert target.read_bytes() == original_bytes
+        assert run_case(copy.deepcopy(nonempty), copy.deepcopy(valid), root) == STRUCTURAL_ONLY, (
+            "hard-link alias cleanup did not restore positive receipt")
 
         # Deterministically replace the pathname with a fresh same-byte inode
         # AFTER lstat and BEFORE descriptor acquisition; the digest still matches.
@@ -189,6 +191,7 @@ def self_test() -> int:
                 try:
                     run_case(copy.deepcopy(nonempty), copy.deepcopy(valid), root)
                 except Rejected as exc:
+                    assert swapped[0], f"pre-open refusal before injected swap: {exc}"
                     assert "STEP artifact custody:" in str(exc), str(exc)
                 else:
                     raise AssertionError("same-byte STEP inode substitution before open admitted")
