@@ -72,7 +72,7 @@
     "zero_condition": "P*cos(pi*phase_turns)=0 AND Q*sin(pi*phase_turns)=0",
     "algorithm": "finite exact rational integer/half-integer lattice plus affine root candidates, exact multiplicity/parity, original knot-sided orders, maximal closed zero intervals and positive cells",
     "bounded_source_bytes": 16384,
-    "bounded_input_rational_bits": 120,
+    "bounded_input_rational_bits": 256,
     "bounded_intermediate_rational_bits": 1024,
     "bounded_absolute_phase_turns": 32,
     "out_of_grammar_behavior": "BLOCKED_OR_RESOURCE_REFUSAL_NOT_TRUTH"
