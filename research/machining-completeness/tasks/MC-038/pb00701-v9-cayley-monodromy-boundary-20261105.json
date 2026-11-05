@@ -1,0 +1,89 @@
+{
+  "schema": "radicadsac-v9-cayley-monodromy-boundary/1.0",
+  "claim": "C_DIRECT_CAYLEY_SEMIALGEBRAIC_ELIMINATION_FALSE",
+  "historical_case_id": "composite:PB00701_V9_EXACT_MONOTONE_SINGLE_HARMONIC_RATIO:tail100",
+  "source_sha256": "cc13a39582060e763c573f2665b3ea3b6dfe8b76a6cb0fb77a7b0ec90cf6253a",
+  "original_row_sha256": "6e122da708ff0c68a339e0bfa5daba1e5321cb79e15af9e27b63712fb1348b63",
+  "source_parameter_id": "source-time-t",
+  "source_interval": [
+    "0",
+    "2"
+  ],
+  "true_knot": "1",
+  "phase_turns": {
+    "offset": "0",
+    "rate": "1/8"
+  },
+  "cayley_variable": "u=tan(pi*t/8)",
+  "original_span_physical_forms": [
+    "(t-1/2)*cos(pi*t/4)+sin(pi*t/4)",
+    "100*(t-1)+(1/2)*cos(pi*t/4)+sin(pi*t/4)"
+  ],
+  "cayley_numerator_pi_times_atan_coefficients": [
+    [
+      "8",
+      "0",
+      "-8"
+    ],
+    [
+      "800",
+      "0",
+      "800"
+    ]
+  ],
+  "cayley_numerator_rational_residual_coefficients": [
+    [
+      "-1/2",
+      "2",
+      "1/2"
+    ],
+    [
+      "-199/2",
+      "2",
+      "-201/2"
+    ]
+  ],
+  "analytic_non_algebraicity_lemma": "CLASSICAL_LOG_MONODROMY_INFINITE_BRANCHES_NOT_MACHINE_FORMALIZED",
+  "pure_algebraic_cayley_reduction_admissible": false,
+  "first_span_open_physical_roots": 1,
+  "first_span_root_bracket": [
+    "0",
+    "1"
+  ],
+  "first_span_root_order": 1,
+  "first_span_crossing": "NEGATIVE_TO_POSITIVE",
+  "second_span_open_physical_roots": 0,
+  "source_endpoint_and_knot_signs": [
+    "NEGATIVE",
+    "POSITIVE",
+    "POSITIVE"
+  ],
+  "identity_zero_or_tangent_or_extremely_close_general_grammar_admitted": false,
+  "before": {
+    "original_sources": 121,
+    "historical_route_refusals": 20,
+    "historical_missing_ordered_premises": 30,
+    "existing_complete_original_witnesses": 50
+  },
+  "after": {
+    "original_sources": 121,
+    "historical_route_refusals": 20,
+    "historical_missing_ordered_premises": 30,
+    "existing_complete_original_witnesses": 50
+  },
+  "delta": {
+    "original_sources": 0,
+    "historical_route_refusals": 0,
+    "historical_missing_ordered_premises": 0,
+    "existing_complete_original_witnesses": 0
+  },
+  "historical_case_ids_newly_closed": [],
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "required_pb_discharge": false,
+  "mc_b_established": false,
+  "mc1_established": false,
+  "native_geometry_qualified": false,
+  "engineering_step_qualified": false,
+  "supported_operations": 26,
+  "production_authorized": false
+}
