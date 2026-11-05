@@ -8,6 +8,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import os
 import stat
 from pathlib import Path
@@ -231,9 +232,37 @@ def no_duplicate_keys(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
     return result
 
 
+def finite_json_float(token: str) -> float:
+    # JSON rejects NaN/Infinity lexemes, but Python's ordinary float parser
+    # also converts a syntactically valid exponent such as 1e999 to infinity.
+    value = float(token)
+    require(math.isfinite(value), "nonfinite JSON exponent")
+    return value
+
+
+def reject_unpaired_surrogates(document: Any) -> None:
+    # json.loads accepts escaped lone UTF-16 surrogate code points even though
+    # they are not Unicode scalar values. Check both keys and values, and
+    # traverse iteratively so source nesting adds no second recursion limit.
+    pending = [document]
+    while pending:
+        value = pending.pop()
+        if isinstance(value, str):
+            require(not any(0xD800 <= ord(ch) <= 0xDFFF for ch in value),
+                    "unpaired Unicode surrogate in JSON")
+        elif isinstance(value, dict):
+            pending.extend(value.keys())
+            pending.extend(value.values())
+        elif isinstance(value, list):
+            pending.extend(value)
+
+
 def read_json_bytes(data: bytes) -> dict[str, Any]:
-    return json.loads(data, object_pairs_hook=no_duplicate_keys,
-                      parse_constant=lambda x: (_ for _ in ()).throw(Rejected(f"nonfinite JSON: {x}")))
+    document = json.loads(
+        data, object_pairs_hook=no_duplicate_keys, parse_float=finite_json_float,
+        parse_constant=lambda x: (_ for _ in ()).throw(Rejected(f"nonfinite JSON: {x}")))
+    reject_unpaired_surrogates(document)
+    return document
 
 
 def main() -> None:
