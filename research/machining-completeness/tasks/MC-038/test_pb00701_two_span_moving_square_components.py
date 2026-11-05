@@ -256,6 +256,34 @@ class ExactOriginalTwoSpanMovingSquareTests(unittest.TestCase):
         evidence=json.loads(V2.read_text())
         self.assertEqual(len({r["id"] for r in frozen["cases"]}),121)
         self.assertEqual(len({r["case_id"] for r in evidence["source_cases"]}),50)
+        receipt=json.loads((HERE/"pb00701-two-span-moving-square-components.json")
+                           .read_text(encoding="utf-8"))
+        self.assertEqual(receipt["frozen_inputs"]["corpus_git_blob"],CORPUS_BLOB)
+        self.assertEqual(receipt["frozen_inputs"]["complete_witness_git_blob"],V2_BLOB)
+        self.assertEqual(receipt["historical_anchor"]["id"],ANCHOR_ID)
+        self.assertEqual(receipt["historical_anchor"]["original_source_sha256"],ANCHOR_SHA)
+        self.assertTrue(receipt["historical_anchor"]["existing_complete_witness"])
+        for column,value in [("original_sources",121),("route_refusals",20),
+                             ("missing_ordered_premises",30),
+                             ("complete_source_specific_witnesses",50)]:
+            self.assertEqual(receipt["population"]["before"][column],value)
+            self.assertEqual(receipt["population"]["after"][column],value)
+            self.assertEqual(receipt["population"]["delta"][column],0)
+        self.assertEqual(receipt["population"]["newly_resolved_historical_case_ids"],[])
+        self.assertEqual(receipt["bounded_proof"]["bounded_input_rational_bits"],m.MAX_BITS)
+        self.assertEqual(receipt["bounded_proof"]["bounded_absolute_phase_turns"],
+                         m.MAX_ABS_PHASE_TURNS)
+        self.assertEqual(receipt["prospective_examples"][0]["source_sha256"],
+                         self.checked(source((Z,Z),(Z,U)))["source_sha256"])
+        self.assertEqual(receipt["evidence_class"],"DETERMINISTIC_MODEL")
+        self.assertEqual(receipt["claim_kind"],
+                         "BOUNDED_PROSPECTIVE_SOURCE_METHOD_NOT_A_B_OR_C")
+        for key in ("mc_b","mc1"):
+            self.assertEqual(receipt["gates"][key],"NOT_ESTABLISHED")
+        self.assertFalse(receipt["gates"]["production_authorized"])
+        self.assertFalse(receipt["gates"]["native_geometry_qualified"])
+        self.assertFalse(receipt["gates"]["engineering_step_qualified"])
+        self.assertEqual(receipt["gates"]["supported_operations"],26)
 
     def test_18_all_admitted_nonidentity_components_positive(self):
         examples=[((ONE,ONE),(ONE,ONE)),
