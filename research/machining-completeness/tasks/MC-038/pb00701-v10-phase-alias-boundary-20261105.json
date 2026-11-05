@@ -1,0 +1,148 @@
+{
+  "schema": "radicadsac-mc038-v10-phase-alias-negative/1.0",
+  "date": "2026-11-05",
+  "task": "MC-038",
+  "obligation": "PB-007-01",
+  "claim_kind": "C_BOUNDED_PHASE_MOD_ONE_EVENT_KEY_FALSIFIED",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "historical_case": "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail0",
+  "source_sha256": "57d3c14096ccedfb7faea5023f5a09bada2ca274748f2207c36d77bbc790927c",
+  "original_row_sha256": "c5ba85453dc65e0d18675353986394ae5b34af6219a741ce14af0c332ffc47cd",
+  "frozen_git_blobs": {
+    "v54": "5841c331579489b25caef38cd412bdbf286f9134",
+    "v2": "e52d3baf3692a011cf86234eeaa992ef407d99fd"
+  },
+  "original_interval": [
+    "0",
+    "2"
+  ],
+  "true_knot": "1",
+  "original_source_identity": {
+    "first_sine_polynomial": [
+      "-1/2",
+      "1"
+    ],
+    "second_sine_polynomial": [
+      "1/2"
+    ],
+    "phase_offset": "-1/2",
+    "phase_rate": "2",
+    "alias_shift": "1/2",
+    "alias_physical_sine_coefficient_delta": "1/2"
+  },
+  "phase_law_turns": {
+    "offset": "-1/2",
+    "rate": "2"
+  },
+  "proven_first_piece": {
+    "formula": "-cos(4*pi*t)+(t-1/2)*sin(4*pi*t)",
+    "root_brackets_strict": [
+      [
+        "0",
+        "1/4"
+      ],
+      [
+        "1/4",
+        "1/2"
+      ],
+      [
+        "1/2",
+        "3/4"
+      ],
+      [
+        "3/4",
+        "1"
+      ]
+    ],
+    "one_root_per_bracket": true,
+    "root_order_each": 1,
+    "derivative_orientations": [
+      "POSITIVE",
+      "NEGATIVE",
+      "POSITIVE",
+      "NEGATIVE"
+    ],
+    "reason": "g=t-1/2-cot(4*pi*t) strictly increases from -infinity to +infinity in every bracket; g'=1+4*pi*csc(4*pi*t)^2>0"
+  },
+  "proven_second_piece": {
+    "formula": "-cos(4*pi*t)+(1/2)*sin(4*pi*t)",
+    "root_brackets_strict": [
+      [
+        "1",
+        "5/4"
+      ],
+      [
+        "5/4",
+        "3/2"
+      ],
+      [
+        "3/2",
+        "7/4"
+      ],
+      [
+        "7/4",
+        "2"
+      ]
+    ],
+    "one_root_per_bracket": true,
+    "root_order_each": 1,
+    "derivative_orientations": [
+      "POSITIVE",
+      "NEGATIVE",
+      "POSITIVE",
+      "NEGATIVE"
+    ],
+    "reason": "cot(4*pi*t)=1/2 strictly decreases from +infinity to -infinity once per pi-phase interval"
+  },
+  "closed_original_zero_set": {
+    "type": "FINITE_IMPLICIT",
+    "number_of_distinct_simple_roots": 8,
+    "true_knot_is_root": false,
+    "physical_cell_signs": [
+      "NEGATIVE",
+      "POSITIVE",
+      "NEGATIVE",
+      "POSITIVE",
+      "NEGATIVE",
+      "POSITIVE",
+      "NEGATIVE",
+      "POSITIVE",
+      "NEGATIVE"
+    ]
+  },
+  "alias_counterexample": {
+    "root_locator": "r0 unique in (0,1/4) with cot(4*pi*r0)=r0-1/2",
+    "alias_locator": "r0+1/2 in (1/2,3/4)",
+    "equal_phase_mod_one": true,
+    "delta_phase_turns": "1",
+    "physical_F_root": "0",
+    "physical_F_alias": "(1/2)*sin(4*pi*r0)>0",
+    "phase_mod_one_event_dedup": "REFUSED_AS_UNSOUND"
+  },
+  "before": {
+    "frozen_original_sources": 121,
+    "historical_route_refusals": 20,
+    "historical_missing_ordered_premises": 30,
+    "complete_source_specific_witnesses": 50
+  },
+  "after": {
+    "frozen_original_sources": 121,
+    "historical_route_refusals": 20,
+    "historical_missing_ordered_premises": 30,
+    "complete_source_specific_witnesses": 50
+  },
+  "delta": {
+    "frozen_original_sources": 0,
+    "historical_route_refusals": 0,
+    "historical_missing_ordered_premises": 0,
+    "complete_source_specific_witnesses": 0
+  },
+  "new_historical_resolutions": [],
+  "required_PB_discharged": false,
+  "MC_B_established": false,
+  "MC_1_established": false,
+  "native_geometry_or_engineering_STEP": false,
+  "production_authorized": false,
+  "supported_operations_unchanged": 26,
+  "limitations": "The checker binds rational source/census and symbolic coefficient identities; cotangent monotonicity and exact root existence/order are mathematical proof steps documented in RAG, not machine-formalized."
+}
