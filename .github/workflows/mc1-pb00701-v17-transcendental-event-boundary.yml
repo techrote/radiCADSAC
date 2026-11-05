@@ -1,0 +1,42 @@
+name: mc1-pb00701-v17-transcendental-event-boundary
+
+on:
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v17_transcendental_event_boundary.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v17-transcendental-event-boundary-20261105.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v17-transcendental-event-boundary-20261105.md'
+      - '.github/workflows/mc1-pb00701-v17-transcendental-event-boundary.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v17_transcendental_event_boundary.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v17-transcendental-event-boundary-20261105.json'
+      - '.github/workflows/mc1-pb00701-v17-transcendental-event-boundary.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  v17-nonalgebraic-event-proof:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: \${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Check the literal PR or main commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "\${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Authenticate original V17 and exact transcendence premises
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v17_transcendental_event_boundary.py --contract --self-test
+      - name: Complete 50-original v2 source-producing replay
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_evidence_reconciliation_v2.py --contract
+      - name: MC-1 static programme validation
+        run: python3 tools/validate_machining_completeness.py
