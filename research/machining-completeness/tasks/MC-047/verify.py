@@ -26,18 +26,23 @@ def core_module():
 
 def fingerprints(ledger: Path, captures: Path) -> tuple[Any, ...]:
     """Detect ordinary mutations during audit; not atomic custody/attestation."""
-    def mark(path: Path) -> tuple[int, int, int, int, int, int]:
+    def mark(path: Path) -> tuple[int, int, int, int, int, int, int]:
         s = path.lstat()
         # On POSIX, ctime changes for same-size rewrites even when mtime is
         # restored. On Windows ctime may mean creation time: NOT attestation.
         return (s.st_dev, s.st_ino, s.st_mode, s.st_size,
-                s.st_mtime_ns, s.st_ctime_ns)
+                s.st_mtime_ns, s.st_ctime_ns, s.st_nlink)
 
     if ledger.is_symlink() or not ledger.is_file():
         raise ValueError("ledger missing, non-file or symlinked")
     if captures.is_symlink() or not captures.is_dir():
         raise ValueError("capture directory missing or symlinked")
     ledger_mark = mark(ledger)
+    # An otherwise valid JSONL file may have an external hard-link alias.
+    # A digest match does not establish exclusive evidence custody.
+    if (not stat.S_ISREG(ledger_mark[2]) or not ledger_mark[1] or
+            ledger_mark[6] != 1):
+        raise ValueError("ledger filesystem identity unavailable or hard-linked")
     identities = {(ledger_mark[0], ledger_mark[1])}
     entries = []
     for child in captures.iterdir():
