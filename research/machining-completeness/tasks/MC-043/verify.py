@@ -390,6 +390,17 @@ def self_test() -> int:
             assert result.returncode == 2 and "REJECTED:" in result.stderr, (
                 f"actual CLI did not refuse overbudget file: {result.returncode} {result.stderr!r}")
             rejected += 1
+            # The *other* command-line input must obey the same budget.
+            oversized_path.write_bytes(as_bytes(nonempty))
+            receipt_path.write_bytes(over)
+            result = subprocess.run(
+                [sys.executable, str(Path(__file__).with_name("consumer_receipt_preflight.py")),
+                 "--manifest", str(oversized_path), "--receipt", str(receipt_path),
+                 "--artifact-root", str(root)],
+                capture_output=True, text=True, timeout=15, check=False)
+            assert result.returncode == 2 and "REJECTED:" in result.stderr, (
+                f"actual CLI did not refuse overbudget receipt: {result.returncode} {result.stderr!r}")
+            rejected += 1
             oversized_path.write_bytes(at_limit)
             parsed, exact_raw = read_json_file(oversized_path, "manifest")
             assert len(exact_raw) == MAX_JSON_BYTES and "padding" in parsed
@@ -421,7 +432,7 @@ def main() -> None:
     if not args.contract and not args.self_test:
         parser.error("select --contract and/or --self-test")
     rejected = self_test()
-    assert rejected == 53, rejected
+    assert rejected == 54, rejected
     print(f"MC-043 PROVISIONAL STRUCTURAL_PREFLIGHT_ONLY: 4 positive synthetic controls; {rejected} rejected corruptions")
     print("No real STEP file, independent consumer process, native permit or MC-E capability qualified")
 
