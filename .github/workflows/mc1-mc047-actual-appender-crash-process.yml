@@ -1,0 +1,58 @@
+name: mc1-mc047-actual-appender-crash-process
+
+on:
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-047/actual_appender_crash_process_qualification.py'
+      - 'research/machining-completeness/tasks/MC-047/actual-appender-crash-process-20261105.md'
+      - '.github/workflows/mc1-mc047-actual-appender-crash-process.yml'
+      - 'research/machining-completeness/tasks/MC-045/campaign_harness.py'
+      - 'research/machining-completeness/tasks/MC-047/verify.py'
+      - 'research/machining-completeness/tasks/MC-047/single_writer_process_qualification.py'
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-047/actual_appender_crash_process_qualification.py'
+      - '.github/workflows/mc1-mc047-actual-appender-crash-process.yml'
+      - 'research/machining-completeness/tasks/MC-045/campaign_harness.py'
+      - 'research/machining-completeness/tasks/MC-047/verify.py'
+      - 'research/machining-completeness/tasks/MC-047/single_writer_process_qualification.py'
+
+permissions:
+  contents: read
+
+jobs:
+  actual-appender-crash-process:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2022]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Exact event source identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "Source $(git rev-parse HEAD)"
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile accepted source and synthetic qualification
+        shell: bash
+        run: |
+          python -m py_compile research/machining-completeness/tasks/MC-045/campaign_harness.py research/machining-completeness/tasks/MC-047/verify.py research/machining-completeness/tasks/MC-047/single_writer_process_qualification.py research/machining-completeness/tasks/MC-047/actual_appender_crash_process_qualification.py
+      - name: Real append_attempt short-write and pre-fsync crash controls
+        shell: bash
+        run: |
+          python research/machining-completeness/tasks/MC-047/actual_appender_crash_process_qualification.py --contract
+      - name: Existing MC-047 read-only regression
+        shell: bash
+        run: |
+          python research/machining-completeness/tasks/MC-047/verify.py --contract
