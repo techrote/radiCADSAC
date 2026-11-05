@@ -10,7 +10,7 @@ Previous CLI `Path.read_bytes()` allocated the entirety of both manifest and con
 
 The source now rejects raw JSON exceeding **1,048,576 bytes**, recursively nested containers exceeding **32 levels**, and integers exceeding **128 decimal digits**. A quote/escape-aware byte scanner applies the depth limit **before** JSON decode. `read_json_file` reads **MAX+1 bytes** on actual regular-file handles and refuses oversized files before invoking any JSON parser. Existing duplicate-key, finite-float, Unicode scalar, receipt binding, descriptor STEP custody and structural checks are preserved.
 
-The existing 47 rejected mutations, four positive synthetic structural controls and actual file-swap/alias cases remain. Six new refusal controls cover oversized in-memory JSON, excessive nesting, oversized integer token, malformed excess delimiter, actual oversized disk-file read and actual CLI exit-2 `REJECTED` result. Positive boundary controls exercise the exact 1 MiB size, depth 32, a 128-digit integer and quoted non-container delimiters. Existing manifest/receipt wire format is unchanged.
+The existing 47 rejected mutations, four positive synthetic structural controls and actual file-swap/alias cases remain. Seven new refusal controls cover oversized in-memory JSON, excessive nesting, oversized integer token, malformed excess delimiter, actual oversized disk-file read and actual CLI exit-2 `REJECTED` results on both manifest and receipt. Positive boundary controls exercise the exact 1 MiB size, depth 32, a 128-digit integer and quoted non-container delimiters. Existing manifest/receipt wire format is unchanged.
 
 ## Evidence and source custody
 
