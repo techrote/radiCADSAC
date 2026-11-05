@@ -818,7 +818,7 @@ def self_test() -> None:
             try:
                 loaded = load_json(authority_path)
             except ContractError as exc:
-                assert swap["performed"] and "identity changed" in str(exc), exc
+                assert swap["performed"] and "authority JSON identity" in str(exc), exc
             else:
                 assert swap["os_refused"] and not swap["performed"], swap
                 assert loaded == permit
@@ -1471,6 +1471,8 @@ def load_json(path: Path) -> dict[str, Any]:
         canonical_bytes(value)
     except ContractError:
         raise
+    except OSError as exc:
+        raise ContractError("authority JSON descriptor custody unavailable") from exc
     except (ValueError, UnicodeError, RecursionError, OverflowError) as exc:
         raise ContractError("invalid authority JSON syntax or UTF-8/Unicode") from exc
     return value
