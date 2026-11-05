@@ -183,12 +183,20 @@ def self_test() -> int:
         real_open = os.open
         displaced = root / "previous-body-a.step"
         swapped = [False]
+        observations = []
 
         def before_open_swap(path, flags, *args, **kwargs):
             if Path(path) == target and not swapped[0]:
                 swapped[0] = True
+                before_meta = target.lstat()
                 target.replace(displaced)
                 target.write_bytes(original_bytes)
+                after_meta = target.lstat()
+                observations.append((
+                    (before_meta.st_dev, before_meta.st_ino, before_meta.st_size,
+                     before_meta.st_mtime_ns, before_meta.st_ctime_ns),
+                    (after_meta.st_dev, after_meta.st_ino, after_meta.st_size,
+                     after_meta.st_mtime_ns, after_meta.st_ctime_ns)))
             return real_open(path, flags, *args, **kwargs)
 
         try:
@@ -199,7 +207,9 @@ def self_test() -> int:
                     assert swapped[0], f"pre-open refusal before injected swap: {exc}"
                     assert "STEP artifact custody:" in str(exc), str(exc)
                 else:
-                    raise AssertionError("same-byte STEP inode substitution before open admitted")
+                    raise AssertionError(
+                        f"same-byte STEP inode substitution before open admitted; "
+                        f"platform metadata before/after={observations!r}")
             assert swapped[0], "inode-swap injection was not executed"
             assert target.read_bytes() == original_bytes
             rejected += 1
