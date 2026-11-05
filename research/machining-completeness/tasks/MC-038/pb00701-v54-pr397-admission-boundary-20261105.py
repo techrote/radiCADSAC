@@ -11,6 +11,7 @@ import argparse
 import copy
 import hashlib
 import json
+import tempfile
 from collections import Counter
 from fractions import Fraction
 from pathlib import Path
@@ -214,9 +215,12 @@ def audit(corpus, register):
 
 
 def read_pinned(path, expected_blob, byte_limit):
-    raw = path.read_bytes()
-    demand(len(raw) <= byte_limit and git_blob(raw) == expected_blob,
-           "FROZEN_GIT_BLOB_DRIFT")
+    # Enforce the IO/heap bound *before* allocating the whole file. This is
+    # not a security sandbox and it does not turn resource refusal into truth.
+    with path.open("rb") as stream:
+        raw = stream.read(byte_limit + 1)
+    demand(len(raw) <= byte_limit, "FROZEN_INPUT_BYTE_LIMIT")
+    demand(git_blob(raw) == expected_blob, "FROZEN_GIT_BLOB_DRIFT")
     return json.loads(raw)
 
 
@@ -237,6 +241,17 @@ def self_test():
     corpus = read_pinned(V54, V54_BLOB, 300_000)
     v2 = read_pinned(V2, V2_BLOB, 350_000)
     saved = json.loads(RECEIPT.read_text(encoding="utf-8"))
+    # Directly exercise the bounded file reader, including a real over-limit
+    # input. No synthetic file is included in the historical denominator.
+    with tempfile.TemporaryDirectory() as scratch:
+        oversized = Path(scratch) / "oversized.json"
+        oversized.write_bytes(b" " * 302)
+        try:
+            read_pinned(oversized, V54_BLOB, 300)
+        except Refusal as exc:
+            assert str(exc) == "FROZEN_INPUT_BYTE_LIMIT"
+        else:
+            raise AssertionError("over-limit source unexpectedly admitted")
     original = audit(corpus, v2)
     demand(saved == original, "SAVED_RECEIPT_NOT_RECOMPUTED")
     assert sum(original["first_refusal_historical_50"].values()) == 50
