@@ -151,6 +151,10 @@ def expected_receipt():
       }
     }
 
+def check_receipt(record):
+    """Fail closed on the real machine receipt, including claim and census drift."""
+    need(record == expected_receipt(), "MACHINE_EVIDENCE_OR_NONPROMOTION_DRIFT")
+
 def adversaries(row):
     inherited = v17.run_self_test(row)
     mutations=[
@@ -177,7 +181,15 @@ def adversaries(row):
     ):
         forged=expected_receipt()
         edit(forged)
-        need(forged!=expected_receipt(), "FORGED_CLAIM_ACCEPTED")
+        # Exercise the SAME production receipt validation predicate used by
+        # main(), not merely inequality between a forged and expected fixture.
+        try:
+            check_receipt(forged)
+        except Refused as exc:
+            need(str(exc) == "MACHINE_EVIDENCE_OR_NONPROMOTION_DRIFT",
+                 "UNEXPECTED_RECEIPT_REFUSAL")
+        else:
+            raise AssertionError("ADVERSARIAL_RECEIPT_MUTATION_ACCEPTED")
     # Prospective exact controls, nonclaims for the general grammar.
     half=Q(1,2)
     f=lambda t:(t-half)**2
@@ -213,8 +225,7 @@ def main():
     v17.check_factor_and_events(spec)
     exact_original_root_premises(spec)
     algebraic_integer_tangent_lemma()
-    need(json.loads(RECEIPT.read_text(encoding="utf-8"))==expected_receipt(),
-         "MACHINE_EVIDENCE_OR_NONPROMOTION_DRIFT")
+    check_receipt(json.loads(RECEIPT.read_text(encoding="utf-8")))
     tests=adversaries(row) if args.self_test else {}
     print(json.dumps({"outcome":"BOUNDED_C_TRANSCENDENTAL_ORIGINAL_ROOTS",
                       "original_case_id":v17.ID,
