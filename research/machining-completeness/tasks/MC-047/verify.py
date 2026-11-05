@@ -64,6 +64,10 @@ def audit(permit: dict[str, Any], plan: dict[str, Any], ledger: Path,
     if permit.get("dispatch_class") != "MODEL_ONLY" and not allow_native_evidence:
         raise ValueError("native evidence requires explicit read-only acknowledgement")
     h.validate_plan(permit, plan, allow_native=allow_native_evidence)
+    # The MC-045 appender retains this marker after uncertain write/fsync/close.
+    # A parsable full ledger is not admissible while custody is quarantined.
+    # Like the MC-045 CLI audit, refuse both active and stale append locks.
+    h.refuse_ledger_append_lock(ledger)
     pre = fingerprints(ledger, captures)
     rows, digest = h.load_ledger_with_digest(ledger)
     h.validate_ledger_sequence(rows, permit, plan, allow_native=allow_native_evidence)
@@ -78,6 +82,11 @@ def audit(permit: dict[str, Any], plan: dict[str, Any], ledger: Path,
         raise ValueError("ledger bytes changed during inspection; refuse mutable custody")
     if pre != fingerprints(ledger, captures):
         raise ValueError("evidence changed during inspection; refuse retry without frozen custody")
+    # A writer may have started (or quarantined) during digest verification;
+    # marker state is outside the ledger/capture fingerprint inventory.
+    # This double check is cooperative local-process admission, NOT an atomic
+    # snapshot or protection from create+remove races on a hostile filesystem.
+    h.refuse_ledger_append_lock(ledger)
     expected = plan["max_jobs"] * plan["sequential_repeats"]
     return {
         "schema": "radicadsac-mc047-readonly-recovery-preflight/1.0",
@@ -165,6 +174,57 @@ def self_test() -> None:
         assert result["status"] == "FULL_SLOT_LEDGER_NOT_PROGRAMME_ACCEPTED"
         assert result["programme_acceptance_established"] is False
         checks += 1
+
+        # A complete, valid ledger under a crashed writer's quarantine lock
+        # MUST be refused, rather than reported as a qualified full-slot set.
+        lock_path = ledger.with_name(ledger.name + ".append.lock")
+        unchanged_ledger = ledger.read_bytes()
+        marker = b"test-only uncertain durability; not a recovery permit\n"
+        lock_path.write_bytes(marker)
+        try:
+            try:
+                audit(permit, plan, ledger, captures)
+            except ValueError as exc:
+                assert "ledger append active or quarantined" in str(exc), exc
+            else:
+                raise AssertionError("quarantined complete ledger accepted")
+            assert ledger.read_bytes() == unchanged_ledger
+            assert lock_path.read_bytes() == marker
+            checks += 1
+        finally:
+            # Test-only cleanup; a real stale marker requires manual review.
+            lock_path.unlink()
+
+        # A marker planted only after the second evidence fingerprint must
+        # still veto admission. The marker is *not* inventoried by fingerprints.
+        write(rows[:1])
+        unchanged_ledger = ledger.read_bytes()
+        original_fingerprints = fingerprints
+        fingerprint_calls = [0]
+
+        def inject_late_quarantine(ledger_path: Path, captures_path: Path):
+            snapshot = original_fingerprints(ledger_path, captures_path)
+            fingerprint_calls[0] += 1
+            if fingerprint_calls[0] == 2:
+                lock_path.write_bytes(marker)
+            return snapshot
+
+        globals()["fingerprints"] = inject_late_quarantine
+        try:
+            try:
+                audit(permit, plan, ledger, captures)
+            except ValueError as exc:
+                assert "ledger append active or quarantined" in str(exc), exc
+            else:
+                raise AssertionError("late quarantine marker accepted")
+            assert fingerprint_calls[0] == 2, fingerprint_calls
+            assert ledger.read_bytes() == unchanged_ledger
+            assert lock_path.read_bytes() == marker
+            checks += 1
+        finally:
+            globals()["fingerprints"] = original_fingerprints
+            if lock_path.exists():
+                lock_path.unlink()
 
         write(rows[:1]); (captures / "000000.stderr.bin").unlink()
         reject("crash after stdout only")
@@ -317,7 +377,7 @@ def self_test() -> None:
 
         reject_with_masked_metadata("metadata-invisible posthash ledger replacement",
                                     rewrite_ledger)
-    assert checks == (17 if os.name == "posix" else 16), checks
+    assert checks == (19 if os.name == "posix" else 18), checks
     print(f"MC-047 read-only crash-window controls passed: {checks}; MODEL_ONLY; no native dispatch")
 
 
