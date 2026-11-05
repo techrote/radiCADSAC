@@ -528,6 +528,38 @@ def refuse_ledger_append_lock(path: Path) -> None:
     raise ContractError("ledger append active or quarantined; audit refused")
 
 
+def audit_ledger(
+    permit: dict[str, Any], plan: dict[str, Any], path: Path, captures: Path,
+    *, require_complete: bool = False, allow_native: bool = False,
+) -> dict[str, Any]:
+    """Read-only cooperative custody check; neither dispatch nor atomic attestation.
+
+    Recheck content rather than treating one hash and a final lock absence as
+    durable evidence. A writer can still race both passes on a hostile FS.
+    """
+    validate_plan(permit, plan, allow_native=allow_native)
+    refuse_ledger_append_lock(path)
+    rows, custody_digest = load_ledger_with_digest(path)
+    validate_ledger_sequence(
+        rows, permit, plan, require_complete=require_complete,
+        allow_native=allow_native,
+    )
+    verify_retained_captures(rows, captures)
+    # Rehash actual retained bytes; file metadata and lock state alone cannot
+    # exclude a same-length rewrite after the first content pass.
+    verify_retained_captures(rows, captures)
+    after_rows, after_digest = load_ledger_with_digest(path)
+    if after_digest != custody_digest or after_rows != rows:
+        raise ContractError("ledger bytes changed during audit; refuse mutable custody")
+    refuse_ledger_append_lock(path)
+    return {
+        "status": "LEDGER_REPLAY_VALIDATED_NOT_NATIVE_QUALIFICATION",
+        "attempt_count": len(rows),
+        "complete": len(rows) == plan["max_jobs"] * plan["sequential_repeats"],
+        "ledger_sha256": custody_digest,
+    }
+
+
 def _attempt(permit: dict[str, Any], plan: dict[str, Any], repeat_index: int, job_index: int, terminal: str, *, peak: int = 0, storage: int = 0, egress: int = 0, return_code: int | None = 0) -> dict[str, Any]:
     stamp = f"2026-09-21T00:00:{repeat_index * plan['max_jobs'] + job_index:02d}Z"
     return {
@@ -1095,6 +1127,79 @@ def self_test() -> None:
             lock_path.unlink()
             refuse_ledger_append_lock(trial)
 
+    # Authoritative MC-045 CLI custody must not accept captures or ledger rows
+    # changed after its first content pass. These fault injections are local
+    # deterministic MODEL_ONLY controls, not hostile-FS or native validation.
+    with tempfile.TemporaryDirectory() as td:
+        root = Path(td)
+        ledger = root / "audited.jsonl"
+        captures = root / "captures"
+        captures.mkdir()
+        attempts = [_attempt(permit, plan, i, 0, "SUCCEEDED") for i in range(3)]
+        attempts[0]["stdout_sha256"] = sha256_bytes(b"AAAA")
+        attempts[0]["output_bytes"] = 4
+        for i, item in enumerate(attempts):
+            append_attempt(ledger, item, permit, plan)
+            (captures / f"{i:06d}.stdout.bin").write_bytes(b"AAAA" if i == 0 else b"")
+            (captures / f"{i:06d}.stderr.bin").write_bytes(b"")
+        pristine_ledger = ledger.read_bytes()
+        assert audit_ledger(permit, plan, ledger, captures, require_complete=True)["complete"]
+        original_verify = verify_retained_captures
+        stdout = captures / "000000.stdout.bin"
+
+        capture_injection = {"done": False, "calls": 0}
+
+        def mutate_capture_after_first(rows, capture_dir):
+            original_verify(rows, capture_dir)
+            capture_injection["calls"] += 1
+            if capture_injection["calls"] == 1:
+                before = stdout.stat()
+                stdout.write_bytes(b"BBBB")
+                os.utime(stdout, ns=(before.st_atime_ns, before.st_mtime_ns))
+                capture_injection["done"] = True
+
+        globals()["verify_retained_captures"] = mutate_capture_after_first
+        try:
+            try:
+                audit_ledger(permit, plan, ledger, captures)
+            except ContractError as exc:
+                assert "retained capture digest mismatch" in str(exc), exc
+            else:
+                raise AssertionError("post-hash same-length capture rewrite admitted")
+            assert capture_injection["done"], "capture mutation not injected"
+            assert ledger.read_bytes() == pristine_ledger
+            assert stdout.read_bytes() == b"BBBB"
+        finally:
+            globals()["verify_retained_captures"] = original_verify
+        stdout.write_bytes(b"AAAA")
+
+        # After BOTH retained capture passes, rewrite a canonical JSONL row
+        # without changing file length; the second ledger digest must refuse.
+        ledger_injection = {"done": False, "calls": 0}
+
+        def mutate_ledger_after_captures(rows, capture_dir):
+            original_verify(rows, capture_dir)
+            ledger_injection["calls"] += 1
+            if ledger_injection["calls"] == 2:
+                mutated = pristine_ledger.replace(b"selftest-r0-j0", b"selftest-x0-j0", 1)
+                assert mutated != pristine_ledger and len(mutated) == len(pristine_ledger)
+                ledger.write_bytes(mutated)
+                ledger_injection["done"] = True
+
+        globals()["verify_retained_captures"] = mutate_ledger_after_captures
+        try:
+            try:
+                audit_ledger(permit, plan, ledger, captures)
+            except ContractError as exc:
+                assert "ledger bytes changed during audit" in str(exc), exc
+            else:
+                raise AssertionError("post-hash canonical ledger rewrite admitted")
+            assert ledger_injection["done"], "ledger mutation not injected"
+            assert ledger.read_bytes() != pristine_ledger
+            assert stdout.read_bytes() == b"AAAA"
+        finally:
+            globals()["verify_retained_captures"] = original_verify
+
 def load_json(path: Path) -> dict[str, Any]:
     value = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(value, dict):
@@ -1130,21 +1235,11 @@ def main() -> int:
     plan = load_json(args.plan)
     validate_plan(permit, plan, allow_native=args.allow_native)
     if args.cmd == "audit-ledger":
-        refuse_ledger_append_lock(args.ledger)
-        rows, custody_digest = load_ledger_with_digest(args.ledger)
-        validate_ledger_sequence(
-            rows, permit, plan,
-            require_complete=args.require_complete,
-            allow_native=args.allow_native,
+        result = audit_ledger(
+            permit, plan, args.ledger, args.captures,
+            require_complete=args.require_complete, allow_native=args.allow_native,
         )
-        verify_retained_captures(rows, args.captures)
-        refuse_ledger_append_lock(args.ledger)
-        print(json.dumps({
-            "status": "LEDGER_REPLAY_VALIDATED_NOT_NATIVE_QUALIFICATION",
-            "attempt_count": len(rows),
-            "complete": len(rows) == plan["max_jobs"] * plan["sequential_repeats"],
-            "ledger_sha256": custody_digest,
-        }, sort_keys=True))
+        print(json.dumps(result, sort_keys=True))
         return 0
     if args.cmd == "account":
         print(json.dumps(accounting_summary(permit, plan), sort_keys=True))
