@@ -582,6 +582,12 @@ def audit_ledger(
     """
     validate_plan(permit, plan, allow_native=allow_native)
     refuse_ledger_append_lock(path)
+    # The appender refuses aliases and special ledger files. The authoritative
+    # reader must impose the same filesystem-identity boundary before replay.
+    # This is a cooperative local check, not a hostile-FS atomic snapshot.
+    entry_identity = _ledger_metadata(path)
+    if entry_identity is None:
+        raise ContractError("ledger missing during read-only custody audit")
     rows, custody_digest = load_ledger_with_digest(path)
     validate_ledger_sequence(
         rows, permit, plan, require_complete=require_complete,
@@ -594,6 +600,11 @@ def audit_ledger(
     after_rows, after_digest = load_ledger_with_digest(path)
     if after_digest != custody_digest or after_rows != rows:
         raise ContractError("ledger bytes changed during audit; refuse mutable custody")
+    exit_identity = _ledger_metadata(path)
+    if (exit_identity is None or
+            _ledger_fingerprint(entry_identity) != _ledger_fingerprint(exit_identity) or
+            entry_identity.st_ctime_ns != exit_identity.st_ctime_ns):
+        raise ContractError("ledger filesystem identity changed during audit; refuse mutable custody")
     refuse_ledger_append_lock(path)
     return {
         "status": "LEDGER_REPLAY_VALIDATED_NOT_NATIVE_QUALIFICATION",
