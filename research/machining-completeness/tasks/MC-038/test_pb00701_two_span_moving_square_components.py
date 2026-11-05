@@ -172,10 +172,15 @@ class ExactOriginalTwoSpanMovingSquareTests(unittest.TestCase):
 
     def test_07_submicroscopic_tangency_not_collapsed_into_endpoint(self):
         eps=R(1,2**80)
-        p=(eps-R(1),R(1))
-        r=self.checked(source((p,p),(p,p)))
-        # Same local affine polynomial on both spans is continuous at K
-        # only when p(1)^2 = p(0)^2; this source uses a different setup below.
+        a=R(1)-eps
+        p=(R(-1)*a,R(1))
+        left=(R(-1)*a,R(0))
+        r=self.checked(source((left,left),(p,p)))
+        self.assertEqual([x["coordinate"] for x in r["isolated_zero_points"]],
+                         [str(R(2)-eps)])
+        self.assertEqual(r["isolated_zero_points"][0]["right_order"],2)
+        self.assertEqual(r["nonzero_sign_cells"][-1]["right"],"2")
+        self.assertTrue(r["nonzero_sign_cells"][-1]["right_included"])
 
     def test_08_negative_phase_direction(self):
         r=self.checked(source((Z,Z),(Z,U),rate=R(-1),offset=R(1)))
