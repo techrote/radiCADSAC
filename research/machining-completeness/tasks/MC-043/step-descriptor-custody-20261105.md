@@ -13,7 +13,7 @@ The original MC-043 `consumer_receipt_preflight.py` checked `safe_file()` and su
 
 ## Bounded correction and falsification
 
-The preflight's STEP artifact hash now uses a checked, read-only file descriptor. It requires a regular, uniquely linked inode; opens with `O_NOFOLLOW` where available; compares dev/inode/mode/link count/size/mtime/ctime metadata across initial `lstat`, descriptor `fstat` before/after reading, and final pathname `lstat`; and refuses filesystem exceptions instead of treating them as success. All receipt, body, item, seam, lineage and empty-material rules remain unchanged.
+The preflight's STEP artifact hash now uses a checked, read-only file descriptor. It requires a regular, uniquely linked inode; opens with `O_NOFOLLOW` where available; compares dev/inode/mode/link count/size/mtime across pathname and descriptor snapshots, and compares ctime **within** each API's before/after snapshots (Windows `lstat` and `fstat` may report different ctime semantics); and refuses filesystem exceptions instead of treating them as success. All receipt, body, item, seam, lineage and empty-material rules remain unchanged.
 
 **Falsification criterion:** an external hard-link alias or a deterministic same-byte inode substitution between initial path examination and descriptor acquisition or between descriptor acquisition and data read is accepted as `STRUCTURAL_PREFLIGHT_ONLY`, or existing valid empty/nonempty structural controls stop passing.
 
@@ -28,6 +28,10 @@ python3 tools/validate_machining_completeness.py
 ```
 
 The dedicated Actions workflow `mc1-mc043-step-descriptor-custody.yml` must guard `git rev-parse HEAD` against the PR's literal head (or push commit) and run the same commands on Ubuntu and Windows. The existing MC-043 workflow remains unchanged. Retain all failed attempts and run IDs in the PR handoff.
+
+## Retained initial qualification failures and correction
+
+The initial exact-head run [#42019478876](https://github.com/techrote/radiCADSAC/actions/runs/42019478876) failed the Windows negative suite while Linux passed: an injected hardlink was removed but the subsequent Windows pathname-vs-descriptor metadata comparison refused before a new mutation fired. Follow-up [#42019675065](https://github.com/techrote/radiCADSAC/actions/runs/42019675065) and diagnostic [#42020028407](https://github.com/techrote/radiCADSAC/actions/runs/42020028407) reproduced the platform-only issue rather than hiding it. The diagnostic demonstrated identical dev/inode/mode/nlink/size/mtime values and **different ctime representations from Windows lstat versus fstat** on an unchanged synthetic file. Correction: cross-API comparisons exclude ctime; ctime remains checked within each API's own before/after pair, preserving refusal for genuinely changed inode/metadata. The hardlink/swap scenarios remain required on both platforms; no expected negative is skipped.
 
 ## Boundaries, assumptions and remaining risks
 
