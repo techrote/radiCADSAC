@@ -34,7 +34,7 @@ jobs:
           echo "source-sha=$actual"
       - name: Check MC-004 pinned source and T2 envelope
         run: python3 research/machining-completeness/tasks/MC-046/readiness.py --contract
-      - name: Run 32 adversarial readiness refusals
+      - name: Run adversarial readiness refusal controls
         run: python3 research/machining-completeness/tasks/MC-046/readiness.py --self-test
       - name: Exercise PLAN_ONLY CLI emission and verified re-ingress
         shell: bash
