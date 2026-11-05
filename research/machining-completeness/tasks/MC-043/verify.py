@@ -128,6 +128,10 @@ def self_test() -> int:
         mutate("non-strict import", mutate_receipt=lambda r: r["import"].update(strict=False))
         mutate("invalid objects preserved", mutate_receipt=lambda r: r["import"].update(reject_invalid=False))
         mutate("nonzero importer exit", mutate_receipt=lambda r: r["import"].update(exit_code=2))
+        # Exercise actual receipt admission, not a stand-alone equality assertion:
+        # both JSON boolean false and JSON real 0.0 compare equal to Python 0.
+        mutate("boolean false is not an integer process exit", mutate_receipt=lambda r: r["import"].update(exit_code=False))
+        mutate("JSON real 0.0 is not an integer process exit", mutate_receipt=lambda r: r["import"].update(exit_code=0.0))
         mutate("import dropped body", mutate_receipt=lambda r: r["import"]["items"].pop())
         mutate("import body fusion", mutate_receipt=lambda r: r["import"]["items"][1].update(durable_body_id="body-a"))
         mutate("import fabricated item", mutate_receipt=lambda r: r["import"]["items"].append(
@@ -280,7 +284,7 @@ def main() -> None:
     if not args.contract and not args.self_test:
         parser.error("select --contract and/or --self-test")
     rejected = self_test()
-    assert rejected == 37, rejected
+    assert rejected == 39, rejected
     print(f"MC-043 PROVISIONAL STRUCTURAL_PREFLIGHT_ONLY: 2 positive synthetic controls; {rejected} rejected corruptions")
     print("No real STEP file, independent consumer process, native permit or MC-E capability qualified")
 
