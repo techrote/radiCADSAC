@@ -6,6 +6,7 @@ import argparse
 import copy
 import hashlib
 import json
+import os
 import stat
 import subprocess
 import tempfile
@@ -78,17 +79,66 @@ def read_json(raw: bytes, *, allow_floats: bool = False) -> Any:
         raise Refused("invalid JSON syntax, depth or Unicode") from exc
 
 
+def proposal_identity(metadata: os.stat_result) -> tuple[int, int, int, int, int, int]:
+    """Best-effort local-file custody: identity, link count, size, write/change timestamps."""
+    # Windows path lstat and CRT-backed fstat report different ctime_ns for
+    # the same genuine file (hosted Windows run 42122094816). A ctime equality
+    # check there produces false refusal; retain the POSIX ctime witness only.
+    return (metadata.st_dev, metadata.st_ino, metadata.st_nlink,
+            metadata.st_size, metadata.st_mtime_ns,
+            metadata.st_ctime_ns if os.name != "nt" else 0)
+
+
+def proposal_identity_drift(a: os.stat_result, b: os.stat_result) -> str:
+    """Name differing metadata fields without leaking local filesystem identifiers."""
+    fields = ("st_dev", "st_ino", "st_nlink", "st_size", "st_mtime_ns")
+    if os.name != "nt":
+        fields += ("st_ctime_ns",)
+    return ",".join(field for field in fields if getattr(a, field) != getattr(b, field))
+
+
+def require_single_regular(metadata: os.stat_result) -> None:
+    require(stat.S_ISREG(metadata.st_mode), "T2 preparation proposal must be a regular file")
+    require(metadata.st_nlink == 1, "T2 preparation hard-link alias forbidden")
+    # Without a filesystem file identifier we cannot bind lstat to fstat.
+    require(metadata.st_ino != 0, "T2 preparation stable file identity unavailable")
+
+
 def read_proposal(path: Path) -> Any:
-    """Bound local PLAN_ONLY proposal bytes; never use unbounded Path.read_bytes()."""
+    """Bound local PLAN_ONLY proposal reads and refuse inconsistent pathname/descriptor identity.
+
+    This is a cooperative local-filesystem custody check, NOT an atomic
+    transaction or a guarantee against a hostile filesystem.
+    """
     try:
-        metadata = path.lstat()
-        require(stat.S_ISREG(metadata.st_mode), "T2 preparation proposal must be a regular file")
-        require(metadata.st_size <= MAX_PROPOSAL_BYTES, "T2 preparation JSON exceeds byte limit")
+        pathname_before = path.lstat()  # symlinks are not permitted
+        require_single_regular(pathname_before)
+        require(pathname_before.st_size <= MAX_PROPOSAL_BYTES,
+                "T2 preparation JSON exceeds byte limit")
         with path.open("rb") as stream:
-            # Size can change between lstat and open; bound actual read anyway.
+            descriptor_before = os.fstat(stream.fileno())
+            require_single_regular(descriptor_before)
+            require(descriptor_before.st_size <= MAX_PROPOSAL_BYTES,
+                    "T2 preparation JSON exceeds byte limit")
+            require(proposal_identity(pathname_before) == proposal_identity(descriptor_before),
+                    "T2 preparation proposal file identity/metadata changed before open: " +
+                    proposal_identity_drift(pathname_before, descriptor_before))
+            # Always bound descriptor data even if the file grows during read.
             raw = stream.read(MAX_PROPOSAL_BYTES + 1)
+            require(len(raw) <= MAX_PROPOSAL_BYTES,
+                    "T2 preparation JSON exceeds byte limit")
+            descriptor_after = os.fstat(stream.fileno())
+            pathname_after = path.lstat()
+            require_single_regular(descriptor_after)
+            require_single_regular(pathname_after)
+            identity = proposal_identity(pathname_before)
+            require(identity == proposal_identity(descriptor_after) ==
+                    proposal_identity(pathname_after),
+                    "T2 preparation proposal file identity/metadata changed during read: " +
+                    proposal_identity_drift(pathname_before, descriptor_after) + "/" +
+                    proposal_identity_drift(pathname_before, pathname_after))
     except OSError as exc:
-        raise Refused("T2 preparation proposal could not be read") from exc
+        raise Refused("T2 preparation proposal custody/read failed") from exc
     return read_json(raw)
 
 
@@ -336,7 +386,67 @@ def self_test(contract: dict[str, Any]) -> int:
             assert "regular file" in str(exc), str(exc)
         else:
             raise AssertionError("directory admitted as proposal")
-    return len(mutants) + len(raw_cases) + len(bounded_negative) + 3
+
+        # A second genuine file with valid (PLAN_ONLY) content must not be read
+        # under the original pathname's identity. This is an actual filesystem
+        # replacement between lstat and open, not a fabricated stat result.
+        proposal.write_bytes(json.dumps(valid).encode("utf-8"))
+        substitute = Path(tmp) / "substitute.json"
+        substitute.write_bytes(json.dumps(valid).encode("utf-8"))
+        saved_original = Path(tmp) / "original.json"
+        swapped = [False]
+
+        def replace_before_open(target: Path, *args, **kwargs):
+            if target == proposal and not swapped[0]:
+                swapped[0] = True
+                proposal.replace(saved_original)
+                substitute.replace(proposal)
+            return original_open(target, *args, **kwargs)
+
+        with patch.object(Path, "open", replace_before_open):
+            try:
+                read_proposal(proposal)
+            except Refused as exc:
+                assert "identity/metadata changed" in str(exc), str(exc)
+            else:
+                raise AssertionError("after-stat pathname replacement admitted")
+        assert swapped[0], "real pathname replacement injection not exercised"
+        # New pathname is a legitimate independent PLAN_ONLY file after swap.
+        check_plan(read_proposal(proposal), contract)
+
+        alias_refusals = 0
+        hard_alias = Path(tmp) / "hard-alias.json"
+        try:
+            os.link(proposal, hard_alias)
+        except (OSError, NotImplementedError):
+            print("MC-046 custody control: hard-link creation unsupported; not exercised")
+        else:
+            try:
+                read_proposal(proposal)
+            except Refused as exc:
+                assert "hard-link alias" in str(exc), str(exc)
+            else:
+                raise AssertionError("hard-linked PLAN_ONLY proposal admitted")
+            alias_refusals += 1
+            hard_alias.unlink()
+
+        sym_alias = Path(tmp) / "symbolic-alias.json"
+        try:
+            sym_alias.symlink_to(proposal)
+        except (OSError, NotImplementedError):
+            print("MC-046 custody control: symlink creation unsupported; not exercised")
+        else:
+            try:
+                read_proposal(sym_alias)
+            except Refused as exc:
+                assert "regular file" in str(exc), str(exc)
+            else:
+                raise AssertionError("symlinked PLAN_ONLY proposal admitted")
+            alias_refusals += 1
+            sym_alias.unlink()
+        check_plan(read_proposal(proposal), contract)
+        print(f"MC-046 custody: real after-stat replacement refused; {alias_refusals} file-alias controls exercised")
+    return len(mutants) + len(raw_cases) + len(bounded_negative) + 4 + alias_refusals
 
 
 def main() -> None:
