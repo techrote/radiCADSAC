@@ -221,12 +221,20 @@ def self_test() -> int:
         # Another adversarial ordering: replace the pathname AFTER the checked
         # fd is opened but BEFORE reading. The fd still sees original bytes.
         real_fdopen = os.fdopen
-        swapped = [False]
+        attempted = [False]
+        os_blocked = [False]
 
         def during_hash_swap(fd, *args, **kwargs):
-            if not swapped[0]:
-                swapped[0] = True
-                target.replace(displaced)
+            if not attempted[0]:
+                attempted[0] = True
+                try:
+                    target.replace(displaced)
+                except OSError:
+                    # Windows can deny renaming a file while its checked fd
+                    # is live. This is an OS-enforced refusal, not a successful
+                    # injection or evidence of the Python metadata guard.
+                    os_blocked[0] = True
+                    raise
                 target.write_bytes(original_bytes)
             return real_fdopen(fd, *args, **kwargs)
 
@@ -238,11 +246,13 @@ def self_test() -> int:
                     assert "STEP artifact custody:" in str(exc), str(exc)
                 else:
                     raise AssertionError("same-byte STEP inode substitution during read admitted")
-            assert swapped[0], "during-hash inode-swap injection was not executed"
+            assert attempted[0], "during-hash attack was not attempted"
+            assert os_blocked[0] or displaced.is_file(), (
+                "neither OS refusal nor actual during-hash swap observed")
             assert target.read_bytes() == original_bytes
             rejected += 1
         finally:
-            if swapped[0]:
+            if displaced.exists():
                 target.unlink()
                 displaced.replace(target)
 
