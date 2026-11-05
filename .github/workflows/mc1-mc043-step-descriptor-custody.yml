@@ -1,0 +1,53 @@
+name: mc1-mc043-step-descriptor-custody
+
+on:
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-043/**'
+      - '.github/workflows/mc1-mc043-step-descriptor-custody.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-043/**'
+      - '.github/workflows/mc1-mc043-step-descriptor-custody.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  exact-head-custody:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2022]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 7
+    steps:
+      - name: Checkout literal source head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Refuse unexpected source identity
+        shell: bash
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          ACTUAL="$(git rev-parse HEAD)"
+          printf 'checked-out=%s expected=%s\n' "$ACTUAL" "$EXPECTED_SHA"
+          test "$ACTUAL" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile source-matched MC-043 checker and test
+        shell: bash
+        run: |
+          python -m py_compile \
+            research/machining-completeness/tasks/MC-043/consumer_receipt_preflight.py \
+            research/machining-completeness/tasks/MC-043/verify.py
+      - name: Existing receipt controls and descriptor custody mutations
+        shell: bash
+        run: python research/machining-completeness/tasks/MC-043/verify.py --contract --self-test
+      - name: Programme static integrity (not gate acceptance)
+        shell: bash
+        run: python tools/validate_machining_completeness.py

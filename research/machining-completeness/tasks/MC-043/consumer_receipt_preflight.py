@@ -8,6 +8,8 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
+import stat
 from pathlib import Path
 from typing import Any
 
@@ -64,11 +66,48 @@ def safe_file(root: Path, path: Any) -> Path:
 
 
 def file_digest(path: Path) -> str:
-    h = hashlib.sha256()
-    with path.open("rb") as f:
-        for chunk in iter(lambda: f.read(1024 * 1024), b""):
-            h.update(chunk)
-    return "sha256:" + h.hexdigest()
+    """Hash a checked regular-file descriptor, not a separately verified pathname.
+
+    Reject external hard-link aliases and detectable same-byte inode swaps.
+    This is bounded local custody, NOT atomic hostile-filesystem attestation.
+    """
+    def identity(s: Any) -> tuple[int, int, int, int, int, int]:
+        # Windows lstat and fstat need not report the same st_ctime_ns.
+        # Compare only portable identity fields ACROSS those APIs.
+        return (s.st_dev, s.st_ino, s.st_mode, s.st_nlink, s.st_size,
+                s.st_mtime_ns)
+
+    def snapshot(s: Any) -> tuple[int, int, int, int, int, int, int]:
+        # Compare ctime WITHIN each API independently to detect mutations.
+        return (*identity(s), s.st_ctime_ns)
+
+    try:
+        before = path.lstat()
+        require(stat.S_ISREG(before.st_mode) and before.st_ino != 0 and
+                before.st_nlink == 1, "STEP artifact custody: nonregular, linked or unidentified")
+        flags = os.O_RDONLY | getattr(os, "O_BINARY", 0) | getattr(os, "O_NOFOLLOW", 0)
+        fd = os.open(path, flags)
+        try:
+            opened = os.fstat(fd)
+            require(stat.S_ISREG(opened.st_mode) and opened.st_nlink == 1 and
+                    identity(opened) == identity(before),
+                    f"STEP artifact custody: identity changed before open; "
+                    f"path={identity(before)!r} fd={identity(opened)!r}")
+            h = hashlib.sha256()
+            with os.fdopen(fd, "rb", closefd=False) as stream:
+                for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+                    h.update(chunk)
+            finished = os.fstat(fd)
+            after = path.lstat()
+            require(snapshot(finished) == snapshot(opened) and
+                    snapshot(after) == snapshot(before) and
+                    identity(after) == identity(opened),
+                    "STEP artifact custody: identity changed during hash")
+            return "sha256:" + h.hexdigest()
+        finally:
+            os.close(fd)
+    except OSError as exc:
+        raise Rejected(f"STEP artifact custody: filesystem refusal: {exc}") from exc
 
 
 def check(manifest: dict[str, Any], receipt: dict[str, Any], manifest_bytes: bytes,

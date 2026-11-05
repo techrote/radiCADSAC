@@ -5,6 +5,9 @@ from __future__ import annotations
 import argparse
 import copy
 import json
+import os
+from unittest.mock import patch
+import consumer_receipt_preflight as custody
 import tempfile
 from pathlib import Path
 
@@ -150,6 +153,109 @@ def self_test() -> int:
         mutate("empty false downstream status", empty_case=True,
                mutate_receipt=lambda r: r["follow_on"].update(status="completed"))
 
+        # Actual unchanged synthetic bytes cannot authorize a hard-linked
+        # STEP artifact: another pathname may rewrite the same inode.
+        target = root / "body-a.step"
+        original_bytes = target.read_bytes()
+        alias = root / "unlisted-hardlink.step"
+        os.link(target, alias)
+        try:
+            try:
+                run_case(copy.deepcopy(nonempty), copy.deepcopy(valid), root)
+            except Rejected as exc:
+                assert "STEP artifact custody:" in str(exc), str(exc)
+            else:
+                raise AssertionError("hard-linked same-byte STEP artifact admitted")
+            rejected += 1
+        finally:
+            alias.unlink()
+            # Windows can retain alias-related metadata across the immediately
+            # following handle open. Each fault scenario must start from a
+            # clean synthetic inode, not from the previous alias experiment.
+            target.unlink()
+            target.write_bytes(original_bytes)
+        assert target.read_bytes() == original_bytes
+        assert run_case(copy.deepcopy(nonempty), copy.deepcopy(valid), root) == STRUCTURAL_ONLY, (
+            "hard-link alias cleanup did not restore positive receipt")
+
+        # Deterministically replace the pathname with a fresh same-byte inode
+        # AFTER lstat and BEFORE descriptor acquisition; the digest still matches.
+        real_open = os.open
+        displaced = root / "previous-body-a.step"
+        swapped = [False]
+        observations = []
+
+        def before_open_swap(path, flags, *args, **kwargs):
+            if Path(path).name == target.name and not swapped[0]:
+                swapped[0] = True
+                before_meta = target.lstat()
+                target.replace(displaced)
+                target.write_bytes(original_bytes)
+                after_meta = target.lstat()
+                observations.append((
+                    (before_meta.st_dev, before_meta.st_ino, before_meta.st_size,
+                     before_meta.st_mtime_ns, before_meta.st_ctime_ns),
+                    (after_meta.st_dev, after_meta.st_ino, after_meta.st_size,
+                     after_meta.st_mtime_ns, after_meta.st_ctime_ns)))
+            return real_open(path, flags, *args, **kwargs)
+
+        try:
+            with patch.object(custody.os, "open", side_effect=before_open_swap):
+                try:
+                    run_case(copy.deepcopy(nonempty), copy.deepcopy(valid), root)
+                except Rejected as exc:
+                    assert swapped[0], f"pre-open refusal before injected swap: {exc}"
+                    assert "STEP artifact custody:" in str(exc), str(exc)
+                else:
+                    raise AssertionError(
+                        f"same-byte STEP inode substitution before open admitted; "
+                        f"platform metadata before/after={observations!r}")
+            assert swapped[0], "inode-swap injection was not executed"
+            assert target.read_bytes() == original_bytes
+            rejected += 1
+        finally:
+            if swapped[0]:
+                target.unlink()
+                displaced.replace(target)
+
+        # Another adversarial ordering: replace the pathname AFTER the checked
+        # fd is opened but BEFORE reading. The fd still sees original bytes.
+        real_fdopen = os.fdopen
+        attempted = [False]
+        os_blocked = [False]
+
+        def during_hash_swap(fd, *args, **kwargs):
+            if not attempted[0]:
+                attempted[0] = True
+                try:
+                    target.replace(displaced)
+                except OSError:
+                    # Windows can deny renaming a file while its checked fd
+                    # is live. This is an OS-enforced refusal, not a successful
+                    # injection or evidence of the Python metadata guard.
+                    os_blocked[0] = True
+                    raise
+                target.write_bytes(original_bytes)
+            return real_fdopen(fd, *args, **kwargs)
+
+        try:
+            with patch.object(custody.os, "fdopen", side_effect=during_hash_swap):
+                try:
+                    run_case(copy.deepcopy(nonempty), copy.deepcopy(valid), root)
+                except Rejected as exc:
+                    assert "STEP artifact custody:" in str(exc), str(exc)
+                else:
+                    raise AssertionError("same-byte STEP inode substitution during read admitted")
+            assert attempted[0], "during-hash attack was not attempted"
+            assert os_blocked[0] or displaced.is_file(), (
+                "neither OS refusal nor actual during-hash swap observed")
+            assert target.read_bytes() == original_bytes
+            rejected += 1
+        finally:
+            if displaced.exists():
+                target.unlink()
+                displaced.replace(target)
+
         (root / "body-a.step").write_bytes(b"TAMPERED_SYNTHETIC_BYTES\n")
         reject_case("mutated bytes after recorded digest", copy.deepcopy(nonempty), copy.deepcopy(valid), root)
         rejected += 1
@@ -174,7 +280,7 @@ def main() -> None:
     if not args.contract and not args.self_test:
         parser.error("select --contract and/or --self-test")
     rejected = self_test()
-    assert rejected == 34, rejected
+    assert rejected == 37, rejected
     print(f"MC-043 PROVISIONAL STRUCTURAL_PREFLIGHT_ONLY: 2 positive synthetic controls; {rejected} rejected corruptions")
     print("No real STEP file, independent consumer process, native permit or MC-E capability qualified")
 
