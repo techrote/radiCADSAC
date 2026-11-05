@@ -4,7 +4,11 @@
 
 **Proposed route under falsification:** `DIRECT_CAYLEY_SEMIALGEBRAIC_ELIMINATION_OF_VARIABLE_AMPLITUDE`: substitute a trigonometric half-angle variable and assume that a nonconstant rational B-spline amplitude becomes an algebraic function of that variable. The proposal would permit a finite polynomial/CAD/Sturm workflow *without* retaining the inverse-phase function or another analytic-event certificate.
 
-**Result:** **false** for an actual frozen original v54 source with a historical V43 route refusal. Both original source spans become rational functions plus a **nonzero rational-polynomial multiple of `atan(u)`**. The classical logarithmic-monodromy theorem shows `atan(u)` is transcendental over `C(u)`; thus neither span function is algebraic over `C(u)`. This is stronger than merely having coefficients outside `Q`, but it refutes only this *defined direct algebraic Cayley elimination*. It does **not** refute algebraic *implicit-root representation after an independently proved transcendental isolation*, or decidability of the original analytic events.
+**Result:** **false** for an actual frozen original v54 source with a historical V43 route refusal. Both original source spans become rational functions plus a **nonzero rational-polynomial multiple of `atan(u)`**. The classical logarithmic-monodromy theorem shows `atan(u)` is transcendental over `C(u)`; thus neither span function is algebraic over `C(u)`. This is stronger than merely having coefficients outside `Q`, but it refutes only this *defined direct algebraic Cayley elimination*.
+
+This explicitly **extends an existing historical negative result rather than rediscovering it**. The already merged [V43 affine-H1 Cayley amplitude boundary](pb00701-v43-cayley-amplitude-boundary-research.md) proved **nonrationality** after Cayley substitution on a separate harvested one-span original, `harvested:verify_pb00701_v9:4e7b85fa122a`. That earlier result already ruled out direct rational-polynomialization. The distinct contribution here is (i) an **actual previously refused two-span V9/V43 tail100 original** with a true interior knot and nonconstant H0 ramp, and (ii) the **stronger nonalgebraicity** conclusion over `C(u)`, using finite-versus-infinite analytic monodromy. Neither proof repairs historical V43 certification or the general PB-007 theorem.
+
+ It does **not** refute algebraic *implicit-root representation after an independently proved transcendental isolation*, or decidability of the original analytic events.
 
 ## Source custody and preregistration
 
