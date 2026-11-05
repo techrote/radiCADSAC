@@ -1,0 +1,53 @@
+name: mc1-pb00701-knot-unsigned-sign-erasure
+on:
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701-knot-unsigned-sign-erasure-20261105.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-knot-unsigned-sign-erasure-20261105.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-knot-unsigned-sign-erasure-20261105.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation-v2.json'
+      - '.github/workflows/mc1-pb00701-knot-unsigned-sign-erasure.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701-knot-unsigned-sign-erasure-20261105.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-knot-unsigned-sign-erasure-20261105.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-knot-unsigned-sign-erasure-20261105.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation-v2.json'
+      - '.github/workflows/mc1-pb00701-knot-unsigned-sign-erasure.yml'
+permissions:
+  contents: read
+jobs:
+  exact-original-knot-information-loss:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Exact two original-source knot-sign falsifier and adversarial controls
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/machining-completeness/tasks/MC-038/pb00701-knot-unsigned-sign-erasure-20261105.py --contract --self-test
+      - name: Frozen 121-case theorem frontier and refusal oracle
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py --contract --self-test
+      - name: Fresh full 50-source v2 proof-producer reconciliation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_evidence_reconciliation_v2.py --contract
+      - name: MC-1 programme/source static validation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/validate_machining_completeness.py

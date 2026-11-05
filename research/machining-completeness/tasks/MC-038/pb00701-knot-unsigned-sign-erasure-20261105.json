@@ -1,0 +1,153 @@
+{
+  "schema": "radicadsac-pb00701-source-bound-knot-sign-erasure/1.0",
+  "task": "MC-038",
+  "parent_issue": "https://github.com/techrote/radiCADSAC/issues/100",
+  "result": "BOUNDED_C",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "candidate": "KNOT_SIGN_FROM_ROOT_SET_AND_UNSIGNED_SIDE_ORDERS_ONLY",
+  "precise_refutation": "The exact physical zero coordinates, a shared source knot, unsigned left/right first-nonzero derivative orders, source-coordinate interval and affine phase do not uniquely determine physical sign cells or whether an isolated knot is a crossing or touch.",
+  "reference_main_at_branch": "9c4c0371f4ba70e0fff8c15bd08e6c252e53dc29",
+  "corpus_git_blob": "5841c331579489b25caef38cd412bdbf286f9134",
+  "complete_source_evidence_git_blob": "e52d3baf3692a011cf86234eeaa992ef407d99fd",
+  "cases": [
+    {
+      "id": "composite:DELEGATED_V6_CONSTANT_MODULATION:tail0",
+      "source_sha256": "9eb6f08a44882adffa919529247c40190c70e8d7599ee2b1a0f7978ef2569eb1",
+      "original_row_sha256": "145ac5ce5b533c447c7356e8dc721dbfa5a44562cdc3a37422278fd7bd0199fc",
+      "v54_disposition": "BLOCKED",
+      "historical_refusal": "V27_CHILD_LEFT_ENDPOINT_MULTIPLICITY_NOT_COMPOSABLE",
+      "source_parameter": "source-time-t",
+      "interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": [
+        "0",
+        "1/4"
+      ],
+      "true_knots": [
+        "1"
+      ],
+      "spline_summary": "cos H0 degree0 knots [0,1,2] controls [0,0]; cos H1 degree0 knots [0,1,2] controls [1,1]; no sine",
+      "left_formula": "cos(pi*t/2)",
+      "right_formula": "cos(pi*t/2)",
+      "exact_zero_set": [
+        "1"
+      ],
+      "unsigned_one_sided_orders": [
+        1,
+        1
+      ],
+      "signed_first_derivative_germs": [
+        "-pi/2",
+        "-pi/2"
+      ],
+      "sign_cells": [
+        "+",
+        "-"
+      ],
+      "knot_event": "CROSSING",
+      "global_smooth_multiplicity": null,
+      "preexisting_v2_witness": true
+    },
+    {
+      "id": "composite:DELEGATED_V6_CONSTANT_MODULATION:tail100",
+      "source_sha256": "f6a0eb06c66af415fbb8abdfe62f9b36a2a2bf154e535d83307a80228e044ad5",
+      "original_row_sha256": "0801317d3452c77733a129148d58eaac2f06aa9cd26396a44892e82c524e1db2",
+      "v54_disposition": "BLOCKED",
+      "historical_refusal": "V27_CHILD_NOT_CERTIFIED",
+      "source_parameter": "source-time-t",
+      "interval": [
+        "0",
+        "2"
+      ],
+      "phase_turn_law": [
+        "0",
+        "1/4"
+      ],
+      "true_knots": [
+        "1"
+      ],
+      "spline_summary": "cos H0 degree1 knots [0,0,1,1,2,2] controls [0,0,0,100]; cos H1 degree0 knots [0,1,2] controls [1,1]; no sine",
+      "left_formula": "cos(pi*t/2)",
+      "right_formula": "100*(t-1)+cos(pi*t/2)",
+      "exact_zero_set": [
+        "1"
+      ],
+      "unsigned_one_sided_orders": [
+        1,
+        1
+      ],
+      "signed_first_derivative_germs": [
+        "-pi/2",
+        "100-pi/2"
+      ],
+      "sign_cells": [
+        "+",
+        "+"
+      ],
+      "knot_event": "TOUCHING",
+      "global_smooth_multiplicity": null,
+      "preexisting_v2_witness": true
+    }
+  ],
+  "witness_proof": [
+    "For both originals F(1)=0 and F(t)=cos(pi*t/2)>0 on [0,1).",
+    "For flat tail, F(t)=cos(pi*t/2)<0 on (1,2], with right-sided first derivative -pi/2.",
+    "For ramp tail, x=t-1∈(0,1], F(1+x)=100*x-sin(pi*x/2) > (100-pi/2)*x > 98*x > 0 because 0<pi<4.",
+    "The left first nonzero derivative at knot is -pi/2 on both originals; right is -pi/2 for flat and 100-pi/2 for ramp, hence same unsigned orders 1,1 and opposite right physical signs.",
+    "Original F(0)=1, flat F(2)=-1 and ramp F(2)=99, so neither original has another exterior root. Open spans have no additional roots, by exact trigonometric inequalities.",
+    "Two inputs indistinguishable to the precisely restricted interface but requiring differing outputs imply no deterministic correct sign/crossing decoder can rely on those inputs alone."
+  ],
+  "exact_adversarial_controls": [
+    "13 original-source/provenance/route mutations per source rejected",
+    "source is identity-zero continuum: refused rather than one isolated root",
+    "synthetic even/odd knot orders checked without pretending to source-match",
+    "Machin rational enclosure pi/2 and two extraordinarily close rational ramp slopes check signed-germ distinction only",
+    "refuse unsupported source IDs, floats and source field replacements"
+  ],
+  "before_after": {
+    "original_sources": {
+      "before": 121,
+      "after": 121,
+      "delta": 0
+    },
+    "historical_route_refusals": {
+      "before": 20,
+      "after": 20,
+      "delta": 0
+    },
+    "missing_ordered_premises": {
+      "before": 30,
+      "after": 30,
+      "delta": 0
+    },
+    "complete_source_witnesses": {
+      "before": 50,
+      "after": 50,
+      "delta": 0
+    },
+    "newly_resolved_case_ids": []
+  },
+  "required_pb_po": {
+    "PB-007-01": "OPEN",
+    "PB-007-02": "OPEN",
+    "PB-007-03": "OPEN_PROPAGATED",
+    "PB-007-04": "OPEN_PROPAGATED",
+    "PO-02": "OPEN",
+    "PO-04": "OPEN",
+    "PO-05": "OPEN",
+    "PO-07": "OPEN",
+    "PO-08": "OPEN"
+  },
+  "gates": {
+    "MC-B": "NOT_ESTABLISHED",
+    "MC-1": "NOT_ESTABLISHED",
+    "required_machining_operations": 26,
+    "native_geometry_or_step_qualified": false,
+    "production_authorized": false
+  },
+  "scope_nonclaims": "This is a restriction on an explicitly underspecified proposed interface, not an implementation defect in previously admitted signed-jet/knot tools, not an additional original-source closure, not a full general analytic event theorem, and not native or independent STEP evidence.",
+  "verification": "python3 research/machining-completeness/tasks/MC-038/pb00701-knot-unsigned-sign-erasure-20261105.py --contract --self-test",
+  "integration": "DRAFT_ONLY until independent later source-level review, literal-head CI and guarded merge, with merged-main verification"
+}
