@@ -35,7 +35,7 @@ def unique_keys(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
     return obj
 
 
-def read_json(raw: bytes) -> Any:
+def read_json(raw: bytes, *, allow_floats: bool = False) -> Any:
     """Do not allow JSON ambiguity, float conversion, invalid Unicode or codepoint loss."""
     def no_float(value: str) -> Any:
         raise Refused("float number not permitted in T2 preparation manifest")
@@ -45,7 +45,7 @@ def read_json(raw: bytes) -> Any:
 
     try:
         result = json.loads(raw.decode("utf-8"), object_pairs_hook=unique_keys,
-                            parse_float=no_float, parse_constant=no_constant)
+                            parse_float=(float if allow_floats else no_float), parse_constant=no_constant)
         queue = [result]
         while queue:
             item = queue.pop()
@@ -68,7 +68,7 @@ def blob(data: bytes) -> str:
 def load_contract() -> dict[str, Any]:
     raw = MC004.read_bytes()
     require(blob(raw) == MC004_BLOB, "reviewed MC-004 source blob drift")
-    contract = read_json(raw)
+    contract = read_json(raw, allow_floats=True)
     require(isinstance(contract, dict) and
             contract.get("schema") == "radicadsac-mc-qualification-contract/1.0",
             "unexpected MC-004 qualification contract")
