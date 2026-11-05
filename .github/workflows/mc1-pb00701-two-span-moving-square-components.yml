@@ -40,7 +40,7 @@ jobs:
         run: |
           echo "Checked out exact commit $(git rev-parse HEAD)"
           test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
-      - name: Original two-span theorem and 20 adversarial tests
+      - name: Original two-span theorem and adversarial tests
         run: |
           set -euo pipefail
           python3 research/machining-completeness/tasks/MC-038/pb00701_two_span_moving_square_components.py --contract
