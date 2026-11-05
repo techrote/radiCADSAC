@@ -130,8 +130,11 @@ def validate(graph=None,programme=None,outcomes=None,ghmap=None,posdoc=None):
         row=outcomes["tasks"][i]
         if type(row.get("issue")) is not int or row["issue"]!=n:
             fail(f"{i} outcome/GitHub issue binding mismatch")
-        if row.get("state") not in {
-            "NOT_STARTED","COMPLETED_RESEARCH","NEGATIVE_RESULT","CAPABILITY_ACCEPTED"
+        # BLOCKED is an explicitly permitted non-accepting outcome under the
+        # execution protocol; malformed non-string states must refuse cleanly.
+        if not isinstance(row.get("state"), str) or row["state"] not in {
+            "NOT_STARTED","BLOCKED","COMPLETED_RESEARCH",
+            "NEGATIVE_RESULT","CAPABILITY_ACCEPTED"
         }:
             fail(f"{i} unknown outcome state")
         # A task-local outcome must not unilaterally grant a capability while
@@ -224,6 +227,22 @@ def self_test():
     try: validate(g,p,o,badm,pos)
     except AssertionError: pass
     else: fail("self-test accepted boolean GitHub issue number")
+    # BLOCKED is valid as a non-accepting task outcome. This positive
+    # mutation protects the published execution and format contracts against
+    # a validator change that accidentally makes honest blockers unrecordable.
+    blocked=copy.deepcopy(o)
+    blocked["tasks"]["MC-038"]["state"]="BLOCKED"
+    blocked["tasks"]["MC-038"]["blockers"]=[{"reason":"PB-007 required obligations remain open"}]
+    validate(g,p,blocked,m,pos)
+    # Invalid state JSON types must fail through the controlled refusal
+    # channel, never an uncaught unhashable-type exception.
+    for malformed in ([], {"unexpected":"state"}):
+        bado=copy.deepcopy(o)
+        bado["tasks"]["MC-038"]["state"]=malformed
+        try: validate(g,p,bado,m,pos)
+        except AssertionError: pass
+        except TypeError as exc: fail(f"self-test non-string state raised TypeError: {exc}")
+        else: fail("self-test accepted non-string outcome state")
     # Adversarial cross-register custody: valid-looking individual ledgers
     # must fail if their shared issue key drifts or gate acceptance is forged.
     for change, label in (
