@@ -1,0 +1,79 @@
+name: mc1-mc047-capture-first-process-crash
+
+on:
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-047/capture_first_process_crash_qualification.py'
+      - 'research/machining-completeness/tasks/MC-047/capture-first-process-crash-20261105.md'
+      - '.github/workflows/mc1-mc047-capture-first-process-crash.yml'
+      - 'research/machining-completeness/tasks/MC-045/campaign_harness.py'
+      - 'research/machining-completeness/tasks/MC-047/verify.py'
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-047/capture_first_process_crash_qualification.py'
+      - 'research/machining-completeness/tasks/MC-047/verify.py'
+      - 'research/machining-completeness/tasks/MC-045/campaign_harness.py'
+      - '.github/workflows/mc1-mc047-capture-first-process-crash.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  capture-first-hard-exit:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2022]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Bind literal checked-out head
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "Checkout: $(git rev-parse HEAD)"
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile the accepted read-only auditors and fault harness
+        shell: bash
+        run: |
+          python -m py_compile research/machining-completeness/tasks/MC-045/campaign_harness.py research/machining-completeness/tasks/MC-047/verify.py research/machining-completeness/tasks/MC-047/capture_first_process_crash_qualification.py
+      - name: Execute three actual hard-exit capture-first fault scenarios
+        shell: bash
+        run: |
+          python research/machining-completeness/tasks/MC-047/capture_first_process_crash_qualification.py --contract
+      - name: Existing accepted source-matched model regressions
+        shell: bash
+        run: |
+          python research/machining-completeness/tasks/MC-045/campaign_harness.py self-test
+          python research/machining-completeness/tasks/MC-047/verify.py --contract
+
+  static-authority:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Bind literal checked-out head
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Static MC-1 source and authority checks
+        shell: bash
+        run: |
+          python tools/validate_machining_completeness.py
