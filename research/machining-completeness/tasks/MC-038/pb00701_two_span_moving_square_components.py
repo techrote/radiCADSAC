@@ -18,6 +18,7 @@ SCHEMA = "radicadsac-mc038-two-span-moving-square-components/1.0"
 GRAMMAR = "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE"
 STATUS = "EXACT_ORIGINAL_TWO_SPAN_MOVING_SQUARE_COMPONENTS_RESEARCH"
 MAX_SOURCE_BYTES = 16_384
+MAX_SOURCE_JSON_NESTING = 32
 MAX_BITS = 256
 MAX_DERIVED_BITS = 1024
 MAX_ABS_PHASE_TURNS = 32
@@ -405,12 +406,37 @@ def validate_report(spec,report):
     return result
 
 
+def check_source_json_nesting(raw):
+    """Linear bounded preparse; JSON decoder handles all remaining syntax."""
+    depth = 0
+    in_string = False
+    escaped = False
+    for byte in raw:
+        if in_string:
+            if escaped:
+                escaped = False
+            elif byte == 92:  # ASCII backslash
+                escaped = True
+            elif byte == 34:  # ASCII double quote
+                in_string = False
+        elif byte == 34:
+            in_string = True
+        elif byte in (91, 123):  # [ or {
+            depth += 1
+            budget(depth <= MAX_SOURCE_JSON_NESTING, "SOURCE_JSON_NESTING_BUDGET")
+        elif byte in (93, 125):  # ] or }
+            depth -= 1
+            need(depth >= 0, "MALFORMED_SOURCE_JSON_STRUCTURE")
+    need(depth == 0 and not in_string, "MALFORMED_SOURCE_JSON_STRUCTURE")
+
+
 def attempt_file(path):
     """Bound raw source input before JSON parsing; never promote parser refusals."""
     try:
         with open(path, "rb") as handle:
             raw = handle.read(MAX_SOURCE_BYTES + 1)
         budget(len(raw) <= MAX_SOURCE_BYTES, "SOURCE_FILE_BYTE_BUDGET")
+        check_source_json_nesting(raw)
 
         def unique_object(pairs):
             result = {}
