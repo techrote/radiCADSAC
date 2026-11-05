@@ -6,6 +6,7 @@ import argparse
 import copy
 import hashlib
 import json
+import stat
 import subprocess
 import tempfile
 from pathlib import Path
@@ -17,6 +18,8 @@ MC004 = ROOT / "research/machining-completeness/tasks/MC-004/qualification-contr
 MC004_BLOB = "22d5f976718edac9a8ccce3cb46f799b76e85ab4"
 SCHEMA = "radicadsac-mc046-t2-plan-only/1.0"
 TIERS = ("T2-G10", "T2-G100", "T2-G1000", "T2-G10000")
+MAX_PROPOSAL_BYTES = 1 << 20  # bound untrusted PLAN_ONLY JSON before parsing
+MAX_JSON_CONTAINER_DEPTH = 32
 
 
 class Refused(ValueError):
@@ -44,22 +47,41 @@ def read_json(raw: bytes, *, allow_floats: bool = False) -> Any:
     def no_constant(value: str) -> Any:
         raise Refused("nonfinite JSON constant not permitted")
 
+    require(len(raw) <= MAX_PROPOSAL_BYTES, "T2 preparation JSON exceeds byte limit")
     try:
         result = json.loads(raw.decode("utf-8"), object_pairs_hook=unique_keys,
                             parse_float=(float if allow_floats else no_float), parse_constant=no_constant)
-        queue = [result]
+        # Count containing object/list levels, not scalar fields. Avoid recursive
+        # traversal; the depth limit is independent of Python recursion limits.
+        queue = [(result, 1)]
         while queue:
-            item = queue.pop()
+            item, depth = queue.pop()
             if isinstance(item, str):
                 item.encode("utf-8")  # rejects unpaired surrogate code points
             elif isinstance(item, dict):
-                queue.extend(item.keys())
-                queue.extend(item.values())
+                require(depth <= MAX_JSON_CONTAINER_DEPTH, "T2 preparation JSON exceeds depth limit")
+                queue.extend((value, depth + 1) for value in item.keys())
+                queue.extend((value, depth + 1) for value in item.values())
             elif isinstance(item, list):
-                queue.extend(item)
+                require(depth <= MAX_JSON_CONTAINER_DEPTH, "T2 preparation JSON exceeds depth limit")
+                queue.extend((value, depth + 1) for value in item)
         return result
     except (UnicodeError, json.JSONDecodeError, RecursionError) as exc:
         raise Refused("invalid JSON syntax, depth or Unicode") from exc
+
+
+def read_proposal(path: Path) -> Any:
+    """Bound local PLAN_ONLY proposal bytes; never use unbounded Path.read_bytes()."""
+    try:
+        metadata = path.lstat()
+        require(stat.S_ISREG(metadata.st_mode), "T2 preparation proposal must be a regular file")
+        require(metadata.st_size <= MAX_PROPOSAL_BYTES, "T2 preparation JSON exceeds byte limit")
+        with path.open("rb") as stream:
+            # Size can change between lstat and open; bound actual read anyway.
+            raw = stream.read(MAX_PROPOSAL_BYTES + 1)
+    except OSError as exc:
+        raise Refused("T2 preparation proposal could not be read") from exc
+    return read_json(raw)
 
 
 def blob(data: bytes) -> str:
@@ -247,7 +269,44 @@ def self_test(contract: dict[str, Any]) -> int:
             assert reason in str(exc), (raw, str(exc))
         else:
             raise AssertionError(f"ambiguous/invalid JSON admitted: {raw!r}")
-    return len(mutants) + len(raw_cases)
+
+    # The untrusted proposal path must refuse resource hazards even though the
+    # canonical source-bound MC-004 contract remains fixed by its Git blob.
+    deep_array = b"[" * (MAX_JSON_CONTAINER_DEPTH + 1) + b"0" + b"]" * (MAX_JSON_CONTAINER_DEPTH + 1)
+    deep_object = b'{"child":' * (MAX_JSON_CONTAINER_DEPTH + 1) + b"0" + b"}" * (MAX_JSON_CONTAINER_DEPTH + 1)
+    bounded_negative = [
+        (b" " * (MAX_PROPOSAL_BYTES + 1), "byte limit"),
+        (deep_array, "depth limit"),
+        (deep_object, "depth limit"),
+    ]
+    for raw, reason in bounded_negative:
+        try:
+            read_json(raw)
+        except Refused as exc:
+            assert reason in str(exc), (reason, str(exc))
+        else:
+            raise AssertionError(f"unbounded T2 proposal admitted: {reason}")
+    # A true boundary value and a valid real-file CLI input remain admissible.
+    depth_32 = b"[" * MAX_JSON_CONTAINER_DEPTH + b"0" + b"]" * MAX_JSON_CONTAINER_DEPTH
+    assert read_json(depth_32) == json.loads(depth_32)
+    with tempfile.TemporaryDirectory() as tmp:
+        proposal = Path(tmp) / "proposal.json"
+        proposal.write_bytes(json.dumps(valid).encode("utf-8"))
+        check_plan(read_proposal(proposal), contract)
+        proposal.write_bytes(b" " * (MAX_PROPOSAL_BYTES + 1))
+        try:
+            read_proposal(proposal)
+        except Refused as exc:
+            assert "byte limit" in str(exc), str(exc)
+        else:
+            raise AssertionError("oversized on-disk proposal admitted")
+        try:
+            read_proposal(Path(tmp))
+        except Refused as exc:
+            assert "regular file" in str(exc), str(exc)
+        else:
+            raise AssertionError("directory admitted as proposal")
+    return len(mutants) + len(raw_cases) + len(bounded_negative) + 2
 
 
 def main() -> None:
@@ -266,7 +325,7 @@ def main() -> None:
         elif args.emit_plan:
             print(json.dumps(expected_plan(contract), sort_keys=True, indent=2))
         elif args.check_plan is not None:
-            check_plan(read_json(args.check_plan.read_bytes()), contract)
+            check_plan(read_proposal(args.check_plan), contract)
             print("MC-046 PLAN_ONLY structural proposal check passed; NOT native/geometry qualification")
         else:
             expected_plan(contract)
