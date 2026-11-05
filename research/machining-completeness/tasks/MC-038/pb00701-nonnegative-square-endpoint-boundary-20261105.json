@@ -1,0 +1,118 @@
+{
+  "schema": "radicadsac-mc038-nonnegative-square-endpoint-boundary/1.0",
+  "date_utc": "2026-11-05",
+  "task": "MC-038",
+  "named_obligation": "PB-007-01",
+  "parent_issue": "https://github.com/techrote/radiCADSAC/issues/100",
+  "coordination_claim": "https://github.com/techrote/radiCADSAC/issues/324#issuecomment-6650503491",
+  "source_selection_main": "2ab90bd3ec684f92830b9863ab870bdbe188c1b5",
+  "candidate_route": "DIRECT_NONNEGATIVE_SQUARE_COMPONENT_COVERAGE_OF_ALL_FROZEN_V54_BLOCKED_ORIGINALS",
+  "result": "NEGATIVE_C_BOUNDED_DIRECT_UNIVERSAL_SQUARE_ADMISSION",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "scope": "Direct literal real nonnegative square-sum representation for all 50 unchanged physical original blocked v54 sources; no signed multiplier, indefinite subtraction or source remapping",
+  "negative_original_case_ids": [
+    "composite:DELEGATED_V6_CONSTANT_MODULATION:tail0",
+    "composite:EXACT_STATIONARY_PHASE_POLYNOMIAL:tail0",
+    "composite:EXACT_STATIONARY_PHASE_POLYNOMIAL:tail100",
+    "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail0",
+    "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail100",
+    "composite:PB00701_V12_EXACT_COMPONENT_ROOT_PARTITION_SINGLE_HARMONIC:tail0",
+    "composite:PB00701_V12_EXACT_COMPONENT_ROOT_PARTITION_SINGLE_HARMONIC:tail100",
+    "composite:PB00701_V13_EXACT_NONVANISHING_EVEN_MULTIPLIER_MULTIHARMONIC:tail0",
+    "composite:PB00701_V13_EXACT_NONVANISHING_EVEN_MULTIPLIER_MULTIHARMONIC:tail100",
+    "composite:PB00701_V14_EXACT_STRICT_DOMINANCE_MULTITERM_MULTIPLIER:tail100",
+    "composite:PB00701_V15_EXACT_FINITE_STRICT_DOMINANCE_MULTIPLIER:tail100",
+    "composite:PB00701_V16_EXACT_CHEBYSHEV_STURM_MULTIPLIER:tail100",
+    "composite:PB00701_V18_EXACT_LAURENT_MODULE_FACTOR:tail100",
+    "composite:PB00701_V23_EXACT_NONCONSTANT_AMPLITUDE_PHASE_SECTOR_ANCHOR:tail0",
+    "composite:PB00701_V26_EXACT_POINTWISE_COMPONENT_CONE_RESIDUAL_ORTHANTS:tail0",
+    "composite:PB00701_V28_EXACT_ALGEBRAIC_RATIONAL_TURN_PHASE_CELL_PROJECTION:tail0",
+    "composite:PB00701_V29_EXACT_5_12_13_NESTED_ALGEBRAIC_PHASE_CELL_PROJECTION:tail0",
+    "composite:PB00701_V30_EXACT_SOURCE_ADAPTIVE_PROJECTIVE_RATIONAL_SEPARATOR:tail0",
+    "composite:PB00701_V8_EXACT_COMMON_FACTOR_REDUCTION:tail0",
+    "composite:PB00701_V9_EXACT_MONOTONE_SINGLE_HARMONIC_RATIO:tail0",
+    "composite:PB00701_V9_EXACT_MONOTONE_SINGLE_HARMONIC_RATIO:tail100",
+    "harvested:verify_pb00701_v13:c426f65b5c10"
+  ],
+  "frozen_source_population": 121,
+  "historical_uncertified_routes": 20,
+  "historical_missing_ordered_premises": 30,
+  "existing_complete_original_source_witnesses": 50,
+  "strictly_negative_endpoint_originals": 22,
+  "negative_route_refusal_originals": 10,
+  "negative_missing_ordered_premise_originals": 12,
+  "frozen_corpus_git_blob": "5841c331579489b25caef38cd412bdbf286f9134",
+  "frozen_v2_register_git_blob": "e52d3baf3692a011cf86234eeaa992ef407d99fd",
+  "before_after": {
+    "before": [
+      121,
+      20,
+      30,
+      50
+    ],
+    "after": [
+      121,
+      20,
+      30,
+      50
+    ],
+    "delta": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "newly_closed_historical_case_ids": []
+  },
+  "source_bound_negative_anchors": [
+    {
+      "id": "composite:DELEGATED_V6_CONSTANT_MODULATION:tail0",
+      "source_sha256": "9eb6f08a44882adffa919529247c40190c70e8d7599ee2b1a0f7978ef2569eb1",
+      "original_row_sha256": "145ac5ce5b533c447c7356e8dc721dbfa5a44562cdc3a37422278fd7bd0199fc",
+      "source_time": "2",
+      "physical_value": "-1",
+      "source_interval": [
+        "0",
+        "2"
+      ],
+      "true_knot": "1",
+      "turns_rate": "1/4"
+    },
+    {
+      "id": "composite:PB00701_V14_EXACT_STRICT_DOMINANCE_MULTITERM_MULTIPLIER:tail100",
+      "source_sha256": "bd10ad1d9503335b2d7f745c09805b82a421b8db7beea67329cf33d0c9d78ff2",
+      "original_row_sha256": "1940ec5f6aafb641a25fcda3f8941ff7dd9f2afc2bf13056da6920159c3f0e18",
+      "source_time": "0",
+      "physical_value": "-5/6"
+    },
+    {
+      "id": "composite:PB00701_V8_EXACT_COMMON_FACTOR_REDUCTION:tail0",
+      "source_sha256": "9abbed355812241cdef20f3ce3b3522619bdd682c3a73fb01828d8f95c72f0af",
+      "original_row_sha256": "2a26a89bcce4070571f41cf377697fc6f258c4c9e04819c14096103f720861cf",
+      "source_time": "2",
+      "physical_value": "-1/2"
+    }
+  ],
+  "nonclaims": [
+    "#397's narrow admitted square theorem is not challenged",
+    "No theorem of general analytic-event impossibility",
+    "No claim on other root methods with signed multipliers",
+    "Other original endpoints with nonquarter phase are unknown",
+    "No new v54 case closure or required PB/PO discharge"
+  ],
+  "pb00701": "OPEN",
+  "pb00702": "OPEN",
+  "pb00703": "OPEN",
+  "pb00704": "OPEN",
+  "po02": "OPEN",
+  "po04": "OPEN",
+  "po05": "OPEN",
+  "po07": "OPEN",
+  "po08": "OPEN",
+  "mc_b": "NOT_ESTABLISHED",
+  "mc1": "NOT_ESTABLISHED",
+  "supported_operations": 26,
+  "production_authorized": false,
+  "native_geometry_qualified": false,
+  "engineering_step_qualified": false
+}
