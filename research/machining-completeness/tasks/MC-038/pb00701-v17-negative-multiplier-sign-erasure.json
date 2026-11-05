@@ -1,0 +1,90 @@
+{
+  "schema": "radicadsac-mc038-v17-negative-multiplier-sign-erasure/1.0",
+  "task": "MC-038",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "case_id": "composite:PB00701_V17_EXACT_PROJECTIVE_EVEN_TRIG_MULTIPLIER:tail100",
+  "source_sha256": "e85d997c9f4d828b1b748c964b375c21e4acef1b1e9046e074b1f7e29011d08f",
+  "original_row_sha256": "41e86bc30392515873fb55bdd844d154236a81426fd3639c3bd5491dad30f05a",
+  "frozen_corpus_git_blob": "5841c331579489b25caef38cd412bdbf286f9134",
+  "v2_register_git_blob": "e52d3baf3692a011cf86234eeaa992ef407d99fd",
+  "candidate_route": "NONVANISHING_MULTIPLIER_PRESERVES_CARRIER_PHYSICAL_SIGNS",
+  "disposition": "FALSIFIED_ON_PINNED_ORIGINAL_SOURCE",
+  "source_parameter_id": "source-time-t",
+  "closed_interval": [
+    "0",
+    "2"
+  ],
+  "true_source_knot": "1",
+  "phase_turns": "t/4",
+  "exact_prefix_factor": "F=(-2+sin(pi*t))*((t-1/3)*cos(pi*t/2)+(2/3-t)*sin(pi*t/2))",
+  "multiplier_range_bound": [
+    "-3",
+    "-1"
+  ],
+  "carrier_sign_cells": [
+    -1,
+    1,
+    -1
+  ],
+  "physical_sign_cells": [
+    1,
+    -1,
+    1
+  ],
+  "physical_event_brackets": [
+    [
+      "1/6",
+      "1/4"
+    ],
+    [
+      "3/4",
+      "5/6"
+    ]
+  ],
+  "physical_event_multiplicities": [
+    1,
+    1
+  ],
+  "physical_event_derivative_signs": [
+    -1,
+    1
+  ],
+  "zero_set_kind": "FINITE",
+  "closed_distinct_root_count": 2,
+  "original_knot_value": "2/3",
+  "right_exterior_value": "304/3",
+  "tail_strict_derivative_lower_bound": "656/7",
+  "historical_census": {
+    "before": {
+      "frozen_original_sources": 121,
+      "historical_route_refusals": 20,
+      "historical_missing_ordered_premises": 30,
+      "preexisting_complete_source_specific_witnesses": 50
+    },
+    "after": {
+      "frozen_original_sources": 121,
+      "historical_route_refusals": 20,
+      "historical_missing_ordered_premises": 30,
+      "preexisting_complete_source_specific_witnesses": 50
+    },
+    "delta": {
+      "frozen_original_sources": 0,
+      "historical_route_refusals": 0,
+      "historical_missing_ordered_premises": 0,
+      "preexisting_complete_source_specific_witnesses": 0
+    },
+    "newly_closed_historical_case_ids": []
+  },
+  "claims": {
+    "bounded_negative_route_result_C": true,
+    "new_historical_source_closure_A": false,
+    "required_PB007_obligation_discharge_B": false,
+    "general_analytic_event_theorem": false,
+    "native_geometry": false,
+    "engineering_STEP": false,
+    "MC_B_established": false,
+    "MC_1_established": false,
+    "production_authorized": false,
+    "supported_operation_denominator": 26
+  }
+}
