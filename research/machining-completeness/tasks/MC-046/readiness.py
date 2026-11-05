@@ -270,7 +270,7 @@ def main() -> None:
             print("MC-046 PLAN_ONLY structural proposal check passed; NOT native/geometry qualification")
         else:
             expected_plan(contract)
-            print(f"MC-046 MC-004 source blob pinned {MC004_BLOB}; MC-041 native capability NOT_ESTABLISHED")
+            print(f"MC-046 MC-004 source blob pinned {MC004_BLOB}; MC-041 capability NOT VERIFIED HERE; no native authorization")
     except (Refused, OSError, KeyError, TypeError) as exc:
         p.exit(2, f"REFUSED: {exc}\n")
 
