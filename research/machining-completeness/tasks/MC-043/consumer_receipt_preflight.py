@@ -85,7 +85,8 @@ def file_digest(path: Path) -> str:
             opened = os.fstat(fd)
             require(stat.S_ISREG(opened.st_mode) and opened.st_nlink == 1 and
                     identity(opened) == identity(before),
-                    "STEP artifact custody: identity changed before open")
+                    f"STEP artifact custody: identity changed before open; "
+                    f"path={identity(before)!r} fd={identity(opened)!r}")
             h = hashlib.sha256()
             with os.fdopen(fd, "rb", closefd=False) as stream:
                 for chunk in iter(lambda: stream.read(1024 * 1024), b""):
