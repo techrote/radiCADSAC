@@ -497,6 +497,22 @@ def load_ledger(path: Path) -> list[dict[str, Any]]:
     return load_ledger_with_digest(path)[0]
 
 
+def refuse_ledger_append_lock(path: Path) -> None:
+    """No authoritative audit while an append may be in flight or uncertain.
+
+    This is a conservative local snapshot, not cross-host locking or a
+    hostile-filesystem race-proof attestation.
+    """
+    lock = path.with_name(path.name + ".append.lock")
+    try:
+        lock.lstat()
+    except FileNotFoundError:
+        return
+    except OSError as exc:
+        raise ContractError("unable to inspect ledger append lock") from exc
+    raise ContractError("ledger append active or quarantined; audit refused")
+
+
 def _attempt(permit: dict[str, Any], plan: dict[str, Any], repeat_index: int, job_index: int, terminal: str, *, peak: int = 0, storage: int = 0, egress: int = 0, return_code: int | None = 0) -> dict[str, Any]:
     stamp = f"2026-09-21T00:00:{repeat_index * plan['max_jobs'] + job_index:02d}Z"
     return {
@@ -1010,6 +1026,12 @@ def self_test() -> None:
             assert fault.hit, f"fault injection missed: {mode}"
             lock_path = trial.with_name(trial.name + ".append.lock")
             assert lock_path.is_file(), f"uncertain ledger append lost its lock: {mode}"
+            try:
+                refuse_ledger_append_lock(trial)
+            except ContractError as exc:
+                assert "audit refused" in str(exc), f"audit did not refuse quarantine: {exc}"
+            else:
+                raise AssertionError("authoritative audit admitted a quarantined ledger")
             failing_row = first if new_file else second
             expected_tail = failing_row if mode == "fsync_error" else failing_row[:17]
             expected_bytes = (b"" if new_file else first) + expected_tail
@@ -1030,6 +1052,7 @@ def self_test() -> None:
                     raise AssertionError("partial JSONL was accepted as a complete record")
             # Test-only cleanup. Real recovery requires manual provenance audit.
             lock_path.unlink()
+            refuse_ledger_append_lock(trial)
 
 def load_json(path: Path) -> dict[str, Any]:
     value = json.loads(path.read_text(encoding="utf-8"))
@@ -1066,6 +1089,7 @@ def main() -> int:
     plan = load_json(args.plan)
     validate_plan(permit, plan, allow_native=args.allow_native)
     if args.cmd == "audit-ledger":
+        refuse_ledger_append_lock(args.ledger)
         rows, custody_digest = load_ledger_with_digest(args.ledger)
         validate_ledger_sequence(
             rows, permit, plan,
@@ -1073,6 +1097,7 @@ def main() -> int:
             allow_native=args.allow_native,
         )
         verify_retained_captures(rows, args.captures)
+        refuse_ledger_append_lock(args.ledger)
         print(json.dumps({
             "status": "LEDGER_REPLAY_VALIDATED_NOT_NATIVE_QUALIFICATION",
             "attempt_count": len(rows),
