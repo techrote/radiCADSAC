@@ -24,7 +24,7 @@ No journal, cached derived state, native geometry, STEP writer, campaign writer 
 Run `python3 research/machining-completeness/tasks/MC-047/verify.py --self-test` (or `--contract`). The original controls remain and two negative controls are added:
 
 1. **Existing quarantine over a complete valid 3-slot ledger.** Preflight must raise the exact MC-045 active/quarantined marker refusal. Assert ledger bytes and marker bytes remain intact; test-only marker removal happens only after the verdict.
-2. **Late marker added during the second evidence-fingerprint call.** A local test shim adds the marker *after* returning the unchanged second fingerprint, at the latest useful injection point. Preflight must still refuse for the authoritative marker reason. Verify that both fingerprints were executed, ledger bytes remain identical and marker bytes remain present.
+2. **Late marker added during the second evidence-fingerprint call.** A local test shim captures the second fingerprint snapshot, then adds the marker *before returning that unchanged snapshot*, at the latest useful injection point. Preflight must still refuse for the authoritative marker reason. Verify that both fingerprints were executed, ledger bytes remain identical and marker bytes remain present.
 
 Controls increase from **17 to 19 on POSIX** and from **16 to 18 on Windows**. Previous unlocked partial/full positive controls must remain accepted only within their deliberately non-authoritative statuses. Assert the specific refusal reason; unrelated errors must not count as successful negatives. Run repository `tools/validate_machining_completeness.py` and applicable exact-head Actions workflows. A failed CI invocation or cross-platform test is not discarded as redundant.
 
