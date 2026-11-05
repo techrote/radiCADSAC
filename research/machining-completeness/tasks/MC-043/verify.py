@@ -6,13 +6,16 @@ import argparse
 import copy
 import json
 import os
+import subprocess
+import sys
 from unittest.mock import patch
 import consumer_receipt_preflight as custody
 import tempfile
 from pathlib import Path
 
 from consumer_receipt_preflight import (PROFILE, SCHEMA, STRUCTURAL_ONLY, Rejected,
-                                       check, digest, read_json_bytes)
+                                       MAX_JSON_BYTES, MAX_JSON_DEPTH, MAX_JSON_INT_DIGITS,
+                                       check, digest, read_json_bytes, read_json_file)
 
 
 D1 = "sha256:" + "1" * 64
@@ -336,6 +339,63 @@ def self_test() -> int:
                     manifest_data=with_aux(original_manifest, b'NaN'))
         reject_wire("explicit Infinity constant still refused",
                     receipt_data=with_aux(original_receipt, b'Infinity'))
+        # Raw resource budgets must reject before full JSON allocation/parse,
+        # including the actual on-disk CLI ingestion path.
+        def reject_ingress(label: str, raw_data: bytes) -> None:
+            nonlocal rejected
+            try:
+                read_json_bytes(raw_data)
+            except Rejected:
+                rejected += 1
+                return
+            raise AssertionError(f"pathological raw JSON admitted: {label}")
+
+        over = b'{"padding":"' + b'x' * MAX_JSON_BYTES + b'"}'
+        assert len(over) > MAX_JSON_BYTES
+        reject_ingress("oversized in-memory JSON", over)
+        reject_ingress("over-depth JSON containers",
+                       b'{"nested":' + b'[' * MAX_JSON_DEPTH + b'0' +
+                       b']' * MAX_JSON_DEPTH + b'}')
+        reject_ingress("oversized integer token",
+                       b'{"n":' + b'9' * (MAX_JSON_INT_DIGITS + 1) + b'}')
+        reject_ingress("unbalanced raw closing delimiter", b'{"n":0}]')
+
+        # Equality boundaries remain accepted, and delimiters inside strings
+        # are not containers. These are structural—not engineering—controls.
+        at_limit = b'{"padding":"' + b'x' * (MAX_JSON_BYTES - len(b'{"padding":""}')) + b'"}'
+        assert len(at_limit) == MAX_JSON_BYTES
+        assert len(read_json_bytes(at_limit)["padding"]) > 1000
+        at_depth = b'{"nested":' + b'[' * (MAX_JSON_DEPTH - 1) + b'0' + b']' * (MAX_JSON_DEPTH - 1) + b'}'
+        assert "nested" in read_json_bytes(at_depth)
+        assert read_json_bytes(b'{"n":' + b'9' * MAX_JSON_INT_DIGITS + b'}')["n"] > 0
+        assert read_json_bytes(b'{"literal":"[[[{{{"}')["literal"] == "[[[{{{"
+
+        oversized_path = root / "oversized-manifest.json"
+        receipt_path = root / "valid-structural-receipt.json"
+        oversized_path.write_bytes(over)
+        receipt_path.write_bytes(as_bytes(valid))
+        try:
+            try:
+                read_json_file(oversized_path, "manifest")
+            except Rejected as exc:
+                assert "raw-byte budget" in str(exc), str(exc)
+            else:
+                raise AssertionError("overbudget disk manifest admitted")
+            rejected += 1
+            result = subprocess.run(
+                [sys.executable, str(Path(__file__).with_name("consumer_receipt_preflight.py")),
+                 "--manifest", str(oversized_path), "--receipt", str(receipt_path),
+                 "--artifact-root", str(root)],
+                capture_output=True, text=True, timeout=15, check=False)
+            assert result.returncode == 2 and "REJECTED:" in result.stderr, (
+                f"actual CLI did not refuse overbudget file: {result.returncode} {result.stderr!r}")
+            rejected += 1
+            oversized_path.write_bytes(at_limit)
+            parsed, exact_raw = read_json_file(oversized_path, "manifest")
+            assert len(exact_raw) == MAX_JSON_BYTES and "padding" in parsed
+        finally:
+            oversized_path.unlink()
+            receipt_path.unlink()
 
         (root / "body-a.step").write_bytes(b"TAMPERED_SYNTHETIC_BYTES\n")
         reject_case("mutated bytes after recorded digest", copy.deepcopy(nonempty), copy.deepcopy(valid), root)
@@ -361,7 +421,7 @@ def main() -> None:
     if not args.contract and not args.self_test:
         parser.error("select --contract and/or --self-test")
     rejected = self_test()
-    assert rejected == 47, rejected
+    assert rejected == 53, rejected
     print(f"MC-043 PROVISIONAL STRUCTURAL_PREFLIGHT_ONLY: 4 positive synthetic controls; {rejected} rejected corruptions")
     print("No real STEP file, independent consumer process, native permit or MC-E capability qualified")
 
