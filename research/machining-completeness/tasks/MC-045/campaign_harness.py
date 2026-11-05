@@ -718,7 +718,7 @@ def self_test() -> None:
             ("nonfinite Infinity",
              valid_plan[:-1] + ',"extra":-Infinity}', "nonfinite JSON constant"),
             ("unpaired surrogate",
-             valid_permit[:-1] + ',"extra":"\u' + 'd800"}', "invalid authority JSON"),
+             valid_permit[:-1] + ',"extra":"\\u' + 'd800"}', "invalid authority JSON"),
             ("top-level array", "[]", "top-level JSON object"),
             ("invalid syntax", "{", "invalid authority JSON"),
         ]
