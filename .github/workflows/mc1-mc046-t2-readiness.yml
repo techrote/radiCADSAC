@@ -36,5 +36,11 @@ jobs:
         run: python3 research/machining-completeness/tasks/MC-046/readiness.py --contract
       - name: Run 32 adversarial readiness refusals
         run: python3 research/machining-completeness/tasks/MC-046/readiness.py --self-test
+      - name: Exercise PLAN_ONLY CLI emission and verified re-ingress
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/machining-completeness/tasks/MC-046/readiness.py --emit-plan > mc046-proposal.json
+          python3 research/machining-completeness/tasks/MC-046/readiness.py --check-plan mc046-proposal.json
       - name: Run independent programme static constraints
         run: python3 tools/validate_machining_completeness.py
