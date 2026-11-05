@@ -43,3 +43,9 @@ GitHub Actions `.github/workflows/mc1-mc046-t2-readiness.yml` runs the same sour
 First accept the complete PB-007 mathematical proof, MC-B and genuinely source-matched MC-041 composed native capability through their separate authorities. Then establish prospective, frozen fixture bytes and independent positive-volume material-change certificates for all four tiers and separate zero-additional-removal controls. Only then seek bounded native campaign permit, authentic MC-RH-Q1/platform manifests, exact MC-045 resource ledger and captured crash/timeout failures, candidate-blind T2 execution and engineering-usable STEP verification. No completed PASS may be inferred from this preparation artifact.
 
 **Unresolved:** source generator materialization, independently established volume-positive witness per section, redundant-history non-removal witnesses, actual native candidate/exact build, approved resource permit, three measured sequential repeats, pass/fail against MC-004 envelopes and signed/frozen evidence. These remain explicitly blocked rather than silently marked ready.
+
+## Retained cross-platform failure and custody correction
+
+Initial exact-head [run #42064450217](https://github.com/techrote/radiCADSAC/actions/runs/42064450217) exposed a genuine platform difference: Windows `actions/checkout` materialized the tracked MC-004 JSON with CRLF worktree bytes, while Ubuntu retained Git LF bytes. Hashing `Path.read_bytes()` and expecting a Git blob SHA therefore falsely refused a clean Windows checkout. The original failure is retained and is **not** counted as a pass.
+
+The implementation now verifies the exact `HEAD:<MC-004 relative path>` Git object bytes via `git show` and refuses a dirty tracked working tree. The canonical Git object, not OS-specific working-tree line endings, supplies the pinned source payload. This checks source identity, not any native geometry. Final exact-head CI must establish the correction on both platforms.
