@@ -405,15 +405,47 @@ def validate_report(spec,report):
     return result
 
 
+def attempt_file(path):
+    """Bound raw source input before JSON parsing; never promote parser refusals."""
+    try:
+        with open(path, "rb") as handle:
+            raw = handle.read(MAX_SOURCE_BYTES + 1)
+        budget(len(raw) <= MAX_SOURCE_BYTES, "SOURCE_FILE_BYTE_BUDGET")
+
+        def unique_object(pairs):
+            result = {}
+            for key, value in pairs:
+                need(key not in result, "DUPLICATE_SOURCE_JSON_KEY")
+                result[key] = value
+            return result
+
+        def reject_nonfinite(_token):
+            raise Refusal("NONFINITE_SOURCE_JSON")
+
+        spec = json.loads(raw.decode("utf-8"),
+                          object_pairs_hook=unique_object,
+                          parse_constant=reject_nonfinite)
+        return attempt(spec)
+    except ResourceRefusal as exc:
+        kind, reason = "RESOURCE_REFUSAL", str(exc)
+    except (Refusal, OSError, UnicodeError, ValueError, TypeError,
+            OverflowError) as exc:
+        kind, reason = "BLOCKED", str(exc)
+    except (MemoryError, RecursionError) as exc:
+        kind, reason = "RESOURCE_REFUSAL", type(exc).__name__
+    return {"schema": SCHEMA, "status": kind, "reason": reason,
+            "is_truth_value": False, "pb00701_certified": False,
+            "mc_b_established": False, "mc1_established": False,
+            "production_authorized": False}
+
+
 def main():
     parser=argparse.ArgumentParser()
     parser.add_argument("--contract",action="store_true")
     parser.add_argument("--source",help="A prospective canonical source JSON file")
     args=parser.parse_args()
     if args.source:
-        with open(args.source,encoding="utf8") as handle:
-            spec=json.load(handle)
-        result=attempt(spec)
+        result=attempt_file(args.source)
         print(json.dumps(result,indent=2,sort_keys=True))
         return 0 if result["status"]==STATUS else 1
     if args.contract:
