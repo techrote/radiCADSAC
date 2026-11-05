@@ -3,6 +3,7 @@
 import copy
 import hashlib
 import json
+import tempfile
 import unittest
 from fractions import Fraction as R
 from pathlib import Path
@@ -310,6 +311,50 @@ class ExactOriginalTwoSpanMovingSquareTests(unittest.TestCase):
                          [R(0),R(1,2),R(1),R(3,2),R(2)])
         self.assertEqual(m.phase_lattice(R(0),R(2),R(1),R(-1)),
                          [R(2),R(3,2),R(1),R(1,2),R(0)])
+
+
+    def test_21_file_ingress_exact_raw_size_and_oversized_valid_json(self):
+        valid=m.encode(source((Z,Z),(Z,U)))
+        self.assertLess(len(valid),m.MAX_SOURCE_BYTES)
+        with tempfile.TemporaryDirectory() as folder:
+            path=Path(folder)/"prospective-source.json"
+            path.write_bytes(valid)
+            good=m.attempt_file(path)
+            self.assertEqual(good["status"],m.STATUS,good)
+            # The raw file budget is inclusive, even when padded JSON parses
+            # to precisely the same canonical source specification.
+            path.write_bytes(valid+b" "*(m.MAX_SOURCE_BYTES-len(valid)))
+            good=m.attempt_file(path)
+            self.assertEqual(good["status"],m.STATUS,good)
+            path.write_bytes(valid+b" "*(m.MAX_SOURCE_BYTES+1-len(valid)))
+            bad=m.attempt_file(path)
+            self.assertEqual(bad["status"],"RESOURCE_REFUSAL",bad)
+            self.assertEqual(bad["reason"],"SOURCE_FILE_BYTE_BUDGET")
+            self.assertFalse(bad["is_truth_value"])
+            self.assertFalse(bad["pb00701_certified"])
+
+    def test_22_file_ingress_duplicate_malformed_nonfinite_and_nesting(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path=Path(folder)/"source.json"
+            bad_cases=[
+                (b'{"grammar":"A","grammar":"B"}',
+                 "BLOCKED","DUPLICATE_SOURCE_JSON_KEY"),
+                (b'{"value":NaN}',"BLOCKED","NONFINITE_SOURCE_JSON"),
+                (b'{"value":Infinity}',"BLOCKED","NONFINITE_SOURCE_JSON"),
+                (b'{"', "BLOCKED",None),
+                (b'\\xff', "BLOCKED",None),
+                (b"["*1500+b"0"+b"]"*1500,"RESOURCE_REFUSAL","RecursionError"),
+            ]
+            for raw,kind,reason in bad_cases:
+                with self.subTest(expected=reason or raw[:20]):
+                    path.write_bytes(raw)
+                    answer=m.attempt_file(path)
+                    self.assertEqual(answer["status"],kind,answer)
+                    if reason is not None:
+                        self.assertEqual(answer["reason"],reason)
+                    self.assertFalse(answer["is_truth_value"])
+                    self.assertFalse(answer["mc_b_established"])
+                    self.assertFalse(answer["production_authorized"])
 
 
 if __name__=="__main__":
