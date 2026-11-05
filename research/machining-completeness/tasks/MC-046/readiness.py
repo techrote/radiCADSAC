@@ -106,10 +106,10 @@ def read_proposal(path: Path) -> Any:
         with path.open("rb") as stream:
             descriptor_before = os.fstat(stream.fileno())
             require_single_regular(descriptor_before)
-            require(proposal_identity(pathname_before) == proposal_identity(descriptor_before),
-                    "T2 preparation proposal file identity/metadata changed before open")
             require(descriptor_before.st_size <= MAX_PROPOSAL_BYTES,
                     "T2 preparation JSON exceeds byte limit")
+            require(proposal_identity(pathname_before) == proposal_identity(descriptor_before),
+                    "T2 preparation proposal file identity/metadata changed before open")
             # Always bound descriptor data even if the file grows during read.
             raw = stream.read(MAX_PROPOSAL_BYTES + 1)
             require(len(raw) <= MAX_PROPOSAL_BYTES,
