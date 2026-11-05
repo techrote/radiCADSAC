@@ -6,6 +6,7 @@ import argparse
 import copy
 import hashlib
 import json
+import subprocess
 import tempfile
 from pathlib import Path
 from typing import Any
@@ -66,7 +67,23 @@ def blob(data: bytes) -> str:
 
 
 def load_contract() -> dict[str, Any]:
-    raw = MC004.read_bytes()
+    # Windows checkout may rewrite LF to CRLF. Compare the canonical tracked
+    # Git blob, not the platform-specific working-tree representation.
+    relative = MC004.relative_to(ROOT).as_posix()
+    try:
+        result = subprocess.run(
+            ["git", "-C", str(ROOT), "show", f"HEAD:{relative}"],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True,
+        )
+        dirty = subprocess.run(
+            ["git", "-C", str(ROOT), "status", "--porcelain",
+             "--untracked-files=no", "--", relative],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True,
+        )
+    except (OSError, subprocess.CalledProcessError) as exc:
+        raise Refused("tracked MC-004 source cannot be verified") from exc
+    require(not dirty.stdout.strip(), "MC-004 working-tree source has uncommitted changes")
+    raw = result.stdout
     require(blob(raw) == MC004_BLOB, "reviewed MC-004 source blob drift")
     contract = read_json(raw, allow_floats=True)
     require(isinstance(contract, dict) and
