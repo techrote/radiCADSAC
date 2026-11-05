@@ -28,12 +28,13 @@
     "finite exponential-polynomial independence over C[x]"
   ],
   "published_theorem": {
-    "title": "Isolating Bounded and Unbounded Real Roots of a Mixed Trigonometric-Polynomial",
+    "title": "Isolating all the real roots of a mixed trigonometric-polynomial",
     "authors": "R. Chen, H. Li, B. Xia, T. Zhao, T. Zheng",
     "journal": "Journal of Symbolic Computation 121 (2024) 102250",
     "arxiv": "2301.05847",
     "doi": "10.1016/j.jsc.2023.102250",
-    "verified_claim_scope": "P in Q[X,S,C]; P(x,sin(x),cos(x))"
+    "verified_claim_scope": "P in Q[X,S,C]; P(x,sin(x),cos(x))",
+    "preprint_title": "Isolating Bounded and Unbounded Real Roots of a Mixed Trigonometric-Polynomial"
   },
   "result_scope": "The published rational-coefficient MTP theorem does not apply verbatim to this original rational-B-spline nonconstant-amplitude source under direct phase normalization.",
   "not_claimed": [
