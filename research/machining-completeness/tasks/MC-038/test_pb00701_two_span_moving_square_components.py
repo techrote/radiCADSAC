@@ -312,7 +312,6 @@ class ExactOriginalTwoSpanMovingSquareTests(unittest.TestCase):
         self.assertEqual(m.phase_lattice(R(0),R(2),R(1),R(-1)),
                          [R(2),R(3,2),R(1),R(1,2),R(0)])
 
-
     def test_21_file_ingress_exact_raw_size_and_oversized_valid_json(self):
         valid=m.encode(source((Z,Z),(Z,U)))
         self.assertLess(len(valid),m.MAX_SOURCE_BYTES)
@@ -342,7 +341,7 @@ class ExactOriginalTwoSpanMovingSquareTests(unittest.TestCase):
                 (b'{"value":NaN}',"BLOCKED","NONFINITE_SOURCE_JSON"),
                 (b'{"value":Infinity}',"BLOCKED","NONFINITE_SOURCE_JSON"),
                 (b'{"', "BLOCKED",None),
-                (b'\\xff', "BLOCKED",None),
+                (bytes([0xff]), "BLOCKED",None),
                 (b"["*1500+b"0"+b"]"*1500,"RESOURCE_REFUSAL","RecursionError"),
             ]
             for raw,kind,reason in bad_cases:
