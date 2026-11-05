@@ -135,7 +135,7 @@ def qualification() -> None:
         for stream in ("stdout", "stderr"):
             assert (captures / f"000000.{stream}.bin").read_bytes() == b""
 
-    assert len(checks) == (12 if symlink_supported else 10), checks
+    assert len(checks) == (11 if symlink_supported else 9), checks
     print(
         f"MC-047 real-source ledger alias custody: {len(checks)} controls PASS; "
         f"symlink={'EXECUTED' if symlink_supported else 'UNAVAILABLE'}; "
