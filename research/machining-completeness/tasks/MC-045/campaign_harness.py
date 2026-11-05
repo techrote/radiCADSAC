@@ -469,13 +469,17 @@ def append_attempt(path: Path, attempt: dict[str, Any], permit: dict[str, Any], 
                     raise UncertainLedgerDurabilityError(
                         "ledger write/fsync failed; quarantine lock retained for manual recovery"
                     ) from exc
-        except OSError as exc:
-            # The file context manager can raise during close and mask the
-            # original short-write/fsync exception. A mutation was attempted:
-            # quarantine even when the outermost exception is a close error.
+        except BaseException as exc:
+            # Once a write was attempted, ANY exceptional unwind may leave
+            # unflushed bytes. KeyboardInterrupt/SystemExit run Python finally
+            # blocks (unlike a hard kill) and would otherwise release the
+            # cooperating-writer lock despite uncertain durability. Preserve
+            # the original typed uncertainty when it already exists.
             if mutation_started:
+                if isinstance(exc, UncertainLedgerDurabilityError):
+                    raise
                 raise UncertainLedgerDurabilityError(
-                    "ledger write/fsync/close failed; quarantine lock retained for manual recovery"
+                    "ledger write/fsync/close/interruption failed; quarantine lock retained for manual recovery"
                 ) from exc
             raise
 
@@ -989,12 +993,14 @@ def self_test() -> None:
                 return getattr(self.stream, name)
 
             def write(self, data):
-                if self.fault.mode in ("short", "write_error"):
+                if self.fault.mode in ("short", "write_error", "interrupt_write"):
                     written = self.stream.write(data[:17])
                     self.fault.hit = True
                     assert written == 17, "fault fixture did not write its 17-byte prefix"
                     if self.fault.mode == "write_error":
                         raise OSError(5, "injected EIO after 17 bytes")
+                    if self.fault.mode == "interrupt_write":
+                        raise KeyboardInterrupt("injected interrupt after 17 bytes")
                     return written
                 return self.stream.write(data)
 
@@ -1018,6 +1024,10 @@ def self_test() -> None:
                     self.hit = True
                     self.fsync_hit = True
                     raise OSError(5, "injected ledger fsync EIO")
+                if self.mode == "exit_fsync" and fd == self.ledger_fd:
+                    self.hit = True
+                    self.fsync_hit = True
+                    raise SystemExit("injected system exit during ledger fsync")
                 return real_os.fsync(fd)
 
         first = canonical_bytes(canonical_rows[0]) + b"\n"
@@ -1028,6 +1038,8 @@ def self_test() -> None:
             ("fsync_error", False),
             ("close_error", False),
             ("fsync_close_error", False),
+            ("interrupt_write", False),
+            ("exit_fsync", False),
             ("short", True),
         ):
             trial = directory / f"uncertain-{mode}-{'new' if new_file else 'old'}.jsonl"
@@ -1040,6 +1052,10 @@ def self_test() -> None:
                     append_attempt(trial, canonical_rows[0 if new_file else 1], permit, plan)
                 except UncertainLedgerDurabilityError as exc:
                     assert "quarantine lock retained" in str(exc), exc
+                    if mode == "interrupt_write":
+                        assert isinstance(exc.__cause__, KeyboardInterrupt), "interrupt was not the actual refusal cause"
+                    if mode == "exit_fsync":
+                        assert isinstance(exc.__cause__, SystemExit), "system exit was not the actual refusal cause"
                 else:
                     raise AssertionError("uncertain ledger append returned success")
             finally:
@@ -1047,6 +1063,8 @@ def self_test() -> None:
             assert fault.hit, f"fault injection missed: {mode}"
             if mode == "fsync_close_error":
                 assert fault.fsync_hit and fault.close_hit, "combined sync+close fault was not reproduced"
+            if mode == "exit_fsync":
+                assert fault.fsync_hit, "system-exit fsync injection did not execute"
             lock_path = trial.with_name(trial.name + ".append.lock")
             assert lock_path.is_file(), f"uncertain ledger append lost its lock: {mode}"
             try:
@@ -1056,7 +1074,7 @@ def self_test() -> None:
             else:
                 raise AssertionError("authoritative audit admitted a quarantined ledger")
             failing_row = first if new_file else second
-            expected_tail = failing_row if mode in ("fsync_error", "close_error", "fsync_close_error") else failing_row[:17]
+            expected_tail = failing_row if mode in ("fsync_error", "close_error", "fsync_close_error", "exit_fsync") else failing_row[:17]
             expected_bytes = (b"" if new_file else first) + expected_tail
             assert trial.read_bytes() == expected_bytes, f"write anomaly changed unexpected bytes: {mode}"
             try:
