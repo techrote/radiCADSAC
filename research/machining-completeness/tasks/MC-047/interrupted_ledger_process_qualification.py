@@ -125,8 +125,12 @@ def run_fault(mode: str) -> None:
         # An untrusted operator must not be able to append under a dead-owner
         # lock; neither read-only inspection nor an append attempt repairs it.
         must_refuse(lambda: h.append_attempt(ledger, second, permit, plan), "locked")
+        # A retained append lock takes precedence over JSONL parsing:
+        # the writer may have crashed after a *complete* but unflushed record.
+        # Preflight must refuse quarantined custody before inspecting rows;
+        # the post-unlock controls below still prove torn-record refusal.
         must_refuse(lambda: preflight.audit(permit, plan, ledger, captures),
-                    "unterminated ledger line 2")
+                    "ledger append active or quarantined; audit refused")
         assert ledger.read_bytes() == damaged and lock.is_file()
 
         # A test-only explicit lock removal models an operator who removed
