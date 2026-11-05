@@ -261,12 +261,67 @@ def reject_unpaired_surrogates(document: Any) -> None:
             pending.extend(value)
 
 
+def bounded_json_integer(token: str) -> int:
+    require(len(token.lstrip("-")) <= MAX_JSON_INT_DIGITS,
+            "JSON integer-token digit budget exceeded")
+    return int(token)
+
+
+def check_json_container_depth(data: bytes) -> None:
+    # UTF-8 ASCII brackets cannot occur in multibyte continuation bytes.
+    # Ignore delimiters inside quoted/escaped strings.
+    depth = 0
+    quoted = False
+    escaped = False
+    for code in data:
+        if quoted:
+            if escaped:
+                escaped = False
+            elif code == 92:
+                escaped = True
+            elif code == 34:
+                quoted = False
+            continue
+        if code == 34:
+            quoted = True
+        elif code in (123, 91):
+            depth += 1
+            require(depth <= MAX_JSON_DEPTH, "JSON container depth budget exceeded")
+        elif code in (125, 93):
+            depth -= 1
+            require(depth >= 0, "JSON closing delimiter without opener")
+    # json.loads remains responsible for all remaining JSON grammar.
+
+
 def read_json_bytes(data: bytes) -> dict[str, Any]:
-    document = json.loads(
-        data, object_pairs_hook=no_duplicate_keys, parse_float=finite_json_float,
-        parse_constant=lambda x: (_ for _ in ()).throw(Rejected(f"nonfinite JSON: {x}")))
+    require(isinstance(data, bytes) and len(data) <= MAX_JSON_BYTES,
+            "JSON raw-byte budget exceeded")
+    check_json_container_depth(data)
+    try:
+        document = json.loads(
+            data, object_pairs_hook=no_duplicate_keys, parse_float=finite_json_float,
+            parse_int=bounded_json_integer,
+            parse_constant=lambda x: (_ for _ in ()).throw(Rejected(f"nonfinite JSON: {x}")))
+    except (RecursionError, OverflowError, UnicodeError, json.JSONDecodeError) as exc:
+        raise Rejected(f"JSON decode refusal: {exc}") from exc
     reject_unpaired_surrogates(document)
+    require(isinstance(document, dict), "JSON root must be an object")
     return document
+
+
+def read_json_file(path: Path, role: str) -> tuple[dict[str, Any], bytes]:
+    # Bound raw allocation before decoding; no hostile-filesystem attestation.
+    try:
+        before = path.lstat()
+        require(stat.S_ISREG(before.st_mode), f"{role} JSON must be a regular file")
+        with path.open("rb") as stream:
+            require(stat.S_ISREG(os.fstat(stream.fileno()).st_mode),
+                    f"{role} JSON descriptor must be a regular file")
+            raw = stream.read(MAX_JSON_BYTES + 1)
+    except OSError as exc:
+        raise Rejected(f"{role} JSON read refusal: {exc}") from exc
+    require(len(raw) <= MAX_JSON_BYTES, f"{role} JSON raw-byte budget exceeded")
+    return read_json_bytes(raw), raw
 
 
 def main() -> None:
@@ -276,9 +331,9 @@ def main() -> None:
     parser.add_argument("--artifact-root", type=Path, required=True)
     args = parser.parse_args()
     try:
-        raw = args.manifest.read_bytes()
-        result = check(read_json_bytes(raw), read_json_bytes(args.receipt.read_bytes()), raw,
-                       args.artifact_root)
+        manifest, raw = read_json_file(args.manifest, "manifest")
+        receipt, _ = read_json_file(args.receipt, "receipt")
+        result = check(manifest, receipt, raw, args.artifact_root)
     except (Rejected, OSError, ValueError, TypeError, KeyError) as exc:
         parser.exit(2, f"REJECTED: {exc}\n")
     print(result)
