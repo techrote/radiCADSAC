@@ -186,7 +186,7 @@ def self_test() -> int:
         observations = []
 
         def before_open_swap(path, flags, *args, **kwargs):
-            if Path(path) == target and not swapped[0]:
+            if Path(path).name == target.name and not swapped[0]:
                 swapped[0] = True
                 before_meta = target.lstat()
                 target.replace(displaced)
