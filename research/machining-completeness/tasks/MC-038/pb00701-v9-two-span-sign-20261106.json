@@ -1,0 +1,61 @@
+{
+  "schema": "radicadsac-pb00701-v9-two-span-sign/1.0",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "case_id": "composite:PB00701_V9_EXACT_MONOTONE_SINGLE_HARMONIC_RATIO:tail0",
+  "source_sha256": "4d1ef1cbecceeb4a43b4e30fd37327fa204164cc9ce25dfe4f1744a052cebcc2",
+  "original_row_sha256": "406ec73609a8213051afd3361478416e496c782b2b89ae2a857b772146059279",
+  "source_parameter": [
+    "0",
+    "2"
+  ],
+  "true_knot": "1",
+  "phase_turns": [
+    "0",
+    "1/8"
+  ],
+  "proof_method": "EXACT_SOURCE_TWO_SPAN_TRIG_SECTOR_SIGN",
+  "implicit_root_open": [
+    "0",
+    "1/2"
+  ],
+  "root_count": 1,
+  "root_kind": "SIMPLE_NEGATIVE_TO_POSITIVE",
+  "root_multiplicity": 1,
+  "knot_sign": "POSITIVE",
+  "endpoint_signs": [
+    "NEGATIVE",
+    "POSITIVE"
+  ],
+  "right_piece_nonmonotone": true,
+  "right_piece_root_count": 0,
+  "maximal_sign_cells": [
+    [
+      "0",
+      "r",
+      "NEGATIVE"
+    ],
+    [
+      "r",
+      "2",
+      "POSITIVE"
+    ]
+  ],
+  "v54_source_count": 121,
+  "v54_route_refusals": 20,
+  "v54_missing_ordered": 30,
+  "v2_preexisting_complete": 50,
+  "accepted_historical_delta": 0,
+  "conditional_missing_ordered_after": 29,
+  "candidate_case_ids": [
+    "composite:PB00701_V9_EXACT_MONOTONE_SINGLE_HARMONIC_RATIO:tail0"
+  ],
+  "new_complete_source_witnesses": 0,
+  "pb_obligations_discharged": 0,
+  "pb007_status": "OPEN",
+  "mc_b": "NOT_ESTABLISHED",
+  "mc1": "NOT_ESTABLISHED",
+  "native_geometry": false,
+  "engineering_step": false,
+  "production_authorized": false,
+  "supported_operations": 26
+}
