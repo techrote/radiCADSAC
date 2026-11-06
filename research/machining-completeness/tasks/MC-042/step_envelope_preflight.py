@@ -78,8 +78,13 @@ def bounded_file(path: Path, after_open: Callable[[], None] | None = None) -> by
         raise Refused("STEP input filesystem custody unavailable") from exc
 
 
-def visible_tokens(text: str) -> str:
-    """Mask quoted strings and /* comments */; never mistake their markers for sections."""
+def visible_tokens(text: str, *, mark_strings: bool = False) -> str:
+    """Mask comments and strings; optionally mark detached string payload.
+
+    Section recognition needs quote-masked text so quoted marker decoys are
+    ignored. Structural inspection needs one non-whitespace sentinel per
+    quoted string so an otherwise detached literal cannot disappear as space.
+    """
     out = list(text)
     i, n = 0, len(text)
     while i < n:
@@ -105,6 +110,8 @@ def visible_tokens(text: str) -> str:
                 raise Refused("unterminated STEP quoted string")
             for j in range(start, i):
                 out[j] = " "
+            if mark_strings:
+                out[start] = "?"
         else:
             i += 1
     return "".join(out)
@@ -216,12 +223,23 @@ def lexical_envelope(raw: bytes) -> None:
     found = list(MARKER_RE.finditer(visible))
     if tuple(x.group(1).upper() for x in found) != MARKERS:
         raise Refused("STEP Part-21 envelope sections incomplete or duplicated")
-    if visible[:found[0].start()].strip() or visible[found[-1].end():].strip():
-        raise Refused("STEP Part-21 envelope has leading or trailing payload")
-    header = visible[found[1].end():found[2].start()]
+    structural = visible_tokens(text, mark_strings=True)
+    # All five regions outside HEADER/DATA are comments-or-whitespace only.
+    # The plain masked view previously erased detached quoted payload and
+    # neglected the three inter-section gaps entirely.
+    for start, end in (
+        (0, found[0].start()),
+        (found[0].end(), found[1].start()),
+        (found[2].end(), found[3].start()),
+        (found[4].end(), found[5].start()),
+        (found[5].end(), len(text)),
+    ):
+        if structural[start:end].strip():
+            raise Refused("STEP Part-21 envelope has detached or inter-section payload")
+    header = structural[found[1].end():found[2].start()]
     if not _has_complete_header_inventory(header):
         raise Refused("STEP HEADER contains unfinished, duplicate-schema or trailing record text")
-    data = visible[found[3].end():found[4].start()]
+    data = structural[found[3].end():found[4].start()]
     if not _balanced_parentheses(header) or not _balanced_parentheses(data):
         raise Refused("STEP header or DATA contains unbalanced parentheses")
     if not _has_complete_entity_inventory(data):
@@ -296,6 +314,14 @@ def self_test() -> None:
         # Additional complete HEADER record must not be mistaken for junk.
         accept(good.replace(b"FILE_SCHEMA(('AP242'));",
                             b"FILE_NAME('synthetic');\nFILE_SCHEMA(('AP242'));"))
+        # Comments are still legal in every inter-section gap. Quoted section
+        # decoys inside constructors also remain masked for section inventory.
+        accept(good.replace(b"ISO-10303-21;\nHEADER;",
+                            b"ISO-10303-21;\n/* pre-header */\nHEADER;")
+                   .replace(b"ENDSEC;\nDATA;",
+                            b"ENDSEC;\n/* pre-data */\nDATA;")
+                   .replace(b"ENDSEC;\nEND-ISO-10303-21;",
+                            b"ENDSEC;\n/* pre-footer */\nEND-ISO-10303-21;"))
         # The sentinel must admit a complete multiple-entity inventory,
         # including a complex instance, without interpreting the geometry.
         decoy = b"/* quoted decoy HEADER; ENDSEC; */"
@@ -315,6 +341,32 @@ def self_test() -> None:
         refuse(good.replace(b"ENDSEC;\nDATA;", b"JUNK_AFTER_SCHEMA\nENDSEC;\nDATA;"))
         refuse(good.replace(b"FILE_SCHEMA(('AP242'));",
                             b"FILE_SCHEMA(('AP242'));\nFILE_SCHEMA(('AP242'));"))
+        # Source-matched gap/quote regression: formerly all these candidates
+        # were admitted despite detached payload outside complete records.
+        for before, after in (
+            (b"ISO-10303-21;\nHEADER;", b"ISO-10303-21;\nJUNK\nHEADER;"),
+            (b"ENDSEC;\nDATA;", b"ENDSEC;\nJUNK\nDATA;"),
+            (b"ENDSEC;\nEND-ISO-10303-21;",
+             b"ENDSEC;\nJUNK\nEND-ISO-10303-21;"),
+        ):
+            assert before in good
+            refuse(good.replace(before, after, 1))
+        for mutant in (
+            b"'detached'\n" + good,
+            good + b"\n'detached'",
+            good.replace(b"ISO-10303-21;\nHEADER;",
+                         b"ISO-10303-21;\n'detached'\nHEADER;", 1),
+            good.replace(b"ENDSEC;\nDATA;",
+                         b"ENDSEC;\n'detached'\nDATA;", 1),
+            good.replace(b"ENDSEC;\nEND-ISO-10303-21;",
+                         b"ENDSEC;\n'detached'\nEND-ISO-10303-21;", 1),
+            good.replace(b"FILE_SCHEMA(('AP242'));",
+                         b"FILE_SCHEMA(('AP242')); 'detached';", 1),
+            good.replace(b"#1=NOT_A_REAL_BREP('ENDSEC; DATA; /* not a comment */');",
+                         b"#1=NOT_A_REAL_BREP('ENDSEC; DATA; /* not a comment */'); 'detached';", 1),
+        ):
+            assert mutant != good
+            refuse(mutant)
         refuse(good.replace(b"#1=", b"NO_ENTITY="))
         # A mere #number= token cannot count as an emitted STEP instance.
         refuse(good.replace(
