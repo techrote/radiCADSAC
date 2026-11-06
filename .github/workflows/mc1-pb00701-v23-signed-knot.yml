@@ -1,0 +1,46 @@
+name: mc1-pb00701-v23-signed-knot
+
+on:
+  push:
+    branches:
+      - mc038/v23-signed-knot-20261106
+    paths:
+      - research/machining-completeness/tasks/MC-038/pb00701_v23_signed_knot_20261106.py
+      - research/machining-completeness/tasks/MC-038/pb00701-v23-signed-knot-20261106.json
+      - research/machining-completeness/tasks/MC-038/pb00701-v23-signed-knot-20261106.md
+      - .github/workflows/mc1-pb00701-v23-signed-knot.yml
+  pull_request:
+    paths:
+      - research/machining-completeness/tasks/MC-038/pb00701_v23_signed_knot_20261106.py
+      - research/machining-completeness/tasks/MC-038/pb00701-v23-signed-knot-20261106.json
+      - research/machining-completeness/tasks/MC-038/pb00701-v23-signed-knot-20261106.md
+      - .github/workflows/mc1-pb00701-v23-signed-knot.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  original-v23-source-signed-knot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Literal checked-out head
+        shell: bash
+        run: |
+          echo "EXPECTED=${{ github.event.pull_request.head.sha || github.sha }}"
+          echo "ACTUAL=$(git rev-parse HEAD)"
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Exact original V23 signed physical source knot and adversarial tests
+        run: python3 research/machining-completeness/tasks/MC-038/pb00701_v23_signed_knot_20261106.py --contract --self-test
+      - name: Historical V54 source frontier census
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py --contract --self-test
+      - name: Fresh full V54/V2 source evidence reconciliation and negative controls
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_evidence_reconciliation_v2.py --contract --self-test
+      - name: MC-1 static authority validation
+        run: python3 tools/validate_machining_completeness.py
