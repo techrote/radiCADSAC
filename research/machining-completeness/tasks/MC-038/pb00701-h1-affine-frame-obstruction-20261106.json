@@ -1,0 +1,107 @@
+{
+  "schema": "radicadsac-pb00701-h1-affine-frame-obstruction/1.0",
+  "proposed_route": "AFFINE_PHASE_FRAME_ERASES_H1_SINE_WITH_UNRESTRICTED_AMPLITUDE",
+  "disposition": "FALSIFIED_FOR_TWO_FROZEN_ORIGINAL_FIRST_SPANS",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "frozen_corpus_git_blob": "5841c331579489b25caef38cd412bdbf286f9134",
+  "frozen_v2_git_blob": "e52d3baf3692a011cf86234eeaa992ef407d99fd",
+  "pinned_census_checker_git_blob": "944565a534adc6703189291ac2cc55b97ad4736c",
+  "proof_method": "EXACT_NONZERO_WRONSKIAN_AND_POLYNOMIAL_DEGREE_CONTRADICTION",
+  "cases": [
+    {
+      "case_id": "composite:PB00701_V9_EXACT_MONOTONE_SINGLE_HARMONIC_RATIO:tail0",
+      "source_sha256": "4d1ef1cbecceeb4a43b4e30fd37327fa204164cc9ce25dfe4f1744a052cebcc2",
+      "source_row_sha256": "406ec73609a8213051afd3361478416e496c782b2b89ae2a857b772146059279",
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "first_original_span": [
+        "0",
+        "1"
+      ],
+      "true_original_source_knot": "1",
+      "phase_turns_offset": "0",
+      "phase_turns_rate": "1/8",
+      "C_coefficients_ascending": [
+        "-1/2",
+        "1"
+      ],
+      "S_coefficients_ascending": [
+        "1"
+      ],
+      "W_coefficients_ascending": [
+        "-1"
+      ],
+      "q_coefficients_ascending": [
+        "5/4",
+        "-1",
+        "1"
+      ],
+      "nonzero_wronskian_blocks_every_affine_phase": true
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v9:4e7b85fa122a",
+      "source_sha256": "a83ca0cd16c7822e6525f8f2d2df26a54f45b99807cadebc67f31fc49b066c10",
+      "source_row_sha256": "62346bbddca22c4271a14c10aa130327013ac7cf8daa0b0ae515257e8f28cfad",
+      "historical_v54_disposition": "BLOCKED",
+      "first_original_span": [
+        "0",
+        "1"
+      ],
+      "true_original_source_knot": null,
+      "phase_turns_offset": "0",
+      "phase_turns_rate": "1/8",
+      "C_coefficients_ascending": [
+        "1"
+      ],
+      "S_coefficients_ascending": [
+        "-1/2",
+        "1"
+      ],
+      "W_coefficients_ascending": [
+        "1"
+      ],
+      "q_coefficients_ascending": [
+        "5/4",
+        "-1",
+        "1"
+      ],
+      "nonzero_wronskian_blocks_every_affine_phase": true
+    }
+  ],
+  "matched_census": {
+    "frozen_original_sources": {
+      "before": 121,
+      "after": 121,
+      "delta": 0
+    },
+    "historical_route_refusals": {
+      "before": 20,
+      "after": 20,
+      "delta": 0
+    },
+    "historical_missing_ordered": {
+      "before": 30,
+      "after": 30,
+      "delta": 0
+    },
+    "already_complete_v2_originals": {
+      "before": 50,
+      "after": 50,
+      "delta": 0
+    }
+  },
+  "new_historical_ids_closed": [],
+  "required_pb_po_discharges": 0,
+  "claim_boundaries": {
+    "all_polynomial_pairs_with_nonzero_W_block_affine_frame": true,
+    "unrestricted_nonlinear_phase_excluded": false,
+    "rational_amplitude_assumed": false,
+    "root_solver_constructed": false,
+    "general_analytic_event_theorem": false,
+    "mc_b_or_mc1_established": false,
+    "native_geometry": false,
+    "independent_oracle": false,
+    "engineering_step": false,
+    "production_authorized": false,
+    "supported_operations_preserved": 26
+  }
+}
