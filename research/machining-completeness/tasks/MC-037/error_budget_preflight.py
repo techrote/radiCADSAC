@@ -147,7 +147,10 @@ def pairs_unique(pairs):
     return obj
 
 def invalid_number(value):
-    raise Refused("nonfinite or floating JSON authority token")
+    # The PLAN_ONLY schema has no numeric JSON fields: even a legitimate
+    # allocation is a bounded, canonical rational *string*. Reject integer
+    # tokens before Python attempts to convert a giant decimal to int.
+    raise Refused("JSON numeric authority token forbidden; use rational strings")
 
 def read_file(path):
     try:
@@ -172,7 +175,8 @@ def read_file(path):
     try:
         return json.loads(
             raw.decode("utf-8", errors="strict"), object_pairs_hook=pairs_unique,
-            parse_float=invalid_number, parse_constant=invalid_number,
+            parse_int=invalid_number, parse_float=invalid_number,
+            parse_constant=invalid_number,
         )
     except (UnicodeError, json.JSONDecodeError) as exc:
         raise Refused("malformed or non-UTF8 JSON plan") from exc
@@ -244,6 +248,13 @@ def self_test():
             raw.replace('"MC-015":', '"MC-015": "0", "MC-015":'),
             raw.replace('"po_09_established": false', '"po_09_established": NaN'),
             raw.replace('"po_09_established": false', '"po_09_established": 1.0'),
+            raw.replace('"trial_request_metres": "1/1000000"',
+                        '"trial_request_metres": 123'),
+            raw.replace('"trial_request_metres": "1/1000000"',
+                        '"trial_request_metres": ' + '9' * 5000),
+            raw.replace('"trial_request_metres": "1/1000000"',
+                        '"trial_request_metres": -0'),
+            raw.replace('"sweep": "1/10000000"', '"sweep": 0'),
             "{broken json",
             "\ufeff" + raw,
             raw + " " * (MAX_FILE + 1),
