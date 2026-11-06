@@ -1,0 +1,48 @@
+name: mc1-pb00701-v43-mtp-coefficient-boundary
+on:
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v43_mtp_coefficient_boundary.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v43-mtp-coefficient-boundary-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v43-mtp-coefficient-boundary.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation-v2.json'
+      - '.github/workflows/mc1-pb00701-v43-mtp-coefficient-boundary.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_v43_mtp_coefficient_boundary.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v43-mtp-coefficient-boundary-research.md'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-v43-mtp-coefficient-boundary.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-finite-owner-corpus-v54.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-post-v54-evidence-reconciliation-v2.json'
+      - '.github/workflows/mc1-pb00701-v43-mtp-coefficient-boundary.yml'
+permissions:
+  contents: read
+jobs:
+  v43-rational-mtp-grammar-negative:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Frozen V43 original source and rational Fourier/adversarial theorem admission
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_v43_mtp_coefficient_boundary.py --contract --self-test
+      - name: Exact 50-source producing evidence reconciliation (independent existing route)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_evidence_reconciliation_v2.py --contract
+      - name: MC-1 static programme and immutable authority
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/validate_machining_completeness.py
