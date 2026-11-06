@@ -1,0 +1,46 @@
+name: mc1-pb00701-v9-phasor-norm-obstruction
+
+on:
+  push:
+    branches:
+      - research/mc038-v9-phasor-norm-obstruction-20261106
+    paths:
+      - research/machining-completeness/tasks/MC-038/pb00701_v9_phasor_norm_obstruction_20261106.py
+      - research/machining-completeness/tasks/MC-038/pb00701-v9-phasor-norm-obstruction-20261106.json
+      - research/machining-completeness/tasks/MC-038/pb00701-v9-phasor-norm-obstruction-20261106.md
+      - .github/workflows/mc1-pb00701-v9-phasor-norm-obstruction-20261106.yml
+  pull_request:
+    paths:
+      - research/machining-completeness/tasks/MC-038/pb00701_v9_phasor_norm_obstruction_20261106.py
+      - research/machining-completeness/tasks/MC-038/pb00701-v9-phasor-norm-obstruction-20261106.json
+      - research/machining-completeness/tasks/MC-038/pb00701-v9-phasor-norm-obstruction-20261106.md
+      - .github/workflows/mc1-pb00701-v9-phasor-norm-obstruction-20261106.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  original-v9-phasor-norm-negative:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout literal source PR head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Authenticate exact checkout SHA
+        shell: bash
+        run: |
+          echo "EXPECTED=${{ github.event.pull_request.head.sha || github.sha }}"
+          echo "ACTUAL=$(git rev-parse HEAD)"
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Original-source phasor norm negative and adversarial controls
+        run: python3 research/machining-completeness/tasks/MC-038/pb00701_v9_phasor_norm_obstruction_20261106.py --contract --self-test
+      - name: Historical frozen V54 census and mutation controls
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py --contract --self-test
+      - name: Complete V54 V2 actual original-source witness replay
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_evidence_reconciliation_v2.py --contract --self-test
+      - name: MC-1 static authority and operation denominator
+        run: python3 tools/validate_machining_completeness.py
