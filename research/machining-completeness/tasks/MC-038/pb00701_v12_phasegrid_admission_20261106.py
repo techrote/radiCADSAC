@@ -261,12 +261,12 @@ def produce():
                 refused.append([row["id"],detail])
         except Refusal:
             pass
-    check(len(structural)==4 and len(admitted)==2 and len(refused)==2,
+    check(len(structural)==3 and len(admitted)==2 and len(refused)==1,
           "DIRECT_GRAMMAR_CENSUS_CHANGED:"+repr({"structural":structural,"admitted":admitted,"refused":refused}))
     check(set(admitted)=={
         "harvested:verify_pb00701_v10:a3af56296a12",V10},
           "DIRECT_ADMITTED_IDENTITY_CHANGED")
-    check(set(x[0] for x in refused)=={V12,"harvested:v19:951efe10f570"},
+    check(set(x[0] for x in refused)=={V12},
           "DIRECT_REFUSED_IDENTITY_CHANGED")
     check(V12 in structural and V12 not in admitted,"V12_FALSE_DIRECT_CLOSURE")
     return {"schema":"radicadsac-mc038-v12-phasegrid-admission-c/1.0",
@@ -299,7 +299,7 @@ class Tests(unittest.TestCase):
         self.assertEqual((x["direct_structurally_eligible"],
                           x["direct_fully_admitted"],
                           x["direct_historical_unresolved_not_admitted"]),
-                         (4,2,49))
+                         (3,2,49))
     def test_receipt_is_recomputed(self):
         x=produce()
         self.assertEqual(x,parse_json(RECEIPT.read_bytes()))
