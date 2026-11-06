@@ -125,6 +125,47 @@ def _balanced_parentheses(segment: str) -> bool:
 
 # Conservative lexical instance starts. Strings/comments have already been masked.
 ENTITY_BEGIN_RE = re.compile(r"#[1-9][0-9]*\s*=\s*(?:[A-Za-z][A-Za-z0-9_]*\s*\(|\()")
+HEADER_BEGIN_RE = re.compile(r"([A-Za-z][A-Za-z0-9_]*)\s*\(")
+
+
+def _has_complete_header_inventory(header: str) -> bool:
+    """Require every provisional HEADER constructor to terminate with ';'.
+
+    Only a conservative lexical check on already masked strings/comments;
+    not full Part-21 header-schema or AP242 parsing.
+    """
+    pos, n, schema_count = 0, len(header), 0
+    while True:
+        while pos < n and header[pos].isspace():
+            pos += 1
+        if pos == n:
+            return schema_count == 1
+        match = HEADER_BEGIN_RE.match(header, pos)
+        if match is None:
+            return False
+        if match.group(1).upper() == "FILE_SCHEMA":
+            schema_count += 1
+            if schema_count > 1:
+                return False
+        depth = 1
+        pos = match.end()
+        while pos < n:
+            ch = header[pos]
+            if ch == "(":
+                depth += 1
+            elif ch == ")":
+                depth -= 1
+                if depth == 0:
+                    break
+            pos += 1
+        if depth != 0:
+            return False
+        pos += 1
+        while pos < n and header[pos].isspace():
+            pos += 1
+        if pos == n or header[pos] != ";":
+            return False
+        pos += 1
 
 
 def _has_complete_entity_inventory(data: str) -> bool:
@@ -178,8 +219,8 @@ def lexical_envelope(raw: bytes) -> None:
     if visible[:found[0].start()].strip() or visible[found[-1].end():].strip():
         raise Refused("STEP Part-21 envelope has leading or trailing payload")
     header = visible[found[1].end():found[2].start()]
-    if not re.search(r"\bFILE_SCHEMA\s*\(", header, re.I):
-        raise Refused("STEP header lacks FILE_SCHEMA declaration")
+    if not _has_complete_header_inventory(header):
+        raise Refused("STEP HEADER contains unfinished, duplicate-schema or trailing record text")
     data = visible[found[3].end():found[4].start()]
     if not _balanced_parentheses(header) or not _balanced_parentheses(data):
         raise Refused("STEP header or DATA contains unbalanced parentheses")
@@ -252,6 +293,9 @@ def self_test() -> None:
         accept(good)
         accept(good.replace(b"HEADER;\n", b"HEADER;\n/* fake DATA; ENDSEC; */\n"))
         accept(good.replace(b"NOT_A_REAL_BREP", b"SYNTHETIC_PLACEHOLDER"))
+        # Additional complete HEADER record must not be mistaken for junk.
+        accept(good.replace(b"FILE_SCHEMA(('AP242'));",
+                            b"FILE_NAME('synthetic');\nFILE_SCHEMA(('AP242'));"))
         # The sentinel must admit a complete multiple-entity inventory,
         # including a complex instance, without interpreting the geometry.
         decoy = b"/* quoted decoy HEADER; ENDSEC; */"
@@ -263,6 +307,14 @@ def self_test() -> None:
         refuse(good.replace(b"DATA;\n", b"BEGIN_DATA;\n", 1))
         refuse(good.replace(b"END-ISO-10303-21;", b"END-ISO-10303-20;"))
         refuse(good.replace(b"FILE_SCHEMA", b"NO_SCHEMA"))
+        # Missing HEADER statement semicolons and arbitrary trailing payload
+        # previously passed the FILE_SCHEMA presence-only search.
+        refuse(good.replace(b"FILE_SCHEMA(('AP242'));", b"FILE_SCHEMA(('AP242'))"))
+        refuse(good.replace(b"FILE_DESCRIPTION(('synthetic'),'2;1');",
+                            b"FILE_DESCRIPTION(('synthetic'),'2;1')"))
+        refuse(good.replace(b"ENDSEC;\nDATA;", b"JUNK_AFTER_SCHEMA\nENDSEC;\nDATA;"))
+        refuse(good.replace(b"FILE_SCHEMA(('AP242'));",
+                            b"FILE_SCHEMA(('AP242'));\nFILE_SCHEMA(('AP242'));"))
         refuse(good.replace(b"#1=", b"NO_ENTITY="))
         # A mere #number= token cannot count as an emitted STEP instance.
         refuse(good.replace(
