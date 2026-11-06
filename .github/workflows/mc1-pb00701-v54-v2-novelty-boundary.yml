@@ -1,0 +1,46 @@
+name: mc1-pb00701-v54-v2-novelty-boundary
+
+on:
+  push:
+    branches:
+      - research/mc038-v54-v2-novelty-boundary-20261106
+    paths:
+      - research/machining-completeness/tasks/MC-038/pb00701_v54_v2_novelty_boundary_20261106.py
+      - research/machining-completeness/tasks/MC-038/pb00701-v54-v2-novelty-boundary-20261106.json
+      - research/machining-completeness/tasks/MC-038/pb00701-v54-v2-novelty-boundary-20261106.md
+      - .github/workflows/mc1-pb00701-v54-v2-novelty-boundary.yml
+  pull_request:
+    paths:
+      - research/machining-completeness/tasks/MC-038/pb00701_v54_v2_novelty_boundary_20261106.py
+      - research/machining-completeness/tasks/MC-038/pb00701-v54-v2-novelty-boundary-20261106.json
+      - research/machining-completeness/tasks/MC-038/pb00701-v54-v2-novelty-boundary-20261106.md
+      - .github/workflows/mc1-pb00701-v54-v2-novelty-boundary.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  prior-signed-original-source-admission:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout literal branch or PR head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Authenticate exact checked-out source
+        shell: bash
+        run: |
+          echo "EXPECTED=${{ github.event.pull_request.head.sha || github.sha }}"
+          echo "ACTUAL=$(git rev-parse HEAD)"
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Recompute three original signed V2 source proofs and test novelty receipt
+        run: python3 research/machining-completeness/tasks/MC-038/pb00701_v54_v2_novelty_boundary_20261106.py --contract --self-test
+      - name: Fresh pinned V54 theorem frontier
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py --contract --self-test
+      - name: Fresh full V54 V2 producing replay
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_evidence_reconciliation_v2.py --contract --self-test
+      - name: Static MC-1 programme authority
+        run: python3 tools/validate_machining_completeness.py
