@@ -2,7 +2,7 @@
 """PB-007-01 / PO-05/08: source-bound V23 signed knot crossing.
 
 This is one original frozen v54 nonstationary multi-span ordered-premise
-candidate, NOT a general analytic event oracle or a PB-007 discharge.
+alternative, NOT a new historical closure or a PB-007 discharge.
 All mathematical sign claims use exact rational inequalities, not sampling.
 """
 from __future__ import annotations
@@ -24,13 +24,17 @@ ROW_SHA = "e52a27e5c3dcdf984919cdcd7bb925c52d2865550035da357cd87178b9fbfc89"
 CORPUS = HERE / "pb00701-finite-owner-corpus-v54.json"
 V2 = HERE / "pb00701-post-v54-evidence-reconciliation-v2.json"
 RECEIPT = HERE / "pb00701-v23-signed-knot-20261106.json"
+PRIOR_REPORT = HERE / "pb00701-exact-zero-child-source-completion-witness.json"
 CORPUS_BLOB = "5841c331579489b25caef38cd412bdbf286f9134"
 V2_BLOB = "e52d3baf3692a011cf86234eeaa992ef407d99fd"
+PRIOR_REPORT_BLOB = "ed0a09595a4e73f7fdb9853d9151b8c7b6fea05f"
+PRIOR_PRODUCER_BLOB = "668eef22876afdeec0931a6ccb6a48573b053203"
 SCHEMA = "radicadsac-pb00701-v23-signed-knot-source/1.0"
 EVIDENCE_CLASS = "DETERMINISTIC_MODEL"
 MAX_CORPUS = 300000
 MAX_V2 = 200000
 MAX_RECEIPT = 30000
+MAX_PRIOR_REPORT = 40000
 
 
 class Refused(ValueError):
@@ -244,6 +248,8 @@ def case_and_v2():
     need(evidence["source_sha256"] == CASE_SHA and
          evidence["original_row_sha256"] == ROW_SHA and
          evidence["registered_evidence_level"] == "COMPLETE_SOURCE_SPECIFIC" and
+         evidence["evidence"]["producer"] == "exact_zero_children" and
+         evidence["evidence"]["producer_git_blob"] == PRIOR_PRODUCER_BLOB and
          evidence["historical_v54_disposition"] ==
              "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
          "PREEXISTING_SOURCE_SPECIFIC_WITNESS_DRIFT")
@@ -253,13 +259,122 @@ def case_and_v2():
     return source["spec"]
 
 
+
+def check_prior_signed_report(report):
+    """Independent previously accepted V2 SIGNED-event prior-art admission.
+
+    It is not enough to see a COMPLETE_SOURCE_SPECIFIC zero-set label: the
+    original saved producing proof already records the exact sided event,
+    sign cells, knots and strict whole-source derivative premise. Match
+    JSON tokens exactly, including booleans versus integer sign/order tokens.
+    """
+    need(type(report) is dict and
+         type(report.get("source_specific_proofs")) is list and
+         len(report["source_specific_proofs"]) == 3 and
+         report.get("evidence_class") == EVIDENCE_CLASS,
+         "PRIOR_SIGNED_PROOF_SCHEMA_OR_DENOMINATOR_DRIFT")
+    selected = [r for r in report["source_specific_proofs"]
+                if r.get("case_id") == CASE_ID]
+    need(len(selected) == 1, "PRIOR_SIGNED_PROOF_CASE_MISSING")
+    p = selected[0]
+    expected_identity = {
+        "case_id": CASE_ID, "source_sha256": CASE_SHA,
+        "original_row_sha256": ROW_SHA, "source_parameter_id": "source-time-t",
+        "source_interval": ["0", "2"],
+        "phase_turn_law": {"offset": "0", "rate": "1/12"},
+        "original_source_piece_edges": ["0", "1", "2"],
+        "historical_v54_disposition":
+            "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "complete_original_source_zero_set": True,
+        "complete_finite_physical_event_count": 1,
+        "physical_zero_set": ["1"],
+        "ordered_nonzero_signs": [-1, 1],
+        "evidence_class": EVIDENCE_CLASS,
+        "historical_disposition_changed": False,
+    }
+    for key, value in expected_identity.items():
+        need(canonical_receipt_json(p.get(key)) == canonical_receipt_json(value),
+             "PRIOR_SIGNED_PROOF_IDENTITY_OR_EVENT_DRIFT")
+    need(canonical_receipt_json([s["interval"] for s in p["source_spans"]]) ==
+         canonical_receipt_json([["0", "1"], ["1", "2"]]),
+         "PRIOR_SIGNED_PROOF_SOURCE_PIECES_DRIFT")
+    knot = p["source_knot_receipt"]
+    expected_knot = {
+        "status": "EXACT_SINGLE_SOURCE_KNOT_ZERO",
+        "coordinate": "1", "physical_zero_events": 1,
+        "left_one_sided_order": 1, "right_one_sided_order": 1,
+        "left_sign": -1, "right_sign": 1,
+        "event_kind": "CROSSING",
+        "global_smooth_multiplicity_claimed": False,
+        "historical_v54_admitted": False,
+        "production_authorized": False,
+    }
+    for key, value in expected_knot.items():
+        need(canonical_receipt_json(knot.get(key)) == canonical_receipt_json(value),
+             "PRIOR_SIGNED_PROOF_KNOT_OR_ORDER_DRIFT")
+    expected_cells = [
+        {"interval": ["0", "1"], "open_at_event": "RIGHT", "sign": -1},
+        {"interval": ["1", "2"], "open_at_event": "LEFT", "sign": 1},
+    ]
+    need(canonical_receipt_json(p["maximal_nonzero_cells"]) ==
+         canonical_receipt_json(expected_cells),
+         "PRIOR_SIGNED_PROOF_CELL_DRIFT")
+    event = p["physical_events"]
+    need(type(event) is list and len(event) == 1,
+         "PRIOR_SIGNED_PROOF_EVENT_COUNT_DRIFT")
+    for key, value in {
+        "kind": "EXACT_PHYSICAL_SOURCE_KNOT_ZERO", "coordinate": "1",
+        "left_one_sided_order": 1, "right_one_sided_order": 1,
+        "left_sign": -1, "right_sign": 1,
+        "global_smooth_multiplicity_claimed": False,
+        "exact_sided_derivatives_unequal": True,
+    }.items():
+        need(canonical_receipt_json(event[0].get(key)) ==
+             canonical_receipt_json(value),
+             "PRIOR_SIGNED_PROOF_PHYSICAL_EVENT_DRIFT")
+    whole = p["whole_source_completeness_proof"]
+    for key, value in {
+        "lemma": "V23_NONCONSTANT_AMPLITUDE_SECTOR_DERIVATIVE",
+        "phase_sectors_in_turns": [["0", "1/12"], ["1/12", "1/6"]],
+        "strict_derivative_lower_bound_on_each_span": "249/1000",
+        "entire_original_closed_interval_covered": True,
+        "method": "EXACT_ZERO_PLUS_STRICT_INCREASE_ON_BOTH_CONTINUOUS_PIECES",
+    }.items():
+        need(canonical_receipt_json(whole.get(key)) ==
+             canonical_receipt_json(value),
+             "PRIOR_SIGNED_PROOF_WHOLE_SOURCE_DRIFT")
+    need(p["retained_transverse_negative_control"]["status"] ==
+         "RESOURCE_REFUSAL" and
+         p["retained_transverse_negative_control"]["is_truth_value"] is False
+         if "is_truth_value" in p["retained_transverse_negative_control"]
+         else p["retained_transverse_negative_control"]["status"] ==
+              "RESOURCE_REFUSAL",
+         "PRIOR_REFUSAL_WAS_LAUNDERED")
+    return {
+        "saved_signed_report_git_blob": PRIOR_REPORT_BLOB,
+        "accepted_producer_git_blob": PRIOR_PRODUCER_BLOB,
+        "same_original_source": CASE_ID,
+        "preexisting_source_knot_signed_event": "NEGATIVE_TO_POSITIVE_AT_1",
+        "preexisting_sided_orders": [1, 1],
+        "preexisting_maximal_nonzero_signs": [-1, 1],
+        "preexisting_whole_source_strict_derivative_proof": True,
+        "new_generic_owner_to_consumer_interface_provided": False,
+    }
+
+
+def prior_signed_report():
+    return decode(read_pinned(PRIOR_REPORT, MAX_PRIOR_REPORT, PRIOR_REPORT_BLOB))
+
+
 def expected_receipt():
     proof = prove_source(case_and_v2())
+    earlier = check_prior_signed_report(prior_signed_report())
     return {
         "schema": SCHEMA, "evidence_class": EVIDENCE_CLASS,
         "frozen_corpus_git_blob": CORPUS_BLOB,
         "preexisting_v2_git_blob": V2_BLOB,
         "case_certificate": proof,
+        "signed_prior_art": earlier,
         "before_after": {
             "frozen_source_population_before": 121,
             "frozen_source_population_after": 121,
@@ -270,10 +385,11 @@ def expected_receipt():
             "existing_complete_v2_witnesses_before": 50,
             "existing_complete_v2_witnesses_after": 50,
             "new_source_specific_complete_witnesses": 0,
-            "new_candidate_ordered_premise_case_ids": [CASE_ID],
-            "standalone_candidate_missing_ordered_after": 29,
-            "conditional_union_with_unmerged_421_after": 27,
-            "conditional_union_not_authoritative": True,
+            "new_unique_ordered_premise_case_ids": [],
+            "already_signed_in_v2_case_ids": [CASE_ID],
+            "new_generic_owner_to_consumer_ordered_premises": 0,
+            "unsupported_standalone_30_to_29_claim_refused": True,
+            "unsupported_combined_30_to_27_claim_refused": True,
             "required_PB007_or_PO_obligations_discharged": 0,
             "MC_B_or_MC1_established": False,
             "frozen_evidence_modified": False,
@@ -360,6 +476,42 @@ def self_test():
         bad = deepcopy(expected)
         mutate(bad)
         refuse(lambda b=bad: validate_receipt(b, expected))
+    # Direct attack on the signed historical prior-art custody and its claims:
+    # changing an already-complete event must never become "new" closure.
+    prior = prior_signed_report()
+    check_prior_signed_report(prior)
+    for mutate in (
+        lambda p: p.__setitem__("source_sha256", "0" * 64),
+        lambda p: p["phase_turn_law"].__setitem__("rate", "1/8"),
+        lambda p: p["source_knot_receipt"].__setitem__("left_one_sided_order", 2),
+        lambda p: p["source_knot_receipt"].__setitem__("left_one_sided_order", True),
+        lambda p: p["source_knot_receipt"].__setitem__("event_kind", "TOUCHING"),
+        lambda p: p["ordered_nonzero_signs"].__setitem__(1, -1),
+        lambda p: p["maximal_nonzero_cells"][1].__setitem__("sign", -1),
+        lambda p: p["physical_events"][0].__setitem__("right_sign", -1),
+        lambda p: p["physical_zero_set"].append("3/2"),
+        lambda p: p["whole_source_completeness_proof"].__setitem__(
+            "entire_original_closed_interval_covered", False),
+        lambda p: p["source_spans"][1].__setitem__("interval", ["1", "3"]),
+    ):
+        bad = deepcopy(prior)
+        selected = next(x for x in bad["source_specific_proofs"]
+                        if x["case_id"] == CASE_ID)
+        mutate(selected)
+        refuse(lambda b=bad: check_prior_signed_report(b))
+    for mutate in (
+        lambda v: v["before_after"].__setitem__(
+            "new_unique_ordered_premise_case_ids", [CASE_ID]),
+        lambda v: v["before_after"].__setitem__(
+            "new_generic_owner_to_consumer_ordered_premises", 1),
+        lambda v: v["before_after"].__setitem__(
+            "unsupported_standalone_30_to_29_claim_refused", False),
+        lambda v: v["signed_prior_art"].__setitem__(
+            "preexisting_maximal_nonzero_signs", [-1, -1]),
+    ):
+        bad = deepcopy(expected)
+        mutate(bad)
+        refuse(lambda b=bad: validate_receipt(b, expected))
     # Python equality conflates JSON booleans with 0/1 and integers with 1.0.
     # All five type aliases must refuse despite having equal Python values.
     for mutate in (
@@ -380,7 +532,7 @@ def self_test():
         p = Path(d) / "oversize.json"
         p.write_bytes(b" " * 128)
         refuse(lambda: read_pinned(p, 64))
-    print("V23 original source, signed-knot proof, 27+ adversarial controls: PASS")
+    print("V23 original proof + pinned signed V2 prior art + 42+ adversarial controls: PASS")
 
 
 def main():
@@ -394,8 +546,8 @@ def main():
     validate_receipt(saved, expected)
     if args.self_test:
         self_test()
-    print(json.dumps({"status": "SOURCE_BOUND_SIGNED_KNOT_CANDIDATE",
-                      "case_id": CASE_ID, "missing_ordered_candidate_delta": -1,
+    print(json.dumps({"status": "SIGNED_V23_PRIOR_ART_CONFIRMED_ZERO_NEW_HISTORICAL_CLOSURES",
+                      "case_id": CASE_ID, "new_historical_ordered_delta": 0,
                       "frozen_v54_delta": 0, "PB007_discharged": False},
                      sort_keys=True))
 
