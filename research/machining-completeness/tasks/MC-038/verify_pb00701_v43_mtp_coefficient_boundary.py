@@ -44,6 +44,7 @@ HISTORICAL = {
 SCHEMA = 'radicadsac-mc038-v43-rational-mtp-admission/1.0'
 MAX_PINNED_BYTES = 1024 * 1024
 MAX_RECEIPT_BYTES = 64 * 1024
+RECEIPT_BLOB = '0d491411fa955158c00c87b43dd08e984146f838'
 
 
 def require(ok, msg):
@@ -76,7 +77,87 @@ def load_pinned(path, sha):
 
 
 def load_receipt(path):
-    return json.loads(read_bounded(path, MAX_RECEIPT_BYTES))
+    # Machine evidence is committed beside this verifier: check the entire
+    # exact document, not only a hand-picked subset of its decoded fields.
+    data = read_bounded(path, MAX_RECEIPT_BYTES)
+    require(git_blob(data) == RECEIPT_BLOB, 'machine receipt Git blob mismatch')
+    return json.loads(data)
+
+
+def typed_json(value):
+    """Canonical JSON preserves bool/int/float distinctions lost by Python ==."""
+    try:
+        return json.dumps(value, sort_keys=True, separators=(',', ':'),
+                          ensure_ascii=True, allow_nan=False)
+    except (TypeError, ValueError, RecursionError, OverflowError) as exc:
+        raise ValueError('invalid machine receipt JSON value') from exc
+
+
+def validate_receipt(receipt, result):
+    require(isinstance(receipt, dict), 'machine receipt must be an object')
+    # Every field shared with the executable receipt is checked, including
+    # nonpromotion fields previously omitted from the 12-key check.
+    keys = (
+        'schema', 'task', 'evidence_class', 'claim', 'case_id',
+        'source_sha256', 'original_row_sha256',
+        'frozen_corpus_git_blob', 'v2_register_git_blob',
+        'before', 'after', 'deltas', 'newly_closed_historical_case_ids',
+        'required_pb007_discharge', 'generic_event_completeness',
+        'MC_B', 'MC_1', 'production_authorized'
+    )
+    for key in keys:
+        require(key in receipt and key in result,
+                'machine receipt missing checked field: ' + key)
+        require(typed_json(receipt[key]) == typed_json(result[key]),
+                'machine receipt typed contract drift: ' + key)
+    return True
+
+
+def receipt_adversarial(receipt, result):
+    """Actual on-disk tamper probes plus independently typed claim checks."""
+    from tempfile import TemporaryDirectory
+    from pathlib import Path
+    cases = (
+        ('false_as_zero', ('required_pb007_discharge',), 0, True),
+        ('integer_as_float', ('before', 'original_sources'), 121.0, True),
+        ('zero_as_false', ('deltas', 'original_sources'), False, True),
+        ('production_promotion', ('production_authorized',), True, True),
+        ('unexamined_interval', ('original_interval', 1), '2', False),
+    )
+    disk_refusals = typed_refusals = 0
+    with TemporaryDirectory() as temporary:
+        target_path = Path(temporary) / 'machine-receipt.json'
+        for label, keys, replacement, checked in cases:
+            changed = deepcopy(receipt)
+            slot = changed
+            for key in keys[:-1]:
+                slot = slot[key]
+            slot[keys[-1]] = replacement
+            target_path.write_text(json.dumps(changed, sort_keys=True),
+                                   encoding='utf-8')
+            try:
+                load_receipt(target_path)
+            except ValueError as exc:
+                require('machine receipt Git blob mismatch' in str(exc),
+                        'incorrect receipt tamper refusal: ' + label)
+                disk_refusals += 1
+            else:
+                raise AssertionError('altered receipt accepted: ' + label)
+            if checked:
+                # Check the semantic validator independently of Git pinning.
+                # Python == would accept the first three typed substitutions.
+                try:
+                    validate_receipt(json.loads(target_path.read_bytes()), result)
+                except ValueError as exc:
+                    require('typed contract drift' in str(exc),
+                            'incorrect typed refusal: ' + label)
+                    typed_refusals += 1
+                else:
+                    raise AssertionError('typed forged claim accepted: ' + label)
+    require((disk_refusals, typed_refusals) == (5, 4),
+            'receipt admission adversarial census drift')
+    return {'disk_blob_tamper_refusals': disk_refusals,
+            'typed_claim_mutation_refusals': typed_refusals}
 
 
 def validate_original(row):
@@ -311,11 +392,9 @@ def run(with_tests):
     }
     if with_tests:
         receipt=load_receipt(HERE/'pb00701-v43-mtp-coefficient-boundary.json')
-        for key in ('schema','claim','case_id','source_sha256',
-                    'original_row_sha256','before','after','deltas',
-                    'newly_closed_historical_case_ids','required_pb007_discharge',
-                    'MC_B','MC_1'):
-            require(receipt[key]==result[key], 'saved C receipt drift: '+key)
+        validate_receipt(receipt, result)
+        controls=receipt_adversarial(receipt, result)
+        print('PASS: exact machine receipt custody and typed adversarial controls:', controls)
     return result
 
 
