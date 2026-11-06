@@ -4,19 +4,19 @@
 
 Parent: [MC-038 #100](https://github.com/techrote/radiCADSAC/issues/100).
 Independent research claim: [#324/6694241367](https://github.com/techrote/radiCADSAC/issues/324#issuecomment-6694241367).
-The challenged implementation is [Draft PR #441](https://github.com/techrote/radiCADSAC/pull/441) at **literal head** \`b1774a01898e423a1e3f62d0b0f881f65156ff23\`, not a claim about future revisions. Accepted main: \`48222d6c40b15ad42cc36d56e6d25f3b284e7fc9\`.
+The challenged implementation is [Draft PR #441](https://github.com/techrote/radiCADSAC/pull/441) at **literal head** `b1774a01898e423a1e3f62d0b0f881f65156ff23`, not a claim about future revisions. Accepted main: `48222d6c40b15ad42cc36d56e6d25f3b284e7fc9`.
 
 ## Hypothesis, outcome and admitted negative scope
 
 **Falsified direct-application proposal:** the unmodified rational quarter-turn H1 phase-grid event theorem in #441 can certify the whole-source physical zero partition of the frozen V12 category-3 historical original merely because the original source meets its structural H1, rational-phase and quarter-turn-knot grammar.
 
-The original **does meet** those necessary structural conditions, but its very first original source piece has **two** simple interior physical roots inside **one** quarter-turn phase cell, while both cell endpoints are negative. The #441 sufficient theorem correctly **refuses** this source at \`ANGULAR_DRIFT_NOT_CERTIFIED_BELOW_PI\`. Consequently it cannot supply this original's missing generic owner-to-consumer ordered-event premise as-is. This is a decisive refusal for this **precisely specified route**, *not* a defect in #441, not general impossibility and not an assertion that V12's roots were unknown. The complete original-source signed result was already established by the accepted V12 component-prefix/V2 producer and [#378](https://github.com/techrote/radiCADSAC/pull/378).
+The original **does meet** those necessary structural conditions, but its very first original source piece has **two** simple interior physical roots inside **one** quarter-turn phase cell, while both cell endpoints are negative. The #441 sufficient theorem correctly **refuses** this source at `ANGULAR_DRIFT_NOT_CERTIFIED_BELOW_PI`. Consequently it cannot supply this original's missing generic owner-to-consumer ordered-event premise as-is. This is a decisive refusal for this **precisely specified route**, *not* a defect in #441, not general impossibility and not an assertion that V12's roots were unknown. The complete original-source signed result was already established by the accepted V12 component-prefix/V2 producer and [#378](https://github.com/techrote/radiCADSAC/pull/378).
 
-**Named obligations:** PB-007-01 and PO-04/05/08 remain OPEN. PB-007-02/03/04 and PO-02/07 remain OPEN. MC-B/MC-1 remain \`NOT_ESTABLISHED\`.
+**Named obligations:** PB-007-01 and PO-04/05/08 remain OPEN. PB-007-02/03/04 and PO-02/07 remain OPEN. MC-B/MC-1 remain `NOT_ESTABLISHED`.
 
 ## Exact source custody and physical semantics
 
-The frozen original is \`composite:PB00701_V12_EXACT_COMPONENT_ROOT_PARTITION_SINGLE_HARMONIC:tail0\`, source SHA-256 \`ee15e947924b45640dd16634247a476bb230fdc145fef94407d9a7c219928cd5\`, whole-row SHA-256 \`d0acef7c69cb8ac1ba128b988e83817a91feff78509dd18007d0e56a506336c3\`. Its original source-time domain is **[0,2]**, genuine original knot **1**, original phase turns \(\beta(t)=t/4\), zero H0, and continuous clamped affine first harmonic cosine/sine coefficients:
+The frozen original is `composite:PB00701_V12_EXACT_COMPONENT_ROOT_PARTITION_SINGLE_HARMONIC:tail0`, source SHA-256 `ee15e947924b45640dd16634247a476bb230fdc145fef94407d9a7c219928cd5`, whole-row SHA-256 `d0acef7c69cb8ac1ba128b988e83817a91feff78509dd18007d0e56a506336c3`. Its original source-time domain is **[0,2]**, genuine original knot **1**, original phase turns \(\beta(t)=t/4\), zero H0, and continuous clamped affine first harmonic cosine/sine coefficients:
 
 \[
 \begin{aligned}
@@ -26,7 +26,7 @@ F(t)&=C(t)\cos(\pi t/2)+S(t)\sin(\pi t/2).
 \end{aligned}
 \]
 
-All coefficients, phase, source time and knot are original, untransformed. The literal source is in immutable V54 corpus Git blob \`5841c331579489b25caef38cd412bdbf286f9134\`. Its **preexisting** complete whole-source witness is in V2 Git blob \`e52d3baf3692a011cf86234eeaa992ef407d99fd\`, producing source \`pb00701_component_prefix_composition.py\` (blob \`530e552bb41c020456fdf0f17506cb18577896f3\`). The original V54 disposition is **BLOCKED** (source's V43 correlated closed handoff); this historical label is not rewritten.
+All coefficients, phase, source time and knot are original, untransformed. The literal source is in immutable V54 corpus Git blob `5841c331579489b25caef38cd412bdbf286f9134`. Its **preexisting** complete whole-source witness is in V2 Git blob `e52d3baf3692a011cf86234eeaa992ef407d99fd`, producing source `pb00701_component_prefix_composition.py` (blob `530e552bb41c020456fdf0f17506cb18577896f3`). The original V54 disposition is **BLOCKED** (source's V43 correlated closed handoff); this historical label is not rewritten.
 
 ## Exact mathematical demonstration — two simple roots, not zero
 
@@ -60,7 +60,7 @@ W/q\in[-6,-3/5],\qquad
 \delta'\in(21/10,53/7).
 \]
 
-The tested strict sufficient certificate bounds the full cell drift by \(\max(|L|,|U|)<3<\pi\); here **\(U=53/7>3\)**. Therefore #441 returns \`ANGULAR_DRIFT_NOT_CERTIFIED_BELOW_PI\`, with the source **REFUSED_NONTRUTH**, not zero roots. Indeed two interior roots with equal negative endpoint signs mathematically exclude the proposed *at-most-one-per-grid-cell* sufficient conclusion. This does not imply actual nonmonotonicity: here \(\delta'\) is strictly positive. The failure is in the **sufficient angular-drift budget**, not existence, ordering or solvability.
+The tested strict sufficient certificate bounds the full cell drift by \(\max(|L|,|U|)<3<\pi\); here **\(U=53/7>3\)**. Therefore #441 returns `ANGULAR_DRIFT_NOT_CERTIFIED_BELOW_PI`, with the source **REFUSED_NONTRUTH**, not zero roots. Indeed two interior roots with equal negative endpoint signs mathematically exclude the proposed *at-most-one-per-grid-cell* sufficient conclusion. This does not imply actual nonmonotonicity: here \(\delta'\) is strictly positive. The failure is in the **sufficient angular-drift budget**, not existence, ordering or solvability.
 
 ## Independently recomputed 121-source direct-admission census
 
@@ -72,7 +72,7 @@ Against the **same immutable 121 V54 originals and 50 V2 complete source registr
 | Fully satisfies exact per-grid-cell derivative and drift certificate | 2 | 1 |
 | Not directly fully admitted | 119 | **49** |
 
-The four structurally eligible originals are \`harvested:verify_pb00701_v10:a3af56296a12\` (admitted; historically certified), \`harvested:v19:951efe10f570\` (refused), the V10 \`tail0\` (admitted; historically blocked), and the selected V12 \`tail0\` (refused). The harvested V19 and V12 first-span algebra agrees and both refuse the drift bound. The V10 case already had complete V2 evidence. Thus **no new original closure** follows from the direct route, even where it admits a frozen original.
+The four structurally eligible originals are `harvested:verify_pb00701_v10:a3af56296a12` (admitted; historically certified), `harvested:v19:951efe10f570` (refused), the V10 `tail0` (admitted; historically blocked), and the selected V12 `tail0` (refused). The harvested V19 and V12 first-span algebra agrees and both refuse the drift bound. The V10 case already had complete V2 evidence. Thus **no new original closure** follows from the direct route, even where it admits a frozen original.
 
 | Matched historical measure | Before | After | Delta |
 |---|---:|---:|---:|
@@ -88,13 +88,13 @@ Newly resolved case IDs: **none**. This census is a **direct unchanged applicati
 
 Run on the literal PR head:
 
-\`\`\`bash
+```bash
 python3 research/machining-completeness/tasks/MC-038/pb00701_v12_phasegrid_admission_20261106.py --contract --self-test
 python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_evidence_reconciliation_v2.py --contract
 python3 tools/validate_machining_completeness.py
-\`\`\`
+```
 
-The machine receipt \`pb00701-v12-phasegrid-admission-20261106.json\` is **recomputed and byte-source pinned** by the executable. Tests challenge source and phase substitution, changed original knots, zero grid nodes, duplicate-key/nonfinite/big JSON inputs, genuine algebraic order-two tangency and two distinct exact algebraic roots separated by \(2^{-119}\). The last two controls are **synthetic arithmetic refusals/contrasts only**; they are not secretly added to the 121-source corpus or counted as a PB theorem. The verifier uses bounded local rational arithmetic; a resource refusal is never counted as mathematical zero.
+The machine receipt `pb00701-v12-phasegrid-admission-20261106.json` is **recomputed and byte-source pinned** by the executable. Tests challenge source and phase substitution, changed original knots, zero grid nodes, duplicate-key/nonfinite/big JSON inputs, genuine algebraic order-two tangency and two distinct exact algebraic roots separated by \(2^{-119}\). The last two controls are **synthetic arithmetic refusals/contrasts only**; they are not secretly added to the 121-source corpus or counted as a PB theorem. The verifier uses bounded local rational arithmetic; a resource refusal is never counted as mathematical zero.
 
 ## Disposition and next dependency unlock
 
