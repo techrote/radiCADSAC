@@ -33,6 +33,7 @@ STAGES = (
 SCHEMA = "radicadsac-mc037-error-allocation-plan/1.0"
 MAX_FILE = 32768  # Auxiliary proposal parsing budget, not an MC-1 domain bound.
 MAX_DIGITS = 32  # Local preflight resource cap, NOT a tolerance/precision floor.
+MAX_JSON_DEPTH = 32  # Auxiliary parser nesting budget, not a machining-domain limit.
 INT = re.compile(r"(?:0|[1-9][0-9]*)\Z")
 RATIONAL = re.compile(r"(0|[1-9][0-9]*)/([1-9][0-9]*)\Z")
 
@@ -152,6 +153,35 @@ def invalid_number(value):
     # tokens before Python attempts to convert a giant decimal to int.
     raise Refused("JSON numeric authority token forbidden; use rational strings")
 
+def check_json_container_depth(text: str) -> None:
+    """Refuse pathological nesting *before* the JSON decoder recurses.
+
+    Quoted strings, including escaped quotes/backslashes, are not structural.
+    The JSON decoder still checks delimiter types, escapes and full syntax.
+    """
+    depth = 0
+    quoted = False
+    escaped = False
+    for ch in text:
+        if quoted:
+            if escaped:
+                escaped = False
+            elif ch == "\\":
+                escaped = True
+            elif ch == '"':
+                quoted = False
+        elif ch == '"':
+            quoted = True
+        elif ch in "{[":
+            depth += 1
+            if depth > MAX_JSON_DEPTH:
+                raise Refused("JSON container nesting budget exceeded")
+        elif ch in "}]":
+            depth -= 1
+            if depth < 0:
+                raise Refused("JSON closing delimiter without opener")
+
+
 def read_file(path):
     try:
         before = path.lstat()
@@ -173,13 +203,15 @@ def read_file(path):
     if len(raw) > MAX_FILE:
         raise Refused("plan parsing byte budget exceeded")
     try:
+        decoded = raw.decode("utf-8", errors="strict")
+        check_json_container_depth(decoded)
         return json.loads(
-            raw.decode("utf-8", errors="strict"), object_pairs_hook=pairs_unique,
+            decoded, object_pairs_hook=pairs_unique,
             parse_int=invalid_number, parse_float=invalid_number,
             parse_constant=invalid_number,
         )
-    except (UnicodeError, json.JSONDecodeError) as exc:
-        raise Refused("malformed or non-UTF8 JSON plan") from exc
+    except (UnicodeError, json.JSONDecodeError, RecursionError, OverflowError) as exc:
+        raise Refused("malformed, recursive or non-UTF8 JSON plan") from exc
 
 def verify_file(path):
     source_pins()
@@ -261,6 +293,31 @@ def self_test():
         ):
             path.write_text(poisoned, encoding="utf-8")
             refuse()
+        # These are real file-ingress JSON specimens within 32 KiB. Before
+        # this guard, deep arrays could raise uncaught decoder RecursionError.
+        for depth in (MAX_JSON_DEPTH + 1, 10_000):
+            deep = ("[" * depth + "null" + "]" * depth).encode("ascii")
+            assert len(deep) < MAX_FILE
+            path.write_bytes(deep)
+            try:
+                verify_file(path)
+            except Refused as exc:
+                assert "nesting budget" in str(exc)
+                n += 1
+            else:
+                raise AssertionError("pathologically nested JSON unexpectedly admitted")
+        # Structural delimiters within a quoted JSON value, including escaped
+        # quote/backslash sequences, must not count as container nesting.
+        quoted_brackets = {"probe": "[" * 80 + "\\\"\\\\]" * 10}
+        write(quoted_brackets)
+        assert read_file(path) == quoted_brackets
+        n += 1
+        # A legal 32-level JSON specimen still passes the bounded parser;
+        # higher-level schema refusal is independent of the parser budget.
+        depth_limit = ("[" * MAX_JSON_DEPTH + "null" + "]" * MAX_JSON_DEPTH)
+        path.write_text(depth_limit, encoding="ascii")
+        assert read_file(path) is not None
+        n += 1
         try:
             source_pins({"MC-003": SOURCE_PINS["MC-003"],
                          "MC-015": (SOURCE_PINS["MC-015"][0], "0"*40)})
