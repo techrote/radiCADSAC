@@ -1,0 +1,39 @@
+name: MC-042 source-pinned STEP byte-envelope preflight
+on:
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-042/**'
+      - '.github/workflows/mc042-step-envelope-preflight.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-pinned-byte-envelope:
+    name: Synthetic byte-envelope / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - name: Checkout literal submitted source (not synthetic PR merge)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact submitted source identity
+        shell: bash
+        env:
+          EXPECTED: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          actual="$(git rev-parse HEAD)"
+          printf 'actual=%s expected=%s\n' "$actual" "$EXPECTED"
+          test "$actual" = "$EXPECTED"
+      - name: Run real on-disk synthetic adversarial checks
+        run: python research/machining-completeness/tasks/MC-042/step_envelope_preflight.py --self-test
+      - name: Verify MC-1 static authority and task routing
+        run: |
+          python tools/validate_machining_completeness.py --self-test
+          python tools/validate_machining_completeness.py
