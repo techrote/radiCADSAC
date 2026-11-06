@@ -127,8 +127,8 @@ def lexical_envelope(raw: bytes) -> None:
     if not re.search(r"\bFILE_SCHEMA\s*\(", header, re.I):
         raise Refused("STEP header lacks FILE_SCHEMA declaration")
     data = visible[found[3].end():found[4].start()]
-    if not re.search(r"#[1-9][0-9]*\s*=", data):
-        raise Refused("STEP DATA lacks an entity assignment")
+    if not re.search(r"#[1-9][0-9]*\s*=\s*(?:[A-Za-z][A-Za-z0-9_]*\s*\(|\()", data):
+        raise Refused("STEP DATA lacks a populated entity constructor")
     # This is deliberately NOT a Part-21 parser, AP242 schema check, B-rep check,
     # model validation, geometry measurement, or proof of faithful material.
 
@@ -203,6 +203,9 @@ def self_test() -> None:
         refuse(good.replace(b"END-ISO-10303-21;", b"END-ISO-10303-20;"))
         refuse(good.replace(b"FILE_SCHEMA", b"NO_SCHEMA"))
         refuse(good.replace(b"#1=", b"NO_ENTITY="))
+        # A mere #number= token cannot count as an emitted STEP instance.
+        refuse(good.replace(
+            b"#1=NOT_A_REAL_BREP('ENDSEC; DATA; /* not a comment */');", b"#1=;"))
         refuse(good.replace(b"ENDSEC;\nDATA;", b"ENDSEC;\nENDSEC;\nDATA;"))
         refuse(good + b"EXTRA;")
         refuse(b"LEADING;" + good)
