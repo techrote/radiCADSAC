@@ -385,7 +385,7 @@ class Tests(unittest.TestCase):
     def test_safe_json_disk_ingress(self):
         with tempfile.TemporaryDirectory() as folder:
             p=Path(folder)/"receipt.json"
-            good={"quoted":"[ \\" { ]", "flag":False}
+            good={"quoted": '[ " { ]', "flag":False}
             p.write_text(json.dumps(good))
             self.assertEqual(read_json(p),good)
             for raw in ('{"a":1,"a":2}',"["*10000+"null"+"]"*10000,
