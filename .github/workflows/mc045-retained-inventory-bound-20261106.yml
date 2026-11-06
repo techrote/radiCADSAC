@@ -19,6 +19,11 @@ jobs:
         os: [ubuntu-24.04, windows-2022]
     runs-on: ${{ matrix.os }}
     steps:
+      # MC-045 verifies exact Git blob bytes. Windows checkout may otherwise
+      # CRLF-convert pinned JSON dependencies and produce false source drift.
+      - name: Preserve source blob bytes on both platforms
+        shell: bash
+        run: git config --global core.autocrlf false
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
