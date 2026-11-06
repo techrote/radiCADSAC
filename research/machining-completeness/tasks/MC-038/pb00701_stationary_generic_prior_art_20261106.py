@@ -47,7 +47,7 @@ def read_bounded(path, limit, pin=None):
     with Path(path).open("rb") as stream:
         data = stream.read(limit + 1)
     need(len(data) <= limit, "INPUT_BYTE_LIMIT")
-    digest = hashlib.sha1(b"blob " + str(len(data)).encode() + b"\\0" + data).hexdigest()
+    digest = hashlib.sha1(b"blob " + str(len(data)).encode() + b"\0" + data).hexdigest()
     if pin:
         need(digest == pin, "SOURCE_GIT_BLOB_DRIFT:" + str(path))
     return data
@@ -256,8 +256,9 @@ def receipt(prior=None, candidate_root=None):
     }
 
 def typed_equal(a, b):
-    return json.dumps(a, sort_keys=True, separators=(",",":"), allow_nan=False) == \\
-           json.dumps(b, sort_keys=True, separators=(",",":"), allow_nan=False)
+    left = json.dumps(a, sort_keys=True, separators=(",",":"), allow_nan=False)
+    right = json.dumps(b, sort_keys=True, separators=(",",":"), allow_nan=False)
+    return left == right
 
 def tests():
     prior = prior_module()
