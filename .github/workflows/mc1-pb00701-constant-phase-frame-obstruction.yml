@@ -1,0 +1,52 @@
+name: mc1-pb00701-constant-phase-frame-obstruction
+
+on:
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_constant_phase_frame_obstruction_20261106.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-constant-phase-frame-obstruction-20261106.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-constant-phase-frame-obstruction-20261106.md'
+      - '.github/workflows/mc1-pb00701-constant-phase-frame-obstruction.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-038/pb00701_constant_phase_frame_obstruction_20261106.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-constant-phase-frame-obstruction-20261106.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-constant-phase-frame-obstruction-20261106.md'
+      - '.github/workflows/mc1-pb00701-constant-phase-frame-obstruction.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  source-phase-frame-negative:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Literal branch-head source custody
+        shell: bash
+        run: |
+          echo "Checked out exact commit $(git rev-parse HEAD)"
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Exact original coefficient-frame obstruction and adversarial controls
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/machining-completeness/tasks/MC-038/pb00701_constant_phase_frame_obstruction_20261106.py --contract --self-test
+      - name: Independent complete frozen original-source V54/V2 producing replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_evidence_reconciliation_v2.py --contract
+      - name: MC-1 static programme and authority validation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/validate_machining_completeness.py
