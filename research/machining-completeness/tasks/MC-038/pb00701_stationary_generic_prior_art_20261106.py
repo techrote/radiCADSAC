@@ -268,7 +268,9 @@ def tests():
         def test_synthetic_exact(self):
             self.assertTrue(all(synthetic_evidence(prior).values()))
         def test_identity_zero_refusal(self):
-            with self.assertRaises(prior.InvalidComposition):
+            # The pinned complete child prover must refuse identity-zero
+            # before source composition; its ValueError is also nontruth.
+            with self.assertRaisesRegex(ValueError, "identity polynomial"):
                 conditional_prior(prior,[("0","1",["0"]),("1","2",["0"])])
         def test_knot_discontinuity_refusal(self):
             with self.assertRaises(prior.InvalidComposition):
