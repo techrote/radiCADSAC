@@ -124,9 +124,10 @@ def source_coefficients(spec):
     cs, ss = spec["cos_splines"], spec["sin_splines"]
     need(set(cs) == {"0","1"} and set(ss) == {"1"}, "not pure H0/H1 phasor grammar")
     c0, c1, s1 = cs["0"], cs["1"], ss["1"]
-    need(c0 == {"degree":0, "knots":["0","1","2"], "controls":["0","0"]},
+    need(type(c0.get("degree")) is int and c0 == {"degree":0, "knots":["0","1","2"], "controls":["0","0"]},
          "H0 not identically zero")
-    need(c1["degree"] == 1 and c1["knots"] == ["0","0","1","1","2","2"] and
+    need(type(c1.get("degree")) is int and type(s1.get("degree")) is int and
+         c1["degree"] == 1 and c1["knots"] == ["0","0","1","1","2","2"] and
          s1["degree"] == 0 and s1["knots"] == ["0","1","2"],
          "true piecewise B-spline knots/degrees changed")
     c = [Q(v) for v in c1["controls"]]
