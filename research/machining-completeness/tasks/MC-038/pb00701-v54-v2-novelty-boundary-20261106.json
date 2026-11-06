@@ -1,0 +1,105 @@
+{
+  "schema": "radicadsac-mc038-v54-v2-novelty-boundary/1.0",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "claim": "REPEATED_SOURCE_SIGNED_WITNESS_NOT_NEW_V54_OWNER_PREMISE",
+  "historical_before": {
+    "frozen_originals": 121,
+    "route_refusals": 20,
+    "missing_ordered": 30,
+    "preexisting_complete_source_witnesses": 50
+  },
+  "historical_after": {
+    "frozen_originals": 121,
+    "route_refusals": 20,
+    "missing_ordered": 30,
+    "preexisting_complete_source_witnesses": 50
+  },
+  "accepted_delta": {
+    "frozen_originals": 0,
+    "route_refusals": 0,
+    "missing_ordered": 0,
+    "preexisting_complete_source_witnesses": 0
+  },
+  "previously_unregistered_unique_signed_source_closures": 0,
+  "cases": [
+    {
+      "case_id": "composite:EXACT_STATIONARY_PHASE_POLYNOMIAL:tail0",
+      "original_source_sha256": "f4c2d33cc4c5a52f355ff4ecc36ad6ee38af0ff0fa8c5159aaac5923a10125ff",
+      "original_row_sha256": "9ee0aed1b32cb85389f372e291a1eb80b9666d2c480d1bfbfa9fb62254dc78d8",
+      "source_time": [
+        "0",
+        "2"
+      ],
+      "source_knot": "1",
+      "phase_rate_turns": "0",
+      "challenged_pr": 421,
+      "challenged_pr_head": "359784454c4eaeda173458b9f4919b07edbdacd8",
+      "challenged_receipt_blob": "d7ee51ed09bc317f29177286dbd9b1e827c8bd10",
+      "prior_v2_registered_complete": true,
+      "prior_full_signed_physical_event": "SIMPLE_NEGATIVE_TO_POSITIVE_AT_1/2",
+      "prior_producer_git_blob": "d0fbe7e189066fd9398958f1b1814b8147a6a64e",
+      "prior_true_knot": "NONZERO_POSITIVE",
+      "prior_maximal_sign_cells": [
+        -1,
+        1
+      ],
+      "unique_new_source_specific_event_or_sign_cells": false,
+      "generic_historical_owner_renewed_by_this_comparison": false
+    },
+    {
+      "case_id": "composite:EXACT_STATIONARY_PHASE_POLYNOMIAL:tail100",
+      "original_source_sha256": "a49b92bbb74a7e016eed471feb64808eb9109a6a42b3ef874243364981a396fd",
+      "original_row_sha256": "a656298a7843e5dfff9bcf4d6262e18331c12f37cb23381d94bd8487f0ab57ca",
+      "source_time": [
+        "0",
+        "2"
+      ],
+      "source_knot": "1",
+      "phase_rate_turns": "0",
+      "challenged_pr": 421,
+      "challenged_pr_head": "359784454c4eaeda173458b9f4919b07edbdacd8",
+      "challenged_receipt_blob": "d7ee51ed09bc317f29177286dbd9b1e827c8bd10",
+      "prior_v2_registered_complete": true,
+      "prior_full_signed_physical_event": "SIMPLE_NEGATIVE_TO_POSITIVE_AT_1/2",
+      "prior_producer_git_blob": "d0fbe7e189066fd9398958f1b1814b8147a6a64e",
+      "prior_true_knot": "NONZERO_POSITIVE",
+      "prior_maximal_sign_cells": [
+        -1,
+        1
+      ],
+      "unique_new_source_specific_event_or_sign_cells": false,
+      "generic_historical_owner_renewed_by_this_comparison": false
+    },
+    {
+      "case_id": "composite:PB00701_V23_EXACT_NONCONSTANT_AMPLITUDE_PHASE_SECTOR_ANCHOR:tail0",
+      "original_source_sha256": "e8d2451833854ee7eaf73d4fb70b78b86ba72194b2688876f3bb9ee6ab132ffd",
+      "original_row_sha256": "e52a27e5c3dcdf984919cdcd7bb925c52d2865550035da357cd87178b9fbfc89",
+      "source_time": [
+        "0",
+        "2"
+      ],
+      "source_knot": "1",
+      "phase_rate_turns": "1/12",
+      "challenged_pr": 423,
+      "challenged_pr_head": "cb594e7a1fe286e953e62e5d3c01916120b18337",
+      "challenged_receipt_blob": "4e8d41aba7c1b90b4fda20e39a9c41a6e93fe4f1",
+      "prior_v2_registered_complete": true,
+      "prior_full_signed_physical_event": "SIGNED_SOURCE_KNOT_CROSSING_AT_1",
+      "prior_producer_git_blob": "668eef22876afdeec0931a6ccb6a48573b053203",
+      "prior_true_knot": "EXACT_ZERO_SIDED_ORDERS_1_1",
+      "prior_maximal_sign_cells": [
+        -1,
+        1
+      ],
+      "unique_new_source_specific_event_or_sign_cells": false,
+      "generic_historical_owner_renewed_by_this_comparison": false
+    }
+  ],
+  "requested_candidate_ordered_count_30_to_27_accepted": false,
+  "does_not_falsify_new_generic_compositor": true,
+  "required_pb_or_po_obligations_discharged": 0,
+  "mc_b_established": false,
+  "mc1_established": false,
+  "production_authorized": false,
+  "native_or_step_qualified": false
+}
