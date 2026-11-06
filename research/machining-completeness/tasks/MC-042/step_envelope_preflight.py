@@ -131,7 +131,7 @@ def _balanced_parentheses(segment: str) -> bool:
 
 
 # Conservative lexical instance starts. Strings/comments have already been masked.
-ENTITY_BEGIN_RE = re.compile(r"#[1-9][0-9]*\s*=\s*(?:[A-Za-z][A-Za-z0-9_]*\s*\(|\()")
+ENTITY_BEGIN_RE = re.compile(r"#([1-9][0-9]*)\s*=\s*(?:[A-Za-z][A-Za-z0-9_]*\s*\(|\()")
 HEADER_BEGIN_RE = re.compile(r"([A-Za-z][A-Za-z0-9_]*)\s*\(")
 
 
@@ -179,9 +179,11 @@ def _has_complete_entity_inventory(data: str) -> bool:
     """Require *every* top-level DATA item to finish, not merely the first.
 
     This is a bounded, deliberately incomplete lexical sentinel, not STEP
-    entity-grammar validation. Reject any unsupported instance form/junk.
+    entity-grammar validation. Reject duplicate top-level instance IDs as well
+    as any unsupported instance form/junk.
     """
     pos, n, found = 0, len(data), False
+    seen_ids: set[str] = set()  # Bounded by the 1 MiB input.
     while True:
         while pos < n and data[pos].isspace():
             pos += 1
@@ -190,6 +192,10 @@ def _has_complete_entity_inventory(data: str) -> bool:
         match = ENTITY_BEGIN_RE.match(data, pos)
         if match is None:
             return False
+        instance_id = match.group(1)
+        if instance_id in seen_ids:
+            return False
+        seen_ids.add(instance_id)
         depth = 1
         pos = match.end()  # Includes the constructor's opening '('.
         while pos < n:
@@ -327,6 +333,15 @@ def self_test() -> None:
         decoy = b"/* quoted decoy HEADER; ENDSEC; */"
         accept(good.replace(decoy, b"#2=SECOND('DATA; ENDSEC;');\n" + decoy))
         accept(good.replace(decoy, b"#2=(FIRST(),SECOND('HEADER;'));\n" + decoy))
+        # Disjoint identifiers remain legal, including a complex constructor.
+        accept(good.replace(decoy, b"#2=SECOND();\n#3=THIRD();\n" + decoy))
+        # A complete syntax envelope must not admit ambiguous DATA identities.
+        for duplicate in (
+            b"#1=SECOND();\n",  # Duplicates the original first instance.
+            b"#2=SECOND();\n#1=THIRD();\n",  # Nonadjacent repeat.
+            b"#2=(FIRST(),SECOND());\n#2=THIRD();\n",  # Complex first instance.
+        ):
+            refuse(good.replace(decoy, duplicate + decoy))
         refuse(b"")
         refuse(good.replace(b"ISO-10303-21;", b"ISO-10303-20;", 1))
         refuse(good.replace(b"HEADER;", b"HEAD;", 1))
