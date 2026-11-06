@@ -157,6 +157,8 @@ def main():
     parser.add_argument("--self-test",action="store_true")
     args=parser.parse_args()
     actual=audit()
+    if args.self_test:
+        ingress_controls()
     if args.contract:
         receipt=read_pinned_untrusted(RECEIPT)
         assert canonical(receipt)==canonical(actual),"CERTIFICATE_RECEIPT_MISMATCH"
@@ -164,15 +166,84 @@ def main():
       "status":"PASS","structural_total":3,"unresolved_directly_excluded":48,
       "historical_delta":0,"proof_obligations_discharged":0},sort_keys=True))
 
+class Refusal(ValueError):
+    """Typed nontruth refusal, never evidence of root absence."""
+
+
+def _forbidden_json_float(_):
+    raise Refusal("JSON_FLOAT_REFUSAL")
+
+
+def _small_json_int(token):
+    if len(token)>12:
+        raise Refusal("JSON_INTEGER_TOKEN_REFUSAL")
+    return int(token)
+
+
+def _unique_pairs(pairs):
+    obj={}
+    for key,value in pairs:
+        if key in obj:
+            raise Refusal("DUPLICATE_JSON_KEY_REFUSAL")
+        obj[key]=value
+    return obj
+
+
+def _bounded_json_depth(raw):
+    depth=0
+    in_string=escaped=False
+    for b in raw:
+        if in_string:
+            if escaped:escaped=False
+            elif b==92:escaped=True
+            elif b==34:in_string=False
+        elif b==34:in_string=True
+        elif b in (91,123):
+            depth+=1
+            if depth>32:raise Refusal("JSON_DEPTH_REFUSAL")
+        elif b in (93,125):
+            depth-=1
+            if depth<0:raise Refusal("JSON_STRUCTURE_REFUSAL")
+    if depth!=0 or in_string:
+        raise Refusal("JSON_STRUCTURE_REFUSAL")
+
+
 def read_pinned_untrusted(path):
-    with path.open("rb") as f:raw=f.read(400001)
-    assert len(raw)<=400000,"RECEIPT_BYTE_BUDGET"
-    def pairs(kv):
-        o={}
-        for k,v in kv:
-            assert k not in o,"DUPLICATE_JSON_KEY"
-            o[k]=v
-        return o
-    return json.loads(raw,object_pairs_hook=pairs)
+    try:
+        with path.open("rb") as f:raw=f.read(400001)
+    except OSError as exc:
+        raise Refusal("JSON_READ_FAILURE") from exc
+    if len(raw)>400000:raise Refusal("RECEIPT_BYTE_BUDGET")
+    _bounded_json_depth(raw)
+    try:
+        return json.loads(raw.decode("utf-8"),object_pairs_hook=_unique_pairs,
+                          parse_int=_small_json_int,
+                          parse_float=_forbidden_json_float,
+                          parse_constant=_forbidden_json_float)
+    except Refusal:
+        raise
+    except (UnicodeError,ValueError,RecursionError,OverflowError,TypeError) as exc:
+        raise Refusal("JSON_PARSE_REFUSAL") from exc
+
+
+def ingress_controls():
+    import tempfile
+    with tempfile.TemporaryDirectory() as directory:
+        file=Path(directory)/"ingress.json"
+        for raw in (
+            b'{"pb00701_established":true,"pb00701_established":false}',
+            b'['*10000+b'null'+b']'*10000,
+            b'{"x":'+b'9'*5000+b'}',
+            b' '*400001,
+            b'{"x":NaN}',b'{"x":1.25}',
+            b'{"x":'+bytes((255,))+b'}',
+            b'{"x":[0}' ):
+            file.write_bytes(raw)
+            try:read_pinned_untrusted(file)
+            except Refusal:pass
+            else:raise AssertionError("UNSAFE_INGRESS_ACCEPTED")
+        file.write_bytes(b'{"escaped":"[\\\"{]","claims":false}')
+        assert read_pinned_untrusted(file)=={"escaped":'["{]',"claims":False}
+
 
 if __name__=="__main__":main()
