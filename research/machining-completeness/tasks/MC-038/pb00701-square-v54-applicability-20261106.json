@@ -1,0 +1,667 @@
+{
+  "schema": "radicadsac-pb00701-square-v54-applicability/1.0",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "proof_route": "DIRECT_FROZEN_V54_ADMISSION_BY_TWO_SPAN_H0_H1_SQUARE_THEOREM",
+  "pr397_pinned_head": "5f29ed7118f2061644893200f19d4c334716d392",
+  "frozen_corpus_blob": "5841c331579489b25caef38cd412bdbf286f9134",
+  "v2_evidence_blob": "e52d3baf3692a011cf86234eeaa992ef407d99fd",
+  "frozen_before": {
+    "original_sources": 121,
+    "route_refusals": 20,
+    "missing_ordered_premises": 30,
+    "complete_source_specific_witnesses": 50
+  },
+  "frozen_after": {
+    "original_sources": 121,
+    "route_refusals": 20,
+    "missing_ordered_premises": 30,
+    "complete_source_specific_witnesses": 50
+  },
+  "direct_source_admissions": 0,
+  "new_historical_case_closures": [],
+  "required_pb_obligations_discharged": 0,
+  "shape_gate_counts": {
+    "COSINE_HARMONICS": 7,
+    "SINE_CHANNEL": 110,
+    "TWO_SPAN_QUADRATIC": 4
+  },
+  "by_v54_disposition": {
+    "BLOCKED": {
+      "COSINE_HARMONICS": 1,
+      "SINE_CHANNEL": 17,
+      "TWO_SPAN_QUADRATIC": 2
+    },
+    "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE": {
+      "SINE_CHANNEL": 28,
+      "TWO_SPAN_QUADRATIC": 2
+    },
+    "CERTIFIED": {
+      "COSINE_HARMONICS": 4,
+      "SINE_CHANNEL": 36
+    },
+    "FINITE_OWNER_SOURCE_EVIDENCE_CERTIFIED": {
+      "COSINE_HARMONICS": 2,
+      "SINE_CHANNEL": 24
+    },
+    "MIXED_OWNER_SOURCE_EVIDENCE_CERTIFIED": {
+      "SINE_CHANNEL": 5
+    }
+  },
+  "cases": [
+    {
+      "case_id": "composite:DELEGATED_V6_CONSTANT_MODULATION:tail0",
+      "v54_disposition": "BLOCKED",
+      "necessary_gate_refusal": "TWO_SPAN_QUADRATIC"
+    },
+    {
+      "case_id": "composite:DELEGATED_V6_CONSTANT_MODULATION:tail100",
+      "v54_disposition": "BLOCKED",
+      "necessary_gate_refusal": "TWO_SPAN_QUADRATIC"
+    },
+    {
+      "case_id": "composite:EXACT_RATIONAL_AMPLITUDE_DOMINANCE:tail0",
+      "v54_disposition": "FINITE_OWNER_SOURCE_EVIDENCE_CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:EXACT_RATIONAL_AMPLITUDE_DOMINANCE:tail100",
+      "v54_disposition": "FINITE_OWNER_SOURCE_EVIDENCE_CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:EXACT_STATIONARY_PHASE_POLYNOMIAL:tail0",
+      "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "necessary_gate_refusal": "TWO_SPAN_QUADRATIC"
+    },
+    {
+      "case_id": "composite:EXACT_STATIONARY_PHASE_POLYNOMIAL:tail100",
+      "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "necessary_gate_refusal": "TWO_SPAN_QUADRATIC"
+    },
+    {
+      "case_id": "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail0",
+      "v54_disposition": "BLOCKED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail100",
+      "v54_disposition": "BLOCKED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO:tail0",
+      "v54_disposition": "BLOCKED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO:tail100",
+      "v54_disposition": "BLOCKED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V12_EXACT_COMPONENT_ROOT_PARTITION_SINGLE_HARMONIC:tail0",
+      "v54_disposition": "BLOCKED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V12_EXACT_COMPONENT_ROOT_PARTITION_SINGLE_HARMONIC:tail100",
+      "v54_disposition": "BLOCKED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V13_EXACT_NONVANISHING_EVEN_MULTIPLIER_MULTIHARMONIC:tail0",
+      "v54_disposition": "BLOCKED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V13_EXACT_NONVANISHING_EVEN_MULTIPLIER_MULTIHARMONIC:tail100",
+      "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V14_EXACT_STRICT_DOMINANCE_MULTITERM_MULTIPLIER:tail100",
+      "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V15_EXACT_FINITE_STRICT_DOMINANCE_MULTIPLIER:tail100",
+      "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V16_EXACT_CHEBYSHEV_STURM_MULTIPLIER:tail100",
+      "v54_disposition": "BLOCKED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V17_EXACT_PROJECTIVE_EVEN_TRIG_MULTIPLIER:tail0",
+      "v54_disposition": "BLOCKED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V17_EXACT_PROJECTIVE_EVEN_TRIG_MULTIPLIER:tail100",
+      "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V18_EXACT_LAURENT_MODULE_FACTOR:tail100",
+      "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V18_EXACT_NONVANISHING_SOURCE_MODULE_FACTOR:tail0",
+      "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V18_EXACT_NONVANISHING_SOURCE_MODULE_FACTOR:tail100",
+      "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V19_EXACT_MULTI_HARMONIC_MONOTONE_ANCHOR:tail0",
+      "v54_disposition": "FINITE_OWNER_SOURCE_EVIDENCE_CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V19_EXACT_MULTI_HARMONIC_MONOTONE_ANCHOR:tail100",
+      "v54_disposition": "MIXED_OWNER_SOURCE_EVIDENCE_CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V20_EXACT_POINTWISE_DERIVATIVE_ENVELOPE:tail0",
+      "v54_disposition": "FINITE_OWNER_SOURCE_EVIDENCE_CERTIFIED",
+      "necessary_gate_refusal": "COSINE_HARMONICS"
+    },
+    {
+      "case_id": "composite:PB00701_V20_EXACT_POINTWISE_DERIVATIVE_ENVELOPE:tail100",
+      "v54_disposition": "FINITE_OWNER_SOURCE_EVIDENCE_CERTIFIED",
+      "necessary_gate_refusal": "COSINE_HARMONICS"
+    },
+    {
+      "case_id": "composite:PB00701_V22_EXACT_PHASE_SECTOR_PARTIAL_DERIVATIVE_ANCHOR:tail0",
+      "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V22_EXACT_PHASE_SECTOR_PARTIAL_DERIVATIVE_ANCHOR:tail100",
+      "v54_disposition": "FINITE_OWNER_SOURCE_EVIDENCE_CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V23_EXACT_NONCONSTANT_AMPLITUDE_PHASE_SECTOR_ANCHOR:tail0",
+      "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V23_EXACT_NONCONSTANT_AMPLITUDE_PHASE_SECTOR_ANCHOR:tail100",
+      "v54_disposition": "FINITE_OWNER_SOURCE_EVIDENCE_CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V24_EXACT_MIXED_QUADRATURE_PHASE_ANCHOR:tail0",
+      "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V24_EXACT_MIXED_QUADRATURE_PHASE_ANCHOR:tail100",
+      "v54_disposition": "FINITE_OWNER_SOURCE_EVIDENCE_CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V25_EXACT_COMPONENT_CONE_MIXED_PROJECTION_ANCHOR:tail0",
+      "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V25_EXACT_COMPONENT_CONE_MIXED_PROJECTION_ANCHOR:tail100",
+      "v54_disposition": "FINITE_OWNER_SOURCE_EVIDENCE_CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V26_EXACT_POINTWISE_COMPONENT_CONE_RESIDUAL_ORTHANTS:tail0",
+      "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V26_EXACT_POINTWISE_COMPONENT_CONE_RESIDUAL_ORTHANTS:tail100",
+      "v54_disposition": "FINITE_OWNER_SOURCE_EVIDENCE_CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V27_EXACT_RATIONAL_PHASE_SECTOR_PARTITION_COMPOSITION:tail0",
+      "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V27_EXACT_RATIONAL_PHASE_SECTOR_PARTITION_COMPOSITION:tail100",
+      "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V28_EXACT_ALGEBRAIC_RATIONAL_TURN_PHASE_CELL_PROJECTION:tail0",
+      "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V28_EXACT_ALGEBRAIC_RATIONAL_TURN_PHASE_CELL_PROJECTION:tail100",
+      "v54_disposition": "FINITE_OWNER_SOURCE_EVIDENCE_CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V29_EXACT_5_12_13_NESTED_ALGEBRAIC_PHASE_CELL_PROJECTION:tail0",
+      "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V29_EXACT_5_12_13_NESTED_ALGEBRAIC_PHASE_CELL_PROJECTION:tail100",
+      "v54_disposition": "FINITE_OWNER_SOURCE_EVIDENCE_CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V30_EXACT_SOURCE_ADAPTIVE_PROJECTIVE_RATIONAL_SEPARATOR:tail0",
+      "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V30_EXACT_SOURCE_ADAPTIVE_PROJECTIVE_RATIONAL_SEPARATOR:tail100",
+      "v54_disposition": "FINITE_OWNER_SOURCE_EVIDENCE_CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V34_EXACT_PHASE_CORRELATED_COMMON_FACTOR:tail0",
+      "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V34_EXACT_PHASE_CORRELATED_COMMON_FACTOR:tail100",
+      "v54_disposition": "FINITE_OWNER_SOURCE_EVIDENCE_CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V35_EXACT_PHASE_CORRELATED_PROPORTIONAL_COMMON_FACTOR:tail0",
+      "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V35_EXACT_PHASE_CORRELATED_PROPORTIONAL_COMMON_FACTOR:tail100",
+      "v54_disposition": "FINITE_OWNER_SOURCE_EVIDENCE_CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V36_EXACT_PHASE_CORRELATED_VARYING_RATIO_SHARED_FACTOR:tail0",
+      "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V36_EXACT_PHASE_CORRELATED_VARYING_RATIO_SHARED_FACTOR:tail100",
+      "v54_disposition": "FINITE_OWNER_SOURCE_EVIDENCE_CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V37_EXACT_PHASE_CORRELATED_TWO_POLYNOMIAL_SHARED_FACTOR:tail0",
+      "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V37_EXACT_PHASE_CORRELATED_TWO_POLYNOMIAL_SHARED_FACTOR:tail100",
+      "v54_disposition": "FINITE_OWNER_SOURCE_EVIDENCE_CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V38_EXACT_DIRECT_ROTATED_COORDINATE_TWO_QUADRATURE:tail0",
+      "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V38_EXACT_DIRECT_ROTATED_COORDINATE_TWO_QUADRATURE:tail100",
+      "v54_disposition": "FINITE_OWNER_SOURCE_EVIDENCE_CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V39_EXACT_SIGNED_A_DIRECT_ROTATED_COORDINATE:tail0",
+      "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V39_EXACT_SIGNED_A_DIRECT_ROTATED_COORDINATE:tail100",
+      "v54_disposition": "FINITE_OWNER_SOURCE_EVIDENCE_CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V40_EXACT_SIGNED_B_ANTI_DIAGONAL_DIRECT_ROTATED_COORDINATE:tail0",
+      "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V40_EXACT_SIGNED_B_ANTI_DIAGONAL_DIRECT_ROTATED_COORDINATE:tail100",
+      "v54_disposition": "FINITE_OWNER_SOURCE_EVIDENCE_CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V42_EXACT_ROTATED_COORDINATE_ORIENTATION_TRANSITION_BRIDGE:tail0",
+      "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V42_EXACT_ROTATED_COORDINATE_ORIENTATION_TRANSITION_BRIDGE:tail100",
+      "v54_disposition": "FINITE_OWNER_SOURCE_EVIDENCE_CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF:tail0",
+      "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF:tail100",
+      "v54_disposition": "FINITE_OWNER_SOURCE_EVIDENCE_CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V47_EXACT_ALGEBRAIC_SINGLE_CUT:tail0",
+      "v54_disposition": "FINITE_OWNER_SOURCE_EVIDENCE_CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V47_EXACT_ALGEBRAIC_SINGLE_CUT:tail100",
+      "v54_disposition": "MIXED_OWNER_SOURCE_EVIDENCE_CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V48_MIXED_ROOT_SINGLE_CUT:tail0",
+      "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V48_MIXED_ROOT_SINGLE_CUT:tail100",
+      "v54_disposition": "MIXED_OWNER_SOURCE_EVIDENCE_CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V49_MIXED_BOUNDARY_MULTICUT:tail0",
+      "v54_disposition": "FINITE_OWNER_SOURCE_EVIDENCE_CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V49_MIXED_BOUNDARY_MULTICUT:tail100",
+      "v54_disposition": "MIXED_OWNER_SOURCE_EVIDENCE_CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V50_VANISHING_SOURCE_FACTOR:tail0",
+      "v54_disposition": "FINITE_OWNER_SOURCE_EVIDENCE_CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V50_VANISHING_SOURCE_FACTOR:tail100",
+      "v54_disposition": "MIXED_OWNER_SOURCE_EVIDENCE_CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V8_EXACT_COMMON_FACTOR_REDUCTION:tail0",
+      "v54_disposition": "BLOCKED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V8_EXACT_COMMON_FACTOR_REDUCTION:tail100",
+      "v54_disposition": "BLOCKED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V9_EXACT_MONOTONE_SINGLE_HARMONIC_RATIO:tail0",
+      "v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "composite:PB00701_V9_EXACT_MONOTONE_SINGLE_HARMONIC_RATIO:tail100",
+      "v54_disposition": "BLOCKED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:v19:951efe10f570",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v10:a3af56296a12",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v10:f8b83299bd55",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v11:c685de034d59",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v13:c14614a6d9a5",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v13:c426f65b5c10",
+      "v54_disposition": "BLOCKED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v14:a2cd3f4e9667",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v14:ec7482b27bfc",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v15:2ebedf7c1f28",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v16:fd59d77070a7",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v17:dd16ef6ca50e",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v20:6b4ca2de37b9",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "COSINE_HARMONICS"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v21:1817903da4c8",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "COSINE_HARMONICS"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v22:83e577c44d37",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v23:dfd50167b10d",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v24:e93ecd102547",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v25:d8b144a0aad1",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v26:bb6e690ce046",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v27:271ca62551a6",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v27:f0917e356c60",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v28:0c19b3867ff7",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v29:b4a6556f4817",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v30:eddbab7dad02",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v34:316e01e93fb6",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v35:ff16dfb00641",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v36:0670bcf00c12",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v37:b11738998631",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v38:cea5309b9413",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v39:99bc6b487b76",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v40:2467f10e8a4e",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v41:25d37aeffd06",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v41:bc04b160869a",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v44:ffaea08e30c9",
+      "v54_disposition": "BLOCKED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v50:50093b009ac3",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v50:fe4b4aeeaece",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v51:1a381c09638a",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v52:2250401ce435",
+      "v54_disposition": "BLOCKED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v52:aa43afe29078",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v53:211692e0eac2",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v53:b5b949283be8",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v53:cb01c327d5f1",
+      "v54_disposition": "BLOCKED",
+      "necessary_gate_refusal": "COSINE_HARMONICS"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v53:ffa05ac74fbc",
+      "v54_disposition": "FINITE_OWNER_SOURCE_EVIDENCE_CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v7:d64b6f03ebfb",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "COSINE_HARMONICS"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v8:4dbf60f7df23",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v8:5b59708bd4dd",
+      "v54_disposition": "CERTIFIED",
+      "necessary_gate_refusal": "COSINE_HARMONICS"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v9:1a5fd052a155",
+      "v54_disposition": "BLOCKED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v9:4e7b85fa122a",
+      "v54_disposition": "BLOCKED",
+      "necessary_gate_refusal": "SINE_CHANNEL"
+    }
+  ],
+  "nonclaims": {
+    "general_analytic_event_theorem": false,
+    "pr397_theorem_falsified": false,
+    "frozen_source_mathematically_unsolvable": false,
+    "native_geometry": false,
+    "engineering_step": false,
+    "mc_b_established": false,
+    "mc1_established": false,
+    "production_authorized": false
+  }
+}
