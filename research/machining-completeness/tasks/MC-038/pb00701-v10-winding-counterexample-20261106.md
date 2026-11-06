@@ -14,6 +14,16 @@ Original source-time `t∈[0,2]`; true physical source knot `t=1`; phase turns `
 
 Historical V54 disposition is still **BLOCKED**, with its second source span refused by V43 (`CORRELATED_CLOSED_HANDOFF_EVENT_NOT_CERTIFIED`). Prior V2 independent original-source registry blob `e52d3baf3692a011cf86234eeaa992ef407d99fd` already registers this exact source as `COMPLETE_SOURCE_SPECIFIC`. Therefore this argument **must not** be counted as a newly resolved historical source or an A reduction. It is a bounded independent source-bound falsification and explanatory ordered-event witness.
 
+## Prior-art and novelty exclusion (mandatory admission boundary)
+
+A current-main audit found **the same original V10 full physical event count already proved**:
+
+- [Complete V10/V11 ratio-prefix composition](pb00701-ratio-prefix-composition-research.md), immutable on main as Git blob `2b2c2ee13d16e1aca55d8d7a780c3ac0ca3a8030`, previously proves this same V10 `tail0` source has four prefix and four tail simple crossings, nine alternating sign cells, nonzero original knot/exteriors. Its actual accepted source-specific V2 producer is not replaced.
+- [V10 phase-alias information-loss falsification](pb00701-v10-phase-alias-boundary-20261105.md), Git blob `fb93e2af58d47b895ef130b6dc56cb65a6e05634`, also reconstructs **the same** eight simple roots and exact original F(0)=F(1)=F(2)=-1. Its rejected route is `PHASE_MOD_ONE_EVENT_KEY_IS_COMPLETE_FOR_VARIABLE_AMPLITUDE_SOURCE`, **not** the monotone-phase-difference/endpoint-sign shortcut challenged here.
+- [V10 V43-refused tail four-crossing proof](pb00701-v43-v10-tail0-four-crossings-research.md), Git blob `9df7334a339c5c8b1179635f28b533a733c0d466`, independently establishes the four second-span crossings already.
+
+**What is new here is only a different, source-bound proof phrasing of the insufficient condition that a strictly increasing _phase difference_, together with three equal physical boundary signs, could warrant no/one full-source event.** The eight-root theorem, source-specific exact ordering, prior V2 witness, and much of its source-bound verification are preexisting. The proposed shortcut is not established as a currently implemented dispatch method; therefore this document cannot claim a new production algorithm defect, generic theorem advance, or an incremental source closure. Treat C as a bounded adversarial *counterexample to the explicitly formulated shortcut*, not a new mathematical event result.
+
 ## 2. Complete mathematical witness on the original physical source
 
 Set \(\theta(t)=2\pi(-1/2+2t)=-\pi+4\pi t\). Its original physical function is
