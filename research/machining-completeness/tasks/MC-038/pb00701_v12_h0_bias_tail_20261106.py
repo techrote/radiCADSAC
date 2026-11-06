@@ -76,7 +76,7 @@ def read_json(path, expected_blob=None):
         raise Refusal("JSON_INVALID") from e
 
 def rational(token):
-    require(type(token) is str and 1 <= len(token) <= 100, "RATIONAL_TOKEN")
+    require(type(token) is str and 1 <= len(token) <= 640, "RATIONAL_TOKEN")
     try:
         value = Fraction(token)
     except (ValueError, ZeroDivisionError, OverflowError) as e:
