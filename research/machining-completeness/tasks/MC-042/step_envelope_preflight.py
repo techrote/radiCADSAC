@@ -136,24 +136,30 @@ HEADER_BEGIN_RE = re.compile(r"([A-Za-z][A-Za-z0-9_]*)\s*\(")
 
 
 def _has_complete_header_inventory(header: str) -> bool:
-    """Require every provisional HEADER constructor to terminate with ';'.
+    """Require the mandatory Part-21 HEADER triad once, in the prescribed order.
 
-    Only a conservative lexical check on already masked strings/comments;
-    not full Part-21 header-schema or AP242 parsing.
+    FILE_DESCRIPTION, FILE_NAME, FILE_SCHEMA are mandatory. Additional complete
+    lexical records after the triad may be present. This conservative sentinel
+    does NOT validate record arguments, EXPRESS schema or STEP geometry.
     """
-    pos, n, schema_count = 0, len(header), 0
+    mandatory = ("FILE_DESCRIPTION", "FILE_NAME", "FILE_SCHEMA")
+    pos, n, next_required = 0, len(header), 0
     while True:
         while pos < n and header[pos].isspace():
             pos += 1
         if pos == n:
-            return schema_count == 1
+            return next_required == len(mandatory)
         match = HEADER_BEGIN_RE.match(header, pos)
         if match is None:
             return False
-        if match.group(1).upper() == "FILE_SCHEMA":
-            schema_count += 1
-            if schema_count > 1:
+        name = match.group(1).upper()
+        if next_required < len(mandatory):
+            if name != mandatory[next_required]:
                 return False
+            next_required += 1
+        elif name in mandatory:
+            # A second mandatory record is ambiguous even after the triad.
+            return False
         depth = 1
         pos = match.end()
         while pos < n:
@@ -173,7 +179,6 @@ def _has_complete_header_inventory(header: str) -> bool:
         if pos == n or header[pos] != ";":
             return False
         pos += 1
-
 
 def _has_complete_entity_inventory(data: str) -> bool:
     """Require *every* top-level DATA item to finish, not merely the first.
@@ -285,6 +290,8 @@ def self_test() -> None:
     good = (
         "ISO-10303-21;\nHEADER;\n"
         "FILE_DESCRIPTION(('synthetic'),'2;1');\n"
+        "FILE_NAME('synthetic.step','2026-11-06T00:00:00',('tester'),"
+        "('research'),'preflight','synthetic','');\n"
         "FILE_SCHEMA(('AP242'));\nENDSEC;\nDATA;\n"
         "#1=NOT_A_REAL_BREP('ENDSEC; DATA; /* not a comment */');\n"
         "/* quoted decoy HEADER; ENDSEC; */\n"
@@ -317,9 +324,10 @@ def self_test() -> None:
         accept(good)
         accept(good.replace(b"HEADER;\n", b"HEADER;\n/* fake DATA; ENDSEC; */\n"))
         accept(good.replace(b"NOT_A_REAL_BREP", b"SYNTHETIC_PLACEHOLDER"))
-        # Additional complete HEADER record must not be mistaken for junk.
+        # Additional complete optional lexical HEADER record after the triad
+        # must not be mistaken for junk (not an argument/schema validity check).
         accept(good.replace(b"FILE_SCHEMA(('AP242'));",
-                            b"FILE_NAME('synthetic');\nFILE_SCHEMA(('AP242'));"))
+                            b"FILE_SCHEMA(('AP242'));\nSECTION_LANGUAGE(('ENGLISH'));"))
         # Comments are still legal in every inter-section gap. Quoted section
         # decoys inside constructors also remain masked for section inventory.
         accept(good.replace(b"ISO-10303-21;\nHEADER;",
@@ -348,6 +356,23 @@ def self_test() -> None:
         refuse(good.replace(b"DATA;\n", b"BEGIN_DATA;\n", 1))
         refuse(good.replace(b"END-ISO-10303-21;", b"END-ISO-10303-20;"))
         refuse(good.replace(b"FILE_SCHEMA", b"NO_SCHEMA"))
+        # Part-21 requires the three mandatory HEADER records, exactly once
+        # and in order. The former positive "good" had no FILE_NAME at all.
+        desc = b"FILE_DESCRIPTION(('synthetic'),'2;1');\n"
+        name = (b"FILE_NAME('synthetic.step','2026-11-06T00:00:00',('tester'),"
+                b"('research'),'preflight','synthetic','');\n")
+        schema = b"FILE_SCHEMA(('AP242'));\n"
+        assert desc + name + schema in good
+        for omitted in (desc, name, schema):
+            refuse(good.replace(omitted, b"", 1))
+        # Mandatory HEADER records may not swap positions.
+        refuse(good.replace(desc + name, name + desc, 1))
+        refuse(good.replace(name + schema, schema + name, 1))
+        # Mandatory records cannot appear twice, even if syntactically complete.
+        for repeated in (desc, name, schema):
+            refuse(good.replace(repeated, repeated + repeated, 1))
+        # Optional/unknown constructors cannot preempt the mandated first entry.
+        refuse(good.replace(desc, b"SECTION_LANGUAGE(('ENGLISH'));\n" + desc, 1))
         # Missing HEADER statement semicolons and arbitrary trailing payload
         # previously passed the FILE_SCHEMA presence-only search.
         refuse(good.replace(b"FILE_SCHEMA(('AP242'));", b"FILE_SCHEMA(('AP242'))"))
