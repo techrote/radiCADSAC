@@ -371,8 +371,15 @@ def verify_retained_captures(rows: list[dict[str, Any]], capture_dir: Path) -> N
             identities.add(identity)
             if sha256_file(capture, expected_metadata=metadata) != attempt[f"{stream}_sha256"]:
                 raise ContractError(f"retained capture digest mismatch: {name}")
-    actual = {entry.name for entry in capture_dir.iterdir()}
-    if actual != expected:
+    # Refuse the first unplanned name rather than materializing a set of
+    # every directory entry before detecting surplus evidence. The remaining
+    # name set contains only the two expected streams per ledger row.
+    # This is cooperative inventory admission, not an atomic directory snapshot.
+    for entry in capture_dir.iterdir():
+        if entry.name not in expected:
+            raise ContractError("retained capture inventory has missing or unexpected paths")
+        expected.remove(entry.name)
+    if expected:
         raise ContractError("retained capture inventory has missing or unexpected paths")
 
 
@@ -1036,11 +1043,45 @@ def self_test() -> None:
         extra.write_bytes(b"")
         try:
             verify_retained_captures(canonical_rows, captures)
-        except ContractError:
-            pass
+        except ContractError as exc:
+            assert "retained capture inventory has missing or unexpected paths" in str(exc), exc
         else:
             raise AssertionError("unexpected retained capture was accepted")
         extra.unlink()
+        verify_retained_captures(canonical_rows, captures)
+
+        # Adversarial surplus enumeration MUST stop on the first unplanned
+        # name. Before this fix the set comprehension exhausted the stream
+        # before detecting the mismatch, permitting unbounded accumulation.
+        # This is a deterministic mock of surplus directory enumeration,
+        # not a hostile-filesystem security or native-execution result.
+        original_iterdir = Path.iterdir
+        inventory_walk = {"calls": 0}
+
+        def surplus_inventory(path):
+            if path != captures:
+                return original_iterdir(path)
+
+            def unexpected_names():
+                inventory_walk["calls"] += 1
+                yield captures / "unplanned-000000.bin"
+                inventory_walk["calls"] += 1
+                raise AssertionError("capture inventory read past first surplus entry")
+
+            return unexpected_names()
+
+        Path.iterdir = surplus_inventory
+        try:
+            try:
+                verify_retained_captures(canonical_rows, captures)
+            except ContractError as exc:
+                assert "retained capture inventory has missing or unexpected paths" in str(exc), exc
+            else:
+                raise AssertionError("surplus capture inventory accepted")
+            assert inventory_walk["calls"] == 1, inventory_walk
+        finally:
+            Path.iterdir = original_iterdir
+
         history = directory / "ledger.jsonl"
         history.write_bytes(b"".join(canonical_bytes(row) + b"\n" for row in canonical_rows))
         assert load_ledger(history) == canonical_rows
