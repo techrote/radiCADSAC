@@ -1,0 +1,67 @@
+name: MC-038 exact V12 constant-H0 bias two-root tail falsifier
+
+on:
+  push:
+    branches:
+      - research/mc038-v12-h0-bias-tail-20261106
+  pull_request:
+    paths:
+      - research/machining-completeness/tasks/MC-038/pb00701_v12_h0_bias_tail_20261106.py
+      - research/machining-completeness/tasks/MC-038/pb00701-v12-h0-bias-tail-20261106.md
+      - research/machining-completeness/tasks/MC-038/pb00701-v12-h0-bias-tail-20261106.json
+      - .github/workflows/mc1-pb00701-v12-h0-bias-tail-20261106.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  h0-bias-original-source-proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Literal HEAD provenance
+        run: |
+          echo "LITERAL_HEAD=$(git rev-parse HEAD)"
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Exact frozen-source and adversarial H0 bias controls
+        run: python3 research/machining-completeness/tasks/MC-038/pb00701_v12_h0_bias_tail_20261106.py --contract --self-test
+
+  original-v54-v2-producer-reconciliation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Literal HEAD provenance
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Full original-source V54/V2 replay
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_evidence_reconciliation_v2.py --contract
+
+  mc1-static:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Literal HEAD provenance
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: MC-1 authority and static validation
+        run: python3 tools/validate_machining_completeness.py
