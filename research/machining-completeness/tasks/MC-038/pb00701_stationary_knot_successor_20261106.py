@@ -453,6 +453,33 @@ def self_test():
         "TANGENCY", "TANGENCY"]
     assert tc["physical_source"]["nonzero_cell_count"] == 3
 
+    # Original exterior endpoint zeros must remain distinct from source
+    # interior events; no fabricated sign outside the admitted interval.
+    left_zero = synthetic(base, ["0", "1"], ["1", "1"])
+    lz = build(left_zero)
+    assert validate(lz, left_zero)
+    assert lz["physical_source"]["exterior_germs"]["left"]["relation"] == "ZERO"
+    assert lz["physical_source"]["exterior_germs"]["left"]["one_sided_order"] == 1
+    assert lz["physical_source"]["interior_source_events"] == 0
+    assert lz["physical_source"]["nonzero_cell_count"] == 1
+
+    right_zero = synthetic(base, ["1", "1"], ["1", "0"])
+    rz = build(right_zero)
+    assert validate(rz, right_zero)
+    assert rz["physical_source"]["exterior_germs"]["right"]["relation"] == "ZERO"
+    assert rz["physical_source"]["exterior_germs"]["right"]["one_sided_order"] == 1
+    assert rz["physical_source"]["closed_source_zero_occurrences"] == 1
+
+    # Two interior roots in different original spans, ordered through an
+    # actual nonzero knot; the central positive cell joins across t=1.
+    two_roots = synthetic(base, ["-1/2", "1/2"], ["1/2", "-1/2"])
+    tr = build(two_roots)
+    assert validate(tr, two_roots)
+    assert [x["source_value"] for x in tr["physical_source"]["ordered_source_events"]] == [
+        "1/2", "3/2"]
+    assert [x["sign"] for x in tr["physical_source"]["maximal_nonzero_cells"]] == [
+        "NEGATIVE", "POSITIVE", "NEGATIVE"]
+
     identity = synthetic(base, ["-1", "0"], ["0", "0"])
     expect_refusal(lambda: build(identity))
     discontinuity = synthetic(base, ["-1", "1/2"], ["3/4", "3/4"])
