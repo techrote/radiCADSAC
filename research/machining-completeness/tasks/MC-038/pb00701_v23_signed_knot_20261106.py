@@ -281,8 +281,19 @@ def expected_receipt():
     }
 
 
+def canonical_receipt_json(value):
+    """Compare JSON tokens, not Python's bool/int/float-coercing equality."""
+    try:
+        return json.dumps(value, sort_keys=True, separators=(",", ":"),
+                          ensure_ascii=True, allow_nan=False)
+    except (ValueError, TypeError, OverflowError, RecursionError) as exc:
+        raise Refused("RECEIPT_NONCANONICAL_JSON") from exc
+
+
 def validate_receipt(candidate, expected):
-    need(type(candidate) is dict and candidate == expected, "RECEIPT_PROOF_OR_PROVENANCE_MISMATCH")
+    need(type(candidate) is dict and
+         canonical_receipt_json(candidate) == canonical_receipt_json(expected),
+         "RECEIPT_PROOF_OR_PROVENANCE_MISMATCH")
     return True
 
 
@@ -301,6 +312,8 @@ def self_test():
          "LOST_ONE_SIDED_KNOT_ORDER")
     expected = expected_receipt()
     validate_receipt(expected, expected)
+    # The actual committed JSON receipt must still admit after typed comparison.
+    validate_receipt(decode(read_pinned(RECEIPT, MAX_RECEIPT)), expected)
     for family, key, mutate in (
         ("cos_splines", "0", lambda x: x["controls"].__setitem__(0, "-500/1000")),
         ("cos_splines", "2", lambda x: x["controls"].__setitem__(1, "0")),
@@ -347,11 +360,27 @@ def self_test():
         bad = deepcopy(expected)
         mutate(bad)
         refuse(lambda b=bad: validate_receipt(b, expected))
+    # Python equality conflates JSON booleans with 0/1 and integers with 1.0.
+    # All five type aliases must refuse despite having equal Python values.
+    for mutate in (
+        lambda v: v["case_certificate"]["proof"]["source_knot_root"].__setitem__("left_sided_order", True),
+        lambda v: v["case_certificate"]["proof"]["source_knot_root"].__setitem__("global_analytic_multiplicity_claimed", 0),
+        lambda v: v["before_after"].__setitem__("required_PB007_or_PO_obligations_discharged", False),
+        lambda v: v["case_certificate"]["proof"]["maximal_nonzero_cells"][0].__setitem__("left_endpoint_included", 1),
+        lambda v: v["case_certificate"]["proof"]["source_knot_root"].__setitem__("right_sided_order", 1.0),
+    ):
+        bad = deepcopy(expected)
+        mutate(bad)
+        refuse(lambda b=bad: validate_receipt(b, expected))
+    # Synthetic in-memory nonfinite scalar is not a canonical JSON receipt.
+    bad = deepcopy(expected)
+    bad["case_certificate"]["proof"]["source_knot_root"]["left_sided_order"] = float("inf")
+    refuse(lambda: validate_receipt(bad, expected))
     with tempfile.TemporaryDirectory() as d:
         p = Path(d) / "oversize.json"
         p.write_bytes(b" " * 128)
         refuse(lambda: read_pinned(p, 64))
-    print("V23 original source, signed-knot proof, 21+ adversarial controls: PASS")
+    print("V23 original source, signed-knot proof, 27+ adversarial controls: PASS")
 
 
 def main():
