@@ -29,7 +29,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Frozen V12 H1 tail / prospective H0 / 8 adversarial controls
+      - name: Frozen V12 H1 tail / prospective H0 / 11 focused/adversarial tests
         run: python3 research/machining-completeness/tasks/MC-038/pb00701_constant_h0_h1_octant_20261106.py --contract --self-test
 
   frozen-original-source-producing-replay:
