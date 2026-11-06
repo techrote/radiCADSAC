@@ -115,14 +115,31 @@
     "existing_complete_v2_witnesses_before": 50,
     "existing_complete_v2_witnesses_after": 50,
     "new_source_specific_complete_witnesses": 0,
-    "new_candidate_ordered_premise_case_ids": [
-      "composite:PB00701_V23_EXACT_NONCONSTANT_AMPLITUDE_PHASE_SECTOR_ANCHOR:tail0"
-    ],
-    "standalone_candidate_missing_ordered_after": 29,
-    "conditional_union_with_unmerged_421_after": 27,
-    "conditional_union_not_authoritative": true,
     "required_PB007_or_PO_obligations_discharged": 0,
     "MC_B_or_MC1_established": false,
-    "frozen_evidence_modified": false
+    "frozen_evidence_modified": false,
+    "new_unique_ordered_premise_case_ids": [],
+    "already_signed_in_v2_case_ids": [
+      "composite:PB00701_V23_EXACT_NONCONSTANT_AMPLITUDE_PHASE_SECTOR_ANCHOR:tail0"
+    ],
+    "new_generic_owner_to_consumer_ordered_premises": 0,
+    "unsupported_standalone_30_to_29_claim_refused": true,
+    "unsupported_combined_30_to_27_claim_refused": true
+  },
+  "signed_prior_art": {
+    "saved_signed_report_git_blob": "ed0a09595a4e73f7fdb9853d9151b8c7b6fea05f",
+    "accepted_producer_git_blob": "668eef22876afdeec0931a6ccb6a48573b053203",
+    "same_original_source": "composite:PB00701_V23_EXACT_NONCONSTANT_AMPLITUDE_PHASE_SECTOR_ANCHOR:tail0",
+    "preexisting_source_knot_signed_event": "NEGATIVE_TO_POSITIVE_AT_1",
+    "preexisting_sided_orders": [
+      1,
+      1
+    ],
+    "preexisting_maximal_nonzero_signs": [
+      -1,
+      1
+    ],
+    "preexisting_whole_source_strict_derivative_proof": true,
+    "new_generic_owner_to_consumer_interface_provided": false
   }
 }
