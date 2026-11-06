@@ -1,0 +1,50 @@
+name: mc1-pb00701-square-v54-applicability-20261106
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - research/mc038-square-theorem-v54-applicability-20261106
+    paths:
+      - '.github/workflows/mc1-pb00701-square-v54-applicability-20261106.yml'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_square_v54_applicability_20261106.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-square-v54-applicability-20261106.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-square-v54-applicability-20261106.md'
+  pull_request:
+    paths:
+      - '.github/workflows/mc1-pb00701-square-v54-applicability-20261106.yml'
+      - 'research/machining-completeness/tasks/MC-038/verify_pb00701_square_v54_applicability_20261106.py'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-square-v54-applicability-20261106.json'
+      - 'research/machining-completeness/tasks/MC-038/pb00701-square-v54-applicability-20261106.md'
+permissions:
+  contents: read
+concurrency:
+  group: square-v54-applicability-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify-pinned-original-admission:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Record literal source head and scoped diff
+        run: |
+          git rev-parse HEAD
+          git status --porcelain
+      - name: Exhaustive frozen-source applicability and adversarial contract
+        run: |
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_square_v54_applicability_20261106.py --self-test --contract --json
+      - name: Independent frozen v54 provenance frontier
+        run: |
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py --contract --self-test
+      - name: Fresh complete V2 original-source producing replay
+        run: |
+          python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_evidence_reconciliation_v2.py --contract --self-test
+      - name: MC-1 static programme regression
+        run: |
+          python3 tools/validate_machining_completeness.py
