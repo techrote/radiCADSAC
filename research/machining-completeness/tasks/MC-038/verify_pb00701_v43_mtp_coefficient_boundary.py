@@ -42,6 +42,8 @@ HISTORICAL = {
     }
 }
 SCHEMA = 'radicadsac-mc038-v43-rational-mtp-admission/1.0'
+MAX_PINNED_BYTES = 1024 * 1024
+MAX_RECEIPT_BYTES = 64 * 1024
 
 
 def require(ok, msg):
@@ -59,10 +61,22 @@ def git_blob(data):
         b'blob ' + str(len(data)).encode() + bytes([0]) + data).hexdigest()
 
 
+def read_bounded(path, max_bytes):
+    """Refuse raw inputs before hashing or JSON parsing; not a filesystem sandbox."""
+    with path.open('rb') as handle:
+        data = handle.read(max_bytes + 1)
+    require(len(data) <= max_bytes, 'input resource limit exceeded: ' + path.name)
+    return data
+
+
 def load_pinned(path, sha):
-    data = path.read_bytes()
+    data = read_bounded(path, MAX_PINNED_BYTES)
     require(git_blob(data) == sha, 'pinned Git blob mismatch: ' + path.name)
     return json.loads(data)
+
+
+def load_receipt(path):
+    return json.loads(read_bounded(path, MAX_RECEIPT_BYTES))
 
 
 def validate_original(row):
@@ -174,6 +188,50 @@ def exact_fourier_controls():
             'nonconstant_V43_direct_rational_MTP_admitted':False}
 
 
+def ingress_budget_adversarial():
+    """Actual disk boundaries; over-budget inputs refuse before hash or JSON."""
+    from tempfile import TemporaryDirectory
+    controls = 0
+    with TemporaryDirectory() as temp_dir:
+        path = Path(temp_dir) / 'tampered.json'
+        for budget in (MAX_PINNED_BYTES, MAX_RECEIPT_BYTES):
+            path.write_bytes(b'x' * budget)
+            require(len(read_bounded(path, budget)) == budget,
+                    'exact byte-budget boundary incorrectly refused')
+            controls += 1
+            path.write_bytes(b'x' * (budget + 1))
+            try:
+                read_bounded(path, budget)
+            except ValueError as exc:
+                require('resource limit exceeded' in str(exc),
+                        'over-budget input did not receive resource refusal')
+                controls += 1
+            else:
+                raise AssertionError('oversized raw input admitted')
+        path.write_bytes(b'x' * (MAX_PINNED_BYTES + 1))
+        try:
+            load_pinned(path, '0' * 40)
+        except ValueError as exc:
+            require('resource limit exceeded' in str(exc),
+                    'pinned corpus was hashed before resource refusal')
+            controls += 1
+        else:
+            raise AssertionError('oversized pinned corpus admitted')
+        path.write_bytes(b'x' * (MAX_RECEIPT_BYTES + 1))
+        try:
+            load_receipt(path)
+        except ValueError as exc:
+            require('resource limit exceeded' in str(exc),
+                    'receipt was parsed before resource refusal')
+            controls += 1
+        else:
+            raise AssertionError('oversized receipt admitted')
+    require(controls == 6, 'ingress budget test census drift')
+    return {'max_pinned_bytes': MAX_PINNED_BYTES,
+            'max_receipt_bytes': MAX_RECEIPT_BYTES,
+            'actual_disk_boundary_controls': controls}
+
+
 def adversarial():
     valid=deepcopy(HISTORICAL)
     require(not validate_original(valid)['rational_mtp_grammar_admitted'],
@@ -209,7 +267,8 @@ def adversarial():
     require(Q(0)**2==0 and Q(1)**2>0,
             'even tangency control failed')
     require(mutations==11, 'adversarial mutation count mismatch')
-    return {'original_source_mutation_refusals':mutations,
+    return {'file_ingress': ingress_budget_adversarial(),
+            'original_source_mutation_refusals':mutations,
             'prospective_event_controls':[
                 'tangency_even_multiplicity', 'identity_zero_continuum',
                 'two_roots_separated_by_2^-200'],
@@ -251,8 +310,7 @@ def run(with_tests):
         'production_authorized':False
     }
     if with_tests:
-        receipt=json.loads((HERE/'pb00701-v43-mtp-coefficient-boundary.json')
-                           .read_text(encoding='utf-8'))
+        receipt=load_receipt(HERE/'pb00701-v43-mtp-coefficient-boundary.json')
         for key in ('schema','claim','case_id','source_sha256',
                     'original_row_sha256','before','after','deltas',
                     'newly_closed_historical_case_ids','required_pb007_discharge',
