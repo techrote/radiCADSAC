@@ -6,11 +6,14 @@ from __future__ import annotations
 
 import argparse
 import copy
+import io
 from fractions import Fraction as Q
 import hashlib
 import json
 from pathlib import Path
+import tempfile
 import unittest
+from unittest import mock
 
 HERE = Path(__file__).resolve().parent
 V54 = HERE / "pb00701-finite-owner-corpus-v54.json"
@@ -67,6 +70,13 @@ def pinned(path,blob):
         buf=fd.read(400001)
     check(len(buf)<=400000,"BYTE_BUDGET")
     check(git_blob(buf)==blob,"IMMUTABLE_BLOB_DRIFT")
+    return parse_json(buf)
+
+def read_receipt(path=RECEIPT):
+    # Enforce the 400,000-byte contract *before* allocation. A one-byte
+    # sentinel distinguishes an over-budget file from the exact boundary.
+    with path.open("rb") as fd:
+        buf = fd.read(400001)
     return parse_json(buf)
 
 def rational(s):
@@ -302,7 +312,7 @@ class Tests(unittest.TestCase):
                          (3,2,49))
     def test_receipt_is_recomputed(self):
         x=produce()
-        self.assertEqual(x,parse_json(RECEIPT.read_bytes()))
+        self.assertEqual(x,read_receipt())
     def test_actual_v12_refuses_not_no_root_claim(self):
         x=pinned(V54,V54_BLOB)
         row=next(y for y in x["cases"] if y["id"]==V12)
@@ -341,6 +351,25 @@ class Tests(unittest.TestCase):
         self.assertGreater(tangent(x+eps),0)
         # A synthetic algebraic control is never promoted to frozen-source closure.
         self.assertEqual(produce()["newly_resolved_historical_ids"],[])
+    def test_receipt_disk_budget_and_bounded_read(self):
+        # The admissible upper boundary is read in one bounded operation.
+        with tempfile.TemporaryDirectory() as root:
+            path=Path(root)/"receipt.json"
+            path.write_bytes(b"{}"+b" "*(400000-2))
+            self.assertEqual(read_receipt(path),{})
+            path.write_bytes(b"{}"+b" "*(400001-2))
+            with self.assertRaisesRegex(Refusal,"BYTE_BUDGET"):
+                read_receipt(path)
+        requested=[]
+        class ObservedReader(io.BytesIO):
+            def read(self,n=-1):
+                requested.append(n)
+                if n!=400001:
+                    raise AssertionError("UNBOUNDED_RECEIPT_READ")
+                return super().read(n)
+        with mock.patch.object(Path,"open",return_value=ObservedReader(b'{"ok":true}')):
+            self.assertEqual(read_receipt(Path("unused")),{"ok":True})
+        self.assertEqual(requested,[400001])
     def test_adversarial_json_ingress(self):
         for raw in (b'{"a":1,"a":2}', b'{"x":1.5}', b'{"x":NaN}',
                     b'\xff',b'['*10000+b'0'+b']'*10000):
@@ -355,7 +384,7 @@ def main():
     check(args.contract or args.self_test,"GATE_REQUIRED")
     if args.contract:
         current=produce()
-        check(current==parse_json(RECEIPT.read_bytes()),"RECEIPT_DRIFT")
+        check(current==read_receipt(),"RECEIPT_DRIFT")
         print(json.dumps(current,sort_keys=True))
     if args.self_test:
         result=unittest.TextTestRunner(verbosity=2).run(
