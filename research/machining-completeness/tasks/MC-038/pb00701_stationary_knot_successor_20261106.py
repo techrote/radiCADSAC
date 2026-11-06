@@ -415,7 +415,16 @@ def self_test():
     near_cert = build(near)
     assert validate(near_cert, near)
     event = near_cert["physical_source"]["ordered_source_events"][0]
-    assert event["source_value"] == str(Q(1) / (Q(1) + Q(delta)))
+    expected_root = Q(1) / (Q(1) + Q(delta))
+    if event["root_kind"] == "RATIONAL_ROOT":
+        assert Q(event["source_value"]) == expected_root
+    else:
+        # A rational zero may validly be encoded as a unique algebraic
+        # isolator when the bisection never lands on that rational point.
+        left, right = map(Q, event["source_isolating_interval"])
+        assert left < expected_root < right
+        assert P.EE.peval(P.source_stationary_spans(near)[0]["polynomial"],
+                          expected_root) == 0
     assert near_cert["physical_source"]["source_knot"]["relation"] == "POSITIVE"
 
     # At the true original knot, both sided orders must be retained;
