@@ -68,11 +68,11 @@ Against the **same immutable 121 V54 originals and 50 V2 complete source registr
 
 | Direct unchanged #441 grammar/certificate category | All 121 | Historical 50 unresolved |
 |---|---:|---:|
-| Meets necessary original-source phase/affine H1/grid grammar | 4 | 2 |
+| Meets necessary original-source phase/affine H1/grid grammar | 3 | 2 |
 | Fully satisfies exact per-grid-cell derivative and drift certificate | 2 | 1 |
 | Not directly fully admitted | 119 | **49** |
 
-The four structurally eligible originals are `harvested:verify_pb00701_v10:a3af56296a12` (admitted; historically certified), `harvested:v19:951efe10f570` (refused), the V10 `tail0` (admitted; historically blocked), and the selected V12 `tail0` (refused). The harvested V19 and V12 first-span algebra agrees and both refuse the drift bound. The V10 case already had complete V2 evidence. Thus **no new original closure** follows from the direct route, even where it admits a frozen original.
+The three structurally eligible originals are `harvested:verify_pb00701_v10:a3af56296a12` (admitted; historically certified), V10 `tail0` (admitted; historically blocked), and the selected V12 `tail0` (refused). The algebraically similar `harvested:v19:951efe10f570` has an additional `parameter_projection` source field and is therefore **not** eligible for the unchanged literal #441 input grammar; its underlying first-span two-root phenomenon is reproduced in the actual V12 composite. The V10 case already had complete V2 evidence. Thus **no new original closure** follows from the direct route, even where it admits a frozen original.
 
 | Matched historical measure | Before | After | Delta |
 |---|---:|---:|---:|
