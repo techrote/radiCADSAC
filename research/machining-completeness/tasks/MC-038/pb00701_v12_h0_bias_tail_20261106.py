@@ -245,7 +245,7 @@ class Tests(unittest.TestCase):
         self.assertEqual(classify(original_spec(),str(b))["root_multiplicities"],[1,1])
     def test_tangency_is_irrational_and_unadmitted(self):
         self.assertEqual(isqrt(5),2)
-        for token in ("sqrt(5)/3","0.7453559925","2/3","1/2","5/7","7/10 "):
+        for token in ("sqrt(5)/3","0.7453559925","2/3","1/2","1","-1/2","7/10 "):
             with self.assertRaises(Refusal):
                 classify(original_spec(),token)
         # A genuine analytic second-order tangency occurs at b=sqrt(5)/3;
