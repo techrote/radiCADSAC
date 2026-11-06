@@ -261,6 +261,11 @@ def self_test() -> None:
         except Refused:
             if not replacement.exists():
                 checks += 1  # Actual replacement succeeded and was refused.
+        else:
+            # The bytes were identical; identity, not content digest, MUST
+            # detect the real successful pathname substitution.
+            if not replacement.exists():
+                raise AssertionError("same-byte pathname substitution accepted")
         # On Windows, replacement while descriptor open may be OS-denied; do not
         # count that as an exercised successful substitution.
         print(f"MC-042 source-pinned synthetic byte-envelope preflight: {checks} controls passed; "
