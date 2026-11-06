@@ -20,6 +20,8 @@ SHA = "4d1ef1cbecceeb4a43b4e30fd37327fa204164cc9ce25dfe4f1744a052cebcc2"
 ROW_SHA = "406ec73609a8213051afd3361478416e496c782b2b89ae2a857b772146059279"
 V54_BLOB = "5841c331579489b25caef38cd412bdbf286f9134"
 V2_BLOB = "e52d3baf3692a011cf86234eeaa992ef407d99fd"
+ORDERED_WITNESS_BLOB = "8e662094df4106b2a79711c565cd865008fadc8c"
+ORDERED_PRODUCER_BLOB = "549251696e43f22122f8ba957baa2befcd8d77a8"
 
 class Refused(ValueError):
     pass
@@ -148,8 +150,13 @@ def expected():
       "v54_source_count":121,"v54_route_refusals":20,
       "v54_missing_ordered":30,"v2_preexisting_complete":50,
       "accepted_historical_delta":0,
-      "conditional_missing_ordered_after":29,
-      "candidate_case_ids":[CASE],"new_complete_source_witnesses":0,
+      "proof_role":"ALTERNATE_SYMBOLIC_PROOF_NOT_NEW_SOURCE_CLOSURE",
+      "preexisting_v2_signed_event_witness_git_blob":ORDERED_WITNESS_BLOB,
+      "preexisting_v2_signed_event_producer_git_blob":ORDERED_PRODUCER_BLOB,
+      "alternate_proof_case_ids":[CASE],
+      "new_unique_ordered_source_closures":0,
+      "new_complete_source_witnesses":0,
+      "new_generic_event_theorem":False,
       "pb_obligations_discharged":0,"pb007_status":"OPEN",
       "mc_b":"NOT_ESTABLISHED","mc1":"NOT_ESTABLISHED",
       "native_geometry":False,"engineering_step":False,
@@ -186,6 +193,70 @@ def census(c,v):
          "V2_EXISTING_SOURCE_WITNESS")
     return matches[0]
 
+
+def prior_signed_event(w,v):
+    """Fail closed unless the already accepted V2 signed certificate subsumes this claim."""
+    need(type(w) is dict and type(w.get("source_cases")) is list and
+         len(w["source_cases"]) == 15, "PINNED_PRIOR_SIGNED_REPORT_SCHEMA")
+    matches=[x for x in w["source_cases"] if x.get("case_id")==CASE]
+    need(len(matches)==1, "PRIOR_SIGNED_CASE_MISSING")
+    old=matches[0]
+    need(old.get("source_sha256")==SHA and old.get("original_row_sha256")==ROW_SHA and
+         old.get("source_interval")==["0","2"] and
+         old.get("original_source_piece_edges")==["0","1","2"] and
+         old.get("phase_turn_law")=={"offset":"0","rate":"1/8"} and
+         old.get("status")=="COMPLETE_PINNED_ORIGINAL_SOURCE_PROOF_RESEARCH_ONLY" and
+         old.get("complete_closed_zero_set_kind")=="FINITE" and
+         type(old.get("complete_closed_root_count")) is int and
+         old["complete_closed_root_count"]==1 and
+         old.get("complete_original_source_zero_set") is True and
+         old.get("historical_disposition_changed") is False,
+         "PRIOR_SIGNED_CUSTODY_OR_COMPLETENESS")
+    roots=old.get("ordered_root_events")
+    need(type(roots) is list and len(roots)==1 and type(roots[0]) is dict,
+         "PRIOR_ORDERED_EVENTS")
+    root=roots[0]
+    need(root.get("root_ref")=="ROOT_1" and
+         type(root.get("source_span_index")) is int and root["source_span_index"]==0 and
+         root.get("source_interval")==["0","1"] and
+         root.get("strict_bracket")==["17/64","9/32"] and
+         type(root.get("left_sign")) is int and root["left_sign"]==-1 and
+         type(root.get("right_sign")) is int and root["right_sign"]==1 and
+         type(root.get("smooth_multiplicity")) is int and root["smooth_multiplicity"]==1 and
+         type(root.get("derivative_sign")) is int and root["derivative_sign"]==1,
+         "PRIOR_SIGNED_ROOT_ALREADY_CERTIFIED")
+    need(old.get("maximal_open_physical_sign_cells")==[
+        {"left":"ORIGINAL_SOURCE_START","right":"ROOT_1","sign":-1},
+        {"left":"ROOT_1","right":"ORIGINAL_SOURCE_END","sign":1}] and
+         old.get("exterior_endpoint_signs")==[-1,1] and
+         old.get("true_source_knots")==[{
+             "position":"1","channel_continuous":True,"left_sign":1,"right_sign":1,
+             "is_physical_zero":False,"is_physical_event":False}],
+         "PRIOR_SIGN_CELLS_OR_KNOT_ALREADY_CERTIFIED")
+    spans=old.get("original_spans")
+    need(type(spans) is list and len(spans)==2 and
+         spans[1].get("source_span_index")==1 and
+         spans[1].get("interval_proof",{}).get("partition")==[
+             {"kind":"NO_ROOT","interval":["1","2"],"sign":1}],
+         "PRIOR_RIGHT_SPAN_ALREADY_CERTIFIED")
+    producers=v.get("producer_registry")
+    need(type(producers) is list, "V2_PRODUCER_REGISTRY")
+    matches=[p for p in producers if p.get("producer")=="ordered_children"]
+    need(len(matches)==1 and
+         matches[0].get("code_git_blob")==ORDERED_PRODUCER_BLOB and
+         matches[0].get("saved_report",{}).get("git_blob")==ORDERED_WITNESS_BLOB and
+         CASE in matches[0].get("selected_original_source_ids",[]),
+         "PRIOR_V2_PRODUCER_PIN")
+    rows=[x for x in v["source_cases"] if x["case_id"]==CASE]
+    need(len(rows)==1 and
+         rows[0].get("evidence",{}).get("producer")=="ordered_children" and
+         rows[0].get("evidence",{}).get("producer_git_blob")==ORDERED_PRODUCER_BLOB and
+         rows[0].get("registered_evidence_level")=="COMPLETE_SOURCE_SPECIFIC",
+         "PRIOR_V2_SIGNED_OWNERSHIP")
+    # The pinned old root bracket is strictly inside this alternate (0,1/2).
+    need(Q(0) < Q("17/64") < Q("9/32") < Q(1,2),
+         "PRIOR_ROOT_BRACKET_NOT_STRONGER")
+
 def reject(fn,*args):
     try:
         fn(*args)
@@ -193,7 +264,7 @@ def reject(fn,*args):
         return
     raise AssertionError("UNPROVED_ADVERSARY_ADMITTED")
 
-def tests(c,v,row,r):
+def tests(c,v,row,r,w):
     n=0
     for path,alteration in [
         (["phase_turn_offset"],"1/2"),(["phase_turn_rate"],"1/12"),
@@ -217,6 +288,9 @@ def tests(c,v,row,r):
         ("root_kind","ENDPOINT_ROOT"),("root_multiplicity",2),
         ("implicit_root_open",["0","1/1208925819614629174706176"]),
         ("root_count",2),("right_piece_nonmonotone",False),
+        ("new_unique_ordered_source_closures",1),
+        ("new_generic_event_theorem",True),
+        ("preexisting_v2_signed_event_witness_git_blob","0"*40),
         ("right_piece_root_count",1),("accepted_historical_delta",True),
         ("v54_missing_ordered",True),("production_authorized",True),
         ("mc_b","ESTABLISHED"),("supported_operations",25)
@@ -224,6 +298,27 @@ def tests(c,v,row,r):
         changed=deepcopy(r)
         changed[field]=alteration
         reject(verify_receipt,changed)
+        n+=1
+    # Novelty guard must reject loss or sign inversion of the already-complete
+    # V2 signed event, knot, or root-free second span.
+    for mutation in ("missing_root", "inverted_left_sign"):
+        changed=deepcopy(w)
+        old_case=next(x for x in changed["source_cases"] if x["case_id"]==CASE)
+        if mutation=="missing_root":
+            old_case["ordered_root_events"]=[]
+        else:
+            old_case["ordered_root_events"][0]["left_sign"]=1
+        reject(prior_signed_event,changed,v)
+        n+=1
+    for field,value in [
+        ("maximal_open_physical_sign_cells",[]),
+        ("true_source_knots",[]),
+        ("original_spans",[])
+    ]:
+        changed=deepcopy(w)
+        old_case=next(x for x in changed["source_cases"] if x["case_id"]==CASE)
+        old_case[field]=value
+        reject(prior_signed_event,changed,v)
         n+=1
     old=deepcopy(v)
     for x in old["source_cases"]:
@@ -257,13 +352,19 @@ def main():
     c=decode(read(BASE/"pb00701-finite-owner-corpus-v54.json",300000,V54_BLOB))
     v=decode(read(BASE/"pb00701-post-v54-evidence-reconciliation-v2.json",200000,V2_BLOB))
     row=census(c,v)
+    w=decode(read(BASE/"pb00701-ordered-child-source-completion-witness.json",
+                  150000,ORDERED_WITNESS_BLOB))
+    read(BASE/"pb00701_ordered_child_source_completion.py",
+         60000,ORDERED_PRODUCER_BLOB)
+    prior_signed_event(w,v)
     r=decode(read(BASE/"pb00701-v9-two-span-sign-20261106.json",30000),True)
     verify_receipt(r)
     print("SOURCE",CASE,"SHA256",SHA)
-    print("CERTIFIED ONE SIMPLE ROOT IN (0,1/2), NEGATIVE THEN POSITIVE")
+    print("ALTERNATE PROOF: ONE SIMPLE ROOT IN (0,1/2), NEGATIVE THEN POSITIVE")
+    print("PREEXISTING V2 SIGNED ROOT BRACKET (17/64,9/32), CELLS AND KNOT VERIFIED")
     print("V54 FROZEN 121/20/30; EXISTING V2 50; ACCEPTED DELTA ZERO")
     if opts.self_test:
-        print("ADVERSARIAL_REFUSALS",tests(c,v,row,r))
+        print("ADVERSARIAL_REFUSALS",tests(c,v,row,r,w))
     print("MODEL ONLY; PB-007 OPEN; MC-B/MC-1 NOT_ESTABLISHED")
 
 if __name__=="__main__":
