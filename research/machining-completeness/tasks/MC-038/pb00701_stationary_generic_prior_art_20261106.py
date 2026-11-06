@@ -193,7 +193,8 @@ def synthetic_evidence(prior):
             "verified_three_span_generalization": True}
 
 def candidate_check(root):
-    root = Path(root)
+    # Resolve before switching subprocess cwd; avoid doubling relative path.
+    root = Path(root).resolve()
     path = root / CANDIDATE_FILE
     read_bounded(path, 25000, CANDIDATE_BLOB)
     try:
@@ -204,7 +205,8 @@ def candidate_check(root):
     need(head == CANDIDATE_HEAD, "CANDIDATE_LITERAL_SHA_MISMATCH")
     p = subprocess.run([sys.executable, str(path), "--contract", "--self-test"],
                        cwd=root, capture_output=True, text=True, timeout=150)
-    need(p.returncode == 0, "CANDIDATE_EXACT_HEAD_TEST_FAILURE")
+    need(p.returncode == 0, "CANDIDATE_EXACT_HEAD_TEST_FAILURE:" +
+         (p.stderr + p.stdout)[-1800:])
     spec = importlib.util.spec_from_file_location("pinned_stationary_candidate", path)
     m = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(m)
