@@ -26,7 +26,7 @@ SCHEMA = "radicadsac-pb00701-oriented-h1-quarterturn-grid/1.0"
 GRAMMAR = "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE"
 LIMIT = 400000
 MAX_DEPTH = 32
-MAX_BITS = 256
+MAX_BITS = 512
 MAX_CELLS = 128
 
 class Refusal(ValueError):
