@@ -14,7 +14,9 @@ from fractions import Fraction as Q
 import hashlib
 import json
 from pathlib import Path
+from tempfile import TemporaryDirectory
 import unittest
+from unittest.mock import patch
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[3]
@@ -47,6 +49,27 @@ def digest(obj):
     return hashlib.sha256(canonical(obj).encode("utf-8")).hexdigest()
 
 
+def strict_object_pairs(pairs):
+    """Refuse contradictory JSON certificate fields at every nesting depth."""
+    out = {}
+    for key, value in pairs:
+        need(key not in out, "duplicate JSON key")
+        out[key] = value
+    return out
+
+
+def reject_nonfinite(_token):
+    raise Refusal("nonfinite JSON token")
+
+
+def strict_json(raw):
+    try:
+        return json.loads(raw.decode("utf-8"), object_pairs_hook=strict_object_pairs,
+                          parse_constant=reject_nonfinite)
+    except (UnicodeError, json.JSONDecodeError, RecursionError) as exc:
+        raise Refusal("invalid JSON encoding, structure or nesting") from exc
+
+
 def read_pinned(path, blob, cap=512 * 1024):
     need(path.is_file(), "required frozen source missing")
     # Read at most cap+1 bytes before SHA-1 and JSON parsing. Cap is custody,
@@ -56,15 +79,7 @@ def read_pinned(path, blob, cap=512 * 1024):
     need(len(raw) <= cap, "refusal: frozen input byte budget exceeded")
     actual = hashlib.sha1(b"blob " + str(len(raw)).encode("ascii") + b"\0" + raw).hexdigest()
     need(actual == blob, "frozen git blob provenance mismatch")
-    def distinct(pairs):
-        out = {}
-        for key, value in pairs:
-            need(key not in out, "duplicate JSON key")
-            out[key] = value
-        return out
-    def nonfinite(_):
-        raise Refusal("nonfinite JSON token")
-    return json.loads(raw.decode("utf-8"), object_pairs_hook=distinct, parse_constant=nonfinite)
+    return strict_json(raw)
 
 
 def original_spec():
@@ -252,7 +267,7 @@ def contract():
     with RECEIPT.open("rb") as f:
         raw = f.read(64 * 1024 + 1)
     need(len(raw) <= 64 * 1024, "machine receipt byte budget exceeded")
-    receipt = json.loads(raw.decode("utf-8"))
+    receipt = strict_json(raw)
     verify_receipt(receipt)
     return receipt
 
@@ -307,6 +322,42 @@ class Adversarial(unittest.TestCase):
         r["new_historical_closed_cases"] = [CASE]
         with self.assertRaises(Refusal):
             verify_receipt(r)
+
+    def refuse_on_disk_receipt_mutation(self, original, replacement, expected_error):
+        """Exercise the real contract() disk-ingress path, not only dictionary validation."""
+        raw = RECEIPT.read_text(encoding="utf-8")
+        self.assertEqual(raw.count(original), 1, "fixture key/field must be unique")
+        with TemporaryDirectory() as td:
+            candidate = Path(td) / "contradictory-receipt.json"
+            candidate.write_text(raw.replace(original, replacement, 1), encoding="utf-8")
+            with patch.dict(globals(), {"RECEIPT": candidate}):
+                with self.assertRaises(Refusal) as raised:
+                    contract()
+            self.assertIn(expected_error, str(raised.exception))
+
+    def test_top_level_duplicate_discharge_refuses(self):
+        self.refuse_on_disk_receipt_mutation(
+            '  "required_pb_po_discharges": 0,',
+            '  "required_pb_po_discharges": true,\\n  "required_pb_po_discharges": 0,'.replace('\\n', '\n'),
+            "duplicate JSON key")
+
+    def test_nested_duplicate_multiplicity_refuses(self):
+        self.refuse_on_disk_receipt_mutation(
+            '    "multiplicity": 1,',
+            '    "multiplicity": 2,\\n    "multiplicity": 1,'.replace('\\n', '\n'),
+            "duplicate JSON key")
+
+    def test_duplicate_authority_flag_refuses(self):
+        self.refuse_on_disk_receipt_mutation(
+            '  "mc_b_established": false,',
+            '  "mc_b_established": true,\\n  "mc_b_established": false,'.replace('\\n', '\n'),
+            "duplicate JSON key")
+
+    def test_nonfinite_receipt_token_refuses(self):
+        self.refuse_on_disk_receipt_mutation(
+            '  "required_pb_po_discharges": 0,',
+            '  "required_pb_po_discharges": NaN,',
+            "nonfinite JSON token")
 
     def test_synthetic_identity_zero_nonzero_norm(self):
         # At phase=0, C=0,S=1 is identically zero but norm=1;
