@@ -359,6 +359,28 @@ class Tests(unittest.TestCase):
         self.refuses({**source(), "phase_turn_rate": "0"})
         self.refuses({**source(), "h1_cos": "1"*5000})
 
+    def test_exact_maximum_order_two_tangency(self):
+        # Negative H0: a strict interior maximum exactly touches zero.
+        out = certify(source(h="-1", c="3/5", s="4/5",
+                             off="1/8", rate="1/8", lo="0", hi="1"))
+        self.assertEqual(out["root_count"], 1)
+        self.assertEqual(out["ordered_events"][0]["multiplicity"], 2)
+        self.assertEqual(out["ordered_signed_regions"], ["NEGATIVE","NEGATIVE"])
+        self.assertEqual(out["cell_certificates"][0]["method"],
+                         "INTERIOR_ORDER_TWO_MAX")
+
+    def test_two_hidden_roots_inside_maximum_octant_refuse(self):
+        # Negative signs at both endpoints, but max -199/200+1 > 0.
+        self.refuses(source(h="-199/200", c="3/5", s="4/5",
+                            off="1/8", rate="1/8", lo="0", hi="1"))
+
+    def test_derivative_zero_at_endpoint_is_monotone(self):
+        # F'(0)=0 at an octant node, and no other critical point in cell.
+        out = certify(source(h="0", c="1", s="0", off="0",
+                             rate="1/8", lo="0", hi="1"))
+        self.assertEqual(out["root_count"], 0)
+        self.assertEqual(out["cell_certificates"][0]["derivative_signs"], [0,-1])
+
     def test_bounded_disk_json_refusals(self):
         with tempfile.TemporaryDirectory() as d:
             path = Path(d)/"source.json"
