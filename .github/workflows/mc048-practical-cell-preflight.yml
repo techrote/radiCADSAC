@@ -1,0 +1,52 @@
+name: MC-048 practical-cell PLAN_ONLY preflight
+on:
+  pull_request:
+    paths:
+      - 'research/machining-completeness/tasks/MC-048/**'
+      - '.github/workflows/mc048-practical-cell-preflight.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/machining-completeness/tasks/MC-048/**'
+      - '.github/workflows/mc048-practical-cell-preflight.yml'
+permissions:
+  contents: read
+jobs:
+  mc048-practical-denominator:
+    name: MC-048 PLAN_ONLY (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2022]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Verify literal source checkout
+        shell: bash
+        run: |
+          set -euo pipefail
+          expected='${{ github.event.pull_request.head.sha || github.sha }}'
+          actual="$(git rev-parse HEAD)"
+          test "$actual" = "$expected"
+          echo "source-sha=$actual"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile and verify accepted source contract
+        shell: bash
+        run: |
+          python3 -m py_compile research/machining-completeness/tasks/MC-048/practical_cell_preflight.py
+          python3 research/machining-completeness/tasks/MC-048/practical_cell_preflight.py --contract
+      - name: Exercise adversarial matrix refusals
+        run: python3 research/machining-completeness/tasks/MC-048/practical_cell_preflight.py --self-test
+      - name: Emit and check actual PLAN_ONLY input
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/machining-completeness/tasks/MC-048/practical_cell_preflight.py --emit-plan > mc048-proposal.json
+          python3 research/machining-completeness/tasks/MC-048/practical_cell_preflight.py --check-plan mc048-proposal.json
+      - name: Validate MC-1 static contracts
+        run: python3 tools/validate_machining_completeness.py
