@@ -314,9 +314,11 @@ class AdversarialTests(unittest.TestCase):
         self.assertEqual(
             from_disk(json.dumps(legal).encode("utf-8"), refusal=False),
             legal)
-        self.assertEqual(from_disk(b"[" * MAX_JSON_DEPTH +
-                                   b"0" + b"]" * MAX_JSON_DEPTH,
-                                   refusal=False)[0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0], 0)
+        nested = from_disk(b"[" * MAX_JSON_DEPTH + b"0" +
+                           b"]" * MAX_JSON_DEPTH, refusal=False)
+        for _ in range(MAX_JSON_DEPTH):
+            nested = nested[0]
+        self.assertEqual(nested, 0)
 
     def test_pinned_all_originals_and_receipt(self):
         actual = contract()
