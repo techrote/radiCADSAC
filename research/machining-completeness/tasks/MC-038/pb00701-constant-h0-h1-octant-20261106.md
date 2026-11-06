@@ -10,7 +10,9 @@ PR #444 certifies exact physical events on **zero-H0, affine-H1** source spans w
 
 The new contribution is a **generic restricted constructive event and signed-region certificate** for arbitrary rational **constant H0 and constant nonzero H1 cosine/sine coefficients** under a nonstationary rational-affine phase. It uses exact rational-plus-sqrt(2) endpoint value and derivative signs, an exact algebraic critical-value comparison, and a theorem proving that an octant phase cell contains **zero roots, one simple root, or one exact order-two tangency**. When a cell contains two simple roots but lacks a pair of disjoint rational isolating intervals, the executable **REFUSES** a complete source-to-consumer certificate even though the analytic count is known. This deliberate refusal is not a no-root assertion.
 
-The scope is complementary to #444's affine H1 / H0=0 certificate; neither theorem implies the other in its full admitted grammar. The accepted frozen V12 original has H0=0 and affine H1 on the prefix, so this new constant-H0/H1 theorem **does not admit the full V12 source**. The unchanged V12 *constant second span* supplies source-pinned prospective test inputs only.
+The scope is complementary to #444's affine H1 / H0=0 certificate; neither theorem implies the other in its full admitted grammar.
+
+The emitted status is **COMPLETE_RESTRICTED_CONSTANT_H0_H1_OCTANT_SPAN**, deliberately **not** a complete original B-spline-source admission. The field span_spec_sha256 identifies only the prospective constant-span input; original_source_sha256 and original_row_sha256 are separately pinned to the unchanged frozen V12 historical record in the producing contract. Arbitrary user-supplied constant-span JSON is not automatically authenticated as a historical B-spline span. The accepted frozen V12 original has H0=0 and affine H1 on the prefix, so this new constant-H0/H1 theorem **does not admit the full V12 source**. The unchanged V12 *constant second span* supplies source-pinned prospective test inputs only.
 
 ## Formal theorem
 
