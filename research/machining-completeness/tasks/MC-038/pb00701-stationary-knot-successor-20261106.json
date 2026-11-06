@@ -75,7 +75,8 @@
         }
       },
       "source_sha256": "f4c2d33cc4c5a52f355ff4ecc36ad6ee38af0ff0fa8c5159aaac5923a10125ff",
-      "successor_candidate": "BOUNDED_SOURCE_ORDERED_SIGN_TRANSFER_CANDIDATE"
+      "successor_candidate": "ALTERNATE_SOURCE_ORDERED_SIGN_DERIVATION",
+      "preexisting_generic_compositor_matched": true
     },
     {
       "case_id": "composite:EXACT_STATIONARY_PHASE_POLYNOMIAL:tail100",
@@ -152,7 +153,8 @@
         }
       },
       "source_sha256": "a49b92bbb74a7e016eed471feb64808eb9109a6a42b3ef874243364981a396fd",
-      "successor_candidate": "BOUNDED_SOURCE_ORDERED_SIGN_TRANSFER_CANDIDATE"
+      "successor_candidate": "ALTERNATE_SOURCE_ORDERED_SIGN_DERIVATION",
+      "preexisting_generic_compositor_matched": true
     }
   ],
   "evidence_class": "DETERMINISTIC_MODEL",
@@ -166,13 +168,18 @@
     "historical_v54_refusals_before": 20,
     "mc_b_or_mc1_accepted": false,
     "required_pb007_obligations_discharged": 0,
-    "successor_candidate_missing_ordered_after": 28,
-    "successor_candidate_newly_ordered_ids": [
+    "successor_candidate_missing_ordered_after": 30,
+    "successor_candidate_newly_ordered_ids": [],
+    "successor_candidate_route_refusals_after": 20,
+    "preexisting_signed_source_ids": [
       "composite:EXACT_STATIONARY_PHASE_POLYNOMIAL:tail0",
       "composite:EXACT_STATIONARY_PHASE_POLYNOMIAL:tail100"
     ],
-    "successor_candidate_route_refusals_after": 20
+    "preexisting_generic_compositor_matches": 2,
+    "new_generic_stationary_owner_consumer_interface_claimed": false,
+    "new_unique_historical_ordered_premises": 0
   },
   "schema": "radicadsac-pb00701-stationary-knot-successor/1.0",
-  "stationary_child_verifier_git_blob": "0954c5e1ad63ec1c8dd2acb3202882650b02c516"
+  "stationary_child_verifier_git_blob": "0954c5e1ad63ec1c8dd2acb3202882650b02c516",
+  "preexisting_generic_stationary_compositor_git_blob": "d0fbe7e189066fd9398958f1b1814b8147a6a64e"
 }
