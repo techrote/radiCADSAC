@@ -13,6 +13,7 @@ import argparse
 import copy
 import hashlib
 import json
+import tempfile
 import unittest
 from fractions import Fraction as Q
 from pathlib import Path
@@ -26,6 +27,9 @@ V2_BLOB = "e52d3baf3692a011cf86234eeaa992ef407d99fd"
 SCHEMA = "radicadsac-mc038-h1-rational-phase-obstruction/1.0"
 MISSING = "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE"
 MAX_RAW_BYTES = 400_000
+MAX_JSON_DEPTH = 32
+MAX_JSON_INTEGER_DIGITS = 12
+MAX_JSON_INTEGER_ABS = 1 << 40
 MAX_Q_BITS = 256
 
 # IDs/SHA-256 are original frozen source identities, not generated examples.
@@ -72,15 +76,71 @@ def duplicate_key_reject(pairs):
         result[k] = v
     return result
 
+def json_nesting_guard(raw):
+    """Bound JSON container depth before Python's recursive decoder runs.
+
+    Quoted brackets and escaped quotes/backslashes do not change nesting.
+    JSON syntax, bracket kinds and UTF-8 are checked by json.loads below.
+    """
+    depth = 0
+    quoted = False
+    escaped = False
+    for byte in raw:
+        if quoted:
+            if escaped:
+                escaped = False
+            elif byte == 92:  # backslash
+                escaped = True
+            elif byte == 34:  # double quote
+                quoted = False
+        elif byte == 34:
+            quoted = True
+        elif byte in (91, 123):  # [ {
+            depth += 1
+            need(depth <= MAX_JSON_DEPTH, "JSON_DEPTH_BUDGET")
+        elif byte in (93, 125):  # ] }
+            depth -= 1
+            need(depth >= 0, "JSON_UNBALANCED_BRACKETS")
+    need(not quoted and depth == 0, "JSON_UNCLOSED_STRUCTURE")
+
+
+def bounded_json_integer(token):
+    """Frozen source metadata uses small integer fields, not floats."""
+    need(len(token) <= MAX_JSON_INTEGER_DIGITS, "JSON_INTEGER_DIGIT_BUDGET")
+    value = int(token)
+    need(abs(value) <= MAX_JSON_INTEGER_ABS, "JSON_INTEGER_VALUE_BUDGET")
+    return value
+
+
+def refuse_json_float(_):
+    raise Refusal("JSON_FLOAT_NOT_ADMITTED")
+
+
 def read_json(path, expected_blob=None):
-    raw = path.read_bytes()
+    # Never allocate an entire adversarial file to discover its size afterward.
+    try:
+        with path.open("rb") as source:
+            raw = source.read(MAX_RAW_BYTES + 1)
+    except OSError as exc:
+        raise Refusal("JSON_READ_FAILURE") from exc
     need(len(raw) <= MAX_RAW_BYTES, "RAW_FILE_BUDGET")
     if expected_blob:
         actual = hashlib.sha1(b"blob " + str(len(raw)).encode() +
                               b"\0" + raw).hexdigest()
         need(actual == expected_blob, "PINNED_GIT_BLOB_DRIFT")
-    return json.loads(raw, object_pairs_hook=duplicate_key_reject,
-                      parse_constant=lambda _: (_ for _ in ()).throw(Refusal("NONFINITE_JSON")))
+    json_nesting_guard(raw)
+    try:
+        return json.loads(
+            raw,
+            object_pairs_hook=duplicate_key_reject,
+            parse_int=bounded_json_integer,
+            parse_float=refuse_json_float,
+            parse_constant=lambda _: (_ for _ in ()).throw(Refusal("NONFINITE_JSON")),
+        )
+    except Refusal:
+        raise
+    except (ValueError, RecursionError, UnicodeError, OverflowError, TypeError) as exc:
+        raise Refusal("INVALID_OR_EXCESSIVE_JSON") from exc
 
 def rational(token):
     need(type(token) is str and 0 < len(token) <= 128, "INVALID_RATIONAL")
@@ -223,6 +283,41 @@ def contract():
     return actual
 
 class AdversarialTests(unittest.TestCase):
+    def test_real_file_json_ingress_refusal_and_quoted_positive(self):
+        def from_disk(raw, refusal=True):
+            with tempfile.TemporaryDirectory() as temp_dir:
+                target = Path(temp_dir) / "candidate.json"
+                target.write_bytes(raw)
+                if refusal:
+                    with self.assertRaises(Refusal):
+                        read_json(target)
+                else:
+                    return read_json(target)
+
+        # These are actual valid on-disk JSON payloads that crashed the
+        # former unbounded decoder outside its declared Refusal type.
+        from_disk(b"[" * 10_000 + b"null" + b"]" * 10_000)
+        from_disk(b'{"n":' + b"9" * 5_000 + b"}")
+        from_disk(b" " * (MAX_RAW_BYTES + 1))
+        from_disk(b'{"n":1.5}')
+        from_disk(b'{"n":NaN}')
+        from_disk(b'{"n":1,"n":2}')
+        from_disk(b'{"n":[}')
+        from_disk(b"\xff")
+        from_disk(b"[" * (MAX_JSON_DEPTH + 1) +
+                  b"0" + b"]" * (MAX_JSON_DEPTH + 1))
+        # Pinned V2 includes genuine integer byte counts (e.g. 2344668).
+        # A default parse_int rejection would wrongly reject frozen evidence.
+        legal = {"bytes": 2_344_668,
+                 "quoted": 'literal [ ] { } and escaped " quote and backslash \\',
+                 "sequence": [0, {"k": "v"}]}
+        self.assertEqual(
+            from_disk(json.dumps(legal).encode("utf-8"), refusal=False),
+            legal)
+        self.assertEqual(from_disk(b"[" * MAX_JSON_DEPTH +
+                                   b"0" + b"]" * MAX_JSON_DEPTH,
+                                   refusal=False)[0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0][0], 0)
+
     def test_pinned_all_originals_and_receipt(self):
         actual = contract()
         self.assertEqual((actual["obstructed_h1_originals"],
