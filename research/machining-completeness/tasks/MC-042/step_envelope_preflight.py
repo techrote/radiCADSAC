@@ -124,7 +124,7 @@ def _balanced_parentheses(segment: str) -> bool:
 
 
 # Conservative lexical instance starts. Strings/comments have already been masked.
-ENTITY_BEGIN_RE = re.compile(r"#[1-9][0-9]*\\s*=\\s*(?:[A-Za-z][A-Za-z0-9_]*\\s*\\(|\\()")
+ENTITY_BEGIN_RE = re.compile(r"#[1-9][0-9]*\s*=\s*(?:[A-Za-z][A-Za-z0-9_]*\s*\(|\()")
 
 
 def _has_complete_entity_inventory(data: str) -> bool:
@@ -255,8 +255,8 @@ def self_test() -> None:
         # The sentinel must admit a complete multiple-entity inventory,
         # including a complex instance, without interpreting the geometry.
         decoy = b"/* quoted decoy HEADER; ENDSEC; */"
-        accept(good.replace(decoy, b"#2=SECOND('DATA; ENDSEC;');\\n" + decoy))
-        accept(good.replace(decoy, b"#2=(FIRST(),SECOND('HEADER;'));\\n" + decoy))
+        accept(good.replace(decoy, b"#2=SECOND('DATA; ENDSEC;');\n" + decoy))
+        accept(good.replace(decoy, b"#2=(FIRST(),SECOND('HEADER;'));\n" + decoy))
         refuse(b"")
         refuse(good.replace(b"ISO-10303-21;", b"ISO-10303-20;", 1))
         refuse(good.replace(b"HEADER;", b"HEAD;", 1))
@@ -278,12 +278,12 @@ def self_test() -> None:
         # second instances or trailing text after an otherwise valid #1.
         # Each mutation is a genuine on-disk candidate with its own digest.
         for trailing in (
-            b"#2=;\\n",                       # Empty entity.
-            b"#2=UNKNOWN\\n",                  # No constructor/terminator.
-            b"#2=SECOND()\\n",                 # Missing ';'.
-            b"#2=SECOND(1); #3=;\\n",         # Valid second, invalid third.
-            b"JUNK_AFTER_FIRST\\n",           # Not an instance at all.
-            b"#2=SECOND(1); EXTRA\\n",        # Valid second, trailing junk.
+            b"#2=;\n",                       # Empty entity.
+            b"#2=UNKNOWN\n",                  # No constructor/terminator.
+            b"#2=SECOND()\n",                 # Missing ';'.
+            b"#2=SECOND(1); #3=;\n",         # Valid second, invalid third.
+            b"JUNK_AFTER_FIRST\n",           # Not an instance at all.
+            b"#2=SECOND(1); EXTRA\n",        # Valid second, trailing junk.
         ):
             mutant = good.replace(decoy, trailing + decoy)
             assert mutant != good
