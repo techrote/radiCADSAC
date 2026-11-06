@@ -231,7 +231,8 @@ class AdversarialTests(unittest.TestCase):
     def test_complex_pole_very_close_not_rounded(self):
         eps = Q(1,2**120)
         r = affine_certificate("0","1","1",str(1+eps))
-        self.assertEqual(r["wronskian"],"0")  # C=t and S=1+(1+eps)t: actually W=-1
+        self.assertEqual(r["wronskian"],"-1")
+        self.assertEqual(r["norm_discriminant"],"-4")
     def test_identity_zero_and_tangency_like_degeneracy(self):
         self.assertEqual(affine_certificate("0","0","0","0")["verdict"],
                          "REFUSE_IDENTITY_ZERO_ORIENTATION")
