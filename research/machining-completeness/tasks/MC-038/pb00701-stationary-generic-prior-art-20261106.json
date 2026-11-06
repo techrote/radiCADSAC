@@ -14,7 +14,7 @@
     "verified_zero_knot_crossing": true,
     "verified_zero_knot_order2_touch": true,
     "verified_interior_tangency": true,
-    "verified_root_distance_to_knot_below_2pow120": true,
+    "verified_root_distance_to_knot_equal_2pow120": true,
     "verified_exterior_endpoint_zero": true,
     "verified_three_span_generalization": true
   },
