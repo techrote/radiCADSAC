@@ -1,0 +1,128 @@
+{
+  "schema": "radicadsac-pb00701-v23-signed-knot-source/1.0",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "frozen_corpus_git_blob": "5841c331579489b25caef38cd412bdbf286f9134",
+  "preexisting_v2_git_blob": "e52d3baf3692a011cf86234eeaa992ef407d99fd",
+  "case_certificate": {
+    "case_id": "composite:PB00701_V23_EXACT_NONCONSTANT_AMPLITUDE_PHASE_SECTOR_ANCHOR:tail0",
+    "source_sha256": "e8d2451833854ee7eaf73d4fb70b78b86ba72194b2688876f3bb9ee6ab132ffd",
+    "source_row_sha256": "e52a27e5c3dcdf984919cdcd7bb925c52d2865550035da357cd87178b9fbfc89",
+    "evidence_class": "DETERMINISTIC_MODEL",
+    "source_interval": [
+      "0",
+      "2"
+    ],
+    "physical_knot": "1",
+    "phase_turns": {
+      "offset": "0",
+      "rate": "1/12"
+    },
+    "reconstructed_global_coefficients": {
+      "cos0": [
+        [
+          "-501/1000",
+          "0"
+        ],
+        [
+          "-501/1000",
+          "0"
+        ]
+      ],
+      "cos2": [
+        [
+          "0",
+          "1/1000"
+        ],
+        [
+          "1/1000",
+          "0"
+        ]
+      ],
+      "sin1": [
+        [
+          "1",
+          "1/1000"
+        ],
+        [
+          "1001/1000",
+          "0"
+        ]
+      ]
+    },
+    "proof": {
+      "method": "EXACT_TWO_PIECE_SIGNED_DERIVATIVE_SECTOR",
+      "pi_strict_bounds": [
+        "3",
+        "4"
+      ],
+      "left_piece_strict_derivative_rational_lower_bound": "299/1200",
+      "right_piece_strict_derivative_pi_factor_lower_bound": "997/12000",
+      "F_at_0": "-501/1000",
+      "F_at_1_left": "0",
+      "F_at_1_right": "0",
+      "F_at_2_strict_rational_lower_bound": "997/4000",
+      "exact_open_root_count": 0,
+      "source_knot_root": {
+        "source_value": "1",
+        "event_kind": "CROSSING",
+        "left_inward_sign": "NEGATIVE",
+        "right_inward_sign": "POSITIVE",
+        "left_sided_order": 1,
+        "right_sided_order": 1,
+        "global_analytic_multiplicity_claimed": false
+      },
+      "source_exteriors": {
+        "0": {
+          "relation": "NEGATIVE",
+          "root": false
+        },
+        "2": {
+          "relation": "POSITIVE",
+          "root": false
+        }
+      },
+      "maximal_nonzero_cells": [
+        {
+          "interval": [
+            "0",
+            "1"
+          ],
+          "interior_sign": "NEGATIVE",
+          "left_endpoint_included": true,
+          "right_endpoint_included": false
+        },
+        {
+          "interval": [
+            "1",
+            "2"
+          ],
+          "interior_sign": "POSITIVE",
+          "left_endpoint_included": false,
+          "right_endpoint_included": true
+        }
+      ],
+      "phase_monotonicity_substituted_for_physical_sign": false,
+      "subdivision_scan_or_timeout_as_truth": false
+    }
+  },
+  "before_after": {
+    "frozen_source_population_before": 121,
+    "frozen_source_population_after": 121,
+    "historical_route_refusals_before": 20,
+    "historical_route_refusals_after": 20,
+    "historical_missing_ordered_before": 30,
+    "historical_missing_ordered_after": 30,
+    "existing_complete_v2_witnesses_before": 50,
+    "existing_complete_v2_witnesses_after": 50,
+    "new_source_specific_complete_witnesses": 0,
+    "new_candidate_ordered_premise_case_ids": [
+      "composite:PB00701_V23_EXACT_NONCONSTANT_AMPLITUDE_PHASE_SECTOR_ANCHOR:tail0"
+    ],
+    "standalone_candidate_missing_ordered_after": 29,
+    "conditional_union_with_unmerged_421_after": 27,
+    "conditional_union_not_authoritative": true,
+    "required_PB007_or_PO_obligations_discharged": 0,
+    "MC_B_or_MC1_established": false,
+    "frozen_evidence_modified": false
+  }
+}
