@@ -110,6 +110,36 @@ def visible_tokens(text: str) -> str:
     return "".join(out)
 
 
+def _balanced_parentheses(segment: str) -> bool:
+    """Cheap lexical refusal only; strings and comments have already been masked."""
+    depth = 0
+    for ch in segment:
+        if ch == "(":
+            depth += 1
+        elif ch == ")":
+            depth -= 1
+            if depth < 0:
+                return False
+    return depth == 0
+
+
+def _has_terminated_entity(data: str) -> bool:
+    """Require one finished DATA constructor; never assert a valid STEP entity."""
+    match = re.search(r"#[1-9][0-9]*\s*=\s*(?:[A-Za-z][A-Za-z0-9_]*\s*\(|\()", data)
+    if match is None:
+        return False
+    depth = 1  # The matched constructor includes its opening parenthesis.
+    for i in range(match.end(), len(data)):
+        ch = data[i]
+        if ch == "(":
+            depth += 1
+        elif ch == ")":
+            depth -= 1
+            if depth == 0:
+                return re.match(r"\s*;", data[i + 1:]) is not None
+    return False
+
+
 def lexical_envelope(raw: bytes) -> None:
     if not raw:
         raise Refused("empty STEP input is not the MC-054 EMPTY_MATERIAL contract")
@@ -127,8 +157,10 @@ def lexical_envelope(raw: bytes) -> None:
     if not re.search(r"\bFILE_SCHEMA\s*\(", header, re.I):
         raise Refused("STEP header lacks FILE_SCHEMA declaration")
     data = visible[found[3].end():found[4].start()]
-    if not re.search(r"#[1-9][0-9]*\s*=\s*(?:[A-Za-z][A-Za-z0-9_]*\s*\(|\()", data):
-        raise Refused("STEP DATA lacks a populated entity constructor")
+    if not _balanced_parentheses(header) or not _balanced_parentheses(data):
+        raise Refused("STEP header or DATA contains unbalanced parentheses")
+    if not _has_terminated_entity(data):
+        raise Refused("STEP DATA lacks a terminated entity constructor")
     # This is deliberately NOT a Part-21 parser, AP242 schema check, B-rep check,
     # model validation, geometry measurement, or proof of faithful material.
 
@@ -206,6 +238,14 @@ def self_test() -> None:
         # A mere #number= token cannot count as an emitted STEP instance.
         refuse(good.replace(
             b"#1=NOT_A_REAL_BREP('ENDSEC; DATA; /* not a comment */');", b"#1=;"))
+        # A present envelope cannot hide an unfinished constructor or missing
+        # entity terminator, even though this is not a full STEP parser.
+        original_entity = b"#1=NOT_A_REAL_BREP('ENDSEC; DATA; /* not a comment */');"
+        refuse(good.replace(original_entity, b"#1=UNTERMINATED("))
+        refuse(good.replace(original_entity,
+                            b"#1=NOT_A_REAL_BREP('ENDSEC; DATA; /* not a comment */')"))
+        refuse(good.replace(original_entity, original_entity + b")"))
+        refuse(good.replace(b"FILE_SCHEMA(('AP242'));", b"FILE_SCHEMA(('AP242');"))
         refuse(good.replace(b"ENDSEC;\nDATA;", b"ENDSEC;\nENDSEC;\nDATA;"))
         refuse(good + b"EXTRA;")
         refuse(b"LEADING;" + good)
