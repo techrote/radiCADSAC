@@ -34,7 +34,7 @@ These two source records are distinct in provenance, source interval, true knot 
 
 ## Mathematical proof of bounded C
 
-Let (	heta(t)=2\pi\beta(t)), (v(t)=(C_1(t),S_1(t))^\top), and (R) be the real (2\times2) orthogonal matrix of a single constant phase shift, or a constant phase reflection followed by a shift. Rewriting (cos\theta,sin\theta) in the new constant frame transforms coefficients to (v'(t)=Rv(t)) (or its inverse; both have (det R=\pm1)). If the transformed H1 sine coefficient vanished for every original time, the second component of **both** (v'(t_0)) and (v'(t_1)) would be zero. Thus
+Let (\theta(t)=2\pi\beta(t)), (v(t)=(C_1(t),S_1(t))^\top), and (R) be the real (2\times2) orthogonal matrix of a single constant phase shift, or a constant phase reflection followed by a shift. Rewriting (cos\theta,sin\theta) in the new constant frame transforms coefficients to (v'(t)=Rv(t)) (or its inverse; both have (det R=\pm1)). If the transformed H1 sine coefficient vanished for every original time, the second component of **both** (v'(t_0)) and (v'(t_1)) would be zero. Thus
 
 \[
   0=\det[v'(t_0),v'(t_1)]
@@ -73,4 +73,4 @@ The original complete-source V2 producers and older V54 raw failures are replaye
 
 New historical closure IDs: **none**. The two source IDs are **negative route challenge anchors**, not newly solved physical geometry. Evidence class `DETERMINISTIC_MODEL`, not native geometry, independent oracle or engineering STEP. PB-007-01/02/03/04 and PO-02/04/05/07/08 remain OPEN, MC-B and MC-1 remain `NOT_ESTABLISHED`. All 26 supported operations, durable body identity, topology, source/phase, journal, source provenance, genuine STEP and consumer gates remain mandatory. No production repository, budget or domain contraction is authorized.
 
-**Next critical-path research:** a genuinely orientation-preserving, nonstationary, sine-bearing original-source event-order/sign-transfer theorem or a narrowly proved transformation with explicit source/knot/multiplicity/termination semantics, independently qualified against historical cases. The constant-phase-only workaround is ruled out for these two originals. 
+**Next critical-path research:** a genuinely orientation-preserving, nonstationary, sine-bearing original-source event-order/sign-transfer theorem or a narrowly proved transformation with explicit source/knot/multiplicity/termination semantics, independently qualified against historical cases. The constant-phase-only workaround is ruled out for these two originals.
