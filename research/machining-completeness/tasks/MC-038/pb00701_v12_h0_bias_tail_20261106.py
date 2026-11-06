@@ -232,6 +232,25 @@ class Tests(unittest.TestCase):
         self.assertEqual(d["complete_original_root_count"],2)
         self.assertEqual(d["maximal_physical_signs"],
                          ["POSITIVE","NEGATIVE","POSITIVE"])
+    def test_exact_rational_root_brackets_using_quarter_angles(self):
+        # Exact physical tail signs, derived from pinned C=2/3,S=-1/3
+        # and b=7/10; the test uses rational radical comparisons.
+        b = Fraction(7,10)
+        self.assertGreater(b-Fraction(1,3),0)   # F(1)
+        self.assertGreater(b-Fraction(2,3),0)   # F(2)
+        self.assertLess(b*b,Fraction(1,2))       # F(3/2)=b-sqrt(2)/2<0
+        # At t=7/4: F=b-(2/3)cos(pi/8)-(1/3)sin(pi/8).
+        # Exact cos(pi/8)>9/10 follows sqrt(2)>5/4.
+        # Exact sin(pi/8)>3/10 follows sqrt(2)<3/2.
+        self.assertLess(Fraction(5,4)**2,2)
+        self.assertGreater(Fraction(3,2)**2,2)
+        self.assertEqual(b,Fraction(2,3)*Fraction(9,10)
+                         +Fraction(1,3)*Fraction(3,10))
+        self.assertEqual(classify(original_spec(),"7/10")[
+                         "complete_original_root_count"],2)
+        # Strict monotone side branches imply the unique two roots lie in
+        # rational source-time brackets (1,3/2) and (7/4,2).
+
     def test_exact_nonroot_positive_control(self):
         d=classify(original_spec(),"3/4")
         self.assertEqual(d["source_sha256"],BIAS_SHA["3/4"])
