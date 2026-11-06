@@ -34,7 +34,7 @@ python3 research/machining-completeness/tasks/MC-044/qualification_readiness.py 
 python3 tools/validate_machining_completeness.py --self-test
 ```
 
-The checker refuses any change in pinned source identity, fixture IDs/owners/mandatory state, 26-operation inventory, six output classes, required A–D layer labels for future nonempty cases, empty-state branch, the MC-017 independent-consumer controls or any attempt to assign simulated native results, output-gate acceptance, production authorization or step-file success. It bounds plan input to 256 KiB and rejects duplicate JSON keys/nonfinite constants. The complete in-memory plan is emitted as sorted JSON and re-imported through a real temporary file.
+The checker refuses any change in pinned source identity, fixture IDs/owners/mandatory state, 26-operation inventory, six output classes, required A–D layer labels for future nonempty cases, empty-state branch, the MC-017 independent-consumer controls or any attempt to assign simulated native results, output-gate acceptance, production authorization or step-file success. It bounds plan input to 256 KiB and numeric tokens to 128 characters, rejecting duplicate JSON keys, named nonfinite constants, exponent overflow to infinity and oversized integer tokens with typed refusals. The complete in-memory plan is emitted as sorted JSON and re-imported through a real temporary file.
 
 Negative controls cover missing and duplicate fixtures/operations, mutated fixture identifiers, false Layer-D/consumer success, dropping empty handling, losing negative controls, changing source hashes and premature authorization. This is an *exact structural and source-pin refusal contract*, not an atomic filesystem security protocol.
 

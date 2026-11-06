@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import copy
 import json
+import math
 import subprocess
 import tempfile
 from pathlib import Path
@@ -13,6 +14,7 @@ TASK = Path(__file__).resolve().parent
 ROOT = TASK.parents[3]
 SCHEMA = "radicadsac-mc044-final-denominator-plan/1.0"
 MAX_PLAN_BYTES = 262144
+MAX_JSON_NUMERIC_TOKEN_CHARS = 128
 SOURCES = {
     "MC-004": ("research/machining-completeness/tasks/MC-004/qualification-contract-v1.json",
                "22d5f976718edac9a8ccce3cb46f799b76e85ab4"),
@@ -44,12 +46,29 @@ def unique_pairs(pairs):
 
 def decode(raw: bytes):
     need(len(raw) <= MAX_PLAN_BYTES, "PLAN_ONLY input exceeds byte limit")
+
+    def bounded_int(token: str):
+        need(len(token.lstrip("-")) <= MAX_JSON_NUMERIC_TOKEN_CHARS,
+             "PLAN_ONLY JSON integer token exceeds digit limit")
+        return int(token)
+
+    def bounded_float(token: str):
+        need(len(token) <= MAX_JSON_NUMERIC_TOKEN_CHARS,
+             "PLAN_ONLY JSON float token exceeds length limit")
+        value = float(token)
+        need(math.isfinite(value), "nonfinite PLAN_ONLY JSON numeric token refused")
+        return value
+
+    def reject_constant(value):
+        raise Refused("nonfinite JSON token refused")
+
     try:
-        def reject_constant(value):
-            raise Refused("nonfinite JSON token refused")
         return json.loads(raw.decode("utf-8"), object_pairs_hook=unique_pairs,
-                          parse_constant=reject_constant)
-    except (UnicodeError, json.JSONDecodeError, RecursionError) as exc:
+                          parse_constant=reject_constant, parse_int=bounded_int,
+                          parse_float=bounded_float)
+    except Refused:
+        raise
+    except (UnicodeError, ValueError, RecursionError) as exc:
         raise Refused("invalid PLAN_ONLY JSON") from exc
 
 
@@ -254,7 +273,20 @@ def self_test(expected) -> int:
             pass
         else:
             raise AssertionError("oversized JSON accepted")
-    return len(attacks) + 3
+        numeric_attacks = (
+            b'{"independent_consumer_refinements_minimum":1e999}',
+            b'{"independent_consumer_refinements_minimum":' + b"9" * 4301 + b"}",
+            b'{"independent_consumer_refinements_minimum":0.' + b"1" * 129 + b"}",
+        )
+        for i, raw in enumerate(numeric_attacks):
+            path.write_bytes(raw)
+            try:
+                read_plan(path)
+            except Refused:
+                pass
+            else:
+                raise AssertionError("numeric JSON attack %d was not refused" % i)
+    return len(attacks) + 3 + len(numeric_attacks)
 
 
 def main() -> int:
