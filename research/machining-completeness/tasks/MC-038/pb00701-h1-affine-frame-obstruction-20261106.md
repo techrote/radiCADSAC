@@ -1,10 +1,10 @@
 # MC-038 / PB-007-01 — affine H1 phase-frame obstruction on two frozen originals
 
-**6 November 2026.** **Evidence class:** \`DETERMINISTIC_MODEL\`, exact rational source/provenance mathematics. **Disposition:** a bounded negative **C** research candidate, subject to literal-head CI and distinct-session source/mathematical admission. **Parent:** [MC-038 #100](https://github.com/techrote/radiCADSAC/issues/100). **Task-local reservation:** [#324/6685257607](https://github.com/techrote/radiCADSAC/issues/324#issuecomment-6685257607).
+**6 November 2026.** **Evidence class:** `DETERMINISTIC_MODEL`, exact rational source/provenance mathematics. **Disposition:** a bounded negative **C** research candidate, subject to literal-head CI and distinct-session source/mathematical admission. **Parent:** [MC-038 #100](https://github.com/techrote/radiCADSAC/issues/100). **Task-local reservation:** [#324/6685257607](https://github.com/techrote/radiCADSAC/issues/324#issuecomment-6685257607).
 
 ## Falsifiable hypothesis and named obligation
 
-Under **PB-007-01**, affecting **PO-04/05/08**, test the proposed shortcut \`AFFINE_PHASE_FRAME_ERASES_H1_SINE_WITH_UNRESTRICTED_AMPLITUDE\`:
+Under **PB-007-01**, affecting **PO-04/05/08**, test the proposed shortcut `AFFINE_PHASE_FRAME_ERASES_H1_SINE_WITH_UNRESTRICTED_AMPLITUDE`:
 
 > For the exact original-source H1 Fourier coefficient pair \(C(t),S(t)\) on its original first nonempty open span, find real constants \(a,b\) and a **differentiable real scalar amplitude** \(A(t)\), which may be irrational, radical or nonpolynomial, such that
 > \[
@@ -18,16 +18,16 @@ Unlike [#434](https://github.com/techrote/radiCADSAC/pull/434), this hypothesis 
 
 ## Exact historical source identities and original semantics
 
-The verifier reads, rehashes and checks **all** original source records from frozen V54 corpus Git blob \`5841c331579489b25caef38cd412bdbf286f9134\`, and all previously accepted complete source-specific V2 witnesses from blob \`e52d3baf3692a011cf86234eeaa992ef407d99fd\`. The 121/50 audit and source SHA-256 conventions are independently reexecuted from the accepted, pinned checker blob \`944565a534adc6703189291ac2cc55b97ad4736c\`.
+The verifier reads, rehashes and checks **all** original source records from frozen V54 corpus Git blob `5841c331579489b25caef38cd412bdbf286f9134`, and all previously accepted complete source-specific V2 witnesses from blob `e52d3baf3692a011cf86234eeaa992ef407d99fd`. The 121/50 audit and source SHA-256 conventions are independently reexecuted from the accepted, pinned checker blob `944565a534adc6703189291ac2cc55b97ad4736c`.
 
 | Frozen historical original | Canonical source SHA-256 | Original first span and coefficients | Historical V54 status |
 | --- | --- | --- | --- |
-| \`composite:PB00701_V9_EXACT_MONOTONE_SINGLE_HARMONIC_RATIO:tail0\` | \`4d1ef1cbecceeb4a43b4e30fd37327fa204164cc9ce25dfe4f1744a052cebcc2\` | Whole [0,2]; true knot 1; global phase turns \(t/8\); first [0,1] has \(C=t-\frac12,\ S=1\) | Missing ordered premise |
-| \`harvested:verify_pb00701_v9:4e7b85fa122a\` | \`a83ca0cd16c7822e6525f8f2d2df26a54f45b99807cadebc67f31fc49b066c10\` | Whole [0,1]; no interior knot; global phase turns \(t/8\); first [0,1] has \(C=1,\ S=t-\frac12\) | V43 uncertified route |
+| `composite:PB00701_V9_EXACT_MONOTONE_SINGLE_HARMONIC_RATIO:tail0` | `4d1ef1cbecceeb4a43b4e30fd37327fa204164cc9ce25dfe4f1744a052cebcc2` | Whole [0,2]; true knot 1; global phase turns \(t/8\); first [0,1] has \(C=t-\frac12,\ S=1\) | Missing ordered premise |
+| `harvested:verify_pb00701_v9:4e7b85fa122a` | `a83ca0cd16c7822e6525f8f2d2df26a54f45b99807cadebc67f31fc49b066c10` | Whole [0,1]; no interior knot; global phase turns \(t/8\); first [0,1] has \(C=1,\ S=t-\frac12\) | V43 uncertified route |
 
-The first original's cosine H1 has degree 1, clamped source knots \`[0,0,1,1,2,2]\`, controls \`[-1/2,1/2,1/2,1/2]\`; sine H1 has degree 0, knots \`[0,1,2]\`, controls \`[1,1]\`. Its harmonic-zero cosine coefficient is exactly zero, not a suppressed nonzero contribution. The first-span controls lower to the displayed rational polynomials by the original Bernstein/Cox–de Boor semantics. The distinct right span is **not** removed or relabelled; the falsification requires only one original open span.
+The first original's cosine H1 has degree 1, clamped source knots `[0,0,1,1,2,2]`, controls `[-1/2,1/2,1/2,1/2]`; sine H1 has degree 0, knots `[0,1,2]`, controls `[1,1]`. Its harmonic-zero cosine coefficient is exactly zero, not a suppressed nonzero contribution. The first-span controls lower to the displayed rational polynomials by the original Bernstein/Cox–de Boor semantics. The distinct right span is **not** removed or relabelled; the falsification requires only one original open span.
 
-The second original has H1 cosine and sine degree-one clamped knots \`[0,0,1,1]\`; controls \`[1,1]\` and \`[-1/2,1/2]\` respectively. Its source interval, parameter ID \`source-time-t\`, exact phase turns and historical refusal are preserved. Original complete-row SHA-256 identities are respectively \`406ec73609a8213051afd3361478416e496c782b2b89ae2a857b772146059279\` and \`62346bbddca22c4271a14c10aa130327013ac7cf8daa0b0ae515257e8f28cfad\`.
+The second original has H1 cosine and sine degree-one clamped knots `[0,0,1,1]`; controls `[1,1]` and `[-1/2,1/2]` respectively. Its source interval, parameter ID `source-time-t`, exact phase turns and historical refusal are preserved. Original complete-row SHA-256 identities are respectively `406ec73609a8213051afd3361478416e496c782b2b89ae2a857b772146059279` and `62346bbddca22c4271a14c10aa130327013ac7cf8daa0b0ae515257e8f28cfad`.
 
 Both historical source identities **already have complete V2 source-specific zero-set witnesses**. No new physical root or signed cell is claimed.
 
@@ -86,7 +86,7 @@ The first command checks frozen provenance and bounded C. The second reexecutes 
 
 The historical 50 cover 49 finite zero sets and one typed continuum, unchanged. This **C** only falsifies the specified affine phase-frame shortcut for the named frozen original spans. **It does not rule out** a nonlinear phase rotation with radical amplitude, alternative source/harmonic encodings, correct implicit transcendental root representations, generic analytic event decidability, source-bound full physical sign transfer, or native material/topology/STEP realizability. A quadratic Wronskian obstruction to rephasing does **not** show the physical source is nonmonotone.
 
-PB-007-01/02/03/04 and PO-02/04/05/07/08 remain **OPEN**; MC-B and MC-1 remain **NOT_ESTABLISHED**. Evidence is \`DETERMINISTIC_MODEL\` only, never independent engineering oracle, native geometry or actual usable STEP. Maintain all **26 required operations**, exact original phase/source timing, source-knot semantics, canonical manufacturing journal, durable material bodies and lineage, topology, nontruth refusal, STEP-first output contract and production authorization \`false\`. Do not edit historical failures, the frozen V54/V2 registers, proof/programme registries, current-authority or the separate current-state ledger.
+PB-007-01/02/03/04 and PO-02/04/05/07/08 remain **OPEN**; MC-B and MC-1 remain **NOT_ESTABLISHED**. Evidence is `DETERMINISTIC_MODEL` only, never independent engineering oracle, native geometry or actual usable STEP. Maintain all **26 required operations**, exact original phase/source timing, source-knot semantics, canonical manufacturing journal, durable material bodies and lineage, topology, nontruth refusal, STEP-first output contract and production authorization `false`. Do not edit historical failures, the frozen V54/V2 registers, proof/programme registries, current-authority or the separate current-state ledger.
 
 ## Integration handoff and next critical path
 
