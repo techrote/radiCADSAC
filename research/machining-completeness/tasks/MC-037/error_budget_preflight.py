@@ -81,6 +81,7 @@ def propose():
         "evidence_class": "DETERMINISTIC_MODEL",
         "source_blobs": {key: blob for key, (_, blob) in SOURCE_PINS.items()},
         "trial_request_metres": "1/1000000",
+        "stage_order": list(STAGES),
         "stage_allocations_metres": {key: "1/10000000" for key in STAGES},
         "native_measurements": None,
         "independent_geometry_comparison": None,
@@ -118,6 +119,8 @@ def validate(obj):
     request = rational(obj["trial_request_metres"])
     if request <= 0:
         raise Refused("zero trial request cannot be accepted")
+    if type(obj["stage_order"]) is not list or obj["stage_order"] != list(STAGES):
+        raise Refused("missing, duplicated, reordered or mismatched stage order")
     exact_keys(obj["stage_allocations_metres"], STAGES, "stage allocations")
     amounts = [rational(obj["stage_allocations_metres"][stage]) for stage in STAGES]
     if any(v <= 0 for v in amounts):
@@ -203,6 +206,10 @@ def self_test():
         accept(baseline)
         patches = [
             lambda x: x.pop("stage_allocations_metres"),
+            lambda x: x["stage_order"].reverse(),
+            lambda x: x["stage_order"].append("step_handoff"),
+            lambda x: x["stage_order"].pop(),
+            lambda x: x.update({"stage_order": "source_normalization"}),
             lambda x: x["stage_allocations_metres"].pop("topology"),
             lambda x: x["stage_allocations_metres"].update({"unknown": "1/10"}),
             lambda x: x["stage_allocations_metres"].update({"sweep": "1/1"}),
