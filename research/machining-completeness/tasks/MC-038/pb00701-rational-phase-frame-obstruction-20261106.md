@@ -8,9 +8,9 @@ Can the sine-bearing first harmonic on an **original source-time span** be conve
 
 The proposed route `RATIONAL_SOURCE_TIME_PHASE_FRAME_ERASES_H1_SINE` requires, for rational polynomial coefficient functions `C(t), S(t)` on an original open source span, a rational real function `theta(t) ∈ R(t)` and **any** differentiable real scalar amplitude `A(t)` such that
 
-[
-(C(t),S(t))=A(t)(cos	heta(t),sin	heta(t)).
-]
+\[
+(C(t),S(t))=A(t)(\cos\theta(t),\sin\theta(t)).
+\]
 
 This would represent `C cos(2πβ)+S sin(2πβ)` as `A cos(2πβ−theta)` without discarding coefficient orientation. Original rational affine phase `β(t)`, knots, harmonic channels and source time are retained. This challenge does **not** claim that #397, #435 or #436 actually use this route. It tests a proposed rational rephasing extension; #434 excludes constant phase, #435 requires rational **amplitude**, and #436 excludes affine phase with arbitrary amplitude.
 
@@ -20,21 +20,21 @@ The proposal fails if a named original first-span H1 coefficient pair cannot adm
 
 Let `C=a+bt, S=c+dt` be real rational affine polynomials on a nonempty open interval. Put
 
-[
-W = CS'-SC'=ad-bc,qquad q=C^2+S^2.
-]
+\[
+W = CS'-SC'=ad-bc,\qquad q=C^2+S^2.
+\]
 
 If `W ≠ 0`, `q(t)>0` for every real `t`; the coefficient vector never vanishes. Differentiating the proposed representation gives the **necessary identity**
 
-[
-	heta'(t)=rac{W}{q(t)}.
-]
+\[
+\theta'(t)=\frac{W}{q(t)}.
+\]
 
 For affine coefficients,
 
-[
-operatorname{disc}(q)=-4W^2<0.
-]
+\[
+\operatorname{disc}(q)=-4W^2<0.
+\]
 
 Consequently `q` has two distinct simple complex roots `z`, and `W/q` has a nonzero simple-pole residue `W/q'(z)` at each root. By contrast, the derivative of **any rational function** `theta(t)∈R(t)` has zero residue at every finite complex pole: in its Laurent expansion the only term that could differentiate to `(t-z)^{-1}` is the constant term, whose derivative is zero. Equality on the original real open span would imply equality of rational functions; their pole residues contradict.
 
