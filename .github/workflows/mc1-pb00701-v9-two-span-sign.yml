@@ -1,0 +1,46 @@
+name: mc1-pb00701-v9-two-span-sign
+
+on:
+  push:
+    branches:
+      - mc038/v9-two-span-sign-20261106
+    paths:
+      - research/machining-completeness/tasks/MC-038/pb00701_v9_two_span_sign_20261106.py
+      - research/machining-completeness/tasks/MC-038/pb00701-v9-two-span-sign-20261106.json
+      - research/machining-completeness/tasks/MC-038/pb00701-v9-two-span-sign-20261106.md
+      - .github/workflows/mc1-pb00701-v9-two-span-sign.yml
+  pull_request:
+    paths:
+      - research/machining-completeness/tasks/MC-038/pb00701_v9_two_span_sign_20261106.py
+      - research/machining-completeness/tasks/MC-038/pb00701-v9-two-span-sign-20261106.json
+      - research/machining-completeness/tasks/MC-038/pb00701-v9-two-span-sign-20261106.md
+      - .github/workflows/mc1-pb00701-v9-two-span-sign.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-v9-two-span-physical-sign:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout literal PR source head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Source checkout SHA identity
+        shell: bash
+        run: |
+          echo "EXPECTED=${{ github.event.pull_request.head.sha || github.sha }}"
+          echo "ACTUAL=$(git rev-parse HEAD)"
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Original V9 physical sign, root order and adversarial tests
+        run: python3 research/machining-completeness/tasks/MC-038/pb00701_v9_two_span_sign_20261106.py --contract --self-test
+      - name: Frozen V54 frontier audit and negative controls
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py --contract --self-test
+      - name: Full historical V54 V2 source proof producing replay
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_evidence_reconciliation_v2.py --contract --self-test
+      - name: Static MC-1 authority validation
+        run: python3 tools/validate_machining_completeness.py
