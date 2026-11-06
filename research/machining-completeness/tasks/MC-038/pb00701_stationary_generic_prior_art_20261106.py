@@ -188,7 +188,7 @@ def synthetic_evidence(prior):
          "PRIOR_GENERIC_THREE_SPAN_CAPABILITY")
     return {"verified_nonzero_knot_join": True, "verified_zero_knot_crossing": True,
             "verified_zero_knot_order2_touch": True, "verified_interior_tangency": True,
-            "verified_root_distance_to_knot_below_2pow120": True,
+            "verified_root_distance_to_knot_equal_2pow120": True,
             "verified_exterior_endpoint_zero": True,
             "verified_three_span_generalization": True}
 
