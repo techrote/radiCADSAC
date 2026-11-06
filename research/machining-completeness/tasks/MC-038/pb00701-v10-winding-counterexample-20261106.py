@@ -216,8 +216,16 @@ class Adversarial(unittest.TestCase):
             "controls": ["1/4", "-1/4", "1/4", "1/4", "1/4", "1/4"],
         }
         tangent["sin_splines"]["1"]["controls"] = ["0", "0", "0", "0"]
-        # First-span physical F=(t-1/2)^2 cos(theta) has a
-        # second-order zero at t=1/2 (cos(theta)=-1 there).
+        # Independently establish a genuine degree-two tangency from
+        # exact Bernstein control identities, not a mislabeled fixture.
+        b0, b1, b2 = map(F, tangent["cos_splines"]["1"]["controls"][:3])
+        half = F(1, 2)
+        q = b0 * (1-half)**2 + 2*b1*half*(1-half) + b2*half**2
+        dq = 2*(b1-b0)*(1-half) + 2*(b2-b1)*half
+        ddq = 2*(b2 - 2*b1 + b0)
+        self.assertEqual((q, dq, ddq), (F(0), F(0), F(2)))
+        # First-span physical F=(t-1/2)^2 cos(theta) has an
+        # order-two zero at t=1/2 (cos(theta)=-1 there).
         with self.assertRaises(Refused):
             original_cells(tangent)
 
