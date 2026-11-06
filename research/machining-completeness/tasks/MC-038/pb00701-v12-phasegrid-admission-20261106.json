@@ -25,14 +25,13 @@
     "missing_ordered_premises": 0,
     "complete_v2_witnesses": 0
   },
-  "direct_structurally_eligible": 4,
+  "direct_structurally_eligible": 3,
   "direct_fully_admitted": 2,
   "direct_historical_unresolved_structural": 2,
   "direct_historical_unresolved_fully_admitted": 1,
   "direct_historical_unresolved_not_admitted": 49,
   "structurally_eligible_ids": [
     "harvested:verify_pb00701_v10:a3af56296a12",
-    "harvested:v19:951efe10f570",
     "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail0",
     "composite:PB00701_V12_EXACT_COMPONENT_ROOT_PARTITION_SINGLE_HARMONIC:tail0"
   ],
@@ -41,10 +40,6 @@
     "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail0"
   ],
   "structurally_eligible_but_refused": [
-    [
-      "harvested:v19:951efe10f570",
-      "ANGULAR_DRIFT_NOT_CERTIFIED_BELOW_PI"
-    ],
     [
       "composite:PB00701_V12_EXACT_COMPONENT_ROOT_PARTITION_SINGLE_HARMONIC:tail0",
       "ANGULAR_DRIFT_NOT_CERTIFIED_BELOW_PI"
