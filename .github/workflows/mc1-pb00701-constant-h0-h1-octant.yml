@@ -1,0 +1,65 @@
+name: MC-038 exact constant H0 H1 octant critical-event research
+on:
+  push:
+    branches:
+      - research/mc038-constant-h0-h1-octant-critical-events-20261106
+  pull_request:
+    paths:
+      - research/machining-completeness/tasks/MC-038/pb00701_constant_h0_h1_octant_20261106.py
+      - research/machining-completeness/tasks/MC-038/pb00701-constant-h0-h1-octant-20261106.md
+      - .github/workflows/mc1-pb00701-constant-h0-h1-octant.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-critical-event-certificate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Check exact literal head
+        run: |
+          echo "LITERAL_HEAD=$(git rev-parse HEAD)"
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Frozen V12 H1 tail / prospective H0 / 8 adversarial controls
+        run: python3 research/machining-completeness/tasks/MC-038/pb00701_constant_h0_h1_octant_20261106.py --contract --self-test
+
+  frozen-original-source-producing-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Check exact literal head
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Complete historical fifty-source producing replay
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_evidence_reconciliation_v2.py --contract
+
+  mc1-authority-static:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Check exact literal head
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Current MC-1 static validation
+        run: python3 tools/validate_machining_completeness.py
