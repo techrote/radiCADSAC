@@ -176,6 +176,18 @@ def synthetic_evidence(prior):
     need(len(close["ordered_physical_zero_events"]) == 1 and
          close["ordered_physical_zero_events"][0]["kind"] == "OPEN_SOURCE_ROOT",
          "PRIOR_EXTREMELY_CLOSE_KNOT_ROOT")
+    # Independent exact root identity, not just an arbitrary event count or
+    # a numerical proximity scan. F(t)=-1+delta+t on this original span.
+    event = close["ordered_physical_zero_events"][0]
+    root_exact = Q(1) - delta
+    need(-1 + delta + root_exact == 0, "NEAR_KNOT_SOURCE_ROOT_NOT_EXACT")
+    if event["coordinate_kind"] == "EXACT_RATIONAL":
+        need(Q(event["coordinate"]) == root_exact, "NEAR_KNOT_RATIONAL_LOCATOR")
+    else:
+        need(event["coordinate_kind"] == "UNIQUE_IMPLICIT_ALGEBRAIC_ZERO",
+             "NEAR_KNOT_UNKNOWN_LOCATOR")
+        low, high = [Q(t) for t in event["strict_bracket"]]
+        need(low < root_exact < high, "NEAR_KNOT_STURM_ISOLATOR_NOT_BOUND")
     endpoint = conditional_prior(prior, [
         ("0","1",["0","1"]),("1","2",["1"])])
     need(endpoint["left_physical_endpoint"]["relation"] == "ZERO" and
