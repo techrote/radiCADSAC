@@ -1,0 +1,119 @@
+{
+  "schema": "radicadsac-mc038-h1-rational-phase-obstruction/1.0",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "method": "EXACT_AFFINE_H1_WRONSKIAN_SIMPLE_COMPLEX_RESIDUE",
+  "population": {
+    "before": {
+      "original_sources": 121,
+      "route_refusals": 20,
+      "missing_ordered_premises": 30,
+      "complete_v2_source_witnesses": 50
+    },
+    "after": {
+      "original_sources": 121,
+      "route_refusals": 20,
+      "missing_ordered_premises": 30,
+      "complete_v2_source_witnesses": 50
+    },
+    "delta": {
+      "original_sources": 0,
+      "route_refusals": 0,
+      "missing_ordered_premises": 0,
+      "complete_v2_source_witnesses": 0
+    },
+    "newly_resolved_historical_case_ids": [],
+    "required_pb_po_discharges": 0
+  },
+  "subgrammar_size": 10,
+  "obstructed_h1_originals": 9,
+  "proportional_nonobstructed_originals": 1,
+  "cases": {
+    "V13_EXACT_NONVANISHING_EVEN_MULTIPLIER_MULTIHARMONIC": {
+      "case_id": "composite:PB00701_V13_EXACT_NONVANISHING_EVEN_MULTIPLIER_MULTIHARMONIC:tail100",
+      "source_sha256": "a7131bea021c5c71d0da2682cd6d4c1a982e8c86196c818ad3f69a926afda2e5",
+      "original_row_sha256": "094b31ab55141488e39589ab6e0deda02b21066f06ba8568110609a23cd0a003",
+      "verdict": "NO_RATIONAL_SOURCE_TIME_PHASE_FRAME",
+      "wronskian": "-5/4",
+      "norm_discriminant": "-25/4"
+    },
+    "V14_EXACT_STRICT_DOMINANCE_MULTITERM_MULTIPLIER": {
+      "case_id": "composite:PB00701_V14_EXACT_STRICT_DOMINANCE_MULTITERM_MULTIPLIER:tail100",
+      "source_sha256": "bd10ad1d9503335b2d7f745c09805b82a421b8db7beea67329cf33d0c9d78ff2",
+      "original_row_sha256": "1940ec5f6aafb641a25fcda3f8941ff7dd9f2afc2bf13056da6920159c3f0e18",
+      "verdict": "NO_RATIONAL_SOURCE_TIME_PHASE_FRAME",
+      "wronskian": "-21/16",
+      "norm_discriminant": "-441/64"
+    },
+    "V15_EXACT_FINITE_STRICT_DOMINANCE_MULTIPLIER": {
+      "case_id": "composite:PB00701_V15_EXACT_FINITE_STRICT_DOMINANCE_MULTIPLIER:tail100",
+      "source_sha256": "8e41009417dd65f9a47a04b492dd9a91b88a7682f12f45305ce64ac38dffd7b7",
+      "original_row_sha256": "3954e79fceefbcd6e4b5932197f0314dbd4b90891b8fbad8410f9572f746725d",
+      "verdict": "NO_RATIONAL_SOURCE_TIME_PHASE_FRAME",
+      "wronskian": "-85/16",
+      "norm_discriminant": "-7225/64"
+    },
+    "V17_EXACT_PROJECTIVE_EVEN_TRIG_MULTIPLIER": {
+      "case_id": "composite:PB00701_V17_EXACT_PROJECTIVE_EVEN_TRIG_MULTIPLIER:tail100",
+      "source_sha256": "e85d997c9f4d828b1b748c964b375c21e4acef1b1e9046e074b1f7e29011d08f",
+      "original_row_sha256": "41e86bc30392515873fb55bdd844d154236a81426fd3639c3bd5491dad30f05a",
+      "verdict": "NO_RATIONAL_SOURCE_TIME_PHASE_FRAME",
+      "wronskian": "-5/4",
+      "norm_discriminant": "-25/4"
+    },
+    "V18_EXACT_LAURENT_MODULE_FACTOR": {
+      "case_id": "composite:PB00701_V18_EXACT_LAURENT_MODULE_FACTOR:tail100",
+      "source_sha256": "ed61c9b827417327b9dda32ec0469ba5f0eab9622fb531d4b1bc959a312aa4a1",
+      "original_row_sha256": "7c1304de8afc41ba322fb653f20a1f8b6c3e0ea27af8a7864e44058d6b4d60d1",
+      "verdict": "NO_RATIONAL_SOURCE_TIME_PHASE_FRAME",
+      "wronskian": "-5/4",
+      "norm_discriminant": "-25/4"
+    },
+    "V24_EXACT_MIXED_QUADRATURE_PHASE_ANCHOR": {
+      "case_id": "composite:PB00701_V24_EXACT_MIXED_QUADRATURE_PHASE_ANCHOR:tail0",
+      "source_sha256": "e565ddf6bb0bab080128aeda16be5ea60466b3b971aa98d0408ea9a96da3d052",
+      "original_row_sha256": "696718a819afa68c7a7122e9fba85eae3b5a8b8be905f94836f666fd74d9298b",
+      "verdict": "NO_OBSTRUCTION_ESTABLISHED",
+      "wronskian": "0",
+      "norm_discriminant": "0"
+    },
+    "V38_EXACT_DIRECT_ROTATED_COORDINATE_TWO_QUADRATURE": {
+      "case_id": "composite:PB00701_V38_EXACT_DIRECT_ROTATED_COORDINATE_TWO_QUADRATURE:tail0",
+      "source_sha256": "9b7429ae290de259b2990b39740f40495c02b407e4e906e7eece77ea65c43f03",
+      "original_row_sha256": "a8d5801d40c97979d8a49124ddb286c59be91b41bb0cf52c9047e60163e12982",
+      "verdict": "NO_RATIONAL_SOURCE_TIME_PHASE_FRAME",
+      "wronskian": "-1/50",
+      "norm_discriminant": "-1/625"
+    },
+    "V39_EXACT_SIGNED_A_DIRECT_ROTATED_COORDINATE": {
+      "case_id": "composite:PB00701_V39_EXACT_SIGNED_A_DIRECT_ROTATED_COORDINATE:tail0",
+      "source_sha256": "daeafb37dd81d27fbba1c97dd09b14767531e37046237449aab3eaa9adfc1061",
+      "original_row_sha256": "7a5ae576818a753fb0b0afb1f09058b58b468da8fc884f528166c05bf1c0b176",
+      "verdict": "NO_RATIONAL_SOURCE_TIME_PHASE_FRAME",
+      "wronskian": "-1/50",
+      "norm_discriminant": "-1/625"
+    },
+    "V40_EXACT_SIGNED_B_ANTI_DIAGONAL_DIRECT_ROTATED_COORDINATE": {
+      "case_id": "composite:PB00701_V40_EXACT_SIGNED_B_ANTI_DIAGONAL_DIRECT_ROTATED_COORDINATE:tail0",
+      "source_sha256": "90a5df370094bcd8cef37be171f9bb12264c15a32237300b5435dc8871c6c2bf",
+      "original_row_sha256": "8291b11b51d2109451ba852185bf6d9504c9d7e46473bf01be5924508ded5fad",
+      "verdict": "NO_RATIONAL_SOURCE_TIME_PHASE_FRAME",
+      "wronskian": "1/5",
+      "norm_discriminant": "-4/25"
+    },
+    "V43_EXACT_CORRELATED_CLOSED_HANDOFF": {
+      "case_id": "composite:PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF:tail0",
+      "source_sha256": "28cd4b4be4c74e6404b1a307d2217b2dc5a8b708b28c5ad75309c35e48092efd",
+      "original_row_sha256": "98057a188fdf320d0238600f3b8a4c10dcb60f9a569010b44cda06a32970a9c4",
+      "verdict": "NO_RATIONAL_SOURCE_TIME_PHASE_FRAME",
+      "wronskian": "7/240",
+      "norm_discriminant": "-49/14400"
+    }
+  },
+  "pb00701_certified": false,
+  "mc_b_established": false,
+  "mc1_established": false,
+  "production_authorized": false,
+  "native_geometry_qualified": false,
+  "engineering_step_qualified": false,
+  "supported_operations": 26
+}
