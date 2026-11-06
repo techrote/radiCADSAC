@@ -1,0 +1,103 @@
+{
+  "schema": "radicadsac-pb00701-h1-rational-rephase-obstruction/1.0",
+  "claim": "H1_RATIONAL_AMPLITUDE_REPHASING_REFUTED_FOR_TWO_ORIGINALS",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "frozen_inputs": {
+    "corpus_git_blob": "5841c331579489b25caef38cd412bdbf286f9134",
+    "v2_git_blob": "e52d3baf3692a011cf86234eeaa992ef407d99fd"
+  },
+  "cases": [
+    {
+      "case_id": "composite:PB00701_V9_EXACT_MONOTONE_SINGLE_HARMONIC_RATIO:tail0",
+      "source_sha256": "4d1ef1cbecceeb4a43b4e30fd37327fa204164cc9ce25dfe4f1744a052cebcc2",
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "source_time": [
+        "0",
+        "2"
+      ],
+      "true_source_knot": "1",
+      "phase_turns": [
+        "0",
+        "1/8"
+      ],
+      "first_original_span_C1_affine": [
+        "-1/2",
+        "1"
+      ],
+      "first_original_span_S1_affine": [
+        "1",
+        "0"
+      ],
+      "squared_norm_coefficients_ascending": [
+        "5/4",
+        "-1",
+        "1"
+      ],
+      "discriminant": "-4",
+      "rational_function_amplitude_exists": false,
+      "physical_root_count_asserted": false
+    },
+    {
+      "case_id": "harvested:verify_pb00701_v9:4e7b85fa122a",
+      "source_sha256": "a83ca0cd16c7822e6525f8f2d2df26a54f45b99807cadebc67f31fc49b066c10",
+      "historical_v54_disposition": "BLOCKED",
+      "source_time": [
+        "0",
+        "1"
+      ],
+      "true_source_knot": null,
+      "phase_turns": [
+        "0",
+        "1/8"
+      ],
+      "first_original_span_C1_affine": [
+        "1",
+        "0"
+      ],
+      "first_original_span_S1_affine": [
+        "-1/2",
+        "1"
+      ],
+      "squared_norm_coefficients_ascending": [
+        "5/4",
+        "-1",
+        "1"
+      ],
+      "discriminant": "-4",
+      "rational_function_amplitude_exists": false,
+      "physical_root_count_asserted": false
+    }
+  ],
+  "census": {
+    "before": {
+      "originals": 121,
+      "route_refusals": 20,
+      "missing_ordered_premises": 30,
+      "complete_v2": 50
+    },
+    "after": {
+      "originals": 121,
+      "route_refusals": 20,
+      "missing_ordered_premises": 30,
+      "complete_v2": 50
+    },
+    "delta": {
+      "originals": 0,
+      "route_refusals": 0,
+      "missing_ordered_premises": 0,
+      "complete_v2": 0
+    },
+    "newly_closed_historical_ids": [],
+    "required_pb_po_discharges": 0
+  },
+  "nonclaims": {
+    "physical_event_solver": false,
+    "generic_pb00701": false,
+    "mc_b_established": false,
+    "mc1_established": false,
+    "native_geometry": false,
+    "engineering_step": false,
+    "production_authorized": false,
+    "supported_operations": 26
+  }
+}
