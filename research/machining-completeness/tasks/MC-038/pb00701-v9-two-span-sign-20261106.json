@@ -45,10 +45,6 @@
   "v54_missing_ordered": 30,
   "v2_preexisting_complete": 50,
   "accepted_historical_delta": 0,
-  "conditional_missing_ordered_after": 29,
-  "candidate_case_ids": [
-    "composite:PB00701_V9_EXACT_MONOTONE_SINGLE_HARMONIC_RATIO:tail0"
-  ],
   "new_complete_source_witnesses": 0,
   "pb_obligations_discharged": 0,
   "pb007_status": "OPEN",
@@ -57,5 +53,13 @@
   "native_geometry": false,
   "engineering_step": false,
   "production_authorized": false,
-  "supported_operations": 26
+  "supported_operations": 26,
+  "proof_role": "ALTERNATE_SYMBOLIC_PROOF_NOT_NEW_SOURCE_CLOSURE",
+  "preexisting_v2_signed_event_witness_git_blob": "8e662094df4106b2a79711c565cd865008fadc8c",
+  "preexisting_v2_signed_event_producer_git_blob": "549251696e43f22122f8ba957baa2befcd8d77a8",
+  "alternate_proof_case_ids": [
+    "composite:PB00701_V9_EXACT_MONOTONE_SINGLE_HARMONIC_RATIO:tail0"
+  ],
+  "new_unique_ordered_source_closures": 0,
+  "new_generic_event_theorem": false
 }
