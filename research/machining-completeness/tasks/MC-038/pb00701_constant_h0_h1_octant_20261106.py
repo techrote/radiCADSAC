@@ -340,6 +340,21 @@ class Tests(unittest.TestCase):
         # Both endpoints positive, unique internal min h - sqrt(1) < 0.
         self.refuses(source(h="199/200", c="-3/5", s="-4/5",
                             off="1/8", rate="1/8", lo="0", hi="1"))
+        # Exact near-coalescence: the two zeros for h=1-2^-300 lie
+        # <2^-147 apart in source time, but remain *two*, not a tangency.
+        # For x=acos(1-2^-300)<1, 1-cos(x)>=x*x/3, so their
+        # source-time separation (8/pi)*x <3*sqrt(3)*2^-150 <2^-147.
+        eps = Q(1, 2**300)
+        close = source(h=str(Q(1)-eps), c="-3/5", s="-4/5",
+                       off="1/8", rate="1/8", lo="0", hi="1")
+        self.assertEqual(attempt(close)["reason"],
+                         "TWO_ROOTS_SAME_OCTANT_UNBRACKETED")
+        exact = certify({**close, "h0": "1"})
+        self.assertEqual((exact["root_count"],
+                          exact["ordered_events"][0]["multiplicity"]), (1, 2))
+        high = certify({**close, "h0": str(Q(1)+eps)})
+        self.assertEqual(high["root_count"], 0)
+        self.assertEqual(high["ordered_signed_regions"], ["POSITIVE"])
 
     def test_negative_rate_with_real_simple_crossing(self):
         out = certify(source(h="0", c="1", s="1/2",
@@ -380,6 +395,18 @@ class Tests(unittest.TestCase):
                              rate="1/8", lo="0", hi="1"))
         self.assertEqual(out["root_count"], 0)
         self.assertEqual(out["cell_certificates"][0]["derivative_signs"], [0,-1])
+        # F(t)=-1+2^-300+cos(pi*t/4): nonzero at t=0 but its
+        # unique simple crossing lies within 2^-147 of that endpoint.
+        # It must not be rounded onto the node or rejected as a tangency.
+        eps = Q(1, 2**300)
+        near = certify(source(h=str(-Q(1)+eps), c="1", s="0",
+                              off="0", rate="1/8", lo="0", hi="1"))
+        self.assertEqual(near["root_count"], 1)
+        self.assertEqual(near["ordered_events"],
+                         [{"strict_rational_bracket": ["0", "1"],
+                           "multiplicity": 1, "event_kind": "SIMPLE_CROSSING"}])
+        self.assertEqual(near["ordered_signed_regions"],
+                         ["POSITIVE", "NEGATIVE"])
 
     def test_bounded_disk_json_refusals(self):
         with tempfile.TemporaryDirectory() as d:
