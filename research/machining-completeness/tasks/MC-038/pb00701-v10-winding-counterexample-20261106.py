@@ -197,13 +197,29 @@ class Adversarial(unittest.TestCase):
             original_cells(changed)
 
     def test_identity_zero_and_tangency_not_laundered(self):
-        # The theorem requires C=1 and exact opposite half-turn endpoint
-        # signs. It DOES NOT infer root-free from equal endpoint signs for
-        # a quadratic touch (t-1/2)^2 or an identity-zero source.
-        for coeff in ("0", "(t-1/2)^2"):
-            self.assertNotEqual(coeff, "1")
-            with self.assertRaises(Refused):
-                original_cells({"grammar": coeff})
+        # Mutate the *complete* original source, not a malformed stub.
+        # These are semantic counterfamilies outside the exact C=1,
+        # orientation-bound signed-winding grammar.
+        import copy
+        base = pinned_json("pb00701-finite-owner-corpus-v54.json", V54_BLOB)
+        spec = next(x["spec"] for x in base["cases"] if x["id"] == CASE)
+
+        zero = copy.deepcopy(spec)
+        zero["cos_splines"]["1"]["controls"] = ["0", "0"]
+        zero["sin_splines"]["1"]["controls"] = ["0", "0", "0", "0"]
+        with self.assertRaises(Refused):
+            original_cells(zero)  # Entire physical source identically zero.
+
+        tangent = copy.deepcopy(spec)
+        tangent["cos_splines"]["1"] = {
+            "degree": 2, "knots": ["0", "0", "0", "1", "1", "1", "2", "2", "2"],
+            "controls": ["1/4", "-1/4", "1/4", "1/4", "1/4", "1/4"],
+        }
+        tangent["sin_splines"]["1"]["controls"] = ["0", "0", "0", "0"]
+        # First-span physical F=(t-1/2)^2 cos(theta) has a
+        # second-order zero at t=1/2 (cos(theta)=-1 there).
+        with self.assertRaises(Refused):
+            original_cells(tangent)
 
     def test_extremely_close_root_cells(self):
         eps = F(1, 2**120)
