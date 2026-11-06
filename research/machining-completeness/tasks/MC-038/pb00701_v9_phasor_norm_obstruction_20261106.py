@@ -162,7 +162,12 @@ def add_poly(a, b):
 
 
 def norm_square(c, s):
-    return add_poly(polynomial_square(c), polynomial_square(s))
+    # Canonical exact polynomial: remove only *identically zero* leading-degree
+    # coefficients, not zero roots or physical events.
+    out = list(add_poly(polynomial_square(c), polynomial_square(s)))
+    while len(out) > 1 and out[-1] == Q(0):
+        out.pop()
+    return tuple(out)
 
 
 def check_source(spec):
