@@ -76,9 +76,7 @@ def original_spec():
     c = Counter(r["expected"]["v54_disposition"] for r in rows)
     need(c["BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE"] == 30,
          "historical 30 ordered-premise population changed")
-    need(sum(v for k, v in c.items() if k.startswith("BLOCKED:") and
-             k != "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE") == 20,
-         "historical 20 route-refusal population changed")
+    need(c["BLOCKED"] == 20, "historical 20 route-refusal population changed")
     v2rows = v2["source_cases"]
     need(len(v2rows) == 50 and len({r["case_id"] for r in v2rows}) == 50,
          "V2 complete-source population changed")
@@ -88,7 +86,8 @@ def original_spec():
          v2["summary"]["complete_continuum_sources"] == 1,
          "V2 finite/continuum kinds changed")
     need({r["case_id"] for r in v2rows} ==
-         {r["id"] for r in rows if r["expected"]["v54_disposition"].startswith("BLOCKED:")},
+         {r["id"] for r in rows if r["expected"]["v54_disposition"] in
+          ("BLOCKED", "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE")},
          "V54/V2 unresolved case identity mismatch")
     row = next(r for r in rows if r["id"] == CASE)
     registry = next(r for r in v2rows if r["case_id"] == CASE)
