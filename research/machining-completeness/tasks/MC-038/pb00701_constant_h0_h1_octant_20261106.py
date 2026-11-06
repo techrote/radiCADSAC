@@ -214,9 +214,9 @@ def certify(spec):
                         "endpoint_signs": [signs[i], signs[i+1]],
                         "derivative_signs": [derivatives[i], derivatives[i+1]],
                         "method": method, "root_count": count})
-    return {"status": "COMPLETE_RESTRICTED_CONSTANT_H0_H1_OCTANT_SOURCE",
+    return {"status": "COMPLETE_RESTRICTED_CONSTANT_H0_H1_OCTANT_SPAN",
             "evidence_class": "DETERMINISTIC_MODEL",
-            "source_sha256": hashlib.sha256(canonical(spec)).hexdigest(),
+            "span_spec_sha256": hashlib.sha256(canonical(spec)).hexdigest(),
             "octant_nodes": [str(t) for t in nodes],
             "node_signs": ["POSITIVE" if x > 0 else "NEGATIVE" for x in signs],
             "ordered_events": events, "ordered_signed_regions": regions,
