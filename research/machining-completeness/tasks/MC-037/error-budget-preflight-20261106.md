@@ -4,7 +4,7 @@
 
 ## Unmet acceptance criterion and falsifier
 
-A downstream reconstructed-solid comparison must not silently lose any of its source-normalization, sweep, material, topology, reconstruction or STEP-handoff *planning allocations*, overbook the requested error budget or convert a proposal into a success receipt. This tool checks only a non-compensating **six-stage allocation denominator** using exact rationals, rejects ambiguous/malformed/duplicate-key JSON, and refuses unauthenticated source-contract substitution. It makes **no statement** that an actual stage can meet its allocation or that summing allocation tokens proves a valid end-to-end error bound.
+A downstream reconstructed-solid comparison must not silently lose any of its source-normalization, sweep, material, topology, reconstruction or STEP-handoff *planning allocations*, overbook the requested error budget or convert a proposal into a success receipt. This tool checks only a non-compensating **explicitly ordered six-stage allocation denominator** using exact rationals, rejects ambiguous/malformed/duplicate-key JSON, and refuses unauthenticated source-contract substitution. It makes **no statement** that an actual stage can meet its allocation or that summing allocation tokens proves a valid end-to-end error bound.
 
 The six equal positive allocations in the positive synthetic proposal and the 1 micrometre illustrative trial request are **test fixtures**, not a customer tolerance, minimum representable feature, approved MC-004 campaign, or a production bound. The 32-digit rational and 32 KiB file caps apply only to this cheap auxiliary preflight, not the machining domain or native arithmetic.
 
@@ -28,8 +28,12 @@ python research/machining-completeness/tasks/MC-037/error_budget_preflight.py --
 python tools/validate_machining_completeness.py
 ```
 
-The source-owned self-test includes missing/surplus stage, negative/zero/oversubscribed/unreduced/oversized rationals, numeric type confusion, duplicate top-level and nested keys, NaN/float/invalid UTF-8, source pin drift, attempted native/PO/MC gate promotion, file-size and filesystem alias refusal. Optional hard/symlink tests are only counted where the OS supports creation. The checker uses a descriptor/path identity comparison but does not guarantee atomic custody against a malicious concurrent writer.
+The source-owned self-test includes canonical stage-order reversal, duplicate and omission, missing/surplus stage, negative/zero/oversubscribed/unreduced/oversized rationals, numeric type confusion, duplicate top-level and nested keys, NaN/float/invalid UTF-8, source pin drift, attempted native/PO/MC gate promotion, file-size and filesystem alias refusal. Optional hard/symlink tests are only counted where the OS supports creation. The checker uses a descriptor/path identity comparison but does not guarantee atomic custody against a malicious concurrent writer.
 
 Expected safe verdict: `ALLOCATIONS_WITHIN_PROVISIONAL_REQUEST_NOT_GEOMETRY_QUALIFIED`, with `native_executed=false`, `geometry_qualified=false`, `mc_1_established=false`, `production_authorized=false`.
 
 No manufacturing release, native STEP success, geometry error certificate, real acceptance result, MC-B/D/E/F/MC-1 gate decision or production authorization follows. All 26 operations and all required source cases remain in scope. The separate #397 owner retains the exclusive main integration lease; **do not merge** this draft until coordination and independent source review, then rerun merged-main CI.
+
+## Same-session source-critical correction
+
+Initial PR head `8d299e93440d5df56f57e8b7333ed48b0957c74d` passed hosted controls but did **not** assert execution-stage order: the stage allocation map was compared only by its key set. Technical [REPAIR comment](https://github.com/techrote/radiCADSAC/pull/433#pullrequestreview-5798822740) preserved that negative finding. The correction introduces explicit required `stage_order` equal to the six source→STEP stages and four on-disk permutation/multiplicity/type refusals. New literal-head qualification is required; first-head green CI is superseded evidence, not final admission.
