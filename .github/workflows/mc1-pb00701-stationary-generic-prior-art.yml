@@ -1,0 +1,57 @@
+name: mc1-pb00701-stationary-generic-prior-art
+
+on:
+  push:
+    branches:
+      - research/mc038-stationary-generic-prior-art-20261106
+    paths:
+      - research/machining-completeness/tasks/MC-038/pb00701_stationary_generic_prior_art_20261106.py
+      - research/machining-completeness/tasks/MC-038/pb00701-stationary-generic-prior-art-20261106.json
+      - research/machining-completeness/tasks/MC-038/pb00701-stationary-generic-prior-art-20261106.md
+      - .github/workflows/mc1-pb00701-stationary-generic-prior-art.yml
+  pull_request:
+    paths:
+      - research/machining-completeness/tasks/MC-038/pb00701_stationary_generic_prior_art_20261106.py
+      - research/machining-completeness/tasks/MC-038/pb00701-stationary-generic-prior-art-20261106.json
+      - research/machining-completeness/tasks/MC-038/pb00701-stationary-generic-prior-art-20261106.md
+      - .github/workflows/mc1-pb00701-stationary-generic-prior-art.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  original-source-generic-prior-art:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout literal tested branch or PR head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Authenticate exact current checkout
+        shell: bash
+        run: |
+          echo "EXPECTED=${{ github.event.pull_request.head.sha || github.sha }}"
+          echo "ACTUAL=$(git rev-parse HEAD)"
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Checkout literal independent candidate 421
+        uses: actions/checkout@v4
+        with:
+          ref: 359784454c4eaeda173458b9f4919b07edbdacd8
+          path: candidate421
+          persist-credentials: false
+      - name: Authenticate candidate source and exact prior head
+        shell: bash
+        run: |
+          test "$(git -C candidate421 rev-parse HEAD)" = 359784454c4eaeda173458b9f4919b07edbdacd8
+          test "$(git hash-object candidate421/research/machining-completeness/tasks/MC-038/pb00701_stationary_knot_successor_20261106.py)" = 01605f2f00abc327ffdba2ab600d4ff9588da619
+      - name: Execute original-source generic prior-art and cross-branch comparisons
+        run: python3 research/machining-completeness/tasks/MC-038/pb00701_stationary_generic_prior_art_20261106.py --contract --self-test --candidate-root candidate421
+      - name: Recompute pinned original V54 theorem frontier
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py --contract --self-test
+      - name: Reproduce complete frozen V54 and source-specific V2 certificates
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_evidence_reconciliation_v2.py --contract --self-test
+      - name: Validate static MC-1 programme and 26-operation contract
+        run: python3 tools/validate_machining_completeness.py
