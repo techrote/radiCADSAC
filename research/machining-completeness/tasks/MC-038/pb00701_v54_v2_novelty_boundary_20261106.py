@@ -148,6 +148,7 @@ def check_stationary(prior_map):
              item["distinct_open_physical_zeros"] == 1,
              "PRIOR_STATIONARY_FULL_SOURCE")
         events = item["ordered_physical_zero_events"]
+        print("PRIOR_STATIONARY_EVENT_DIAG", ident, json.dumps(events, sort_keys=True))
         need(len(events) == 1 and events[0]["coordinate"] == spec["old_event"] and
              events[0]["coordinate_kind"] == "EXACT_RATIONAL" and
              events[0]["left_sign"] == -1 and events[0]["right_sign"] == 1 and
