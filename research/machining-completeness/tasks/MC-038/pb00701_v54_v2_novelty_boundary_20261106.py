@@ -222,6 +222,10 @@ def census(corpus, registry):
     need({x["case_id"] for x in registry["source_cases"]} ==
          {x["id"] for x in cases if x["expected"]["v54_disposition"].startswith("BLOCKED")},
          "PRIOR_V2_CASE_SET_DRIFT")
+    disposition_by_id = {x["id"]: x["expected"]["v54_disposition"] for x in cases}
+    need(all(x["historical_v54_disposition"] == disposition_by_id[x["case_id"]]
+             for x in registry["source_cases"]),
+         "CASE_LEVEL_HISTORICAL_DISPOSITION_CHANGED")
     return {"frozen_originals": 121, "route_refusals": 20,
             "missing_ordered": 30, "preexisting_complete_source_witnesses": 50}
 
