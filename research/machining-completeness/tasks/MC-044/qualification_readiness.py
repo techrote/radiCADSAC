@@ -170,8 +170,10 @@ def source_plan() -> dict:
         "independent_consumer_refinements_minimum": 3,
         "real_step_files": "NOT_AVAILABLE",
         "native_measurements": None, "manufacturing_authorized": False,
-        "mc_b": "NOT_ESTABLISHED", "mc_d": "NOT_ESTABLISHED",
-        "mc_e": "NOT_ESTABLISHED", "mc_1": "NOT_ESTABLISHED",
+        "mc_a": "ACCEPTED", "mc_b": "NOT_ESTABLISHED",
+        "mc_c": "NOT_ESTABLISHED", "mc_d": "NOT_ESTABLISHED",
+        "mc_e": "NOT_ESTABLISHED", "mc_f": "NOT_ESTABLISHED",
+        "mc_1": "NOT_ESTABLISHED",
         "production_authorized": False
     }
 
@@ -215,7 +217,10 @@ def self_test(expected) -> int:
     mutate(lambda q: q.update(real_step_files="VALIDATED"))
     mutate(lambda q: q.update(native_measurements={"volume": 1}))
     mutate(lambda q: q.update(manufacturing_authorized=True))
+    mutate(lambda q: q.update(mc_c="ACCEPTED"))
     mutate(lambda q: q.update(mc_e="ACCEPTED"))
+    mutate(lambda q: q.update(mc_f="ACCEPTED"))
+    mutate(lambda q: q.update(manufacturing_authorized=0))  # bool/int must not alias
     mutate(lambda q: q.update(production_authorized=True))
     mutate(lambda q: q["accepted_git_blobs"].update({"MC-054": "0" * 40}))
     for i, attack in enumerate(attacks):
