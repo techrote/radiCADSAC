@@ -123,21 +123,45 @@ def _balanced_parentheses(segment: str) -> bool:
     return depth == 0
 
 
-def _has_terminated_entity(data: str) -> bool:
-    """Require one finished DATA constructor; never assert a valid STEP entity."""
-    match = re.search(r"#[1-9][0-9]*\s*=\s*(?:[A-Za-z][A-Za-z0-9_]*\s*\(|\()", data)
-    if match is None:
-        return False
-    depth = 1  # The matched constructor includes its opening parenthesis.
-    for i in range(match.end(), len(data)):
-        ch = data[i]
-        if ch == "(":
-            depth += 1
-        elif ch == ")":
-            depth -= 1
-            if depth == 0:
-                return re.match(r"\s*;", data[i + 1:]) is not None
-    return False
+# Conservative lexical instance starts. Strings/comments have already been masked.
+ENTITY_BEGIN_RE = re.compile(r"#[1-9][0-9]*\\s*=\\s*(?:[A-Za-z][A-Za-z0-9_]*\\s*\\(|\\()")
+
+
+def _has_complete_entity_inventory(data: str) -> bool:
+    """Require *every* top-level DATA item to finish, not merely the first.
+
+    This is a bounded, deliberately incomplete lexical sentinel, not STEP
+    entity-grammar validation. Reject any unsupported instance form/junk.
+    """
+    pos, n, found = 0, len(data), False
+    while True:
+        while pos < n and data[pos].isspace():
+            pos += 1
+        if pos == n:
+            return found
+        match = ENTITY_BEGIN_RE.match(data, pos)
+        if match is None:
+            return False
+        depth = 1
+        pos = match.end()  # Includes the constructor's opening '('.
+        while pos < n:
+            ch = data[pos]
+            if ch == "(":
+                depth += 1
+            elif ch == ")":
+                depth -= 1
+                if depth == 0:
+                    break
+            pos += 1
+        if depth != 0:
+            return False
+        pos += 1
+        while pos < n and data[pos].isspace():
+            pos += 1
+        if pos == n or data[pos] != ";":
+            return False
+        pos += 1
+        found = True
 
 
 def lexical_envelope(raw: bytes) -> None:
@@ -159,8 +183,8 @@ def lexical_envelope(raw: bytes) -> None:
     data = visible[found[3].end():found[4].start()]
     if not _balanced_parentheses(header) or not _balanced_parentheses(data):
         raise Refused("STEP header or DATA contains unbalanced parentheses")
-    if not _has_terminated_entity(data):
-        raise Refused("STEP DATA lacks a terminated entity constructor")
+    if not _has_complete_entity_inventory(data):
+        raise Refused("STEP DATA contains unfinished, unsupported or trailing entity text")
     # This is deliberately NOT a Part-21 parser, AP242 schema check, B-rep check,
     # model validation, geometry measurement, or proof of faithful material.
 
@@ -228,6 +252,11 @@ def self_test() -> None:
         accept(good)
         accept(good.replace(b"HEADER;\n", b"HEADER;\n/* fake DATA; ENDSEC; */\n"))
         accept(good.replace(b"NOT_A_REAL_BREP", b"SYNTHETIC_PLACEHOLDER"))
+        # The sentinel must admit a complete multiple-entity inventory,
+        # including a complex instance, without interpreting the geometry.
+        decoy = b"/* quoted decoy HEADER; ENDSEC; */"
+        accept(good.replace(decoy, b"#2=SECOND('DATA; ENDSEC;');\\n" + decoy))
+        accept(good.replace(decoy, b"#2=(FIRST(),SECOND('HEADER;'));\\n" + decoy))
         refuse(b"")
         refuse(good.replace(b"ISO-10303-21;", b"ISO-10303-20;", 1))
         refuse(good.replace(b"HEADER;", b"HEAD;", 1))
@@ -245,6 +274,20 @@ def self_test() -> None:
         refuse(good.replace(original_entity,
                             b"#1=NOT_A_REAL_BREP('ENDSEC; DATA; /* not a comment */')"))
         refuse(good.replace(original_entity, original_entity + b")"))
+        # Old "at least one terminated entity" logic admitted malformed
+        # second instances or trailing text after an otherwise valid #1.
+        # Each mutation is a genuine on-disk candidate with its own digest.
+        for trailing in (
+            b"#2=;\\n",                       # Empty entity.
+            b"#2=UNKNOWN\\n",                  # No constructor/terminator.
+            b"#2=SECOND()\\n",                 # Missing ';'.
+            b"#2=SECOND(1); #3=;\\n",         # Valid second, invalid third.
+            b"JUNK_AFTER_FIRST\\n",           # Not an instance at all.
+            b"#2=SECOND(1); EXTRA\\n",        # Valid second, trailing junk.
+        ):
+            mutant = good.replace(decoy, trailing + decoy)
+            assert mutant != good
+            refuse(mutant)
         refuse(good.replace(b"FILE_SCHEMA(('AP242'));", b"FILE_SCHEMA(('AP242');"))
         refuse(good.replace(b"ENDSEC;\nDATA;", b"ENDSEC;\nENDSEC;\nDATA;"))
         refuse(good + b"EXTRA;")
