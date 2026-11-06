@@ -129,6 +129,11 @@ def source_coefficients(spec):
          c1["degree"] == 1 and c1["knots"] == ["0","0","1","1","2","2"] and
          s1["degree"] == 0 and s1["knots"] == ["0","1","2"],
          "true piecewise B-spline knots/degrees changed")
+    need(type(c1["controls"]) is list and type(s1["controls"]) is list and
+         type(c1["knots"]) is list and type(s1["knots"]) is list and
+         all(type(v) is str for v in (c1["controls"] + s1["controls"] +
+                                      c1["knots"] + s1["knots"])),
+         "B-spline rational coefficients/knots must be exact strings")
     c = [Q(v) for v in c1["controls"]]
     s = [Q(v) for v in s1["controls"]]
     need(len(c) == 4 and len(s) == 2, "control population mismatch")
@@ -280,6 +285,9 @@ class Adversarial(unittest.TestCase):
     def test_knot_discontinuity_refuses(self):
         self.refuse(lambda s: s["cos_splines"]["1"]["controls"].__setitem__(2,"1/4"))
 
+    def test_boolean_sine_control_refuses(self):
+        self.refuse(lambda s: s["sin_splines"]["1"]["controls"].__setitem__(0,True))
+
     def test_type_coercion_refuses(self):
         self.refuse(lambda s: s["cos_splines"]["1"].__setitem__("degree",True))
 
@@ -326,7 +334,10 @@ if __name__ == "__main__":
     parser.add_argument("--self-test",action="store_true")
     args = parser.parse_args()
     if args.self_test:
-        unittest.main(argv=[__file__],exit=False,verbosity=2)
+        suite = unittest.defaultTestLoader.loadTestsFromTestCase(Adversarial)
+        result = unittest.TextTestRunner(verbosity=2).run(suite)
+        if not result.wasSuccessful():
+            raise SystemExit(1)
     if args.contract or not args.self_test:
         result = contract()
         print(canonical({"status":"BOUNDED_NEGATIVE_C","source_case_id":CASE,
