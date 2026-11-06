@@ -207,10 +207,15 @@ def candidate_check(root):
                        cwd=root, capture_output=True, text=True, timeout=150)
     need(p.returncode == 0, "CANDIDATE_EXACT_HEAD_TEST_FAILURE:" +
          (p.stderr + p.stdout)[-1800:])
-    spec = importlib.util.spec_from_file_location("pinned_stationary_candidate", path)
-    m = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(m)
-    cases = m.source_case_outputs()["case_results"]
+    # Independent process preserves the candidate's own pinned module/import
+    # provenance; importing it into the baseline process contaminates the
+    # source-dependency module namespace and yields a false mismatch.
+    report = subprocess.run([sys.executable, str(path), "--contract", "--report"],
+                            cwd=root, capture_output=True, text=True, timeout=150)
+    need(report.returncode == 0, "CANDIDATE_RECEIPT_REPLAY_FAILURE:" +
+         (report.stderr + report.stdout)[-1800:])
+    need(len(report.stdout.encode()) <= 16000, "CANDIDATE_RECEIPT_OUTPUT_LIMIT")
+    cases = parse(report.stdout.encode())["case_results"]
     need({x["case_id"] for x in cases} == set(EXPECTED),
          "CANDIDATE_ORIGINAL_POPULATION")
     for x in cases:
