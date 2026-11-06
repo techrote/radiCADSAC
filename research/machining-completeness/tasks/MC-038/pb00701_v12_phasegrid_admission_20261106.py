@@ -262,7 +262,7 @@ def produce():
         except Refusal:
             pass
     check(len(structural)==4 and len(admitted)==2 and len(refused)==2,
-          "DIRECT_GRAMMAR_CENSUS_CHANGED")
+          "DIRECT_GRAMMAR_CENSUS_CHANGED:"+repr({"structural":structural,"admitted":admitted,"refused":refused}))
     check(set(admitted)=={
         "harvested:verify_pb00701_v10:a3af56296a12",V10},
           "DIRECT_ADMITTED_IDENTITY_CHANGED")
