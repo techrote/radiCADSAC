@@ -24,8 +24,13 @@ def core_module():
     return module
 
 
-def fingerprints(ledger: Path, captures: Path) -> tuple[Any, ...]:
-    """Detect ordinary mutations during audit; not atomic custody/attestation."""
+def fingerprints(ledger: Path, captures: Path, entry_limit: int) -> tuple[Any, ...]:
+    """Bound inventory allocation by the validated campaign's capture-slot budget.
+
+    This is a cooperative local-directory budget, not hostile-FS atomic custody.
+    """
+    if type(entry_limit) is not int or entry_limit < 0:
+        raise ValueError("capture inventory limit must be a nonnegative integer")
     def mark(path: Path) -> tuple[int, int, int, int, int, int, int]:
         s = path.lstat()
         # On POSIX, ctime changes for same-size rewrites even when mtime is
@@ -46,6 +51,11 @@ def fingerprints(ledger: Path, captures: Path) -> tuple[Any, ...]:
     identities = {(ledger_mark[0], ledger_mark[1])}
     entries = []
     for child in captures.iterdir():
+        # Refuse on the (limit + 1)th directory entry BEFORE lstat and before
+        # adding another tuple. This prevents materializing unbounded surplus
+        # entries in an incomplete or otherwise invalid campaign inventory.
+        if len(entries) >= entry_limit:
+            raise ValueError("capture inventory exceeds planned slot budget")
         # Mode and identity must come from the *same* lstat snapshot. A
         # separate pre-check could approve a regular file replaced by a
         # symlink before mark() (still not a full TOCTOU defense).
@@ -73,7 +83,10 @@ def audit(permit: dict[str, Any], plan: dict[str, Any], ledger: Path,
     # A parsable full ledger is not admissible while custody is quarantined.
     # Like the MC-045 CLI audit, refuse both active and stale append locks.
     h.refuse_ledger_append_lock(ledger)
-    pre = fingerprints(ledger, captures)
+    # Each planned attempt retains exactly stdout and stderr; the bound is
+    # derived from validated plan authority, never observed directory size.
+    capture_limit = 2 * plan["max_jobs"] * plan["sequential_repeats"]
+    pre = fingerprints(ledger, captures, capture_limit)
     rows, digest = h.load_ledger_with_digest(ledger)
     h.validate_ledger_sequence(rows, permit, plan, allow_native=allow_native_evidence)
     h.verify_retained_captures(rows, captures)
@@ -85,7 +98,7 @@ def audit(permit: dict[str, Any], plan: dict[str, Any], ledger: Path,
     replay_rows, replay_digest = h.load_ledger_with_digest(ledger)
     if replay_digest != digest or replay_rows != rows:
         raise ValueError("ledger bytes changed during inspection; refuse mutable custody")
-    if pre != fingerprints(ledger, captures):
+    if pre != fingerprints(ledger, captures, capture_limit):
         raise ValueError("evidence changed during inspection; refuse retry without frozen custody")
     # A writer may have started (or quarantined) during digest verification;
     # marker state is outside the ledger/capture fingerprint inventory.
@@ -180,6 +193,19 @@ def self_test() -> None:
         assert result["programme_acceptance_established"] is False
         checks += 1
 
+        # Plan = three slots, hence exactly six permitted capture entries.
+        # The seventh real on-disk entry must be refused at the bounded
+        # inventory gate before any unbounded tuple/sort materialization.
+        write(rows)
+        (captures / "unexpected-000000.bin").write_bytes(b"orphan")
+        try:
+            audit(permit, plan, ledger, captures)
+        except ValueError as exc:
+            assert "capture inventory exceeds planned slot budget" in str(exc), exc
+        else:
+            raise AssertionError("over-budget capture inventory accepted")
+        checks += 1
+
         # A complete, valid ledger under a crashed writer's quarantine lock
         # MUST be refused, rather than reported as a qualified full-slot set.
         lock_path = ledger.with_name(ledger.name + ".append.lock")
@@ -207,8 +233,8 @@ def self_test() -> None:
         original_fingerprints = fingerprints
         fingerprint_calls = [0]
 
-        def inject_late_quarantine(ledger_path: Path, captures_path: Path):
-            snapshot = original_fingerprints(ledger_path, captures_path)
+        def inject_late_quarantine(ledger_path: Path, captures_path: Path, entry_limit: int):
+            snapshot = original_fingerprints(ledger_path, captures_path, entry_limit)
             fingerprint_calls[0] += 1
             if fingerprint_calls[0] == 2:
                 lock_path.write_bytes(marker)
@@ -325,7 +351,8 @@ def self_test() -> None:
 
         def reject_with_masked_metadata(label, mutate_after_first):
             saved_core = core_module
-            snapshot = original_fingerprints(ledger, captures)
+            snapshot = original_fingerprints(
+                ledger, captures, 2 * plan["max_jobs"] * plan["sequential_repeats"])
             injection = {"completed": False}
 
             def injection_core():
@@ -345,7 +372,7 @@ def self_test() -> None:
                 return source
 
             globals()["core_module"] = injection_core
-            globals()["fingerprints"] = lambda _ledger, _captures: snapshot
+            globals()["fingerprints"] = lambda _ledger, _captures, _limit: snapshot
             try:
                 reject(label)
                 # An early refusal or OSError in fault injection must not
@@ -382,7 +409,7 @@ def self_test() -> None:
 
         reject_with_masked_metadata("metadata-invisible posthash ledger replacement",
                                     rewrite_ledger)
-    assert checks == (19 if os.name == "posix" else 18), checks
+    assert checks == (20 if os.name == "posix" else 19), checks
     print(f"MC-047 read-only crash-window controls passed: {checks}; MODEL_ONLY; no native dispatch")
 
 
