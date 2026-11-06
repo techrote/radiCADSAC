@@ -492,7 +492,7 @@ def main():
 
 # The receipt is separately checked by exact content, not permitted to
 # establish truth without source replay. Filled at candidate publication.
-RECEIPT_BLOB = "TO_BE_PINNED_AT_PUBLICATION"
+RECEIPT_BLOB = "d7ee51ed09bc317f29177286dbd9b1e827c8bd10"
 
 
 if __name__ == "__main__":
