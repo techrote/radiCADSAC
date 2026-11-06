@@ -345,6 +345,21 @@ class Tests(unittest.TestCase):
                             Q(c0["strict_drift_upper"])<3 for c0
                             in c["local_certificates"]))
 
+    def test_prospective_affine_h1_not_preexisting_v10_source(self):
+        # Different phase, coefficient orientation and signed event pattern:
+        # original-like C=1, S=t+1/4 on [0,2], beta=1/2.
+        s=v10_spec()
+        s["phase_turn_offset"]="0"
+        s["phase_turn_rate"]="1/2"
+        s["sin_splines"]["1"]["controls"]=["1/4","5/4","5/4","9/4"]
+        cert=analyze(s)
+        self.assertEqual(cert["phase_grid_cells"],4)
+        self.assertEqual(cert["root_brackets"],[["1/2","1"],["3/2","2"]])
+        self.assertEqual(cert["maximal_nonzero_cell_signs"],
+                         ["POSITIVE","NEGATIVE","POSITIVE"])
+        self.assertTrue(all(c["delta_direction"]=="INCREASING" for c
+                            in cert["local_certificates"]))
+
     def test_reversed_phase_orientation(self):
         s=v10_spec()
         s["phase_turn_offset"]="7/2"
