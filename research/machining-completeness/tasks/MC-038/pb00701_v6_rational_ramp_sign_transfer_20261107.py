@@ -171,7 +171,7 @@ def certify_ramp(m_text, *, cos1="1", phase="t/4"):
         "interior_event_count": len(events),
         "physical_zero_count_including_exterior": len(events) +
             int(right_boundary is not None),
-        "historical_source_admitted": m in (Q(0), Q(100)),
+        "source_identity_requires_separate_pinned_verification": True,
         "new_historical_closures": [], "required_pb_po_discharges": 0,
         "pb00701_established": False, "mc_b_established": False,
         "mc1_established": False, "production_authorized": False,
@@ -255,8 +255,6 @@ class Tests(unittest.TestCase):
         self.assertEqual(len(r["unchanged_historically_unresolved_ids"]), 50)
         self.assertEqual(r["historical_delta"]["missing_ordered_premises"], 0)
         self.assertEqual(r["original_source_witnesses"][PREFIX+"tail0"]
-                         ["certificate"]["event_kind"] if False else
-                         r["original_source_witnesses"][PREFIX+"tail0"]
                          ["certificate"]["ordered_interior_events"][0]["event_kind"],
                          "KNOT_CROSSING")
         self.assertEqual(r["original_source_witnesses"][PREFIX+"tail100"]
@@ -321,8 +319,8 @@ class Tests(unittest.TestCase):
         event = a["ordered_interior_events"][1]
         self.assertEqual(event["strict_open_rational_bracket"], ["1", "2"])
         self.assertNotIn("exact_source_time", event)
-        self.assertNotIn("global_smooth_multiplicity",
-                         a["ordered_interior_events"][0]) if False else None
+        self.assertIsNone(a["ordered_interior_events"][0]
+                          ["global_smooth_multiplicity"])
 
     def test_pi_enclosure_shrinks_without_float(self):
         l1, u1 = halfpi_bounds(1)
