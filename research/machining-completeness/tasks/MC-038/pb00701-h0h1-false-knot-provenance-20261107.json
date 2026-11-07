@@ -1,0 +1,139 @@
+{
+  "schema": "radicadsac-mc038-false-true-knot-source-provenance-c-1.0",
+  "date_utc": "2026-11-07",
+  "result_class": "BOUNDED_C_SOURCE_PROVENANCE_COUNTEREXAMPLE_AND_REPAIR",
+  "named_obligation": "PB-007-01",
+  "dependent_proof_obligations": [
+    "PO-04",
+    "PO-05",
+    "PO-08"
+  ],
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "general_event_theorem_discharge": false,
+  "original_source": {
+    "case_id": "composite:DELEGATED_V6_CONSTANT_MODULATION:tail0",
+    "frozen_v54_git_blob_sha1": "5841c331579489b25caef38cd412bdbf286f9134",
+    "source_sha256": "9eb6f08a44882adffa919529247c40190c70e8d7599ee2b1a0f7978ef2569eb1",
+    "row_sha256": "145ac5ce5b533c447c7356e8dc721dbfa5a44562cdc3a37422278fd7bd0199fc",
+    "frozen_v2_git_blob_sha1": "e52d3baf3692a011cf86234eeaa992ef407d99fd",
+    "prior_v2_registered_evidence_level": "COMPLETE_SOURCE_SPECIFIC",
+    "source_time": [
+      "0",
+      "2"
+    ],
+    "true_original_degree_zero_knot_vector": [
+      "0",
+      "1",
+      "2"
+    ],
+    "original_internal_knots": [
+      "1"
+    ],
+    "harmonics": {
+      "h0_cos": [
+        "0",
+        "0"
+      ],
+      "h1_cos": [
+        "1",
+        "1"
+      ],
+      "h1_sin": []
+    },
+    "phase_turns": "t/4",
+    "physical_function": "cos(pi*t/2)",
+    "true_physical_events": [
+      {
+        "exact_source_time": "1",
+        "multiplicity": 1,
+        "event_kind": "SIMPLE_CROSSING"
+      }
+    ],
+    "ordered_physical_open_signs": [
+      "POSITIVE",
+      "NEGATIVE"
+    ]
+  },
+  "falsified_inference": "TWO_ADJACENT_EQUAL_CONSTANT_H0_H1_PHASE_LAWS_IMPLY_THE_JOIN_IS_A_VERIFIED_ORIGINAL_SOURCE_BSPLINE_KNOT",
+  "counterexamples": [
+    {
+      "left_source_time": [
+        "0",
+        "1/2"
+      ],
+      "right_source_time": [
+        "1/2",
+        "2"
+      ],
+      "old_successful_generic_output_true_source_knot": "1/2",
+      "is_actual_v6_internal_knot": false
+    },
+    {
+      "left_source_time": [
+        "0",
+        "3/2"
+      ],
+      "right_source_time": [
+        "3/2",
+        "2"
+      ],
+      "old_successful_generic_output_true_source_knot": "3/2",
+      "is_actual_v6_internal_knot": false
+    }
+  ],
+  "status_before": "FALSE_TRUE_SOURCE_KNOT_PROVENANCE_LABEL_WHILE_ROOT_COUNTS_CORRECT",
+  "status_after": "GENERIC_JOIN_UNVERIFIED;PINNED_V6_ONLY_UPGRADES_ACTUAL_KNOT",
+  "contract_changes": {
+    "generic_consumer_status": "COMPLETE_RESTRICTED_SAME_LAW_TWO_SPAN_JOIN",
+    "generic_label": "unverified_same_law_join",
+    "generic_true_source_knot_field": "ABSENT",
+    "authenticated_original_v6_status": "COMPLETE_RESTRICTED_SAME_LAW_TWO_SPAN_KNOT",
+    "authenticated_true_source_knot": "1",
+    "authenticated_source_hash_and_full_row_hash_attached": true,
+    "refused_cases_preserved": true,
+    "physical_events_changed": false
+  },
+  "frozen_census": {
+    "pinned_denominator": 121,
+    "before": {
+      "original_sources": 121,
+      "uncertified_v54_routes": 20,
+      "missing_v54_ordered_premises": 30,
+      "complete_v2_whole_source_witnesses": 50,
+      "required_pb_po_discharges": 0
+    },
+    "after": {
+      "original_sources": 121,
+      "uncertified_v54_routes": 20,
+      "missing_v54_ordered_premises": 30,
+      "complete_v2_whole_source_witnesses": 50,
+      "required_pb_po_discharges": 0
+    },
+    "delta": {
+      "original_sources": 0,
+      "uncertified_v54_routes": 0,
+      "missing_v54_ordered_premises": 0,
+      "complete_v2_whole_source_witnesses": 0,
+      "required_pb_po_discharges": 0
+    },
+    "newly_resolved_historical_case_ids": [],
+    "still_unresolved_historical_case_ids_changed": []
+  },
+  "limitations": [
+    "Not a false physical root count or a refutation of the restricted math theorem",
+    "Generic interval pair cannot prove its own B-spline provenance",
+    "Historical V6 physical events already complete in V2",
+    "No general source-knot, identity-zero, multiharmonic or nonmonotone theorem",
+    "No independent engineering oracle, native geometry or STEP evidence"
+  ],
+  "gate_status": {
+    "pb00701": "OPEN",
+    "pb00702": "OPEN",
+    "pb00703": "OPEN",
+    "pb00704": "OPEN",
+    "mc_b": "NOT_ESTABLISHED",
+    "mc_1": "NOT_ESTABLISHED",
+    "production_authorized": false
+  },
+  "integration": "DRAFT_UNMERGED_PENDING_CORRECTED_HEAD_CI_AND_DISTINCT_INDEPENDENT_REVIEW"
+}
