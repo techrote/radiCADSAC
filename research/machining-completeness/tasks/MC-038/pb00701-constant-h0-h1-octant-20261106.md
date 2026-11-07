@@ -61,6 +61,22 @@ Their signs are +,-,+. The first octant cell has strictly negative derivative th
 
 For prospective H0=3/4, exact node signs are +,+,+, and h-sqrt(5)/3>0 by 9h^2>5. The tail has **zero roots**. These results reproduce already established #443 prospective mathematics through a different, parameterized reusable admission mechanism; they do not change historical evidence.
 
+## New source-bound negative C: direct unchanged certificate cannot close frozen V6
+
+**Proposed route falsified:** `APPLY_UNMODIFIED_PR445_CONSTANT_H0_H1_OCTANT_CERTIFICATE_TO_FROZEN_V6_FULL_SOURCE`. This is a failure of direct **admission**, not a counterexample to the sufficient constant-H0/H1 theorem or an impossibility claim for a strengthened endpoint-aware algorithm.
+
+The **actual, immutable frozen V54** original is `composite:DELEGATED_V6_CONSTANT_MODULATION:tail0`, source-spec SHA-256 `9eb6f08a44882adffa919529247c40190c70e8d7599ee2b1a0f7978ef2569eb1`, whole-row SHA-256 `145ac5ce5b533c447c7356e8dc721dbfa5a44562cdc3a37422278fd7bd0199fc`. Its exact original grammar is two degree-zero fully clamped source-time spline spans with knots \(0,1,2\), cosine H0 zero, cosine H1 identically 1, no sine channel, and phase turns \(\beta(t)=t/4\) for \(t\in[0,2]\). The true knot is \(t=1\), not a sampling boundary invented by this investigation. Thus
+
+\[
+F(t)=\cos(\pi t/2),\qquad F(0)=1,\ F(1)=0,\ F(2)=-1,\ F'(1)=-\pi/2\ne0.
+\]
+
+The complete physical source has exactly **one simple knot zero**, \(t=1\), with positive-to-negative physical sign transfer. No numerical scan is needed: \(\cos\) is strictly decreasing across \([0,\pi]\). The frozen V54 recorded disposition for this source is `BLOCKED`, with original V27 child-left-endpoint multiplicity noncomposability, and the pinned V2 register already contains its `COMPLETE_SOURCE_SPECIFIC` original-source proof. Consequently these mathematical roots are **prior art**, not newly closed historical evidence.
+
+The unchanged PR #445 emitter is expressly strict-open-octant-only: the true phase at \(t=1\) is \(\beta=1/4=2/8\), so its exact node list contains the zero, and `require(f != 0, "PHYSICAL_OCTANT_NODE_ZERO")` returns `REFUSED_NONTRUTH` **before** emitting an ordered full-source certificate. This exact source/provenance and refusal is checked in the same eleven-method adversarial suite against both immutable V54/V2 blobs, including the original SHA-256 identities. It is a decisive C result for **that unchanged direct-certification route only**; a knot-sided endpoint-root theorem might repair it. It is not a required PB/PO discharge.
+
+The historical matched before/after is **121 originals / 20 refused routes / 30 missing ordered premises / 50 complete V2 witnesses**, all deltas **zero**, newly closed originals \([]\), and required PB/PO discharges **zero**. This result does not narrow the domain or alter any frozen status, and evidence remains `DETERMINISTIC_MODEL`.
+
 ## Exact adversarial controls
 
 The verifier includes **eleven** independent test methods spanning positive and negative controls for: (1) two simple source-ordered H0-biased tail roots; (2) root-free larger H0; (3) an **exact order-two tangency** at generally irrational source time using C=-3/5,S=-4/5,h=1; (4) a **genuine two-root same-octant cell** with h=199/200 which must refuse despite matching positive endpoints; (5) reversed phase orientation with one crossing; (6) exact octant-node zero and zero phasor refusals; (7) exact Q(sqrt2) sign comparisons and malformed source inputs; (8) both minimum and maximum interior critical points, including their respective exact order-two tangencies and two-root refusals; (9) derivative-zero phase endpoints, and (10) bounded, duplicate-aware disk JSON ingress, nested containers, long integer, nonfinite number and 400001-byte controls, without counting brackets inside quoted strings as container nesting.
