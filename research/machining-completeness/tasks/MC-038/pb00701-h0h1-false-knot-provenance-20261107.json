@@ -117,7 +117,362 @@
       "required_pb_po_discharges": 0
     },
     "newly_resolved_historical_case_ids": [],
-    "still_unresolved_historical_case_ids_changed": []
+    "still_unresolved_historical_case_ids_changed": [],
+    "unchanged_50_original_source_ids": [
+      {
+        "case_id": "composite:DELEGATED_V6_CONSTANT_MODULATION:tail0",
+        "original_v54_disposition": "BLOCKED",
+        "after_v54_disposition": "BLOCKED",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:DELEGATED_V6_CONSTANT_MODULATION:tail100",
+        "original_v54_disposition": "BLOCKED",
+        "after_v54_disposition": "BLOCKED",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:EXACT_STATIONARY_PHASE_POLYNOMIAL:tail0",
+        "original_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:EXACT_STATIONARY_PHASE_POLYNOMIAL:tail100",
+        "original_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail0",
+        "original_v54_disposition": "BLOCKED",
+        "after_v54_disposition": "BLOCKED",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V10_EXACT_DUAL_PROJECTIVE_SINGLE_HARMONIC_RATIO:tail100",
+        "original_v54_disposition": "BLOCKED",
+        "after_v54_disposition": "BLOCKED",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO:tail0",
+        "original_v54_disposition": "BLOCKED",
+        "after_v54_disposition": "BLOCKED",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V11_EXACT_PHASE_DOMINANCE_SINGLE_HARMONIC_RATIO:tail100",
+        "original_v54_disposition": "BLOCKED",
+        "after_v54_disposition": "BLOCKED",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V12_EXACT_COMPONENT_ROOT_PARTITION_SINGLE_HARMONIC:tail0",
+        "original_v54_disposition": "BLOCKED",
+        "after_v54_disposition": "BLOCKED",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V12_EXACT_COMPONENT_ROOT_PARTITION_SINGLE_HARMONIC:tail100",
+        "original_v54_disposition": "BLOCKED",
+        "after_v54_disposition": "BLOCKED",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V13_EXACT_NONVANISHING_EVEN_MULTIPLIER_MULTIHARMONIC:tail0",
+        "original_v54_disposition": "BLOCKED",
+        "after_v54_disposition": "BLOCKED",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V13_EXACT_NONVANISHING_EVEN_MULTIPLIER_MULTIHARMONIC:tail100",
+        "original_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V14_EXACT_STRICT_DOMINANCE_MULTITERM_MULTIPLIER:tail100",
+        "original_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V15_EXACT_FINITE_STRICT_DOMINANCE_MULTIPLIER:tail100",
+        "original_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V16_EXACT_CHEBYSHEV_STURM_MULTIPLIER:tail100",
+        "original_v54_disposition": "BLOCKED",
+        "after_v54_disposition": "BLOCKED",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V17_EXACT_PROJECTIVE_EVEN_TRIG_MULTIPLIER:tail0",
+        "original_v54_disposition": "BLOCKED",
+        "after_v54_disposition": "BLOCKED",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V17_EXACT_PROJECTIVE_EVEN_TRIG_MULTIPLIER:tail100",
+        "original_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V18_EXACT_LAURENT_MODULE_FACTOR:tail100",
+        "original_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V18_EXACT_NONVANISHING_SOURCE_MODULE_FACTOR:tail0",
+        "original_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V18_EXACT_NONVANISHING_SOURCE_MODULE_FACTOR:tail100",
+        "original_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V22_EXACT_PHASE_SECTOR_PARTIAL_DERIVATIVE_ANCHOR:tail0",
+        "original_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V23_EXACT_NONCONSTANT_AMPLITUDE_PHASE_SECTOR_ANCHOR:tail0",
+        "original_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V24_EXACT_MIXED_QUADRATURE_PHASE_ANCHOR:tail0",
+        "original_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V25_EXACT_COMPONENT_CONE_MIXED_PROJECTION_ANCHOR:tail0",
+        "original_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V26_EXACT_POINTWISE_COMPONENT_CONE_RESIDUAL_ORTHANTS:tail0",
+        "original_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V27_EXACT_RATIONAL_PHASE_SECTOR_PARTITION_COMPOSITION:tail0",
+        "original_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V27_EXACT_RATIONAL_PHASE_SECTOR_PARTITION_COMPOSITION:tail100",
+        "original_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V28_EXACT_ALGEBRAIC_RATIONAL_TURN_PHASE_CELL_PROJECTION:tail0",
+        "original_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V29_EXACT_5_12_13_NESTED_ALGEBRAIC_PHASE_CELL_PROJECTION:tail0",
+        "original_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V30_EXACT_SOURCE_ADAPTIVE_PROJECTIVE_RATIONAL_SEPARATOR:tail0",
+        "original_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V34_EXACT_PHASE_CORRELATED_COMMON_FACTOR:tail0",
+        "original_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V35_EXACT_PHASE_CORRELATED_PROPORTIONAL_COMMON_FACTOR:tail0",
+        "original_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V36_EXACT_PHASE_CORRELATED_VARYING_RATIO_SHARED_FACTOR:tail0",
+        "original_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V37_EXACT_PHASE_CORRELATED_TWO_POLYNOMIAL_SHARED_FACTOR:tail0",
+        "original_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V38_EXACT_DIRECT_ROTATED_COORDINATE_TWO_QUADRATURE:tail0",
+        "original_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V39_EXACT_SIGNED_A_DIRECT_ROTATED_COORDINATE:tail0",
+        "original_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V40_EXACT_SIGNED_B_ANTI_DIAGONAL_DIRECT_ROTATED_COORDINATE:tail0",
+        "original_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V42_EXACT_ROTATED_COORDINATE_ORIENTATION_TRANSITION_BRIDGE:tail0",
+        "original_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V43_EXACT_CORRELATED_CLOSED_HANDOFF:tail0",
+        "original_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V48_MIXED_ROOT_SINGLE_CUT:tail0",
+        "original_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V8_EXACT_COMMON_FACTOR_REDUCTION:tail0",
+        "original_v54_disposition": "BLOCKED",
+        "after_v54_disposition": "BLOCKED",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V8_EXACT_COMMON_FACTOR_REDUCTION:tail100",
+        "original_v54_disposition": "BLOCKED",
+        "after_v54_disposition": "BLOCKED",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V9_EXACT_MONOTONE_SINGLE_HARMONIC_RATIO:tail0",
+        "original_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "composite:PB00701_V9_EXACT_MONOTONE_SINGLE_HARMONIC_RATIO:tail100",
+        "original_v54_disposition": "BLOCKED",
+        "after_v54_disposition": "BLOCKED",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "harvested:verify_pb00701_v13:c426f65b5c10",
+        "original_v54_disposition": "BLOCKED",
+        "after_v54_disposition": "BLOCKED",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "harvested:verify_pb00701_v44:ffaea08e30c9",
+        "original_v54_disposition": "BLOCKED",
+        "after_v54_disposition": "BLOCKED",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "harvested:verify_pb00701_v52:2250401ce435",
+        "original_v54_disposition": "BLOCKED",
+        "after_v54_disposition": "BLOCKED",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "harvested:verify_pb00701_v53:cb01c327d5f1",
+        "original_v54_disposition": "BLOCKED",
+        "after_v54_disposition": "BLOCKED",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "harvested:verify_pb00701_v9:1a5fd052a155",
+        "original_v54_disposition": "BLOCKED",
+        "after_v54_disposition": "BLOCKED",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      },
+      {
+        "case_id": "harvested:verify_pb00701_v9:4e7b85fa122a",
+        "original_v54_disposition": "BLOCKED",
+        "after_v54_disposition": "BLOCKED",
+        "after_v2_registration": "COMPLETE_SOURCE_SPECIFIC",
+        "change_reason": "NO_ADAPTER_OR_OWNER_ROUTE_MODIFICATION;SOURCE_KNOT_PROVENANCE_FIX_ONLY"
+      }
+    ],
+    "verifier_method": "Pinned V54 Git blob exactly 121 unique case IDs and per-case v54 dispositions; pinned V2 Git blob 50 complete original-source evidence identities; before/after original cases are unchanged.",
+    "numerator_newly_closed": 0,
+    "denominator_originals": 121
   },
   "limitations": [
     "Not a false physical root count or a refutation of the restricted math theorem",
