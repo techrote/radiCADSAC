@@ -422,10 +422,14 @@ class Tests(unittest.TestCase):
                 certify_affine_h1(m)
 
     def test_finite_pi_compare_budget_is_typed_nontruth(self):
-        low,high=halfpi_bounds(MAX_MACHIN_PAIRS)
+        from unittest.mock import patch
+        low,high=halfpi_bounds(1)
         mid=(low+high)/2
-        with self.assertRaisesRegex(Refusal,"PI_COMPARISON_BUDGET_NONTRUTH"):
-            certify_affine_h1(str(mid+Q(1,2)))
+        with patch.dict(certify_affine_h1.__globals__,
+                        {"MAX_MACHIN_PAIRS": 1}):
+            with self.assertRaisesRegex(Refusal,
+                                        "PI_COMPARISON_BUDGET_NONTRUTH"):
+                certify_affine_h1(str(mid+Q(1,2)))
 
 
 def main():
