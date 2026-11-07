@@ -1,0 +1,171 @@
+{
+  "schema": "radicadsac-mc038-h0h1-event-region-partition-repair/1.0",
+  "task": "MC-038",
+  "date": "2026-11-07",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "named_obligations": [
+    "PB-007-01",
+    "PO-04",
+    "PO-05",
+    "PO-08"
+  ],
+  "classification": "C_SOURCE_BOUND_PREVIOUS_CONSUMER_INTERFACE_FALSIFICATION_AND_CORRECTIVE_IMPLEMENTATION",
+  "falsified_proposal": "PR445_OLD_ORDERED_SIGNED_REGIONS_IS_AN_EVENT_SEPARATED_PHYSICAL_SIGN_PARTITION",
+  "scope": "Restricted constant H0/H1 phase-octant span certificate; source-time event partition only; not full frozen original B-spline admission",
+  "existing_pr": 445,
+  "accepted_main_at_claim": "48222d6c40b15ad42cc36d56e6d25f3b284e7fc9",
+  "pre_repair_pr_head": "7a33ff0c40f373d5f346c6263a7ed1eb9a8d8970",
+  "original_source": {
+    "id": "composite:PB00701_V12_EXACT_COMPONENT_ROOT_PARTITION_SINGLE_HARMONIC:tail0",
+    "spec_sha256": "ee15e947924b45640dd16634247a476bb230fdc145fef94407d9a7c219928cd5",
+    "row_sha256": "d0acef7c69cb8ac1ba128b988e83817a91feff78509dd18007d0e56a506336c3",
+    "source_time": [
+      "0",
+      "2"
+    ],
+    "true_knot": "1",
+    "phase_turn_law": {
+      "offset": "0",
+      "rate": "1/4"
+    },
+    "tested_original_second_span": {
+      "time": [
+        "1",
+        "2"
+      ],
+      "h0": "0",
+      "h1_cos": "2/3",
+      "h1_sin": "-1/3",
+      "is_prospective_h0_mutation": false,
+      "exact_node_times": [
+        "1",
+        "3/2",
+        "2"
+      ],
+      "exact_node_values": [
+        "-1/3",
+        "-sqrt(2)/2",
+        "-2/3"
+      ],
+      "root_count": 0,
+      "sign": "NEGATIVE",
+      "proof": "cos(theta)<=0 and sin(theta)>=0 on theta=[pi/2,pi]; both rational coefficients have strictly negative sign and both trigonometric terms cannot simultaneously vanish"
+    }
+  },
+  "before": {
+    "pr_head": "7a33ff0c40f373d5f346c6263a7ed1eb9a8d8970",
+    "basis": "Direct deterministic source-code control-flow examination, prior to corrected-head execution",
+    "events": [],
+    "old_ordered_signed_regions": [
+      "NEGATIVE",
+      "NEGATIVE",
+      "NEGATIVE"
+    ],
+    "old_octant_nodes": [
+      "1",
+      "3/2",
+      "2"
+    ],
+    "valid_event_partition": false
+  },
+  "after_expected": {
+    "events": [],
+    "ordered_signed_regions": [
+      "NEGATIVE"
+    ],
+    "octant_nodes": [
+      "1",
+      "3/2",
+      "2"
+    ],
+    "node_signs": [
+      "NEGATIVE",
+      "NEGATIVE",
+      "NEGATIVE"
+    ],
+    "invariant": "len(ordered_signed_regions) == len(ordered_events)+1",
+    "prospective_controls": [
+      {
+        "h0": "3/4",
+        "events": 0,
+        "event_regions": [
+          "POSITIVE"
+        ],
+        "source_modified": true
+      },
+      {
+        "h0": "1/2",
+        "events": 1,
+        "event_regions": [
+          "POSITIVE",
+          "NEGATIVE"
+        ],
+        "source_modified": true
+      },
+      {
+        "h0": "1",
+        "h1_cos": "-3/5",
+        "h1_sin": "-4/5",
+        "phase_offset": "1/8",
+        "rate": "1/8",
+        "time": [
+          "0",
+          "2"
+        ],
+        "events": 1,
+        "multiplicity": [
+          2
+        ],
+        "event_regions": [
+          "POSITIVE",
+          "POSITIVE"
+        ],
+        "source_modified": true
+      }
+    ]
+  },
+  "frozen_census": {
+    "v54_git_blob": "5841c331579489b25caef38cd412bdbf286f9134",
+    "v2_git_blob": "e52d3baf3692a011cf86234eeaa992ef407d99fd",
+    "before": {
+      "originals": 121,
+      "historical_route_refusals": 20,
+      "historical_missing_ordered_premises": 30,
+      "complete_v2_source_witnesses": 50
+    },
+    "after": {
+      "originals": 121,
+      "historical_route_refusals": 20,
+      "historical_missing_ordered_premises": 30,
+      "complete_v2_source_witnesses": 50
+    },
+    "delta": {
+      "originals": 0,
+      "historical_route_refusals": 0,
+      "historical_missing_ordered_premises": 0,
+      "complete_v2_source_witnesses": 0
+    },
+    "newly_closed_original_case_ids": []
+  },
+  "remaining_obligations": [
+    "PB-007-01",
+    "PB-007-02",
+    "PB-007-03",
+    "PB-007-04",
+    "PO-02",
+    "PO-04",
+    "PO-05",
+    "PO-07",
+    "PO-08"
+  ],
+  "required_pb_po_discharges": 0,
+  "mc_b": "NOT_ESTABLISHED",
+  "mc1": "NOT_ESTABLISHED",
+  "production_authorized": false,
+  "operations_supported": 26,
+  "not_native_geometry": true,
+  "not_independent_oracle": true,
+  "not_engineering_STEP": true,
+  "unchanged_v6_node_zero_refusal": true,
+  "integration": "DRAFT_ONLY_UNTIL_NEW_LITERAL_HEAD_CI_AND_DISTINCT_SESSION_REVIEW"
+}
