@@ -47,6 +47,27 @@ def guarded_json(path, blob):
     with path.open("rb") as stream:
         raw = stream.read(MAX_BYTES + 1)
     check(len(raw) <= MAX_BYTES, "CORPUS_BYTE_BUDGET")
+    # Bound the JSON nesting depth before the built-in parser allocates trees.
+    depth = 0
+    in_string = False
+    escaped = False
+    for ch in raw:
+        if in_string:
+            if escaped:
+                escaped = False
+            elif ch == 92:
+                escaped = True
+            elif ch == 34:
+                in_string = False
+        elif ch == 34:
+            in_string = True
+        elif ch in (91, 123):
+            depth += 1
+            check(depth <= 32, "JSON_DEPTH_BUDGET")
+        elif ch in (93, 125):
+            depth -= 1
+            check(depth >= 0, "JSON_NESTING_MALFORMED")
+    check(depth == 0 and not in_string, "JSON_NESTING_MALFORMED")
     check(hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest()
           == blob, "FROZEN_GIT_BLOB_DRIFT")
     def unique(pairs):
@@ -296,6 +317,34 @@ class Tests(unittest.TestCase):
         e = Q(1, 2**300)
         self.assertEqual(certify_ramp(str(Q(1)+e))["interior_event_count"], 2)
         self.assertEqual(certify_ramp(str(Q(1)-e))["interior_event_count"], 1)
+
+    def test_two_distinct_roots_within_2_to_minus_100_of_true_knot(self):
+        # Exact alternating Machin bounds construct a small rational below a=pi/2.
+        # For 0<x<=1, sin(a*x)/x < a-x*x/4 by the fifth-order
+        # alternating sine upper bound, 3/2<a<2, and 71/240>1/4.
+        # At x=delta, R(x)<a-delta**2/4<m, hence the extra simple
+        # root is in (1,1+delta) rather than coinciding with the knot.
+        lower, upper = halfpi_bounds(24)
+        scale = 2**210
+        m = Q((lower.numerator * scale) // lower.denominator, scale)
+        delta = Q(1, 2**100)
+        self.assertTrue(Q(1) < m <= lower < upper)
+        self.assertTrue(upper - m < delta*delta/4)
+        result = certify_ramp(str(m))
+        self.assertEqual(result["interior_event_count"], 2)
+        self.assertEqual(result["ordered_signed_open_components"],
+                         ["POSITIVE", "NEGATIVE", "POSITIVE"])
+
+    def test_extra_root_within_2_to_minus_100_of_right_exterior(self):
+        # cos(a*delta)>=1-2*delta**2; since m*(1-delta)
+        # <1-2*delta**2, F(2-delta)<0 while F(2)=m-1>0.
+        delta = Q(1, 2**100)
+        eps = Q(1, 2**300)
+        self.assertTrue((1+eps)*(1-delta) < 1-2*delta*delta)
+        result = certify_ramp(str(1+eps))
+        self.assertEqual(result["interior_event_count"], 2)
+        self.assertEqual(result["ordered_signed_open_components"],
+                         ["POSITIVE", "NEGATIVE", "POSITIVE"])
 
     def test_rationals_straddling_pi_over_two(self):
         self.assertEqual(certify_ramp("333/212")["interior_event_count"], 2)
