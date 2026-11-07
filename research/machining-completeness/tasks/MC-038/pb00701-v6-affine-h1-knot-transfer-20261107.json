@@ -1,0 +1,170 @@
+{
+  "schema": "radicadsac-mc038-v6-affine-h1-knot-transfer-research/1.0",
+  "date_utc": "2026-11-07",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "result_class": "BOUNDED_CONSTRUCTIVE_PROSPECTIVE_THEOREM_NO_HISTORICAL_CLOSURE",
+  "source_parameter": "source-time-t",
+  "source_interval": [
+    "0",
+    "2"
+  ],
+  "true_source_double_knot": "1",
+  "source_phase_turns": "t/4",
+  "prospective": true,
+  "prospective_not_equal_to_frozen_original": true,
+  "spline_degree": 2,
+  "spline_knots": [
+    "0",
+    "0",
+    "0",
+    "1",
+    "1",
+    "2",
+    "2",
+    "2"
+  ],
+  "left": {
+    "H0": "0",
+    "H1_cos": "1",
+    "H1_sin": "0"
+  },
+  "right_x_eq_t_minus_one": {
+    "H0": "m*x",
+    "H1_cos": "1-x/2",
+    "H1_sin": "-x/2",
+    "slope_m_type": "canonical_exact_rational"
+  },
+  "source_controls": {
+    "H0": [
+      "0",
+      "0",
+      "0",
+      "m/2",
+      "m"
+    ],
+    "H1_cos": [
+      "1",
+      "1",
+      "1",
+      "3/4",
+      "1/2"
+    ],
+    "H1_sin": [
+      "0",
+      "0",
+      "0",
+      "-1/4",
+      "-1/2"
+    ]
+  },
+  "physical_right": "x*(m-Q(x))",
+  "Q": "sin(pi*x/2)/x - sin(pi*x/2)/2 + cos(pi*x/2)/2",
+  "Q_prime": "R'(x)-pi*(cos(pi*x/2)+sin(pi*x/2))/4 <0 for 0<x<=1",
+  "Q_limits": {
+    "x_to_0": "pi/2+1/2",
+    "x_eq_half": "sqrt(2)",
+    "x_eq_1": "1/2"
+  },
+  "classification": [
+    {
+      "m": "<1/2",
+      "events": [
+        "true_knot_t1_crossing"
+      ],
+      "signs": [
+        "POSITIVE",
+        "NEGATIVE"
+      ]
+    },
+    {
+      "m": "=1/2",
+      "events": [
+        "true_knot_t1_crossing",
+        "simple_exterior_t2"
+      ],
+      "signs": [
+        "POSITIVE",
+        "NEGATIVE"
+      ]
+    },
+    {
+      "m": ">1/2 and <pi/2+1/2",
+      "events": [
+        "true_knot_t1_crossing",
+        "one_right_simple_interior_root"
+      ],
+      "signs": [
+        "POSITIVE",
+        "NEGATIVE",
+        "POSITIVE"
+      ],
+      "rational_bracket_if_m_lt_sqrt2": [
+        "3/2",
+        "2"
+      ],
+      "rational_bracket_if_m_gt_sqrt2": [
+        "1",
+        "3/2"
+      ]
+    },
+    {
+      "m": ">pi/2+1/2",
+      "events": [
+        "true_knot_t1_sided_touch"
+      ],
+      "signs": [
+        "POSITIVE",
+        "POSITIVE"
+      ]
+    }
+  ],
+  "frozen_v54_git_blob_sha1": "5841c331579489b25caef38cd412bdbf286f9134",
+  "frozen_v2_git_blob_sha1": "e52d3baf3692a011cf86234eeaa992ef407d99fd",
+  "source_provenance_references": [
+    {
+      "id": "composite:DELEGATED_V6_CONSTANT_MODULATION:tail0",
+      "spec_sha256": "9eb6f08a44882adffa919529247c40190c70e8d7599ee2b1a0f7978ef2569eb1",
+      "row_sha256": "145ac5ce5b533c447c7356e8dc721dbfa5a44562cdc3a37422278fd7bd0199fc",
+      "not_same_source_h1": true
+    },
+    {
+      "id": "composite:DELEGATED_V6_CONSTANT_MODULATION:tail100",
+      "spec_sha256": "f6a0eb06c66af415fbb8abdfe62f9b36a2a2bf154e535d83307a80228e044ad5",
+      "row_sha256": "0801317d3452c77733a129148d58eaac2f06aa9cd26396a44892e82c524e1db2",
+      "not_same_source_h1": true
+    }
+  ],
+  "historical_before": {
+    "original_sources": 121,
+    "uncertified_routes": 20,
+    "missing_ordered_premises": 30,
+    "existing_complete_v2": 50,
+    "required_pb_po_discharges": 0
+  },
+  "historical_after": {
+    "original_sources": 121,
+    "uncertified_routes": 20,
+    "missing_ordered_premises": 30,
+    "existing_complete_v2": 50,
+    "required_pb_po_discharges": 0
+  },
+  "historical_delta": {
+    "original_sources": 0,
+    "uncertified_routes": 0,
+    "missing_ordered_premises": 0,
+    "existing_complete_v2": 0,
+    "required_pb_po_discharges": 0
+  },
+  "newly_resolved_historical_case_ids": [],
+  "named_obligation": "PB-007-01",
+  "dependent_proof_obligations": [
+    "PO-04",
+    "PO-05",
+    "PO-08"
+  ],
+  "required_pb_po_discharges": 0,
+  "pb00701_established": false,
+  "mc_b_established": false,
+  "mc1_established": false,
+  "production_authorized": false
+}
