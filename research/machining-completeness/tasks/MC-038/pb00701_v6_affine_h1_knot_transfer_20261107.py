@@ -425,6 +425,59 @@ class Tests(unittest.TestCase):
             with self.assertRaises(Refusal):
                 certify_affine_h1(m)
 
+
+    def test_exact_bspline_basis_evaluates_claimed_piecewise_laws(self):
+        knots = tuple(map(Q, ("0","0","0","1","1","2","2","2")))
+        m = Q(3,2)
+        controls = (
+            [Q(0),Q(0),Q(0),m/2,m],
+            [Q(1),Q(1),Q(1),Q(3,4),Q(1,2)],
+            [Q(0),Q(0),Q(0),-Q(1,4),-Q(1,2)])
+        def eval_bspline(ctrl, t):
+            if t == 2:
+                return ctrl[-1]
+            def basis(i,p):
+                if p == 0:
+                    return Q(int(knots[i] <= t < knots[i+1]))
+                v = Q(0)
+                a, b = knots[i+p]-knots[i], knots[i+p+1]-knots[i+1]
+                if a:
+                    v += (t-knots[i])/a*basis(i,p-1)
+                if b:
+                    v += (knots[i+p+1]-t)/b*basis(i+1,p-1)
+                return v
+            return sum((ctrl[i]*basis(i,2) for i in range(5)),Q(0))
+        for t in (Q(0),Q(1,4),Q(1,2),Q(3,4),Q(1),
+                  Q(5,4),Q(3,2),Q(7,4),Q(2)):
+            x=t-1
+            expect=(Q(0),Q(1),Q(0)) if t<=1 else \
+                   (m*x,1-x/2,-x/2)
+            self.assertEqual(tuple(eval_bspline(a,t) for a in controls),
+                             expect)
+
+    def test_machine_receipt_matches_dynamic_contract(self):
+        path = HERE / "pb00701-v6-affine-h1-knot-transfer-20261107.json"
+        with path.open("rb") as stream:
+            raw = stream.read(64001)
+        self.assertLessEqual(len(raw),64000)
+        rec = json.loads(raw.decode("utf-8"))
+        result = original_census_and_anchors()
+        self.assertEqual(rec["historical_before"], result["historical_before"])
+        self.assertEqual(rec["historical_after"], result["historical_after"])
+        self.assertEqual(rec["historical_delta"], result["historical_delta"])
+        self.assertEqual(rec["frozen_v54_git_blob_sha1"],CORPUS_BLOB)
+        self.assertEqual(rec["frozen_v2_git_blob_sha1"],V2_BLOB)
+        self.assertEqual(rec["newly_resolved_historical_case_ids"],[])
+        self.assertTrue(rec["prospective_not_equal_to_frozen_original"])
+        self.assertEqual(rec["spline_knots"],
+                         certify_affine_h1("1")["spline_knots"])
+        self.assertEqual(rec["source_controls"]["H1_cos"],
+                         certify_affine_h1("1")["proposed_h1_cos_controls"])
+        self.assertEqual(rec["source_controls"]["H1_sin"],
+                         certify_affine_h1("1")["proposed_h1_sin_controls"])
+        self.assertFalse(rec["mc_b_established"] or rec["mc1_established"]
+                         or rec["production_authorized"])
+
     def test_finite_pi_compare_budget_is_typed_nontruth(self):
         from unittest.mock import patch
         low,high=halfpi_bounds(1)
