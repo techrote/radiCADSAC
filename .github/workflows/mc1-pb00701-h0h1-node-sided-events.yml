@@ -8,6 +8,7 @@ on:
     paths:
       - research/machining-completeness/tasks/MC-038/pb00701_h0h1_node_sided_events_20261107.py
       - research/machining-completeness/tasks/MC-038/pb00701-h0h1-node-sided-events-20261107.md
+      - research/machining-completeness/tasks/MC-038/pb00701-h0h1-false-knot-provenance-20261107.json
       - .github/workflows/mc1-pb00701-h0h1-node-sided-events.yml
   workflow_dispatch:
 
@@ -30,7 +31,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Exact knot/original V6 producing contract and 13 adversarial controls
+      - name: Exact knot/original V6 producing contract and 14 adversarial controls
         run: python3 research/machining-completeness/tasks/MC-038/pb00701_h0h1_node_sided_events_20261107.py --contract --self-test
 
   frozen-original-source-replay:
