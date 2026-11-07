@@ -366,6 +366,44 @@ class Tests(unittest.TestCase):
         self.refuses(source(h="0", c="1", s="0",
                             off="3/8", rate="-1/4", lo="0", hi="1"))
         self.refuses(source(c="0", s="0"))
+        # Actual frozen V54 V6 source, NOT a prospective change:
+        # F(t)=cos(pi*t/2), t in [0,2], true source knot t=1.
+        # Its one simple physical knot zero has F'(1)=-pi/2, POS->NEG.
+        # The unchanged constant-H0/H1 octant emitter refuses because
+        # that exact root lies at its k=2 physical octant node. This is
+        # a direct-admission C limitation, never a mathematical failure.
+        ident = "composite:DELEGATED_V6_CONSTANT_MODULATION:tail0"
+        rows = checked_json(CORPUS, V54_BLOB)["cases"]
+        row = next(r for r in rows if r["id"] == ident)
+        self.assertEqual(row["expected"]["v54_disposition"], "BLOCKED")
+        self.assertEqual(row["spec"], {
+            "grammar": "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE",
+            "source_parameter_id": "source-time-t",
+            "parameter_lo": "0", "parameter_hi": "2",
+            "phase_turn_offset": "0", "phase_turn_rate": "1/4",
+            "cos_splines": {
+                "0": {"degree": 0, "knots": ["0","1","2"],
+                      "controls": ["0","0"]},
+                "1": {"degree": 0, "knots": ["0","1","2"],
+                      "controls": ["1","1"]}},
+            "sin_splines": {}})
+        self.assertEqual(hashlib.sha256(canonical(row["spec"])).hexdigest(),
+                         "9eb6f08a44882adffa919529247c40190c70e8d7599ee2b1a0f7978ef2569eb1")
+        self.assertEqual(hashlib.sha256(canonical(row)).hexdigest(),
+                         "145ac5ce5b533c447c7356e8dc721dbfa5a44562cdc3a37422278fd7bd0199fc")
+        v2 = checked_json(V2, V2_BLOB)["source_cases"]
+        entry = next(x for x in v2 if x["case_id"] == ident)
+        self.assertEqual(entry["registered_evidence_level"],
+                         "COMPLETE_SOURCE_SPECIFIC")
+        self.assertEqual(entry["source_sha256"],
+                         "9eb6f08a44882adffa919529247c40190c70e8d7599ee2b1a0f7978ef2569eb1")
+        historical = source(h="0", c="1", s="0",
+                            off="0", rate="1/4", lo="0", hi="2")
+        self.assertEqual(attempt(historical),
+                         {"status": "REFUSED_NONTRUTH",
+                          "reason": "PHYSICAL_OCTANT_NODE_ZERO",
+                          "pb00701_established": False,
+                          "mc1_established": False})
 
     def test_exact_sqrt2_no_float_and_strict_source_grammar(self):
         self.assertEqual(sqrt2_sign(Q(7,10), -Q(1,2)), -1)
