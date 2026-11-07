@@ -299,6 +299,244 @@ def original_census_and_anchors():
 
 
 
+
+# Independently maintained complete expected theorem receipt.  The certificate is
+# untrusted input, not the oracle for its own mathematical claims. Updating the
+# theorem requires an explicit review of this separate frozen expected contract.
+EXPECTED_RECEIPT_JSON = r'''{
+  "schema": "radicadsac-mc038-v6-affine-h1-knot-transfer-research/1.0",
+  "date_utc": "2026-11-07",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "result_class": "BOUNDED_CONSTRUCTIVE_PROSPECTIVE_THEOREM_NO_HISTORICAL_CLOSURE",
+  "source_parameter": "source-time-t",
+  "source_interval": [
+    "0",
+    "2"
+  ],
+  "true_source_double_knot": "1",
+  "source_phase_turns": "t/4",
+  "prospective": true,
+  "prospective_not_equal_to_frozen_original": true,
+  "spline_degree": 2,
+  "spline_knots": [
+    "0",
+    "0",
+    "0",
+    "1",
+    "1",
+    "2",
+    "2",
+    "2"
+  ],
+  "left": {
+    "H0": "0",
+    "H1_cos": "1",
+    "H1_sin": "0"
+  },
+  "right_x_eq_t_minus_one": {
+    "H0": "m*x",
+    "H1_cos": "1-x/2",
+    "H1_sin": "-x/2",
+    "slope_m_type": "canonical_exact_rational"
+  },
+  "source_controls": {
+    "H0": [
+      "0",
+      "0",
+      "0",
+      "m/2",
+      "m"
+    ],
+    "H1_cos": [
+      "1",
+      "1",
+      "1",
+      "3/4",
+      "1/2"
+    ],
+    "H1_sin": [
+      "0",
+      "0",
+      "0",
+      "-1/4",
+      "-1/2"
+    ]
+  },
+  "physical_right": "x*(m-Q(x))",
+  "Q": "sin(pi*x/2)/x - sin(pi*x/2)/2 + cos(pi*x/2)/2",
+  "Q_prime": "R'(x)-pi*(cos(pi*x/2)+sin(pi*x/2))/4 <0 for 0<x<=1",
+  "Q_limits": {
+    "x_to_0": "pi/2+1/2",
+    "x_eq_half": "sqrt(2)",
+    "x_eq_1": "1/2"
+  },
+  "classification": [
+    {
+      "m": "<1/2",
+      "events": [
+        "true_knot_t1_crossing"
+      ],
+      "signs": [
+        "POSITIVE",
+        "NEGATIVE"
+      ]
+    },
+    {
+      "m": "=1/2",
+      "events": [
+        "true_knot_t1_crossing",
+        "simple_exterior_t2"
+      ],
+      "signs": [
+        "POSITIVE",
+        "NEGATIVE"
+      ]
+    },
+    {
+      "m": ">1/2 and <pi/2+1/2",
+      "events": [
+        "true_knot_t1_crossing",
+        "one_right_simple_interior_root"
+      ],
+      "signs": [
+        "POSITIVE",
+        "NEGATIVE",
+        "POSITIVE"
+      ],
+      "rational_bracket_if_m_lt_sqrt2": [
+        "3/2",
+        "2"
+      ],
+      "rational_bracket_if_m_gt_sqrt2": [
+        "1",
+        "3/2"
+      ]
+    },
+    {
+      "m": ">pi/2+1/2",
+      "events": [
+        "true_knot_t1_sided_touch"
+      ],
+      "signs": [
+        "POSITIVE",
+        "POSITIVE"
+      ]
+    }
+  ],
+  "frozen_v54_git_blob_sha1": "5841c331579489b25caef38cd412bdbf286f9134",
+  "frozen_v2_git_blob_sha1": "e52d3baf3692a011cf86234eeaa992ef407d99fd",
+  "source_provenance_references": [
+    {
+      "id": "composite:DELEGATED_V6_CONSTANT_MODULATION:tail0",
+      "spec_sha256": "9eb6f08a44882adffa919529247c40190c70e8d7599ee2b1a0f7978ef2569eb1",
+      "row_sha256": "145ac5ce5b533c447c7356e8dc721dbfa5a44562cdc3a37422278fd7bd0199fc",
+      "not_same_source_h1": true
+    },
+    {
+      "id": "composite:DELEGATED_V6_CONSTANT_MODULATION:tail100",
+      "spec_sha256": "f6a0eb06c66af415fbb8abdfe62f9b36a2a2bf154e535d83307a80228e044ad5",
+      "row_sha256": "0801317d3452c77733a129148d58eaac2f06aa9cd26396a44892e82c524e1db2",
+      "not_same_source_h1": true
+    }
+  ],
+  "historical_before": {
+    "original_sources": 121,
+    "uncertified_routes": 20,
+    "missing_ordered_premises": 30,
+    "existing_complete_v2": 50,
+    "required_pb_po_discharges": 0
+  },
+  "historical_after": {
+    "original_sources": 121,
+    "uncertified_routes": 20,
+    "missing_ordered_premises": 30,
+    "existing_complete_v2": 50,
+    "required_pb_po_discharges": 0
+  },
+  "historical_delta": {
+    "original_sources": 0,
+    "uncertified_routes": 0,
+    "missing_ordered_premises": 0,
+    "existing_complete_v2": 0,
+    "required_pb_po_discharges": 0
+  },
+  "newly_resolved_historical_case_ids": [],
+  "named_obligation": "PB-007-01",
+  "dependent_proof_obligations": [
+    "PO-04",
+    "PO-05",
+    "PO-08"
+  ],
+  "required_pb_po_discharges": 0,
+  "pb00701_established": false,
+  "mc_b_established": false,
+  "mc1_established": false,
+  "production_authorized": false
+}'''
+RECEIPT_BYTE_LIMIT = 64000
+
+
+def receipt_json(raw):
+    """Bounded, duplicate-free, type-preserving input parser."""
+    check(len(raw) <= RECEIPT_BYTE_LIMIT, "RECEIPT_BYTE_BUDGET")
+    depth = 0
+    quoted = False
+    escaped = False
+    for ch in raw:
+        if quoted:
+            if escaped:
+                escaped = False
+            elif ch == 92:
+                escaped = True
+            elif ch == 34:
+                quoted = False
+        elif ch == 34:
+            quoted = True
+        elif ch in (91, 123):
+            depth += 1
+            check(depth <= 32, "RECEIPT_DEPTH_BUDGET")
+        elif ch in (93, 125):
+            depth -= 1
+            check(depth >= 0, "RECEIPT_BRACKET_ORDER")
+    check(depth == 0 and not quoted, "RECEIPT_NESTING_INVALID")
+
+    def distinct(pairs):
+        out = {}
+        for key, value in pairs:
+            check(key not in out, "RECEIPT_DUPLICATE_KEY")
+            out[key] = value
+        return out
+
+    def limited_int(token):
+        check(len(token) <= 12, "RECEIPT_INTEGER_BUDGET")
+        return int(token)
+
+    def reject_number(_):
+        raise Refusal("RECEIPT_NONINTEGER_NUMBER")
+
+    try:
+        return json.loads(raw.decode("utf-8"), object_pairs_hook=distinct,
+                          parse_int=limited_int, parse_float=reject_number,
+                          parse_constant=reject_number)
+    except (ValueError, UnicodeError, RecursionError) as exc:
+        raise Refusal("RECEIPT_JSON_INVALID") from exc
+
+
+def verify_receipt_bytes(raw):
+    actual = receipt_json(raw)
+    expected = json.loads(EXPECTED_RECEIPT_JSON)
+    # Canonical JSON preserves type distinctions: true != 1, false != 0.
+    check(canonical(actual) == canonical(expected),
+          "RECEIPT_CLAIM_OR_TYPE_DRIFT")
+    return actual
+
+
+def verify_receipt_file(path):
+    with path.open("rb") as stream:
+        raw = stream.read(RECEIPT_BYTE_LIMIT + 1)
+    return verify_receipt_bytes(raw)
+
+
 class Tests(unittest.TestCase):
     def test_frozen_source_pins_as_provenance_only_and_unchanged_census(self):
         evidence = original_census_and_anchors()
@@ -457,26 +695,77 @@ class Tests(unittest.TestCase):
 
     def test_machine_receipt_matches_dynamic_contract(self):
         path = HERE / "pb00701-v6-affine-h1-knot-transfer-20261107.json"
-        with path.open("rb") as stream:
-            raw = stream.read(64001)
-        self.assertLessEqual(len(raw),64000)
-        rec = json.loads(raw.decode("utf-8"))
+        rec = verify_receipt_file(path)
         result = original_census_and_anchors()
         self.assertEqual(rec["historical_before"], result["historical_before"])
         self.assertEqual(rec["historical_after"], result["historical_after"])
         self.assertEqual(rec["historical_delta"], result["historical_delta"])
-        self.assertEqual(rec["frozen_v54_git_blob_sha1"],CORPUS_BLOB)
-        self.assertEqual(rec["frozen_v2_git_blob_sha1"],V2_BLOB)
-        self.assertEqual(rec["newly_resolved_historical_case_ids"],[])
-        self.assertTrue(rec["prospective_not_equal_to_frozen_original"])
+        self.assertEqual(rec["frozen_v54_git_blob_sha1"], CORPUS_BLOB)
+        self.assertEqual(rec["frozen_v2_git_blob_sha1"], V2_BLOB)
+        self.assertEqual(rec["newly_resolved_historical_case_ids"], [])
         self.assertEqual(rec["spline_knots"],
                          certify_affine_h1("1")["spline_knots"])
         self.assertEqual(rec["source_controls"]["H1_cos"],
                          certify_affine_h1("1")["proposed_h1_cos_controls"])
         self.assertEqual(rec["source_controls"]["H1_sin"],
                          certify_affine_h1("1")["proposed_h1_sin_controls"])
+        self.assertEqual(rec["source_controls"]["H0"],
+                         certify_affine_h1("1")["proposed_h0_controls"][:3] +
+                         ["m/2", "m"])
         self.assertFalse(rec["mc_b_established"] or rec["mc1_established"]
                          or rec["production_authorized"])
+
+    def test_mutated_mathematical_receipts_fail_closed(self):
+        import copy
+        base = json.loads(EXPECTED_RECEIPT_JSON)
+        mutations = (
+            lambda r: r["classification"][0].update(
+                signs=["NEGATIVE", "POSITIVE"]),
+            lambda r: r["source_controls"]["H0"].__setitem__(3, "17"),
+            lambda r: r.update(pb00701_established=True),
+            lambda r: r.update(required_pb_po_discharges=True),
+            lambda r: r["Q_limits"].update(x_eq_1="17"),
+            lambda r: r["right_x_eq_t_minus_one"].update(H1_sin="0"),
+            lambda r: r["dependent_proof_obligations"].append("PO-UNKNOWN"),
+        )
+        for mutation in mutations:
+            altered = copy.deepcopy(base)
+            mutation(altered)
+            with self.subTest(altered=altered):
+                with self.assertRaisesRegex(Refusal,
+                                            "RECEIPT_CLAIM_OR_TYPE_DRIFT"):
+                    verify_receipt_bytes(canonical(altered))
+
+    def test_duplicate_and_resource_abuse_receipts_fail_closed(self):
+        valid = EXPECTED_RECEIPT_JSON.encode("utf-8")
+        self.assertEqual(verify_receipt_bytes(valid)["schema"],
+                         "radicadsac-mc038-v6-affine-h1-knot-transfer-research/1.0")
+        for raw in (
+            valid.replace(b'"schema":', b'"schema":"WRONG","schema":', 1),
+            b'[' * 33 + b'0' + b']' * 33,
+            b'{"x":' + b'9' * 5000 + b'}',
+            b' ' * (RECEIPT_BYTE_LIMIT + 1),
+            b'{"x": NaN}',
+            b'{"x": 1.0}',
+            b'{"x": [1}}',
+        ):
+            with self.subTest(sample=raw[:30]):
+                with self.assertRaises(Refusal):
+                    verify_receipt_bytes(raw)
+
+    def test_producing_contract_validates_real_on_disk_receipt(self):
+        import tempfile
+        original = HERE / "pb00701-v6-affine-h1-knot-transfer-20261107.json"
+        with tempfile.TemporaryDirectory() as td:
+            altered = Path(td) / original.name
+            obj = json.loads(EXPECTED_RECEIPT_JSON)
+            obj["classification"][0]["signs"] = ["NEGATIVE", "POSITIVE"]
+            altered.write_bytes(canonical(obj))
+            with self.assertRaisesRegex(Refusal,
+                                        "RECEIPT_CLAIM_OR_TYPE_DRIFT"):
+                verify_receipt_file(altered)
+            self.assertEqual(verify_receipt_file(original)["classification"],
+                             json.loads(EXPECTED_RECEIPT_JSON)["classification"])
 
     def test_finite_pi_compare_budget_is_typed_nontruth(self):
         from unittest.mock import patch
@@ -495,6 +784,10 @@ def main():
     p.add_argument("--self-test", action="store_true")
     args = p.parse_args()
     if args.contract:
+        # Ordinary producing runs must reject corrupted companion receipts,
+        # even when --self-test is not requested.
+        verify_receipt_file(
+            HERE / "pb00701-v6-affine-h1-knot-transfer-20261107.json")
         print(json.dumps(original_census_and_anchors(), sort_keys=True))
     if args.self_test:
         suite = unittest.defaultTestLoader.loadTestsFromTestCase(Tests)
