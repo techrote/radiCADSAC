@@ -163,8 +163,11 @@ def certify_identical_law_knot(left, right):
     base.require(whole["ordered_interior_events"] == expected_events and
                  whole["ordered_signed_open_regions"] == expected_regions,
                  "SOURCE_COMPOSITION_CONTRADICTION")
-    whole["status"] = "COMPLETE_RESTRICTED_SAME_LAW_TWO_SPAN_KNOT"
-    whole["true_source_knot"] = left["parameter_hi"]
+    # Matching laws and adjacent intervals prove a mathematical join, NOT an
+    # original B-spline knot. A caller can fabricate an octant-aligned split.
+    # Only a separate hash-pinned source/knot witness may upgrade this label.
+    whole["status"] = "COMPLETE_RESTRICTED_SAME_LAW_TWO_SPAN_JOIN"
+    whole["unverified_same_law_join"] = left["parameter_hi"]
     whole["constituent_span_sha256"] = [
         a["span_spec_sha256"], b["span_spec_sha256"]]
     return whole
@@ -209,6 +212,14 @@ def original_v6_contract():
                     lo="0", hi="1")
     b = {**a, "parameter_lo": "1", "parameter_hi": "2"}
     result = certify_identical_law_knot(a, b)
+    # The exact frozen original spec above proves the true degree-zero
+    # B-spline knot is 1. The generic same-law join alone does not.
+    base.require(result["unverified_same_law_join"] == "1",
+                 "V6_TRUE_KNOT_IDENTITY")
+    result["true_source_knot"] = "1"
+    result["status"] = "COMPLETE_RESTRICTED_SAME_LAW_TWO_SPAN_KNOT"
+    result["verified_original_source_sha256"] = V6_SHA
+    result["verified_original_row_sha256"] = V6_ROW
     base.require(
         result["ordered_interior_events"] == [{
             "exact_source_time": "1", "multiplicity": 1,
@@ -236,6 +247,37 @@ class Tests(unittest.TestCase):
         out = original_v6_contract()["same_law_two_span_certificate"]
         self.assertEqual(out["ordered_interior_events"][0]["exact_source_time"], "1")
         self.assertEqual(out["ordered_signed_open_regions"], ["POSITIVE","NEGATIVE"])
+
+    def test_fabricated_original_v6_law_splits_are_not_true_knots(self):
+        # V6 original B-spline knots [0,1,2] are verified in the separate
+        # original_v6_contract() custody check. Neither 1/2 nor 3/2 is a
+        # genuine knot, although both are valid octant-aligned time cuts.
+        original = original_v6_contract()["same_law_two_span_certificate"]
+        self.assertEqual(original["true_source_knot"], "1")
+        self.assertEqual(original["verified_original_source_sha256"], V6_SHA)
+        self.assertEqual(original["verified_original_row_sha256"], V6_ROW)
+        self.assertEqual(original["ordered_interior_events"], [{
+            "exact_source_time": "1", "multiplicity": 1,
+            "event_kind": "SIMPLE_CROSSING"}])
+        for fake in ("1/2", "3/2"):
+            a = base.source(h="0", c="1", s="0", off="0",
+                            rate="1/4", lo="0", hi=fake)
+            b = {**a, "parameter_lo": fake, "parameter_hi": "2"}
+            unverified = certify_identical_law_knot(a, b)
+            self.assertEqual(unverified["status"],
+                             "COMPLETE_RESTRICTED_SAME_LAW_TWO_SPAN_JOIN")
+            self.assertEqual(unverified["unverified_same_law_join"], fake)
+            self.assertNotIn("true_source_knot", unverified)
+            self.assertNotIn("verified_original_source_sha256", unverified)
+            self.assertEqual(unverified["ordered_interior_events"],
+                             original["ordered_interior_events"])
+            self.assertEqual(unverified["ordered_signed_open_regions"],
+                             ["POSITIVE", "NEGATIVE"])
+        rows = base.checked_json(base.CORPUS, base.V54_BLOB)["cases"]
+        source_spec = next(r["spec"] for r in rows if r["id"] == V6_ID)
+        self.assertTrue(all(fake not in src["knots"]
+                            for src in source_spec["cos_splines"].values()
+                            for fake in ("1/2", "3/2")))
 
     def test_simple_zero_at_left_endpoint_has_one_interior_region(self):
         out = certify_nodes(base.source(h="0",c="1",s="0",off="0",
