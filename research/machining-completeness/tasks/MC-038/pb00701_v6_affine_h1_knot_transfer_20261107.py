@@ -753,6 +753,20 @@ class Tests(unittest.TestCase):
                 with self.assertRaises(Refusal):
                     verify_receipt_bytes(raw)
 
+    def test_producing_contract_validates_real_on_disk_receipt(self):
+        import tempfile
+        original = HERE / "pb00701-v6-affine-h1-knot-transfer-20261107.json"
+        with tempfile.TemporaryDirectory() as td:
+            altered = Path(td) / original.name
+            obj = json.loads(EXPECTED_RECEIPT_JSON)
+            obj["classification"][0]["signs"] = ["NEGATIVE", "POSITIVE"]
+            altered.write_bytes(canonical(obj))
+            with self.assertRaisesRegex(Refusal,
+                                        "RECEIPT_CLAIM_OR_TYPE_DRIFT"):
+                verify_receipt_file(altered)
+            self.assertEqual(verify_receipt_file(original)["classification"],
+                             json.loads(EXPECTED_RECEIPT_JSON)["classification"])
+
     def test_finite_pi_compare_budget_is_typed_nontruth(self):
         from unittest.mock import patch
         low,high=halfpi_bounds(1)
@@ -770,6 +784,10 @@ def main():
     p.add_argument("--self-test", action="store_true")
     args = p.parse_args()
     if args.contract:
+        # Ordinary producing runs must reject corrupted companion receipts,
+        # even when --self-test is not requested.
+        verify_receipt_file(
+            HERE / "pb00701-v6-affine-h1-knot-transfer-20261107.json")
         print(json.dumps(original_census_and_anchors(), sort_keys=True))
     if args.self_test:
         suite = unittest.defaultTestLoader.loadTestsFromTestCase(Tests)
