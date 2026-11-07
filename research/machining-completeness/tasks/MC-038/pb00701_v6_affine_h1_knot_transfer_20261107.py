@@ -363,8 +363,12 @@ class Tests(unittest.TestCase):
 
     def test_pi_threshold_enclosures_both_sides(self):
         low, high = halfpi_bounds(8)
-        a = certify_affine_h1(str(Q(1,2)+low))
-        b = certify_affine_h1(str(Q(1,2)+high))
+        scale = 2**160
+        below = Q((low.numerator*scale)//low.denominator,scale)
+        above = Q((high.numerator*scale)//high.denominator+1,scale)
+        self.assertTrue(below < low < high < above)
+        a = certify_affine_h1(str(Q(1,2)+below))
+        b = certify_affine_h1(str(Q(1,2)+above))
         self.assertEqual(a["physical_zero_count_including_exterior"], 2)
         self.assertEqual(b["physical_zero_count_including_exterior"], 1)
 
