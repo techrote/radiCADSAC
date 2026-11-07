@@ -208,12 +208,17 @@ def certify(spec):
                            "TANGENCY" if order == 2 else "SIMPLE_CROSSING"})
             if order == 1:
                 current = -current
+            # Physical open regions are separated by actual zero events, not
+            # by arbitrary octant grid nodes. A tangency splits two open
+            # components of the same sign; a root-free octant splits none.
             regions.append("POSITIVE" if current > 0 else "NEGATIVE")
         require(current == signs[i+1], "SIGNED_CELL_TRANSFER_CONTRADICTION")
         details.append({"cell": [str(nodes[i]), str(nodes[i+1])],
                         "endpoint_signs": [signs[i], signs[i+1]],
                         "derivative_signs": [derivatives[i], derivatives[i+1]],
                         "method": method, "root_count": count})
+    require(len(regions) == len(events) + 1,
+            "EVENT_SIGN_REGION_PARTITION_INCONSISTENT")
     return {"status": "COMPLETE_RESTRICTED_CONSTANT_H0_H1_OCTANT_SPAN",
             "evidence_class": "DETERMINISTIC_MODEL",
             "span_spec_sha256": hashlib.sha256(canonical(spec)).hexdigest(),
@@ -328,6 +333,8 @@ class Tests(unittest.TestCase):
         out = certify(source(h="3/4"))
         self.assertEqual(out["root_count"], 0)
         self.assertEqual(out["node_signs"], ["POSITIVE"]*3)
+        self.assertEqual(out["ordered_events"], [])
+        self.assertEqual(out["ordered_signed_regions"], ["POSITIVE"])
 
     def test_exact_irrational_phase_order_two_tangency(self):
         out = certify(source(h="1", c="-3/5", s="-4/5",
@@ -355,6 +362,54 @@ class Tests(unittest.TestCase):
         high = certify({**close, "h0": str(Q(1)+eps)})
         self.assertEqual(high["root_count"], 0)
         self.assertEqual(high["ordered_signed_regions"], ["POSITIVE"])
+
+    def test_frozen_v12_actual_tail_event_partition_not_octant_partition(self):
+        # Actual immutable V12 H0=0 tail, NOT a prospective modification.
+        # The source-wide B-spline keeps its true knot at t=1 and its
+        # original span [1,2] has C=2/3, S=-1/3 and beta=t/4.
+        rows = checked_json(CORPUS, V54_BLOB)["cases"]
+        row = next(r for r in rows if r["id"] == V12)
+        require(hashlib.sha256(canonical(row["spec"])).hexdigest() == SOURCE_SHA
+                and hashlib.sha256(canonical(row)).hexdigest() == ROW_SHA,
+                "ORIGINAL_V12_PROVENANCE")
+        s = row["spec"]
+        self.assertEqual((s["parameter_lo"], s["parameter_hi"],
+                          s["phase_turn_offset"], s["phase_turn_rate"]),
+                         ("0", "2", "0", "1/4"))
+        self.assertEqual(s["cos_splines"]["1"]["knots"],
+                         ["0","0","1","1","2","2"])
+        self.assertEqual(s["cos_splines"]["1"]["controls"][2:], ["2/3","2/3"])
+        self.assertEqual(s["sin_splines"]["1"]["controls"][2:], ["-1/3","-1/3"])
+        tail = source(h="0", c="2/3", s="-1/3",
+                      off="0", rate="1/4", lo="1", hi="2")
+        actual = certify(tail)
+        self.assertEqual(actual["octant_nodes"], ["1","3/2","2"])
+        self.assertEqual(actual["node_signs"], ["NEGATIVE"]*3)
+        self.assertEqual(actual["root_count"], 0)
+        self.assertEqual(actual["ordered_events"], [])
+        # Before repair this was THREE duplicate labels despite zero events.
+        self.assertEqual(actual["ordered_signed_regions"], ["NEGATIVE"])
+        self.assertEqual(len(actual["cell_certificates"]), 2)
+        # Prospective H0 offset: one simple event and one root-free cell.
+        one = certify({**tail, "h0": "1/2"})
+        self.assertEqual(one["root_count"], 1)
+        self.assertEqual(one["ordered_events"][0]["strict_rational_bracket"],
+                         ["1","3/2"])
+        self.assertEqual(one["ordered_signed_regions"],
+                         ["POSITIVE","NEGATIVE"])
+        self.assertEqual(len(one["cell_certificates"]), 2)
+        # A strict order-two zero separates two OPEN sign components even
+        # though their signs match. A further root-free octant adds none.
+        tangent = certify(source(h="1", c="-3/5", s="-4/5",
+                                 off="1/8", rate="1/8", lo="0", hi="2"))
+        self.assertEqual((tangent["root_count"],
+                          tangent["ordered_events"][0]["multiplicity"]), (1,2))
+        self.assertEqual(tangent["ordered_signed_regions"],
+                         ["POSITIVE","POSITIVE"])
+        self.assertEqual(len(tangent["cell_certificates"]), 2)
+        for out in (actual, one, tangent, certify(source(h="3/4"))):
+            self.assertEqual(len(out["ordered_signed_regions"]),
+                             len(out["ordered_events"]) + 1)
 
     def test_negative_rate_with_real_simple_crossing(self):
         out = certify(source(h="0", c="1", s="1/2",
