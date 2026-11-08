@@ -80,7 +80,7 @@ def read_bounded(path, budget):
 def frozen(path, blob):
     raw = read_bounded(path, MAX_FILE_BYTES)
     require(len(raw) <= MAX_FILE_BYTES, "FROZEN_FILE_TOO_LARGE")
-    actual = hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\\0" + raw).hexdigest()
+    actual = hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest()
     require(actual == blob, "FROZEN_GIT_BLOB_DRIFT")
     return parse_bounded(raw, MAX_FILE_BYTES)
 
