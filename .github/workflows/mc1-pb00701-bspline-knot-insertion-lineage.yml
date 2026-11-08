@@ -1,0 +1,71 @@
+name: MC-038 exact B-spline insertion lineage and event preservation
+
+on:
+  push:
+    branches:
+      - research/mc038-bspline-knot-insertion-lineage-20261108
+  pull_request:
+    paths:
+      - research/machining-completeness/tasks/MC-038/pb00701_bspline_knot_insertion_lineage_20261108.py
+      - research/machining-completeness/tasks/MC-038/pb00701-bspline-knot-insertion-lineage-20261108.md
+      - .github/workflows/mc1-pb00701-bspline-knot-insertion-lineage.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-spline-insertion-and-parent-proofs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Require exact committed source head
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Exact insertion source lineage and independent tests
+        run: python3 research/machining-completeness/tasks/MC-038/pb00701_bspline_knot_insertion_lineage_20261108.py --contract --self-test
+      - name: Parent structural spline and exact physical proof
+        run: python3 research/machining-completeness/tasks/MC-038/pb00701_genuine_bspline_knot_bridge_20261108.py --contract --self-test
+      - name: Inherited order-two and first-order boundary proof
+        run: |
+          python3 research/machining-completeness/tasks/MC-038/pb00701_generic_second_order_boundary_20261108.py --contract --self-test
+          python3 research/machining-completeness/tasks/MC-038/pb00701_generic_zero_knot_extension_20261108.py --contract --self-test
+          python3 research/machining-completeness/tasks/MC-038/pb00701_generic_interval_events_20261108.py --contract --self-test
+
+  complete-frozen-original-reconciliation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Require exact committed source head
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Recompute frozen V54 and V2 producing evidence
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_evidence_reconciliation_v2.py --contract
+
+  mc1-authority-static:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check exact committed source head
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Validate MC-1 static programme invariants
+        run: python3 tools/validate_machining_completeness.py
