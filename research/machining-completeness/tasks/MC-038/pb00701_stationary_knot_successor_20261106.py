@@ -22,6 +22,8 @@ CORPUS = HERE / "pb00701-finite-owner-corpus-v54.json"
 V2 = HERE / "pb00701-post-v54-evidence-reconciliation-v2.json"
 CHILD = HERE / "verify_pb00701_stationary_polynomial_order.py"
 RECEIPT = HERE / "pb00701-stationary-knot-successor-20261106.json"
+PRIOR_PATH = HERE / "pb00701_stationary_knot_composition.py"
+PRIOR_BLOB = "d0fbe7e189066fd9398958f1b1814b8147a6a64e"
 CORPUS_BLOB = "5841c331579489b25caef38cd412bdbf286f9134"
 V2_BLOB = "e52d3baf3692a011cf86234eeaa992ef407d99fd"
 CHILD_BLOB = "0954c5e1ad63ec1c8dd2acb3202882650b02c516"
@@ -291,9 +293,107 @@ def load_baseline():
     return cases, v2
 
 
+def prior_compositor_proofs():
+    """Replay the preexisting generic source compositor, not a self-asserted flag.
+
+    Source-matched equivalence is assessed against independently produced
+    existing-main output, with exact pinned code and immutable source custody.
+    """
+    read_pinned(PRIOR_PATH, PRIOR_BLOB, 60000)
+    spec = importlib.util.spec_from_file_location(
+        "pb00701_preexisting_stationary_compositor", PRIOR_PATH)
+    module = importlib.util.module_from_spec(spec)
+    require(spec.loader is not None, "PRIOR_COMPOSITOR_LOADER")
+    spec.loader.exec_module(module)
+    # The source-bound prior verifier explicitly checks the immutable V54,
+    # authority and complete 26-operation domain before replay.
+    rows = module.replay_frozen_stationary_cases(prover=P)
+    require(git_blob(read_pinned(PRIOR_PATH, PRIOR_BLOB, 60000)) == PRIOR_BLOB,
+            "PRIOR_COMPOSITOR_POST_REPLAY_DRIFT")
+    by_id = {row["source_case_id"]: row for row in rows}
+    require(len(by_id) == len(rows) and
+            set(SOURCE_SHA256).issubset(by_id), "PRIOR_SOURCE_IDENTITY_SET")
+    return by_id
+
+
+def verify_prior_match(case_id, expected_sha, physical, prior):
+    """Compare source-bound exact event, signs, and authentic knot semantics."""
+    require(prior["original_source_sha256"] == expected_sha and
+            prior["source_span_count"] == 2 and
+            prior["distinct_open_physical_zeros"] == 1,
+            "PRIOR_SOURCE_OR_ROOT_COUNT_DISAGREEMENT")
+    events = prior["ordered_physical_zero_events"]
+    ours = physical["ordered_source_events"]
+    require(len(events) == len(ours) == 1, "PRIOR_EVENT_NUMBER_DISAGREEMENT")
+    e, o = events[0], ours[0]
+    require(e["coordinate_kind"] == "EXACT_RATIONAL" and
+            e["coordinate"] == o["source_value"] == "1/2" and
+            e["multiplicity"] == o["multiplicity"] == 1 and
+            e["event_kind"] == o["event_kind"] == "CROSSING" and
+            e["left_sign"] == "NEGATIVE" and
+            e["right_sign"] == "POSITIVE" and
+            o["left_sign"] == -1 and o["right_sign"] == 1,
+            "PRIOR_EVENT_OR_ORIENTATION_DISAGREEMENT")
+    require([cell["sign"] for cell in prior["maximal_open_sign_cells"]] ==
+            [cell["sign"] for cell in physical["maximal_nonzero_cells"]] ==
+            ["NEGATIVE", "POSITIVE"], "PRIOR_SIGN_CELLS_DISAGREEMENT")
+    knots = prior["true_source_knots"]
+    require(len(knots) == 1 and
+            knots[0]["position"] == "1" and
+            knots[0]["kind"] == "NONZERO_KNOT_NOT_ROOT" and
+            knots[0]["left_inward_sign"] ==
+            knots[0]["right_inward_sign"] == "POSITIVE" and
+            physical["source_knot"]["relation"] == "POSITIVE" and
+            physical["source_knot"]["source_root"] is False,
+            "PRIOR_SOURCE_KNOT_DISAGREEMENT")
+    return True
+
+
+def validate_nonpromotion_receipt(receipt):
+    """No novelty credit may be inferred from two already-admitted sources."""
+    expected_census = {
+        "frozen_original_source_count": 121,
+        "historical_v54_refusals_before": 20,
+        "historical_v54_missing_ordered_before": 30,
+        "complete_preexisting_v2_source_witnesses": 50,
+        "successor_candidate_newly_ordered_ids": [],
+        "successor_candidate_missing_ordered_after": 30,
+        "successor_candidate_route_refusals_after": 20,
+        "frozen_v54_dispositions_modified": False,
+        "required_pb007_obligations_discharged": 0,
+        "mc_b_or_mc1_accepted": False,
+        "preexisting_signed_source_ids": sorted(SOURCE_SHA256),
+        "preexisting_generic_compositor_matches": 2,
+        "new_generic_stationary_owner_consumer_interface_claimed": False,
+        "new_unique_historical_ordered_premises": 0
+    }
+    require(type(receipt) is dict and
+            receipt.get("matched_census") == expected_census and
+            set(receipt.get("matched_census", {})) == set(expected_census) and
+            receipt.get("preexisting_generic_stationary_compositor_git_blob")
+            == PRIOR_BLOB and
+            type(receipt["matched_census"]["successor_candidate_missing_ordered_after"])
+            is int and
+            type(receipt["matched_census"]["new_unique_historical_ordered_premises"])
+            is int and
+            type(receipt["matched_census"]["preexisting_generic_compositor_matches"])
+            is int and
+            type(receipt["matched_census"]["mc_b_or_mc1_accepted"]) is bool,
+            "NONNOVELTY_RECEIPT_DRIFT")
+    rows = receipt.get("case_results")
+    require(type(rows) is list and len(rows) == 2 and
+            {row.get("case_id") for row in rows} == set(SOURCE_SHA256) and
+            all(row.get("successor_candidate") ==
+                "ALTERNATE_SOURCE_ORDERED_SIGN_DERIVATION" and
+                row.get("preexisting_generic_compositor_matched") is True
+                for row in rows), "NONNOVELTY_CASE_LABEL_DRIFT")
+    return True
+
+
 def source_case_outputs():
     cases, v2 = load_baseline()
     originals = {x["id"]: x for x in cases}
+    prior = prior_compositor_proofs()
     outputs = []
     for case_id, pinned_sha in SOURCE_SHA256.items():
         case = originals[case_id]
@@ -318,11 +418,14 @@ def source_case_outputs():
                 ["NEGATIVE", "POSITIVE"], "HISTORICAL_SIGN_CELL_MISMATCH")
         require(cert["child_certificate"]["historical_span_count"] == 2,
                 "HISTORICAL_CHILD_COVERAGE_MISSING")
+        require(verify_prior_match(case_id, pinned_sha, parent, prior[case_id]),
+                "UNVERIFIED_PREEXISTING_COMPOSITOR_MATCH")
         outputs.append({
             "case_id": case_id, "source_sha256": pinned_sha,
             "historical_v54_disposition": case["expected"]["v54_disposition"],
-            "successor_candidate": "BOUNDED_SOURCE_ORDERED_SIGN_TRANSFER_CANDIDATE",
+            "successor_candidate": "ALTERNATE_SOURCE_ORDERED_SIGN_DERIVATION",
             "physical": parent,
+            "preexisting_generic_compositor_matched": True,
         })
     require(set(x["case_id"] for x in v2["source_cases"]).issuperset(SOURCE_SHA256),
             "EXISTING_SOURCE_SPECIFIC_WITNESSES_NOT_PRESERVED")
@@ -332,20 +435,26 @@ def source_case_outputs():
         "frozen_v54_corpus_git_blob": CORPUS_BLOB,
         "frozen_v2_registry_git_blob": V2_BLOB,
         "stationary_child_verifier_git_blob": CHILD_BLOB,
+        "preexisting_generic_stationary_compositor_git_blob": PRIOR_BLOB,
         "case_results": outputs,
         "matched_census": {
             "frozen_original_source_count": 121,
             "historical_v54_refusals_before": 20,
             "historical_v54_missing_ordered_before": 30,
             "complete_preexisting_v2_source_witnesses": 50,
-            "successor_candidate_newly_ordered_ids": sorted(SOURCE_SHA256),
-            "successor_candidate_missing_ordered_after": 28,
+            "successor_candidate_newly_ordered_ids": [],
+            "successor_candidate_missing_ordered_after": 30,
             "successor_candidate_route_refusals_after": 20,
             "frozen_v54_dispositions_modified": False,
             "required_pb007_obligations_discharged": 0,
             "mc_b_or_mc1_accepted": False,
+            "preexisting_signed_source_ids": sorted(SOURCE_SHA256),
+            "preexisting_generic_compositor_matches": 2,
+            "new_generic_stationary_owner_consumer_interface_claimed": False,
+            "new_unique_historical_ordered_premises": 0,
         },
     }
+    validate_nonpromotion_receipt(receipt)
     return receipt
 
 
@@ -491,7 +600,22 @@ def self_test():
     # No historical failure or source witness is ever rewritten by the test.
     receipt = source_case_outputs()
     assert len(receipt["case_results"]) == 2
-    assert receipt["matched_census"]["successor_candidate_missing_ordered_after"] == 28
+    assert validate_nonpromotion_receipt(receipt)
+    assert receipt["matched_census"]["successor_candidate_missing_ordered_after"] == 30
+    assert receipt["matched_census"]["successor_candidate_newly_ordered_ids"] == []
+    assert receipt["matched_census"]["new_unique_historical_ordered_premises"] == 0
+    for mutation in ("missing", "new_id", "truth", "preexisting"):
+        bad = deepcopy(receipt)
+        if mutation == "missing":
+            bad["matched_census"]["successor_candidate_missing_ordered_after"] = 28
+        elif mutation == "new_id":
+            bad["matched_census"]["successor_candidate_newly_ordered_ids"] = [
+                next(iter(SOURCE_SHA256))]
+        elif mutation == "truth":
+            bad["matched_census"]["mc_b_or_mc1_accepted"] = True
+        else:
+            bad["case_results"][0]["preexisting_generic_compositor_matched"] = False
+        expect_refusal(lambda bad=bad: validate_nonpromotion_receipt(bad))
     print("PASS: two frozen originals, full source/knot/sign order and adversarial controls")
 
 
@@ -507,7 +631,10 @@ def main():
         receipt = source_case_outputs()
         if args.contract:
             expected = json.loads(read_pinned(RECEIPT, RECEIPT_BLOB, 20000))
-            require(receipt == expected, "MACHINE_RECEIPT_REPLAY_MISMATCH")
+            validate_nonpromotion_receipt(expected)
+            require(json.dumps(receipt, sort_keys=True, separators=(",", ":")) ==
+                    json.dumps(expected, sort_keys=True, separators=(",", ":")),
+                    "MACHINE_RECEIPT_REPLAY_MISMATCH")
         if args.report:
             print(json.dumps(receipt, indent=2, sort_keys=True))
         elif not args.self_test:
@@ -519,7 +646,7 @@ def main():
 
 # The receipt is separately checked by exact content, not permitted to
 # establish truth without source replay. Filled at candidate publication.
-RECEIPT_BLOB = "d7ee51ed09bc317f29177286dbd9b1e827c8bd10"
+RECEIPT_BLOB = "7b613448510b5465aeec44a1bf8bc3d289b84a16"
 
 
 if __name__ == "__main__":
