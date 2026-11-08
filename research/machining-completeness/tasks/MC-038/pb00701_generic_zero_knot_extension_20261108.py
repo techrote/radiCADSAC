@@ -239,13 +239,13 @@ class Tests(unittest.TestCase):
 
     def test_non_quarter_turn_exact_zero_refuses(self):
         doc = {"phase_offset_pi": "1/3", "phase_slope_pi": "1/2",
-               "pieces": [piece("0", "1", ("-1", "1"))]}
+               "pieces": [piece("0", "1", ("-1", "1"), c1=("0",))]}
         with self.assertRaisesRegex(Nontruth, "NON_QUARTER_TURN"):
             certify(core.parse_source(doc))
 
     def test_flat_derivative_tangency_refuses(self):
         doc = {"phase_offset_pi": "0", "phase_slope_pi": "1/2",
-               "pieces": [piece("0", "1", ("0", "0", "1"))]}
+               "pieces": [piece("0", "1", ("0", "0", "1"), c1=("0",))]}
         with self.assertRaises(Nontruth):
             certify(core.parse_source(doc))
 
