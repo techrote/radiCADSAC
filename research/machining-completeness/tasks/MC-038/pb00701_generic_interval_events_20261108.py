@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+from pathlib import Path
 from dataclasses import dataclass
 from fractions import Fraction as Q
 from functools import lru_cache
@@ -389,6 +390,106 @@ SAMPLES = {
 }
 
 
+# Authentication is deliberately independent of any source-specific
+# uniqueness theorem. No frozen source file is ever modified.
+HERE = Path(__file__).resolve().parent
+V44_ID = "harvested:verify_pb00701_v44:ffaea08e30c9"
+V44_SPEC_SHA256 = "d3b3a90024ea283dfd96811b8fc2b66ceff621b3b48defc44c77f85557adbba2"
+V44_ROW_SHA256 = "7423adadf8c52ff28d47d9f63effbc5a2a7a630bdaf7efe6f8eeb1d2a85c5600"
+FROZEN_V54_BLOB = "5841c331579489b25caef38cd412bdbf286f9134"
+FROZEN_V2_BLOB = "e52d3baf3692a011cf86234eeaa992ef407d99fd"
+
+
+def frozen_json(name, blob_sha1, byte_limit):
+    path = HERE / name
+    try:
+        with path.open("rb") as stream:
+            raw = stream.read(byte_limit + 1)
+    except OSError as exc:
+        raise Nontruth("FROZEN_FILE_UNAVAILABLE") from exc
+    need(len(raw) <= byte_limit, "FROZEN_BYTE_BUDGET")
+    digest = hashlib.sha1(
+        b"blob " + str(len(raw)).encode("ascii") + b"\0" + raw).hexdigest()
+    need(digest == blob_sha1, "FROZEN_BLOB_IDENTITY_DRIFT")
+    try:
+        return json.loads(raw.decode("utf-8"))
+    except (UnicodeError, ValueError, RecursionError) as exc:
+        raise Nontruth("FROZEN_JSON_INVALID") from exc
+
+
+def frozen_quadratic(poly):
+    """Exact clamped quadratic Bernstein/B-spline -> global t polynomial."""
+    need(type(poly) is dict and poly.get("degree") == 2 and
+         poly.get("knots") == ["0", "0", "0", "1", "1", "1"] and
+         type(poly.get("controls")) is list and
+         len(poly["controls"]) == 3, "ORIGINAL_QUADRATIC_SPLINE_GRAMMAR")
+    c0, c1, c2 = map(fraction, poly["controls"])
+    return [str(c0), str(2*(c1-c0)), str(c0-2*c1+c2)]
+
+
+def verify_authenticated_v44():
+    """Rebuild the model's exact physical coefficients from frozen original."""
+    corpus = frozen_json("pb00701-finite-owner-corpus-v54.json",
+                         FROZEN_V54_BLOB, 240000)
+    v2 = frozen_json("pb00701-post-v54-evidence-reconciliation-v2.json",
+                     FROZEN_V2_BLOB, 190000)
+    matches = [r for r in corpus["cases"] if r.get("id") == V44_ID]
+    need(len(matches) == 1, "ORIGINAL_V44_ID_UNIQUE")
+    row = matches[0]
+    spec = row["spec"]
+    need(hashlib.sha256(canonical(spec)).hexdigest() == V44_SPEC_SHA256 and
+         hashlib.sha256(canonical(row)).hexdigest() == V44_ROW_SHA256,
+         "ORIGINAL_V44_SOURCE_HASH")
+    need(spec.get("grammar") == "RATIONAL_BSPLINE_MODULATED_TRIG_AFFINE_PHASE"
+         and spec.get("source_parameter_id") == "pb00701-v44-algebraic-orientation"
+         and (spec.get("parameter_lo"), spec.get("parameter_hi")) == ("0", "1")
+         and set(spec.get("cos_splines", {})) == {"1", "2"}
+         and set(spec.get("sin_splines", {})) == {"1"},
+         "ORIGINAL_V44_SOURCE_GRAMMAR")
+    h2 = spec["cos_splines"]["2"]
+    need(h2 == {"degree": 0, "knots": ["0", "1"],
+                "controls": ["1/100000000"]}, "ORIGINAL_V44_NONZERO_H2")
+    doc = {
+        "phase_offset_pi": str(2*fraction(spec["phase_turn_offset"])),
+        "phase_slope_pi": str(2*fraction(spec["phase_turn_rate"])),
+        "pieces": [{
+            "lo": spec["parameter_lo"], "hi": spec["parameter_hi"],
+            "H0": ["0"], "C1": frozen_quadratic(spec["cos_splines"]["1"]),
+            "S1": frozen_quadratic(spec["sin_splines"]["1"]),
+            "C2": [h2["controls"][0]], "S2": ["0"]
+        }]
+    }
+    need(doc == SAMPLES["v44_shape"], "SOURCE_CONVERSION_NOT_EXACT")
+    witnesses = [r for r in v2["source_cases"] if r.get("case_id") == V44_ID]
+    need(len(witnesses) == 1 and
+         witnesses[0].get("source_sha256") == V44_SPEC_SHA256 and
+         witnesses[0].get("original_row_sha256") == V44_ROW_SHA256 and
+         witnesses[0].get("registered_evidence_level") ==
+         "COMPLETE_SOURCE_SPECIFIC" and
+         row["expected"]["v54_disposition"] == "BLOCKED",
+         "EXISTING_ORIGINAL_EVIDENCE_CUSTODY")
+    source = parse_source(doc)
+    receipt = classify(source, bits=12)
+    need(receipt["physical_root_count"] == 1,
+         "AUTHENTIC_V44_EVENT_COUNT")
+    root = next(r for r in receipt["signed_partition"]
+                if r["kind"] == "ONE_SIMPLE_CROSSING")
+    # The previously published exact V44 40-bit bracket is a separate
+    # existing result: use it only to challenge this complete partition.
+    previous_lo = Q(317223013097, 549755813888)
+    previous_hi = Q(634446026195, 1099511627776)
+    need(fraction(root["lo"]) < previous_lo < previous_hi <
+         fraction(root["hi"]), "V44_PRIOR_BRACKET_DISAGREEMENT")
+    return {
+        "case_id": V44_ID, "source_sha256": V44_SPEC_SHA256,
+        "source_row_sha256": V44_ROW_SHA256,
+        "existing_v2_complete": True, "new_historical_closures": [],
+        "required_pb_po_discharges": 0,
+        "certificate": receipt
+    }
+
+
+
 class Tests(unittest.TestCase):
     def test_exact_machin_and_trig_enclosures(self):
         for n in (6, 10, 16):
@@ -502,6 +603,17 @@ class Tests(unittest.TestCase):
         with self.assertRaisesRegex(Nontruth, "POLYNOMIAL_GRAMMAR"):
             parse_source(mutant)
 
+    def test_original_v44_frozen_blob_custody_and_generic_certificate(self):
+        # The historical corpus is guaranteed in repository CI, but is not
+        # copied into a standalone local model-only sandbox.
+        if not (HERE / "pb00701-finite-owner-corpus-v54.json").exists():
+            self.skipTest("frozen original corpus not present outside repository")
+        result = verify_authenticated_v44()
+        self.assertEqual(result["case_id"], V44_ID)
+        self.assertEqual(result["certificate"]["physical_root_count"], 1)
+        self.assertEqual(result["new_historical_closures"], [])
+        self.assertEqual(result["required_pb_po_discharges"], 0)
+
     def test_nonpromotion_and_source_identity(self):
         src = parse_source(SAMPLES["v44_shape"])
         receipt = classify(src, bits=8)
@@ -520,7 +632,14 @@ def main():
     p.add_argument("--self-test", action="store_true")
     args = p.parse_args()
     if args.contract:
-        # No external solver or historical evidence is consumed by this model.
+        # The producing contract must also authenticate the original frozen
+        # source before it may describe its V44-shaped test as source-matched.
+        authenticated = verify_authenticated_v44()
+        print(json.dumps({"case": "authenticated_frozen_v44",
+                          "original_case_id": authenticated["case_id"],
+                          "source_sha256": authenticated["source_sha256"],
+                          "roots": authenticated["certificate"]["physical_root_count"],
+                          "new_historical_closures": []}, sort_keys=True))
         for name in SAMPLES:
             src = parse_source(SAMPLES[name])
             cert = classify(src, bits=9)
