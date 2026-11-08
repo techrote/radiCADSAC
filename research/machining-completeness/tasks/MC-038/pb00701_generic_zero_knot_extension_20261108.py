@@ -86,10 +86,28 @@ def guard(source, piece, t, side):
 
 
 def one_piece(source, piece, lo, hi):
-    """Only the certified knot-free interior; preserve original identity."""
-    need(piece.lo <= lo < hi <= piece.hi, "INTERIOR_EMPTY_OR_OUTSIDE")
-    return core.Source(source.phase_offset, source.phase_slope,
-                       (core.Piece(lo, hi, piece.polys),), source.identity)
+    """Canonical, separately identifiable restriction of an authenticated source.
+
+    A child certificate must never advertise its parent's full-domain digest:
+    the certificate is COMPLETE only over this narrowed source domain.
+    """
+    need(piece in source.pieces and piece.lo <= lo < hi <= piece.hi,
+         "INTERIOR_EMPTY_OR_OUTSIDE")
+    document = {
+        "phase_offset_pi": str(source.phase_offset),
+        "phase_slope_pi": str(source.phase_slope),
+        "pieces": [{
+            "lo": str(lo), "hi": str(hi),
+            **{key: [str(c) for c in coeff]
+               for key, coeff in zip(core.KEYS, piece.polys)}
+        }]
+    }
+    child = core.parse_source(document)
+    need(child.identity != source.identity or
+         (len(source.pieces) == 1 and
+          piece.lo == lo and piece.hi == hi),
+         "SUBSOURCE_IDENTITY_ALIAS")
+    return child
 
 
 def _produce(source, bits):
@@ -108,6 +126,7 @@ def _produce(source, bits):
         certificate = core.classify(interior, bits=bits)
         interiors.append({"piece": i, "lo": str(a), "hi": str(b),
                           "left_guard": left, "right_guard": right,
+                          "child_source_sha256": interior.identity,
                           "certificate": certificate})
     events = []
     for i, state in enumerate(states):
@@ -164,18 +183,33 @@ def verify_extended(source, receipt):
          and len(receipt["interior_certificates"]) == len(source.pieces),
          "EXTENDED_RECEIPT_BUDGET")
     for index, row in enumerate(receipt["interior_certificates"]):
-        need(type(row) is dict and row.get("piece") == index
-             and type(row.get("piece")) is int, "INTERIOR_INDEX")
+        need(type(row) is dict and set(row) == {
+            "piece", "lo", "hi", "left_guard", "right_guard",
+            "child_source_sha256", "certificate"} and
+             type(row["piece"]) is int and row["piece"] == index,
+             "INTERIOR_FIELDS_OR_INDEX")
         p = source.pieces[index]
         a, b = core.fraction(row["lo"]), core.fraction(row["hi"])
         child = one_piece(source, p, a, b)
-        core.verify_certificate(child, row["certificate"])
+        need(type(row["child_source_sha256"]) is str and
+             row["child_source_sha256"] == child.identity,
+             "CHILD_SOURCE_IDENTITY_DRIFT")
+        # The parent #453 verifier assumes structurally well-formed JSON.
+        # Wrap malformed nested receipts as deterministic NONTRUTH.
+        try:
+            core.verify_certificate(child, row["certificate"])
+        except (KeyError, TypeError, IndexError, AttributeError,
+                OverflowError, RecursionError) as exc:
+            raise Nontruth("MALFORMED_CHILD_CERTIFICATE") from exc
     # A second construction pass checks every *original* knot/exterior
     # exact-zero identity, every certified sided derivative over its full
     # guard, every source-time gap, and the signed-event classification.
     expected = _produce(source, bits)
-    need(core.canonical(receipt) == core.canonical(expected),
-         "EXTENDED_RECEIPT_REPLAY_DRIFT")
+    try:
+        equivalent = core.canonical(receipt) == core.canonical(expected)
+    except (TypeError, ValueError, OverflowError, RecursionError) as exc:
+        raise Nontruth("EXTENDED_RECEIPT_NOT_CANONICAL_JSON") from exc
+    need(equivalent, "EXTENDED_RECEIPT_REPLAY_DRIFT")
     return True
 
 
@@ -308,6 +342,47 @@ class Tests(unittest.TestCase):
         for index, value in enumerate(bad):
             with self.subTest(index=index), self.assertRaises(Nontruth):
                 verify_extended(src, value)
+
+    def test_subsource_certificate_identity_binds_actual_domain(self):
+        source = core.parse_source(MOVING_KNOT)
+        result = certify(source)
+        rows = result["interior_certificates"]
+        child_ids = [r["child_source_sha256"] for r in rows]
+        self.assertEqual(len(set(child_ids)), len(rows))
+        self.assertTrue(all(digest != source.identity for digest in child_ids))
+        for index, row in enumerate(rows):
+            child = one_piece(source, source.pieces[index],
+                              core.fraction(row["lo"]), core.fraction(row["hi"]))
+            self.assertEqual(row["child_source_sha256"], child.identity)
+            self.assertEqual(row["certificate"]["source_sha256"], child.identity)
+            self.assertTrue(core.verify_certificate(child, row["certificate"]))
+            with self.assertRaisesRegex(Nontruth, "RECEIPT_PROVENANCE"):
+                core.verify_certificate(source, row["certificate"])
+        hostile = copy.deepcopy(result)
+        hostile["interior_certificates"][0]["child_source_sha256"] = source.identity
+        with self.assertRaisesRegex(Nontruth, "CHILD_SOURCE_IDENTITY"):
+            verify_extended(source, hostile)
+        hostile = copy.deepcopy(result)
+        hostile["interior_certificates"][0]["certificate"]["source_sha256"] = source.identity
+        with self.assertRaises(Nontruth):
+            verify_extended(source, hostile)
+
+    def test_malformed_nested_receipts_refuse_as_nontruth(self):
+        source = core.parse_source(TOUCH_KNOT)
+        original = certify(source)
+        variants = []
+        x = copy.deepcopy(original)
+        del x["interior_certificates"][0]["hi"]
+        variants.append(x)
+        x = copy.deepcopy(original)
+        x["interior_certificates"][0]["certificate"]["signed_partition"] = 17
+        variants.append(x)
+        x = copy.deepcopy(original)
+        x["boundary_events"] = [object()]
+        variants.append(x)
+        for index, hostile in enumerate(variants):
+            with self.subTest(index=index), self.assertRaises(Nontruth):
+                verify_extended(source, hostile)
 
     def test_existing_generic_and_frozen_v44_nonpromotion(self):
         authenticated = core.verify_authenticated_v44()
