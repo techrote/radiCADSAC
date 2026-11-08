@@ -1,0 +1,72 @@
+name: MC-038 V6 nonzero true-knot two physical roots
+
+on:
+  push:
+    branches:
+      - research/mc038-v6-nonzero-knot-two-roots-20261108
+    paths:
+      - research/machining-completeness/tasks/MC-038/pb00701_v6_nonzero_knot_two_roots_20261108.py
+      - research/machining-completeness/tasks/MC-038/pb00701-v6-nonzero-knot-two-roots-20261108.json
+      - research/machining-completeness/tasks/MC-038/pb00701-v6-nonzero-knot-two-roots-20261108.md
+      - .github/workflows/mc1-pb00701-v6-nonzero-knot-two-roots.yml
+  pull_request:
+    paths:
+      - research/machining-completeness/tasks/MC-038/pb00701_v6_nonzero_knot_two_roots_20261108.py
+      - research/machining-completeness/tasks/MC-038/pb00701-v6-nonzero-knot-two-roots-20261108.json
+      - research/machining-completeness/tasks/MC-038/pb00701-v6-nonzero-knot-two-roots-20261108.md
+      - .github/workflows/mc1-pb00701-v6-nonzero-knot-two-roots.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-nonzero-knot-root-theorem:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify literal head
+        run: |
+          echo "LITERAL_HEAD=$(git rev-parse HEAD)"
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Complete theorem, source custody, receipt and adversarial tests
+        run: python3 research/machining-completeness/tasks/MC-038/pb00701_v6_nonzero_knot_two_roots_20261108.py --contract --self-test
+
+  historical-v54-v2-reconciliation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify literal head
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Full original V54/V2 source producing replay
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_evidence_reconciliation_v2.py --contract
+
+  mc1-static-safety:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify literal head
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Static MC-1 programme qualification
+        run: python3 tools/validate_machining_completeness.py
