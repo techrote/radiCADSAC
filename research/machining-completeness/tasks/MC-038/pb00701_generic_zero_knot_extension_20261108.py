@@ -21,6 +21,23 @@ MAX_GUARD_DIVISOR = 256
 MAX_BOUNDARIES = core.MAX_PIECES + 1
 
 
+def authenticate_source(source):
+    """Rebuild the grammar and identity; a hand-forged Source is not a proof."""
+    need(type(source) is core.Source, "SOURCE_TYPE")
+    document = {
+        "phase_offset_pi": str(source.phase_offset),
+        "phase_slope_pi": str(source.phase_slope),
+        "pieces": [{
+            "lo": str(p.lo), "hi": str(p.hi),
+            **{key: [str(c) for c in coeff]
+               for key, coeff in zip(core.KEYS, p.polys)}
+        } for p in source.pieces]
+    }
+    need(core.parse_source(document) == source,
+         "SOURCE_IDENTITY_OR_CONTINUITY_DRIFT")
+    return True
+
+
 def physical_boundary_sign(source, index):
     """Exact zero/sign only at quarter-turns; otherwise enclose nonzero sign."""
     t = source.pieces[0].lo if index == 0 else source.pieces[index-1].hi
@@ -76,6 +93,7 @@ def one_piece(source, piece, lo, hi):
 
 
 def _produce(source, bits):
+    authenticate_source(source)
     need(type(bits) is int and 1 <= bits <= core.MAX_BITS, "BITS_BUDGET")
     need(1 <= len(source.pieces) <= core.MAX_PIECES, "PIECE_BUDGET")
     states = [physical_boundary_sign(source, i)[0]
@@ -130,6 +148,7 @@ def verify_extended(source, receipt):
     Strict canonical replay also makes type substitution, orphan guards,
     fabricated zero events and undisclosed modified partitions unacceptable.
     """
+    authenticate_source(source)
     need(type(receipt) is dict and set(receipt) == {
         "status", "evidence_class", "source_sha256",
         "target_binary_bits", "boundary_events",
@@ -254,6 +273,22 @@ class Tests(unittest.TestCase):
         doc["pieces"][1]["H0"][0] = "1/8"
         with self.assertRaisesRegex(Nontruth, "KNOT_COEFFICIENT_DISCONTINUITY"):
             core.parse_source(doc)
+
+    def test_hand_forged_source_identity_and_continuity_refuse(self):
+        source = core.parse_source(MOVING_KNOT)
+        fake = core.Source(source.phase_offset, source.phase_slope,
+                           source.pieces, "0"*64)
+        with self.assertRaisesRegex(Nontruth, "SOURCE_IDENTITY"):
+            certify(fake)
+        changed = list(source.pieces)
+        right = changed[1]
+        polys = list(right.polys)
+        polys[0] = (Q(1),)
+        changed[1] = core.Piece(right.lo, right.hi, tuple(polys))
+        fake = core.Source(source.phase_offset, source.phase_slope,
+                           tuple(changed), source.identity)
+        with self.assertRaises(Nontruth):
+            certify(fake)
 
     def test_hostile_receipt_substitution_refuses(self):
         src = core.parse_source(TOUCH_KNOT)
