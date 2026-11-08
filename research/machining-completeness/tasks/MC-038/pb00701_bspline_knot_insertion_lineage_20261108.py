@@ -251,6 +251,27 @@ class Tests(unittest.TestCase):
         self.assertEqual(rec["insertion_lineage"]["new_field_multiplicity"], 1)
         self.assertFalse(rec["historical_corpus_knot_membership_claimed"])
 
+    def test_existing_simple_knot_refinement_preserves_derived_source(self):
+        """A pre-existing source knot gains multiplicity but is not introduced."""
+        data = copy.deepcopy(bridge.POSITIVE_TANGENCY)
+        data["splines"]["H0"] = bridge.spline(
+            2, ["0", "0", "0", "1", "2", "2", "2"],
+            ["3", "3", "3", "3"])
+        rec = certify(data, "H0", "1")
+        self.assertEqual(rec["insertion_lineage"]["old_field_multiplicity"], 1)
+        self.assertEqual(rec["insertion_lineage"]["new_field_multiplicity"], 2)
+        self.assertFalse(rec["insertion_lineage"]["new_coordinate_in_field"])
+        self.assertTrue(rec["insertion_lineage"]["was_pre_edit_field_knot"])
+        self.assertNotEqual(rec["pre_edit_supplied_source_sha256"],
+                            rec["post_edit_supplied_source_sha256"])
+        self.assertEqual(rec["pre_edit_derived_piece_sha256"],
+                         rec["post_edit_derived_piece_sha256"])
+        self.assertEqual(rec["pre_edit_complete_events"]["physical_events"]
+                         ["physical_root_count"], 0)
+        self.assertEqual(rec["post_edit_complete_events"]["physical_events"]
+                         ["physical_root_count"], 0)
+        self.assertTrue(verify(data, rec))
+
     def test_existing_double_knot_fails_closed(self):
         with self.assertRaisesRegex(Nontruth, "INSERTION_MULTIPLICITY_EXHAUSTED"):
             produce(bridge.POSITIVE_TANGENCY, "H0", "1")
