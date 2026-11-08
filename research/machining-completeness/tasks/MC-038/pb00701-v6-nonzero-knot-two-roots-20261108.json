@@ -1,0 +1,128 @@
+{
+  "schema": "radicadsac-mc038-v6-nonzero-knot-two-roots/1.0",
+  "prospective": true,
+  "custody": {
+    "frozen_v54_blob": "5841c331579489b25caef38cd412bdbf286f9134",
+    "frozen_v2_blob": "e52d3baf3692a011cf86234eeaa992ef407d99fd",
+    "reference_original_id": "composite:DELEGATED_V6_CONSTANT_MODULATION:tail0",
+    "reference_source_sha256": "9eb6f08a44882adffa919529247c40190c70e8d7599ee2b1a0f7978ef2569eb1",
+    "reference_only_not_same_h0": true,
+    "historical": {
+      "originals": 121,
+      "route_refusals": 20,
+      "missing_ordered_premises": 30,
+      "preexisting_v2_witnesses": 50,
+      "newly_closed_originals": 0,
+      "required_pb_po_discharges": 0
+    }
+  },
+  "certificate": {
+    "evidence_class": "DETERMINISTIC_MODEL",
+    "result": "EXACT_PROSPECTIVE_TWO_RIGHT_ROOTS_NONZERO_KNOT",
+    "source_parameter": "source-time-t",
+    "interval": [
+      "0",
+      "2"
+    ],
+    "phase_turns": "t/4",
+    "degree": 2,
+    "knots": [
+      "0",
+      "0",
+      "0",
+      "1",
+      "1",
+      "2",
+      "2",
+      "2"
+    ],
+    "parameters": {
+      "m": "1/5",
+      "b": "9/10"
+    },
+    "source_controls": {
+      "H0": [
+        "1/5",
+        "1/5",
+        "1/5",
+        "13/20",
+        "11/10"
+      ],
+      "H1_cos": [
+        "1",
+        "1",
+        "1",
+        "1",
+        "1"
+      ],
+      "H1_sin": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    "physical_left": "m+cos(pi*t/2)",
+    "physical_right": "m+b*x-sin(pi*x/2); x=t-1",
+    "true_knot": {
+      "source_time": "1",
+      "value": "1/5",
+      "zero": false,
+      "event": false,
+      "left_inward_sign": "POSITIVE",
+      "right_inward_sign": "POSITIVE"
+    },
+    "strict_exact_conditions": [
+      "m>0",
+      "m+b>1",
+      "q=m+b/2>0",
+      "2*q^2<1"
+    ],
+    "strict_convexity": "F_right_second=(pi/2)^2*sin(pi*x/2)>0 for 0<x<1",
+    "critical_midpoint_sign": "NEGATIVE_BY_EXACT_SQUARE_COMPARISON",
+    "ordered_physical_events": [
+      {
+        "source_time": null,
+        "open_rational_source_bracket": [
+          "1",
+          "3/2"
+        ],
+        "kind": "SIMPLE_CROSSING",
+        "left_sign": "POSITIVE",
+        "right_sign": "NEGATIVE",
+        "one_sided_orders": [
+          1,
+          1
+        ]
+      },
+      {
+        "source_time": null,
+        "open_rational_source_bracket": [
+          "3/2",
+          "2"
+        ],
+        "kind": "SIMPLE_CROSSING",
+        "left_sign": "NEGATIVE",
+        "right_sign": "POSITIVE",
+        "one_sided_orders": [
+          1,
+          1
+        ]
+      }
+    ],
+    "maximal_nonzero_signs": [
+      "POSITIVE",
+      "NEGATIVE",
+      "POSITIVE"
+    ],
+    "physical_zero_count": 2,
+    "original_source_case": null,
+    "new_original_witnesses": [],
+    "required_pb_po_discharges": 0,
+    "pb00701_established": false,
+    "mc_b_established": false,
+    "mc1_established": false,
+    "production_authorized": false
+  }
+}
