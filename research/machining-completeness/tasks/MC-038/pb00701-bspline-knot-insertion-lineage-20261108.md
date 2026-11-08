@@ -51,6 +51,14 @@ The positive fixtures include insertion into a genuine degree-two double-knot so
 
 Frozen V54 before/after **121 originals / 20 historical route refusals / 30 missing ordered premises**. Frozen V2 retains **50 already complete source-specific witnesses**. Newly closed original IDs [], required PB/PO discharges 0; MC-B and MC-1 remain \`NOT_ESTABLISHED\`, production unauthorized. The new proof does not make either frozen corpus a more complete historical corpus.
 
+## Independent review correction — precision-claim integrity (8 November 2026)
+
+An independent source review of the original #459 head identified a **metadata-substitution falsifier**. The original `verify(spec, receipt)` rebuilt the insertion witness and independently replayed both genuine physical-event certificates, but did **not** check that the enclosing `receipt["bits"]` agreed with either child `physical_events["target_binary_bits"]`. Altering only the enclosing claimed precision from `10` to `9` or `11` therefore passed the original verifier even though both independently valid child proofs still certified precision `10`.
+
+The bounded correction compares the top-level integer to **both** child claims *after* their source-bound mathematical verification. It does **not** require bitwise identical event partitions or regenerate exact root searches. New adversarial tests mutate the outer claim in both directions and require `REFINEMENT_CERTIFICATE_BITS_DRIFT`; the authentic receipt still passes. The defect is an integrity weakness in a provenance/precision claim, **not** evidence of a false physical root count or failed exact knot insertion. Historical evidence, PB/PO coverage and programme authority are unaffected.
+
+This repair is carried on a separate corrective PR targeting #459, and remains Draft until its own exact-head CI and distinct-session source-critical admission; do not count it as approval of the original uncorrected head.
+
 ## Reproduction and handoff
 
 Run from repository root:

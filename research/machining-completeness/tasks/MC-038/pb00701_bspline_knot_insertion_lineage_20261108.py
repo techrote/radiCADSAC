@@ -209,6 +209,11 @@ def verify(spec, receipt):
                      receipt["post_edit_complete_events"])
     bridge.verify(spec, before)
     bridge.verify(refined, after)
+    # Each proof may have its own valid event partition, but neither may
+    # silently certify a different precision than the enclosing receipt.
+    need(before["physical_events"]["target_binary_bits"] == bits and
+         after["physical_events"]["target_binary_bits"] == bits,
+         "REFINEMENT_CERTIFICATE_BITS_DRIFT")
     need(before["physical_events"]["physical_root_count"] ==
          after["physical_events"]["physical_root_count"],
          "REFINEMENT_PHYSICAL_EVENT_COUNT_DRIFT")
@@ -305,6 +310,18 @@ class Tests(unittest.TestCase):
         bad["post_edit_complete_events"]["physical_events"]["physical_root_count"] = 9
         with self.assertRaises(Nontruth):
             verify(bridge.POSITIVE_TANGENCY, bad)
+
+    def test_claimed_precision_must_match_both_parent_certificates(self):
+        """Prior verifier accepted forged top-level bits with valid child proofs."""
+        rec = copy.deepcopy(qualified_positive())
+        self.assertTrue(verify(bridge.POSITIVE_TANGENCY, rec))
+        for claimed in (rec["bits"]-1, rec["bits"]+1):
+            with self.subTest(forged_bits=claimed):
+                bad = copy.deepcopy(rec)
+                bad["bits"] = claimed
+                with self.assertRaisesRegex(Nontruth,
+                                            "REFINEMENT_CERTIFICATE_BITS_DRIFT"):
+                    verify(bridge.POSITIVE_TANGENCY, bad)
 
     def test_changed_original_source_refuses_receipt(self):
         rec = copy.deepcopy(qualified_positive())
