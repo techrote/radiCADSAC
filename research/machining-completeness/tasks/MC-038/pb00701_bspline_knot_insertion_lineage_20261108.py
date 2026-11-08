@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import copy
+import functools
 import random
 import unittest
 from fractions import Fraction as Q
@@ -147,7 +148,12 @@ def produce(spec, field, at, bits=10):
 
 
 def verify(spec, receipt):
-    """Regenerate and verify both physical certificates, without trusting labels."""
+    """Reconstruct source lineage; independently replay both supplied proofs.
+
+    No numerical recertification is necessary here: the inherited verifier
+    checks every cell and event of each independently supplied certificate.
+    This avoids recomputing expensive complete event search in a verifier.
+    """
     need(type(receipt) is dict and set(receipt) == {
         "status", "evidence_class", "field", "insert_at", "bits",
         "pre_edit_supplied_source_sha256", "post_edit_supplied_source_sha256",
@@ -159,16 +165,53 @@ def verify(spec, receipt):
         "new_historical_closures", "required_pb_po_discharges",
         "pb00701_established", "mc_b_established", "mc1_established",
         "production_authorized"}, "REFINEMENT_RECEIPT_FIELDS")
-    expected = produce(spec, receipt["field"], receipt["insert_at"],
-                       receipt["bits"])
-    try:
-        need(core.canonical(receipt) == core.canonical(expected),
-             "REFINEMENT_RECEIPT_REPLAY_DRIFT")
-    except (TypeError, ValueError, OverflowError, RecursionError) as exc:
-        raise Nontruth("REFINEMENT_RECEIPT_MALFORMED") from exc
-    bridge.verify(spec, receipt["pre_edit_complete_events"])
-    bridge.verify(receipt["post_edit_source"],
-                  receipt["post_edit_complete_events"])
+    field, at, bits = receipt["field"], receipt["insert_at"], receipt["bits"]
+    need(type(field) is str and field in core.KEYS,
+         "INSERTION_COEFFICIENT_FIELD")
+    need(type(at) is str, "INSERTION_POINT_ENCODING")
+    need(type(bits) is int and 1 <= bits <= core.MAX_BITS,
+         "INSERTION_EVENT_BITS_BUDGET")
+    old_doc, old_parsed, old_knots = bridge.source_to_pieces(spec)
+    refined = copy.deepcopy(spec)
+    new_field, step = insert_exact(refined["splines"][field], at)
+    refined["splines"][field] = new_field
+    new_doc, new_parsed, new_knots = bridge.source_to_pieces(refined)
+    witness = certify_polynomial_equivalence(spec, refined)
+    need(old_parsed.identity != new_parsed.identity or old_doc == new_doc,
+         "REFINEMENT_DERIVED_IDENTITY_COLLISION")
+    need(bridge.source_hash(spec) != bridge.source_hash(refined),
+         "REFINEMENT_SOURCE_IDENTITY_COLLISION")
+    expected = {
+        "status": "COMPLETE_EXACT_BSPLINE_REFINEMENT_WITH_EVENT_PROOFS",
+        "evidence_class": "DETERMINISTIC_MODEL",
+        "field": field, "insert_at": step["insert_at"], "bits": bits,
+        "pre_edit_supplied_source_sha256": bridge.source_hash(spec),
+        "post_edit_supplied_source_sha256": bridge.source_hash(refined),
+        "pre_edit_derived_piece_sha256": old_parsed.identity,
+        "post_edit_derived_piece_sha256": new_parsed.identity,
+        "insertion_lineage": step,
+        "pre_edit_structural_knot_witnesses": old_knots,
+        "post_edit_structural_knot_witnesses": new_knots,
+        "post_edit_source": refined,
+        "exact_polynomial_refinement_witness": witness,
+        "historical_corpus_knot_membership_claimed": False,
+        "new_historical_closures": [], "required_pb_po_discharges": 0,
+        "pb00701_established": False, "mc_b_established": False,
+        "mc1_established": False, "production_authorized": False,
+    }
+    for key, value in expected.items():
+        try:
+            good = core.canonical(receipt[key]) == core.canonical(value)
+        except (TypeError, ValueError, OverflowError, RecursionError) as exc:
+            raise Nontruth("REFINEMENT_RECEIPT_MALFORMED") from exc
+        need(good, "REFINEMENT_RECEIPT_REPLAY_DRIFT:" + key)
+    before, after = (receipt["pre_edit_complete_events"],
+                     receipt["post_edit_complete_events"])
+    bridge.verify(spec, before)
+    bridge.verify(refined, after)
+    need(before["physical_events"]["physical_root_count"] ==
+         after["physical_events"]["physical_root_count"],
+         "REFINEMENT_PHYSICAL_EVENT_COUNT_DRIFT")
     return True
 
 
@@ -178,9 +221,15 @@ def certify(spec, field, at, bits=10):
     return receipt
 
 
+@functools.lru_cache(maxsize=1)
+def qualified_positive():
+    """One immutable reference receipt; mutation tests deep-copy it."""
+    return certify(bridge.POSITIVE_TANGENCY, "H0", "1/2")
+
+
 class Tests(unittest.TestCase):
     def test_insertion_preserves_full_h1_h2_tangency(self):
-        rec = certify(bridge.POSITIVE_TANGENCY, "H0", "1/2")
+        rec = copy.deepcopy(qualified_positive())
         self.assertEqual(rec["insertion_lineage"]["new_coordinate_in_field"],
                          True)
         self.assertEqual(rec["insertion_lineage"]["old_field_multiplicity"], 0)
@@ -216,7 +265,7 @@ class Tests(unittest.TestCase):
             produce(bridge.POSITIVE_TANGENCY, "H0", "1/2", bits=True)
 
     def test_tamper_lineage_event_source_and_gate_refuse(self):
-        rec = certify(bridge.POSITIVE_TANGENCY, "H0", "1/2")
+        rec = copy.deepcopy(qualified_positive())
         mutations = [
             ("historical_corpus_knot_membership_claimed", True),
             ("required_pb_po_discharges", False),
@@ -237,7 +286,7 @@ class Tests(unittest.TestCase):
             verify(bridge.POSITIVE_TANGENCY, bad)
 
     def test_changed_original_source_refuses_receipt(self):
-        rec = certify(bridge.POSITIVE_TANGENCY, "H0", "1/2")
+        rec = copy.deepcopy(qualified_positive())
         forged = copy.deepcopy(bridge.POSITIVE_TANGENCY)
         forged["splines"]["H0"]["controls"][0] = "3"
         with self.assertRaises(Nontruth):
@@ -273,7 +322,7 @@ class Tests(unittest.TestCase):
 def contract():
     # The authentic frozen V44 check is inherited and must still execute.
     bridge.contract()
-    rec = certify(bridge.POSITIVE_TANGENCY, "H0", "1/2")
+    rec = qualified_positive()
     need(rec["pre_edit_complete_events"]["physical_events"]
          ["physical_root_count"] == 1 and
          rec["post_edit_complete_events"]["physical_events"]
