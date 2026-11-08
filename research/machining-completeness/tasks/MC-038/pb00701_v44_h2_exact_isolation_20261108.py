@@ -145,7 +145,11 @@ def certificate(bits=40):
     require(original["row"]["id"] == CASE_ID, "V44_CASE_MISMATCH")
     full_lo, full_hi = isolate(bits, str(EPSILON))
     h1_lo, h1_hi = isolate(bits, "0")
-    require(full_hi < h1_lo, "ROOT_ORDER_UNRESOLVED_AT_REQUESTED_BITS")
+    # Exact root order was independently proved by the parent theorem;
+    # coarse rational intervals may overlap even though the roots do not.
+    require(classify(str(EPSILON))["exact_root_order"] ==
+            "FULL_ROOT_STRICTLY_BEFORE_H1_ROOT", "PARENT_ORDER_NOT_PROVED")
+    brackets_disjoint = full_hi < h1_lo
     return {
         "schema": "mc038-v44-h2-exact-isolation/1.0",
         "evidence_class": "DETERMINISTIC_MODEL",
@@ -158,6 +162,7 @@ def certificate(bits=40):
         "full_h1_h2_root_bracket": [str(full_lo), str(full_hi)],
         "h1_only_control_root_bracket": [str(h1_lo), str(h1_hi)],
         "strict_full_before_h1": True,
+        "strict_order_independently_witnessed_by_disjoint_brackets": brackets_disjoint,
         "certified_sign_at_each_lower_endpoint": "NEGATIVE",
         "certified_sign_at_each_upper_endpoint": "POSITIVE",
         "root_count_for_each_equation": 1,
@@ -201,8 +206,21 @@ class Tests(unittest.TestCase):
     def test_full_original_and_h1_root_are_disjoint(self):
         result = certificate(40)
         self.assertTrue(result["strict_full_before_h1"])
+        self.assertTrue(result["strict_order_independently_witnessed_by_disjoint_brackets"])
         self.assertEqual(result["requested_binary_precision"], 40)
         self.assertEqual(result["required_pb_po_discharges"], 0)
+
+    def test_coarse_brackets_do_not_claim_false_separation(self):
+        result = certificate(4)
+        self.assertTrue(result["strict_full_before_h1"])
+        self.assertFalse(result["strict_order_independently_witnessed_by_disjoint_brackets"])
+        self.assertEqual(result["requested_binary_precision"], 4)
+
+    def test_64_bit_original_root_bracket(self):
+        lo, hi = isolate(64)
+        self.assertLessEqual(hi-lo, Q(1, 2**64))
+        self.assertEqual(certified_sign(lo, EPSILON), -1)
+        self.assertEqual(certified_sign(hi, EPSILON), 1)
 
     def test_h2_sign_reverse_moves_root_other_way(self):
         zero_lo, zero_hi = isolate(40, "0")
