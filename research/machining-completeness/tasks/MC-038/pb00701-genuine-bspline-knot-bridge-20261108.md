@@ -56,8 +56,8 @@ F(t)=H_0(t)+\cos(\pi t)+\tfrac18\cos(2\pi t).
 At t=1, F=0 and F'=0 separately on both sides, whereas
 
 \[
-F''(1^-)=1/2+3\pi^2/4,\qquad
-F''(1^+)=1+3\pi^2/4,
+F''(1^-)=1/2+\pi^2/2,\qquad
+F''(1^+)=1+\pi^2/2,
 \]
 
 both strictly positive. The inherited #457 strict rational sided-F'' guards prove an **isolated second-order touch** from both sides. This source has one physical root, at the genuine knot, with positive signs on both sides.
