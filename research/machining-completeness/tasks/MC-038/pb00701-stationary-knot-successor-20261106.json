@@ -1,0 +1,185 @@
+{
+  "case_results": [
+    {
+      "case_id": "composite:EXACT_STATIONARY_PHASE_POLYNOMIAL:tail0",
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "physical": {
+        "closed_source_zero_occurrences": 1,
+        "exterior_germs": {
+          "left": {
+            "inward_sign": -1,
+            "one_sided_order": 0,
+            "relation": "NEGATIVE",
+            "source_value": "0"
+          },
+          "right": {
+            "inward_sign": 1,
+            "one_sided_order": 0,
+            "relation": "POSITIVE",
+            "source_value": "2"
+          }
+        },
+        "general_analytic_event_theorem_claimed": false,
+        "interior_source_events": 1,
+        "maximal_nonzero_cells": [
+          {
+            "children": [
+              {
+                "cell_index": 0,
+                "span_index": 0
+              }
+            ],
+            "left_boundary": "source:left",
+            "right_boundary": "span0:root0",
+            "sign": "NEGATIVE"
+          },
+          {
+            "children": [
+              {
+                "cell_index": 1,
+                "span_index": 0
+              },
+              {
+                "cell_index": 0,
+                "span_index": 1
+              }
+            ],
+            "left_boundary": "span0:root0",
+            "right_boundary": "source:right",
+            "sign": "POSITIVE"
+          }
+        ],
+        "nonzero_cell_count": 2,
+        "ordered_source_events": [
+          {
+            "event_kind": "CROSSING",
+            "id": "span0:root0",
+            "left_sign": -1,
+            "multiplicity": 1,
+            "right_sign": 1,
+            "root_kind": "RATIONAL_ROOT",
+            "source_value": "1/2",
+            "span_index": 0
+          }
+        ],
+        "source_interval": [
+          "0",
+          "2"
+        ],
+        "source_knot": {
+          "left_inward_sign": "POSITIVE",
+          "relation": "POSITIVE",
+          "right_inward_sign": "POSITIVE",
+          "source_root": false,
+          "source_value": "1"
+        }
+      },
+      "source_sha256": "f4c2d33cc4c5a52f355ff4ecc36ad6ee38af0ff0fa8c5159aaac5923a10125ff",
+      "successor_candidate": "ALTERNATE_SOURCE_ORDERED_SIGN_DERIVATION",
+      "preexisting_generic_compositor_matched": true
+    },
+    {
+      "case_id": "composite:EXACT_STATIONARY_PHASE_POLYNOMIAL:tail100",
+      "historical_v54_disposition": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "physical": {
+        "closed_source_zero_occurrences": 1,
+        "exterior_germs": {
+          "left": {
+            "inward_sign": -1,
+            "one_sided_order": 0,
+            "relation": "NEGATIVE",
+            "source_value": "0"
+          },
+          "right": {
+            "inward_sign": 1,
+            "one_sided_order": 0,
+            "relation": "POSITIVE",
+            "source_value": "2"
+          }
+        },
+        "general_analytic_event_theorem_claimed": false,
+        "interior_source_events": 1,
+        "maximal_nonzero_cells": [
+          {
+            "children": [
+              {
+                "cell_index": 0,
+                "span_index": 0
+              }
+            ],
+            "left_boundary": "source:left",
+            "right_boundary": "span0:root0",
+            "sign": "NEGATIVE"
+          },
+          {
+            "children": [
+              {
+                "cell_index": 1,
+                "span_index": 0
+              },
+              {
+                "cell_index": 0,
+                "span_index": 1
+              }
+            ],
+            "left_boundary": "span0:root0",
+            "right_boundary": "source:right",
+            "sign": "POSITIVE"
+          }
+        ],
+        "nonzero_cell_count": 2,
+        "ordered_source_events": [
+          {
+            "event_kind": "CROSSING",
+            "id": "span0:root0",
+            "left_sign": -1,
+            "multiplicity": 1,
+            "right_sign": 1,
+            "root_kind": "RATIONAL_ROOT",
+            "source_value": "1/2",
+            "span_index": 0
+          }
+        ],
+        "source_interval": [
+          "0",
+          "2"
+        ],
+        "source_knot": {
+          "left_inward_sign": "POSITIVE",
+          "relation": "POSITIVE",
+          "right_inward_sign": "POSITIVE",
+          "source_root": false,
+          "source_value": "1"
+        }
+      },
+      "source_sha256": "a49b92bbb74a7e016eed471feb64808eb9109a6a42b3ef874243364981a396fd",
+      "successor_candidate": "ALTERNATE_SOURCE_ORDERED_SIGN_DERIVATION",
+      "preexisting_generic_compositor_matched": true
+    }
+  ],
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "frozen_v2_registry_git_blob": "e52d3baf3692a011cf86234eeaa992ef407d99fd",
+  "frozen_v54_corpus_git_blob": "5841c331579489b25caef38cd412bdbf286f9134",
+  "matched_census": {
+    "complete_preexisting_v2_source_witnesses": 50,
+    "frozen_original_source_count": 121,
+    "frozen_v54_dispositions_modified": false,
+    "historical_v54_missing_ordered_before": 30,
+    "historical_v54_refusals_before": 20,
+    "mc_b_or_mc1_accepted": false,
+    "required_pb007_obligations_discharged": 0,
+    "successor_candidate_missing_ordered_after": 30,
+    "successor_candidate_newly_ordered_ids": [],
+    "successor_candidate_route_refusals_after": 20,
+    "preexisting_signed_source_ids": [
+      "composite:EXACT_STATIONARY_PHASE_POLYNOMIAL:tail0",
+      "composite:EXACT_STATIONARY_PHASE_POLYNOMIAL:tail100"
+    ],
+    "preexisting_generic_compositor_matches": 2,
+    "new_generic_stationary_owner_consumer_interface_claimed": false,
+    "new_unique_historical_ordered_premises": 0
+  },
+  "schema": "radicadsac-pb00701-stationary-knot-successor/1.0",
+  "stationary_child_verifier_git_blob": "0954c5e1ad63ec1c8dd2acb3202882650b02c516",
+  "preexisting_generic_stationary_compositor_git_blob": "d0fbe7e189066fd9398958f1b1814b8147a6a64e"
+}

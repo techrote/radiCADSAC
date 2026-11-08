@@ -1,0 +1,46 @@
+name: mc1-pb00701-stationary-knot-successor
+
+on:
+  push:
+    branches:
+      - mc038/stationary-knot-successor-20261106
+    paths:
+      - research/machining-completeness/tasks/MC-038/pb00701_stationary_knot_successor_20261106.py
+      - research/machining-completeness/tasks/MC-038/pb00701-stationary-knot-successor-20261106.md
+      - research/machining-completeness/tasks/MC-038/pb00701-stationary-knot-successor-20261106.json
+      - .github/workflows/mc1-pb00701-stationary-knot-successor.yml
+  pull_request:
+    paths:
+      - research/machining-completeness/tasks/MC-038/pb00701_stationary_knot_successor_20261106.py
+      - research/machining-completeness/tasks/MC-038/pb00701-stationary-knot-successor-20261106.md
+      - research/machining-completeness/tasks/MC-038/pb00701-stationary-knot-successor-20261106.json
+      - .github/workflows/mc1-pb00701-stationary-knot-successor.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  stationary-source-knot-research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Exact checked-out source identity
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Report literal source SHA
+        shell: bash
+        run: |
+          echo "EXPECTED_EVENT_SHA=${{ github.event.pull_request.head.sha || github.sha }}"
+          echo "ACTUAL_CHECKOUT_SHA=$(git rev-parse HEAD)"
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Exact source and child proof replay plus adversarial controls
+        run: python3 research/machining-completeness/tasks/MC-038/pb00701_stationary_knot_successor_20261106.py --contract --self-test
+      - name: Fresh full frozen V54/V2 original-source and adversarial replay
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_evidence_reconciliation_v2.py --contract --self-test
+      - name: Independent historical V54 frontier census
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_frontier.py --contract --self-test
+      - name: Static MC-1 contract validation
+        run: python3 tools/validate_machining_completeness.py
