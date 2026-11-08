@@ -1,0 +1,64 @@
+name: MC-038 V44 full H1+H2 exact rational physical-root isolation
+
+on:
+  push:
+    branches:
+      - research/mc038-v44-h2-exact-root-isolation-20261108
+  pull_request:
+    paths:
+      - research/machining-completeness/tasks/MC-038/pb00701_v44_h2_exact_isolation_20261108.py
+      - research/machining-completeness/tasks/MC-038/pb00701-v44-h2-exact-isolation-20261108.md
+      - .github/workflows/mc1-pb00701-v44-h2-exact-isolation.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-full-harmonic-root-isolation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify literal checkout
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Original V44 exact H1+H2 40-bit event and adversarial checks
+        run: python3 research/machining-completeness/tasks/MC-038/pb00701_v44_h2_exact_isolation_20261108.py --contract --self-test
+
+  original-historical-reconciliation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify literal checkout
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Reproduce historical V54 and V2 identity/sign evidence
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_evidence_reconciliation_v2.py --contract
+
+  mc1-static:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify literal checkout
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate unchanged MC-1 authority contracts
+        run: python3 tools/validate_machining_completeness.py
