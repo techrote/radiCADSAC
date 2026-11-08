@@ -349,6 +349,11 @@ def verify_prior_match(case_id, expected_sha, physical, prior):
     return True
 
 
+def canonical_json(value):
+    return json.dumps(value, sort_keys=True, separators=(",", ":"),
+                      ensure_ascii=True, allow_nan=False)
+
+
 def validate_nonpromotion_receipt(receipt):
     """No novelty credit may be inferred from two already-admitted sources."""
     expected_census = {
@@ -368,7 +373,7 @@ def validate_nonpromotion_receipt(receipt):
         "new_unique_historical_ordered_premises": 0
     }
     require(type(receipt) is dict and
-            receipt.get("matched_census") == expected_census and
+            canonical_json(receipt.get("matched_census")) == canonical_json(expected_census) and
             set(receipt.get("matched_census", {})) == set(expected_census) and
             receipt.get("preexisting_generic_stationary_compositor_git_blob")
             == PRIOR_BLOB and
@@ -604,7 +609,7 @@ def self_test():
     assert receipt["matched_census"]["successor_candidate_missing_ordered_after"] == 30
     assert receipt["matched_census"]["successor_candidate_newly_ordered_ids"] == []
     assert receipt["matched_census"]["new_unique_historical_ordered_premises"] == 0
-    for mutation in ("missing", "new_id", "truth", "preexisting"):
+    for mutation in ("missing", "new_id", "truth", "preexisting", "bool_alias"):
         bad = deepcopy(receipt)
         if mutation == "missing":
             bad["matched_census"]["successor_candidate_missing_ordered_after"] = 28
@@ -613,6 +618,8 @@ def self_test():
                 next(iter(SOURCE_SHA256))]
         elif mutation == "truth":
             bad["matched_census"]["mc_b_or_mc1_accepted"] = True
+        elif mutation == "bool_alias":
+            bad["matched_census"]["required_pb007_obligations_discharged"] = False
         else:
             bad["case_results"][0]["preexisting_generic_compositor_matched"] = False
         expect_refusal(lambda bad=bad: validate_nonpromotion_receipt(bad))
