@@ -1,0 +1,66 @@
+name: MC-038 exact rational B-spline affine time covariance
+on:
+  push:
+    branches:
+      - research/mc038-bspline-affine-time-covariance-20261108
+  pull_request:
+    paths:
+      - research/machining-completeness/tasks/MC-038/pb00701_bspline_affine_time_covariance_20261108.py
+      - research/machining-completeness/tasks/MC-038/pb00701-bspline-affine-time-covariance-20261108.md
+      - .github/workflows/mc1-pb00701-bspline-affine-time-covariance.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-affine-source-and-physical-proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Require literal committed head
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Affine source algebra, physical events, adversarial tests
+        run: python3 research/machining-completeness/tasks/MC-038/pb00701_bspline_affine_time_covariance_20261108.py --contract --self-test
+      - name: Inherited genuine spline compiler and exact H1/H2 proofs
+        run: python3 research/machining-completeness/tasks/MC-038/pb00701_genuine_bspline_knot_bridge_20261108.py --contract --self-test
+      - name: Inherited second and first order source-bound events
+        run: |
+          python3 research/machining-completeness/tasks/MC-038/pb00701_generic_second_order_boundary_20261108.py --contract --self-test
+          python3 research/machining-completeness/tasks/MC-038/pb00701_generic_zero_knot_extension_20261108.py --contract --self-test
+          python3 research/machining-completeness/tasks/MC-038/pb00701_generic_interval_events_20261108.py --contract --self-test
+  original-v54-v2-complete-reconciliation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Require literal committed head
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Complete original V54 and V2 producing replay
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_evidence_reconciliation_v2.py --contract
+  mc1-static-authority:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Require literal committed head
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate repository MC-1 authority
+        run: python3 tools/validate_machining_completeness.py
