@@ -310,6 +310,31 @@ class Tests(unittest.TestCase):
             self.assertEqual(core.poly_at(p.polys[0], t), spline_value(sp, t))
         self.assertEqual(len(doc["pieces"]), 2)
 
+    def test_genuine_knot_need_not_be_physical_event(self):
+        data = model(["3"]*5)
+        rec = certify(data)
+        self.assertEqual(rec["genuine_internal_knot_witnesses"],
+                         [{"t": "1", "field_multiplicities": {"H0": 2}}])
+        self.assertEqual(rec["physical_events"]["physical_root_count"], 0)
+        self.assertEqual(rec["physical_events"]["boundary_events"], [])
+
+    def test_distinct_coefficient_knot_vector_union(self):
+        data = copy.deepcopy(POSITIVE_TANGENCY)
+        data["splines"]["S1"] = spline(1,
+            ["0", "0", "1/2", "2", "2"],
+            ["0", "1/4", "1/4"])
+        doc, src, knots = source_to_pieces(data)
+        self.assertEqual([(r["lo"], r["hi"]) for r in doc["pieces"]],
+                         [("0", "1/2"), ("1/2", "1"), ("1", "2")])
+        self.assertEqual(knots, [
+            {"t": "1/2", "field_multiplicities": {"S1": 1}},
+            {"t": "1", "field_multiplicities": {"H0": 2}}])
+        value = spline_parse(data["splines"]["S1"])
+        for t in (Q(1, 5), Q(4, 5), Q(7, 5)):
+            matching = next(p for p in src.pieces if p.lo < t < p.hi)
+            self.assertEqual(core.poly_at(matching.polys[2], t),
+                             spline_value(value, t))
+
     def test_degree_and_multiplicity_refusals(self):
         for mutation in (
             lambda x: x["splines"]["H0"].__setitem__("degree", True),
