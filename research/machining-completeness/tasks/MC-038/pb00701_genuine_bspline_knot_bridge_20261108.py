@@ -402,6 +402,8 @@ if __name__ == "__main__":
         contract()
         print("GENUINE_BSPLINE_KNOT_BRIDGE_CONTRACT_PASS")
     if args.self_test:
-        unittest.main(argv=[__file__], exit=False, verbosity=2)
+        suite = unittest.defaultTestLoader.loadTestsFromTestCase(Tests)
+        result = unittest.TextTestRunner(verbosity=2).run(suite)
+        need(result.wasSuccessful(), "SELF_TEST_FAILED")
     if not (args.contract or args.self_test):
         parser.error("select --contract or --self-test")
