@@ -1,6 +1,6 @@
 # MC-038 / PB-007-01 — alternate exact stationary source-knot and signed-cell derivation
 
-**Date:** 6 November 2026 UTC; **corrected 8 November 2026** following [#421 exact-head HOLD](https://github.com/techrote/radiCADSAC/pull/421#pullrequestreview-5815240000) and [#428 prior-art challenge](https://github.com/techrote/radiCADSAC/pull/428). **Status:** independently reviewable alternate derivation, *not* novel historical ordered-premise closure, a V54 edit, final PB-007 acceptance, or MC-B/MC-1 success. **Evidence class:** `DETERMINISTIC_MODEL`. **Parent:** [MC-038 #100](https://github.com/techrote/radiCADSAC/issues/100). **Coordination:** [#324 claim 6672895157](https://github.com/techrote/radiCADSAC/issues/324#issuecomment-6672895157). **Base:** `48222d6c40b15ad42cc36d56e6d25f3b284e7fc9`.
+**Date:** 6 November 2026 UTC; **corrected 8 November 2026** following [#421 exact-head HOLD](https://github.com/techrote/radiCADSAC/pull/421) and [#428 prior-art challenge](https://github.com/techrote/radiCADSAC/pull/428). **Status:** independently reviewable alternate derivation, *not* novel historical ordered-premise closure, a V54 edit, final PB-007 acceptance, or MC-B/MC-1 success. **Evidence class:** `DETERMINISTIC_MODEL`. **Parent:** [MC-038 #100](https://github.com/techrote/radiCADSAC/issues/100). **Coordination:** [#324 claim 6672895157](https://github.com/techrote/radiCADSAC/issues/324#issuecomment-6672895157). **Base:** `48222d6c40b15ad42cc36d56e6d25f3b284e7fc9`.
 
 ## Precise hypothesis and falsifiers
 
