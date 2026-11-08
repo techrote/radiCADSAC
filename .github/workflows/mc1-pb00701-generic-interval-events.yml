@@ -1,0 +1,60 @@
+name: MC-038 generic H0/H1/H2 affine-phase exact interval event certificates
+
+on:
+  push:
+    branches:
+      - research/mc038-generic-h1h2-interval-events-20261108
+  pull_request:
+    paths:
+      - research/machining-completeness/tasks/MC-038/pb00701_generic_interval_events_20261108.py
+      - research/machining-completeness/tasks/MC-038/pb00701-generic-interval-events-20261108.md
+      - .github/workflows/mc1-pb00701-generic-interval-events.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-generic-event-partition:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Require literal source commit
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Exact rational contract and hostile certificate tests
+        run: python3 research/machining-completeness/tasks/MC-038/pb00701_generic_interval_events_20261108.py --contract --self-test
+
+  historical-v54-v2-reconciliation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Historical original-source witness replay
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_evidence_reconciliation_v2.py --contract
+
+  mc1-static:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Unchanged MC-1 programme static authority
+        run: python3 tools/validate_machining_completeness.py
