@@ -1,6 +1,6 @@
 # MC-038 / PB-007-01 — exact two-simple-root witness inside one phase octant
 
-**9 November 2026. Research only; deterministic mathematical model, not an original-source, machining, native or STEP qualification.** Repository authority: [MC-1](../../../..//docs/machining-completeness/00-PROGRAMME.md), [DR-0026](../../../../docs/decisions/DR-0026-machining-completeness-programme.md), [MC-038 issue #100](https://github.com/techrote/radiCADSAC/issues/100). This leaf was developed from accepted main `48222d6c40b15ad42cc36d56e6d25f3b284e7fc9` under [#324 source claim](https://github.com/techrote/radiCADSAC/issues/324#issuecomment-6730025256). #397 retains exclusive main integration. No edits to #445/#446 or frozen V54/V2 evidence.
+**9 November 2026. Research only; deterministic mathematical model, not an original-source, machining, native or STEP qualification.** Repository authority: [MC-1](../../../../docs/machining-completeness/00-PROGRAMME.md), [DR-0026](../../../../docs/decisions/DR-0026-machining-completeness-programme.md), [MC-038 issue #100](https://github.com/techrote/radiCADSAC/issues/100). This leaf was developed from accepted main `48222d6c40b15ad42cc36d56e6d25f3b284e7fc9` under [#324 source claim](https://github.com/techrote/radiCADSAC/issues/324#issuecomment-6730025256). #397 retains exclusive main integration. No edits to #445/#446 or frozen V54/V2 evidence.
 
 ## Question and prior gap
 
