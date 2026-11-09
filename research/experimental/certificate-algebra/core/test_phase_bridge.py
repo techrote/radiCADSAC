@@ -48,10 +48,11 @@ class BridgeTests(unittest.TestCase):
                               "0":[["2","-1"],["0"]],
                               "1":[["0","3/2","-1/4"],["-1","0","1"]],
                               "2":[["-2"],["1/3"]]})
-                    a2 = make("A2-471", offset=str(native_offset),
-                              rate=str(native_rate), terms=copy.deepcopy(a1["terms"]))
-                    c = prove_equivalent(a2, a1)
-                    self.assertTrue(verify(a2,a1,c,pinned_source_hash=digest(a2),
+                    origin = "A2-471" if native_rate else "MC038-main"
+                    typed = make(origin, offset=str(native_offset),
+                                 rate=str(native_rate), terms=copy.deepcopy(a1["terms"]))
+                    c = prove_equivalent(typed, a1)
+                    self.assertTrue(verify(typed,a1,c,pinned_source_hash=digest(typed),
                                            pinned_target_hash=digest(a1)))
                     n += 1
         self.assertEqual(n,260)
@@ -87,11 +88,21 @@ class BridgeTests(unittest.TestCase):
                      lambda s: s["terms"].update({"9":[["1"],["0"]]}),
                      lambda s: s["terms"].update({"1":[["0","0"],["1"]]}),
                      lambda s: s.update(extra=1),
-                     lambda s: s.update(terms={"1":[["1"]*100000,["0"]]})]:
+                     lambda s: s.update(terms={"1":[["1"]*100000,["0"]]}),
+                     lambda s: s["terms"].update({"3":[["1"],["0"]]})]:
             bad = copy.deepcopy(a)
             edit(bad)
             with self.assertRaises(Refusal):
                 canonical(bad)
+
+    def test_producer_admission_restrictions(self):
+        a2 = make("A2-471", rate="0")
+        with self.assertRaises(Refusal):
+            canonical(a2)
+        a2 = make("A2-471")
+        a2["terms"]["1"][0] = ["1", "2", "3", "4", "5"]
+        with self.assertRaises(Refusal):
+            canonical(a2)
 
     def test_phase_period_alias_is_conservatively_not_proven(self):
         # pi*(beta+2) is semantically periodic, but this restricted contract
