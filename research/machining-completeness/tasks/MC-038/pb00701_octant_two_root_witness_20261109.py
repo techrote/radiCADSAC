@@ -10,12 +10,17 @@ import argparse
 from fractions import Fraction as Q
 import hashlib
 import json
+from pathlib import Path
+import re
 from math import factorial
 import unittest
 
 MAX_BITS = 512
 PI_TERMS = 28
 TAYLOR_TERMS = 25
+HERE = Path(__file__).resolve().parent
+RECEIPT = HERE / "pb00701-octant-two-root-witness-20261109.json"
+MAX_RECEIPT_BYTES = 16_384
 
 
 class RefusedNontruth(ValueError):
@@ -133,6 +138,60 @@ def certify(h: Q, c: Q, s: Q, offset: Q, rate: Q,
     }
 
 
+def verify_receipt(receipt: dict) -> bool:
+    """Replay the source-bound complete receipt, including every numeric claim.
+
+    This reuses the implementation's interval evaluator; it is source-integrity
+    qualification, NOT an independent mathematical oracle.
+    """
+    if type(receipt) is not dict or type(receipt.get("source_spec")) is not dict:
+        raise RefusedNontruth("MALFORMED_RECEIPT")
+    source = receipt["source_spec"]
+    keys = ("h", "c", "s", "offset", "rate", "left", "pivot", "right")
+    if set(source) != set(keys):
+        raise RefusedNontruth("RECEIPT_SOURCE_FIELDS")
+    args = []
+    for k in keys:
+        value = source[k]
+        if (type(value) is not str or len(value) > 165 or
+            re.fullmatch(r"-?(?:0|[1-9][0-9]*)(?:/[1-9][0-9]*)?", value) is None):
+            raise RefusedNontruth("NONCANONICAL_RECEIPT_RATIONAL")
+        try:
+            fraction = rational(Q(value))
+        except (ValueError, ZeroDivisionError, OverflowError) as error:
+            raise RefusedNontruth("NONCANONICAL_RECEIPT_RATIONAL") from error
+        if str(fraction) != value:
+            raise RefusedNontruth("NONCANONICAL_RECEIPT_RATIONAL")
+        args.append(fraction)
+    expected = certify(*args)
+    if json.dumps(receipt, sort_keys=True, separators=(",", ":")) != json.dumps(
+            expected, sort_keys=True, separators=(",", ":")):
+        raise RefusedNontruth("RECEIPT_CLAIM_SUBSTITUTION")
+    return True
+
+
+def read_receipt(path: Path = RECEIPT) -> dict:
+    """Bound, decode and reject duplicate-key JSON before proof replay."""
+    with path.open("rb") as handle:
+        raw = handle.read(MAX_RECEIPT_BYTES + 1)
+    if len(raw) > MAX_RECEIPT_BYTES:
+        raise RefusedNontruth("RECEIPT_BYTE_BUDGET")
+    def unique(pairs):
+        result={}
+        for key, value in pairs:
+            if key in result:
+                raise RefusedNontruth("DUPLICATE_RECEIPT_KEY")
+            result[key]=value
+        return result
+    def bad_float(value):
+        raise RefusedNontruth("RECEIPT_NONINTEGER_JSON_NUMBER")
+    try:
+        return json.loads(raw.decode("utf-8"), object_pairs_hook=unique,
+                          parse_float=bad_float, parse_constant=bad_float)
+    except (ValueError, UnicodeDecodeError, RecursionError) as error:
+        raise RefusedNontruth("RECEIPT_JSON_REFUSED") from error
+
+
 def witness(rate=Q(1,8), offset=Q(1,8), pivot=Q(1,4),
             h=Q(199,200), c=Q(-3,5), s=Q(-4,5)):
     return certify(h,c,s,offset,rate,Q(0),pivot,Q(1))
@@ -197,6 +256,45 @@ class CertifyTests(unittest.TestCase):
         with self.assertRaisesRegex(RefusedNontruth,"DYADIC_RECEIPT_NOT_STRICT"):
             strict_sign(-Q(1)-eps,Q(1),Q(0),Q(0))
 
+    def test_full_receipt_replay_and_adversarial_substitution(self):
+        import copy
+        original=witness()
+        self.assertTrue(verify_receipt(original))
+        for path, false_value in [
+            (("root_count",), True),
+            (("root_orders",), [2, 1]),
+            (("ordered_signed_regions",), ["POSITIVE","POSITIVE","POSITIVE"]),
+            (("point_interval_proofs","pivot","sign"), "POSITIVE"),
+            (("source_spec_sha256",), "0"*64),
+            (("required_pb_po_discharges",), True),
+            (("mc_b",), "ESTABLISHED")]:
+            bad=copy.deepcopy(original)
+            dest=bad
+            for key in path[:-1]: dest=dest[key]
+            dest[path[-1]]=false_value
+            with self.assertRaisesRegex(RefusedNontruth,"RECEIPT_CLAIM_SUBSTITUTION"):
+                verify_receipt(bad)
+
+    def test_canonical_input_receipt_rationals_refuse_zero_denominator(self):
+        x=witness()
+        x["source_spec"]["h"]="1/0"
+        with self.assertRaisesRegex(RefusedNontruth,"NONCANONICAL_RECEIPT_RATIONAL"):
+            verify_receipt(x)
+
+    def test_duplicate_json_and_receipt_bytes_refuse(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as d:
+            file=Path(d)/"bad.json"
+            file.write_text('{"source_spec":{},"source_spec":{}}', encoding="utf-8")
+            with self.assertRaisesRegex(RefusedNontruth,"RECEIPT_JSON_REFUSED"):
+                read_receipt(file)
+            file.write_bytes(b" "*(MAX_RECEIPT_BYTES+1))
+            with self.assertRaisesRegex(RefusedNontruth,"RECEIPT_BYTE_BUDGET"):
+                read_receipt(file)
+
+    def test_committed_receipt_exact_replay(self):
+        self.assertTrue(verify_receipt(read_receipt()))
+
     def test_not_source_identity_or_gate_promotion(self):
         r=witness()
         self.assertEqual(r["source_knot_provenance"],"NOT_CLAIMED")
@@ -218,7 +316,8 @@ def main():
         if not result.wasSuccessful():
             raise SystemExit(1)
     elif args.contract:
-        r=witness()
+        r=read_receipt()
+        verify_receipt(r)
         assert r["root_count"]==2 and r["mc_b"]=="NOT_ESTABLISHED"
         print("PASS: rational sign enclosures, strict disjoint two-root witness, nonpromotion",r["source_spec_sha256"])
     else:
