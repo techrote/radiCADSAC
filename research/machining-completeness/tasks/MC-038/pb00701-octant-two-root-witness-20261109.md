@@ -32,13 +32,13 @@ and 28 alternating terms per arctangent yield rational strict lower/upper bounds
 
 Inputs must be genuine int/Fraction (no floats or booleans), each numerator and denominator <=512 bits. Derived source-phase values beyond the input budget and undecidable sign intervals explicitly raise `RefusedNontruth`: not zero, not complete and not a proof of impossibility. Exact limits 28/25 are fixed: near enough to zeros, a real nonzero sign may also fail closed.
 
-The returned source-spec SHA-256 binds canonical textual values of h,C,S,u,r,a,p,b; it is **not** the SHA of an original frozen B-spline source. The receipt explicitly records both strict rational root brackets, root orders, three signed regions, point intervals, zero new historical closures, zero required PB/PO discharges, and `NOT_ESTABLISHED` MC-B/MC-1. There is no claimed source knot, global event coverage or native semantics.
+The returned source-spec SHA-256 binds canonical textual values of h,C,S,u,r,a,p,b; it is **not** the SHA of an original frozen B-spline source. A [committed JSON receipt](pb00701-octant-two-root-witness-20261109.json) is re-read by `--contract`, limited to 16 KiB UTF-8, rejects duplicate keys/noninteger JSON numbers, and replays every field from canonical exact source parameters with type-sensitive canonical JSON comparison. Forged root counts, orders, signed regions, point enclosures, hashes, gate claims and boolean/int substitutions are refusal cases. This is an **integrity/replay checker that shares the producer's arithmetic**, not an independent mathematical oracle. The receipt explicitly records both strict rational root brackets, root orders, three signed regions, point intervals, zero new historical closures, zero required PB/PO discharges, and `NOT_ESTABLISHED` MC-B/MC-1. There is no claimed source knot, global event coverage or native semantics.
 
 ## Reproducible prospective positive challenge
 
 Take `h=199/200`, `C=-3/5`, `S=-4/5`, `u=1/8`, `r=1/8`, `a=0`, `p=1/4`, `b=1`. This is #445's previously refused *same-octant double-root* type, with exact strict signs `POSITIVE,NEGATIVE,POSITIVE`. The certificate establishes exactly one simple zero in `(0,1/4)` and one in `(1/4,1)`. No algebraic or rational root **coordinate** is invented.
 
-An adversary with a true value of magnitude `2^-100` is also refused because the outward 2^-40 receipt would erase its strict sign. An opposite-sign mirror tests `NEGATIVE,POSITIVE,NEGATIVE`; reversed `r` tests source-time order; adding an integer to `u` tests periodic reduction. Eleven tests also include wrong-cell widths, insufficient pivot, exact node zero, stationary/zero harmonic, non-rational values, and input bit-budget refusals.
+An adversary with a true value of magnitude `2^-100` is also refused because the outward 2^-40 receipt would erase its strict sign. An opposite-sign mirror tests `NEGATIVE,POSITIVE,NEGATIVE`; reversed `r` tests source-time order; adding an integer to `u` tests periodic reduction. Fifteen tests also include wrong-cell widths, insufficient pivot, exact node zero, stationary/zero harmonic, non-rational values, and input bit-budget refusals.
 
 ## Commands and validation
 
@@ -52,7 +52,7 @@ python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_evi
 python3 tools/validate_machining_completeness.py
 ```
 
-Dedicated exact-head CI checks the new ten methods/contract, full historical V54/V2 50-source producing replay, and repository-wide static rules. This is a **prospective constructive positive restricted C**, not a discharge of PB-007-01/02/03/04 or PO-02/04/05/07/08.
+Dedicated exact-head CI checks the new fifteen methods/committed-receipt contract, full historical V54/V2 50-source producing replay, and repository-wide static rules. The byte-pinned committed receipt is strictly checked against the same literal-head source, not trusted by mere existence. This is a **prospective constructive positive restricted C**, not a discharge of PB-007-01/02/03/04 or PO-02/04/05/07/08.
 
 ## Negative findings and boundary to the next engineer
 
