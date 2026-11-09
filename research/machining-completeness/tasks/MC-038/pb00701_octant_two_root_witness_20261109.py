@@ -84,6 +84,9 @@ def strict_sign(h: Q, c: Q, s: Q, phase_turns: Q) -> dict[str, str]:
     scale = 1 << 40
     lo_dyadic = Q((lower * scale).__floor__(), scale)
     hi_dyadic = Q(-((-upper * scale).__floor__()), scale)
+    if (sign == "POSITIVE" and lo_dyadic <= 0 or
+        sign == "NEGATIVE" and hi_dyadic >= 0):
+        raise RefusedNontruth("DYADIC_RECEIPT_NOT_STRICT")
     return {"sign": sign, "strict_lower": str(lo_dyadic), "strict_upper": str(hi_dyadic)}
 
 
@@ -186,6 +189,13 @@ class CertifyTests(unittest.TestCase):
             witness(h=0.995)
         with self.assertRaisesRegex(RefusedNontruth,"INPUT_BIT_BUDGET"):
             witness(h=Q(2**513))
+
+    def test_dyadic_outward_rounding_refuses_if_it_erases_strictness(self):
+        eps=Q(1,2**100)
+        with self.assertRaisesRegex(RefusedNontruth,"DYADIC_RECEIPT_NOT_STRICT"):
+            strict_sign(Q(1)+eps,Q(-1),Q(0),Q(0))
+        with self.assertRaisesRegex(RefusedNontruth,"DYADIC_RECEIPT_NOT_STRICT"):
+            strict_sign(-Q(1)-eps,Q(1),Q(0),Q(0))
 
     def test_not_source_identity_or_gate_promotion(self):
         r=witness()
