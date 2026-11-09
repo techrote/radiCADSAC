@@ -243,6 +243,25 @@ class Tests(unittest.TestCase):
         self.assertEqual(len(out["ordered_signed_regions"]),
                          out["root_count"] + 1)
 
+    def test_two_repeated_cycles_and_two_independent_pivots(self):
+        # One physical source with 16 consecutive octants, including two
+        # disjoint hidden-root cells one exact whole phase turn apart.
+        out = certify(source(rate="1", hi="2"),
+                      {"0":"1/32", "1":"33/32"})
+        self.assertEqual(len(out["certified_cells"]), 16)
+        self.assertEqual(out["root_count"], 4)
+        self.assertEqual([x["strict_rational_bracket"] for x in
+                          out["ordered_events"]],
+                         [["0","1/32"],["1/32","1/8"],
+                          ["1","33/32"],["33/32","9/8"]])
+        self.assertEqual(out["ordered_signed_regions"],
+                         ["POSITIVE","NEGATIVE","POSITIVE",
+                          "NEGATIVE","POSITIVE"])
+        self.assertEqual(sum(c["kind"] ==
+                             "TWO_SIMPLE_ROOTS_WITH_EXACT_PIVOT"
+                             for c in out["certified_cells"]), 2)
+        self.assertTrue(verify_receipt(out))
+
     def test_negative_phase_reversal(self):
         out = certify(source(off="1/4",rate="-1/8"), {"0":"3/4"})
         self.assertEqual([x["strict_rational_bracket"] for x in
