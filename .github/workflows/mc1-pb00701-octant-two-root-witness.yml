@@ -34,7 +34,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Ten focused and adversarial tests
+      - name: Eleven focused and adversarial tests
         run: python research/machining-completeness/tasks/MC-038/pb00701_octant_two_root_witness_20261109.py --self-test
       - name: Exact rational prospective contract
         run: python research/machining-completeness/tasks/MC-038/pb00701_octant_two_root_witness_20261109.py --contract
