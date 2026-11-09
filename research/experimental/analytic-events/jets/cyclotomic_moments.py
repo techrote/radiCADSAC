@@ -403,6 +403,15 @@ def knot_germ(degree, knots, controls, offset, rate):
             "production_authorized": False}
 
 
+
+def verify_knot_receipt(degree, knots, controls, offset, rate, claimed):
+    """Reconstruct from complete knot/control source; never trust a knot report."""
+    require(type(claimed) is dict and
+            claimed == knot_germ(degree, knots, controls, offset, rate),
+            "FORGED_OR_STALE_KNOT_RECEIPT")
+    return True
+
+
 def reversed_spline(degree, knots, controls, offset, rate, A=2):
     """Reparameterise original t=A-u, including real source knot reversal."""
     ks = [rational(A) - rational(x) for x in reversed(knots)]
