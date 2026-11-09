@@ -93,6 +93,11 @@ class ResearchControls(unittest.TestCase):
         receipt = m.knot_germ(3, knots, controls, 0, Q(1, 4))
         self.assertEqual(receipt["status"], "SINGLE_PHYSICAL_ZERO_KNOT")
         self.assertEqual(receipt["physical_zero_count"], 1)
+        self.assertTrue(m.verify_knot_receipt(3, knots, controls, 0, Q(1, 4),
+                                              receipt))
+        with self.assertRaises(m.Refusal):
+            m.verify_knot_receipt(3, knots, controls, 0, Q(1, 4),
+                                  dict(receipt, physical_zero_count=3))
         self.assertEqual((receipt["left"]["order"], receipt["right"]["order"]),
                          (2, 3))
         self.assertEqual((receipt["left"]["left_sign"], receipt["right"]["right_sign"]),
