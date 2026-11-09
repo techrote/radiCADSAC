@@ -112,6 +112,18 @@ class SourceProofTests(unittest.TestCase):
         independent_change, _ = candidate.lower_f08_operations(changed)
         self.assertNotEqual(independent_change["F08-TSLOT"]["source_id"],
                             altered["F08-TSLOT"]["source_id"])
+        # JSON is authoritative, not a hostile Python mapping's .get() override.
+        class MisleadingMapping(dict):
+            def get(self, key, default=None):
+                if key == "families":
+                    return changed["families"]
+                return super().get(key, default)
+
+        misleading = MisleadingMapping(copy.deepcopy(self.fixture))
+        stable, _ = candidate.lower_f08_operations(misleading)
+        self.assertEqual(stable["F08-TSLOT"]["source_id"],
+                         original["F08-TSLOT"]["source_id"])
+        self.assertFalse(member(stable["F08-TSLOT"], point))
         for fixture in (self.fixture, changed):
             for asserted in (candidate.FIXTURE_BLOB, "forged-source"):
                 with self.assertRaises(candidate.InvalidSource):

@@ -243,6 +243,9 @@ def lower_f08_operations(fixture, *, provenance=None):
     if provenance is not None:
         raise InvalidSource("caller-supplied provenance cannot establish original identity")
     supplied = _canonical_fixture_bytes(fixture)
+    # Lower only the same frozen JSON snapshot that was authenticated/hashed:
+    # caller subclasses, custom getters, or later mutations cannot change meaning.
+    fixture = json.loads(supplied)
     original = _canonical_fixture_bytes(
         _authenticated_original_fixture(Path(__file__).resolve().parents[4]))
     authentic = supplied == original
