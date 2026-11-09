@@ -7,6 +7,7 @@ import hashlib
 import json
 from pathlib import Path
 import re
+import subprocess
 import unittest
 
 HERE = Path(__file__).resolve().parent
@@ -99,13 +100,49 @@ def affine(source: dict) -> dict:
         "production_authorized": False
     }
 
+def git_blob_sha(raw: bytes) -> str:
+    return hashlib.sha1(b"blob " + str(len(raw)).encode("ascii") + b"\0" + raw).hexdigest()
+
+def pinned_committed_bytes(path: Path, worktree: bytes, expected_blob: str,
+                           limit: int) -> bytes:
+    """Check actual HEAD:path object, its bytes and only LF/CRLF checkout changes."""
+    try:
+        root = Path(subprocess.check_output(
+            ["git", "rev-parse", "--show-toplevel"], cwd=path.parent,
+            stderr=subprocess.DEVNULL).decode("utf-8").strip()).resolve()
+        rel = path.resolve().relative_to(root).as_posix()
+        oid = subprocess.check_output(
+            ["git", "rev-parse", "--verify", "HEAD:" + rel], cwd=root,
+            stderr=subprocess.DEVNULL).decode("ascii").strip()
+        require(oid == expected_blob, "PINNED_GIT_BLOB_MISMATCH")
+        kind = subprocess.check_output(
+            ["git", "cat-file", "-t", oid], cwd=root,
+            stderr=subprocess.DEVNULL).decode("ascii").strip()
+        require(kind == "blob", "PINNED_OBJECT_NOT_BLOB")
+        size = int(subprocess.check_output(
+            ["git", "cat-file", "-s", oid], cwd=root,
+            stderr=subprocess.DEVNULL).strip())
+        require(size <= limit, "RAW_BYTE_LIMIT")
+        committed = subprocess.check_output(
+            ["git", "cat-file", "blob", oid], cwd=root,
+            stderr=subprocess.DEVNULL)
+    except RefusedNontruth:
+        raise
+    except (OSError, ValueError, UnicodeDecodeError,
+            subprocess.CalledProcessError) as exc:
+        raise RefusedNontruth("GIT_OBJECT_CUSTODY_UNAVAILABLE") from exc
+    require(len(committed) == size and git_blob_sha(committed) == expected_blob,
+            "PINNED_GIT_BLOB_MISMATCH")
+    require(worktree.replace(b"\r\n", b"\n") ==
+            committed.replace(b"\r\n", b"\n"), "CHECKOUT_BYTES_MISMATCH")
+    return committed
+
 def strict_json(path: Path, limit: int = 400_000, expected_blob: str | None = None):
     with path.open("rb") as handle:
         raw = handle.read(limit + 1)
     require(len(raw) <= limit, "RAW_BYTE_LIMIT")
-    if expected_blob:
-        blob = hashlib.sha1(b"blob "+str(len(raw)).encode()+b"\0"+raw).hexdigest()
-        require(blob == expected_blob, "PINNED_GIT_BLOB_MISMATCH")
+    committed = (pinned_committed_bytes(path, raw, expected_blob, limit)
+                 if expected_blob is not None else None)
     def pairs(seq):
         out = {}
         for k,v in seq:
@@ -117,12 +154,20 @@ def strict_json(path: Path, limit: int = 400_000, expected_blob: str | None = No
         return int(token)
     def noninteger(_):
         raise RefusedNontruth("NONINTEGER_JSON_NUMBER")
-    try:
-        return json.loads(raw.decode("utf-8"), object_pairs_hook=pairs,
-                          parse_int=number, parse_float=noninteger,
-                          parse_constant=noninteger)
-    except (UnicodeDecodeError, ValueError, RecursionError, OverflowError) as exc:
-        raise RefusedNontruth("INVALID_JSON") from exc
+    def decode(data):
+        try:
+            return json.loads(data.decode("utf-8"), object_pairs_hook=pairs,
+                              parse_int=number, parse_float=noninteger,
+                              parse_constant=noninteger)
+        except RefusedNontruth:
+            raise
+        except (UnicodeDecodeError, ValueError, RecursionError,
+                OverflowError) as exc:
+            raise RefusedNontruth("INVALID_JSON") from exc
+    checkout = decode(raw)
+    if committed is not None:
+        require(checkout == decode(committed), "ORIGINAL_SEMANTICS_MISMATCH")
+    return checkout
 
 def frozen_spec():
     # Independent hardcoded source assertion; original frozen V54+V2 rehashed
@@ -299,6 +344,61 @@ class ProofTests(unittest.TestCase):
             path.write_bytes(b" " * 401_000)
             with self.assertRaises(RefusedNontruth):
                 strict_json(path)
+
+    def test_actual_frozen_v54_v2_git_checkout_custody(self):
+        """Original frozen source blobs, LF/CRLF, altered checkout and forged HEAD."""
+        import tempfile
+        originals = ((V54, V54_BLOB), (V2, V2_BLOB))
+        with tempfile.TemporaryDirectory() as directory:
+            repo = Path(directory)
+            def git(*args):
+                return subprocess.run(["git", *args], cwd=repo, check=True,
+                                      stdout=subprocess.DEVNULL,
+                                      stderr=subprocess.PIPE)
+            git("init", "-q")
+            git("config", "user.name", "MC-038 custody test")
+            git("config", "user.email", "mc038@example.invalid")
+            git("config", "core.autocrlf", "false")
+            for source, pin in originals:
+                committed = pinned_committed_bytes(
+                    source, source.read_bytes(), pin, 400_000)
+                require(git_blob_sha(committed) == pin, "PINNED_GIT_BLOB_MISMATCH")
+                (repo/source.name).write_bytes(committed)
+            git("add", V54.name, V2.name)
+            git("commit", "-qm", "Seed exact original Git blob bytes")
+            for source, pin in originals:
+                path = repo/source.name
+                raw = path.read_bytes()
+                self.assertEqual(git_blob_sha(raw), pin)
+                canonical_original = strict_json(path, expected_blob=pin)
+                self.assertEqual(canonical_original,
+                                 strict_json(source, expected_blob=pin))
+                path.write_bytes(raw.replace(b"\n", b"\r\n"))
+                self.assertEqual(strict_json(path, expected_blob=pin),
+                                 canonical_original)
+                for tampered in (
+                    raw.replace(b'"schema"', b'"scheMa"', 1),
+                    raw.replace(b"\n", b"\r\r\n"),
+                    raw.replace(b'"schema":', b'"schema": 0, "schema":', 1)):
+                    self.assertNotEqual(tampered, raw)
+                    path.write_bytes(tampered)
+                    with self.assertRaisesRegex(RefusedNontruth,
+                                                "CHECKOUT_BYTES_MISMATCH"):
+                        strict_json(path, expected_blob=pin)
+                path.write_bytes(raw)
+            bad = repo/V54.name
+            bad.write_bytes(bad.read_bytes().replace(b'"schema"',
+                                                     b'"scheMa"', 1))
+            git("add", V54.name)
+            git("commit", "-qm", "Adversarial changed committed source")
+            with self.assertRaisesRegex(RefusedNontruth,
+                                        "PINNED_GIT_BLOB_MISMATCH"):
+                strict_json(bad, expected_blob=V54_BLOB)
+            self.assertEqual(strict_json(repo/V2.name, expected_blob=V2_BLOB),
+                             strict_json(V2, expected_blob=V2_BLOB))
+            with self.assertRaisesRegex(RefusedNontruth,
+                                        "PINNED_GIT_BLOB_MISMATCH"):
+                strict_json(repo/V2.name, expected_blob=V54_BLOB)
 
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
