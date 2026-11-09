@@ -48,8 +48,34 @@ class Source:
     phase_offset: Q
     phase_rate: Q
 
+    def __post_init__(self) -> None:
+        validate_source(self)
+
     def channels(self) -> tuple[tuple[Q, ...], ...]:
         return (self.c0,) + self.cos + self.sin
+
+
+def validate_source(s: Source) -> None:
+    """Validate even after construction, so forged frozen Source mutations refuse."""
+    if type(s) is not Source:
+        raise Refusal("expected an exact Source object")
+    if any(type(x) is not tuple for x in (s.c0, s.cos, s.sin)):
+        raise Refusal("source channels must be immutable tuples")
+    if len(s.cos) != len(s.sin) or len(s.cos) > 2:
+        raise Refusal("matched H0/H1/H2 channels required")
+    if type(s.phase_offset) is not Q or type(s.phase_rate) is not Q:
+        raise Refusal("phase fields must be exact canonical Fraction values")
+    rational(s.phase_offset)
+    rational(s.phase_rate)
+    for p in s.channels():
+        if type(p) is not tuple or len(p) > 17:
+            raise Refusal("polynomial must be a canonical degree<=16 tuple")
+        if any(type(v) is not Q for v in p):
+            raise Refusal("polynomial contains noncanonical/nonrational coefficient")
+        if p and not p[-1]:
+            raise Refusal("polynomial trailing zero is not canonical")
+        for v in p:
+            rational(v)
 
 
 def source(c0, cos=(), sin=(), *, phase_offset=0, phase_rate=1) -> Source:
@@ -61,6 +87,7 @@ def source(c0, cos=(), sin=(), *, phase_offset=0, phase_rate=1) -> Source:
 
 
 def source_sha(s: Source) -> str:
+    validate_source(s)
     obj = {"c0": list(map(str, s.c0)),
            "cos": [[str(y) for y in x] for x in s.cos],
            "sin": [[str(y) for y in x] for x in s.sin],
@@ -108,6 +135,38 @@ def cyclotomic(n: int) -> tuple[Q, ...]:
     return f
 
 
+def constant_phase_identity(s: Source) -> bool:
+    """Decide F(t) identically zero at rational, constant phase.
+
+    For every amplitude degree j, form its exact cyclotomic Fourier
+    coefficient; all coefficients must vanish in Q[zeta_{4d}].
+    This is an infinite-family result (bounded computational grammar).
+    """
+    validate_source(s)
+    if s.phase_rate:
+        raise Refusal("constant-phase identity requires zero phase rate")
+    d, p = s.phase_offset.denominator, s.phase_offset.numerator
+    n = 4 * d
+    if n > 128:
+        raise Refusal("constant phase denominator exceeds cyclotomic budget")
+    phi = cyclotomic(n)
+    channels = s.channels()
+    for j in range(max((len(poly) for poly in channels), default=0)):
+        coeff = lambda poly: poly[j] if j < len(poly) else Q(0)
+        total = [Q(0)] * n
+        total[0] += 2 * coeff(s.c0)
+        for k, (cc, ss) in enumerate(zip(s.cos, s.sin), 1):
+            c, sine = coeff(cc), coeff(ss)
+            total[(2 * k * p) % n] += c
+            total[(-2 * k * p) % n] += c
+            total[(d - 2 * k * p) % n] += sine
+            total[(d + 2 * k * p) % n] -= sine
+        _, remainder = divmod_poly(trim(total), phi)
+        if remainder:
+            return False
+    return True
+
+
 def rational_event(s: Source, t: int | Q) -> dict:
     """Decide F(t)==0 exactly for a rational time; sign is NOT claimed.
 
@@ -115,6 +174,7 @@ def rational_event(s: Source, t: int | Q) -> dict:
     The Laurent Fourier sum is converted to an integer-power polynomial
     modulo Phi_(4*d). It vanishes iff its exact remainder is zero.
     """
+    validate_source(s)
     t = rational(t)
     beta = s.phase_offset + s.phase_rate * t
     d, p = beta.denominator, beta.numerator
@@ -132,11 +192,13 @@ def rational_event(s: Source, t: int | Q) -> dict:
     numerator = trim(total)
     phi = cyclotomic(n)
     _, rem = divmod_poly(numerator, phi)
+    identity = (not any(s.channels()) if s.phase_rate else
+                constant_phase_identity(s))
     return {"schema": "a1-rational-event/1", "source_sha256": source_sha(s),
             "time": str(t), "phase_turns": str(beta), "cyclotomic_order": n,
             "numerator_2F": [str(x) for x in numerator],
             "phi": [str(x) for x in phi], "remainder": [str(x) for x in rem],
-            "result": ("IDENTICAL_ZERO_PIECE" if not any(s.channels()) else
+            "result": ("IDENTICAL_ZERO_PIECE" if identity else
                        "EXACT_ZERO" if not rem else "EXACT_NONZERO"),
             "sign": "UNDETERMINED"}
 
@@ -171,6 +233,7 @@ def quadratic_event(s: Source, a: int, b: int, c: int) -> dict:
     iff every channel vanishes. The common quadratic valuation determines
     the exact zero order (simple quadratic roots).
     """
+    validate_source(s)
     if not s.phase_rate:
         raise Refusal("zero phase rate outside the irrational-phase theorem")
     m, disc = _quadratic(a, b, c)
