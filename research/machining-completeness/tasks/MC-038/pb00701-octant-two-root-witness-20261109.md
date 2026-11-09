@@ -28,7 +28,7 @@ The executable [source](pb00701_octant_two_root_witness_20261109.py) uses Python
 
 `pi = 16*atan(1/5)-4*atan(1/239)`
 
-and 28 alternating terms per arctangent yield rational strict lower/upper bounds for pi using the first omitted term. Reduce source phase modulo one turn to `[-1/2,1/2]`. Using midpoint pi, angle error is bounded by `|phase|*(pi_upper-pi_lower)`. The first 26 sine/cosine Taylor terms are rational and have Lagrange remainder bounds `4^53/53!` and `4^52/52!` respectively, since `|theta|<pi<4`. The 1-Lipschitz sine/cosine bounds propagate angular uncertainty. Coefficient-weighted rational intervals strictly enclose F, then are rounded **outwards** onto a 2^-40 rational grid for compact, auditable receipt fields. Signs are accepted *only* when the full unrounded enclosures prove strict positivity or negativity.
+and 28 alternating terms per arctangent yield rational strict lower/upper bounds for pi using the first omitted term. Reduce source phase modulo one turn to `[-1/2,1/2]`. Using midpoint pi, angle error is bounded by `|phase|*(pi_upper-pi_lower)`. The first 26 sine/cosine Taylor terms are rational and have Lagrange remainder bounds `4^53/53!` and `4^52/52!` respectively, since `|theta|<pi<4`. The 1-Lipschitz sine/cosine bounds propagate angular uncertainty. Coefficient-weighted rational intervals strictly enclose F, then are rounded **outwards** onto a 2^-40 rational grid for compact, auditable receipt fields. Signs are accepted *only* when the full unrounded enclosures prove strict positivity or negativity **and the outward-rounded receipt retains a strictly nonzero bound**; otherwise `DYADIC_RECEIPT_NOT_STRICT` refuses. This additional test prevents receipt compression from advertising a sign that an independent reader cannot verify from the serialized interval.
 
 Inputs must be genuine int/Fraction (no floats or booleans), each numerator and denominator <=512 bits. Derived source-phase values beyond the input budget and undecidable sign intervals explicitly raise `RefusedNontruth`: not zero, not complete and not a proof of impossibility. Exact limits 28/25 are fixed: near enough to zeros, a real nonzero sign may also fail closed.
 
@@ -38,7 +38,7 @@ The returned source-spec SHA-256 binds canonical textual values of h,C,S,u,r,a,p
 
 Take `h=199/200`, `C=-3/5`, `S=-4/5`, `u=1/8`, `r=1/8`, `a=0`, `p=1/4`, `b=1`. This is #445's previously refused *same-octant double-root* type, with exact strict signs `POSITIVE,NEGATIVE,POSITIVE`. The certificate establishes exactly one simple zero in `(0,1/4)` and one in `(1/4,1)`. No algebraic or rational root **coordinate** is invented.
 
-An opposite-sign mirror tests `NEGATIVE,POSITIVE,NEGATIVE`; reversed `r` tests source-time order; adding an integer to `u` tests periodic reduction. Tests also include wrong-cell widths, insufficient pivot, exact node zero, stationary/zero harmonic, non-rational values, and input bit-budget refusals.
+An adversary with a true value of magnitude `2^-100` is also refused because the outward 2^-40 receipt would erase its strict sign. An opposite-sign mirror tests `NEGATIVE,POSITIVE,NEGATIVE`; reversed `r` tests source-time order; adding an integer to `u` tests periodic reduction. Eleven tests also include wrong-cell widths, insufficient pivot, exact node zero, stationary/zero harmonic, non-rational values, and input bit-budget refusals.
 
 ## Commands and validation
 
