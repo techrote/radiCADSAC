@@ -64,7 +64,7 @@ def canonical(source):
     head, phase_scale = PRODUCERS[who]
     if source["producer_head"] != head:
         raise Refusal("unreviewed producer revision")
-    if not isinstance(source["origin_source_sha"], str) or not HEX.fullmatch(source["origin_source_sha"]):
+    if not isinstance(source["origin_source_sha"], str) or len(source["origin_source_sha"]) != 64 or not HEX.fullmatch(source["origin_source_sha"]):
         raise Refusal("malformed producer-supplied source identity")
     interval = source["interval"]
     if not isinstance(interval, list) or len(interval) != 2:
@@ -86,7 +86,7 @@ def canonical(source):
     if "0" not in terms:
         raise Refusal("missing explicit constant harmonic")
     if who == "A1-470":
-        positives = sorted(int(k) for k in terms if k != "0" and k.isdigit())
+        positives = sorted(int(k) for k in terms if isinstance(k, str) and k != "0" and k.isdigit())
         if positives != list(range(1, len(positives) + 1)):
             raise Refusal("noncontiguous A1 harmonic channels")
     admitted = {}
@@ -127,9 +127,9 @@ def verify(source, target, claim, *, pinned_source_hash, pinned_target_hash):
 
     These pins are NOT a replacement for producer object/codec authentication.
     """
-    if not isinstance(pinned_source_hash, str) or not HEX.fullmatch(pinned_source_hash):
+    if not isinstance(pinned_source_hash, str) or len(pinned_source_hash) != 64 or not HEX.fullmatch(pinned_source_hash):
         raise Refusal("invalid trusted source pin")
-    if not isinstance(pinned_target_hash, str) or not HEX.fullmatch(pinned_target_hash):
+    if not isinstance(pinned_target_hash, str) or len(pinned_target_hash) != 64 or not HEX.fullmatch(pinned_target_hash):
         raise Refusal("invalid trusted target pin")
     # Admit and bound both records *before* JSON hashing untrusted payloads.
     expected = prove_equivalent(source, target)
