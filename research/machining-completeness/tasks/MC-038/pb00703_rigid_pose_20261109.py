@@ -146,11 +146,24 @@ def _pullback_node(node, forms, tally):
     raise AssertionError(op)
 
 
+def _bound_guard(form, value, upper):
+    """Enforce an original local source-bound face after exact reorientation."""
+    constant = {(0, 0, 0): -value}
+    difference = _sum(form, constant)
+    if not upper:
+        difference = {ex: -coeff for ex, coeff in difference.items()}
+    return {"op": "poly_le", "terms": [
+        {"coefficient": _qstr(coeff), "exponents": list(exp)}
+        for exp, coeff in sorted(difference.items())
+    ]}
+
+
 def lower_exact_source(source, pose, instance_id):
     """Return source and SHA-bound derivation receipt; never change input source.
 
     The transformed bounding box is conservative *only as source extent*:
-    the full pulled-back polynomial/Boolean solid, not its AABB, is material truth.
+    the pulled-back polynomial/Boolean solid *and transformed original six
+    bound faces*, never its AABB alone, are exact membership truth.
     """
     if not isinstance(instance_id, str) or not instance_id.strip():
         raise ValueError("distinct durable instance_id required")
@@ -187,7 +200,11 @@ def lower_exact_source(source, pose, instance_id):
         "units": src["units"],
         "frame_id": pose["target_frame"],
         "bounds": bounds,
-        "solid": _pullback_node(src["solid"], forms, [0, 0]),
+        "solid": {"op": "intersection", "children": [
+            _pullback_node(src["solid"], forms, [0, 0]),
+            *[_bound_guard(forms[i], src["bounds"][AXES[i]][1], True) for i in range(3)],
+            *[_bound_guard(forms[i], src["bounds"][AXES[i]][0], False) for i in range(3)],
+        ]},
         "source_uncertainty": _qstr(src["source_uncertainty"]),
     }
     canon = v4.canonical_source_object(out)
@@ -199,7 +216,7 @@ def lower_exact_source(source, pose, instance_id):
     }
     receipt = {
         "schema": "radicadsac-pb00703-rigid-pose/1.0",
-        "method": "EXACT_POLYNOMIAL_PULLBACK_RIGHT_HANDED_RATIONAL_RIGID",
+        "method": "EXACT_POLYNOMIAL_PULLBACK_AND_SOURCE_BOUND_GUARDS_RATIONAL_RIGID",
         "original_sha256": v4.source_sha256(source),
         "output_sha256": v4.source_sha256(canon),
         "original_source_id": src["source_id"],
