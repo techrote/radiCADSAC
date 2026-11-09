@@ -80,8 +80,15 @@ def canonical(source):
         raise Refusal("source exceeds A2/MC038 physical domain")
     max_h, max_poly = ((2, 17) if who == "A1-470" else (8, 4))
     terms = source["terms"]
-    if not isinstance(terms, dict) or not 1 <= len(terms) <= 9:
+    if not isinstance(terms, dict) or not 1 <= len(terms) <= (9 if who == "A1-470" else 8):
         raise Refusal("bad harmonic map")
+    # Strict zero-mode convention; zero c0 must be explicitly represented.
+    if "0" not in terms:
+        raise Refusal("missing explicit constant harmonic")
+    if who == "A1-470":
+        positives = sorted(int(k) for k in terms if k != "0" and k.isdigit())
+        if positives != list(range(1, len(positives) + 1)):
+            raise Refusal("noncontiguous A1 harmonic channels")
     admitted = {}
     for key, pair in terms.items():
         if not isinstance(key, str) or not re.fullmatch(r"(?:0|[1-8])", key) or int(key) > max_h:
