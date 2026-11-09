@@ -14,7 +14,7 @@ SCHEMA = "b1-typed-phase-source-v1"
 RECEIPT = "b1-phase-equivalence-v1"
 PRODUCERS = {
     "A1-470": ("281705e947fd7812300d1d2605d3cdf60cdb005e", 1),
-    "A2-471": ("38b45dbd028742cca3758a86666d366e9b5df66b", 2),
+    "A2-471": ("3b6eaf70e1e7422b7ac8e8e9ff6f0fef85281978", 2),
     "MC038-main": ("48222d6c40b15ad42cc36d56e6d25f3b284e7fc9", 2),
 }
 HEX = re.compile(r"[0-9a-f]{64}\Z")
