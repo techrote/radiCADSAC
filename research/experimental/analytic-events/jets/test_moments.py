@@ -132,6 +132,41 @@ class ResearchControls(unittest.TestCase):
             m.knot_germ(3, [0]*4+[1]*2+[2]*5,
                         {0: ([[0]*7, [0]*7])}, 0, Q(1, 4))
 
+    def test_preparse_rational_budget_and_malformed_spline_controls(self):
+        # Entire canonical 160-bit numerator/denominator pair remains admitted.
+        top, bottom = (1 << 159) - 1, (1 << 159) - 3
+        canonical = f"{top}/{bottom}"
+        self.assertLessEqual(len(canonical), m.MAX_RATIONAL_LITERAL_CHARS)
+        self.assertEqual(m.rational(canonical), Q(top, bottom))
+
+        # Pre-parse length refusal must precede Fraction construction, even
+        # when a huge leading-zero input would normalize to a tiny rational.
+        oversized = "0" * 100_000 + "1/2"
+        for invalid in (oversized, "1/" + "0" * 100_000 + "3",
+                        " " * 200 + "1/2"):
+            with self.subTest(length=len(invalid)):
+                with self.assertRaisesRegex(
+                        m.Refusal, "RATIONAL_LITERAL_RESOURCE_LIMIT"):
+                    m.rational(invalid)
+                result = m.attempt(m.rational, invalid)
+                self.assertEqual(result["status"], "RESOURCE_REFUSAL_OR_BLOCKED")
+                self.assertFalse(result["is_truth_value"])
+
+        for invalid in (True, 3.5, None, {}, b"1/2"):
+            with self.subTest(type=type(invalid).__name__):
+                with self.assertRaisesRegex(m.Refusal, "NONEXACT_RATIONAL"):
+                    m.rational(invalid)
+
+        with self.assertRaisesRegex(m.Refusal, "RATIONAL_LITERAL_RESOURCE_LIMIT"):
+            m.source(0, 2, 0, Q(1, 4), {1: ([oversized], [0])})
+
+        knots = [0] * 4 + [1] * 3 + [2] * 4
+        for malformed in (None, 7, "0000000"):
+            with self.subTest(control=repr(malformed)):
+                with self.assertRaisesRegex(m.Refusal, "INVALID_SPLINE_CONTROL_COUNT"):
+                    m.clamped_two_span_bezier(
+                        3, knots, {0: (malformed, [0] * 7)}, 0, Q(1, 4))
+
     def test_refusal_is_not_a_truth_value(self):
         refused = m.attempt(m.source, 0, 2, 0, 0, {1: ([0], [1])})
         self.assertFalse(refused["is_truth_value"])
