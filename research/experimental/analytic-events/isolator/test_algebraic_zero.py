@@ -2,8 +2,9 @@
 from fractions import Fraction as Q
 import unittest
 
-from algebraic_zero import (Refusal, source, rational_event, quadratic_event,
-                            verify_rational_event, verify_quadratic_event)
+from algebraic_zero import (Refusal, Source, source, rational_event, quadratic_event,
+                            constant_phase_identity, verify_rational_event,
+                            verify_quadratic_event)
 
 
 class ExactPointTests(unittest.TestCase):
@@ -84,6 +85,68 @@ class ExactPointTests(unittest.TestCase):
         self.assertTrue(verify_quadratic_event(s,q))
         self.assertFalse(verify_quadratic_event(s,{**q,"multiplicity_at_both":100}))
         self.assertFalse(verify_quadratic_event(source([2],cos=([-1],),sin=([],)),q))
+
+
+    def test_a3_zero_rate_continuum_vs_isolated_point(self):
+        # A3 PRR_kwDOUd7FHc8AAAABW61vCw: point zero is not a continuum.
+        cosine = source([-1], cos=([1],), sin=([],), phase_rate=0)
+        sine = source([-1], cos=([],), sin=([1],),
+                      phase_offset=Q(1, 2), phase_rate=0)
+        for src in (cosine, sine):
+            self.assertTrue(constant_phase_identity(src))
+            for at in (Q(-7, 2), Q(1, 3), Q(5)):
+                receipt = rational_event(src, at)
+                self.assertEqual(receipt["result"], "IDENTICAL_ZERO_PIECE")
+                self.assertTrue(verify_rational_event(src, receipt))
+        isolated = source([-1, 1], phase_rate=0)
+        self.assertFalse(constant_phase_identity(isolated))
+        self.assertEqual(rational_event(isolated, 1)["result"], "EXACT_ZERO")
+        self.assertEqual(rational_event(isolated, 2)["result"], "EXACT_NONZERO")
+        cancellation = source([0, 1], cos=([0, -1],), sin=([],),
+                              phase_rate=0)
+        self.assertTrue(constant_phase_identity(cancellation))
+        self.assertRaises(Refusal, constant_phase_identity, source([1]))
+        self.assertRaises(Refusal, rational_event,
+                          source([1], phase_offset=Q(1, 33), phase_rate=0), 1)
+
+    def test_a3_infinite_family_rational_polynomial_amplitudes(self):
+        # The cancellation holds for arbitrary rational polynomials, not specimens.
+        for degree in range(17):
+            coeff = [Q(0)] * degree + [Q(1, 3)]
+            src = source(coeff, cos=([-v for v in coeff],),
+                         sin=([],), phase_rate=0)
+            self.assertTrue(constant_phase_identity(src))
+            self.assertEqual(rational_event(src, Q(7, 8))["result"],
+                             "IDENTICAL_ZERO_PIECE")
+            neg = source(coeff, cos=(coeff,), sin=([],), phase_rate=0)
+            self.assertFalse(constant_phase_identity(neg))
+
+    def test_a3_direct_source_validation_and_mutation(self):
+        invalid = [
+            dict(c0=(), cos=((Q(1),),), sin=(),
+                 phase_offset=Q(0), phase_rate=Q(1)),
+            dict(c0=(0.25,), cos=(), sin=(),
+                 phase_offset=Q(0), phase_rate=Q(1)),
+            dict(c0=(Q(1), Q(0)), cos=(), sin=(),
+                 phase_offset=Q(0), phase_rate=Q(1)),
+            dict(c0=(Q(1),) * 18, cos=(), sin=(),
+                 phase_offset=Q(0), phase_rate=Q(1)),
+            dict(c0=(Q(2 ** 300),), cos=(), sin=(),
+                 phase_offset=Q(0), phase_rate=Q(1)),
+            dict(c0=(Q(1),), cos=(), sin=(),
+                 phase_offset=0.0, phase_rate=Q(1)),
+        ]
+        for fields in invalid:
+            with self.subTest(fields=fields), self.assertRaises(Refusal):
+                Source(**fields)
+        src = source([1], cos=([1],), sin=([],))
+        r = rational_event(src, 0)
+        q = quadratic_event(src, 1, 0, -2)
+        object.__setattr__(src, "sin", ())  # hostile frozen-dataclass bypass
+        self.assertRaises(Refusal, rational_event, src, 0)
+        self.assertRaises(Refusal, quadratic_event, src, 1, 0, -2)
+        self.assertFalse(verify_rational_event(src, r))
+        self.assertFalse(verify_quadratic_event(src, q))
 
 
 if __name__ == "__main__":
