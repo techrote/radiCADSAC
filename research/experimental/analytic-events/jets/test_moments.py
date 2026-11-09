@@ -167,6 +167,51 @@ class ResearchControls(unittest.TestCase):
                     m.clamped_two_span_bezier(
                         3, knots, {0: (malformed, [0] * 7)}, 0, Q(1, 4))
 
+    def test_knot_count_checked_before_element_conversion(self):
+        # A3 #5833649987: only fixed-length built-in knot containers are
+        # admissible. No length-100000 conversion and no iterator consumption.
+        class BombIterator:
+            def __init__(self):
+                self.pulls = 0
+
+            def __iter__(self):
+                self.pulls += 1
+                raise AssertionError("UNBOUNDED_KNOT_ITERATOR_CONSUMED")
+
+        knots = [0] * 4 + [1] * 3 + [2] * 4
+        controls = {0: ([[0] * 7, [0] * 7])}
+        for malformed in ([0] * 100_000, tuple([0] * 12),
+                          "0" * 11, None, (x for x in knots)):
+            with self.subTest(kind=type(malformed).__name__):
+                with self.assertRaisesRegex(
+                        m.Refusal, "INVALID_BSPLINE_KNOT_COUNT"):
+                    m.clamped_two_span_bezier(
+                        3, malformed, controls, 0, Q(1, 4))
+                with self.assertRaisesRegex(
+                        m.Refusal, "INVALID_BSPLINE_KNOT_COUNT"):
+                    m.reversed_spline(3, malformed, controls, 0, Q(1, 4))
+
+        bomb = BombIterator()
+        with self.assertRaisesRegex(
+                m.Refusal, "INVALID_BSPLINE_KNOT_COUNT"):
+            m.clamped_two_span_bezier(3, bomb, controls, 0, Q(1, 4))
+        self.assertEqual(bomb.pulls, 0)
+        with self.assertRaisesRegex(
+                m.Refusal, "INVALID_BSPLINE_KNOT_COUNT"):
+            m.reversed_spline(3, bomb, controls, 0, Q(1, 4))
+        self.assertEqual(bomb.pulls, 0)
+
+        # Real fixed-length tuples remain admissible. No refusal is a zero
+        # certificate; absence of an iterator is an explicit source grammar.
+        a, b, knot, binding = m.clamped_two_span_bezier(
+            3, tuple(knots), controls, 0, Q(1, 4))
+        self.assertEqual(knot, Q(1))
+        self.assertEqual(len(binding), 64)
+        refusal = m.attempt(m.clamped_two_span_bezier, 3, bomb,
+                            controls, 0, Q(1, 4))
+        self.assertFalse(refusal["is_truth_value"])
+        self.assertEqual(refusal["status"], "RESOURCE_REFUSAL_OR_BLOCKED")
+
     def test_refusal_is_not_a_truth_value(self):
         refused = m.attempt(m.source, 0, 2, 0, 0, {1: ([0], [1])})
         self.assertFalse(refused["is_truth_value"])
