@@ -23,6 +23,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 25
     steps:
+      # The historical proof checks raw immutable Git blob hashes. Windows
+      # runner defaults must not rewrite them as CRLF during checkout.
+      - name: Disable line ending conversion before checkout
+        shell: bash
+        run: git config --global core.autocrlf false
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
