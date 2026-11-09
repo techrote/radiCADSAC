@@ -72,6 +72,20 @@ Run in a checked-out repository:
 
 Development-local on 9 November 2026: **10/10 deterministic standard-library tests PASS**. Optional SymPy 1.14 challenge: **32/32 cyclotomic polynomial identities**, **209/209 admitted independently symbolic rational-time controls PASS**, **31/240 rational-time cases typed budget refusal**, **0 symbolic unknown**, and **120/120 constructed quadratic valuation checks PASS**. Reproducible seed 241, no numerical sampling accepted as proof, no native/STEP/paid campaign. Tests include cosine/sine/H2 phase cancellation, negative phase rate, 2^−10 near-zero budget refusal, cubic crossing at ±sqrt(2), quadratic tangency, ±sqrt(3), identity-zero piece and forged receipt/source rejection. These executions are **MEASURED_DETERMINISTIC_MODEL**, not independent validation of the theorem.
 
+## 9 November 2026 A3 review repair: constant-phase continuum and forged sources
+
+A3's [source-critical review](https://github.com/techrote/radiCADSAC/pull/470#pullrequestreview-5833060107) identified two checker defects in the first Draft: constant phase (`b=0`) could yield an identically zero function despite nonzero raw coefficient polynomials, and a directly constructed malformed `Source` bypassed factory validation and was subsequently accepted by a receipt verifier. Both were **implementation defects**; the nonzero-rate transcendence theorem does not apply to constant phase.
+
+**New exact classification lemma (classical cyclotomic algebra, not a new theorem):** for `b=0` and rational offset `a=p/d`, write each input polynomial `C_k(t),S_k(t)` as a sum of rational coefficients times `t^j`. Let `T_j(X)` be the Fourier numerator polynomial formed from the coefficient of `t^j`, using the same exponents as rational-time evaluation. Then
+
+`F(t) ≡ 0` on a nonempty open interval iff **for every j**, `T_j(X) mod Φ_(4d)(X) = 0`.
+
+The forward implication follows from the uniqueness of coefficients of a polynomial in `t` over the cyclotomic number field; the reverse follows by reconstruction. This covers **infinitely many rational polynomial source families** under the bounded executable grammar, including nontrivial cosine/sine cancellations. It separates `IDENTICAL_ZERO_PIECE` from a single `EXACT_ZERO` without confusing point equality with zero continua. `b ≠ 0` still uses the existing nonzero-channel criterion (distinct effective harmonics); `b=0` above cyclotomic order 128 refuses. This does NOT enumerate all isolated roots of constant-rate fields or produce their adjacent signs.
+
+Source authentication is now checked both during frozen `Source` construction and at every public evaluation/provenance entry: matched H0/H1/H2 arrays, exact `Fraction` types, immutable trimmed coefficient tuples, phase types, bit and degree budgets. A malicious `object.__setattr__` mutation cannot reuse an earlier receipt without being revalidated. Failures are typed `Refusal` or `verify_*=False`, never a fabricated zero certificate. Registered regressions include A3's exact two counterexamples, direct malformed source, float, noncanonical/oversized input, forged frozen field, and an arbitrary-degree rational polynomial family.
+
+**Evidence:** local stdlib tests and separately derived exact-SymPy checks are model-level evidence; this section records the corrected claim and falsifiers for independent A3 review. Prior [Gelfond–Schneider](https://encyclopediaofmath.org/wiki/Gel%27fond-Schneider_method) and cyclotomic-field results remain established mathematics, not new theorems. No MC-038/MC-B acceptance or general event partition is claimed.
+
 ## Known limitations and research handoff
 
 1. **Not a complete analytic event isolator.** It decides equality for specified algebraic times; it does not enumerate, bracket or order all **transcendental** roots. The square of t cos(πt)−1 gives a conceptual source with transcendental multiple zeros and illustrates the missing generality.
