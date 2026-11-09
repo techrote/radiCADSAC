@@ -46,8 +46,8 @@ python3 -m unittest -v test_phase_bridge.py
 At the locally tested source bytes, **6/6 tests PASS**, including **260 rational parameter combinations** (208 nonzero-rate A2↔A1, 52 stationary MC-038↔A1), degree-two polynomial amplitudes and two positive harmonics; exact A3 phase mismatch and corrected transfer in both directions; negative rates, forged coefficient/source identity/head/pins, malformed input, overlong coefficients, unsupported harmonic arrays, A2 stationary refusal and deliberately conservative periodic-alias refusal. These finite tests are implementation challenges, **not** the proof of the infinite family.
 
 Source-matched Git blob identities (the actual locally executed byte streams):
-- `phase_bridge.py`: `1fff5c4403324ac87c690c78b924970b20813ce3`
-- `test_phase_bridge.py`: `15f92a5d3c14e6aeaa068550942515b543a39d76`
+- `phase_bridge.py`: `7840c367b9a465d5811c0f559954dbf3efab2907`
+- `test_phase_bridge.py`: `ea3b2d9552e74e1bd6ba18dc9890dc8002113751`
 
 No native/paid campaign and no new host workflow. The checker scans only bounded metadata (at most nine harmonics and up to 17 coefficients for A1, or eight harmonics and four coefficients per channel for A2/MC). It is **not** placed on a solver hot path. Neither wall-clock improvement nor production certificate reuse has been measured. The earlier B1-C2 2080-vs-96 leaf-proof comparison remains only abstract recomputation accounting.
 
