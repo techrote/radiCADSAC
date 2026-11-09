@@ -18,14 +18,14 @@ Falsifier: modified A1/A2 coefficient, phase, interval, pin or unsupported gramm
 
 ## Conditional preservation theorem (infinite family)
 
-Let (S_1) be an A1 canonical serialized rational polynomial Fourier source and (S_2) an A2 canonical serialized source, both admitted by `producer_codec.py`. Let the externally pinned physical window (I) equal A2's source domain; A1 is restricted to (I). Assume source hash pins refer to those exact immutable upstream serializations and the code version contract is independently trusted. The codec reconstructs coefficients unchanged, except for representing A1's empty polynomial as the zero coefficient `["0"]`. It does not rescale physical time or move knots.
+Let \(S_1\) be an A1 canonical serialized rational-polynomial Fourier source and \(S_2\) an A2 canonical serialized source, both admitted by `producer_codec.py`. Let the externally pinned physical window \(I\) equal A2's source domain; A1 is restricted to \(I\). Assume source hash pins refer to those exact immutable upstream serializations and the code-version contract is independently trusted. The codec reconstructs coefficients unchanged, except for representing A1's empty polynomial as the zero coefficient `["0"]`. It does not rescale physical time or move knots.
 
-If `certified_pair` succeeds, all harmonics and polynomial coefficients agree, and the exact rational phase expressions obey (alpha_{A1}=2alpha_{A2}) and (eta_{A1}=2eta_{A2}). Consequently for **all real (tin I)**,
+If `certified_pair` succeeds, all harmonics and polynomial coefficients agree, and the exact rational phase expressions obey \(\alpha_{A1}=2\alpha_{A2}\) and \(\beta_{A1}=2\beta_{A2}\). Consequently, for **all real \(t\in I\)**,
 
-[
-F_{A1}(t)=sum_h(P_h(t)cos(hpi(alpha+ eta t))+Q_h(t)sin(hpi(alpha+eta t)))
+\[
+F_{A1}(t)=\sum_h\left(P_h(t)\cos(h\pi(\alpha+\beta t))+Q_h(t)\sin(h\pi(\alpha+\beta t))\right)
 =F_{A2}(t).
-]
+\]
 
 Proof: direct canonical reconstruction and equality of each trigonometric argument; summing equal terms yields equality. Thus any independently proved point-root, multiplicity or sided sign of *this same function* can be transported semantically, but an upstream receipt still requires its own verifier/source binding. The result applies to an infinite family of rational-polynomial coefficient choices and nonzero rational A2 rates, within the structural grammar. It is **classical semantic identity and canonical serialization preservation**, not new general event isolation, decidability or machining topology.
 
@@ -33,7 +33,7 @@ Proof: direct canonical reconstruction and equality of each trigonometric argume
 
 ## Adversarial fixture and measurement
 
-`A1`: `c0=[-1], cos=[[]], sin=[[1]], phase_offset=0, phase_rate=1` (A1 uses (pi) units). `A2`: physical domain `[0,2]`, `P0=-1, Q0=0, P1=0, Q1=1`, offset 0, rate 1/2 (A2 uses (2pi) units). Thus (-1+sin(pi t)) agrees exactly. Changing A2 rate to 1 or changing either amplitude, source or window with the original pins refuses. The 52 `(k,degree)` cases include negative rates, 48 accepted nonzero-rate pairs and four explicitly refused A2 stationary cases, besides substitution/over-budget controls.
+`A1`: `c0=[-1], cos=[[]], sin=[[1]], phase_offset=0, phase_rate=1` (A1 uses pi-radian phase units). `A2`: physical domain `[0,2]`, `P0=-1, Q0=0, P1=0, Q1=1`, offset 0, rate 1/2 (A2 uses 2pi-radian phase units). Thus the two sources represent the same function, -1 + sin(pi*t). Changing A2 rate to 1 or changing either amplitude, source or window with the original pins refuses. The 52 `(k,degree)` cases include negative rates, 48 accepted nonzero-rate pairs and four explicitly refused A2 stationary cases, besides substitution/over-budget controls.
 
 Run from the core directory with Python 3.11+ and standard library:
 
