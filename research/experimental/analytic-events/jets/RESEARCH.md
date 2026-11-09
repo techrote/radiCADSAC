@@ -1,6 +1,6 @@
 # A2 — separated-amplitude cyclotomic moments and exact sided germs
 
-**Status:** Research-only Draft; independent review outstanding. **Date:** 9 November 2026. **Evidence:** deterministic model, not native geometry, STEP or a complete event partition.
+**Status:** Research-only Draft; A3's *restricted mathematical lemma* review is conditional GO ([review 5833085453](https://github.com/techrote/radiCADSAC/pull/471#pullrequestreview-5833085453)); engineering/receipt acceptance remains HOLD pending independent retest and exact-head validation. **Date:** 9 November 2026. **Evidence:** deterministic model, not native geometry, STEP or a complete event partition.
 
 **Scope/ownership:** research/experimental/analytic-events/jets/** only. See [MC-038 #100](https://github.com/techrote/radiCADSAC/issues/100), [#324 A2 lease](https://github.com/techrote/radiCADSAC/issues/324#issuecomment-6751700697), and the earlier [12th-order MAX_JET_ORDER=10 budget counterexample](https://github.com/techrote/radiCADSAC/issues/100#issuecomment-6735298098). Historical 121 originals / 20 refused routes / 30 missing premises / 50 pre-existing complete witnesses, 26 machining operations, MC-B/MC-1 NOT_ESTABLISHED and production_authorized=false remain unchanged.
 
@@ -75,6 +75,14 @@ python3 -m unittest discover -s research/experimental/analytic-events/jets -p 't
 A local independent scratch counterpart passed **8 focused tests**, including 28 constructive Laurent-polynomial instances (harmonic count 1..7 × amplitude degree 0..3), exact cyclotomic quarter-turn checks for Phi_4/8/12/16/24/48/60/64, the order-12 counterexample, identity-zero/nonroot, a genuine C0 cubic spline knot, signed reversal, continuum-adjacent knot, source-receipt tampering, invalid knot vectors and typed resource refusals. Those tests are mathematical/model controls, **not hosted literal-head CI**, not original V54/V2 producing replay and not accepted repository capability. Exact-head GitHub CI and independent A3 source-critical review are still required.
 
 Verifier interface: verify_receipt(source, t0, submitted) replays the entire source-bound exact computation; no supplied sign, order, source SHA or cost limit is trusted. B1 should independently assess whether a smaller moment-field witness can be checked without recomputation.
+
+## A3 review response — parser and source-shape correction (9 November 2026)
+
+Independent [A3 review 5833085453](https://github.com/techrote/radiCADSAC/pull/471#pullrequestreview-5833085453) found no counterexample to the normalized nonzero-rate rational-phase valuation lemma, but identified an implementation-resource defect: the string-to-`Fraction` conversion previously ran **before** the 160-bit numerator/denominator limit. An arbitrarily long literal (including a value that later reduces to `1/2`) could consume unbounded parse time/memory. The revised model refuses strings over **128 characters before conversion**. This admits the canonical decimal text of any 160-bit numerator/denominator pair (at most 101 characters including signs and slash) but intentionally refuses unusually padded noncanonical input. It also refuses malformed/non-list spline control arrays, rather than interpreting a seven-character digit string as seven control values or allowing `len(None)` to escape as `TypeError`.
+
+**Falsifier:** An oversized rational literal reaches `Fraction`; a 160-bit canonical numerator/denominator is wrongly refused; a malformed control container is accepted or raises a non-typed exception; any previously admitted exact moment/knot receipt changes despite identical normalized input. The added standalone tests assert the first three classes plus existing full model controls. They do not establish full source-runtime or hosted qualification until they run against the literal revised PR head.
+
+Review classification remains **mathematical restricted-scope conditional GO / implementation HOLD**. This correction is engineering hardening, **not a new theorem, expanded spline grammar, MC-B advancement or native-performance claim**. Resource refusal remains a nontruth outcome. A3 must independently recheck the changed parser and source-shape admission before any acceptance.
 
 ## Prior art, nonclaims and follow-on
 
