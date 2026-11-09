@@ -1,0 +1,214 @@
+{
+  "schema": "radicadsac-mc038-h1-oriented-angular-drift/1.0",
+  "task": "MC-038",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "bounded_method": "PI_RATIONAL_ANGULAR_DRIFT_W_Q_ORIENTED_H1",
+  "frozen_v54_git_blob": "5841c331579489b25caef38cd412bdbf286f9134",
+  "v2_git_blob": "e52d3baf3692a011cf86234eeaa992ef407d99fd",
+  "population": {
+    "before": {
+      "frozen_originals": 121,
+      "route_refusals": 20,
+      "missing_ordered_premises": 30,
+      "existing_v2_witnesses": 50
+    },
+    "after": {
+      "frozen_originals": 121,
+      "route_refusals": 20,
+      "missing_ordered_premises": 30,
+      "existing_v2_witnesses": 50
+    },
+    "delta": {
+      "frozen_originals": 0,
+      "route_refusals": 0,
+      "missing_ordered_premises": 0,
+      "existing_v2_witnesses": 0
+    },
+    "newly_closed_historical_case_ids": [],
+    "required_pb_po_discharges": 0
+  },
+  "original_source_cases": {
+    "composite:PB00701_V9_EXACT_MONOTONE_SINGLE_HARMONIC_RATIO:tail0": {
+      "original_source_sha256": "4d1ef1cbecceeb4a43b4e30fd37327fa204164cc9ce25dfe4f1744a052cebcc2",
+      "original_row_sha256": "406ec73609a8213051afd3361478416e496c782b2b89ae2a857b772146059279",
+      "historical_v54_status": "BLOCKED:SPAN_OWNER_LACKS_EXACT_ORDERED_SPAN_PREMISE",
+      "preexisting_v2_source_specific": true,
+      "new_original_closure": false,
+      "certificate": {
+        "schema": "radicadsac-mc038-h1-oriented-angular-drift/1.0",
+        "status": "COMPLETE_BOUNDED_ORIENTED_H1_SIGNED_EVENT_CERTIFICATE",
+        "evidence_class": "DETERMINISTIC_MODEL",
+        "source_sha256": "4d1ef1cbecceeb4a43b4e30fd37327fa204164cc9ce25dfe4f1744a052cebcc2",
+        "source_interval": [
+          "0",
+          "2"
+        ],
+        "true_source_knots": [
+          "1"
+        ],
+        "global_phase_turns": {
+          "offset": "0",
+          "rate": "1/8"
+        },
+        "orientation_preserved": true,
+        "spans": [
+          {
+            "C_endpoints": [
+              "-1/2",
+              "1/2"
+            ],
+            "S_endpoints": [
+              "1",
+              "1"
+            ],
+            "q_min": "1",
+            "q_max": "5/4",
+            "wronskian_local": "-1",
+            "delta_direction": "INCREASING",
+            "strict_abs_delta_change_upper": "25/14",
+            "root_count_justification": "q>0; exact strict delta derivative sign; |delta(b)-delta(a)|<3<pi; every cosine zero has nonzero derivative; opposite endpoint signs imply one root",
+            "source_span": [
+              "0",
+              "1"
+            ],
+            "left_exact_sign": "NEGATIVE",
+            "right_exact_sign": "POSITIVE",
+            "isolated_root_count": 1,
+            "isolated_root_locator": {
+              "open_original_source_interval": [
+                "0",
+                "1"
+              ],
+              "unique_simple_root": true,
+              "coordinate_is_implicit_not_rational": true
+            },
+            "all_nonzero_sign_cells": [
+              "NEGATIVE",
+              "POSITIVE"
+            ]
+          },
+          {
+            "C_endpoints": [
+              "1/2",
+              "1/2"
+            ],
+            "S_endpoints": [
+              "1",
+              "1"
+            ],
+            "q_min": "5/4",
+            "q_max": "5/4",
+            "wronskian_local": "0",
+            "delta_direction": "INCREASING",
+            "strict_abs_delta_change_upper": "11/14",
+            "root_count_justification": "q>0; exact strict delta derivative sign; |delta(b)-delta(a)|<3<pi; every cosine zero has nonzero derivative; opposite endpoint signs imply one root",
+            "source_span": [
+              "1",
+              "2"
+            ],
+            "left_exact_sign": "POSITIVE",
+            "right_exact_sign": "POSITIVE",
+            "isolated_root_count": 0,
+            "isolated_root_locator": null,
+            "all_nonzero_sign_cells": [
+              "POSITIVE"
+            ]
+          }
+        ],
+        "total_isolated_roots": 1,
+        "total_zero_continua": 0,
+        "root_multiplicity": "SIMPLE_EACH_COUNTED_ROOT",
+        "maximal_nonzero_cell_signs": [
+          "NEGATIVE",
+          "POSITIVE"
+        ],
+        "source_specific_complete_within_admitted_grammar": true,
+        "historical_originals_newly_closed": [],
+        "required_pb_po_discharges": 0,
+        "pb00701_established": false,
+        "mc_b_established": false,
+        "mc1_established": false,
+        "native_geometry_qualified": false,
+        "engineering_step_qualified": false,
+        "production_authorized": false
+      }
+    },
+    "harvested:verify_pb00701_v9:4e7b85fa122a": {
+      "original_source_sha256": "a83ca0cd16c7822e6525f8f2d2df26a54f45b99807cadebc67f31fc49b066c10",
+      "original_row_sha256": "62346bbddca22c4271a14c10aa130327013ac7cf8daa0b0ae515257e8f28cfad",
+      "historical_v54_status": "BLOCKED",
+      "preexisting_v2_source_specific": true,
+      "new_original_closure": false,
+      "certificate": {
+        "schema": "radicadsac-mc038-h1-oriented-angular-drift/1.0",
+        "status": "COMPLETE_BOUNDED_ORIENTED_H1_SIGNED_EVENT_CERTIFICATE",
+        "evidence_class": "DETERMINISTIC_MODEL",
+        "source_sha256": "a83ca0cd16c7822e6525f8f2d2df26a54f45b99807cadebc67f31fc49b066c10",
+        "source_interval": [
+          "0",
+          "1"
+        ],
+        "true_source_knots": [],
+        "global_phase_turns": {
+          "offset": "0",
+          "rate": "1/8"
+        },
+        "orientation_preserved": true,
+        "spans": [
+          {
+            "C_endpoints": [
+              "1",
+              "1"
+            ],
+            "S_endpoints": [
+              "-1/2",
+              "1/2"
+            ],
+            "q_min": "1",
+            "q_max": "5/4",
+            "wronskian_local": "1",
+            "delta_direction": "DECREASING",
+            "strict_abs_delta_change_upper": "1/4",
+            "root_count_justification": "q>0; exact strict delta derivative sign; |delta(b)-delta(a)|<3<pi; every cosine zero has nonzero derivative; opposite endpoint signs imply one root",
+            "source_span": [
+              "0",
+              "1"
+            ],
+            "left_exact_sign": "POSITIVE",
+            "right_exact_sign": "POSITIVE",
+            "isolated_root_count": 0,
+            "isolated_root_locator": null,
+            "all_nonzero_sign_cells": [
+              "POSITIVE"
+            ]
+          }
+        ],
+        "total_isolated_roots": 0,
+        "total_zero_continua": 0,
+        "root_multiplicity": "SIMPLE_EACH_COUNTED_ROOT",
+        "maximal_nonzero_cell_signs": [
+          "POSITIVE"
+        ],
+        "source_specific_complete_within_admitted_grammar": true,
+        "historical_originals_newly_closed": [],
+        "required_pb_po_discharges": 0,
+        "pb00701_established": false,
+        "mc_b_established": false,
+        "mc1_established": false,
+        "native_geometry_qualified": false,
+        "engineering_step_qualified": false,
+        "production_authorized": false
+      }
+    }
+  },
+  "pb00701_established": false,
+  "pb00702_established": false,
+  "pb00703_established": false,
+  "pb00704_established": false,
+  "mc_b_established": false,
+  "mc1_established": false,
+  "native_geometry_qualified": false,
+  "engineering_step_qualified": false,
+  "production_authorized": false,
+  "supported_operations_unchanged": 26
+}
