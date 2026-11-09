@@ -15,6 +15,9 @@ from math import comb, factorial, lcm
 
 SCHEMA = "radicadsac-a2-moment-germ/1.0"
 MAX_HARMONICS, MAX_DEGREE, MAX_FIELD_ORDER = 8, 3, 64
+# Canonical 160-bit numerator/denominator text fits in 101 characters.
+# Reject oversized text BEFORE Fraction parses/normalizes it.
+MAX_RATIONAL_LITERAL_CHARS = 128
 
 
 class Refusal(ValueError):
@@ -28,6 +31,9 @@ def require(test, reason):
 
 def rational(value):
     require(type(value) in (str, int, Q), "NONEXACT_RATIONAL")
+    if type(value) is str:
+        require(len(value) <= MAX_RATIONAL_LITERAL_CHARS,
+                "RATIONAL_LITERAL_RESOURCE_LIMIT")
     try:
         result = Q(value)
     except (ValueError, ZeroDivisionError) as exc:
@@ -360,7 +366,8 @@ def clamped_two_span_bezier(degree, knots, controls, offset, rate):
                 type(pair) in (tuple, list) and len(pair) == 2,
                 "INVALID_SPLINE_HARMONIC")
         cp, cq = pair
-        require(len(cp) == 2 * degree + 1 and len(cq) == 2 * degree + 1,
+        require(type(cp) in (tuple, list) and type(cq) in (tuple, list) and
+                len(cp) == 2 * degree + 1 and len(cq) == 2 * degree + 1,
                 "INVALID_SPLINE_CONTROL_COUNT")
         cp = tuple(map(rational, cp))
         cq = tuple(map(rational, cq))
