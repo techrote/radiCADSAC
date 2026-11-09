@@ -350,9 +350,11 @@ def clamped_two_span_bezier(degree, knots, controls, offset, rate):
     """
     require(type(degree) is int and 1 <= degree <= MAX_DEGREE,
             "UNSUPPORTED_SPLINE_DEGREE")
-    ks = tuple(map(rational, knots))
-    require(len(ks) == 3 * degree + 2,
+    # Own the source grammar before processing elements: no unbounded iterator
+    # materialisation, and at most 3*p+2 rational conversions for p<=3.
+    require(type(knots) in (list, tuple) and len(knots) == 3 * degree + 2,
             "INVALID_BSPLINE_KNOT_COUNT")
+    ks = tuple(rational(x) for x in knots)
     L, K, R = ks[0], ks[degree + 1], ks[-1]
     require(L < K < R and ks == ((L,) * (degree + 1) +
                                  (K,) * degree + (R,) * (degree + 1)),
@@ -421,6 +423,10 @@ def verify_knot_receipt(degree, knots, controls, offset, rate, claimed):
 
 def reversed_spline(degree, knots, controls, offset, rate, A=2):
     """Reparameterise original t=A-u, including real source knot reversal."""
+    require(type(degree) is int and 1 <= degree <= MAX_DEGREE,
+            "UNSUPPORTED_SPLINE_DEGREE")
+    require(type(knots) in (list, tuple) and len(knots) == 3 * degree + 2,
+            "INVALID_BSPLINE_KNOT_COUNT")
     ks = [rational(A) - rational(x) for x in reversed(knots)]
     cs = {h: [list(reversed(pair[0])), list(reversed(pair[1]))]
           for h, pair in controls.items()}
