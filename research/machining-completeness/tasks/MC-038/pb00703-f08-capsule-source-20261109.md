@@ -55,3 +55,12 @@ MC-020/MC-026/MC-038 may consume this restricted original-source lowering as a c
 ## Remaining prerequisite
 
 An independent source-critical review and exact-head qualification must establish that the new constructor correctly binds the **whole** original F08 source and yields expected responses under adversarial parser mutations. Next, general exact source geometry outside rational planar disk paths (including true imported stock, curved/trimmed NURBS and arbitrary accessible undercut tool geometries) still needs an exact lowering theorem or explicit finite refusal with named consumer proof dependency. No negative datum or unsolved source family may be removed from MC-B's required obligations.
+
+
+## 9 November 2026 — source-custody correction after independent HOLD
+
+The direct adapter previously defaulted untrusted parsed fixtures to the frozen MC-012 original Git-blob ID. This was unsound: changing only F08-TSLOT head_radius from 3 to 13/4 preserved the original ID while changing exact membership at P=(15,105/8,5). Its segment-distance squared is 625/64; original r²=9 is OUTSIDE, altered r²=169/16 is INSIDE. The original capsule algebra was correct, but the source identity was forged.
+
+The repaired adapter independently checks original fixture bytes against the pinned MC-012 Git blob before assigning the original ID and compares canonical **complete JSON semantics** (mapping key order normalized; original array order, scalar types, all field values bound) with its untrusted supplied fixture. Only an exact semantic match inherits the frozen original source ID. Every altered but supported prospective input receives a distinct PB-007-03:derived-canonical-sha256:<digest>:<operation> identity bound to all source fields, never the original MC-012 label. Passing an asserted provenance argument is rejected. A derived geometric result does not confer independent physical source validity.
+
+The direct-adapter adversarial test checks the reviewed 3→13/4 mutation, independent MC-012 oracle membership, exact rational inequalities, canonical original and derived identities, whole-fixture mutation, JSON key-order invariance, source descriptor digest changes, and explicit forged-provenance rejection. The original byte-authenticated loader remains a positive control. This correction does not change original fixtures, capsule algebra, holder/access certificates or broader PB-007-03 coverage; required PO and MC-B/MC-1 obligations stay OPEN/NOT_ESTABLISHED.

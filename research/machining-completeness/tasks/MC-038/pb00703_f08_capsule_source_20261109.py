@@ -205,8 +205,54 @@ def make_source(source_id, solid, bounds, *, units="mm", frame_id="F08:S-F08:com
     }
 
 
-def lower_f08_operations(fixture, *, provenance=FIXTURE_BLOB):
-    """Derive *two distinct* original journal cutting sources; never fuse operations."""
+def _canonical_fixture_bytes(fixture):
+    """Canonical full JSON semantics, not caller-supplied original provenance."""
+    try:
+        data = json.dumps(fixture, sort_keys=True, separators=(",", ":"),
+                          ensure_ascii=False, allow_nan=False).encode("utf-8")
+    except (TypeError, ValueError, OverflowError, RecursionError) as exc:
+        raise InvalidSource("fixture must have finite JSON semantics") from exc
+    if len(data) > MAX_FIXTURE_BYTES:
+        raise OpenSource("PB-007-03: canonical fixture budget exceeded; source stays OPEN")
+    return data
+
+
+def _authenticated_original_fixture(root: Path):
+    """Pin actual historical bytes before allowing the original identity."""
+    try:
+        raw = (root / FIXTURE_PATH).read_bytes()
+    except OSError as exc:
+        raise OpenSource("PB-007-03: original source bytes unavailable for authentication") from exc
+    if len(raw) > MAX_FIXTURE_BYTES:
+        raise OpenSource("PB-007-03: original fixture byte budget; no silent truncation")
+    blob = hashlib.sha1(f"blob {len(raw)}\0".encode() + raw).hexdigest()
+    if blob != FIXTURE_BLOB:
+        raise InvalidSource("original fixture Git blob SHA differs from reviewed authority")
+    try:
+        return json.loads(raw)
+    except (ValueError, UnicodeDecodeError) as exc:
+        raise InvalidSource("authenticated original fixture JSON is invalid") from exc
+
+
+def lower_f08_operations(fixture, *, provenance=None):
+    """Preserve original identity only for authenticated complete fixture semantics.
+
+    Different accepted in-memory fixtures get explicit SHA256-derived identities.
+    Neither a default argument nor caller-provided provenance can forge MC-012.
+    """
+    if provenance is not None:
+        raise InvalidSource("caller-supplied provenance cannot establish original identity")
+    supplied = _canonical_fixture_bytes(fixture)
+    original = _canonical_fixture_bytes(
+        _authenticated_original_fixture(Path(__file__).resolve().parents[4]))
+    authentic = supplied == original
+    derived_sha = hashlib.sha256(supplied).hexdigest()
+
+    def source_identity(operation):
+        if authentic:
+            return f"MC-012:{operation}:{FIXTURE_BLOB}"
+        return f"PB-007-03:derived-canonical-sha256:{derived_sha}:{operation}"
+
     if not isinstance(fixture, dict) or fixture.get("schema") != "radicadsac-mc-physical-corpus/1.0" or fixture.get("task") != "MC-012":
         raise InvalidSource("unexpected original fixture schema/task")
     found = [f for f in fixture.get("families", []) if f.get("id") == "F08"]
@@ -239,20 +285,13 @@ def lower_f08_operations(fixture, *, provenance=FIXTURE_BLOB):
         max(q(b[axis][1]) for b in (head_bounds, neck_bounds)),
     ] for axis in ("x", "y", "z")}
     return {
-        "F08-ACCESS": make_source(f"MC-012:F08-ACCESS:{provenance}", access_solid, access_bounds),
-        "F08-TSLOT": make_source(f"MC-012:F08-TSLOT:{provenance}", either(head_solid, neck_solid), combined_bounds),
+        "F08-ACCESS": make_source(source_identity("F08-ACCESS"), access_solid, access_bounds),
+        "F08-TSLOT": make_source(source_identity("F08-TSLOT"), either(head_solid, neck_solid), combined_bounds),
     }, radial_margin
 
 
 def load_original_f08(root: Path):
-    path = root / FIXTURE_PATH
-    raw = path.read_bytes()
-    if len(raw) > MAX_FIXTURE_BYTES:
-        raise OpenSource("PB-007-03: original fixture byte budget; no silent truncation")
-    blob = hashlib.sha1(f"blob {len(raw)}\0".encode() + raw).hexdigest()
-    if blob != FIXTURE_BLOB:
-        raise InvalidSource("original fixture Git blob SHA differs from reviewed authority")
-    fixture = json.loads(raw)
+    fixture = _authenticated_original_fixture(root)
     return fixture, *lower_f08_operations(fixture)
 
 

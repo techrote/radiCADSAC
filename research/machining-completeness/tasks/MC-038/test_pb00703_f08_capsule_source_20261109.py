@@ -64,6 +64,59 @@ class SourceProofTests(unittest.TestCase):
         self.assertNotEqual(codec.source_sha256(self.sources["F08-ACCESS"]),
                             codec.source_sha256(self.sources["F08-TSLOT"]))
 
+    def test_direct_adapter_original_identity_forgery_regression(self):
+        original, original_margin = candidate.lower_f08_operations(copy.deepcopy(self.fixture))
+        self.assertEqual(original_margin, Fraction(1, 2))
+        for operation in ("F08-ACCESS", "F08-TSLOT"):
+            self.assertEqual(original[operation]["source_id"],
+                             f"MC-012:{operation}:{candidate.FIXTURE_BLOB}")
+            self.assertEqual(original[operation]["source_id"], self.sources[operation]["source_id"])
+        # Reordering map keys cannot silently change semantic source identity.
+        reordered = dict(reversed(list(self.fixture.items())))
+        reordered_sources, _ = candidate.lower_f08_operations(reordered)
+        for operation in original:
+            self.assertEqual(reordered_sources[operation]["source_id"],
+                             original[operation]["source_id"])
+
+        changed = copy.deepcopy(self.fixture)
+        changed_slot = next(f for f in changed["families"] if f["id"] == "F08")["operations"][1]
+        self.assertEqual(changed_slot["head_radius"], "3")
+        changed_slot["head_radius"] = "13/4"
+        altered, margin = candidate.lower_f08_operations(changed)
+        self.assertEqual(margin, Fraction(1, 4))
+        point = [Fraction(15), Fraction(105, 8), Fraction(5)]
+        self.assertEqual(Fraction(25, 8) ** 2, Fraction(625, 64))
+        self.assertLess(Fraction(3) ** 2, Fraction(625, 64))
+        self.assertGreater(Fraction(13, 4) ** 2, Fraction(625, 64))
+        self.assertFalse(member(original["F08-TSLOT"], point))
+        self.assertTrue(member(altered["F08-TSLOT"], point))
+        self.assertFalse(oracle.t_slot_sweep_removes(
+            point, self.slot["path_xy"], self.slot["head_radius"], self.slot["head_z"],
+            self.slot["neck_radius"], self.slot["neck_z"]))
+        self.assertTrue(oracle.t_slot_sweep_removes(
+            point, changed_slot["path_xy"], changed_slot["head_radius"], changed_slot["head_z"],
+            changed_slot["neck_radius"], changed_slot["neck_z"]))
+        digest = hashlib.sha256(candidate._canonical_fixture_bytes(changed)).hexdigest()
+        for operation in original:
+            self.assertEqual(altered[operation]["source_id"],
+                             f"PB-007-03:derived-canonical-sha256:{digest}:{operation}")
+            self.assertNotEqual(altered[operation]["source_id"],
+                                original[operation]["source_id"])
+            self.assertEqual(codec.classify_source_descriptor(altered[operation])["status"],
+                             "EXACT_NOMINAL_SOURCE")
+        self.assertNotEqual(codec.source_sha256(altered["F08-TSLOT"]),
+                            codec.source_sha256(original["F08-TSLOT"]))
+        replay, _ = candidate.lower_f08_operations(copy.deepcopy(changed))
+        self.assertEqual(replay["F08-TSLOT"]["source_id"], altered["F08-TSLOT"]["source_id"])
+        changed["families"][0]["title"] += " changed outside F08"
+        independent_change, _ = candidate.lower_f08_operations(changed)
+        self.assertNotEqual(independent_change["F08-TSLOT"]["source_id"],
+                            altered["F08-TSLOT"]["source_id"])
+        for fixture in (self.fixture, changed):
+            for asserted in (candidate.FIXTURE_BLOB, "forged-source"):
+                with self.assertRaises(candidate.InvalidSource):
+                    candidate.lower_f08_operations(fixture, provenance=asserted)
+
     def test_actual_original_physical_witnesses(self):
         slot = self.sources["F08-TSLOT"]
         assertions = self.f08["oracle_assertions"]
