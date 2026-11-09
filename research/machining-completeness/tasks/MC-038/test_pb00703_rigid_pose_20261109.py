@@ -167,7 +167,31 @@ class ExactRigidPoseTest(unittest.TestCase):
             self.assertEqual(v4.classify_nominal_point(transformed, world).get(
                              "closed_predicate_membership",False), truth)
 
-    def test_03_any_role_and_nonzero_uncertainty(self):
+    def test_03_rotated_bounding_domain_not_aabb_tool_truth(self):
+        # Complement inside the source domain has a REAL rotated box boundary.
+        # World (69/10,0,0) lies inside the output bounding AABB [-7,7]^2
+        # but its inverse has y=-138/25 outside the original [-5,5] source.
+        src = source({"op": "complement", "child": v4.unit_sphere_solid()})
+        p = rotation()
+        p["translation"] = ["0", "0", "0"]
+        out, receipt = posecodec.lower_exact_source(src, p, "bounded-complement")
+        witness = [Q(69,10), Q(0), Q(0)]
+        local = exact_inverse(p, witness)
+        self.assertTrue(-7 <= witness[0] <= 7)
+        self.assertTrue(local[1] < -5)
+        self.assertFalse(v4.classify_nominal_point(src, local).get(
+            "closed_predicate_membership", False))
+        self.assertFalse(v4.classify_nominal_point(out, witness).get(
+            "closed_predicate_membership", False))
+        eps = Q(1,1000000)
+        for u, truth in ((Q(5)-eps,True),(Q(5),True),(Q(5)+eps,False)):
+            world = exact_forward(p, [u,0,0])
+            self.assertEqual(v4.classify_nominal_point(out, world).get(
+                             "closed_predicate_membership",False), truth)
+        self.assertTrue(posecodec.verify_exact_receipt(src, p, "bounded-complement",
+                                                       out, receipt))
+
+    def test_05_any_role_and_nonzero_uncertainty(self):
         for role in ("stock", "cutting", "holder"):
             src = source(v4.unit_sphere_solid(), role, "1/1000000")
             transformed, receipt = posecodec.lower_exact_source(src, rotation(), role+"-posed")
@@ -178,7 +202,7 @@ class ExactRigidPoseTest(unittest.TestCase):
                 exact_forward(rotation(), [0,0,0]))["status"], "UNCERTIFIED_SOURCE")
             self.assertFalse(posecodec.attempt(src, rotation(), role+"-posed")["certifying_exactness"])
 
-    def test_04_forged_receipt_output_source_pose_and_metadata(self):
+    def test_05_forged_receipt_output_source_pose_and_metadata(self):
         src = source(v4.unit_sphere_solid())
         p = rotation()
         out, rec = posecodec.lower_exact_source(src, p, "posed")
@@ -194,7 +218,7 @@ class ExactRigidPoseTest(unittest.TestCase):
             with self.assertRaises(ValueError, msg=change):
                 posecodec.verify_exact_receipt(ss, pp, "posed", oo, rr)
 
-    def test_05_bad_geometry_rejected_without_epsilon(self):
+    def test_06_bad_geometry_rejected_without_epsilon(self):
         src = source(v4.unit_sphere_solid())
         for mutation in ("mirror", "skew", "float", "translation_float", "missing_frame", "extra", "near_orthogonal"):
             p = rotation()
@@ -208,7 +232,7 @@ class ExactRigidPoseTest(unittest.TestCase):
             self.assertEqual(posecodec.attempt(src, p, "posed")["status"],
                              "SEMANTIC_BLOCKER", mutation)
 
-    def test_06_open_resource_budget_not_invalid_domain(self):
+    def test_07_open_resource_budget_not_invalid_domain(self):
         highdegree = source({"op": "poly_le", "terms": [
             {"coefficient": "1", "exponents": [13,0,0]},
             {"coefficient": "-1", "exponents": [0,0,0]}]})
@@ -219,7 +243,7 @@ class ExactRigidPoseTest(unittest.TestCase):
         self.assertEqual(posecodec.attempt(source(v4.unit_sphere_solid()), rotation(),
             "local-source-01")["status"], "SEMANTIC_BLOCKER")
 
-    def test_07_exact_identity_and_inverse_rotation(self):
+    def test_08_exact_identity_and_inverse_rotation(self):
         src = source(v4.unit_sphere_solid())
         identity = {"matrix":[["1","0","0"],["0","1","0"],["0","0","1"]],
                     "translation":["0","0","0"], "source_frame":"machine", "target_frame":"common"}
@@ -230,7 +254,7 @@ class ExactRigidPoseTest(unittest.TestCase):
             self.assertEqual(expected, actual)
         self.assertEqual(rec["output_sha256"], v4.source_sha256(out))
 
-    def test_08_opaque_sources_and_invalid_rationals_fail_closed(self):
+    def test_09_opaque_sources_and_invalid_rationals_fail_closed(self):
         src = source(v4.unit_sphere_solid())
         for bad in ({"format":"STEP","path":"unreviewed.step"}, None, [], {"schema":"opaque"}):
             self.assertNotEqual(posecodec.attempt(bad, rotation(), "posed")["status"],
