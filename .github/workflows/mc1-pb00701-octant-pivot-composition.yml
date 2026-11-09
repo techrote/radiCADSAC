@@ -1,0 +1,80 @@
+name: MC-038 exact constant-H0/H1 octant two-root pivot composition
+on:
+  push:
+    branches:
+      - research/mc038-octant-pivot-composition-20261109
+  pull_request:
+    paths:
+      - research/machining-completeness/tasks/MC-038/pb00701_octant_pivot_composition_20261109.py
+      - research/machining-completeness/tasks/MC-038/pb00701-octant-pivot-composition-20261109.md
+      - .github/workflows/mc1-pb00701-octant-pivot-composition.yml
+      - research/machining-completeness/tasks/MC-038/pb00701_octant_two_root_witness_20261109.py
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-pivot-composition:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 25
+    steps:
+      # The historical proof checks raw immutable Git blob hashes. Windows
+      # runner defaults must not rewrite them as CRLF during checkout.
+      - name: Disable line ending conversion before checkout
+        shell: bash
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Check exact literal committed head
+        shell: bash
+        run: |
+          echo "LITERAL_HEAD=$(git rev-parse HEAD)"
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Full composing theorem and adversarial tests
+        run: python research/machining-completeness/tasks/MC-038/pb00701_octant_pivot_composition_20261109.py --self-test --contract
+      - name: Unmodified inherited octant and rational pivot theorem tests
+        run: |
+          python research/machining-completeness/tasks/MC-038/pb00701_constant_h0_h1_octant_20261106.py --self-test
+          python research/machining-completeness/tasks/MC-038/pb00701_octant_two_root_witness_20261109.py --self-test
+
+  full-frozen-original-producing-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Check exact literal committed head
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: All 50 historical original sources producing replay
+        run: python3 research/machining-completeness/tasks/MC-038/verify_pb00701_post_v54_evidence_reconciliation_v2.py --contract
+
+  mc1-programme-static:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Check exact literal committed head
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: MC-1 current programme static checks
+        run: python3 tools/validate_machining_completeness.py

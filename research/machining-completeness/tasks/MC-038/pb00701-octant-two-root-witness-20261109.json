@@ -1,0 +1,59 @@
+{
+  "schema": "radicadsac-pb00701-octant-two-root-witness/1.0",
+  "status": "COMPLETE_RESTRICTED_SPAN_TWO_SIMPLE_EVENTS",
+  "evidence_class": "DETERMINISTIC_MODEL",
+  "source_spec_sha256": "0c005078db60467d081c2130cb0d1c395fe687dcad66b4c9e531cf2ec9187124",
+  "source_spec": {
+    "h": "199/200",
+    "c": "-3/5",
+    "s": "-4/5",
+    "offset": "1/8",
+    "rate": "1/8",
+    "left": "0",
+    "pivot": "1/4",
+    "right": "1"
+  },
+  "root_count": 2,
+  "root_orders": [
+    1,
+    1
+  ],
+  "strict_rational_root_brackets": [
+    [
+      "0",
+      "1/4"
+    ],
+    [
+      "1/4",
+      "1"
+    ]
+  ],
+  "ordered_signed_regions": [
+    "POSITIVE",
+    "NEGATIVE",
+    "POSITIVE"
+  ],
+  "point_interval_proofs": {
+    "left": {
+      "sign": "POSITIVE",
+      "strict_lower": "5553090445/1099511627776",
+      "strict_upper": "2776545223/549755813888"
+    },
+    "pivot": {
+      "sign": "NEGATIVE",
+      "strict_lower": "-3867894609/1099511627776",
+      "strict_upper": "-241743413/68719476736"
+    },
+    "right": {
+      "sign": "POSITIVE",
+      "strict_lower": "26800595927/137438953472",
+      "strict_upper": "214404767417/1099511627776"
+    }
+  },
+  "proof": "IVT_TWICE_PLUS_ROLLE_AT_MOST_ONE_INTERIOR_STATIONARY_POINT",
+  "source_knot_provenance": "NOT_CLAIMED",
+  "historical_new_closures": 0,
+  "required_pb_po_discharges": 0,
+  "mc_b": "NOT_ESTABLISHED",
+  "mc_1": "NOT_ESTABLISHED"
+}
