@@ -191,7 +191,7 @@ class ExactRigidPoseTest(unittest.TestCase):
         self.assertTrue(posecodec.verify_exact_receipt(src, p, "bounded-complement",
                                                        out, receipt))
 
-    def test_05_any_role_and_nonzero_uncertainty(self):
+    def test_04_any_role_and_nonzero_uncertainty(self):
         for role in ("stock", "cutting", "holder"):
             src = source(v4.unit_sphere_solid(), role, "1/1000000")
             transformed, receipt = posecodec.lower_exact_source(src, rotation(), role+"-posed")
