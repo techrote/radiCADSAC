@@ -6,6 +6,7 @@ import copy
 from fractions import Fraction as Q
 import hashlib
 import json
+import subprocess
 from pathlib import Path
 import sys
 
@@ -16,12 +17,59 @@ import pb00703_parametric_patch as patch
 import pb00703_trimmed_shell as v6
 import pb00703_nonconvex_shell_20261109 as nc
 
-MC020=ROOT/'research/machining-completeness/tasks/MC-020/form-undercut-sweep-contract-v1.json'
+MC020_REL='research/machining-completeness/tasks/MC-020/form-undercut-sweep-contract-v1.json'
+MC020=ROOT/MC020_REL
 MC020_SHA='6fca79b5d70329346e2c4ceab292c1be3fc3e528'
 
 
 def git_blob_sha(data):
     return hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()
+
+
+
+def _strict_json(raw):
+    """Reject duplicate keys/non-JSON constants; never silently reinterpret custody."""
+    def unique_pairs(pairs):
+        result={}
+        for key,value in pairs:
+            if key in result:
+                raise ValueError('duplicate key in original MC-020 fixture: '+key)
+            result[key]=value
+        return result
+    def illegal_constant(value):
+        raise ValueError('non-JSON constant in source: '+value)
+    return json.loads(raw,object_pairs_hook=unique_pairs,parse_constant=illegal_constant)
+
+
+def verify_mc020_checkout(committed_bytes,worktree_bytes,head_object_id):
+    """Verify three separate authorities: HEAD Git object, checkout, consumed JSON.
+
+    The only permitted worktree difference is platform CRLF checkout conversion.
+    Do not substitute a worktree SHA-1 for the immutable Git-object identity.
+    """
+    if head_object_id!=MC020_SHA or git_blob_sha(committed_bytes)!=MC020_SHA:
+        raise ValueError('HEAD MC-020 source Git object differs from frozen authority')
+    if worktree_bytes!=committed_bytes and worktree_bytes.replace(b'\r\n',b'\n')!=committed_bytes:
+        raise ValueError('MC-020 worktree differs beyond permitted checkout CRLF conversion')
+    committed_doc=_strict_json(committed_bytes)
+    checkout_doc=_strict_json(worktree_bytes)
+    if checkout_doc!=committed_doc:
+        raise ValueError('MC-020 consumed original-source semantics changed')
+    return checkout_doc
+
+
+def authenticated_original_mc020():
+    """Bind original geometry to the current checkout's immutable pinned Git blob."""
+    try:
+        head_id=subprocess.check_output(
+            ['git','rev-parse','HEAD:'+MC020_REL],cwd=ROOT,stderr=subprocess.PIPE
+        ).decode('ascii').strip()
+        committed=subprocess.check_output(
+            ['git','cat-file','blob','HEAD:'+MC020_REL],cwd=ROOT,stderr=subprocess.PIPE
+        )
+    except (OSError,subprocess.CalledProcessError) as exc:
+        raise ValueError('cannot authenticate checked-out MC-020 Git source') from exc
+    return verify_mc020_checkout(committed,MC020.read_bytes(),head_id)
 
 
 def fmt(x):
@@ -33,9 +81,7 @@ def q3(p):
 
 
 def original_cutter():
-    raw=MC020.read_bytes()
-    assert git_blob_sha(raw)==MC020_SHA, 'original MC-020 witness provenance changed'
-    fixture=json.loads(raw)['boundary_controls']['undercut_access']
+    fixture=authenticated_original_mc020()['boundary_controls']['undercut_access']
     return [[Q(x) for x in fixture[name]] for name in ('cutting_head','cutting_neck')]
 
 
@@ -127,6 +173,48 @@ def rejected(source):
     return res
 
 
+
+def source_custody_adversaries():
+    """Positive LF/CRLF checkout and negative Git-object/geometry mutation controls."""
+    # This object is the committed source, not a normalized worktree approximation.
+    committed=subprocess.check_output(
+        ['git','cat-file','blob','HEAD:'+MC020_REL],cwd=ROOT
+    )
+    checked=MC020.read_bytes()
+    original=verify_mc020_checkout(committed,checked,MC020_SHA)
+    assert original['boundary_controls']['undercut_access']['cutting_head'][-1]=='3/4'
+    assert verify_mc020_checkout(committed,committed,MC020_SHA)==original
+    assert verify_mc020_checkout(committed,committed.replace(b'\n',b'\r\n'),MC020_SHA)==original
+
+    def refuses(committed_arg,worktree_arg,head_id,reason):
+        try:
+            verify_mc020_checkout(committed_arg,worktree_arg,head_id)
+        except (ValueError,UnicodeError):
+            return
+        raise AssertionError('original-source custody accepted '+reason)
+
+    # One *physical* cutting-head coordinate changes (the bounded exact oracle).
+    marker=b'"cutting_head":["-1","1","-1","1","0","3/4"]'
+    assert committed.count(marker)==1, 'original MC-020 witness layout changed'
+    changed=committed.replace(marker,marker.replace(b'"3/4"',b'"7/8"'),1)
+    assert _strict_json(changed)['boundary_controls']['undercut_access']['cutting_head'][-1]=='7/8'
+    refuses(committed,changed,MC020_SHA,'modified head geometry')
+    refuses(committed,changed.replace(b'\n',b'\r\n'),MC020_SHA,'modified geometry plus CRLF')
+    refuses(changed,changed,MC020_SHA,'forged canonical Git object')
+    refuses(committed,committed,'0'*40,'forged HEAD source identity')
+    refuses(committed,committed+b' ',MC020_SHA,'unrecorded worktree text edit')
+    refuses(committed,committed.replace(b'\n',b'\r\r\n'),MC020_SHA,'unexpected checkout filter')
+    # Exact original source semantics must not be parsed with duplicate-key override.
+    duplicate=b'{"source":"A","source":"B"}'
+    try:
+        _strict_json(duplicate)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError('duplicate JSON identity accepted')
+    print('PB-007-03 MC-020 custody: pinned HEAD Git blob, LF/CRLF, and altered-source refusals PASS')
+
+
 def run_controls():
     s=cutter_shell()
     cert=nc.certify_shell(s)
@@ -200,7 +288,8 @@ def main():
     if not a.contract and not a.self_test:
         parser.error('specify --contract or --self-test')
     assert MC020.exists(),MC020
-    assert git_blob_sha(MC020.read_bytes())==MC020_SHA
+    authenticated_original_mc020()
+    source_custody_adversaries()
     if a.self_test:
         run_controls()
     else:
