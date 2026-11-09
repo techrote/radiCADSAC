@@ -73,18 +73,24 @@ def canonical(source):
     if left >= right:
         raise Refusal("empty/reversed physical domain")
     offset, rate = exact(source["offset"]), exact(source["rate"])
+    # Do not admit envelope instances a named producer's actual grammar refuses.
+    if who == "A2-471" and rate == 0:
+        raise Refusal("A2 refuses stationary phase")
+    if who != "A1-470" and (left < -4 or right > 4 or abs(rate) > 4):
+        raise Refusal("source exceeds A2/MC038 physical domain")
+    max_h, max_poly = ((2, 17) if who == "A1-470" else (8, 4))
     terms = source["terms"]
     if not isinstance(terms, dict) or not 1 <= len(terms) <= 9:
         raise Refusal("bad harmonic map")
     admitted = {}
     for key, pair in terms.items():
-        if not isinstance(key, str) or not re.fullmatch(r"(?:0|[1-8])", key):
+        if not isinstance(key, str) or not re.fullmatch(r"(?:0|[1-8])", key) or int(key) > max_h:
             raise Refusal("bad harmonic index")
         if not isinstance(pair, list) or len(pair) != 2:
             raise Refusal("bad harmonic pair")
         arrays = []
         for poly in pair:
-            if not isinstance(poly, list) or not 1 <= len(poly) <= 9:
+            if not isinstance(poly, list) or not 1 <= len(poly) <= max_poly:
                 raise Refusal("bad polynomial length")
             coeff = tuple(exact(v) for v in poly)
             if len(coeff) > 1 and coeff[-1] == 0:
