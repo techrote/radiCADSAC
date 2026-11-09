@@ -94,13 +94,15 @@ def certify(spec, pivots):
         key = str(left)
         child_spec = {**spec, "parameter_lo": key,
                       "parameter_hi": str(right)}
-        left_sign = name(octant.endpoint_signs(h,c,s,rate,indices[i])[0])
-        right_sign = name(octant.endpoint_signs(h,c,s,rate,indices[i+1])[0])
         try:
             proof = octant.certify(child_spec)
         except octant.Refusal as exc:
+            # Preserve the parent's exact failure *before* inspecting node
+            # signs: an actual node zero is its own typed refusal.
             require(str(exc) == "TWO_ROOTS_SAME_OCTANT_UNBRACKETED",
                     "PARENT_REFUSAL:" + str(exc))
+            left_sign = name(octant.endpoint_signs(h,c,s,rate,indices[i])[0])
+            right_sign = name(octant.endpoint_signs(h,c,s,rate,indices[i+1])[0])
             require(key in pivots, "MISSING_RATIONAL_TWO_ROOT_PIVOT")
             middle = octant.rat(pivots[key])
             require(left < middle < right, "PIVOT_OUTSIDE_CELL")
@@ -123,6 +125,8 @@ def certify(spec, pivots):
             kind = "TWO_SIMPLE_ROOTS_WITH_EXACT_PIVOT"
             consumed.add(key)
         else:
+            left_sign = name(octant.endpoint_signs(h,c,s,rate,indices[i])[0])
+            right_sign = name(octant.endpoint_signs(h,c,s,rate,indices[i+1])[0])
             require(key not in pivots, "UNNEEDED_PIVOT_FOR_ADMITTED_CELL")
             require(proof["root_count"] == len(proof["ordered_events"]) and
                     proof["node_signs"] == [left_sign,right_sign] and
@@ -187,8 +191,13 @@ def verify_receipt(receipt):
     require(type(receipt) is dict and type(receipt.get("source_spec")) is dict
             and type(receipt.get("supplied_rational_pivots")) is dict,
             "RECEIPT_SHAPE")
-    expected = certify(receipt["source_spec"],
-                       receipt["supplied_rational_pivots"])
+    try:
+        expected = certify(receipt["source_spec"],
+                           receipt["supplied_rational_pivots"])
+    except (RefusedNontruth, octant.Refusal, witness.RefusedNontruth,
+            ValueError, TypeError, KeyError, IndexError, OverflowError,
+            RecursionError, ZeroDivisionError, MemoryError) as exc:
+        raise RefusedNontruth("RECEIPT_REPLAY_REFUSED:" + str(exc)) from exc
     try:
         actual_json = json.dumps(receipt, sort_keys=True,
                                  separators=(",", ":"), allow_nan=False)
