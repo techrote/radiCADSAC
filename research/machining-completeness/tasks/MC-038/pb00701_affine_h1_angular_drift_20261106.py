@@ -420,6 +420,37 @@ def near_knot_control():
             "strict_pair_distance_upper":str(2*h)}
 
 
+def same_law_shared_zero_spec(epsilon):
+    """Two continuous affine H1 spans: C=1-t-eps, S=t-1-eps.
+
+    With u=t-1, F=sqrt(2)*cos(pi*u/4)*(u*tan(pi*u/4)-eps).
+    epsilon=0: one exactly order-two knot zero, F''(1)=pi/sqrt(2)>0.
+    epsilon>0: two simple crossings, one on each side of the knot.
+    epsilon<0: no roots throughout [0,2].
+    All three lie OUTSIDE the sufficient q>0/strict-drift grammar.
+    """
+    eps=Q(epsilon)
+    return synthetic([str(1-eps),str(-eps),str(-eps),str(-1-eps)],
+                     [str(-1-eps),str(-eps),str(-eps),str(1-eps)])
+
+
+def near_knot_shared_zero_bifurcation():
+    """Exact rational root separation, with no numerical root scanning.
+
+    For 0<u<=1, tan(pi*u/4)>pi*u/4>3*u/4.
+    At h=2^-50 and eps=2^-120, h*tan(pi*h/4)>3*h^2/4>eps.
+    u*tan(pi*u/4) is even and strictly increases with |u| on [-1,1].
+    Thus eps>0 has one simple root in each of (-h,0),(0,h);
+    eps=0 has an order-two zero at u=0; eps<0 has no roots.
+    """
+    h, eps = Q(1,2**50), Q(1,2**120)
+    need(Q(3,4)*h*h>eps, "BIFURCATION_SIGN_INEQUALITY_FAILED")
+    return {"epsilon":str(eps),"h":str(h),
+            "left_root_in":[str(1-h),"1"],
+            "right_root_in":["1",str(1+h)],
+            "pair_distance_strictly_below":str(2*h)}
+
+
 class Tests(unittest.TestCase):
     def assert_refused(self, spec):
         result=attempt(spec)
@@ -451,14 +482,48 @@ class Tests(unittest.TestCase):
         witness=near_knot_control()
         self.assertEqual(Q(witness["strict_pair_distance_upper"]),Q(1,2**99))
 
-    def test_identity_zero_shared_amplitude_and_tangency_refusals(self):
+    def test_identity_and_shared_amplitude_simple_crossing_refusals(self):
         self.assert_refused(synthetic(["0"]*4,["0"]*4))
-        # Affine coefficient pair vanishes at interior u=1/2: source
-        # physically has a tangential/multiple root, not admitted here.
-        self.assert_refused(synthetic(["-1","1","1","1"],
-                                      ["-1","1","1","1"]))
+        # On the first source span C=S=2t-1 gives
+        # F=(2t-1)*(cos(pi*t/4)+sin(pi*t/4)). Its t=1/2 zero
+        # is SIMPLE: F'(1/2)=2*(cos(pi/8)+sin(pi/8))>0.
+        # q_min=0 requires NONTRUTH refusal, not "multiple root".
+        simple=synthetic(["-1","1","1","1"],["-1","1","1","1"])
+        self.assert_refused(simple)
+        self.assertEqual(attempt(simple)["reason"],
+                         "IDENTITY_OR_SHARED_AMPLITUDE_ZERO_REFUSAL")
         self.assert_refused(synthetic(["0","0","-1","-1"],
                                       ["1","1","1","1"]))
+
+    def test_genuine_order_two_shared_amplitude_knot_tangency_refusal(self):
+        # Same-law two-span C=1-t, S=t-1: letting u=t-1,
+        # F=sqrt(2)*u*sin(pi*u/4)>=0 for -1<=u<=1.
+        # F(1)=F'(1)=0 and F''(1)=pi/sqrt(2)>0: order TWO,
+        # not the simple crossing in the previous test.
+        tangency=same_law_shared_zero_spec(0)
+        self.assert_refused(tangency)
+        self.assertEqual(attempt(tangency)["reason"],
+                         "IDENTITY_OR_SHARED_AMPLITUDE_ZERO_REFUSAL")
+
+    def test_shared_zero_near_knot_root_bifurcation_refusal(self):
+        # eps=+2^-120: exactly two distinct SIMPLE crossings, with
+        # POSITIVE,NEGATIVE,POSITIVE cells, both within 2^-50 of knot1.
+        # eps=-2^-120: root-free POSITIVE. eps=0: order-two tangency.
+        # Exact lower bound 3*h*h/4>eps certifies positive signs
+        # at 1+/-h, while F(1)=-sqrt(2)*eps<0 for eps>0.
+        witness=near_knot_shared_zero_bifurcation()
+        self.assertEqual(Q(witness["pair_distance_strictly_below"]),
+                         Q(1,2**49))
+        for eps in (Q(1,2**120),-Q(1,2**120)):
+            # A fail-closed sufficient classifier must not return a
+            # fabricated root-free certificate or silently coalesce
+            # the two close real roots.
+            result=attempt(same_law_shared_zero_spec(eps))
+            self.assertEqual(result["status"],"REFUSED_NONTRUTH")
+            self.assertFalse(result["pb00701_established"])
+            self.assertIn(result["reason"],
+                          ("ANGULAR_DERIVATIVE_SIGN_UNPROVED",
+                           "ANGULAR_DRIFT_NOT_STRICTLY_BELOW_PI"))
 
     def test_knot_and_endpoint_zero_refusals(self):
         self.assert_refused(synthetic(["0","1","1","1"],["1"]*4))
