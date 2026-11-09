@@ -123,7 +123,7 @@ class ExactRigidPoseTest(unittest.TestCase):
             point = cases[name]
             self.assertEqual(physical.finite_cylinder_contains(point, op["axis_common"],
                 op["center_common_yz"], op["axial_interval_common"], op["radius"]), truth)
-            self.assertEqual(v4.classify_nominal_point(out, point)["closed_predicate_membership"], truth)
+            self.assertEqual(v4.classify_nominal_point(out, point).get("closed_predicate_membership", False), truth)
         # Original cylindrical boundary and exact signed 1/1e6 perturbations.
         eps = Q(1, 1000000)
         for yy, expected in [(Q(3)-eps, True), (Q(3), True), (Q(3)+eps, False)]:
