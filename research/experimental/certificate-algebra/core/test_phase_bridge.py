@@ -89,7 +89,8 @@ class BridgeTests(unittest.TestCase):
                      lambda s: s["terms"].update({"1":[["0","0"],["1"]]}),
                      lambda s: s.update(extra=1),
                      lambda s: s.update(terms={"1":[["1"]*100000,["0"]]}),
-                     lambda s: s["terms"].update({"3":[["1"],["0"]]})]:
+                     lambda s: s["terms"].update({"3":[["1"],["0"]]}),
+                     lambda s: s["terms"].update({1:[["1"],["0"]]})]:
             bad = copy.deepcopy(a)
             edit(bad)
             with self.assertRaises(Refusal):
