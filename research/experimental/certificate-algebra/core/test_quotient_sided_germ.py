@@ -158,6 +158,52 @@ class QuotientSidedGermTests(unittest.TestCase):
         self.assertEqual(g['left'],{'kind':'FINITE_ORDER','order':0,'leading':'1'})
         self.assertEqual(g['right'],g['left'])
 
+    def test_e5_post_replay_mutation_cannot_rebind_pinned_germ(self):
+        """Source must not change between E4 proof replay and E5 germ parsing."""
+        import sys
+        from certificate_algebra import digest
+
+        n, d = family(1, Q(1), Q(1))
+        q, positive, _ = attach(n, d)
+        self.assertEqual(positive["right"]["leading"], "1")
+        pin = n["hash"]
+
+        # A valid-looking receipt for the alternative source, but falsely
+        # tied to the original E4 quotient hash and external parent pin.
+        wrong = copy.deepcopy(positive)
+        wrong["right"]["leading"] = "-1"
+        wrong["germ_hash"] = digest({k:v for k,v in wrong.items() if k != "germ_hash"})
+
+        def run_under_boundary_mutation(fn):
+            hit = [False]
+            def trace(frame, event, arg):
+                if (event == "call" and not hit[0] and
+                    frame.f_code.co_name == "piece" and
+                    frame.f_globals.get("__name__") == "certificate_algebra" and
+                    frame.f_back.f_globals.get("__name__") == "quotient_sided_germ"):
+                    hit[0] = True
+                    n["pieces"][1]["coeff"][1] = "-1"
+                return trace
+            sys.settrace(trace)
+            try:
+                value = fn()
+            finally:
+                sys.settrace(None)
+            self.assertTrue(hit[0], "mutation must hit E5's real piece parsing")
+            return value
+
+        good, _ = run_under_boundary_mutation(
+            lambda: derive(n, d, q, numerator_pin=pin,
+                           denominator_pin=d["hash"], time="1"))
+        self.assertEqual(good, positive)
+        # With a stable altered source the old pin cannot reverify.
+        with self.assertRaises(Refusal):
+            derive(n,d,q,numerator_pin=pin,denominator_pin=d["hash"],time="1")
+        n["pieces"][1]["coeff"][1] = "1"
+        with self.assertRaises(Refusal):
+            run_under_boundary_mutation(lambda: verify(n, d, q, wrong,
+                    numerator_pin=pin, denominator_pin=d["hash"], time="1"))
+
     def test_projection_invalid_and_unbound(self):
         n,d=family(1,Q(1),Q(1))
         _,g,_=attach(n,d)
