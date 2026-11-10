@@ -10,7 +10,7 @@ import re
 from typing import Any
 
 from certificate_algebra import EvidenceMeter, Refusal, Verified, enc, replay, verify_base
-from receipt_integrity import admit
+from receipt_integrity import admit, validate
 from product_cone import verify_product
 
 SCHEMA = "b1-closed-nonzero-v1"
@@ -18,7 +18,7 @@ _HEX = re.compile(r"[0-9a-f]{64}\Z")
 
 
 def _pin(value: Any) -> str:
-    if not isinstance(value, str) or _HEX.fullmatch(value) is None:
+    if type(value) is not str or _HEX.fullmatch(value) is None:
         raise Refusal("external 64-hex snapshot pin required")
     return value
 
@@ -71,7 +71,8 @@ def verify_closed_base(raw: dict, *, source_pin: str,
     trusted expected pin separately from caller-provided raw fields.
     """
     pin = _pin(source_pin)
-    if not isinstance(raw, dict) or set(raw) != {"pieces", "receipts", "hash"}:
+    validate(raw)  # Include top-level hash; verify_base guards only child arrays.
+    if type(raw) is not dict or set(raw) != {"pieces", "receipts", "hash"}:
         raise Refusal("invalid base record schema")
     ps, cs = raw["pieces"], raw["receipts"]
     if (not isinstance(ps, list) or not isinstance(cs, list)
