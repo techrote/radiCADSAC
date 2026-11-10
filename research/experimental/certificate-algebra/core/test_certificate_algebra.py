@@ -144,6 +144,34 @@ class CertificateAlgebraTests(unittest.TestCase):
         with self.assertRaises(Refusal): piece({"left":"0","right":"1","coeff":["1"],"forged":1})
         with self.assertRaises(Refusal): Piece(Q(0),Q(1),(Q(1),Q(0)))
 
+    def test_transform_closures_refuse_oversized_verified_snapshots(self):
+        # Base admission allows exactly 512 cells, but the old split and
+        # concatenate closures minted 513-cell Verified states. Journal replay
+        # would inherit the same budget bypass.
+        ps = tuple(Piece(Q(i), Q(i + 1), (Q(1),)) for i in range(512))
+        boundary = verified(*ps)
+        self.assertEqual(len(boundary.pieces), 512)
+        with self.assertRaisesRegex(Refusal, "cardinality"):
+            split(boundary, 0, Q(1, 2), EvidenceMeter())
+        neighbor = verified(Piece(Q(512), Q(513), (Q(1),)))
+        with self.assertRaisesRegex(Refusal, "cardinality"):
+            concatenate(boundary, neighbor, EvidenceMeter())
+        # The actual untrusted journal replay must enforce the same budget;
+        # a consistent 513-piece `after` hash cannot authorize enlargement.
+        source = base_record(ps)
+        l = Piece(Q(0), Q(1, 2), (Q(1),))
+        r = Piece(Q(1, 2), Q(1), (Q(1),))
+        oversized_hash = snapshot_hash((l, r) + ps[1:], 0)
+        log = {"schema": "b1-journal-v1", "base": source,
+               "steps": [{"before": source["hash"], "after": oversized_hash,
+                          "op": "split", "index": 0, "cut": "1/2"}]}
+        with self.assertRaisesRegex(Refusal, "cardinality"):
+            replay(log)
+        # A legitimate smaller closure must remain available.
+        small = verified(Piece(Q(0), Q(1), (Q(1),)))
+        self.assertEqual(len(split(small, 0, Q(1, 2), EvidenceMeter()).pieces), 2)
+        self.assertEqual(len(concatenate(small, verified(Piece(Q(1), Q(2), (Q(1),))), EvidenceMeter()).pieces), 2)
+
     def test_explicit_concatenation_is_only_static_continuous(self):
         left=verified(Piece(Q(0),Q(1),(Q(1),)))
         right=verified(Piece(Q(1),Q(3),(Q(1),Q(2),Q(-2))))
