@@ -176,8 +176,10 @@ def snapshot_hash(pieces: tuple[Piece, ...], generation: int) -> str:
 
 
 def _state(ps: tuple[Piece, ...], cs: tuple[Certificate, ...], gen: int) -> Verified:
-    if not ps or len(ps) != len(cs) or gen < 0:
-        raise Refusal("invalid snapshot")
+    # The public importer admits at most 512 pieces. Every trusted closure
+    # must preserve that same resource budget, including journal replay.
+    if not ps or len(ps) > 512 or len(ps) != len(cs) or gen < 0:
+        raise Refusal("invalid snapshot cardinality")
     for p, c in zip(ps, cs):
         if p.hash != c.source_hash or len(p.coeff) != len(c.b) or c.sign not in ("ZERO", "POS", "NEG"):
             raise Refusal("certificate attachment mismatch")
