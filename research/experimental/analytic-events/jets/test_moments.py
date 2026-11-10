@@ -212,6 +212,75 @@ class ResearchControls(unittest.TestCase):
         self.assertFalse(refusal["is_truth_value"])
         self.assertEqual(refusal["status"], "RESOURCE_REFUSAL_OR_BLOCKED")
 
+    def test_signed_reversal_preflight_rejects_unbounded_controls(self):
+        # A3 exact-head review #5834336109: oversized control arrays used
+        # to be copied and returned by the public helper without refusal.
+        knots = [0] * 4 + [1] * 3 + [2] * 4
+        legal = {0: ([0] * 7, [0] * 7)}
+
+        class Bomb:
+            pulls = 0
+
+            def __iter__(self):
+                self.pulls += 1
+                raise AssertionError("CONTROL_ITERATOR_WAS_CONSUMED")
+
+            def __reversed__(self):
+                self.pulls += 1
+                raise AssertionError("CONTROL_ITERATOR_WAS_REVERSED")
+
+        bomb = Bomb()
+        malformed = (
+            ({0: ([0] * 100_000, [0] * 7)}, "INVALID_SPLINE_CONTROL_COUNT"),
+            ({0: ([0] * 7, [0] * 100_000)}, "INVALID_SPLINE_CONTROL_COUNT"),
+            ({0: (bomb, [0] * 7)}, "INVALID_SPLINE_CONTROL_COUNT"),
+            ({0: ([0] * 7, (x for x in range(7)))},
+             "INVALID_SPLINE_CONTROL_COUNT"),
+            ({0: None}, "INVALID_SPLINE_HARMONIC"),
+            ({0: ([0] * 7,)}, "INVALID_SPLINE_HARMONIC"),
+            ({0: ([0] * 7, [0] * 7), 1: ([0] * 100_000, [0] * 7)},
+             "INVALID_SPLINE_CONTROL_COUNT"),
+            ({9: ([0] * 7, [0] * 7)}, "INVALID_SPLINE_HARMONIC"),
+            ({True: ([0] * 7, [0] * 7)}, "INVALID_SPLINE_HARMONIC"),
+            ({}, "INVALID_SPLINE_CHANNELS"),
+            (None, "INVALID_SPLINE_CHANNELS"),
+        )
+        for controls, reason in malformed:
+            with self.subTest(kind=reason, shape=type(controls).__name__):
+                with self.assertRaisesRegex(m.Refusal, reason):
+                    m.reversed_spline(3, knots, controls, 0, Q(1, 4))
+        self.assertEqual(bomb.pulls, 0)
+
+        # Correct shape is insufficient: refuse noncanonical source content
+        # and transformations that violate the emitted source budget.
+        with self.assertRaisesRegex(m.Refusal, "INVALID_RATIONAL"):
+            m.reversed_spline(
+                3, knots, {0: ([0] * 6 + ["not-a-rational"], [0] * 7)},
+                0, Q(1, 4))
+        with self.assertRaisesRegex(
+                m.Refusal, "NONCANONICAL_ZERO_HARMONIC_SINE"):
+            m.reversed_spline(3, knots, {0: ([0] * 7, [1] * 7)},
+                              0, Q(1, 4))
+        with self.assertRaisesRegex(m.Refusal, "UNSUPPORTED_SPLINE_KNOT_PATTERN"):
+            m.reversed_spline(3, [0] * 4 + [1] * 2 + [2] * 5,
+                              legal, 0, Q(1, 4))
+        with self.assertRaisesRegex(m.Refusal, "SOURCE_DOMAIN_RESOURCE_LIMIT"):
+            m.reversed_spline(3, knots, legal, 0, Q(1, 4), A=10)
+
+        # Each admitted degree roundtrips complete original source data;
+        # a true C0 knot remains a structural knot after negative reversal.
+        for p in (1, 2, 3):
+            source = (p, [0] * (p + 1) + [1] * p + [2] * (p + 1),
+                      {0: ([0] * (2 * p + 1), [0] * (2 * p + 1))},
+                      0, Q(1, 4))
+            once = m.reversed_spline(*source)
+            twice = m.reversed_spline(*once)
+            self.assertEqual(
+                m.clamped_two_span_bezier(*source)[3],
+                m.clamped_two_span_bezier(*twice)[3])
+            self.assertEqual(
+                m.knot_germ(*once)["status"], "CONTINUUM_BOTH_SIDES")
+
     def test_refusal_is_not_a_truth_value(self):
         refused = m.attempt(m.source, 0, 2, 0, 0, {1: ([0], [1])})
         self.assertFalse(refused["is_truth_value"])
