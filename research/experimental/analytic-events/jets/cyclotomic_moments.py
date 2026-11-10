@@ -422,15 +422,39 @@ def verify_knot_receipt(degree, knots, controls, offset, rate, claimed):
 
 
 def reversed_spline(degree, knots, controls, offset, rate, A=2):
-    """Reparameterise original t=A-u, including real source knot reversal."""
+    """Reparameterise t=A-u; refuse invalid source shape before reversal.
+
+    Source and transformed-source admission are checked independently. A
+    syntactically plausible returned array is not itself a germ certificate.
+    """
     require(type(degree) is int and 1 <= degree <= MAX_DEGREE,
             "UNSUPPORTED_SPLINE_DEGREE")
     require(type(knots) in (list, tuple) and len(knots) == 3 * degree + 2,
             "INVALID_BSPLINE_KNOT_COUNT")
-    ks = [rational(A) - rational(x) for x in reversed(knots)]
+    # A3 review #5834336109: preflight *all* control shapes before any
+    # reversed() call or element conversion, including channels after h=0.
+    require(type(controls) is dict and 1 <= len(controls) <= MAX_HARMONICS,
+            "INVALID_SPLINE_CHANNELS")
+    for h, pair in controls.items():
+        require(type(h) is int and 0 <= h <= 8 and
+                type(pair) in (tuple, list) and len(pair) == 2,
+                "INVALID_SPLINE_HARMONIC")
+        cp, cq = pair
+        require(type(cp) in (tuple, list) and type(cq) in (tuple, list) and
+                len(cp) == 2 * degree + 1 and len(cq) == 2 * degree + 1,
+                "INVALID_SPLINE_CONTROL_COUNT")
+    # Bound literal parsing and authenticate complete source rather than
+    # returning a reversal of noncanonical or discontinuous input.
+    clamped_two_span_bezier(degree, knots, controls, offset, rate)
+    anchor, phase_offset, phase_rate = rational(A), rational(offset), rational(rate)
+    ks = [anchor - rational(x) for x in reversed(knots)]
     cs = {h: [list(reversed(pair[0])), list(reversed(pair[1]))]
           for h, pair in controls.items()}
-    return degree, ks, cs, rational(offset) + rational(rate) * rational(A), -rational(rate)
+    new_offset, new_rate = phase_offset + phase_rate * anchor, -phase_rate
+    # A may move a valid source outside this model's domain budget.
+    # Validate the *output* instead of claiming it is admissible regardless.
+    clamped_two_span_bezier(degree, ks, cs, new_offset, new_rate)
+    return degree, ks, cs, new_offset, new_rate
 
 
 def attempt(fn, *args, **kwargs):
