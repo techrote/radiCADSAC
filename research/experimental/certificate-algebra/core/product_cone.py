@@ -9,6 +9,8 @@ from __future__ import annotations
 from fractions import Fraction as Q
 from math import comb
 
+from receipt_integrity import admit
+
 from certificate_algebra import (
     MAX_BITS, MAX_DEGREE, Certificate, EvidenceMeter, Piece, Refusal,
     Verified, _state, kind, verify_base,
@@ -81,11 +83,9 @@ def product(raw_left: dict, raw_right: dict, *, left_pin: str, right_pin: str,
 def verify_product(raw_left: dict, raw_right: dict, witness: dict, *,
                    left_pin: str, right_pin: str):
     """Independent deterministic replay; never trusts a supplied output sign."""
-    if not isinstance(witness, dict) or set(witness) != {
-            "schema", "left", "right", "product", "leaf_hashes", "signs"}:
-        raise Refusal("invalid product witness fields")
+    # The untrusted witness must NOT be enumerated or compared before exact
+    # primitive-tree admission (even set(witness) can run custom key hooks).
     s, reconstructed, meter = product(raw_left, raw_right,
                                       left_pin=left_pin, right_pin=right_pin)
-    if witness != reconstructed:
-        raise Refusal("forged/stale product witness")
+    admit(reconstructed, witness)
     return s, meter
