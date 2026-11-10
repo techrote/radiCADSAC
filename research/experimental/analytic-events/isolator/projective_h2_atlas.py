@@ -209,13 +209,19 @@ def projective_numerator(c):
 
 
 def read(doc):
-    require(type(doc) is dict and set(doc) == set(KEYS), 'SOURCE_FIELDS')
-    a, b, ql, qr = (token(doc[k]) for k in KEYS[:4])
-    coeff = tuple(token(doc[k]) for k in KEYS[4:])
+    # Flat, exact-built-in source grammar; capture once for parsing AND digest.
+    # This avoids accepting a digest of data changed after coefficient parsing.
+    # This is not a trusted upstream B-spline provenance or writer-fence proof.
+    require(type(doc) is dict and len(doc) == len(KEYS)
+            and all(type(k) is str for k in doc), 'SOURCE_FIELDS')
+    captured = doc.copy()
+    require(set(captured) == set(KEYS), 'SOURCE_FIELDS')
+    a, b, ql, qr = (token(captured[k]) for k in KEYS[:4])
+    coeff = tuple(token(captured[k]) for k in KEYS[4:])
     require(b != 0, 'ZERO_PHASE_RATE')
     require(ql < qr and ql.denominator in (1, 2) and qr.denominator in (1, 2), 'PHASE_ENDPOINT_GRAMMAR')
     require(-MAX_PHASE <= ql < qr <= MAX_PHASE and qr-ql <= MAX_WIDTH, 'PHASE_WIDTH_BUDGET')
-    digest = sha256(json.dumps(doc,sort_keys=True,separators=(',',':'),ensure_ascii=True).encode()).hexdigest()
+    digest = sha256(json.dumps(captured,sort_keys=True,separators=(',',':'),ensure_ascii=True).encode()).hexdigest()
     return a, b, ql, qr, coeff, digest
 
 

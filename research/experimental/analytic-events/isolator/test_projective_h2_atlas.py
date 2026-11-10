@@ -1,5 +1,7 @@
 """Independent Fraction controls for A1-F6 complete projective H2 atlas."""
 import copy
+import json
+import sys
 import unittest
 from fractions import Fraction as Q
 
@@ -168,6 +170,45 @@ class ProjectiveAtlasTests(unittest.TestCase):
             if change=='bounds':receipt['bounds']['bits']=999
             if change=='authentication':receipt['physical_source_authentication']='TRUSTED_BSPLINE'
             self.assertFalse(mod.verify(src,receipt),change)
+
+    def test_source_hash_and_event_analysis_share_one_snapshot(self):
+        # New direct source-level F6 control: a mutable ordinary dict changes
+        # from a four-crossing source to a zero continuum after parsing but
+        # precisely before hashing. The receipt must never mix those states.
+        d = dict(a='0/1', b='-2/1', phase_lo='-1/2', phase_hi='1/1',
+                 H0='0/1', C1='0/1', S1='0/1', C2='0/1', S2='-1/4')
+        good = mod.certify(d, bits=12)
+        self.assertTrue(mod.verify(d, good))
+        zero = copy.deepcopy(d)
+        zero['S2'] = '0/1'
+        z = mod.certify(zero, bits=12)
+        self.assertEqual(z['kind'], 'IDENTITY_ZERO_CONTINUUM')
+        forged = copy.deepcopy(good)
+        forged['source_sha256'] = z['source_sha256']
+        self.assertFalse(mod.verify(d, forged))
+
+        def during_digest(call):
+            triggered = [False]
+            def trace(frame, event, arg):
+                if (event == 'call' and frame.f_code is json.dumps.__code__
+                        and frame.f_back and frame.f_back.f_code is mod.read.__code__):
+                    d['S2'] = '0/1'
+                    triggered[0] = True
+                return trace
+            sys.settrace(trace)
+            try:
+                response = call()
+            finally:
+                sys.settrace(None)
+            self.assertTrue(triggered[0], 'real F6 digest was not reached')
+            return response
+
+        self.assertFalse(during_digest(lambda: mod.verify(d, forged)))
+        d['S2'] = '-1/4'
+        candidate = during_digest(lambda: mod.certify(d, bits=12))
+        self.assertEqual(candidate['source_sha256'], good['source_sha256'])
+        self.assertEqual(candidate['events'], good['events'])
+        self.assertFalse(mod.verify(d, candidate))  # now all-zero source
 
     def test_typed_nontruth_on_unsupported_budgets_and_grammar(self):
         d=document((1,0,0,-1,0))
