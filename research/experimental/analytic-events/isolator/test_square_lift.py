@@ -1,5 +1,6 @@
 """Deterministic adversarial tests for the restricted exact square-lift certificate."""
 import json
+import sys
 import unittest
 from dataclasses import replace
 from fractions import Fraction as Q
@@ -98,6 +99,46 @@ class SquareLiftTests(unittest.TestCase):
         object.__setattr__(s,"left_p",(Q(1,2),))
         self.assertFalse(verify(s,base))
         self.assertRaises(Refusal,issue,s)
+
+    def test_source_digest_mutation_cannot_forge_receipt(self):
+        # Original-parent negative: issue captures k=4, then source_hash reads
+        # mutated caller-owned Spec(k=5), producing an incoherent receipt.
+        # The published pre-fix verifier accepted under the same interleaving.
+        import square_lift as original
+
+        source = make_spec(4)
+        expected = issue(source)
+        digest_five = issue(make_spec(5))["source_sha256"]
+
+        def mutate_original_at_hash(compute):
+            seen = []
+            def trace(frame, event, arg):
+                if event == "call" and frame.f_code is original.source_hash.__code__:
+                    seen.append(True)
+                    object.__setattr__(source, "k", 5)
+                    sys.settrace(None)
+                return trace
+            sys.settrace(trace)
+            try:
+                outcome = compute()
+            finally:
+                sys.settrace(None)
+            self.assertTrue(seen, "must execute original source_hash boundary")
+            return outcome
+
+        raced = mutate_original_at_hash(lambda: issue(source))
+        self.assertEqual(raced, expected)  # entire receipt is bound to k=4
+        self.assertNotEqual(raced["source_sha256"], digest_five)
+
+        # Construct the previously issuable contradictory source-bound receipt.
+        forgery = {**expected, "source_sha256": digest_five}
+        object.__setattr__(source, "k", 4)
+        self.assertFalse(mutate_original_at_hash(lambda: verify(source, forgery)))
+        object.__setattr__(source, "k", 4)
+        self.assertTrue(mutate_original_at_hash(lambda: verify(source, expected)))
+        self.assertFalse(verify(source, expected))  # source now k=5
+        object.__setattr__(source, "k", 4)
+        self.assertTrue(verify(source, expected))
 
     def test_malformed_and_budget_refusals(self):
         invalid=[(2,(),(),()), (10001,(),(),()),(True,(),(),()),

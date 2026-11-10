@@ -125,6 +125,38 @@ def validate(s):
     return s
 
 
+def source_snapshot(s):
+    """Capture a canonical owned source before any receipt classification or digest.
+
+    A frozen dataclass can still be mutated via object.__setattr__, so a
+    validator followed by rereading its caller-owned fields is not custody.
+    The bounded exact rational values are reconstructed into independent Qs.
+    """
+    if type(s) is not Spec:
+        raise Refusal("source must be an exact Spec")
+    k, left, right, r = s.k, s.left_p, s.right_p, s.r
+
+    def owned_vector(vec, degree):
+        if type(vec) is not tuple or not 1 <= len(vec) <= degree + 1:
+            raise Refusal("source vector must be a bounded tuple")
+        captured = []
+        for value in vec:
+            if type(value) is not Q:
+                raise Refusal("noncanonical source coefficient")
+            n, d = value.numerator, value.denominator
+            if type(n) is not int or type(d) is not int or d <= 0:
+                raise Refusal("noncanonical rational representation")
+            copied = Q(n, d)
+            if copied.numerator != n or copied.denominator != d:
+                raise Refusal("noncanonical rational representation")
+            captured.append(rational(copied))
+        return tuple(captured)
+
+    return Spec(k, owned_vector(left, MAX_DEGREE_P),
+                owned_vector(right, MAX_DEGREE_P),
+                owned_vector(r, MAX_DEGREE_R))
+
+
 def make_spec(k, left_p=(Q(7,4), Q(1,2)), right_p=(Q(3,2), Q(1)), r=(Q(1),)):
     # Validate bounded container length BEFORE conversion, including rejecting generators.
     left_p = poly(left_p, MAX_DEGREE_P)
@@ -163,7 +195,7 @@ def source_hash(s):
 
 def issue(s):
     """Replay a finite exact theorem schema, not a general event solver."""
-    validate(s)
+    s = source_snapshot(s)
     k = s.k
     seam = evaluate(s.left_p, HALF)
     base = {"schema": "a1-square-lift-receipt-v1", "source_sha256": source_hash(s),
