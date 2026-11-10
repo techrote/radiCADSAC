@@ -47,7 +47,26 @@ class Source:
 
 
 def source(doc):
-    require(type(doc) is dict and set(doc)=={"a", "b", "pieces"}, "SOURCE_FIELDS")
+    # One private bounded primitive-tree snapshot binds parsing and SHA-256.
+    # External writers are not fenced; the result describes captured values.
+    require(type(doc) is dict and len(doc) == 3 and
+            all(type(k) is str for k in doc) and
+            set(doc) == {"a", "b", "pieces"}, "SOURCE_FIELDS")
+    rows = doc["pieces"]
+    require(type(rows) is list and 1 <= len(rows) <= MAX_PIECES, "PIECE_LIMIT")
+    captured = {"a": doc["a"], "b": doc["b"], "pieces": []}
+    for piece in rows:
+        require(type(piece) is dict and len(piece) == 7 and
+                all(type(k) is str for k in piece) and
+                set(piece) == {"lo", "hi", *POLYS}, "PIECE_FIELDS")
+        row = {"lo": piece["lo"], "hi": piece["hi"]}
+        for name in POLYS:
+            values = piece[name]
+            require(type(values) is list and 1 <= len(values) <= MAX_DEGREE+1,
+                    "DEGREE")
+            row[name] = values.copy()
+        captured["pieces"].append(row)
+    doc = captured
     a,b=parse_rat(doc["a"]),parse_rat(doc["b"])
     require(type(doc["pieces"]) is list and 1<=len(doc["pieces"])<=MAX_PIECES,"PIECE_LIMIT")
     out=[]
@@ -69,23 +88,49 @@ def source(doc):
     sha=hashlib.sha256(json.dumps(doc,sort_keys=True,separators=(",",":"),ensure_ascii=True).encode()).hexdigest()
     return Source(a,b,tuple(out),sha)
 
+def owned_source(s):
+    """Return a privately rebuilt, source-hash-checked value, not a mutable caller alias.
+
+    Source/Piece dataclasses are frozen only by convention: object.__setattr__
+    can change caller-owned instances after a one-time validity check.
+    No external writer-fence or real B-spline ancestry is claimed.
+    """
+    require(type(s) is Source and type(s.a) is Q and type(s.b) is Q
+            and type(s.pieces) is tuple and type(s.sha256) is str
+            and 1 <= len(s.pieces) <= MAX_PIECES, "SOURCE_SHAPE")
+
+    def rat_token(q):
+        require(type(q) is Q, "SOURCE_RATIONAL")
+        n, d = q.numerator, q.denominator
+        require(type(n) is int and type(d) is int and d > 0
+                and max(abs(n).bit_length(), d.bit_length()) <= MAX_BITS,
+                "SOURCE_RATIONAL_BUDGET")
+        return canon(Q(n, d))
+
+    doc = {"a": rat_token(s.a), "b": rat_token(s.b), "pieces": []}
+    for piece in s.pieces:
+        require(type(piece) is Piece and type(piece.lo) is Q
+                and type(piece.hi) is Q and type(piece.p) is tuple
+                and len(piece.p) == len(POLYS), "PIECE_SHAPE")
+        row = {"lo": rat_token(piece.lo), "hi": rat_token(piece.hi)}
+        for name, coeffs in zip(POLYS, piece.p):
+            require(type(coeffs) is tuple and 1 <= len(coeffs) <= MAX_DEGREE+1,
+                    "COEFFICIENT_SHAPE")
+            row[name] = [rat_token(c) for c in coeffs]
+        doc["pieces"].append(row)
+    rebuilt = source(doc)
+    require(rebuilt.sha256 == s.sha256, "SOURCE_HASH_MISMATCH")
+    return rebuilt
+
+
 def valid_source(s):
-    """Reject forged/mutated Source before consuming a source-bound receipt."""
+    """Return boolean validity, without leaking a mutable source into a proof."""
     try:
-        if type(s) is not Source or type(s.a) is not Q or type(s.b) is not Q or type(s.pieces) is not tuple:
-            return False
-        doc={"a":canon(s.a),"b":canon(s.b),"pieces":[]}
-        for p in s.pieces:
-            if type(p) is not Piece or type(p.lo) is not Q or type(p.hi) is not Q or type(p.p) is not tuple or len(p.p)!=5:
-                return False
-            row={"lo":canon(p.lo),"hi":canon(p.hi)}
-            for key,coeffs in zip(POLYS,p.p):
-                if type(coeffs) is not tuple or not all(type(c) is Q for c in coeffs):return False
-                row[key]=[canon(c) for c in coeffs]
-            doc["pieces"].append(row)
-        renewed=source(doc)
-        return renewed == s and renewed.sha256 == s.sha256
-    except (TypeError,Refusal,ValueError,AttributeError,OverflowError):return False
+        owned_source(s)
+        return True
+    except (TypeError, Refusal, ValueError, AttributeError, OverflowError,
+            ZeroDivisionError):
+        return False
 
 
 def eval_poly(p,x):
@@ -185,7 +230,9 @@ def grid(lo,hi,n,j,shifts):
 def partition(s,limit_level=6,max_shifts=8,precision=(4,6,8,12)):
     require(type(limit_level) is int and type(max_shifts) is int and
             0<=limit_level<=10 and 1<=max_shifts<=32 and
-            valid_source(s) and type(precision) is tuple and all(type(k) is int and 3<=k<=16 for k in precision),"BUDGET")
+            type(precision) is tuple and 1 <= len(precision) <= 16 and
+            all(type(k) is int and 3<=k<=16 for k in precision), "BUDGET")
+    s = owned_source(s)  # Every later proof stage consumes this private snapshot.
     # Global stage-wise search; each candidate is independently checked.
     for level in range(limit_level+1):
         n=2**level
@@ -210,7 +257,8 @@ def partition(s,limit_level=6,max_shifts=8,precision=(4,6,8,12)):
 
 def verify(s,cert):
     try:
-        if not valid_source(s) or type(cert) is not dict or cert.get("status")!="CERTIFIED_SIMPLE_PARTITION" or cert.get("source_sha256")!=s.sha256:return False
+        s = owned_source(s)  # One hash-bound snapshot for ALL recomputation stages.
+        if type(cert) is not dict or cert.get("status")!="CERTIFIED_SIMPLE_PARTITION" or cert.get("source_sha256")!=s.sha256:return False
         level,j,shifts,k=cert["level"],cert["shift"],cert["shifts"],cert["precision"]
         if not all(type(x) is int for x in (level,j,shifts,k)) or not (0<=level<=10 and 1<=j<=shifts<=32 and 3<=k<=16):return False
         expected=[]

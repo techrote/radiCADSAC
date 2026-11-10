@@ -62,7 +62,89 @@ class Research(unittest.TestCase):
         p=partition(s)
         object.__setattr__(s, "a", Q(1,3))
         self.assertFalse(verify(s,p))
-        with self.assertRaisesRegex(Refusal,"BUDGET"):
+        with self.assertRaisesRegex(Refusal,"SOURCE_HASH_MISMATCH"):
+            partition(s)
+
+    def test_hash_bound_source_snapshot_under_interleaving(self):
+        # A frozen Source is caller mutable with object.__setattr__.
+        # On the original producer/verifier, modifying pieces immediately
+        # after validation caused real negative-sign EMPTY cells to be issued
+        # under the original positive-function SHA, and verify accepted them.
+        import sys
+        import simple_promise as f8
+        positive = source(input_doc([("0/1", "1/1", {"H0": ["4/1"]})]))
+        negative = source(input_doc([("0/1", "1/1", {"H0": ["-4/1"]})]))
+        original = positive.pieces
+        calls = []
+
+        def interleave(frame, event, arg):
+            if frame.f_code is f8.valid_source.__code__:
+                if event == "call":
+                    object.__setattr__(positive, "pieces", original)
+                elif event == "return" and arg is True:
+                    calls.append("admitted")
+                    object.__setattr__(positive, "pieces", negative.pieces)
+            return interleave
+
+        sys.settrace(interleave)
+        try:
+            certificate = partition(positive, limit_level=0, max_shifts=1,
+                                    precision=(4,))
+            accepted = verify(positive, certificate)
+        finally:
+            sys.settrace(None)
+            object.__setattr__(positive, "pieces", original)
+        # Fixed producer/consumer never re-read the outside Source after
+        # admission. The attack hook may no longer run at all; either way,
+        # no source-incoherent negative-sign receipt may be accepted.
+        self.assertEqual(certificate["source_sha256"], positive.sha256)
+        self.assertTrue(all(c["sign"] == 1 for c in certificate["cells"]))
+        self.assertTrue(accepted)
+        self.assertTrue(verify(positive, certificate))
+        self.assertFalse(verify(negative, certificate))
+        forged = partition(negative, limit_level=0, max_shifts=1,
+                           precision=(4,))
+        forged["source_sha256"] = positive.sha256
+        sys.settrace(interleave)
+        try:
+            self.assertFalse(verify(positive, forged))
+        finally:
+            sys.settrace(None)
+            object.__setattr__(positive, "pieces", original)
+
+    def test_doc_ingress_hash_matches_parsed_capture(self):
+        # At the exact json.dumps boundary, an external dict may change.
+        # The captured polynomial and source digest must still agree.
+        import sys
+        doc = input_doc([("0/1", "1/1", {"H0": ["4/1"]})])
+        intact = source(doc)
+        mutated = False
+
+        def interleave(frame, event, arg):
+            nonlocal mutated
+            # json.dumps itself is ordinarily a pure-Python entrypoint.
+            if (event == "call" and not mutated and
+                    frame.f_code.co_name == "dumps" and
+                    frame.f_globals.get("__name__") == "json"):
+                mutated = True
+                doc["pieces"][0]["H0"][0] = "-4/1"
+            return interleave
+
+        sys.settrace(interleave)
+        try:
+            rebuilt = source(doc)
+        finally:
+            sys.settrace(None)
+        self.assertTrue(mutated)
+        self.assertEqual(rebuilt.sha256, intact.sha256)
+        self.assertTrue(valid_source(rebuilt))
+        self.assertEqual(partition(rebuilt)["cells"][0]["sign"], 1)
+
+    def test_source_snapshot_rejects_oversized_fraction_before_recompute(self):
+        s = source(input_doc([("0/1", "1/1", {"H0": ["4/1"]})]))
+        object.__setattr__(s, "a", Q(1 << 2000, 1))
+        self.assertFalse(valid_source(s))
+        with self.assertRaisesRegex(Refusal, "SOURCE_RATIONAL_BUDGET"):
             partition(s)
 
     def test_tamper_and_genuine_knot_refusal(self):
