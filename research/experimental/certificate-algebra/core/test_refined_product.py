@@ -118,6 +118,61 @@ class RefinedProductTests(unittest.TestCase):
         with self.assertRaises(Refusal):
             derive(changed,b,left_pin=a['hash'],right_pin=b['hash'])
 
+    def test_e3_e4_e5_reject_hostile_parent_mapping_keys(self):
+        # B1-D3: the real E3 parent boundary is shared by refined product,
+        # E4 rational quotient and E5 sided germ. A string-subclass key must
+        # not masquerade as a genuine builtin field even if the *values* and
+        # independently held snapshot hashes remain otherwise correct.
+        from rational_quotient import derive as quotient_derive
+        from quotient_sided_germ import derive as germ_derive
+
+        class AliasKey(str):
+            def __new__(cls, alias):
+                obj = str.__new__(cls, 'untrusted-alien-field')
+                obj.alias = alias
+                return obj
+            def __hash__(self):
+                return hash(self.alias)
+            def __eq__(self, other):
+                return other == self.alias
+
+        n = base_record((Piece(Q(0), Q(1), (Q(2),)),))
+        d = base_record((Piece(Q(0), Q(1), (Q(3),)),))
+        # Positive controls: valid E3, E4 and E5 still replay exactly.
+        _, product_receipt, _ = derive(n, d, left_pin=n['hash'], right_pin=d['hash'])
+        verify(n, d, product_receipt, left_pin=n['hash'], right_pin=d['hash'])
+        quotient_receipt, _ = quotient_derive(n, d, numerator_pin=n['hash'],
+                                               denominator_pin=d['hash'])
+        germ, _ = germ_derive(n, d, quotient_receipt,
+                              numerator_pin=n['hash'], denominator_pin=d['hash'],
+                              time='1/2')
+        self.assertEqual(germ['left']['leading'], '2/3')
+        for field in ('pieces', 'receipts', 'hash'):
+            with self.subTest(field=field):
+                forged = dict(n)
+                value = forged.pop(field)
+                forged[AliasKey(field)] = value
+                self.assertFalse(any(type(k) is str and k == field for k in forged))
+                # No fresh pins; these remain the genuine, externally selected
+                # original parent snapshot hashes. The problem is Python key
+                # equality/grammar execution before structural source admission.
+                with self.assertRaises(Refusal):
+                    derive(forged, d, left_pin=n['hash'], right_pin=d['hash'])
+                with self.assertRaises(Refusal):
+                    quotient_derive(forged, d, numerator_pin=n['hash'],
+                                    denominator_pin=d['hash'])
+                with self.assertRaises(Refusal):
+                    germ_derive(forged, d, quotient_receipt,
+                                numerator_pin=n['hash'], denominator_pin=d['hash'],
+                                time='1/2')
+        # Recursive and overbudget graphs must refuse at shared ingress.
+        for hostile in (('oversize', 'x'*4097), ('cycle', None)):
+            with self.subTest(hostile=hostile[0]):
+                forged = dict(n)
+                forged['hash'] = hostile[1] if hostile[1] is not None else forged
+                with self.assertRaises(Refusal):
+                    derive(forged, d, left_pin=n['hash'], right_pin=d['hash'])
+
     def test_boundary_and_budget_refusals(self):
         wrong=source([Q(0),Q(1,2),Q(2)],Q(0))
         with self.assertRaises(Refusal):
