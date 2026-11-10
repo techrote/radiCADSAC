@@ -4,6 +4,7 @@ These are upstream serialization-format fixtures, NOT executions of the
 published A1/A2 source modules, and not independently trusted source pins.
 """
 import copy
+from unittest.mock import patch
 import unittest
 from fractions import Fraction as Q
 
@@ -121,6 +122,43 @@ class SourceCodecTests(unittest.TestCase):
         with self.assertRaises(Refusal):
             a2_envelope(deep, source_pin="f" * 64,
                         window_pin=digest(WIN))
+
+    def test_source_snapshot_refuses_torn_identity_during_digest(self):
+        # Real adapter boundary: previously it parsed one source and then
+        # hashed a mutated different source using a caller-controlled pin.
+        import producer_codec as codec
+        for name in ("A1", "A2"):
+            with self.subTest(producer=name):
+                original = copy.deepcopy(A1 if name == "A1" else A2)
+                changed = copy.deepcopy(original)
+                if name == "A1":
+                    changed["c0"][0] = "-2"
+                else:
+                    changed["terms"]["0"][0][0] = "-2"
+                old_pin, changed_pin = digest(original), digest(changed)
+                self.assertNotEqual(old_pin, changed_pin)
+                triggered = [False]
+
+                def mutate_then_hash(value):
+                    if not triggered[0] and type(value) is dict:
+                        triggered[0] = True
+                        if name == "A1":
+                            original["c0"][0] = "-2"
+                        else:
+                            original["terms"]["0"][0][0] = "-2"
+                    return digest(value)
+
+                with patch.object(codec, "digest", side_effect=mutate_then_hash):
+                    with self.assertRaises(Refusal):
+                        if name == "A1":
+                            a1_envelope(original, WIN, source_pin=changed_pin,
+                                        window_pin=digest(WIN))
+                        else:
+                            a2_envelope(original, source_pin=changed_pin,
+                                        window_pin=digest(WIN))
+                self.assertTrue(triggered[0])
+                # No claim that this verifies who produced either source or pin.
+                self.assertEqual(digest(original), changed_pin)
 
     def test_infinite_rational_family_and_negative_rates(self):
         # General law follows from exact phase substitution, not finite tests.
