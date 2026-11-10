@@ -67,6 +67,65 @@ class ExactControls(unittest.TestCase):
             # cos near a zero at rational quarter turn; cannot prove strict sign in enclosing wide cell.
             signed_from_verified_germ(doc(c1=M),M,['1/2','3/2'],germ(1),4)
 
+    def test_signed_germ_and_cofactor_share_captured_source(self):
+        # A real F2 parent returns a source SHA, then F9 must not observe a
+        # different caller-owned H0 when forming signed sides. Before this fix,
+        # sys.settrace deterministically caused original F9 verify to accept
+        # a receipt with OLD source SHA and the OPPOSITE source's sided signs.
+        import copy
+        import sys
+        import signed_cell
+        minimal = (-2, 0, 1)
+        bracket = ['707/500', '283/200']
+        original = doc(h0=poly_mul(minimal, [5]))
+        opposite = doc(h0=poly_mul(minimal, [-5]))
+        honest = signed_cell.certify(original, minimal, 3, bracket, 16)
+        opposite_receipt = signed_cell.certify(opposite, minimal, 3, bracket, 16)
+        self.assertTrue(signed_cell.verify(original, honest))
+        self.assertNotEqual((honest['left_sign'], honest['right_sign']),
+                            (opposite_receipt['left_sign'], opposite_receipt['right_sign']))
+
+        def trace_source_change(source):
+            triggered = [False]
+            def tracer(frame, event, arg):
+                if (event == 'call' and
+                        frame.f_code is signed_cell.signed_from_verified_germ.__code__
+                        and not triggered[0]):
+                    triggered[0] = True
+                    source['H0'][:] = opposite['H0']
+                return tracer
+            return tracer, triggered
+
+        producer_input = copy.deepcopy(original)
+        tracer, triggered = trace_source_change(producer_input)
+        sys.settrace(tracer)
+        try:
+            raced = signed_cell.certify(producer_input, minimal, 3, bracket, 16)
+        finally:
+            sys.settrace(None)
+        self.assertTrue(triggered[0])
+        self.assertEqual(raced['source_sha256'], honest['source_sha256'])
+        self.assertEqual((raced['left_sign'], raced['right_sign']),
+                         (honest['left_sign'], honest['right_sign']))
+        self.assertTrue(signed_cell.verify(original, raced))
+        self.assertFalse(signed_cell.verify(opposite, raced))
+
+        # A forged mixed-source receipt is refused even when the *caller input*
+        # is altered at the same real verifier/signing function boundary.
+        forged = copy.deepcopy(honest)
+        forged['left_sign'], forged['right_sign'] = (
+            opposite_receipt['left_sign'], opposite_receipt['right_sign'])
+        self.assertFalse(signed_cell.verify(original, forged))
+        verifier_input = copy.deepcopy(original)
+        tracer, triggered = trace_source_change(verifier_input)
+        sys.settrace(tracer)
+        try:
+            accepted = signed_cell.verify(verifier_input, forged)
+        finally:
+            sys.settrace(None)
+        self.assertTrue(triggered[0])
+        self.assertFalse(accepted)
+
     def test_source_anchored_original_module_replay(self):
         # This uses the REAL A1 module when checked out in the repository.
         try:

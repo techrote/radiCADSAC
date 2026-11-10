@@ -149,19 +149,44 @@ def signed_from_verified_germ(doc, minimal, bracket, germ, terms=16):
             "strict_cofactor_witness":sign,"physical_source_authentication":"UNVERIFIED"}
 
 
+def _owned_admitted_doc(doc):
+    """One bounded primitive source for F2 germ and F9 signed-cofactor proof.
+
+    F2 admitted() already captures/validates the finite exact source grammar.
+    Recover the exact canonical token values from its *owned* Fraction tuples;
+    never reread the potentially mutable caller-owned doc after that boundary.
+    This is consistency, not external writer or physical B-spline attestation.
+    """
+    from algebraic_degree import admitted, CHANNELS
+    import hashlib
+    import json
+    (a, b), channels, digest = admitted(doc)
+    frozen = {'a': fmt(a), 'b': fmt(b)}
+    frozen.update({key: [fmt(v) for v in coefficients]
+                   for key, coefficients in zip(CHANNELS, channels)})
+    actual = hashlib.sha256(json.dumps(frozen, sort_keys=True, separators=(',', ':'),
+                                      ensure_ascii=True).encode()).hexdigest()
+    require(actual == digest, 'SOURCE_SNAPSHOT_MISMATCH')
+    return frozen
+
+
 def certify(doc,minimal,prime,bracket,terms=16):
     from algebraic_degree import certify as germ_certify
-    germ=germ_certify(doc,minimal,prime,bracket)
-    return signed_from_verified_germ(doc,minimal,bracket,germ,terms)
+    frozen = _owned_admitted_doc(doc)
+    germ = germ_certify(frozen,minimal,prime,bracket)
+    return signed_from_verified_germ(frozen,minimal,bracket,germ,terms)
 
 
 def verify(doc,receipt):
     from algebraic_degree import verify as verify_germ
     try:
-        if type(receipt) is not dict or not verify_germ(doc,receipt['germ']):
+        if type(receipt) is not dict:
+            return False
+        frozen = _owned_admitted_doc(doc)
+        if not verify_germ(frozen,receipt['germ']):
             return False
         germ=receipt['germ']
-        return strict_equal(certify(doc,receipt['minimal_polynomial'],germ['irreducibility_prime'],
+        return strict_equal(certify(frozen,receipt['minimal_polynomial'],germ['irreducibility_prime'],
                        receipt['root_bracket'],receipt['series_terms']),receipt)
     except (KeyError,ValueError,TypeError,ZeroDivisionError,OverflowError):
         return False
