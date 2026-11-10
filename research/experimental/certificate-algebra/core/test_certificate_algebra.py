@@ -1,6 +1,7 @@
 """Independent standard-library adversarial and finite-family tests for B1-C1/C2."""
 import copy
 import unittest
+from dataclasses import replace as dataclass_replace
 from fractions import Fraction as Q
 
 from certificate_algebra import (
@@ -29,6 +30,8 @@ class CertificateAlgebraTests(unittest.TestCase):
         # The actual verified public base/journal path continues to work.
         genuine = Piece(Q(0), Q(1), (Q(1),))
         checked = verified(genuine)
+        with self.assertRaises(Refusal):
+            dataclass_replace(checked, pieces=(p,), certs=(false,))
         self.assertEqual([c.sign for c in split(checked, 0, Q(1, 3), EvidenceMeter()).certs],
                          ["POS", "POS"])
 
