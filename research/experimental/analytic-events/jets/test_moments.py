@@ -132,6 +132,57 @@ class ResearchControls(unittest.TestCase):
             m.knot_germ(3, [0]*4+[1]*2+[2]*5,
                         {0: ([[0]*7, [0]*7])}, 0, Q(1, 4))
 
+    def test_a3_hostile_receipt_equality_exact_parent(self):
+        """A3 #5837604840: reject subclasses at real replay entry points."""
+        class EqualAlways(str):
+            def __eq__(self, other):
+                return True
+            __hash__ = str.__hash__
+
+        s = m.source(0, 2, 0, Q(1, 4), trig_power(3))
+        clean = m.point_germ(s, 1)
+        self.assertTrue(m.verify_receipt(s, 1, clean))
+        for field in ("status", "order", "right_sign",
+                      "production_authorized", "source_sha256"):
+            with self.subTest(point_field=field):
+                forged = dict(clean, **{field: EqualAlways("FORGED")})
+                # The old unrestricted dict-equality admission was bypassable.
+                self.assertTrue(forged == clean)
+                with self.assertRaisesRegex(
+                        m.Refusal, "FORGED_OR_STALE_GERM_RECEIPT"):
+                    m.verify_receipt(s, 1, forged)
+        from copy import deepcopy
+        forged = deepcopy(clean)
+        forged["moment_rows"][0]["moment"] = EqualAlways("FORGED")
+        with self.assertRaisesRegex(m.Refusal, "FORGED_OR_STALE_GERM_RECEIPT"):
+            m.verify_receipt(s, 1, forged)
+        forged = dict(clean, order=True)  # Python bool == int must not pass.
+        with self.assertRaisesRegex(m.Refusal, "FORGED_OR_STALE_GERM_RECEIPT"):
+            m.verify_receipt(s, 1, forged)
+
+        p = 1
+        knots = [0, 0, 1, 2, 2]
+        controls = {0: ([1, 1, 1], [0, 0, 0])}
+        args = (p, knots, controls, 0, Q(1, 4))
+        knot = m.knot_germ(*args)
+        self.assertTrue(m.verify_knot_receipt(*args, knot))
+        for field in ("status", "physical_zero_count",
+                      "production_authorized", "spline_sha256"):
+            with self.subTest(knot_field=field):
+                forged = dict(knot, **{field: EqualAlways("FORGED")})
+                self.assertTrue(forged == knot)
+                with self.assertRaisesRegex(
+                        m.Refusal, "FORGED_OR_STALE_KNOT_RECEIPT"):
+                    m.verify_knot_receipt(*args, forged)
+        forged = deepcopy(knot)
+        forged["left"]["status"] = EqualAlways("FORGED")
+        with self.assertRaisesRegex(m.Refusal, "FORGED_OR_STALE_KNOT_RECEIPT"):
+            m.verify_knot_receipt(*args, forged)
+        forged = deepcopy(knot)
+        forged["right"]["right_sign"] = EqualAlways("FORGED")
+        with self.assertRaisesRegex(m.Refusal, "FORGED_OR_STALE_KNOT_RECEIPT"):
+            m.verify_knot_receipt(*args, forged)
+
     def test_preparse_rational_budget_and_malformed_spline_controls(self):
         # Entire canonical 160-bit numerator/denominator pair remains admitted.
         top, bottom = (1 << 159) - 1, (1 << 159) - 3
