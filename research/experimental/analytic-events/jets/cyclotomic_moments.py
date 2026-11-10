@@ -323,8 +323,33 @@ def point_germ(s, x):
             "mc_b_established": False, "production_authorized": False}
 
 
+def strict_receipt_equal(expected, claimed):
+    """Compare canonical research receipts without subclass-controlled equality.
+
+    The expected tree is independently recomputed from an admitted source and
+    contains only bounded JSON primitives.  Exact type checks distinguish
+    bool/int, prevent hostile `__eq__`, and reject noncanonical dict keys.
+    Recursion follows that finite expected tree, not attacker-owned structure.
+    This checks receipt integrity, *not* original physical-source custody.
+    """
+    if type(expected) is not type(claimed):
+        return False
+    if type(expected) is dict:
+        if len(expected) != len(claimed) or any(type(k) is not str for k in claimed):
+            return False
+        return all(k in claimed and strict_receipt_equal(value, claimed[k])
+                   for k, value in expected.items())
+    if type(expected) is list:
+        return len(expected) == len(claimed) and all(
+            strict_receipt_equal(a, b) for a, b in zip(expected, claimed))
+    if type(expected) in (str, int, bool, type(None)):
+        return expected == claimed
+    return False
+
+
 def verify_receipt(s, x, claimed):
-    require(type(claimed) is dict and claimed == point_germ(s, x),
+    require(type(claimed) is dict and
+            strict_receipt_equal(point_germ(s, x), claimed),
             "FORGED_OR_STALE_GERM_RECEIPT")
     return True
 
@@ -416,7 +441,8 @@ def knot_germ(degree, knots, controls, offset, rate):
 def verify_knot_receipt(degree, knots, controls, offset, rate, claimed):
     """Reconstruct from complete knot/control source; never trust a knot report."""
     require(type(claimed) is dict and
-            claimed == knot_germ(degree, knots, controls, offset, rate),
+            strict_receipt_equal(
+                knot_germ(degree, knots, controls, offset, rate), claimed),
             "FORGED_OR_STALE_KNOT_RECEIPT")
     return True
 
