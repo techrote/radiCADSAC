@@ -236,6 +236,16 @@ def certify(doc,*,bits=20,terms=16,max_depth=8):
     need(type(max_depth) is int and 0<=max_depth<=12,'COVER_BUDGET')
     a,b,pieces,digest=source(doc)
     result=[analyze_piece(a,b,l,h,cs,bits,terms,max_depth) for l,h,cs in pieces]
+    # Exact maximal positive-length zero components: contiguous identity-zero
+    # source pieces coalesce; a finite polynomial-carrier piece never does.
+    zero_continua=[]
+    for piece in result:
+        if piece['kind']!='IDENTITY_ZERO_CONTINUUM':continue
+        lo,hi=piece['interval']
+        if zero_continua and zero_continua[-1][1]==lo:
+            zero_continua[-1][1]=hi
+        else:
+            zero_continua.append([lo,hi])
     knots=[]
     for j in range(len(result)-1):
         left,right=result[j],result[j+1]
@@ -248,7 +258,12 @@ def certify(doc,*,bits=20,terms=16,max_depth=8):
         need(lzero==rzero,'INCONSISTENT_KNOT_ZERO')
         at=left['interval'][1]
         if lzero:
-            knots.append({'coordinate':at,'kind':'SINGLE_PHYSICAL_KNOT_ZERO',
+            # A zero knot need not be an isolated zero.  Preserve the
+            # component topology in a *typed* kind, not only optional flags.
+            kind=('ZERO_CONTINUUM_INTERIOR' if lc and rc else
+                  'ZERO_CONTINUUM_BOUNDARY' if lc or rc else
+                  'ISOLATED_PHYSICAL_KNOT_ZERO')
+            knots.append({'coordinate':at,'kind':kind,
                           'left_continuum':lc,'right_continuum':rc,
                           'left_order':None if lc else lg['multiplicity'],
                           'right_order':None if rc else rg['multiplicity'],
@@ -262,7 +277,8 @@ def certify(doc,*,bits=20,terms=16,max_depth=8):
             rs=right['cofactor_sign']*(1 if evalp(rp,x)>0 else -1)
             need(ls==rs,'INCONSISTENT_KNOT_SIGN')
             knots.append({'coordinate':at,'kind':'STRICT_NONZERO_KNOT','sign':ls})
-    return {'schema':'a1-carrier-partition/1','source_sha256':digest,
+    return {'schema':'a1-carrier-partition/2','source_sha256':digest,
+            'zero_continua':zero_continua,
             'phase_units':'pi','physical_source_authentication':'UNVERIFIED',
             'bounds':{'bits':bits,'terms':terms,'max_depth':max_depth},
             'pieces':result,'knots':knots}
