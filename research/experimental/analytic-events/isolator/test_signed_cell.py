@@ -67,4 +67,25 @@ class ExactControls(unittest.TestCase):
             # cos near a zero at rational quarter turn; cannot prove strict sign in enclosing wide cell.
             signed_from_verified_germ(doc(c1=M),M,['1/2','3/2'],germ(1),4)
 
+    def test_source_anchored_original_module_replay(self):
+        # This uses the REAL A1 module when checked out in the repository.
+        try:
+            import algebraic_degree
+        except ModuleNotFoundError:
+            self.skipTest('exact original algebraic_degree.py not present in scratch')
+        import copy
+        src=doc(h0=poly_mul(M,[5]),c1=M,s2=poly_mul(M,[Q(1,2)]))
+        receipt=certify(src,M,3,['7/5','3/2'],16)
+        self.assertTrue(verify(src,receipt))
+        self.assertEqual((receipt['left_sign'],receipt['right_sign']),(-1,1))
+        altered=copy.deepcopy(src)
+        altered['b']='-1/1'
+        self.assertFalse(verify(altered,receipt))
+        changed=copy.deepcopy(receipt)
+        changed['left_sign']=1
+        self.assertFalse(verify(src,changed))
+        changed=copy.deepcopy(receipt)
+        changed['germ']['multiplicity']=2
+        self.assertFalse(verify(src,changed))
+
 if __name__=='__main__':unittest.main(verbosity=2)
