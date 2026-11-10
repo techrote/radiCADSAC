@@ -76,6 +76,7 @@ def analytic_join(degree, knots, controls, offset, rate):
 
 def verify_join(degree, knots, controls, offset, rate, claimed):
     """Reject stale, altered or forged receipts by full source replay."""
-    a2.require(type(claimed) is dict and claimed == analytic_join(
-        degree, knots, controls, offset, rate), "FORGED_OR_STALE_JOIN_RECEIPT")
+    a2.require(type(claimed) is dict and a2.strict_receipt_equal(
+        analytic_join(degree, knots, controls, offset, rate), claimed),
+        "FORGED_OR_STALE_JOIN_RECEIPT")
     return True
