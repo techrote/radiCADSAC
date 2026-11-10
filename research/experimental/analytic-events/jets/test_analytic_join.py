@@ -104,6 +104,37 @@ class AnalyticJoinControls(unittest.TestCase):
                         self.assertFalse(report["complete_zero_set_certified"])
                         self.assertTrue(join.verify_join(*args, report))
 
+    def test_a3_hostile_join_receipts_exact_parent(self):
+        """Real source replay refuses attacker-defined equality at any depth."""
+        class EqualAlways(str):
+            def __eq__(self, other):
+                return True
+            __hash__ = str.__hash__
+
+        from copy import deepcopy
+        p = 3
+        args = (p, knots_for(p), controls_for_join(p, 1, 2, True),
+                0, Q(1, 4))
+        clean = join.analytic_join(*args)
+        self.assertTrue(join.verify_join(*args, clean))
+        for field in ("status", "first_mismatched_derivative",
+                      "spline_sha256", "production_authorized", "knot"):
+            with self.subTest(join_field=field):
+                forged = dict(clean, **{field: EqualAlways("FORGED")})
+                self.assertTrue(forged == clean)
+                with self.assertRaisesRegex(
+                        join.a2.Refusal, "FORGED_OR_STALE_JOIN_RECEIPT"):
+                    join.verify_join(*args, forged)
+        forged = deepcopy(clean)
+        forged["difference_germ"]["status"] = EqualAlways("FORGED")
+        with self.assertRaisesRegex(
+                join.a2.Refusal, "FORGED_OR_STALE_JOIN_RECEIPT"):
+            join.verify_join(*args, forged)
+        forged = dict(clean, production_authorized=0)
+        with self.assertRaisesRegex(
+                join.a2.Refusal, "FORGED_OR_STALE_JOIN_RECEIPT"):
+            join.verify_join(*args, forged)
+
     def test_source_binding_and_refusals(self):
         p = 3
         args = (p, knots_for(p), controls_for_join(p, 1, 2, True),
