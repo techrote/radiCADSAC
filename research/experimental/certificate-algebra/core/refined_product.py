@@ -10,7 +10,7 @@ import re
 from certificate_algebra import (EvidenceMeter, Refusal, Verified, _state,
                                  enc, events, split, verify_base)
 from product_cone import _combine
-from receipt_integrity import admit
+from receipt_integrity import admit, validate
 
 SCHEMA = "b1-refined-product-v1"
 MAX_REFINED_PIECES = 128
@@ -18,6 +18,10 @@ _PIN = re.compile(r"[0-9a-f]{64}\Z")
 
 
 def _parent(raw: dict, external_pin: str, meter: EvidenceMeter) -> Verified:
+    # A dict can contain hostile str subclasses whose equality/hash imitate
+    # builtin source fields. Admit the *whole* primitive tree before set(raw),
+    # lookup, hashing, or parent proof recomputation; E4/E5 reuse this gate.
+    validate(raw)
     if type(external_pin) is not str or _PIN.fullmatch(external_pin) is None:
         raise Refusal("independent 64-hex parent pin required")
     if type(raw) is not dict or set(raw) != {"pieces", "receipts", "hash"}:
