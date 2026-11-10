@@ -155,6 +155,38 @@ class HostileProductWitnessTests(unittest.TestCase):
         with self.assertRaises(Refusal):
             verify_product(a, a, forged, left_pin=a['hash'], right_pin=a['hash'])
 
+    class ForgeEquality(str):
+        def __eq__(self, other):
+            return True
+        def __ne__(self, other):
+            return False
+        __hash__ = str.__hash__
+
+    def test_parent_source_hash_and_external_pin_must_be_builtin_and_exact(self):
+        a, _, _ = self.fixture()
+        forged = copy.deepcopy(a)
+        forged['hash'] = self.ForgeEquality('0' * 64)
+        with self.assertRaises(Refusal):
+            product(forged, a, left_pin=a['hash'], right_pin=a['hash'])
+        with self.assertRaises(Refusal):
+            product(a, a, left_pin=self.ForgeEquality('f' * 64), right_pin=a['hash'])
+        with self.assertRaises(Refusal):
+            product(a, a, left_pin='f' * 64, right_pin=a['hash'])
+
+    def test_E2_closed_base_source_and_product_pin_spoof_refused(self):
+        from closed_nonzero import verify_closed_base
+        a, s, witness = self.fixture()
+        for fake in (self.ForgeEquality('0' * 64), '0' * 64):
+            with self.subTest(pin=type(fake).__name__), self.assertRaises(Refusal):
+                verify_closed_base(a, source_pin=fake)
+            with self.assertRaises(Refusal):
+                verify_closed_product(a, a, witness, left_pin=a['hash'],
+                                      right_pin=a['hash'], product_pin=fake)
+        forged = copy.deepcopy(a)
+        forged['hash'] = self.ForgeEquality('0' * 64)
+        with self.assertRaises(Refusal):
+            verify_closed_base(forged, source_pin=a['hash'])
+
     def test_nonprimitive_nested_oversized_and_cyclic_witness_refused(self):
         a, _, witness = self.fixture()
         candidates = []
