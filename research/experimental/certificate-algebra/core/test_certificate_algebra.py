@@ -6,7 +6,7 @@ from fractions import Fraction as Q
 from certificate_algebra import (
     Piece, Refusal, EvidenceMeter, affine, base_record, bernstein,
     concatenate, events, kind, piece, prove, replay, replace, split,
-    verify_base,
+    verify_base, Verified, Certificate, snapshot_hash,
 )
 
 
@@ -17,6 +17,21 @@ def verified(*ps):
 
 
 class CertificateAlgebraTests(unittest.TestCase):
+    def test_unverified_dataclass_cannot_inject_false_sign_into_transform(self):
+        # A public dataclass was previously enough to skip check_leaf and make
+        # split/affine proclaim POS for 1-2u, whose true interior root is 1/2.
+        p = Piece(Q(0), Q(1), (Q(1), Q(-2)))
+        false = Certificate(p.hash, "POS", (Q(1), Q(1)))
+        with self.assertRaises(Refusal):
+            Verified((p,), (false,), 0, snapshot_hash((p,), 0))
+        with self.assertRaises(Refusal):
+            verify_base([p.source()], [false.record()], EvidenceMeter())
+        # The actual verified public base/journal path continues to work.
+        genuine = Piece(Q(0), Q(1), (Q(1),))
+        checked = verified(genuine)
+        self.assertEqual([c.sign for c in split(checked, 0, Q(1, 3), EvidenceMeter()).certs],
+                         ["POS", "POS"])
+
     def test_tangent_crossing_and_identity_continuum(self):
         # x^2 at 0, -x^2 at 1, identity-zero [2,3]: signs and zero sets exact.
         s = verified(Piece(Q(0),Q(1),(Q(0),Q(1),Q(-1))),
