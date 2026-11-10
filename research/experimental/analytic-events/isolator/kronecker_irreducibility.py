@@ -30,17 +30,25 @@ def qread(value, bits=128):
     return q
 
 def admitted(doc):
-    need(type(doc) is dict and set(doc) == {"a", "b", *CHANNELS}, "SOURCE_FIELDS")
-    a, b = qread(doc["a"]), qread(doc["b"])
-    need(b != 0, "ZERO_RATE_UNSUPPORTED")
-    channels = []
+    # Capture one bounded owned primitive source BEFORE parsing or digesting.
+    # Without this, a caller's nested list could change between the parsed
+    # coefficient tuple and json.dumps(doc), authenticating a different germ.
+    need(type(doc) is dict and all(type(k) is str for k in doc)
+         and set(doc) == {"a", "b", *CHANNELS}, "SOURCE_FIELDS")
+    captured = {"a": doc["a"], "b": doc["b"]}
     for key in CHANNELS:
         values = doc[key]
         need(type(values) is list and 1 <= len(values) <= 17, "POLYNOMIAL_SHAPE")
+        captured[key] = list(values)
+    a, b = qread(captured["a"]), qread(captured["b"])
+    need(b != 0, "ZERO_RATE_UNSUPPORTED")
+    channels = []
+    for key in CHANNELS:
+        values = captured[key]
         coeffs = tuple(qread(v) for v in values)
         need(len(coeffs) == 1 or coeffs[-1] != 0, "NONCANONICAL_POLYNOMIAL")
         channels.append(coeffs)
-    source_hash = sha256(json.dumps(doc, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode()).hexdigest()
+    source_hash = sha256(json.dumps(captured, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode()).hexdigest()
     return (a, b), channels, source_hash
 
 def trim(seq):
