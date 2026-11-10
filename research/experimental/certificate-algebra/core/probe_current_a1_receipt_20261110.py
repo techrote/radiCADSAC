@@ -1,4 +1,4 @@
-"""Direct source-matched current A1 producer event versus B1 adapter, research only.
+"""Replay a source-pinned 10-Nov A1 producer event versus latest B1 adapter.
 
 Usage: python3 probe_current_a1_receipt_20261110.py --a1-dir /path/to/A1/isolator
 No native/STEP execution or authenticated spline ancestry is implied.
@@ -12,7 +12,7 @@ A1_HEAD = "098517a70e63cb8d5b8bab01b34118fa8439c942"
 A1_BLOBS = {"algebraic_zero.py":"3c48045a218018c8c3134a1224011c7acc2307b1",
             "receipt_integrity.py":"77f0ba7700002b7a376dfcc2c29b820ea4def485"}
 B1_BLOBS = {"phase_bridge.py":"dbcb2049d7e3de09f6430e632bee21ce836a1809",
-            "producer_codec.py":"563c445c314309a6198395addbecb59b464182a0"}
+            "producer_codec.py":"d9858061f47df687722eb1069965cd8e03c219b6"}
 
 def blob(path):
     data=path.read_bytes()
@@ -73,7 +73,7 @@ def run(a1dir):
     try: a1_envelope(modified,window,source_pin=pin,window_pin=digest(window))
     except Refusal as e: assert str(e)=="source serialization/pin mismatch"
     else: raise AssertionError("mutated producer source accepted under old pin")
-    return {"class":"DIRECT_CURRENT_A1_PYTHON_MODEL","a1_head":A1_HEAD,
+    return {"class":"DIRECT_PINNED_A1_PYTHON_MODEL","a1_head":A1_HEAD,
             "source_git_blobs":blobs,"a1_real_receipt_verified":True,
             "a1_result":"EXACT_ZERO","source_sha256":pin,
             "altered_a1_receipt_refused":True,"b1_codec_matches_a1_serialization":True,
