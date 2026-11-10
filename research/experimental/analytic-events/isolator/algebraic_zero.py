@@ -106,6 +106,23 @@ def source(c0, cos=(), sin=(), *, phase_offset=0, phase_rate=1) -> Source:
                   rational(phase_offset), rational(phase_rate))
 
 
+def _owned_source(s: Source) -> Source:
+    """Capture a validated immutable source for analysis *and* its digest.
+
+    An externally held frozen dataclass is not a concurrency lock: Python
+    object.__setattr__ can alter its fields between Fourier analysis and
+    source_sha().  The new Source contains only exact immutable builtins and
+    Fractions, so later changes to the caller's original cannot rebind the
+    certificate to a different model. This is not physical provenance.
+    """
+    if type(s) is not Source:
+        raise Refusal("expected an exact Source object")
+    try:
+        return Source(s.c0, s.cos, s.sin, s.phase_offset, s.phase_rate)
+    except AttributeError as exc:
+        raise Refusal("source changed during bounded capture") from exc
+
+
 def source_sha(s: Source) -> str:
     validate_source(s)
     obj = {"c0": list(map(str, s.c0)),
@@ -194,7 +211,7 @@ def rational_event(s: Source, t: int | Q) -> dict:
     The Laurent Fourier sum is converted to an integer-power polynomial
     modulo Phi_(4*d). It vanishes iff its exact remainder is zero.
     """
-    validate_source(s)
+    s = _owned_source(s)
     t = rational(t)
     beta = s.phase_offset + s.phase_rate * t
     d, p = beta.denominator, beta.numerator
@@ -253,7 +270,7 @@ def quadratic_event(s: Source, a: int, b: int, c: int) -> dict:
     iff every channel vanishes. The common quadratic valuation determines
     the exact zero order (simple quadratic roots).
     """
-    validate_source(s)
+    s = _owned_source(s)
     if not s.phase_rate:
         raise Refusal("zero phase rate outside the irrational-phase theorem")
     m, disc = _quadratic(a, b, c)

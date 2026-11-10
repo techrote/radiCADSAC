@@ -149,6 +149,72 @@ class ExactPointTests(unittest.TestCase):
         self.assertFalse(verify_quadratic_event(src, q))
 
 
+class SourceSnapshotCoherenceTests(unittest.TestCase):
+    """Actual imported F1 event/verifier, not a stand-in source hash oracle."""
+
+    @staticmethod
+    def interleave_at_real_source_hash(original, replacement, action):
+        import sys
+        import algebraic_zero
+        seen = [False]
+        def trace(frame, event, arg):
+            if (event == 'call' and frame.f_code is algebraic_zero.source_sha.__code__
+                    and not seen[0]):
+                object.__setattr__(original, 'c0', replacement)
+                seen[0] = True
+                sys.settrace(None)
+            return trace
+        before = original.c0
+        sys.settrace(trace)
+        try:
+            return action()
+        finally:
+            sys.settrace(None)
+            object.__setattr__(original, 'c0', before)
+            if not seen[0]:
+                raise AssertionError('real F1 source_sha() interception missing')
+
+    def test_rational_event_snapshot_blocks_cross_stage_source_hash(self):
+        from algebraic_zero import source_sha
+        s = source([-1], cos=([1],), sin=([],))
+        new_c0 = (Q(1),)
+        honest = rational_event(s, 0)
+        self.assertEqual(honest['result'], 'EXACT_ZERO')
+        changed = source([1], cos=([1],), sin=([],))
+        mutated_sha = source_sha(changed)
+        self.assertNotEqual(honest['source_sha256'], mutated_sha)
+        self.assertEqual(rational_event(changed, 0)['result'], 'EXACT_NONZERO')
+        alleged = {**honest, 'source_sha256': mutated_sha}
+        self.assertFalse(verify_rational_event(s, alleged))
+        self.assertFalse(verify_rational_event(changed, alleged))
+        self.assertEqual(self.interleave_at_real_source_hash(
+            s, new_c0, lambda: rational_event(s, 0)), honest)
+        self.assertFalse(self.interleave_at_real_source_hash(
+            s, new_c0, lambda: verify_rational_event(s, alleged)))
+        self.assertTrue(verify_rational_event(s, honest))
+
+    def test_quadratic_event_snapshot_blocks_cross_stage_source_hash(self):
+        from algebraic_zero import source_sha
+        s = source([-2, 0, 1])
+        new_c0 = (Q(1),)
+        honest = quadratic_event(s, 1, 0, -2)
+        self.assertEqual((honest['result_at_both_roots'], honest['multiplicity_at_both']),
+                         ('EXACT_ZERO', 1))
+        changed = source([1])
+        mutated_sha = source_sha(changed)
+        self.assertNotEqual(honest['source_sha256'], mutated_sha)
+        self.assertEqual(quadratic_event(changed, 1, 0, -2)['result_at_both_roots'],
+                         'EXACT_NONZERO')
+        alleged = {**honest, 'source_sha256': mutated_sha}
+        self.assertFalse(verify_quadratic_event(s, alleged))
+        self.assertFalse(verify_quadratic_event(changed, alleged))
+        self.assertEqual(self.interleave_at_real_source_hash(
+            s, new_c0, lambda: quadratic_event(s, 1, 0, -2)), honest)
+        self.assertFalse(self.interleave_at_real_source_hash(
+            s, new_c0, lambda: verify_quadratic_event(s, alleged)))
+        self.assertTrue(verify_quadratic_event(s, honest))
+
+
 if __name__ == "__main__":
     unittest.main()
 
