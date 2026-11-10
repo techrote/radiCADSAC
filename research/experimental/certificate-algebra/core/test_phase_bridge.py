@@ -105,6 +105,36 @@ class BridgeTests(unittest.TestCase):
         with self.assertRaises(Refusal):
             canonical(a2)
 
+    def test_recomputed_phase_receipt_rejects_hostile_python_equality(self):
+        # Exact B1-D1 verifier negative: ordinary dict equality admitted these.
+        class Lies(str):
+            def __eq__(self, other): return True
+            def __ne__(self, other): return False
+            __hash__ = str.__hash__
+        a = make("A1-470")
+        b = make("MC038-main", rate="1/2")
+        honest = prove_equivalent(a, b)
+        pins = {"pinned_source_hash": digest(a),
+                "pinned_target_hash": digest(b)}
+        self.assertTrue(verify(a, b, honest, **pins))
+        for field in ("schema", "source_hash", "target_hash", "semantic_hash"):
+            with self.subTest(field=field):
+                forged = dict(honest, **{field: Lies("UNTRUE")})
+                with self.assertRaises(Refusal):
+                    verify(a, b, forged, **pins)
+        for forged in (dict(honest, schema=False),
+                       dict(honest, semantic_hash=["x"]),
+                       dict(honest, **{Lies("unknown"): "x"})):
+            with self.assertRaises(Refusal):
+                verify(a, b, forged, **pins)
+        cyclic = dict(honest)
+        cyclic["semantic_hash"] = cyclic
+        with self.assertRaises(Refusal):
+            verify(a, b, cyclic, **pins)
+        with self.assertRaises(Refusal):
+            verify(a, b, honest, pinned_source_hash=Lies(pins["pinned_source_hash"]),
+                   pinned_target_hash=pins["pinned_target_hash"])
+
     def test_phase_period_alias_is_conservatively_not_proven(self):
         # pi*(beta+2) is semantically periodic, but this restricted contract
         # intentionally does not derive periodic-alias equivalence.
