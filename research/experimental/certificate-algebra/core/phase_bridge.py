@@ -5,6 +5,7 @@ producer objects or grant authority to their receipts.
 """
 from __future__ import annotations
 
+import copy
 from fractions import Fraction
 from hashlib import sha256
 import json
@@ -50,22 +51,32 @@ def digest(data):
     return sha256(json.dumps(data, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode("ascii")).hexdigest()
 
 
-def canonical(source):
-    """Independently normalize the exact source's native phase units to pi units.
+def _owned(source):
+    """One bounded owned primitive tree for BOTH semantic analysis and hashing.
 
-    Returns semantic form only; producer SHA is claimed, not externally verified.
-    The coefficient arrays are in physical t, so this does NOT change time or
-    knot-sided event orientation. All inputs are strict finite JSON records.
+    This is an in-process snapshot, not a trusted external producer/lifetime
+    witness. It prevents a caller's later edit from changing only the hash side.
     """
-    keys = {"schema", "producer", "producer_head", "origin_source_sha",
-            "interval", "offset", "rate", "terms"}
-    # Untrusted source objects must be exact builtin JSON primitives BEFORE
-    # any membership, equality, Fraction conversion or hash computation.
-    # Otherwise a str subclass can spoof the reviewed producer head/schema.
     try:
         validate_primitive_source(source)
+        if type(source) is not dict:
+            raise Refusal("phase source must be a primitive mapping")
+        captured = copy.deepcopy(source)
+        validate_primitive_source(captured)
     except PrimitiveRefusal as exc:
         raise Refusal("nonprimitive/overbudget source record") from exc
+    return captured
+
+
+def canonical(source):
+    """Normalize one bounded owned source snapshot to pi phase units."""
+    return _canonical_owned(_owned(source))
+
+
+def _canonical_owned(source):
+    # Caller has already copied and revalidated exact builtin primitives.
+    keys = {"schema", "producer", "producer_head", "origin_source_sha",
+            "interval", "offset", "rate", "terms"}
     if type(source) is not dict or set(source) != keys or source["schema"] != SCHEMA:
         raise Refusal("unknown source schema")
     who = source["producer"]
@@ -123,13 +134,17 @@ def canonical(source):
     }
 
 
-def prove_equivalent(source, target):
-    """Build a reproducible, untrusted semantic-equivalence receipt."""
-    a, b = canonical(source), canonical(target)
+def _prove_owned(source, target):
+    a, b = _canonical_owned(source), _canonical_owned(target)
     if a != b:
         raise Refusal("phase-normalized functions are not proven identical")
     return {"schema": RECEIPT, "source_hash": digest(source),
             "target_hash": digest(target), "semantic_hash": digest(a)}
+
+
+def prove_equivalent(source, target):
+    """Recompute a model receipt from ONE captured value per original source."""
+    return _prove_owned(_owned(source), _owned(target))
 
 
 def verify(source, target, claim, *, pinned_source_hash, pinned_target_hash):
@@ -142,8 +157,11 @@ def verify(source, target, claim, *, pinned_source_hash, pinned_target_hash):
     if type(pinned_target_hash) is not str or len(pinned_target_hash) != 64 or not HEX.fullmatch(pinned_target_hash):
         raise Refusal("invalid trusted target pin")
     # Admit and bound both records *before* JSON hashing untrusted payloads.
-    expected = prove_equivalent(source, target)
-    if digest(source) != pinned_source_hash or digest(target) != pinned_target_hash:
+    # Capture before semantics. Reuse the SAME snapshots for proof and pins;
+    # re-reading mutable external mappings permits semantic/hash torn reads.
+    source_copy, target_copy = _owned(source), _owned(target)
+    expected = _prove_owned(source_copy, target_copy)
+    if digest(source_copy) != pinned_source_hash or digest(target_copy) != pinned_target_hash:
         raise Refusal("source/target envelope substitution")
     # The submitted receipt is untrusted Python, not necessarily plain JSON.
     # Ordinary dict equality executes hostile __eq__ and confuses bool/int.
