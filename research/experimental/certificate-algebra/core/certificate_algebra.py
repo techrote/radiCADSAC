@@ -5,7 +5,7 @@ Run: python3 -m unittest -v test_certificate_algebra.py
 """
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import InitVar, dataclass
 from fractions import Fraction as Q
 from hashlib import sha256
 from math import comb
@@ -164,10 +164,10 @@ class Verified:
     certs: tuple[Certificate, ...]
     generation: int
     hash: str
-    _mint: object = field(default=None, repr=False, compare=False)
+    _mint: InitVar[object] = None
 
-    def __post_init__(self) -> None:
-        if self._mint is not _VERIFIED_MINT:
+    def __post_init__(self, _mint: object) -> None:
+        if _mint is not _VERIFIED_MINT:
             raise Refusal("Verified requires checked source import or trusted closure")
 
 
