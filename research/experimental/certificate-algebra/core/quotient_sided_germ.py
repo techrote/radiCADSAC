@@ -5,12 +5,13 @@ computational cuts to authenticated physical B-spline knots. Python 3.11+.
 """
 from __future__ import annotations
 
+import copy
 from fractions import Fraction as Q
 from math import comb
 
 from certificate_algebra import Refusal, digest, enc, frac, piece
 from rational_quotient import verify as verify_quotient
-from receipt_integrity import admit
+from receipt_integrity import admit, validate
 
 SCHEMA = "b1-quotient-sided-germ-v1"
 
@@ -64,12 +65,25 @@ def derive(numerator: dict, denominator: dict, quotient: dict, *,
     External custody of original pins is a caller obligation. The output never
     asserts that a source piece boundary is a genuine structural spline knot.
     """
-    original, meter = verify_quotient(numerator, denominator, quotient,
+    # E4 replays complete parents, but E5 previously re-read caller-owned
+    # piece dictionaries AFTER that replay. Mutating a coefficient at the E5
+    # read produced a false sided germ under the OLD independently held pin.
+    # Capture each bounded parent once and use its private values for BOTH
+    # E4 admission and local Taylor analysis. No external source custody is
+    # claimed by an in-process snapshot.
+    validate(numerator)
+    validate(denominator)
+    if type(numerator) is not dict or type(denominator) is not dict:
+        raise Refusal("nonprimitive parent source mapping")
+    n_owned, d_owned = copy.deepcopy(numerator), copy.deepcopy(denominator)
+    validate(n_owned)
+    validate(d_owned)
+    original, meter = verify_quotient(n_owned, d_owned, quotient,
                                      numerator_pin=numerator_pin,
                                      denominator_pin=denominator_pin)
     t = frac(time)
-    np = tuple(piece(x) for x in numerator["pieces"])
-    dp = tuple(piece(x) for x in denominator["pieces"])
+    np = tuple(piece(x) for x in n_owned["pieces"])
+    dp = tuple(piece(x) for x in d_owned["pieces"])
     if not (np[0].left <= t <= np[-1].right):
         raise Refusal("germ outside authenticated closed source domain")
     actual = {
