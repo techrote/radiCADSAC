@@ -1,3 +1,4 @@
+from receipt_integrity import strict_equal
 """Research A1: sound conditional signed local algebraic-time event cells.
 
 Works with sibling algebraic_degree's exact source/irreducibility/Sturm oracle.
@@ -160,7 +161,7 @@ def verify(doc,receipt):
         if type(receipt) is not dict or not verify_germ(doc,receipt['germ']):
             return False
         germ=receipt['germ']
-        return certify(doc,receipt['minimal_polynomial'],germ['irreducibility_prime'],
-                       receipt['root_bracket'],receipt['series_terms'])==receipt
+        return strict_equal(certify(doc,receipt['minimal_polynomial'],germ['irreducibility_prime'],
+                       receipt['root_bracket'],receipt['series_terms']),receipt)
     except (KeyError,ValueError,TypeError,ZeroDivisionError,OverflowError):
         return False

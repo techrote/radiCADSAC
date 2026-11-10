@@ -1,3 +1,4 @@
+from receipt_integrity import strict_equal
 """A1 research-only exact rational irreducibility fallback and algebraic-time germ.
 
 Classical Kronecker factor enumeration, finite but resource capped. Not a
@@ -229,7 +230,7 @@ def certify(doc, minimal, bracket):
 
 def verify(doc, receipt):
     try:
-        return type(receipt) is dict and certify(
-            doc, receipt["minimal_polynomial"], receipt["root_bracket"]) == receipt
+        return type(receipt) is dict and strict_equal(certify(
+            doc, receipt["minimal_polynomial"], receipt["root_bracket"]), receipt)
     except (KeyError, TypeError, ValueError, ZeroDivisionError, OverflowError):
         return False

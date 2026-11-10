@@ -1,3 +1,4 @@
+from receipt_integrity import strict_equal
 """A1 research: exact germ at a certified irrational algebraic time (not a global isolator)."""
 from fractions import Fraction as Q
 from hashlib import sha256
@@ -183,7 +184,7 @@ def certify(doc, minimal, prime, bracket):
 
 def verify(doc, receipt):
     try:
-        return type(receipt) is dict and certify(doc, receipt["minimal_polynomial"],
-           receipt["irreducibility_prime"], receipt["root_bracket"]) == receipt
+        return type(receipt) is dict and strict_equal(certify(doc, receipt["minimal_polynomial"],
+           receipt["irreducibility_prime"], receipt["root_bracket"]), receipt)
     except (KeyError, TypeError, ValueError, ZeroDivisionError, OverflowError):
         return False

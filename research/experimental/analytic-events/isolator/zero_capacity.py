@@ -1,3 +1,4 @@
+from receipt_integrity import strict_equal
 """A1-F7: exact zero-capacity (not zero-isolation) research checker.
 
 All arithmetic on source data is rational. The proof uses pi analytically;
@@ -125,7 +126,11 @@ def spline_pieces(source):
 
 
 def certify(source):
-    pieces = spline_pieces(source)
+    # Analyze and hash one owned primitive-tree snapshot; avoid analysis/hash TOCTOU.
+    if not _plain(source):
+        raise Refusal('unbounded or nonprimitive source')
+    captured = json.loads(json.dumps(source, sort_keys=True, separators=(',', ':'), ensure_ascii=True))
+    pieces = spline_pieces(captured)
     parts = [piece_capacity(p) for p in pieces]
     continua = []
     for part in parts:
@@ -135,9 +140,9 @@ def certify(source):
             continua[-1][1] = part['interval'][1]
         else:
             continua.append(part['interval'][:])
-    return {'schema': 'a1-zero-capacity/1', 'source_sha256': canonical_digest(source),
+    return {'schema': 'a1-zero-capacity/1', 'source_sha256': canonical_digest(captured),
             'source_type': 'CONSTRUCTED_C0_QUADRATIC_BSPLINE',
-            'actual_source_ancestry': 'UNVERIFIED', 'knot': source['K'],
+            'actual_source_ancestry': 'UNVERIFIED', 'knot': captured['K'],
             'knot_topology': 'SIDED_GERMS_REQUIRED', 'pieces': parts,
             'maximal_identity_zero_continua': continua,
             'claim': 'UPPER_BOUND_ONLY_NOT_COMPLETE_EVENT_PARTITION'}
@@ -163,6 +168,6 @@ def verify(source, claimed):
     if not _plain(source) or not _plain(claimed):
         return False
     try:
-        return certify(source) == claimed
+        return strict_equal(certify(source), claimed)
     except (Refusal, ValueError, TypeError, OverflowError):
         return False

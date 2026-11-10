@@ -5,6 +5,7 @@ on [k,k+1], k integer >=3, with a C0 two-piece rational polynomial P.
 Exact proof rules and oracle limitations are in SQUARE-LIFT.md. No native codec.
 """
 from __future__ import annotations
+from receipt_integrity import strict_equal
 
 from dataclasses import dataclass
 from fractions import Fraction as Q
@@ -186,7 +187,7 @@ def issue(s):
 
 def verify(s, receipt):
     try:
-        return type(receipt) is dict and receipt == issue(s)
+        return type(receipt) is dict and strict_equal(issue(s), receipt)
     except (Refusal, OverflowError, TypeError, ValueError, AttributeError):
         return False
 

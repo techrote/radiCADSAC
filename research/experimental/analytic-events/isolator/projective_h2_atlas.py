@@ -5,6 +5,7 @@ phase uses pi turns, never radians or the sibling 2*pi convention.  Physical
 B-spline provenance is intentionally UNVERIFIED.  See PROJECTIVE-H2-ATLAS.md.
 """
 from __future__ import annotations
+from receipt_integrity import strict_equal
 
 from fractions import Fraction as Q
 from hashlib import sha256
@@ -352,6 +353,6 @@ def certify(doc, *, bits=20):
 
 def verify(doc, receipt):
     try:
-        return type(receipt) is dict and certify(doc,**receipt['bounds'])==receipt
+        return type(receipt) is dict and strict_equal(certify(doc,**receipt['bounds']),receipt)
     except (Refusal,TypeError,ValueError,KeyError,ZeroDivisionError,OverflowError):
         return False

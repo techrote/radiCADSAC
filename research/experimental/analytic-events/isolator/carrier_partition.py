@@ -1,3 +1,4 @@
+from receipt_integrity import strict_equal
 """A1-F4 research: bounded exact polynomial-carrier partition of signed Fourier pieces.
 
 Requires sibling signed_cell.py from PR #470 for exact Machin/Taylor cofactor bounds.
@@ -285,6 +286,6 @@ def certify(doc,*,bits=20,terms=16,max_depth=8):
 
 def verify(doc,receipt):
     try:
-        return type(receipt) is dict and certify(doc,**receipt['bounds'])==receipt
+        return type(receipt) is dict and strict_equal(certify(doc,**receipt['bounds']),receipt)
     except (Refusal,SignRefusal,TypeError,ValueError,KeyError,ZeroDivisionError,OverflowError):
         return False

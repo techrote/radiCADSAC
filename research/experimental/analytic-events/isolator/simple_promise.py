@@ -4,6 +4,7 @@ Finite-budget prototype for a conditional promise-termination theorem. A refusal
 All certificate arithmetic is fractions; no binary floating-point decisions.
 """
 from __future__ import annotations
+from receipt_integrity import strict_equal
 from dataclasses import dataclass
 from fractions import Fraction as Q
 from functools import lru_cache
@@ -219,7 +220,8 @@ def verify(s,cert):
                 kind=cell_kind(s,p,a,b,k)
                 if kind is None:return False
                 expected.append({"piece":i,"lo":canon(a),"hi":canon(b),**kind})
-        return cert["cells"]==expected
+        return strict_equal({"source_sha256":s.sha256,"level":level,"shift":j,"shifts":shifts,
+                             "precision":k,"cells":expected,"status":"CERTIFIED_SIMPLE_PARTITION"},cert)
     except (Refusal, KeyError, TypeError, ValueError, ZeroDivisionError):return False
 
 def input_doc(parts,a="0/1",b="1/1"):

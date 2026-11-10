@@ -26,7 +26,7 @@ class ExactPointTests(unittest.TestCase):
         reversed_phase = source([-1], cos=([2],), sin=([],), phase_rate=-1)
         self.assertEqual(rational_event(reversed_phase, Q(1,3))["result"], "EXACT_ZERO")
         high = source([-1], cos=([2],), sin=([],), phase_rate=0, phase_offset=Q(1,3))
-        self.assertEqual(rational_event(high, Q(4,9))["result"], "EXACT_ZERO")
+        self.assertEqual(rational_event(high, Q(4,9))["result"], "IDENTICAL_ZERO_PIECE")
 
     def test_close_rational_arguments_stay_separate(self):
         s = source([1], cos=([-1],), sin=([],))

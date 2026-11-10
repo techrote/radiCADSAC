@@ -4,6 +4,7 @@ Research-only: NOT a complete trigonometric root isolator or an accepted
 machining event certificate. Exact rational arithmetic, Python stdlib only.
 """
 from __future__ import annotations
+from receipt_integrity import strict_equal
 
 from dataclasses import dataclass
 from fractions import Fraction as Q
@@ -207,7 +208,7 @@ def verify_rational_event(s: Source, receipt: dict) -> bool:
     if type(receipt) is not dict:
         return False
     try:
-        return rational_event(s, Q(receipt["time"])) == receipt
+        return strict_equal(rational_event(s, Q(receipt["time"])), receipt)
     except (KeyError, ValueError, TypeError, ZeroDivisionError, Refusal):
         return False
 
@@ -268,6 +269,6 @@ def verify_quadratic_event(s: Source, receipt: dict) -> bool:
         return False
     try:
         c, b, a = receipt["minimal_polynomial"]
-        return quadratic_event(s, a, b, c) == receipt
+        return strict_equal(quadratic_event(s, a, b, c), receipt)
     except (KeyError, ValueError, TypeError, ZeroDivisionError, Refusal):
         return False
