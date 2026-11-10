@@ -6,6 +6,7 @@ from fractions import Fraction as Q
 from certificate_algebra import (EvidenceMeter, Piece, Refusal, base_record,
                                  bernstein, check_seam, events, prove, verify_base)
 from product_cone import product, verify_product
+from closed_nonzero import verify_closed_product
 
 
 def P(a, b, *coeff):
@@ -105,6 +106,75 @@ class ProductClosureTests(unittest.TestCase):
         self.assertEqual(meter.seam_checks, 62)
         self.assertEqual(fresh.seam_checks, 31)
         self.assertEqual(len(out.pieces), 32)
+
+
+class HostileProductWitnessTests(unittest.TestCase):
+    """Real E1 and E2 imported consumer boundary, not a standalone oracle."""
+
+    class AlwaysEqual(str):
+        def __eq__(self, other):
+            return True
+        __hash__ = str.__hash__
+
+    class DangerousKey(str):
+        def __eq__(self, other):
+            raise AssertionError("caller-defined key comparator must not run")
+        __hash__ = str.__hash__
+
+    def fixture(self):
+        a = base(P(0, 1, 1))
+        s, witness, _ = product(a, a, left_pin=a['hash'], right_pin=a['hash'])
+        return a, s, witness
+
+    def test_str_subclass_false_sign_schema_and_hash_refused(self):
+        a, s, witness = self.fixture()
+        self.assertEqual(verify_product(a, a, witness,
+                         left_pin=a['hash'], right_pin=a['hash'])[0].hash, s.hash)
+        for name, value in (("schema", self.AlwaysEqual("FORGED")),
+                            ("left", self.AlwaysEqual("0" * 64)),
+                            ("product", self.AlwaysEqual("f" * 64)),
+                            ("signs", [self.AlwaysEqual("NEG")]),
+                            ("leaf_hashes", [self.AlwaysEqual("0" * 64)])):
+            fake = copy.deepcopy(witness)
+            fake[name] = value
+            with self.subTest(field=name), self.assertRaises(Refusal):
+                verify_product(a, a, fake, left_pin=a['hash'], right_pin=a['hash'])
+
+    def test_E2_downstream_must_refuse_forged_E1_sign(self):
+        a, s, witness = self.fixture()
+        forged = copy.deepcopy(witness)
+        forged['signs'][0] = self.AlwaysEqual('NEG')
+        with self.assertRaises(Refusal):
+            verify_closed_product(a, a, forged, left_pin=a['hash'],
+                                  right_pin=a['hash'], product_pin=s.hash)
+
+    def test_hostile_witness_key_is_refused_before_key_comparison(self):
+        a, _, witness = self.fixture()
+        forged = dict(witness)
+        forged[self.DangerousKey('intruder')] = 'x'
+        with self.assertRaises(Refusal):
+            verify_product(a, a, forged, left_pin=a['hash'], right_pin=a['hash'])
+
+    def test_nonprimitive_nested_oversized_and_cyclic_witness_refused(self):
+        a, _, witness = self.fixture()
+        candidates = []
+        forged = copy.deepcopy(witness); forged['signs'] = [True]
+        candidates.append(forged)
+        forged = copy.deepcopy(witness); forged['schema'] = 'x' * 4097
+        candidates.append(forged)
+        forged = copy.deepcopy(witness); forged['signs'] = [{'too': {'deep': set()}}]
+        candidates.append(forged)
+        nested = []
+        for _ in range(40):
+            nested = [nested]
+        forged = copy.deepcopy(witness); forged['signs'] = nested
+        candidates.append(forged)
+        cycle = []; cycle.append(cycle)
+        forged = copy.deepcopy(witness); forged['signs'] = cycle
+        candidates.append(forged)
+        for i, forged in enumerate(candidates):
+            with self.subTest(forgery=i), self.assertRaises(Refusal):
+                verify_product(a, a, forged, left_pin=a['hash'], right_pin=a['hash'])
 
 
 if __name__ == "__main__":
