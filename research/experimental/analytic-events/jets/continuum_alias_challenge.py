@@ -12,7 +12,7 @@ import json
 from fractions import Fraction as Q
 from math import comb
 
-A2_GIT_BLOB = '77b79335ffffb8382eb348afd44e7d9416f34583'
+A2_GIT_BLOB = '649b6dc6d5f74766ae285115dfd7600f2b6f6036'
 
 
 def polynomial_to_bernstein(coeffs, degree):
