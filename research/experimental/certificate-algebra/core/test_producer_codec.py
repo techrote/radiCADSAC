@@ -83,6 +83,45 @@ class SourceCodecTests(unittest.TestCase):
             with self.assertRaises(Refusal):
                 prove(y=invalid, pins=(digest(A1),digest(invalid),digest(WIN)))
 
+    def test_hostile_serialization_keys_and_nested_budget_refused(self):
+        # An actual producer cannot emit a hostile Python str-subclass key.
+        # Previously set(raw) == literal_fields called attacker equality and
+        # indexing retrieved a value under an alien literal name.
+        class Alias(str):
+            def __new__(cls, text, impersonates):
+                obj = str.__new__(cls, text)
+                obj.impersonates = impersonates
+                return obj
+            def __hash__(self): return hash(self.impersonates)
+            def __eq__(self, other): return other == self.impersonates
+
+        a = {Alias("alien-a1-key", "c0"): ["-1"],
+             "cos": [[]], "sin": [["1"]],
+             "phase_offset": "0", "phase_rate": "1"}
+        b = {Alias("alien-a2-key", "interval"): ["0", "2"],
+             "phase": ["0", "1/2"],
+             "terms": {"0": [["-1"], ["0"]], "1": [["0"], ["1"]]}}
+        self.assertEqual(a["c0"], ["-1"])
+        self.assertEqual(b["interval"], ["0", "2"])
+        self.assertEqual(set(a), set(A1))
+        self.assertEqual(set(b), set(A2))
+        for x, y in ((a, A2), (A1, b)):
+            with self.subTest(hostile_a1=(x is a)):
+                with self.assertRaises(Refusal):
+                    prove(x, y, pins=(digest(x), digest(y), digest(WIN)))
+        for payload in (dict(A1, sin=[["1"]], cos=[["1"]*200000]),
+                        dict(A1, c0=["1" * 10000]),
+                        dict(A1, cos=[[]], sin=[["1"]], phase_rate="1/1")):
+            with self.assertRaises(Refusal):
+                a1_envelope(payload, WIN, source_pin=digest(payload),
+                            window_pin=digest(WIN))
+        deep = copy.deepcopy(A2)
+        deep["terms"]["1"][0] = ["1"]
+        deep["terms"]["1"][0][0] = [deep]  # intentional cycle
+        with self.assertRaises(Refusal):
+            a2_envelope(deep, source_pin="f" * 64,
+                        window_pin=digest(WIN))
+
     def test_infinite_rational_family_and_negative_rates(self):
         # General law follows from exact phase substitution, not finite tests.
         for k in range(-6, 7):
