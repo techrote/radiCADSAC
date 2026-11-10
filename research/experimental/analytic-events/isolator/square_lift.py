@@ -146,6 +146,8 @@ def source_snapshot(s):
             n, d = value.numerator, value.denominator
             if type(n) is not int or type(d) is not int or d <= 0:
                 raise Refusal("noncanonical rational representation")
+            if max(abs(n).bit_length(), d.bit_length()) > MAX_BITS:
+                raise Refusal("source coefficient exceeds bit budget")
             copied = Q(n, d)
             if copied.numerator != n or copied.denominator != d:
                 raise Refusal("noncanonical rational representation")

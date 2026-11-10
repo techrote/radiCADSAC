@@ -32,3 +32,7 @@ python3 -m unittest discover -s . -p 'test_*.py' -v
 python3 challenge_sympy.py
 PYTHONPATH=. python3 /path/to/F5_original_probe.py   # EXPECT EXIT 1 on pre-fix only
 ```
+
+## Completion addendum — bounded denominator/numerator ingress
+
+After initial exact source-snapshot success (109/109), post-publication hardening adds a bit-length preflight on the captured rational numerator and denominator **before** reconstructing the independent Fraction. This prevents performing an unbounded denominator GCD on a forged, oversized Fraction object. New original-parent regression mutates a frozen Spec to carry an oversized (200,000-bit numerator) Fraction and requires typed budget refusal and no certificate acceptance. Corrected complete source-inclusive suite **110/110 PASS** (CPython 3.13.5), with full A3-style direct controls and SymPy rerun; final exact Git readback and independent review remain separate gates.

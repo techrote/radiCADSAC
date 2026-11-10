@@ -140,6 +140,14 @@ class SquareLiftTests(unittest.TestCase):
         object.__setattr__(source, "k", 4)
         self.assertTrue(verify(source, expected))
 
+    def test_snapshot_preflights_forged_fraction_budget(self):
+        # No gcd/reconstruction of a forged unbounded Fraction before refusal.
+        s = make_spec(4)
+        object.__setattr__(s, "left_p", (Q(2**200000, 3),))
+        with self.assertRaisesRegex(Refusal, "bit budget"):
+            issue(s)
+        self.assertFalse(verify(s, issue(make_spec(4))))
+
     def test_malformed_and_budget_refusals(self):
         invalid=[(2,(),(),()), (10001,(),(),()),(True,(),(),()),
                  (3,(0.1,),(0.1,),(1,)), (3,tuple(Q(1) for _ in range(6)),(Q(1),),(Q(1),)),
