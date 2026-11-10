@@ -140,6 +140,49 @@ class CarrierTests(unittest.TestCase):
         with self.assertRaisesRegex(cp.Refusal,'COFACTOR_SIGN_BUDGET'):
             cp.certify(d,max_depth=5)
 
+    def test_original_f4_digest_mutation_uses_captured_source(self):
+        # A1-QUAL-004: exact original-parent F4 source/hash TOCTOU regression.
+        # The caller's mutable H0 list changes at the real json.dumps entry;
+        # the captured source must control both polynomial events and digest.
+        import sys, json
+        s=doc(row(0,1,factor((Q(1,2),1)),h0=(Q(1),),c1=(),s2=()),
+              a=Q(0),b=Q(1))
+        original=copy.deepcopy(s)
+        honest=cp.certify(s,bits=8)
+        zero=copy.deepcopy(s)
+        zero['pieces'][0]['H0']=['0/1']
+        zero_cert=cp.certify(zero,bits=8)
+        self.assertTrue(cp.verify(s,honest))
+        self.assertEqual(honest['pieces'][0]['events'][0]['kind'],'CROSS')
+        self.assertEqual(zero_cert['pieces'][0]['kind'],'IDENTITY_ZERO_CONTINUUM')
+
+        def during_digest(operation):
+            fired=[False]
+            def trace(frame,event,arg):
+                if (event=='call' and frame.f_code is json.dumps.__code__
+                        and frame.f_back and frame.f_back.f_code is cp.source.__code__):
+                    s['pieces'][0]['H0']=['0/1']
+                    fired[0]=True
+                return trace
+            sys.settrace(trace)
+            try: result=operation()
+            finally: sys.settrace(None)
+            self.assertTrue(fired[0], 'real F4 digest boundary must be exercised')
+            return result
+
+        output=during_digest(lambda:cp.certify(s,bits=8))
+        self.assertEqual(output['pieces'][0]['events'],honest['pieces'][0]['events'])
+        self.assertEqual(output['source_sha256'],honest['source_sha256'])
+        self.assertNotEqual(output['source_sha256'],zero_cert['source_sha256'])
+        self.assertFalse(cp.verify(s,output)) # Caller now holds changed source.
+
+        forged=copy.deepcopy(honest)
+        forged['source_sha256']=zero_cert['source_sha256']
+        s.clear();s.update(copy.deepcopy(original))
+        self.assertFalse(during_digest(lambda:cp.verify(s,forged)))
+        s.clear();s.update(copy.deepcopy(original))
+        self.assertTrue(cp.verify(s,honest))
+
     def test_tamper_receipt_and_phase(self):
         d=doc(row(0,2,factor((Q(1,3),2))))
         c=cp.certify(d)

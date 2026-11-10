@@ -131,10 +131,28 @@ def interior_order(p,l,h):
     return k
 
 def source(doc):
-    need(type(doc) is dict and set(doc)=={'a','b','pieces'},'SOURCE_FIELDS')
-    a,b=token(doc['a']),token(doc['b'])
+    # Capture one owned bounded *primitive value* tree before parsing channels.
+    # Both rational analysis and the digest below must consume this snapshot,
+    # not fresh reads from caller-owned, mutable nested dictionaries/lists.
+    # The copy does NOT provide an external writer fence or authenticate the
+    # original physical B-spline/producer; those remain separately unverified.
+    need(type(doc) is dict and len(doc)==3 and all(type(k) is str for k in doc)
+         and set(doc)=={'a','b','pieces'},'SOURCE_FIELDS')
+    source_rows=doc['pieces']
+    need(type(source_rows) is list and 1<=len(source_rows)<=3,'PIECE_COUNT')
+    captured={'a':doc['a'],'b':doc['b'],'pieces':[]}
+    for row in source_rows:
+        need(type(row) is dict and len(row)==7 and all(type(k) is str for k in row)
+             and set(row)=={'lo','hi',*KEYS},'PIECE_FIELDS')
+        snapshot_row={'lo':row['lo'],'hi':row['hi']}
+        for name in KEYS:
+            values=row[name]
+            need(type(values) is list and 1<=len(values)<=11,'POLYNOMIAL_DEGREE')
+            snapshot_row[name]=values.copy()
+        captured['pieces'].append(snapshot_row)
+    a,b=token(captured['a']),token(captured['b'])
     need(b!=0,'ZERO_PHASE_RATE')
-    data=doc['pieces'];need(type(data) is list and 1<=len(data)<=3,'PIECE_COUNT')
+    data=captured['pieces']
     output=[]
     for row in data:
         need(type(row) is dict and set(row)=={'lo','hi',*KEYS},'PIECE_FIELDS')
@@ -153,7 +171,7 @@ def source(doc):
         # a verified origin of genuine B-spline knot/control vectors.
         need(all(evalp(x,before[1])==evalp(y,after[0]) for x,y in zip(before[2],after[2])),
              'C0_CHANNEL_SEAM')
-    digest=sha256(json.dumps(doc,sort_keys=True,separators=(',',':'),ensure_ascii=True).encode()).hexdigest()
+    digest=sha256(json.dumps(captured,sort_keys=True,separators=(',',':'),ensure_ascii=True).encode()).hexdigest()
     return a,b,output,digest
 
 def sign_cover(cofactor,a,b,l,h,terms,max_depth):
