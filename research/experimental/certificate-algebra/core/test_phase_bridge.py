@@ -1,5 +1,6 @@
 """B1-D1 deterministic positive and adversarial tests; no numerical root sampling."""
 import copy
+import sys
 from fractions import Fraction as Q
 import unittest
 
@@ -171,6 +172,41 @@ class BridgeTests(unittest.TestCase):
         with self.assertRaises(Refusal):
             canonical(dict(original, terms={"0": [["0"], ["0"]],
                                             Lies("1"): [["0"], ["1"]]}))
+
+    def test_phase_snapshot_digest_torn_read_refuses_false_equivalence(self):
+        # Direct imported B1 phase verifier: previously math parsed the initial
+        # source while the later source hash represented a DIFFERENT function.
+        source, target = make("A1-470"), make("A1-470")
+        changed = copy.deepcopy(source)
+        changed["terms"]["1"][1][0] = "2"
+        old_semantic_hash = digest(canonical(source))
+        old_source_hash = digest(source)
+        changed_pin, target_pin = digest(changed), digest(target)
+        self.assertNotEqual(old_source_hash, changed_pin)
+        with self.assertRaises(Refusal):
+            prove_equivalent(changed, target)
+        # The submitted receipt claims the ORIGINAL equivalence and the
+        # independently selected final/changed hash; those conflict.
+        forged = {"schema": "b1-phase-equivalence-v1",
+                  "source_hash": changed_pin, "target_hash": target_pin,
+                  "semantic_hash": old_semantic_hash}
+        seen = [False]
+        from phase_bridge import digest as real_digest
+        def trace(frame, event, arg):
+            if event == "call" and frame.f_code is real_digest.__code__ and not seen[0]:
+                seen[0] = True
+                source["terms"]["1"][1][0] = "2"
+            return trace
+        sys.settrace(trace)
+        try:
+            with self.assertRaises(Refusal):
+                verify(source, target, forged, pinned_source_hash=changed_pin,
+                       pinned_target_hash=target_pin)
+        finally:
+            sys.settrace(None)
+        self.assertTrue(seen[0])
+        self.assertEqual(digest(source), changed_pin)
+        self.assertNotEqual(canonical(source), canonical(target))
 
     def test_phase_period_alias_is_conservatively_not_proven(self):
         # pi*(beta+2) is semantically periodic, but this restricted contract
