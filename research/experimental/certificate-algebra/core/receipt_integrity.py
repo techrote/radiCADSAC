@@ -52,13 +52,23 @@ def _same(a, b) -> bool:
     return a == b
 
 
+def validate(value: object) -> None:
+    """Reject nonprimitive or oversized source/receipt input before parsing.
+
+    Safe as a local import from certificate_algebra: no admission function is
+    invoked while Python imports either module. This is a resource-bounded
+    shape check, not source authentication or a mathematical proof.
+    """
+    _primitive(value, 0, [MAX_RECEIPT_NODES])
+
+
 def admit(expected: dict, proposed: dict) -> None:
     """Replay equality only for exact builtin JSON trees; otherwise NONTRUTH.
 
     No caller-supplied comparator, truthiness, coercion, digest or object
     serialization participates. Independent source-pin custody is still needed.
     """
-    _primitive(expected, 0, [MAX_RECEIPT_NODES])
-    _primitive(proposed, 0, [MAX_RECEIPT_NODES])
+    validate(expected)
+    validate(proposed)
     if type(expected) is not dict or type(proposed) is not dict or not _same(expected, proposed):
         raise Refusal("missing, stale, forged, or noncanonical primitive receipt")
