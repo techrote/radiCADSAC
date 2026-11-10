@@ -172,8 +172,24 @@ def analyze(left, right, t0):
             'local_annihilator_ceiling': max((j+2*sum(f>0 for f in fs)+(F(0) in fs)-1
                                              for j, fs in groups.items() if fs), default=0)}
 
+def same_receipt(expected, claimed):
+    """Strict canonical receipt primitives; never invoke attacker-defined equality."""
+    if type(expected) is not type(claimed):
+        return False
+    if type(expected) is dict:
+        if len(expected) != len(claimed) or any(type(k) is not str for k in claimed):
+            return False
+        return all(k in claimed and same_receipt(v, claimed[k])
+                   for k, v in expected.items())
+    if type(expected) is list:
+        return len(expected) == len(claimed) and all(
+            same_receipt(e, c) for e, c in zip(expected, claimed))
+    if type(expected) in (str, int, bool, type(None)):
+        return expected == claimed
+    return False
+
 def verify(left, right, t0, claimed):
-    check(type(claimed) is dict and analyze(left, right, t0) == claimed,
+    check(type(claimed) is dict and same_receipt(analyze(left, right, t0), claimed),
           'FORGED_OR_STALE_RECEIPT')
     return True
 
