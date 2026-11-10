@@ -8,8 +8,9 @@ from __future__ import annotations
 
 from fractions import Fraction as Q
 from math import comb
+import re
 
-from receipt_integrity import admit
+from receipt_integrity import admit, validate
 
 from certificate_algebra import (
     MAX_BITS, MAX_DEGREE, Certificate, EvidenceMeter, Piece, Refusal,
@@ -20,11 +21,12 @@ SCHEMA = "b1-bernstein-product-v1"
 
 
 def _parent(raw: dict, pin: str, meter: EvidenceMeter) -> Verified:
-    if not isinstance(raw, dict) or set(raw) != {"pieces", "receipts", "hash"}:
+    validate(raw)  # Audit all hostile keys/values before dict operations.
+    if type(raw) is not dict or set(raw) != {"pieces", "receipts", "hash"}:
         raise Refusal("parent record schema mismatch")
     if not isinstance(raw["pieces"], list) or not isinstance(raw["receipts"], list):
         raise Refusal("parent record arrays required")
-    if not isinstance(pin, str) or len(pin) != 64:
+    if type(pin) is not str or re.fullmatch(r"[0-9a-f]{64}", pin) is None:
         raise Refusal("missing exact external source pin")
     s = verify_base(raw["pieces"], raw["receipts"], meter)
     if s.hash != raw["hash"] or s.hash != pin:
