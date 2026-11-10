@@ -10,7 +10,8 @@ from hashlib import sha256
 import json
 import re
 from certificate_algebra import Refusal as PrimitiveRefusal
-from receipt_integrity import admit as admit_primitive_receipt
+from receipt_integrity import (admit as admit_primitive_receipt,
+                               validate as validate_primitive_source)
 
 SCHEMA = "b1-typed-phase-source-v1"
 RECEIPT = "b1-phase-equivalence-v1"
@@ -28,7 +29,7 @@ class Refusal(ValueError):
 
 
 def exact(x):
-    if not isinstance(x, str) or len(x) > 90 or not CANON.fullmatch(x):
+    if type(x) is not str or len(x) > 90 or not CANON.fullmatch(x):
         raise Refusal("noncanonical or overlong rational")
     try:
         q = Fraction(x)
@@ -58,7 +59,14 @@ def canonical(source):
     """
     keys = {"schema", "producer", "producer_head", "origin_source_sha",
             "interval", "offset", "rate", "terms"}
-    if not isinstance(source, dict) or set(source) != keys or source["schema"] != SCHEMA:
+    # Untrusted source objects must be exact builtin JSON primitives BEFORE
+    # any membership, equality, Fraction conversion or hash computation.
+    # Otherwise a str subclass can spoof the reviewed producer head/schema.
+    try:
+        validate_primitive_source(source)
+    except PrimitiveRefusal as exc:
+        raise Refusal("nonprimitive/overbudget source record") from exc
+    if type(source) is not dict or set(source) != keys or source["schema"] != SCHEMA:
         raise Refusal("unknown source schema")
     who = source["producer"]
     if not isinstance(who, str) or who not in PRODUCERS:
