@@ -9,6 +9,8 @@ from fractions import Fraction
 from hashlib import sha256
 import json
 import re
+from certificate_algebra import Refusal as PrimitiveRefusal
+from receipt_integrity import admit as admit_primitive_receipt
 
 SCHEMA = "b1-typed-phase-source-v1"
 RECEIPT = "b1-phase-equivalence-v1"
@@ -127,14 +129,19 @@ def verify(source, target, claim, *, pinned_source_hash, pinned_target_hash):
 
     These pins are NOT a replacement for producer object/codec authentication.
     """
-    if not isinstance(pinned_source_hash, str) or len(pinned_source_hash) != 64 or not HEX.fullmatch(pinned_source_hash):
+    if type(pinned_source_hash) is not str or len(pinned_source_hash) != 64 or not HEX.fullmatch(pinned_source_hash):
         raise Refusal("invalid trusted source pin")
-    if not isinstance(pinned_target_hash, str) or len(pinned_target_hash) != 64 or not HEX.fullmatch(pinned_target_hash):
+    if type(pinned_target_hash) is not str or len(pinned_target_hash) != 64 or not HEX.fullmatch(pinned_target_hash):
         raise Refusal("invalid trusted target pin")
     # Admit and bound both records *before* JSON hashing untrusted payloads.
     expected = prove_equivalent(source, target)
     if digest(source) != pinned_source_hash or digest(target) != pinned_target_hash:
         raise Refusal("source/target envelope substitution")
-    if not isinstance(claim, dict) or claim != expected:
-        raise Refusal("forged or stale equivalence receipt")
+    # The submitted receipt is untrusted Python, not necessarily plain JSON.
+    # Ordinary dict equality executes hostile __eq__ and confuses bool/int.
+    # Reuse E6 bounded builtin-only admission rather than adding another codec.
+    try:
+        admit_primitive_receipt(expected, claim)
+    except PrimitiveRefusal as exc:
+        raise Refusal("forged or stale equivalence receipt") from exc
     return True
