@@ -135,6 +135,43 @@ class BridgeTests(unittest.TestCase):
             verify(a, b, honest, pinned_source_hash=Lies(pins["pinned_source_hash"]),
                    pinned_target_hash=pins["pinned_target_hash"])
 
+    def test_source_fields_cannot_spoof_producer_or_canonical_rationals(self):
+        # Direct B1-D1 source boundary, not only forged output receipt.
+        # Before the source input guard, hostile __eq__/__ne__ let unknown
+        # producer versions, schemas and noncanonical rationals pass.
+        class Lies(str):
+            def __eq__(self, other): return True
+            def __ne__(self, other): return False
+            __hash__ = str.__hash__
+
+        original = make("A1-470")
+        baseline = make("MC038-main", rate="1/2")
+        verified = prove_equivalent(original, baseline)
+        self.assertTrue(verify(original, baseline, verified,
+                               pinned_source_hash=digest(original),
+                               pinned_target_hash=digest(baseline)))
+        for field, bogus in (
+            ("schema", Lies("NOT-B1-SCHEMA")),
+            ("producer_head", Lies("f" * 40)),
+            ("offset", Lies("1/1")),
+            ("rate", Lies("1/1")),
+            ("origin_source_sha", Lies("a" * 64)),
+        ):
+            with self.subTest(field=field):
+                forged = copy.deepcopy(original)
+                forged[field] = bogus
+                with self.assertRaises(Refusal):
+                    canonical(forged)
+                with self.assertRaises(Refusal):
+                    verify(forged, forged, prove_equivalent(original, original),
+                           pinned_source_hash=digest(forged),
+                           pinned_target_hash=digest(forged))
+        with self.assertRaises(Refusal):
+            canonical(dict(original, terms={"0": [[Lies("1/1")], ["0"]]}))
+        with self.assertRaises(Refusal):
+            canonical(dict(original, terms={"0": [["0"], ["0"]],
+                                            Lies("1"): [["0"], ["1"]]}))
+
     def test_phase_period_alias_is_conservatively_not_proven(self):
         # pi*(beta+2) is semantically periodic, but this restricted contract
         # intentionally does not derive periodic-alias equivalence.
