@@ -151,3 +151,64 @@ class ExactPointTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+class BoundedSourceIngressTests(unittest.TestCase):
+    """A3 resource falsifier: the real source() must not traverse huge inputs."""
+
+    def test_preflight_17_coefficients_and_hash_unchanged(self):
+        from algebraic_zero import source_sha
+        s = source([0] * 16 + [1], cos=([2],), sin=([],))
+        self.assertEqual(len(s.c0), 17)
+        self.assertEqual(source_sha(s), source_sha(source(tuple([0] * 16 + [1]),
+                                                  cos=((2,),), sin=((),))))
+        self.assertEqual(source_sha(source([1], cos=([2],), sin=([],))),
+                         source_sha(source((1,), cos=((2,),), sin=((),))))
+
+    def test_huge_top_level_and_nested_preflight(self):
+        huge = [0] * 100000
+        for kwargs in ({'c0': huge},
+                       {'c0': [0], 'cos': [huge], 'sin': [[]]},
+                       {'c0': [0], 'cos': [[]], 'sin': [huge]}):
+            with self.subTest(kind=tuple(kwargs)):
+                with self.assertRaises(Refusal):
+                    source(**kwargs)
+        for kwargs in ({'c0': [0] * 18},
+                       {'c0': [0], 'cos': [[0] * 18], 'sin': [[]]},
+                       {'c0': [0], 'cos': [[]], 'sin': [[0] * 18]}):
+            with self.subTest(kind=tuple(kwargs)):
+                with self.assertRaisesRegex(Refusal, 'degree exceeds 16'):
+                    source(**kwargs)
+
+    def test_bomb_iterators_are_never_consumed(self):
+        class Bomb:
+            def __init__(self):
+                self.pulls = 0
+            def __iter__(self):
+                self.pulls += 1
+                raise AssertionError('unbounded iterator consumed')
+            def __len__(self):
+                raise AssertionError('custom length consulted')
+        for which in ('c0', 'cos', 'sin', 'cos_inner', 'sin_inner'):
+            item = Bomb()
+            args = {'c0': [0], 'cos': ([1],), 'sin': ([],)}
+            if which in ('c0', 'cos', 'sin'):
+                args[which] = item
+            elif which == 'cos_inner':
+                args['cos'] = (item,)
+            else:
+                args['sin'] = (item,)
+            with self.subTest(which=which):
+                with self.assertRaises(Refusal):
+                    source(**args)
+                self.assertEqual(item.pulls, 0)
+
+    def test_bounded_index_and_noncanonical_subclasses(self):
+        class DynamicList(list):
+            def __iter__(self):
+                raise AssertionError('untrusted iterator used')
+        for value in (DynamicList([1]), tuple(range(18))):
+            with self.assertRaises(Refusal):
+                source(value)
+        # Both H1 and H2 remain accepted as exact primitive list/tuple shapes.
+        src = source([1], cos=([2], [3]), sin=([4], [5]))
+        self.assertEqual(len(src.channels()), 5)

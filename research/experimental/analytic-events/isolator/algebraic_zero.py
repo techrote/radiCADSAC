@@ -35,9 +35,21 @@ def trim(coeffs: tuple[Q, ...] | list[Q]) -> tuple[Q, ...]:
 
 
 def polynomial(seq) -> tuple[Q, ...]:
-    values = tuple(rational(c) for c in seq)
-    if len(values) > 17:
+    """Admit at most 17 coefficients before any conversion or traversal.
+
+    Exact built-in containers, rather than arbitrary iterators or subclasses,
+    make this finite-work intake contract independently inspectable. The
+    bounded index loop avoids following a list that grows during capture.
+    """
+    if type(seq) not in (list, tuple):
+        raise Refusal("polynomial coefficients require exact list/tuple")
+    count = len(seq)
+    if count > 17:
         raise Refusal("polynomial degree exceeds 16")
+    try:
+        values = tuple(rational(seq[i]) for i in range(count))
+    except IndexError as exc:
+        raise Refusal("polynomial changed during bounded capture") from exc
     return trim(values)
 
 
@@ -80,10 +92,17 @@ def validate_source(s: Source) -> None:
 
 
 def source(c0, cos=(), sin=(), *, phase_offset=0, phase_rate=1) -> Source:
-    if len(cos) != len(sin) or len(cos) > 2:
+    if type(cos) not in (list, tuple) or type(sin) not in (list, tuple):
+        raise Refusal("Fourier channel containers require exact list/tuple")
+    count = len(cos)
+    if count != len(sin) or count > 2:
         raise Refusal("matched H0/H1/H2 cosine and sine channels required")
-    return Source(polynomial(c0), tuple(polynomial(x) for x in cos),
-                  tuple(polynomial(x) for x in sin),
+    try:
+        cos_values = tuple(polynomial(cos[i]) for i in range(count))
+        sin_values = tuple(polynomial(sin[i]) for i in range(count))
+    except IndexError as exc:
+        raise Refusal("Fourier channels changed during bounded capture") from exc
+    return Source(polynomial(c0), cos_values, sin_values,
                   rational(phase_offset), rational(phase_rate))
 
 
