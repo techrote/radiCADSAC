@@ -10,6 +10,7 @@ import re
 from typing import Any
 
 from certificate_algebra import EvidenceMeter, Refusal, Verified, enc, replay, verify_base
+from receipt_integrity import admit
 from product_cone import verify_product
 
 SCHEMA = "b1-closed-nonzero-v1"
@@ -58,8 +59,8 @@ def _closed(s: Verified, provenance: str, pins: tuple[str, ...]) -> dict:
 
 
 def _expected(actual: dict, proposed: dict | None) -> None:
-    if proposed is not None and (not isinstance(proposed, dict) or proposed != actual):
-        raise Refusal("forged or stale closed-domain receipt")
+    if proposed is not None:
+        admit(actual, proposed)
 
 
 def verify_closed_base(raw: dict, *, source_pin: str,

@@ -10,6 +10,7 @@ from math import comb
 
 from certificate_algebra import Refusal, digest, enc, frac, piece
 from rational_quotient import verify as verify_quotient
+from receipt_integrity import admit
 
 SCHEMA = "b1-quotient-sided-germ-v1"
 
@@ -98,8 +99,7 @@ def verify(numerator: dict, denominator: dict, quotient: dict, proposed: dict,
     actual, meter = derive(numerator, denominator, quotient,
                            numerator_pin=numerator_pin,
                            denominator_pin=denominator_pin, time=time)
-    if actual != proposed:
-        raise Refusal("forged or stale exact sided-germ receipt")
+    admit(actual, proposed)
     if expected_germ_hash is not None and (
             type(expected_germ_hash) is not str or
             expected_germ_hash != actual["germ_hash"]):
@@ -113,7 +113,8 @@ def project_signed_affine(germ: dict, *, offset: str, rate: str) -> dict:
     For physical t=offset+rate*x, rate<0 swaps sides. To promote, independently
     reprove source/denominator and invoke derive on the transformed source.
     """
-    if type(germ) is not dict or germ.get("schema") != SCHEMA:
+    admit(germ, germ)  # Reject subclass hooks before accessing untrusted fields.
+    if germ.get("schema") != SCHEMA:
         raise Refusal("invalid germ schema")
     if set(germ) != {"schema", "quotient_hash", "numerator_pin", "denominator_pin",
                      "time", "left", "right", "source_piece_boundary_membership",

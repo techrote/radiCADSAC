@@ -10,6 +10,7 @@ import re
 from certificate_algebra import (EvidenceMeter, Refusal, Verified, _state,
                                  enc, events, split, verify_base)
 from product_cone import _combine
+from receipt_integrity import admit
 
 SCHEMA = "b1-refined-product-v1"
 MAX_REFINED_PIECES = 128
@@ -85,8 +86,7 @@ def verify(left: dict, right: dict, proposed: dict, *, left_pin: str,
         raise Refusal("missing proposed receipt")
     out, expected, meter = derive(left, right, left_pin=left_pin,
                                   right_pin=right_pin)
-    if proposed != expected:
-        raise Refusal("incomplete, forged or stale refinement certificate")
+    admit(expected, proposed)
     if expected_product_pin is not None:
         if type(expected_product_pin) is not str or _PIN.fullmatch(expected_product_pin) is None or expected_product_pin != out.hash:
             raise Refusal("untrusted output source version")

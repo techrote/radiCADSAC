@@ -10,6 +10,7 @@ import re
 from certificate_algebra import EvidenceMeter, Refusal, digest, enc, events
 from closed_nonzero import _closed
 from refined_product import MAX_REFINED_PIECES, _parent, _refine
+from receipt_integrity import admit
 
 SCHEMA = 'b1-rational-quotient-v1'
 _HEX = re.compile(r'[0-9a-f]{64}\Z')
@@ -97,8 +98,7 @@ def verify(numerator: dict, denominator: dict, proposed: dict, *,
     receipt, meter = derive(numerator, denominator,
                             numerator_pin=numerator_pin,
                             denominator_pin=denominator_pin)
-    if receipt != proposed:
-        raise Refusal('forged or incomplete quotient receipt')
+    admit(receipt, proposed)
     if expected_quotient_hash is not None and (
         _external_pin(expected_quotient_hash) != receipt['quotient_hash']
     ):
