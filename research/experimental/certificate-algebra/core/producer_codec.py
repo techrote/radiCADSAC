@@ -5,6 +5,8 @@ not verify who supplied the pins, execute the producer, or authenticate Git code
 """
 from __future__ import annotations
 
+import copy
+
 from phase_bridge import PRODUCERS, SCHEMA, Refusal, digest, exact, prove_equivalent
 from certificate_algebra import Refusal as PrimitiveRefusal
 from receipt_integrity import validate as validate_primitive_source
@@ -17,13 +19,23 @@ def _require(ok, message):
         raise Refusal(message)
 
 
-def _admit_source(raw):
-    # Validate the entire untrusted Python graph BEFORE set(raw), dict indexing,
-    # JSON serialization or any operation that could run hostile key equality.
+def _snapshot_source(raw):
+    """Capture one bounded primitive source for both parsing and source pin.
+
+    A caller can mutate a producer dict after admission. Parsing the old
+    coefficients then hashing the new dict authenticates neither source.
+    This local snapshot is NOT independent upstream producer custody.
+    """
     try:
+        # Guard types/budget before invoking deepcopy or indexing keys.
         validate_primitive_source(raw)
+        if type(raw) is not dict:
+            raise Refusal("producer source must be a primitive mapping")
+        owned = copy.deepcopy(raw)
+        validate_primitive_source(owned)
     except PrimitiveRefusal as exc:
         raise Refusal("nonprimitive/overbudget producer source") from exc
+    return owned
 
 
 def _q(x):
@@ -57,7 +69,7 @@ def _pin(source, pinned):
 
 def a1_envelope(raw, window, *, source_pin, window_pin):
     """Bind canonical A1 Source.source_sha JSON and separately pinned domain."""
-    _admit_source(raw)
+    raw = _snapshot_source(raw)
     _require(type(raw) is dict and set(raw) == {
         "c0", "cos", "sin", "phase_offset", "phase_rate"}, "bad A1 source fields")
     c0 = _p(raw["c0"], a1=True)
@@ -78,7 +90,7 @@ def a1_envelope(raw, window, *, source_pin, window_pin):
 
 def a2_envelope(raw, *, source_pin, window_pin):
     """Bind canonical A2 source_dict()/digest serialization and own domain."""
-    _admit_source(raw)
+    raw = _snapshot_source(raw)
     _require(type(raw) is dict and set(raw) == {"interval", "phase", "terms"},
              "bad A2 source fields")
     w = _window(raw["interval"], window_pin)
