@@ -61,6 +61,28 @@ class TestSparse(unittest.TestCase):
             with self.assertRaises(Refusal):verify(a,b,0,forged)
         with self.assertRaises(Refusal):verify(a,src(F(1,33)),0,r)
 
+    def test_hostile_python_receipt_equality(self):
+        # Negative control from published pre-fix head: dict equality accepted this.
+        class EqualAlways:
+            def __eq__(self, other):
+                return True
+        a, b = src(F(1,31)), src(F(1,32))
+        r = analyze(a,b,0)
+        for key, spoof in (('right_sign', EqualAlways()),
+                           ('right_sign', True),
+                           ('first_mismatch_order', EqualAlways())):
+            forged = dict(r); forged[key] = spoof
+            with self.assertRaises(Refusal):
+                verify(a,b,0,forged)
+        forged = dict(r)
+        forged['moment_terms'] = [[2, EqualAlways()]]
+        with self.assertRaises(Refusal):
+            verify(a,b,0,forged)
+        forged['moment_terms'] = [[2, '63/492032']] * 100_000
+        with self.assertRaises(Refusal):
+            verify(a,b,0,forged)
+        self.assertTrue(verify(a,b,0,r))
+
     def test_quarter_budget_and_bad_shapes(self):
         a=src(F(1,31));b=src(F(1,32))
         for bad in (src(F(1,31),off=F(1,8)),
