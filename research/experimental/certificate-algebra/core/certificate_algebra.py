@@ -47,12 +47,12 @@ class Piece:
     coeff: tuple[Q, ...]  # power basis in u=(t-left)/(right-left)
 
     def __post_init__(self) -> None:
-        if not isinstance(self.left, Q) or not isinstance(self.right, Q) or not self.left < self.right:
+        if type(self.left) is not Q or type(self.right) is not Q or not self.left < self.right:
             raise Refusal("invalid exact interval")
-        if not isinstance(self.coeff, tuple) or not (1 <= len(self.coeff) <= MAX_DEGREE + 1):
+        if type(self.coeff) is not tuple or not (1 <= len(self.coeff) <= MAX_DEGREE + 1):
             raise Refusal("invalid polynomial degree")
         for q in (self.left, self.right, *self.coeff):
-            if not isinstance(q, Q) or q.numerator.bit_length() > MAX_BITS or q.denominator.bit_length() > MAX_BITS:
+            if type(q) is not Q or q.numerator.bit_length() > MAX_BITS or q.denominator.bit_length() > MAX_BITS:
                 raise Refusal("non-rational or oversized input")
         if len(self.coeff) > 1 and self.coeff[-1] == 0:
             raise Refusal("noncanonical trailing-zero coefficient")
@@ -222,7 +222,7 @@ def _casteljau(b: tuple[Q, ...], u: Q) -> tuple[tuple[Q, ...], tuple[Q, ...]]:
 
 
 def split(s: Verified, i: int, cut: Q, meter: EvidenceMeter) -> Verified:
-    if not isinstance(i, int) or not (0 <= i < len(s.pieces)) or not isinstance(cut, Q):
+    if type(i) is not int or not (0 <= i < len(s.pieces)) or type(cut) is not Q:
         raise Refusal("invalid split index/cut")
     p, c = s.pieces[i], s.certs[i]
     if not p.left < cut < p.right:
@@ -244,7 +244,7 @@ def split(s: Verified, i: int, cut: Q, meter: EvidenceMeter) -> Verified:
 
 def affine(s: Verified, offset: Q, rate: Q, meter: EvidenceMeter) -> Verified:
     """Reparameterize f(t) as g(x)=f(offset+rate*x), rate!=0."""
-    if not isinstance(offset, Q) or not isinstance(rate, Q) or rate == 0:
+    if type(offset) is not Q or type(rate) is not Q or rate == 0:
         raise Refusal("affine rate must be nonzero exact rational")
     ps, cs = [], []
     for p, c in zip(s.pieces, s.certs):
@@ -272,7 +272,7 @@ def affine(s: Verified, offset: Q, rate: Q, meter: EvidenceMeter) -> Verified:
 
 def replace(s: Verified, i: int, new_coeff: tuple[Q, ...], meter: EvidenceMeter) -> Verified:
     """Single-owned local mutation; no claim about distant physical influence."""
-    if not isinstance(i, int) or not (0 <= i < len(s.pieces)):
+    if type(i) is not int or not (0 <= i < len(s.pieces)):
         raise Refusal("invalid update index")
     old = s.pieces[i]
     p = Piece(old.left, old.right, new_coeff)
