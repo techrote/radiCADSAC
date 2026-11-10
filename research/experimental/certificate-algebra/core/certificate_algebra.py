@@ -73,7 +73,9 @@ class Piece:
 
 
 def piece(data: dict) -> Piece:
-    if not isinstance(data, dict) or set(data) != {"left", "right", "coeff"}:
+    from receipt_integrity import validate
+    validate(data)
+    if type(data) is not dict or set(data) != {"left", "right", "coeff"}:
         raise Refusal("source fields mismatch")
     if not isinstance(data["coeff"], list):
         raise Refusal("coefficients must be a list")
@@ -107,7 +109,9 @@ class Certificate:
 
 
 def receipt(data: dict) -> Certificate:
-    if not isinstance(data, dict) or set(data) != {"source_hash", "sign", "bernstein"}:
+    from receipt_integrity import validate
+    validate(data)
+    if type(data) is not dict or set(data) != {"source_hash", "sign", "bernstein"}:
         raise Refusal("receipt fields mismatch")
     if not isinstance(data["source_hash"], str) or not re.fullmatch(r"[0-9a-f]{64}", data["source_hash"]):
         raise Refusal("invalid source digest")
@@ -131,6 +135,12 @@ def prove(p: Piece, meter: EvidenceMeter) -> Certificate:
 
 def check_leaf(p: Piece, c: Certificate, meter: EvidenceMeter) -> None:
     meter.full_leaf_checks += 1
+    # Certificate is an ordinary Python dataclass, not an opaque signed token.
+    # Refuse hostile subclass fields even on a direct (non-JSON) call site.
+    if (type(c) is not Certificate or type(c.source_hash) is not str
+            or type(c.sign) is not str or type(c.b) is not tuple
+            or any(type(x) is not Q for x in c.b)):
+        raise Refusal("noncanonical in-process leaf certificate")
     if p.hash != c.source_hash or bernstein(p) != c.b or kind(c.b) != c.sign:
         raise Refusal("forged leaf certificate / source substitution")
 
@@ -163,6 +173,12 @@ def _state(ps: tuple[Piece, ...], cs: tuple[Certificate, ...], gen: int) -> Veri
 
 
 def verify_base(raw_pieces: list[dict], raw_receipts: list[dict], meter: EvidenceMeter) -> Verified:
+    from receipt_integrity import validate
+    # Inspect the complete input before performing comparisons or iteration.
+    validate(raw_pieces)
+    validate(raw_receipts)
+    if type(raw_pieces) is not list or type(raw_receipts) is not list:
+        raise Refusal("base source/receipt arrays must be primitive lists")
     if len(raw_pieces) != len(raw_receipts) or not (1 <= len(raw_pieces) <= 512):
         raise Refusal("invalid base cardinality")
     ps, cs = tuple(piece(x) for x in raw_pieces), tuple(receipt(x) for x in raw_receipts)
@@ -292,8 +308,10 @@ def replay(log: dict, meter: EvidenceMeter | None = None) -> tuple[Verified, Evi
     Initial certificates are supplied, not trusted. Transformation closure follows
     already verified parents; new mutations each receive a new exact leaf check.
     """
+    from receipt_integrity import validate
+    validate(log)
     meter = meter if meter is not None else EvidenceMeter()
-    if not isinstance(log,dict) or set(log)!={"schema","base","steps"} or log["schema"]!="b1-journal-v1":
+    if type(log) is not dict or set(log)!={"schema","base","steps"} or log["schema"]!="b1-journal-v1":
         raise Refusal("journal schema mismatch")
     base = log["base"]
     if not isinstance(base,dict) or set(base)!={"pieces","receipts","hash"}:
