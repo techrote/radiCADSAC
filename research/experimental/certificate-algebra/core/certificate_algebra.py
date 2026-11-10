@@ -5,7 +5,7 @@ Run: python3 -m unittest -v test_certificate_algebra.py
 """
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from fractions import Fraction as Q
 from hashlib import sha256
 from math import comb
@@ -151,12 +151,24 @@ def check_seam(left: Piece, right: Piece, meter: EvidenceMeter) -> None:
         raise Refusal("noncontiguous or discontinuous seam")
 
 
+# In-process transition closures are entitled to reuse earlier proof work
+# ONLY for objects minted by a checked importer or a trusted closure. A public
+# dataclass constructor is not a proof: raw callers could otherwise assert any
+# Bernstein coefficients and make split/affine emit false zero-set claims.
+_VERIFIED_MINT = object()
+
+
 @dataclass(frozen=True)
 class Verified:
     pieces: tuple[Piece, ...]
     certs: tuple[Certificate, ...]
     generation: int
     hash: str
+    _mint: object = field(default=None, repr=False, compare=False)
+
+    def __post_init__(self) -> None:
+        if self._mint is not _VERIFIED_MINT:
+            raise Refusal("Verified requires checked source import or trusted closure")
 
 
 def snapshot_hash(pieces: tuple[Piece, ...], generation: int) -> str:
@@ -169,7 +181,7 @@ def _state(ps: tuple[Piece, ...], cs: tuple[Certificate, ...], gen: int) -> Veri
     for p, c in zip(ps, cs):
         if p.hash != c.source_hash or len(p.coeff) != len(c.b) or c.sign not in ("ZERO", "POS", "NEG"):
             raise Refusal("certificate attachment mismatch")
-    return Verified(ps, cs, gen, snapshot_hash(ps, gen))
+    return Verified(ps, cs, gen, snapshot_hash(ps, gen), _VERIFIED_MINT)
 
 
 def verify_base(raw_pieces: list[dict], raw_receipts: list[dict], meter: EvidenceMeter) -> Verified:
