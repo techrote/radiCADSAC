@@ -60,7 +60,7 @@ class CarrierTests(unittest.TestCase):
         self.assertEqual(c['pieces'][0]['sided']['right']['left_germ_sign'],1)
         self.assertEqual(c['pieces'][1]['sided']['left']['right_germ_sign'],1)
         self.assertEqual(len(c['knots']),1)
-        self.assertEqual(c['knots'][0]['kind'],'SINGLE_PHYSICAL_KNOT_ZERO')
+        self.assertEqual(c['knots'][0]['kind'],'ISOLATED_PHYSICAL_KNOT_ZERO')
         self.assertEqual((c['knots'][0]['left_order'],c['knots'][0]['right_order']),(2,1))
         corrupted=copy.deepcopy(d)
         corrupted['pieces'][1]['C1']=['2/1','-1/1']
@@ -74,7 +74,58 @@ class CarrierTests(unittest.TestCase):
         self.assertEqual(c['pieces'][0]['kind'],'IDENTITY_ZERO_CONTINUUM')
         self.assertEqual(c['pieces'][1]['sided']['left']['multiplicity'],1)
         self.assertTrue(c['knots'][0]['left_continuum'])
+        self.assertEqual(c['knots'][0]['kind'],'ZERO_CONTINUUM_BOUNDARY')
+        self.assertEqual(c['zero_continua'],[['0/1','1/1']])
         self.assertEqual(c['knots'][0]['right_order'],1)
+
+    def test_genuine_clamped_bspline_zero_component_topology(self):
+        # Exact degree-2, C0 clamped B-spline: knot vector
+        # [0,0,0,1,1,2,2,2], five controls c0..c4.
+        # The two polynomials below are independently reconstructed
+        # from the Bernstein basis, not invented F4 join flags.
+        def make(controls):
+            c0,c1,c2,c3,c4=map(Q,controls)
+            left=poly(c0, -2*c0+2*c1, c0-2*c1+c2)
+            right=poly(4*c2-4*c3+c4, -4*c2+6*c3-2*c4, c2-2*c3+c4)
+            def piece(lo,hi,p):
+                row={'lo':cp.fmt(Q(lo)),'hi':cp.fmt(Q(hi))}
+                for k in cp.KEYS: row[k]=['0/1']
+                row['H0']=list(map(cp.fmt,p or (Q(0),)))
+                return row
+            return doc(piece(0,1,left),piece(1,2,right),a=Q(0),b=Q(1))
+        cases=(
+            ((0,0,0,0,0),'ZERO_CONTINUUM_INTERIOR',[['0/1','2/1']]),
+            ((0,0,0,0,1),'ZERO_CONTINUUM_BOUNDARY',[['0/1','1/1']]),
+            ((1,0,0,0,0),'ZERO_CONTINUUM_BOUNDARY',[['1/1','2/1']]),
+            ((1,0,0,0,1),'ISOLATED_PHYSICAL_KNOT_ZERO',[]),
+        )
+        for controls,kind,components in cases:
+            with self.subTest(controls=controls):
+                source=make(controls)
+                receipt=cp.certify(source)
+                self.assertTrue(cp.verify(source,receipt))
+                self.assertEqual(receipt['schema'],'a1-carrier-partition/2')
+                self.assertEqual(receipt['knots'][0]['kind'],kind)
+                self.assertEqual(receipt['zero_continua'],components)
+                bad=copy.deepcopy(receipt)
+                bad['knots'][0]['kind']='ISOLATED_PHYSICAL_KNOT_ZERO' if kind!='ISOLATED_PHYSICAL_KNOT_ZERO' else 'ZERO_CONTINUUM_BOUNDARY'
+                self.assertFalse(cp.verify(source,bad))
+                bad=copy.deepcopy(receipt)
+                bad['zero_continua']=[['0/1','2/1']] if components!=[['0/1','2/1']] else []
+                self.assertFalse(cp.verify(source,bad))
+
+    def test_maximal_continuum_merging_vs_nonidentity_gap(self):
+        z=lambda lo,hi:row(lo,hi,(Q(0),),h0=(Q(1),),c1=(),s2=())
+        p=row(2,3,factor((Q(2),2)),h0=(Q(1),),c1=(),s2=())
+        source=doc(z(0,1),z(1,2),p,a=Q(0),b=Q(1))
+        cert=cp.certify(source)
+        self.assertEqual(cert['zero_continua'],[['0/1','2/1']])
+        self.assertEqual([k['kind'] for k in cert['knots']],
+                         ['ZERO_CONTINUUM_INTERIOR','ZERO_CONTINUUM_BOUNDARY'])
+        self.assertTrue(cp.verify(source,cert))
+        # The nonidentity piece has only an isolated zero at its left
+        # endpoint; it cannot be absorbed into a positive-length continuum.
+        self.assertEqual(cert['pieces'][2]['sided']['left']['multiplicity'],2)
 
     def test_root_free_signed_harmonic(self):
         d=doc(row(0,1,(Q(1),),h0=(Q(-2),),c1=(Q(1,10),),s2=()))
