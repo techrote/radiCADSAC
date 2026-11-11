@@ -143,7 +143,7 @@ def project_signed_affine(germ: dict, *, offset: str, rate: str) -> dict:
     admit(germ, germ)  # Reject subclass hooks before accessing untrusted fields.
     # A caller-owned mutable dict may change after the self-hash is checked.
     # Project the exact same bounded primitive snapshot that was authenticated
-    # by the self-hash, rather than re-reading the caller\'s later values.
+    # by the self-hash, rather than re-reading the caller's later values.
     germ = copy.deepcopy(germ)
     admit(germ, germ)
     if germ.get("schema") != SCHEMA:
