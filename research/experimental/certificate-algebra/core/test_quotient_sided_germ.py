@@ -239,5 +239,27 @@ class QuotientSidedGermTests(unittest.TestCase):
         self.assertEqual(projection['right']['leading'],'1/2')
 
 
+    def test_e5_scalar_parameters_reject_str_subclasses_before_hooks(self):
+        # Complete real E4 parent/quotient replay precedes E5 time parsing;
+        # malicious user-supplied scalar subclasses must never run __ne__.
+        class HostileScalar(str):
+            def __ne__(self, other):
+                raise AssertionError("untrusted E5 scalar equality executed")
+
+        n, d = family(1, Q(1), Q(1))
+        q, g, _ = attach(n, d)
+        with self.assertRaises(Refusal):
+            derive(n, d, q, numerator_pin=n["hash"],
+                   denominator_pin=d["hash"], time=HostileScalar("1"))
+        for kwargs in ({"offset": HostileScalar("0"), "rate": "1"},
+                       {"offset": "0", "rate": HostileScalar("-1")}):
+            with self.subTest(consumer="affine_prediction", parameters=tuple(kwargs)):
+                with self.assertRaises(Refusal):
+                    project_signed_affine(g, **kwargs)
+        honest, _ = derive(n, d, q, numerator_pin=n["hash"],
+                           denominator_pin=d["hash"], time="1")
+        self.assertEqual(honest, g)
+        self.assertEqual(project_signed_affine(g, offset="2", rate="-1")["time"], "1")
+
 if __name__ == '__main__':
     unittest.main()
