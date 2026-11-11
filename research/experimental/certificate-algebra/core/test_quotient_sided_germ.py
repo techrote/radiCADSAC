@@ -224,6 +224,59 @@ class QuotientSidedGermTests(unittest.TestCase):
         with self.assertRaises(Refusal):
             project_signed_affine(g,offset='0',rate=str(2**1023))
 
+    def test_projection_source_hash_and_leading_share_one_snapshot(self):
+        """Do not consume a changed side under the previous germ hash."""
+        from unittest.mock import patch
+        import quotient_sided_germ as module
+
+        n, d = family(1, Q(1), Q(1))
+        _, germ, _ = attach(n, d)
+        original = copy.deepcopy(germ)
+        expected = project_signed_affine(original, offset="0", rate="1")
+        real_digest = module.digest
+        changed = []
+
+        def swap_after_hash(record):
+            result = real_digest(record)
+            if not changed:
+                changed.append(True)
+                germ["right"]["leading"] = "-1"
+            return result
+
+        with patch.object(module, "digest", side_effect=swap_after_hash):
+            projected = module.project_signed_affine(germ, offset="0", rate="1")
+        self.assertTrue(changed, "mutation must occur at the real digest boundary")
+        self.assertEqual(projected["input_germ_hash"], expected["input_germ_hash"])
+        self.assertEqual(projected["right"], expected["right"])
+        with self.assertRaises(Refusal):
+            project_signed_affine(germ, offset="0", rate="1")
+
+    def test_projection_source_hash_and_time_share_one_snapshot(self):
+        """Do not project a later event coordinate under the old hash."""
+        from unittest.mock import patch
+        import quotient_sided_germ as module
+
+        n, d = family(1, Q(1), Q(1))
+        _, germ, _ = attach(n, d)
+        expected = project_signed_affine(copy.deepcopy(germ), offset="0", rate="1")
+        real_digest = module.digest
+        changed = []
+
+        def change_coordinate_after_hash(record):
+            result = real_digest(record)
+            if not changed:
+                changed.append(True)
+                germ["time"] = "3/2"
+            return result
+
+        with patch.object(module, "digest", side_effect=change_coordinate_after_hash):
+            projected = module.project_signed_affine(germ, offset="0", rate="1")
+        self.assertTrue(changed)
+        self.assertEqual(projected["time"], expected["time"])
+        self.assertEqual(projected["input_germ_hash"], expected["input_germ_hash"])
+        with self.assertRaises(Refusal):
+            project_signed_affine(germ, offset="0", rate="1")
+
     def test_projection_invalid_and_unbound(self):
         n,d=family(1,Q(1),Q(1))
         _,g,_=attach(n,d)
