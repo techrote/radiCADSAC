@@ -128,6 +128,42 @@ class ClosedNonzeroTests(unittest.TestCase):
         with self.assertRaises(Refusal):
             verify_closed_journal(attack,base_pin=s.hash,final_pin=u.hash)
 
+    def test_journal_checks_primitive_shape_before_any_hostile_mapping_hooks(self):
+        raw = record(pos())
+        base = {"schema": "b1-journal-v1", "base": raw, "steps": []}
+
+        class HostileKey(str):
+            called = False
+
+            def __hash__(self):
+                return hash(str(self))
+
+            def __eq__(self, other):
+                type(self).called = True
+                raise AssertionError("hostile string equality must not run")
+
+        class HostileMap(dict):
+            called = False
+
+            def get(self, *args):
+                type(self).called = True
+                raise AssertionError("hostile mapping getter must not run")
+
+        nested = deepcopy(base)
+        nested["base"][HostileKey("hash")] = nested["base"].pop("hash")
+        top = {"schema": "b1-journal-v1", HostileKey("base"): raw, "steps": []}
+        for bad in (HostileMap(base), top, nested):
+            with self.subTest(case=type(bad).__name__):
+                with self.assertRaises(Refusal):
+                    verify_closed_journal(bad, base_pin=raw["hash"], final_pin=raw["hash"])
+        self.assertFalse(HostileKey.called)
+        self.assertFalse(HostileMap.called)
+        # Positive valid journal controls remain executable.
+        actual, receipt, _ = verify_closed_journal(
+            base, base_pin=raw["hash"], final_pin=raw["hash"])
+        self.assertEqual(actual.hash, raw["hash"])
+        self.assertEqual(receipt["closed_sign"], "POS")
+
     def test_mutation_replay_does_not_reuse_obsolete_nonzero_claim(self):
         raw = record(pos())
         s = verify_base(raw['pieces'],raw['receipts'],EvidenceMeter())
