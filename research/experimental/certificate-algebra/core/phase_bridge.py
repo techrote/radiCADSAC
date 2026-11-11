@@ -107,7 +107,7 @@ def _canonical_owned(source):
     if "0" not in terms:
         raise Refusal("missing explicit constant harmonic")
     if who == "A1-470":
-        positives = sorted(int(k) for k in terms if isinstance(k, str) and k != "0" and k.isdigit())
+        positives = sorted(int(k) for k in terms if type(k) is str and re.fullmatch(r"[1-8]", k))
         if positives != list(range(1, len(positives) + 1)):
             raise Refusal("noncontiguous A1 harmonic channels")
     admitted = {}
