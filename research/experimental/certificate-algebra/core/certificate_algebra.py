@@ -22,7 +22,7 @@ class Refusal(ValueError):
 
 
 def frac(s: str) -> Q:
-    if not isinstance(s, str) or len(s) > 640 or not _CANON.fullmatch(s):
+    if type(s) is not str or len(s) > 640 or not _CANON.fullmatch(s):
         raise Refusal("noncanonical or oversized rational")
     q = Q(s)
     if enc(q) != s:
