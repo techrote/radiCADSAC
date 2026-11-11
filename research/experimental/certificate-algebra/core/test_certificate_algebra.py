@@ -181,4 +181,26 @@ class CertificateAlgebraTests(unittest.TestCase):
         bad=verified(Piece(Q(1),Q(3),(Q(2),)))
         with self.assertRaises(Refusal): concatenate(left,bad,EvidenceMeter())
 
+    def test_direct_fraction_parser_refuses_hostile_string_comparator(self):
+        # Unlike base_record JSON, scalar E5 parameters enter frac() directly.
+        # A str subclass can bypass canonical -0 via __ne__ and execute Python
+        # hooks at a pre-admission comparison boundary.
+        from certificate_algebra import frac
+
+        class FakeCanonical(str):
+            def __ne__(self, other):
+                return False
+
+        class TrapComparator(str):
+            def __ne__(self, other):
+                raise AssertionError("hostile scalar comparator executed")
+
+        with self.assertRaises(Refusal):
+            frac(FakeCanonical("-0"))
+        with self.assertRaises(Refusal):
+            frac(TrapComparator("1/2"))
+        self.assertEqual(frac("1/2"), Q(1, 2))
+        with self.assertRaises(Refusal):
+            frac("-0")
+
 if __name__=="__main__": unittest.main()
