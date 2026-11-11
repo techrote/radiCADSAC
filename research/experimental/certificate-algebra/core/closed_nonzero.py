@@ -94,7 +94,11 @@ def verify_closed_journal(log: dict, *, base_pin: str, final_pin: str,
     This does NOT confer native material dependencies or physical authority.
     """
     before, after = _pin(base_pin), _pin(final_pin)
-    if (not isinstance(log, dict) or not isinstance(log.get("base"), dict)
+    # Audit the entire untrusted journal BEFORE .get(), [] or comparisons:
+    # a dict/str subclass otherwise invokes hostile Python hooks at this
+    # consumer boundary, before replay() can perform its own validation.
+    validate(log)
+    if (type(log) is not dict or type(log.get("base")) is not dict
             or log["base"].get("hash") != before):
         raise Refusal("journal lacks independently pinned base source")
     meter = EvidenceMeter()
