@@ -9,11 +9,24 @@ import copy
 from fractions import Fraction as Q
 from math import comb
 
-from certificate_algebra import Refusal, digest, enc, frac, piece
+from certificate_algebra import MAX_BITS, Refusal, digest, enc, frac, piece
 from rational_quotient import verify as verify_quotient
 from receipt_integrity import admit, validate
 
 SCHEMA = "b1-quotient-sided-germ-v1"
+
+
+def _enc_bounded(value: Q) -> str:
+    """Bound every newly derived exact rational before decimal serialization.
+
+    B1 input budgets do not bound derivatives or signed-affine powers;
+    unchecked output can overflow CPython's integer-to-string limit or
+    create receipts larger than the primitive admission format permits.
+    """
+    if (type(value) is not Q or
+            max(value.numerator.bit_length(), value.denominator.bit_length()) > MAX_BITS):
+        raise Refusal("derived sided germ exceeds exact-rational resource budget")
+    return enc(value)
 
 
 def taylor(p, point: Q) -> tuple[Q, ...]:
@@ -51,7 +64,7 @@ def _germ(n, d, point: Q, direction: str) -> dict:
         return {"kind": "IDENTITY_ZERO_SIDE"}
     degree = next(j for j, c in enumerate(numerator) if c != 0)
     return {"kind": "FINITE_ORDER", "order": degree,
-            "leading": enc(numerator[degree]/denominator[0])}
+            "leading": _enc_bounded(numerator[degree]/denominator[0])}
 
 
 def _seams(ps, t: Q) -> bool:
@@ -148,14 +161,14 @@ def project_signed_affine(germ: dict, *, offset: str, rate: str) -> dict:
             if type(k) is not int or not (0 <= k <= 24):
                 raise Refusal("invalid or unsupported sided order")
             transformed.append({"kind": "FINITE_ORDER", "order": k,
-                                "leading": enc(frac(side["leading"])*b**k)})
+                                "leading": _enc_bounded(frac(side["leading"])*b**k)})
         elif side["kind"] in ("ABSENT", "IDENTITY_ZERO_SIDE") and set(side) == {"kind"}:
             transformed.append(side)
         else:
             raise Refusal("invalid sided germ record")
     return {"schema": "b1-affine-germ-prediction-v1",
             "input_germ_hash": germ["germ_hash"],
-            "time": enc((point-a)/b), "left": transformed[0],
+            "time": _enc_bounded((point-a)/b), "left": transformed[0],
             "right": transformed[1],
             "status": "UNBOUND_PREDICTION_REVERIFY_TRANSFORMED_SOURCE",
             "genuine_structural_knot": "UNVERIFIED"}

@@ -204,6 +204,26 @@ class QuotientSidedGermTests(unittest.TestCase):
             run_under_boundary_mutation(lambda: verify(n, d, q, wrong,
                     numerator_pin=pin, denominator_pin=d["hash"], time="1"))
 
+    def test_e5_exact_source_derivative_overflow_is_typed_refusal(self):
+        # Both input Bernstein parents pass all 1024-bit limits. A narrow
+        # physical domain can nevertheless amplify a 24th-order germ beyond
+        # the receipt format's rational budget (and Python's decimal limit).
+        w = Q(1, 2**1023)
+        n = raw(Piece(Q(0), w, (Q(0),)*24+(Q(1),)))
+        d = raw(Piece(Q(0), w, (Q(1),)))
+        q,_ = quotient_derive(n,d,numerator_pin=n['hash'],denominator_pin=d['hash'])
+        with self.assertRaises(Refusal):
+            derive(n,d,q,numerator_pin=n['hash'],denominator_pin=d['hash'],time='0')
+
+    def test_e5_affine_prediction_overflow_is_typed_refusal(self):
+        # A genuine E4/E5 receipt may be representable while a valid 1024-bit
+        # affine rate makes the transported leading jet unrepresentable.
+        n = raw(Piece(Q(0), Q(1), (Q(0),)*24+(Q(1,2**1023),)))
+        d = raw(Piece(Q(0), Q(1), (Q(1),)))
+        _,g,_ = attach(n,d,'0')
+        with self.assertRaises(Refusal):
+            project_signed_affine(g,offset='0',rate=str(2**1023))
+
     def test_projection_invalid_and_unbound(self):
         n,d=family(1,Q(1),Q(1))
         _,g,_=attach(n,d)
