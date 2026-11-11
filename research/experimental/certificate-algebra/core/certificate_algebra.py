@@ -85,7 +85,13 @@ def piece(data: dict) -> Piece:
 def bernstein(p: Piece) -> tuple[Q, ...]:
     """Exact conversion from power-basis coefficients to Bernstein coefficients."""
     n = len(p.coeff) - 1
-    return tuple(sum(p.coeff[k] * Q(comb(i, k), comb(n, k)) for k in range(i+1)) for i in range(n+1))
+    b = tuple(sum(p.coeff[k] * Q(comb(i, k), comb(n, k)) for k in range(i+1)) for i in range(n+1))
+    # Individually bounded source coefficients may have coprime denominators.
+    # Their exact Bernstein sums can exceed Python's decimal output limits.
+    # This is an unproved/admission-overbudget case, not a negative sign result.
+    if any(max(q.numerator.bit_length(), q.denominator.bit_length()) > MAX_BITS for q in b):
+        raise Refusal("derived Bernstein proof exceeds rational resource budget")
+    return b
 
 
 def kind(b: tuple[Q, ...]) -> str:
@@ -103,6 +109,16 @@ class Certificate:
     source_hash: str
     sign: str
     b: tuple[Q, ...]
+
+    def __post_init__(self) -> None:
+        # Trusted transformations may reuse/convolve leaf Bernstein data.
+        # Never mint or render an oversized output certificate, even if each
+        # parent input is individually within its independent scalar budget.
+        if (type(self.b) is not tuple or not (1 <= len(self.b) <= MAX_DEGREE + 1)
+                or any(type(q) is not Q or
+                       max(q.numerator.bit_length(), q.denominator.bit_length()) > MAX_BITS
+                       for q in self.b)):
+            raise Refusal("certificate Bernstein output resource budget")
 
     def record(self) -> dict:
         return {"source_hash": self.source_hash, "sign": self.sign, "bernstein": [enc(x) for x in self.b]}
