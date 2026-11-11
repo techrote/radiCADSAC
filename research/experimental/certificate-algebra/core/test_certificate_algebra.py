@@ -181,6 +181,32 @@ class CertificateAlgebraTests(unittest.TestCase):
         bad=verified(Piece(Q(1),Q(3),(Q(2),)))
         with self.assertRaises(Refusal): concatenate(left,bad,EvidenceMeter())
 
+    def test_derived_bernstein_budget_refuses_coprime_valid_inputs(self):
+        # Every input coefficient is an exact Fraction with <=1024-bit
+        # numerator/denominator, but their 25 mutually coprime denominators
+        # produce a >22,000-bit Bernstein endpoint coefficient. Previously
+        # prove() minted it and base_record() raised an untyped CPython
+        # decimal-conversion ValueError at Certificate.record().
+        from certificate_algebra import MAX_BITS, Certificate, check_leaf
+        primes = (2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41,
+                  43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97)
+        coeff = tuple(Q(1, p ** (1023 // p.bit_length())) for p in primes)
+        self.assertLessEqual(max(x.denominator.bit_length() for x in coeff), MAX_BITS)
+        source = Piece(Q(0), Q(1), coeff)
+        with self.assertRaisesRegex(Refusal, "Bernstein.*budget"):
+            prove(source, EvidenceMeter())
+        with self.assertRaisesRegex(Refusal, "Bernstein.*budget"):
+            base_record((source,))
+        # A directly provided in-process certificate is bounded too, before
+        # record() or comparison with independently derived mathematics.
+        with self.assertRaisesRegex(Refusal, "Bernstein.*budget"):
+            Certificate(source.hash, "POS", (Q(1, 2 ** (MAX_BITS + 1)),))
+        # Nearby valid small denominators retain exact proof functionality.
+        small = Piece(Q(0), Q(1), (Q(1, 2), Q(1, 3), Q(1, 5)))
+        cert = prove(small, EvidenceMeter())
+        check_leaf(small, cert, EvidenceMeter())
+        self.assertEqual(cert.sign, "POS")
+
     def test_direct_fraction_parser_refuses_hostile_string_comparator(self):
         # Unlike base_record JSON, scalar E5 parameters enter frac() directly.
         # A str subclass can bypass canonical -0 via __ne__ and execute Python
